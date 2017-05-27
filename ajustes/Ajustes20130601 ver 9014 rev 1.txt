@@ -1,0 +1,9 @@
+CREATE TABLE `tblclientesimpuestos` (
+  `idimpuesto` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idcliente` INTEGER UNSIGNED NOT NULL,
+  `tipo` TINYINT UNSIGNED NOT NULL,
+  `tasa` DOUBLE NOT NULL,
+  `nombre` VARCHAR(250) NOT NULL,
+  PRIMARY KEY (`idimpuesto`)
+)
+ENGINE = InnoDB;

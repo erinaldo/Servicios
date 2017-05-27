@@ -1,0 +1,36 @@
+DROP TABLE IF EXISTS `db_services`.`tblimpresiones`;
+CREATE TABLE  `db_services`.`tblimpresiones` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `y` int(10) unsigned NOT NULL,
+  `yl` int(10) unsigned NOT NULL,
+  `documento` int(10) unsigned NOT NULL,
+  `idsucursal` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_tblimpresiones_01` (`idsucursal`),
+  CONSTRAINT `FK_tblimpresiones_01` FOREIGN KEY (`idsucursal`) REFERENCES `tblsucursales` (`idsucursal`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `db_services`.`tblimpresionesnodos`;
+CREATE TABLE  `db_services`.`tblimpresionesnodos` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `x` int(10) unsigned NOT NULL,
+  `y` int(10) unsigned NOT NULL,
+  `texto` varchar(200) NOT NULL,
+  `datapropertyname` varchar(100) NOT NULL,
+  `xl` int(10) unsigned NOT NULL,
+  `yl` int(10) unsigned NOT NULL,
+  `fuente` varchar(45) NOT NULL,
+  `fuentesize` int(10) unsigned NOT NULL,
+  `fuentestilo` int(10) unsigned NOT NULL,
+  `alineacion` int(10) unsigned NOT NULL,
+  `tipo` int(10) unsigned NOT NULL,
+  `tipodato` int(10) unsigned NOT NULL,
+  `visible` tinyint(3) unsigned NOT NULL,
+  `documento` int(10) unsigned NOT NULL,
+  `idsucursal` int(10) unsigned NOT NULL,
+  `tiponodo` tinyint(3) unsigned NOT NULL,
+  `conetiqueta` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_tblimpresiones_1` (`idsucursal`),
+  CONSTRAINT `FK_tblimpresiones_1` FOREIGN KEY (`idsucursal`) REFERENCES `tblsucursales` (`idsucursal`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;

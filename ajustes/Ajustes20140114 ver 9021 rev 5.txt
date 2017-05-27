@@ -1,0 +1,16 @@
+DROP TABLE IF EXISTS `tblidentificacion`;
+CREATE TABLE  `tblidentificacion` (
+  `idIdentificacion` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(45) NOT NULL,
+  PRIMARY KEY (`idIdentificacion`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+ALTER TABLE `tblclientes` ADD COLUMN `imagen` VARCHAR(500) NOT NULL AFTER `zona2`,
+ ADD COLUMN `identificacion` INTEGER UNSIGNED NOT NULL AFTER `imagen`,
+ ADD COLUMN `numeroID` VARCHAR(45) NOT NULL AFTER `identificacion`;
+
+update tblclientes set imagen='',identificacion=0,numeroid='';
+
+insert into tblactualizaciones(version) values('ver 9021 rev 5');
+
+

@@ -1,0 +1,10 @@
+CREATE TABLE `tblventascorte` (
+  `concepto` VARCHAR(45) NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  `modulo` TINYINT UNSIGNED NOT NULL,
+  `posicion` TINYINT UNSIGNED NOT NULL
+)
+ENGINE = InnoDB;
+
+
+insert into tblactualizaciones(version) values('ver 9029 rev 14');

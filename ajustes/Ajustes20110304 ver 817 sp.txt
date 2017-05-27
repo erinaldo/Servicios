@@ -1,0 +1,64 @@
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spclientesmovimientos` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spclientesmovimientos`(pidcliente int,pfecha1 varchar(10),pfecha2 varchar(10)) RETURNS int(11)
+BEGIN
+
+delete from tblclientesmovimientos where idcliente=pidcliente;
+
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select fecha,1,idventa,totalapagar,0,0,pidcliente,hora,3,serie,folio from tblventas inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where idcliente=pidcliente and (estado=3 or estado=4) and fecha>=pfecha1 and fecha<=pfecha2 and tblformasdepago.tipo=0;
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select fecha,1,idventa,totalapagar,totalapagar,0,pidcliente,hora,3,serie,folio from tblventas inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where idcliente=pidcliente and (estado=3 or estado=4) and fecha>=pfecha1 and fecha<=pfecha2 and tblformasdepago.tipo=1;
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select fecha,2,idnota,0,totalapagar,0,pidcliente,hora,3,serie,folio from tblnotasdecredito where idcliente=pidcliente and (estado=3 or estado=4) and fecha>=pfecha1 and fecha<=pfecha2;
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select fecha,3,iddevolucion,0,totalapagar,0,pidcliente,hora,3,serie,folio from tbldevoluciones where idcliente=pidcliente and (estado=3 or estado=4) and fecha>=pfecha1 and fecha<=pfecha2;
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select tblventaspagos.fecha,4,idpago,0,cantidad,0,pidcliente,tblventaspagos.hora,3,if(tblventaspagos.idventa<>0,(select serie from tblventas where idventa=tblventaspagos.idventa limit 1),(select serie from tblnotasdecargo where idcargo=tblventaspagos.idcargo limit 1)) as serie,
+if(tblventaspagos.idventa<>0,(select folio from tblventas where idventa=tblventaspagos.idventa limit 1),(select folio from tblnotasdecargo where idcargo=tblventaspagos.idcargo limit 1)) as folio from tblventaspagos where tblventaspagos.idcliente=pidcliente and (tblventaspagos.estado=3 or tblventaspagos.estado=4) and tblventaspagos.fecha>=pfecha1 and tblventaspagos.fecha<=pfecha2 and tblventaspagos.iddocumento=0;
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select fecha,5,idcargo,totalapagar,0,0,pidcliente,hora,3,serie,folio from tblnotasdecargo where idcliente=pidcliente and (estado=3 or estado=4) and fecha>=pfecha1 and fecha<=pfecha2;
+
+
+/*Cancelados*/
+
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select fechacancelado,1,idventa,0,totalapagar,0,pidcliente,horacancelado,4,serie,folio from tblventas inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where idcliente=pidcliente and estado=4 and fecha>=pfecha1 and fecha<=pfecha2 and tblformasdepago.tipo=0;
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select fechacancelado,1,idventa,totalapagar,totalapagar,0,pidcliente,horacancelado,4,serie,folio from tblventas inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where idcliente=pidcliente and estado=4 and fecha>=pfecha1 and fecha<=pfecha2 and tblformasdepago.tipo=1;
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select fechacancelado,2,idnota,totalapagar,0,0,pidcliente,horacancelado,4,serie,folio from tblnotasdecredito where idcliente=pidcliente and estado=4 and fecha>=pfecha1 and fecha<=pfecha2;
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select fechacancelado,3,iddevolucion,totalapagar,0,0,pidcliente,horacancelado,4,serie,folio from tbldevoluciones where idcliente=pidcliente and estado=4 and fecha>=pfecha1 and fecha<=pfecha2;
+
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select tblventaspagos.fecha,4,idpago,cantidad,0,0,pidcliente,tblventaspagos.hora,4,if(tblventaspagos.idventa<>0,(select serie from tblventas where idventa=tblventaspagos.idventa limit 1),(select serie from tblnotasdecargo where idcargo=tblventaspagos.idcargo limit 1)) as serie,
+if(tblventaspagos.idventa<>0,(select folio from tblventas where idventa=tblventaspagos.idventa limit 1),(select folio from tblnotasdecargo where idcargo=tblventaspagos.idcargo limit 1)) as folio from tblventaspagos where tblventaspagos.idcliente=pidcliente and tblventaspagos.estado=4 and tblventaspagos.fecha>=pfecha1 and tblventaspagos.fecha<=pfecha2 and tblventaspagos.iddocumento=0;
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select fechacancelado,5,idcargo,0,totalapagar,0,pidcliente,horacancelado,4,serie,folio from tblnotasdecargo where idcliente=pidcliente and estado=4 and fecha>=pfecha1 and fecha<=pfecha2;
+
+
+/*Saldo anterior */
+
+/*declare isaldo double;*/
+
+/*isaldo=(select sum(totalapagar) from tblventas where idcliente=pidcliente and fecha<pfecha1)*/
+
+
+return pidcliente;
+END $$
+
+DELIMITER ;

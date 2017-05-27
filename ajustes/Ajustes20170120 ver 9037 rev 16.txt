@@ -1,0 +1,14 @@
+ALTER TABLE `tblpolizas` ADD COLUMN `cantidadcheque` DOUBLE NOT NULL AFTER `estado`,
+ ADD COLUMN `leyendach` TINYINT UNSIGNED NOT NULL AFTER `cantidadcheque`;
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(19,696,'Cantidad Cheque','cantcheque',600,50,'Lucida Console',8,0,0,0,0,0,19+16,1,0,0,'Documento - Cant. Cheque',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(19,696,'Cantidad Cheque','cantcheque',600,50,'Lucida Console',8,0,0,0,0,0,19+16+16,1,0,0,'Documento - Cant. Cheque',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(19,696,'Cantidad Cheque','cantcheque',600,50,'Lucida Console',8,0,0,0,0,0,25+16,1,0,0,'Documento - Cant. Cheque',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(19,696,'Cantidad Cheque','cantcheque',600,50,'Lucida Console',8,0,0,0,0,0,25+16+16,1,0,0,'Documento - Cant. Cheque',0,1);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(19,696,'Leyenda','leyenda',600,50,'Lucida Console',8,0,0,0,0,0,19+16,1,0,0,'Documento - Leyenda',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(19,696,'Leyenda','leyenda',600,50,'Lucida Console',8,0,0,0,0,0,19+16+16,1,0,0,'Documento - Leyenda',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(19,696,'Leyenda','leyenda',600,50,'Lucida Console',8,0,0,0,0,0,25+16,1,0,0,'Documento - Leyenda',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(19,696,'Leyenda','leyenda',600,50,'Lucida Console',8,0,0,0,0,0,25+16+16,1,0,0,'Documento - Leyenda',0,1);
+
+insert into tblactualizaciones(version,versionchk) values('ver 9037 rev 16','00903716');

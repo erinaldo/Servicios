@@ -1,0 +1,47 @@
+Fertilizantes
+
+pedidos
+ver,alta, cancelacion
+
+movimientos de almacen
+alta,cambios,cancelar,permitir
+
+Reportes
+ver
+
+
+Contabilidad
+
+configuracion ok
+ver, modificar
+
+clasificacion polizas
+ver,alta,cambios,eliminar ok
+
+cuentas
+ver,alta,cambios,eliminar ok
+
+polizas
+ver,alta, eliminar ok
+
+consultar saldos
+ver ok
+
+consiliacion diot
+ver ok
+
+reportes
+ver ok
+
+mascaras
+ver,altas,cambios,bajas ok
+
+generar polizas
+permitir ok
+
+
+Bancos
+
+bancos quitar
+cuentas contables quitar
+

@@ -1,0 +1,175 @@
+tblventas
+credito cambio a double
+idvendedor int nuevo - Dar de alta primero un vendedor
+
+tblinventario
+clave2 varchar(20)
+
+tblclientes
+idvendedor int nuevo
+
+
+DROP TABLE IF EXISTS `db_services`.`tblvendedores`;
+CREATE TABLE  `db_services`.`tblvendedores` (
+  `idvendedor` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(150) CHARACTER SET latin1 NOT NULL,
+  `direccion` varchar(150) CHARACTER SET latin1 NOT NULL,
+  `telefono` varchar(45) CHARACTER SET latin1 NOT NULL,
+  `email` varchar(200) CHARACTER SET latin1 NOT NULL,
+  `clave` varchar(20) CHARACTER SET latin1 NOT NULL,
+  `ciudad` varchar(45) CHARACTER SET latin1 NOT NULL,
+  `cp` varchar(8) CHARACTER SET latin1 NOT NULL,
+  `estado` varchar(45) CHARACTER SET latin1 NOT NULL,
+  `pais` varchar(45) CHARACTER SET latin1 NOT NULL,
+  PRIMARY KEY (`idvendedor`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `db_services`.`tblnotasdecredito`;
+CREATE TABLE  `db_services`.`tblnotasdecredito` (
+  `idnota` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idcliente` int(10) unsigned NOT NULL,
+  `fecha` varchar(10) NOT NULL,
+  `folio` int(10) unsigned NOT NULL,
+  `total` double NOT NULL,
+  `hora` varchar(8) NOT NULL,
+  `estado` tinyint(3) unsigned NOT NULL,
+  `iva` double NOT NULL,
+  `totalapagar` double NOT NULL,
+  `desglosar` tinyint(3) unsigned NOT NULL,
+  `idsucursal` int(10) unsigned NOT NULL,
+  `serie` varchar(10) NOT NULL,
+  `tipodecambio` double NOT NULL,
+  `noaprobacion` varchar(10) NOT NULL,
+  `yearaprobacion` varchar(5) NOT NULL,
+  `nocertificado` varchar(25) NOT NULL,
+  `eselectronica` tinyint(3) unsigned NOT NULL,
+  `idmoneda` int(10) unsigned NOT NULL,
+  `aplicado` double NOT NULL,
+  `fechacancelado` varchar(10) NOT NULL,
+  `horacancelado` varchar(8) NOT NULL,
+  PRIMARY KEY (`idnota`),
+  KEY `FK_tblnotasdecredito_1` (`idcliente`),
+  KEY `FK_tblnotasdecredito_2` (`idsucursal`),
+  CONSTRAINT `FK_tblnotasdecredito_1` FOREIGN KEY (`idcliente`) REFERENCES `tblclientes` (`idcliente`) ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblnotasdecredito_2` FOREIGN KEY (`idsucursal`) REFERENCES `tblsucursales` (`idsucursal`) ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `db_services`.`tblnotasdecreditodetalles`;
+CREATE TABLE  `db_services`.`tblnotasdecreditodetalles` (
+  `iddetalle` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idinventario` int(10) unsigned NOT NULL,
+  `idmoneda` int(10) unsigned NOT NULL,
+  `idnota` int(10) unsigned NOT NULL,
+  `cantidad` double NOT NULL,
+  `precio` double NOT NULL,
+  `descripcion` varchar(200) NOT NULL,
+  `iva` double NOT NULL,
+  `extra` varchar(500) NOT NULL,
+  `descuento` double NOT NULL,
+  `idvariante` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`iddetalle`),
+  KEY `FK_tblnotasdecreditodetalles_1` (`idmoneda`),
+  KEY `FK_tblnotasdecreditodetalles_2` (`idnota`),
+  CONSTRAINT `FK_tblnotasdecreditodetalles_1` FOREIGN KEY (`idmoneda`) REFERENCES `tblmonedas` (`idmoneda`) ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblnotasdecreditodetalles_2` FOREIGN KEY (`idnota`) REFERENCES `tblnotasdecredito` (`idnota`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `db_services`.`tbldevoluciones`;
+CREATE TABLE  `db_services`.`tbldevoluciones` (
+  `iddevolucion` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `folio` int(10) unsigned NOT NULL,
+  `idcliente` int(10) unsigned NOT NULL,
+  `fecha` varchar(10) NOT NULL,
+  `desglosar` tinyint(3) unsigned NOT NULL,
+  `facturado` tinyint(3) unsigned NOT NULL,
+  `credito` double NOT NULL,
+  `iva` double NOT NULL,
+  `totalapagar` double NOT NULL,
+  `total` double NOT NULL,
+  `hora` varchar(8) NOT NULL,
+  `nocertificado` varchar(45) NOT NULL,
+  `noaprobacion` varchar(10) NOT NULL,
+  `yearaprobacion` varchar(45) NOT NULL,
+  `eselectronica` tinyint(3) unsigned NOT NULL,
+  `estado` tinyint(3) unsigned NOT NULL,
+  `serie` varchar(15) NOT NULL,
+  `idsucursal` int(10) unsigned NOT NULL,
+  `idforma` int(10) unsigned NOT NULL,
+  `tipodecambio` double NOT NULL,
+  `idconversion` int(10) unsigned NOT NULL,
+  `ivaretenido` double NOT NULL,
+  `isr` double NOT NULL,
+  `fechacancelado` varchar(10) NOT NULL,
+  `horacancelado` varchar(8) NOT NULL,
+  `idventa` int(10) unsigned NOT NULL,
+  `idremision` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`iddevolucion`),
+  KEY `FK_tbldevoluciones_1` (`idcliente`),
+  KEY `FK_tbldevoluciones_2` (`idsucursal`),
+  CONSTRAINT `FK_tbldevoluciones_1` FOREIGN KEY (`idcliente`) REFERENCES `tblclientes` (`idcliente`) ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tbldevoluciones_2` FOREIGN KEY (`idsucursal`) REFERENCES `tblsucursales` (`idsucursal`) ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `db_services`.`tbldevolucionesdetalles`;
+CREATE TABLE  `db_services`.`tbldevolucionesdetalles` (
+  `iddetalle` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `iddevolucion` int(10) unsigned NOT NULL,
+  `idinventario` int(10) unsigned NOT NULL,
+  `cantidad` double NOT NULL,
+  `precio` double NOT NULL,
+  `descripcion` varchar(200) NOT NULL,
+  `idmoneda` int(10) unsigned NOT NULL,
+  `idalmacen` int(10) unsigned NOT NULL,
+  `iva` double NOT NULL,
+  `extra` varchar(500) NOT NULL,
+  `descuento` double NOT NULL,
+  `idvariante` int(10) unsigned NOT NULL,
+  `idservicio` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`iddetalle`),
+  KEY `FK_tbldevolucionesdetalles_2` (`idmoneda`),
+  KEY `FK_tbldevolucionesdetalles_3` (`idalmacen`),
+  KEY `FK_tbldevolucionesdetalles_4` (`idinventario`),
+  KEY `FK_tbldevolucionesdetalles_5` (`idvariante`),
+  KEY `FK_tbldevolucionesdetalles_1` (`iddevolucion`),
+  CONSTRAINT `FK_tbldevolucionesdetalles_1` FOREIGN KEY (`iddevolucion`) REFERENCES `tbldevoluciones` (`iddevolucion`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tbldevolucionesdetalles_2` FOREIGN KEY (`idmoneda`) REFERENCES `tblmonedas` (`idmoneda`) ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tbldevolucionesdetalles_3` FOREIGN KEY (`idalmacen`) REFERENCES `tblalmacenes` (`idalmacen`) ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tbldevolucionesdetalles_4` FOREIGN KEY (`idinventario`) REFERENCES `tblinventario` (`idinventario`) ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tbldevolucionesdetalles_5` FOREIGN KEY (`idvariante`) REFERENCES `tblproductosvariantes` (`idvariante`) ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `db_services`.`tblsucursalescertificados`;
+CREATE TABLE  `db_services`.`tblsucursalescertificados` (
+  `idcertificado` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idsucursal` int(10) unsigned NOT NULL,
+  `noserie` varchar(25) NOT NULL,
+  `certificado` varchar(5000) NOT NULL,
+  `passkey` blob NOT NULL,
+  `activo` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`idcertificado`),
+  KEY `FK_tblsucursalescertificados_1` (`idsucursal`),
+  CONSTRAINT `FK_tblsucursalescertificados_1` FOREIGN KEY (`idsucursal`) REFERENCES `tblsucursales` (`idsucursal`) ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `db_services`.`tblsucursalesfolios`;
+CREATE TABLE  `db_services`.`tblsucursalesfolios` (
+  `idfolio` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idsucursal` int(10) unsigned NOT NULL,
+  `folioinicial` int(10) unsigned NOT NULL,
+  `foliofinal` int(10) unsigned NOT NULL,
+  `serie` varchar(20) NOT NULL,
+  `eselectronica` tinyint(3) unsigned NOT NULL,
+  `idcertificado` int(10) unsigned NOT NULL,
+  `noaprobacion` varchar(15) NOT NULL,
+  `yearaprobacion` varchar(8) NOT NULL,
+  `activo` tinyint(3) unsigned NOT NULL,
+  `tipodocumento` tinyint(3) unsigned NOT NULL,
+  `formato` varchar(15) NOT NULL,
+  PRIMARY KEY (`idfolio`),
+  KEY `FK_tblsucursalesfolios_1` (`idsucursal`),
+  CONSTRAINT `FK_tblsucursalesfolios_1` FOREIGN KEY (`idsucursal`) REFERENCES `tblsucursales` (`idsucursal`) ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+
+
+

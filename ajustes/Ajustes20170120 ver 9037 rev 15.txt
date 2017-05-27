@@ -1,0 +1,34 @@
+ALTER TABLE `tblsucursales` ADD COLUMN `clavecolonia` VARCHAR(7) NOT NULL AFTER `claveregimen`,
+ ADD COLUMN `clavelocalidad` VARCHAR(5) NOT NULL AFTER `clavecolonia`,
+ ADD COLUMN `clavemun` VARCHAR(5) NOT NULL AFTER `clavelocalidad`,
+ ADD COLUMN `claveestado` VARCHAR(5) NOT NULL AFTER `clavemun`,
+ ADD COLUMN `clavepais` VARCHAR(5) NOT NULL AFTER `claveestado`;
+
+ALTER TABLE `tblsucursales` ADD COLUMN `claveregimen2` INT(10) NOT NULL AFTER `clavepais`;
+
+ALTER TABLE `tblclientes` ADD COLUMN `clavecolonia` VARCHAR(7) NOT NULL AFTER `nochecarcr`,
+ ADD COLUMN `clavelocalidad` VARCHAR(5) NOT NULL AFTER `clavecolonia`,
+ ADD COLUMN `clavemun` VARCHAR(5) NOT NULL AFTER `clavelocalidad`,
+ ADD COLUMN `claveestado` VARCHAR(5) NOT NULL AFTER `clavemun`,
+ ADD COLUMN `clavepais` VARCHAR(5) NOT NULL AFTER `claveestado`;
+
+ALTER TABLE `tblinventario` ADD COLUMN `cproductoserv` VARCHAR(10) NOT NULL AFTER `unidadaduana`,
+ ADD COLUMN `cunidad` VARCHAR(5) NOT NULL AFTER `cproductoserv`;
+
+insert into tblformasdepagosat(clave,nombre) values(12,'Dación de pago');
+insert into tblformasdepagosat(clave,nombre) values(13,'Pago por subrogación');
+insert into tblformasdepagosat(clave,nombre) values(14,'Pago por consignación');
+insert into tblformasdepagosat(clave,nombre) values(15,'Condonación');
+insert into tblformasdepagosat(clave,nombre) values(17,'Compensación');
+insert into tblformasdepagosat(clave,nombre) values(23,'Novación');
+insert into tblformasdepagosat(clave,nombre) values(24,'Confución');
+insert into tblformasdepagosat(clave,nombre) values(25,'Remisión de deuda');
+insert into tblformasdepagosat(clave,nombre) values(26,'Prescripción o caducidad');
+insert into tblformasdepagosat(clave,nombre) values(27,'A satisfacción del acreedor');
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(19,696,'Total letra','totalletra',600,50,'Lucida Console',8,0,0,0,0,0,19+16,1,0,0,'Documento - Total letra',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(19,696,'Total letra','totalletra',600,50,'Lucida Console',8,0,0,0,0,0,19+16+16,1,0,0,'Documento - Total letra',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(19,696,'Total letra','totalletra',600,50,'Lucida Console',8,0,0,0,0,0,25+16,1,0,0,'Documento - Total letra',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(19,696,'Total letra','totalletra',600,50,'Lucida Console',8,0,0,0,0,0,25+16+16,1,0,0,'Documento - Total letra',0,1);
+
+insert into tblactualizaciones(version,versionchk) values('ver 9037 rev 15','00903715');

@@ -1,0 +1,82 @@
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdadetalleskit` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdadetalleskit`(pidocumento int,piddetalle int,pconseries tinyint,ptipo int) RETURNS varchar(2000) CHARSET utf8
+BEGIN
+declare varminid int;
+declare varmaxid int;
+declare varidinventario int;
+declare varidventa int;
+declare vardetalles varchar(2000);
+set vardetalles='';
+if ptipo=0 then
+set varminid=ifnull((select min(iddetallekit) from tblventaskits where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(iddetallekit) from tblventaskits where iddetalle=piddetalle),0);
+
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n',convert((select cantidad from tblventaskits where iddetallekit=varminid limit 1) using utf8),' ',(select tblinventario.nombre from tblinventario inner join tblventaskits on tblventaskits.idinventario=tblinventario.idinventario where iddetallekit=varminid limit 1));
+if pconseries=1 then
+set varidinventario=(select idinventario from tblventaskits where iddetallekit=varminid);
+set varidventa=(select idventa from tblventaskits where iddetallekit=varminid);
+set vardetalles=concat(vardetalles,(select spdaseriesventa(varidinventario,varidventa)));
+end if;
+set varminid=ifnull((select min(iddetallekit) from tblventaskits where iddetalle=piddetalle and iddetallekit>varminid),0);
+
+end while;
+end if;
+
+
+if ptipo=1 then /*remision*/
+set varminid=ifnull((select min(iddetallekit) from tblventaskitsr where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(iddetallekit) from tblventaskitsr where iddetalle=piddetalle),0);
+
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n',convert((select cantidad from tblventaskitsr where iddetallekit=varminid limit 1) using utf8),' ',(select tblinventario.nombre from tblinventario inner join tblventaskitsr on tblventaskitsr.idinventario=tblinventario.idinventario where iddetallekit=varminid limit 1));
+/*if pconseries=1 then
+set varidinventario=(select idinventario from tblventaskitsr where iddetallekit=varminid);
+set varidventa=(select idventa from tblventaskitsr where iddetallekit=varminid);
+set vardetalles=concat(vardetalles,(select spdaseriesventa(varidinventario,varidventa)));
+end if;*/
+set varminid=ifnull((select min(iddetallekit) from tblventaskitsr where iddetalle=piddetalle and iddetallekit>varminid),0);
+
+end while;
+end if;
+
+if ptipo=2 then /*pedido*/
+set varminid=ifnull((select min(iddetallekit) from tblventaskitsp where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(iddetallekit) from tblventaskitsp where iddetalle=piddetalle),0);
+
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n',convert((select cantidad from tblventaskitsp where iddetallekit=varminid limit 1) using utf8),' ',(select tblinventario.nombre from tblinventario inner join tblventaskitsp on tblventaskitsp.idinventario=tblinventario.idinventario where iddetallekit=varminid limit 1));
+/*if pconseries=1 then
+set varidinventario=(select idinventario from tblventaskitsr where iddetallekit=varminid);
+set varidventa=(select idventa from tblventaskitsr where iddetallekit=varminid);
+set vardetalles=concat(vardetalles,(select spdaseriesventa(varidinventario,varidventa)));
+end if;*/
+set varminid=ifnull((select min(iddetallekit) from tblventaskitsp where iddetalle=piddetalle and iddetallekit>varminid),0);
+
+end while;
+end if;
+
+if ptipo=3 then /*cotizacion*/
+set varminid=ifnull((select min(iddetallekit) from tblventaskitsc where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(iddetallekit) from tblventaskitsc where iddetalle=piddetalle),0);
+
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n',convert((select cantidad from tblventaskitsc where iddetallekit=varminid limit 1) using utf8),' ',(select tblinventario.nombre from tblinventario inner join tblventaskitsc on tblventaskitsc.idinventario=tblinventario.idinventario where iddetallekit=varminid limit 1));
+/*if pconseries=1 then
+set varidinventario=(select idinventario from tblventaskitsr where iddetallekit=varminid);
+set varidventa=(select idventa from tblventaskitsr where iddetallekit=varminid);
+set vardetalles=concat(vardetalles,(select spdaseriesventa(varidinventario,varidventa)));
+end if;*/
+set varminid=ifnull((select min(iddetallekit) from tblventaskitsc where iddetalle=piddetalle and iddetallekit>varminid),0);
+
+end while;
+end if;
+
+return vardetalles;
+END $$
+
+DELIMITER ;
+
+insert into tblactualizaciones values('ver 9015 rev 4');

@@ -1,0 +1,13 @@
+CREATE TABLE `tblrepcajasmovimientos` (
+  `idmovimiento` INTEGER UNSIGNED NOT NULL,
+  `fecha` VARCHAR(10) NOT NULL,
+  `folio` INTEGER UNSIGNED NOT NULL,
+  `serie` VARCHAR(20) NOT NULL,
+  `estado` TINYINT UNSIGNED NOT NULL,
+  `descripcion` VARCHAR(2000) NOT NULL,
+  `precio` DOUBLE NOT NULL,
+  `tipo` TINYINT UNSIGNED NOT NULL,
+  `idcaja` INTEGER UNSIGNED NOT NULL,
+  `nombre` VARCHAR(150) NOT NULL
+)
+ENGINE = InnoDB;

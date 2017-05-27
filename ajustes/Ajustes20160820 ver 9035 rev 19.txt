@@ -1,0 +1,53 @@
+insert into tblnominasformasdepago(idnomina,idforma,cantidad) select idnomina,idforma,totalapagar from tblnominas where estado=3 or estado=4;
+insert into tblremisionesformasdepago(idremision,idforma,cantidad) select idremision,idforma,totalapagar from tblventasremisiones where estado=3 or estado=4;
+
+CREATE TABLE `tbldockardexf` (
+  `idmov` INTEGER UNSIGNED NOT NULL,
+  `tipo` TINYINT UNSIGNED NOT NULL,
+  `fecha` VARCHAR(10) NOT NULL,
+  `hora` VARCHAR(8) NOT NULL,
+  `movimiento` VARCHAR(45) NOT NULL,
+  `folio` VARCHAR(45) NOT NULL,
+  `importe` DOUBLE NOT NULL,
+  `idventa` INTEGER UNSIGNED NOT NULL,
+  CONSTRAINT `FK_tbldockardexf_1` FOREIGN KEY `FK_tbldockardexf_1` (`idventa`)
+    REFERENCES `tblventas` (`idventa`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tbldockardexr` (
+  `idmov` INTEGER UNSIGNED NOT NULL,
+  `tipo` TINYINT UNSIGNED NOT NULL,
+  `fecha` VARCHAR(10) NOT NULL,
+  `hora` VARCHAR(8) NOT NULL,
+  `movimiento` VARCHAR(45) NOT NULL,
+  `folio` VARCHAR(45) NOT NULL,
+  `importe` DOUBLE NOT NULL,
+  `idremision` INTEGER UNSIGNED NOT NULL,
+  CONSTRAINT `FK_tbldockardexr_1` FOREIGN KEY `FK_tbldockardexr_1` (`idremision`)
+    REFERENCES `tblventasremisiones` (`idremision`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tbldockardexc` (
+  `idmov` INTEGER UNSIGNED NOT NULL,
+  `tipo` TINYINT UNSIGNED NOT NULL,
+  `fecha` VARCHAR(10) NOT NULL,
+  `hora` VARCHAR(8) NOT NULL,
+  `movimiento` VARCHAR(45) NOT NULL,
+  `folio` VARCHAR(45) NOT NULL,
+  `importe` DOUBLE NOT NULL,
+  `idcompra` INTEGER UNSIGNED NOT NULL,
+  CONSTRAINT `FK_tbldockardexc_1` FOREIGN KEY `FK_tbldockardexc_1` (`idcompra`)
+    REFERENCES `tblcompras` (`idcompra`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+insert into tblformasdepagosat values(1000,'NA');
+
+insert into tblactualizaciones(version,versionchk) values('ver 9035 rev 19','00903519');

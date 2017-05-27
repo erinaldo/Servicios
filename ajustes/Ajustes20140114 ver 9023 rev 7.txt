@@ -1,0 +1,34 @@
+ALTER TABLE `tblempeniosdetalles` ADD CONSTRAINT `FK_tblempeniosdetalles_1` FOREIGN KEY `FK_tblempeniosdetalles_1` (`idMovimiento`)
+    REFERENCES `tblempenios` (`idmovimiento`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblgastosdetalles` ADD CONSTRAINT `FK_tblgastosdetalles_1` FOREIGN KEY `FK_tblgastosdetalles_1` (`idMovimiento`)
+    REFERENCES `tblgastos` (`idmovimiento`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblventasinventario` ADD COLUMN `predial` VARCHAR(45) NOT NULL AFTER `IVARetenido`;
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(21,304,'Predial:','predial',100,20,'Lucida Console',8,0,0,1,0,0,0,1,0,0,'Artículos - Predial',1,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(21,304,'Predial:','predial',100,20,'Lucida Console',8,0,0,1,0,0,16,1,0,0,'Artículos - Predial',1,4);
+
+ALTER TABLE `tblopciones` ADD COLUMN `mostrarpredial` TINYINT UNSIGNED NOT NULL AFTER `correocontenido`;
+
+CREATE TABLE `tblgastosclasificacion2` (
+  `idclasificacion` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(150) NOT NULL,
+  `idclassuperior` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`idclasificacion`),
+  CONSTRAINT `FK_tblgastosclasificacion2_1` FOREIGN KEY `FK_tblgastosclasificacion2_1` (`idclassuperior`)
+    REFERENCES `tblgastosclasificacion` (`idClasificacion`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+
+ALTER TABLE `tblgastosdetalles` ADD COLUMN `idclasificacion2` INTEGER UNSIGNED NOT NULL AFTER `esSalario`;
+
+
+insert into tblactualizaciones(version) values('ver 9023 rev 7');

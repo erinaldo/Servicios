@@ -1,0 +1,4 @@
+ALTER TABLE `db_services`.`tblproductos` ADD COLUMN `costo` DOUBLE NOT NULL AFTER `iva`;
+
+update tblproductos set costo=0
+

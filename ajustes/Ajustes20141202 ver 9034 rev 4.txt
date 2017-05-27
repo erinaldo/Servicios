@@ -1,0 +1,48 @@
+ALTER TABLE `tblinventarioprecios` MODIFY COLUMN `utilidad` DOUBLE NOT NULL,
+ MODIFY COLUMN `descuentoprecio` DOUBLE NOT NULL;
+
+ALTER TABLE `tblccontables` MODIFY COLUMN `descontinuada` VARCHAR(200) NOT NULL;
+
+ALTER TABLE `tblccontables` ADD COLUMN `idcuentam` INTEGER UNSIGNED NOT NULL AFTER `descontinuada`;
+
+update tblccontables set descontinuada='';
+
+ALTER TABLE `tblclientesviejossaldos` ADD COLUMN `idSucursal` INTEGER UNSIGNED NOT NULL DEFAULT 1 AFTER `totalapagar`;
+ALTER TABLE `tblclientesrepdeudas` ADD COLUMN `idsucursal` INTEGER UNSIGNED NOT NULL DEFAULT 1 AFTER `estado`;
+ALTER TABLE `tblclientesviejossaldosex` ADD COLUMN `idsucursal` INTEGER UNSIGNED NOT NULL DEFAULT 1 AFTER `totalapagar`;
+ALTER TABLE `tblrepventasporsurtir` ADD COLUMN `idSucursal` INTEGER UNSIGNED NOT NULL AFTER `tipo`;
+
+DROP TABLE IF EXISTS `tblccontablestemp`;
+CREATE TABLE  `tblccontablestemp` (
+  `idCContable` int(10) unsigned,
+  `Cuenta` varchar(5) DEFAULT NULL,
+  `N2` varchar(5) DEFAULT NULL,
+  `N3` varchar(5) DEFAULT NULL,
+  `N4` varchar(5) DEFAULT NULL,
+  `Descripcion` varchar(65) DEFAULT NULL,
+  `Nivel` int(10) unsigned DEFAULT NULL,
+  `CuentaComp` varchar(35) DEFAULT NULL,
+  `Tipo` int(10) unsigned DEFAULT NULL,
+  `Naturaleza` int(10) unsigned DEFAULT NULL,
+  `N5` varchar(5) DEFAULT NULL,
+  `fecha` varchar(11) NOT NULL,
+  `cmb1` int(10) unsigned NOT NULL,
+  `cmb2` int(10) NOT NULL,
+  `idContable` int(10) unsigned NOT NULL,
+  `DIOT` int(10) unsigned NOT NULL,
+  `idUsuarioAlta` int(10) unsigned NOT NULL DEFAULT '1000',
+  `fechaAlta` varchar(45) NOT NULL,
+  `horaAlta` varchar(45) NOT NULL,
+  `idUsuarioCambio` int(10) unsigned NOT NULL DEFAULT '1000',
+  `fechaCambio` varchar(45) NOT NULL,
+  `horaCambio` varchar(45) NOT NULL,
+  `descontinuada` varchar(200) NOT NULL,
+  `idcuentam` int(10) unsigned NOT NULL
+) ENGINE=InnoDB default charset=utf8;
+
+insert into tblccontablestemp select * from tblccontables;
+update tblccontables a set idcuentam=(select i.idccontable from tblccontablestemp i where i.cuenta=a.cuenta and i.n2='' and i.n3='' and i.n4='' and i.n5='' limit 1);
+DROP TABLE IF EXISTS `tblccontablestemp`;
+
+
+insert into tblactualizaciones(version,versionchk) values('ver 9034 rev 4','00903404');

@@ -1,0 +1,3 @@
+insert into db_servicesnue2.tbldocumentosclientes(folio,idcliente,fecha,credito,totalapagar,hora,estado,serie,idsucursal,tipodecambio,fechacancelado,horacancelado,folioreferencia,idmoneda,seriereferencia,idforma,tiposaldo)
+select vr.idremision,vr.idcliente,vr.fecha,0,if(vr.idmoneda=2,vr.total,vr.total*vr.tipodecambio)-if(vr.idmoneda=2,vr.credito,vr.credito*vr.tipodecambio),vr.hora,3,'',vr.idsucursal,vr.tipodecambio,'','',vr.folio,2,vr.serie,2,1
+from db_services.tblventasremisiones as vr inner join db_services.tblclientes on vr.idcliente=tblclientes.idcliente inner join db_services.tblformasdepagoremisiones on tblformasdepagoremisiones.idforma=vr.idforma where vr.estado=3 and tblformasdepagoremisiones.tipo=3 and round(vr.credito,2)<round(vr.totalapagar,2)

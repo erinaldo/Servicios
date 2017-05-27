@@ -1,0 +1,147 @@
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdaivaproporcionalnc` $$
+CREATE FUNCTION `spdaivaproporcionalnc` (pidcargo int,pcantidad double) RETURNS DOUBLE
+BEGIN
+
+declare vtiva double;
+declare vsubtotal double;
+declare vresultado double;
+
+set vsubtotal=(select sum(precio) from tblnotasdecargodetalles where idcargo=pidcargo);
+set vtiva=(select sum(precio*iva/100) from tblnotasdecargodetalles where idcargo=pidcargo);
+
+set vresultado=pcantidad*vtiva/(vsubtotal+vtiva);
+
+return ifnull(vresultado,0);
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdaivaproporcionalnccompras` $$
+CREATE FUNCTION `spdaivaproporcionalnccompras` (pidcargo int,pcantidad double) RETURNS DOUBLE
+BEGIN
+
+declare vtiva double;
+declare vsubtotal double;
+declare vresultado double;
+
+set vsubtotal=(select sum(precio) from tblnotasdecargodetallesc where idcargo=pidcargo);
+set vtiva=(select sum(precio*iva/100) from tblnotasdecargodetallesc where idcargo=pidcargo);
+
+set vresultado=pcantidad*vtiva/(vsubtotal+vtiva);
+
+return ifnull(vresultado,0);
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdaivaproporcionalf` $$
+CREATE FUNCTION `spdaivaproporcionalf` (pidventa int,pcantidad double,ptipo tinyint) RETURNS DOUBLE
+BEGIN
+
+declare vtiva double;
+declare vsubtotal double;
+declare vtieps double;
+declare vivarett double;
+declare vivaret double;
+declare visr double;
+declare visrt double;
+declare vresultado double;
+
+set vsubtotal=(select sum(precio) from tblventasinventario where idventa=pidventa);
+set vtiva=(select sum(precio*iva/100) from tblventasinventario where idventa=pidventa);
+set vtieps=(select sum(precio*ieps/100) from tblventasinventario where idventa=pidventa);
+set vivarett=(select sum(precio*ivaretenido/100) from tblventasinventario where idventa=pidventa);
+set vivaret=(select ivaretenido from tblventas where idventa=pidventa);
+set visr=(select isr from tblventas where idventa=pidventa);
+set vivarett=vivarett+(vsubtotal*vivaret/100);
+set visrt=vsubtotal*visr/100;
+
+if ptipo=0 then
+set vresultado=pcantidad*vtiva/(vsubtotal+vtiva);
+end if;
+if ptipo=1 then
+set vresultado=pcantidad*vtieps/(vsubtotal+vtieps);
+end if;
+if ptipo=2 then
+set vresultado=pcantidad*vivarett/(vsubtotal-vivarett);
+end if;
+if ptipo=3 then
+set vresultado=pcantidad*visrt/(vsubtotal-visrt);
+end if;
+
+return ifnull(vresultado,0);
+END $$
+
+DELIMITER ;
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL DEPOSITO','TDEP',4);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL POR PAGO','TXP',4);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IVA','TIVA',4);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IEPS','TIEPS',4);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IVA RETENIDO','TIVAR',4);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL ISR','TISR',4);
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL DEPOSITO','TDEP',5);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL POR PAGO','TXP',5);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IVA','TIVA',5);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IEPS','TIEPS',5);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IVA RETENIDO','TIVAR',5);
+
+ALTER TABLE `tblccontables` CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+ALTER TABLE `tblccontables` MODIFY COLUMN `Cuenta` VARCHAR(5) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+ MODIFY COLUMN `N2` VARCHAR(5) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+ MODIFY COLUMN `N3` VARCHAR(5) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+ MODIFY COLUMN `N4` VARCHAR(5) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+ MODIFY COLUMN `Descripcion` VARCHAR(65) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+ MODIFY COLUMN `CuentaComp` VARCHAR(35) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+ MODIFY COLUMN `N5` VARCHAR(5) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+ MODIFY COLUMN `fecha` VARCHAR(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdaivaproporcionalfcompras` $$
+CREATE FUNCTION `spdaivaproporcionalfcompras` (pidventa int,pcantidad double,ptipo tinyint) RETURNS DOUBLE
+BEGIN
+
+declare vtiva double;
+declare vsubtotal double;
+declare vtieps double;
+declare vivarett double;
+declare vivaret double;
+declare visr double;
+declare visrt double;
+declare vresultado double;
+
+set vsubtotal=(select sum(precio) from tblcomprasdetalles where idcompra=pidventa);
+set vtiva=(select sum(precio*iva/100) from tblcomprasdetalles where idcompra=pidventa);
+set vtieps=(select sum(precio*ieps/100) from tblcomprasdetalles where idcompra=pidventa);
+set vivarett=(select sum(precio*ivaretenido/100) from tblcomprasdetalles where idcompra=pidventa);
+
+if ptipo=0 then
+set vresultado=pcantidad*vtiva/(vsubtotal+vtiva);
+end if;
+if ptipo=1 then
+set vresultado=pcantidad*vtieps/(vsubtotal+vtieps);
+end if;
+if ptipo=2 then
+set vresultado=pcantidad*vivarett/(vsubtotal-vivarett);
+end if;
+
+
+return ifnull(vresultado,0);
+END $$
+
+DELIMITER ;
+
+
+insert into tblactualizaciones(version) values('ver 9032 rev 14');
+

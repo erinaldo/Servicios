@@ -1,0 +1,7 @@
+update tblimpresionesnodos set tipo=1 where datapropertyname='total deducciones';
+
+ALTER TABLE `tblsemillasboletas` ADD COLUMN `precio` DOUBLE DEFAULT 0 AFTER `iddetalle`,
+ ADD COLUMN `tara` DOUBLE DEFAULT 0 AFTER `precio`;
+
+insert into tblactualizaciones(version) values('ver 9032 rev 8');
+

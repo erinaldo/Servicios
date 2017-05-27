@@ -1,0 +1,6 @@
+159 460 725
+5185
+
+update tblinventarioprecios inner join tblinventario on tblinventarioprecios.idinventario=tblinventario.idinventario
+set tblinventarioprecios.precio=vcosto*(1+tblinventarioprecios.utilidad/100)
+where tblinventarioprecios.idinventario=pidinventario;

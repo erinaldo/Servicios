@@ -1,0 +1,6 @@
+ALTER TABLE `tblsucursales` ADD COLUMN `idalmacenc` INTEGER UNSIGNED NOT NULL AFTER `curp`,
+ ADD COLUMN `idalmacenm` INTEGER UNSIGNED NOT NULL AFTER `idalmacenc`;
+
+update tblsucursales set idalmacenc=idalmacen,idalmacenm=idalmacen;
+
+insert into tblactualizaciones(version) values('ver 9024 rev 8');

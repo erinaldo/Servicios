@@ -1,0 +1,34 @@
+DROP TABLE IF EXISTS `tblsiabonos`;
+CREATE TABLE  `tblsiabonos` (
+  `Cuenta` varchar(45) NOT NULL,
+  `N2` varchar(45) NOT NULL,
+  `N3` varchar(45) NOT NULL,
+  `N4` varchar(45) NOT NULL,
+  `N5` varchar(45) NOT NULL,
+  `total` varchar(45) NOT NULL,
+  KEY `Cuenta` (`Cuenta`,`N2`,`N3`,`N4`,`N5`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tblsicargos`;
+CREATE TABLE  `tblsicargos` (
+  `Cuenta` varchar(45) NOT NULL,
+  `N2` varchar(45) NOT NULL,
+  `N3` varchar(45) NOT NULL,
+  `N4` varchar(45) NOT NULL,
+  `N5` varchar(45) NOT NULL,
+  `total` varchar(45) NOT NULL,
+  KEY `Cuenta` (`Cuenta`,`N2`,`N3`,`N4`,`N5`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tblsisi`;
+CREATE TABLE  `tblsisi` (
+  `cuenta` varchar(45) NOT NULL,
+  `N2` varchar(45) NOT NULL,
+  `N3` varchar(45) NOT NULL,
+  `N4` varchar(45) NOT NULL,
+  `N5` varchar(45) NOT NULL,
+  `total` varchar(45) NOT NULL,
+  KEY `Cuenta` (`cuenta`,`N2`,`N3`,`N4`,`N5`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into tblactualizaciones(version) values('ver 9027 rev 20');

@@ -1,0 +1,13 @@
+delete from tblimpresionesnodos where (datapropertyname='ieps' or datapropertyname='ivaRetenido') and (tipo=0 or tipo=2) and (documento=3 or documento=19);
+update tblimpresionesnodos set nombre='Artículo - IEPS',clasificacion=4 where datapropertyname='ieps' and (documento=0 or documento=16 or documento=3 or documento=19);
+update tblimpresionesnodos set nombre='Artículo - IVA Retenido',clasificacion=4 where datapropertyname='ivaRetenido' and (documento=0 or documento=16 or documento=3 or documento=19);
+update tblimpresionesnodos set tipo=1 where datapropertyname='importe' and (documento=0 or documento=16 or documento=3 or documento=19);
+
+update tblimpresionesnodos set tipo=1 where datapropertyname='descuentocant' and (documento=0 or documento=16 or documento=3 or documento=19);
+update tblimpresionesnodos set tipo=1 where datapropertyname='preciosindesc' and (documento=0 or documento=16 or documento=3 or documento=19);
+update tblimpresionesnodos set tipo=1 where datapropertyname='tipocantidad' and (documento=0 or documento=16 or documento=3 or documento=19);
+update tblimpresionesnodos set tipo=1 where datapropertyname='clave' and (documento=0 or documento=16 or documento=3 or documento=19);
+update tblimpresionesnodos set tipo=1 where datapropertyname='importe' and (documento=0 or documento=16 or documento=3 or documento=19);
+
+
+insert into tblactualizaciones(version) values('ver 9024 rev 10');

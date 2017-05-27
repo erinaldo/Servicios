@@ -1,0 +1,47 @@
+CREATE TABLE `tblContabilidadConf` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nNiv1` INTEGER UNSIGNED NOT NULL,
+  `nNiv2` INTEGER UNSIGNED NOT NULL,
+  `nNiv3` INTEGER UNSIGNED NOT NULL,
+  `nNiv4` INTEGER UNSIGNED NOT NULL,
+  `nNiv5` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+)
+ENGINE = InnoDB;
+ALTER TABLE `tblcontabilidadconf` ADD COLUMN `anio` VARCHAR(4) NOT NULL AFTER `nNiv5`;
+ALTER TABLE `tblcontabilidadconf` ADD COLUMN `passPeriodo` VARCHAR(45) NOT NULL AFTER `anio`;
+
+
+insert into tblcontabilidadconf (nNiv1,nNiv2,nNiv3,nNiv4,nNiv5,anio,passPeriodo) values(4,4,4,4,4,'2014','X');
+
+ALTER TABLE `tblccontables` ADD COLUMN `DIOT` INTEGER UNSIGNED NOT NULL AFTER `idContable`;
+
+
+ALTER TABLE `tblproveedores` ADD COLUMN `curp` VARCHAR(45) NOT NULL AFTER `limitedecredito`,
+ ADD COLUMN `tipo` INTEGER UNSIGNED NOT NULL AFTER `curp`;
+
+
+ALTER TABLE `tblpolizasdetalles` ADD COLUMN `factura` VARCHAR(45) NOT NULL AFTER `idCuenta`,
+ ADD COLUMN `idProveedor` INTEGER UNSIGNED NOT NULL AFTER `factura`,
+ ADD COLUMN `iva` VARCHAR(3) NOT NULL AFTER `idProveedor`,
+ ADD COLUMN `concepto` VARCHAR(60) NOT NULL AFTER `iva`,
+ ADD COLUMN `esDIOT` INTEGER UNSIGNED NOT NULL AFTER `concepto`;
+
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho)values(500,300,41,1,40,4,0,864);
+delete from tblimpresionesnodos where documento=41 and idsucursal=1;
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(32,37,'Póliza: ','tipoPoliza',100,20,'Microsoft Sans Serif',7,0,0,0,0,1,41,1,0,1,'Tipo poliza',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(32,60,'Fecha','fechaPoliza',150,20,'Microsoft Sans Serif',7,0,0,0,0,1,41,1,0,0,'Fecha poliza',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(32,83,'Concepto: ','conceptoPoliza',600,20,'Microsoft Sans Serif',7,0,0,0,0,1,41,1,0,1,'Concepto poliza',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(32,107,'Beneficiario: ','BeneficiarioPoliza',600,20,'Microsoft Sans Serif',7,0,0,0,0,1,41,1,0,1,'Beneficiario poliza',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(658,403,'Total Cargos','totalCargos',100,20,'Microsoft Sans Serif',7,0,0,0,0,1,41,1,0,0,'Total Cargos',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(760,403,'Total Abonos','totalAbonos',100,20,'Microsoft Sans Serif',7,0,0,0,0,1,41,1,0,0,'Total Abonos',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(0,205,'Cuenta','CuentaPoliza',200,20,'Microsoft Sans Serif',7,0,0,1,1,1,41,1,0,0,'Cuenta',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(202,205,'Descripcion','DescripcionPoliza',455,20,'Microsoft Sans Serif',7,0,0,1,1,1,41,1,0,0,'Descripcion',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(658,205,'Cargo','cargoPoliza',100,20,'Microsoft Sans Serif',7,0,0,1,1,1,41,1,0,0,'Cargo',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(760,205,'Abono','abonoPoliza',100,20,'Microsoft Sans Serif',7,0,0,1,1,1,41,1,0,0,'Abono',0,0);
+
+
+
+insert into tblactualizaciones(version) values('ver 9025 rev 19');
+

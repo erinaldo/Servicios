@@ -1,0 +1,91 @@
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IMPUESTOS LOCALES TRAS.','TILT',0,'DA EL TOTAL DE LOS IMPUESTOS LOCALES TRASLADOS CONTADO+CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IMPUESTOS LOCALES RET.','TILR',0,'DA EL TOTAL DE LOS IMPUESTOS LOCALES RETENIDOS CONTADO+CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IMPUESTOS LOCALES CONTADO TRAS.','TILTCon',0,'DA EL TOTAL DE LOS IMPUESTOS LOCALES TRASLADADOS CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IMPUESTOS LOCALES CONTADO RET.','TILRCon',0,'DA EL TOTAL DE LOS IMPUESTOS LOCALES RETENIDOS CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IMPUESTOS LOCALES CRÉDITO TRAS.','TILTCr',0,'DA EL TOTAL DE LOS IMPUESTOS LOCALES TRASLADADOS CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IMPUESTOS LOCALES CRÉDITO RET.','TILRCr',0,'DA EL TOTAL DE LOS IMPUESTOS LOCALES RETENIDOS CRÉDITO.');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IMP. LOCALES TRAS POR FAC','TILTxf',0,'DA EL TOTAL DE LOS IMPUESTOS LOCALES TRASLADOS CONTADO+CRÉDITO POR FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IMP. LOCALES RET POR FAC','TILRxf',0,'DA EL TOTAL DE LOS IMPUESTOS LOCALES RETENIDOS CONTADO+CRÉDITO POR FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IMP. LOCALES CONTADO TRAS POR FAC','TILTConxf',0,'DA EL TOTAL DE LOS IMPUESTOS LOCALES TRASLADADOS CONTADO POR FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IMP. LOCALES CONTADO RET POR FAC','TILRConxf',0,'DA EL TOTAL DE LOS IMPUESTOS LOCALES RETENIDOS CONTADO POR FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IMP. LOCALES CRÉDITO TRAS POR FAC','TILTCrxf',0,'DA EL TOTAL DE LOS IMPUESTOS LOCALES TRASLADADOS CRÉDITO POR FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IMP. LOCALES CRÉDITO RET POR FAC','TILRCrxf',0,'DA EL TOTAL DE LOS IMPUESTOS LOCALES RETENIDOS CRÉDITO POR FACTURA.');
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(246,10,'Usuario','usuario',500,20,'Arial',10,1,0,0,0,0,7,1,0,0,'Documento - Usuario',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(246,10,'Usuario','usuario',500,20,'Arial',10,1,0,0,0,0,7+16,1,0,0,'Documento - Usuario',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(246,10,'Usuario','usuario',500,20,'Arial',10,1,0,0,0,0,14,1,0,0,'Documento - Usuario',0,1);
+
+ALTER TABLE `tblopciones2` ADD COLUMN `pvconfirmarcobrar` TINYINT UNSIGNED NOT NULL AFTER `ventascorteremtodas`;
+
+delete from tblimpresionesnodos where documento=30 and idsucursal=1;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(44,24,'Empresa','nombrefiscal',500,20,'Arial',10,0,0,0,0,1,30,1,0,0,'Documento - Empresa',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(44,46,'Concepto:','concepto',300,20,'Arial',10,0,0,0,0,1,30,1,0,1,'Documento - Concepto',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(44,68,'Serie:','serie',60,20,'Arial',10,0,0,0,0,1,30,1,0,1,'Documento - Serie',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(44,90,'Folio:','folio',100,20,'Arial',10,0,0,0,0,1,30,1,0,1,'Documento - Folio',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(44,113,'Fecha:','fecha',130,20,'Arial',10,0,0,0,0,1,30,1,0,1,'Documento - Fecha',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(177,113,'Hora','hora',100,20,'Arial',10,0,0,0,0,1,30,1,0,0,'Documento - Hora',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(13,180,'Clave','clave',130,20,'Lucida Console',8,0,0,1,0,1,30,1,0,0,'Artículo - Código',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(148,180,'Descripción','descripcion',200,100,'Lucida Console',8,0,0,1,0,1,30,1,0,0,'Artículos - Descripción',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(341,180,'Cantidad','cantidad',90,20,'Lucida Console',8,0,0,1,1,1,30,1,0,0,'Artículos - Cantidad',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(417,180,'Tipo','tipocantidad',33,20,'Lucida Console',8,0,0,1,0,1,30,1,0,0,'Artículos - Tipo Cantidad',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(443,180,'Costo Unitario','preciou',112,20,'Lucida Console',8,0,0,1,1,1,30,1,0,0,'Artículos - Costo Unitario',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(549,180,'Importe','importe',90,20,'Lucida Console',8,0,0,1,1,1,30,1,0,0,'Artículos - Importe',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(657,180,'Almacen1','almacen1',100,20,'Lucida Console',8,0,0,1,0,1,30,1,0,0,'Artículos - Almacen 1',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(760,180,'Almacen2','almacen2',100,20,'Lucida Console',8,0,0,1,0,1,30,1,0,0,'Artículos - Almacen 2',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(7,848,'Comentario','comentario',800,100,'Lucida Console',8,0,0,0,0,1,30,1,0,0,'Documento - Comentario',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(664,775,'Total','total',120,20,'Lucida Console',8,0,0,0,1,1,30,1,0,1,'Documento - Total',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(16,145,'Código','et01',100,20,'Lucida Console',8,0,0,0,0,1,30,1,2,0,'Etiqueta01',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(155,145,'Descripción','et02',100,20,'Lucida Console',8,0,0,0,0,1,30,1,2,0,'Etiqueta02',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(357,145,'Cantidad','et03',100,20,'Lucida Console',8,0,0,0,0,1,30,1,2,0,'Etiqueta03',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(464,145,'Costo U.','et04',90,20,'Lucida Console',8,0,0,0,0,1,30,1,2,0,'Etiqueta04',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(557,145,'Importe','et05',80,20,'Lucida Console',8,0,0,0,0,1,30,1,2,0,'Etiqueta05',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(657,145,'Almacen','et06',100,20,'Lucida Console',8,0,0,0,0,1,30,1,2,0,'Etiqueta06',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(762,145,'Almacen Dest.','et07',100,20,'Lucida Console',8,0,0,0,0,1,30,1,2,0,'Etiqueta07',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(3,167,'Línea01','ln01',864,2,'Arial',10,0,0,0,0,1,30,1,1,0,'Línea01',0,8);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(324,492,'Mensaje Cancelado','cancelado',170,20,'Arial',18,0,0,1,0,1,30,1,0,0,'Documento - Mensaje Cancelado',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(129,70,'Referencia: ','folioref',300,20,'Lucida Console',8,0,0,0,0,1,30,1,0,0,'Documento - Folio Referencia',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(302,102,'Cliente: ','clienteref',300,20,'Lucida Console',8,0,0,0,0,1,30,1,0,1,'Documento - Nombre Cliente',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(358,48,'Usuario:','usuario',500,20,'Arial',10,1,0,0,0,1,30,1,0,1,'Documento - Usuario',0,1);
+
+ALTER TABLE `tblcajas` ADD COLUMN `maximo` DOUBLE NOT NULL AFTER `horaCambio`;
+
+ALTER TABLE `tblformasdepago` ADD COLUMN `parabancos` TINYINT UNSIGNED NOT NULL AFTER `clavesat`;
+update tblformasdepago set parabancos=1 where idforma>2 and clavesat<>99;
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA GRAVABLE.','TSIG',0,'DA EL TOTAL SIN IVA GRAVABLE CONTADO+CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA NO GRAVABLE.','TSING',0,'DA EL TOTAL SIN IVA NO GRAVABLE CONTADO+CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA GRAVABLE CONTADO.','TSIGCon',0,'DA EL TOTAL SIN IVA GRAVABLE DE LAS VENTAS DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA GRAVABLE CRÉDITO.','TSIGCr',0,'DA EL TOTAL SIN IVA GRAVABLE DE LAS VENTAS DE CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA NO GRAVABLE CONTADO.','TSINGCon',0,'DA EL TOTAL SIN IVA NO GRAVABLE DE LAS VENTAS DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA NO GRAVABLE CRÉDITO.','TSINGCr',0,'DA EL TOTAL SIN IVA NO GRAVABLE DE LAS VENTAS DE CRÉDITO.');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA GRAVABLE POR FAC.','TSIGnetoxf',0,'DA EL TOTAL SIN IVA GRAVABLE CONTADO+CRÉDITO POR FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA NO GRAVABLE POR FAC.','TSINGnetoxf',0,'DA EL TOTAL SIN IVA NO GRAVABLE CONTADO+CRÉDITO POR FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA GRAVABLE CONTADO POR FAC.','TSIGConxf',0,'DA EL TOTAL SIN IVA GRAVABLE DE LAS VENTAS DE CONTADO POR FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA GRAVABLE CRÉDITO POR FAC.','TSIGCrxf',0,'DA EL TOTAL SIN IVA GRAVABLE DE LAS VENTAS DE CRÉDITO POR FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA NO GRAVABLE CONTADO POR FAC.','TSINGConxf',0,'DA EL TOTAL SIN IVA NO GRAVABLE DE LAS VENTAS DE CONTADO POR FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA NO GRAVABLE CRÉDITO POR FAC.','TSINGCrxf',0,'DA EL TOTAL SIN IVA NO GRAVABLE DE LAS VENTAS DE CRÉDITO POR FACTURA.');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA GRAVABLE.','TSIG',1,'DA EL TOTAL SIN IVA GRAVABLE CONTADO+CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA NO GRAVABLE.','TSING',1,'DA EL TOTAL SIN IVA NO GRAVABLE CONTADO+CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA GRAVABLE CONTADO.','TSIGCon',1,'DA EL TOTAL SIN IVA GRAVABLE DE LAS COMPRAS DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA GRAVABLE CRÉDITO.','TSIGCr',1,'DA EL TOTAL SIN IVA GRAVABLE DE LAS COMPRAS DE CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA NO GRAVABLE CONTADO.','TSINGCon',1,'DA EL TOTAL SIN IVA NO GRAVABLE DE LAS COMPRAS DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA NO GRAVABLE CRÉDITO.','TSINGCr',1,'DA EL TOTAL SIN IVA NO GRAVABLE DE LAS COMPRAS DE CRÉDITO.');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA GRAVABLE POR FAC.','TSIGnetoxf',1,'DA EL TOTAL SIN IVA GRAVABLE CONTADO+CRÉDITO POR FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA NO GRAVABLE POR FAC.','TSINGnetoxf',1,'DA EL TOTAL SIN IVA NO GRAVABLE CONTADO+CRÉDITO POR FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA GRAVABLE CONTADO POR FAC.','TSIGConxf',1,'DA EL TOTAL SIN IVA GRAVABLE DE LAS COMPRAS DE CONTADO POR FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA GRAVABLE CRÉDITO POR FAC.','TSIGCrxf',1,'DA EL TOTAL SIN IVA GRAVABLE DE LAS COMPRAS DE CRÉDITO POR FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA NO GRAVABLE CONTADO POR FAC.','TSINGConxf',1,'DA EL TOTAL SIN IVA NO GRAVABLE DE LAS COMPRAS DE CONTADO POR FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA NO GRAVABLE CRÉDITO POR FAC.','TSINGCrxf',1,'DA EL TOTAL SIN IVA NO GRAVABLE DE LAS COMPRAS DE CRÉDITO POR FACTURA.');
+
+ALTER TABLE `tblproveedores` ADD COLUMN `isr` DOUBLE NOT NULL AFTER `idcuenta4`;
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL ISR.','TISR',5,'SUMA DEL TOTAL DE ISR.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL ISR DESGLOSADO SIN LIGAR.','TISRXRetSL',5,'DA EL TOTAL DE ISR POR CADA PAGO QUE NO ESTÁ LIGADO.');
+
+ALTER TABLE `tblinventario` ADD COLUMN `restaurante` TINYINT UNSIGNED NOT NULL AFTER `horaCambio`;
+
+insert into tblactualizaciones(version,versionchk) values('ver 9036 rev 7','00903607');

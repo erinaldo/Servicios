@@ -1,0 +1,22 @@
+ALTER TABLE `db_services`.`tblopciones` ADD COLUMN `paccfdi` TINYINT UNSIGNED NOT NULL AFTER `direcciontimbrado`;
+
+
+ALTER TABLE `db_services`.`tblopciones` ADD COLUMN `usuariofaccom` VARCHAR(200) NOT NULL AFTER `paccfdi`,
+ ADD COLUMN `passfaccom` VARCHAR(45) NOT NULL AFTER `usuariofaccom`;
+update tblopciones set paccfdi=0,usuariofaccom='',passfaccom=''
+
+
+ALTER TABLE `db_services`.`tblcomprascotizacionesb` MODIFY COLUMN `folio` INTEGER UNSIGNED NOT NULL,
+ ADD COLUMN `serie` VARCHAR(45) NOT NULL AFTER `idsucursal`;
+
+ALTER TABLE `db_services`.`tblcompraspedidosdetalles`
+ DROP FOREIGN KEY `FK_tblcompraspedidosdetalles_3`;
+
+ALTER TABLE `db_services`.`tblcompraspedidosdetalles` ADD CONSTRAINT `FK_tblcompraspedidosdetalles_3` FOREIGN KEY `FK_tblcompraspedidosdetalles_3` (`idpedido`)
+    REFERENCES `tblcompraspedidos` (`idpedido`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `db_services`.`tblcompraspedidos` MODIFY COLUMN `folio` INTEGER UNSIGNED NOT NULL,
+ ADD COLUMN `serie` VARCHAR(45) NOT NULL AFTER `folio`;
+

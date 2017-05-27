@@ -1,0 +1,9 @@
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdasaldoafavor` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdasaldoafavor`(pidcliente int) RETURNS double
+BEGIN
+return ifnull((select sum(precio*(1+tblventasinventario.iva/100)) from tblventasinventario inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblventas on tblventas.idventa=tblventasinventario.idventa where tblinventario.esamortizacion=1 and tblventas.estado=3 and tblventas.idcliente=pidcliente),0)+ifnull((select sum(precio*(1+tblventasremisionesinventario.iva/100)) from tblventasremisionesinventario inner join tblinventario on tblventasremisionesinventario.idinventario=tblinventario.idinventario inner join tblventasremisiones on tblventasremisiones.idremision=tblventasremisionesinventario.idremision where tblinventario.esamortizacion=1 and tblventasremisiones.estado=3 and tblventasremisiones.idcliente=pidcliente),0);
+END $$
+
+DELIMITER ;

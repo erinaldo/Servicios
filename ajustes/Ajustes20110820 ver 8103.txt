@@ -1,0 +1,44 @@
+tblventasinventario 
+add surtido double
+update tblventasinventario set surtido=cantidad
+
+tblventas
+comentariof varchar(500)
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spmodificainventarioi` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spmodificainventarioi`(pidinventario int,pidalmacen int,pcantidad double,pcantidadant double,pmodo tinyint) RETURNS int(11)
+BEGIN
+declare vcontenido double;
+declare vcantidad double;
+declare vesinventariable tinyint;
+declare checaalmacen tinyint;
+set vesinventariable=(select inventariable from tblinventario where idinventario=pidinventario);
+if vesinventariable=1 then
+set vcantidad=(select spdainventario(pidinventario,pidalmacen));
+set vcontenido=(select contenido from tblinventario where idinventario=pidinventario);
+if vcontenido<>0 then
+  if pmodo=0 then
+  set vcantidad=vcantidad+pcantidad/vcontenido;
+  end if;
+  if pmodo=1 then
+  set vcantidad=vcantidad-pcantidad/vcontenido;
+  end if;
+  if pmodo=2 then
+  set vcantidad=vcantidad-pcantidadant/vcontenido+pcantidad/vcontenido;
+  end if;
+  if pmodo=3 then
+  set vcantidad=vcantidad+pcantidadant/vcontenido-pcantidad/vcontenido;
+  end if;
+end if;
+set checaalmacen=(select ifnull((select 1 from tblalmacenesi where idinventario=pidinventario and idalmacen=pidalmacen),0));
+if checaalmacen=0 then
+insert into tblalmacenesi(idalmacen,idinventario,cantidad) values(pidalmacen,pidinventario,0);
+end if;
+update tblalmacenesi set cantidad=vcantidad where idinventario=pidinventario and idalmacen=pidalmacen;
+end if;
+return 1;
+END $$
+
+DELIMITER ;

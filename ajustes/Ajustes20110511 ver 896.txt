@@ -1,0 +1,16 @@
+tblopciones 
+direcciontimbrado varhcar(500)
+
+DROP TABLE IF EXISTS `db_services`.`tblventastimbrado`;
+CREATE TABLE  `db_services`.`tblventastimbrado` (
+  `idventa` int(10) unsigned NOT NULL,
+  `uuid` varchar(45) NOT NULL,
+  `fechatimbrado` varchar(45) NOT NULL,
+  `sellocfd` varchar(2000) NOT NULL,
+  `nocertificadosat` varchar(45) NOT NULL,
+  `sellosat` varchar(2000) NOT NULL,
+  KEY `FK_tblventastimbrado_1` (`idventa`),
+  CONSTRAINT `FK_tblventastimbrado_1` FOREIGN KEY (`idventa`) REFERENCES `tblventas` (`idventa`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+tblcompraspedidosdetalles cambiar llaveforanea a cascade

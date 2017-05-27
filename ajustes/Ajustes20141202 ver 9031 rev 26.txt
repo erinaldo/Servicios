@@ -1,0 +1,171 @@
+
+DROP TABLE IF EXISTS `tblsemillasboletas`;
+CREATE TABLE  `tblsemillasboletas` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `folio` int(10) unsigned NOT NULL,
+  `fecha` varchar(45) DEFAULT NULL,
+  `productor` int(10) unsigned DEFAULT NULL,
+  `chofer` varchar(45) DEFAULT NULL,
+  `producto` int(10) unsigned DEFAULT NULL,
+  `peso` double NOT NULL,
+  `humedad` double NOT NULL,
+  `impurezas` double NOT NULL,
+  `granoquebrado` double NOT NULL,
+  `granodanado` double NOT NULL,
+  `castigoHumedad` double NOT NULL,
+  `castigoImpurezas` double NOT NULL,
+  `castigoGranoD` double NOT NULL,
+  `castigoGranoQ` double NOT NULL,
+  `castigoTotal` double NOT NULL,
+  `pesoanalizado` double NOT NULL,
+  `hora` varchar(45) DEFAULT NULL,
+  `camion` varchar(45) DEFAULT NULL,
+  `placas` varchar(45) DEFAULT NULL,
+  `analista` varchar(45) DEFAULT NULL,
+  `pesador` varchar(45) DEFAULT NULL,
+  `descargo` varchar(45) DEFAULT NULL,
+  `portero` varchar(45) DEFAULT NULL,
+  `tipoBoleta` varchar(45) NOT NULL,
+  `bodega` int(10) unsigned NOT NULL,
+  `destino` varchar(45) DEFAULT NULL,
+  `variedad` varchar(45) DEFAULT NULL,
+  `porcentajeHumedad` double DEFAULT NULL,
+  `porcentajeImpurezas` double DEFAULT NULL,
+  `porcentajeGranoQ` double DEFAULT NULL,
+  `porcentajeGranoD` double DEFAULT NULL,
+  `liquidada` tinyint(1) DEFAULT NULL,
+  `importe` double DEFAULT '0',
+  `idventa` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `boletas_productores` (`productor`),
+  KEY `boletas_productos` (`producto`),
+  KEY `boletas_ventas` (`idventa`),
+  CONSTRAINT `boletas_productores` FOREIGN KEY (`productor`) REFERENCES `tblproveedores` (`idproveedor`),
+  CONSTRAINT `boletas_productos` FOREIGN KEY (`producto`) REFERENCES `tblinventario` (`idinventario`),
+  CONSTRAINT `boletas_ventas` FOREIGN KEY (`idventa`) REFERENCES `tblventasinventario` (`idventasinventario`)
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `tblsemillascomprobante`;
+CREATE TABLE  `tblsemillascomprobante` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idcliente` int(10) unsigned DEFAULT NULL,
+  `riego` int(10) unsigned DEFAULT NULL,
+  `superficie` double DEFAULT NULL,
+  `idfactura` int(10) unsigned DEFAULT NULL,
+  `numcomprobante` varchar(45) DEFAULT NULL,
+  `disponecontrato` tinyint(1) DEFAULT NULL,
+  `sociopersonamoral` varchar(45) DEFAULT NULL,
+  `volumen` double DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `comprobante_cliente` (`idcliente`),
+  KEY `comprobante_factura` (`idfactura`),
+  CONSTRAINT `comprobante_cliente` FOREIGN KEY (`idcliente`) REFERENCES `tblclientes` (`idcliente`),
+  CONSTRAINT `comprobante_factura` FOREIGN KEY (`idfactura`) REFERENCES `tblventas` (`idventa`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `tblsemillasconfiguracion`;
+CREATE TABLE  `tblsemillasconfiguracion` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `humedad` double NOT NULL,
+  `impurezas` double NOT NULL,
+  `granoDanado` double NOT NULL,
+  `granoQuebrado` double NOT NULL,
+  `editar` tinyint(1) NOT NULL DEFAULT '0',
+  `idProducto` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_configuracion_producto` (`idProducto`),
+  CONSTRAINT `fk_configuracion_producto` FOREIGN KEY (`idProducto`) REFERENCES `tblinventario` (`idinventario`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `tblsemillasliquidacion`;
+CREATE TABLE  `tblsemillasliquidacion` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `subtotal` double DEFAULT NULL,
+  `total` double DEFAULT NULL,
+  `idProveedor` int(10) unsigned DEFAULT NULL,
+  `folio` varchar(45) DEFAULT NULL,
+  `idventa` int(10) unsigned DEFAULT NULL,
+  `serie` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `liquidacion_proveedor` (`idProveedor`),
+  KEY `liquidacion_ventas` (`idventa`),
+  CONSTRAINT `liquidacion_proveedor` FOREIGN KEY (`idProveedor`) REFERENCES `tblproveedores` (`idproveedor`),
+  CONSTRAINT `liquidacion_ventas` FOREIGN KEY (`idventa`) REFERENCES `tblventas` (`idventa`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `tblsemillasliquidaciondetalle`;
+CREATE TABLE  `tblsemillasliquidaciondetalle` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idboleta` int(10) unsigned DEFAULT NULL,
+  `idliquidacion` int(10) unsigned DEFAULT NULL,
+  `importe` double DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `detalles_boletas` (`idboleta`),
+  KEY `detalles_liquidaciones` (`idliquidacion`),
+  CONSTRAINT `detalles_boletas` FOREIGN KEY (`idboleta`) REFERENCES `tblsemillasboletas` (`id`),
+  CONSTRAINT `detalles_liquidaciones` FOREIGN KEY (`idliquidacion`) REFERENCES `tblsemillasliquidacion` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tblsemillasanticipos`;
+CREATE TABLE  `tblsemillasanticipos` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `medio` varchar(45) DEFAULT NULL,
+  `importe` double DEFAULT NULL,
+  `idLiquidacion` int(10) unsigned DEFAULT NULL,
+  `idFactura` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `anticipos_liquidacion` (`idLiquidacion`),
+  KEY `anticipos_Factura` (`idFactura`),
+  CONSTRAINT `anticipos_Factura` FOREIGN KEY (`idFactura`) REFERENCES `tblventas` (`idventa`) ON UPDATE NO ACTION,
+  CONSTRAINT `anticipos_liquidacion` FOREIGN KEY (`idLiquidacion`) REFERENCES `tblsemillasliquidacion` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+
+ALTER TABLE `tblpercepciones` ADD COLUMN `idcuenta` INTEGER UNSIGNED NOT NULL AFTER `descripcion`;
+
+ALTER TABLE `tbldeducciones` ADD COLUMN `idcuenta` INTEGER UNSIGNED NOT NULL AFTER `descripcion`;
+
+ALTER TABLE `tblgastosclasificacion` ADD COLUMN `clave` VARCHAR(45) NOT NULL AFTER `nombre`;
+
+ALTER TABLE `tblgastosclasificacion2` ADD COLUMN `clave` VARCHAR(45) NOT NULL AFTER `idclassuperior`;
+
+
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(500,100,45,1,66,4,0,864);
+delete from tblimpresionesnodos where documento=45 and idsucursal=1;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(215,53,'fecha:','fecha',60,20,'Lucida Console',8,0,0,0,0,1,45,1,0,0,'Boleta - Fecha',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(288,53,'boleta:','FolioBoleta',50,20,'Lucida Console',8,0,0,0,0,1,45,1,0,0,'Boleta - Folio',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(549,54,'bpeso bruto:','peso bruto',60,20,'Lucida Console',8,0,0,0,0,1,45,1,0,0,'Boleta - Peso Bruto',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(346,53,'humedad:','humedad',60,20,'Lucida Console',8,0,0,0,0,1,45,1,0,0,'Boleta - humedad',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(219,93,'quebrado:','quebrado',60,20,'Lucida Console',8,0,0,0,0,1,45,1,0,0,'Boleta - Quebrado',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(481,53,'impurezas:','impurezas',60,20,'Lucida Console',8,0,0,0,0,1,45,1,0,0,'Boleta - Impurezas',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(26,51,'Dañado:','dañado',50,20,'Lucida Console',8,0,0,0,0,1,45,1,0,0,'Boleta - Dañado',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(92,51,'Total deducciones:','total deducciones',60,20,'Lucida Console',8,0,0,0,0,1,45,1,0,0,'Boleta - Deducciones',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(18,89,'peso liquidar:','peso liquidar',60,20,'Lucida Console',8,0,0,0,0,1,45,1,0,0,'Boleta - Peso Liquidar',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(130,89,'precio/ton:','precio/ton',60,20,'Lucida Console',8,0,0,0,0,1,45,1,0,0,'Boleta - Precio',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(413,54,'importe:','importe',60,20,'Lucida Console',8,0,0,0,0,1,45,1,0,0,'Boleta - Importe',0,0);
+
+
+DROP TABLE IF EXISTS `tblgastosclasificacion3`;
+CREATE TABLE  `tblgastosclasificacion3` (
+  `idclasificacion` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(45) NOT NULL,
+  `idclassuperior` int(10) unsigned NOT NULL,
+  `clave` varchar(45) NOT NULL,
+  PRIMARY KEY (`idclasificacion`),
+  KEY `FK_tblgastosclasificacion3_1` (`idclassuperior`),
+  CONSTRAINT `FK_tblgastosclasificacion3_1` FOREIGN KEY (`idclassuperior`) REFERENCES `tblgastosclasificacion2` (`idclasificacion`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+update tblgastosclasificacion set clave=lpad(convert(idclasificacion using utf8),3,'0');
+update tblgastosclasificacion2 set clave=lpad(convert(idclasificacion using utf8),3,'0');
+
+ALTER TABLE `tblgastosdetalles` ADD COLUMN `idclasificacion3` INTEGER UNSIGNED NOT NULL AFTER `idclasificacion2`;
+
+ALTER TABLE `tblusuarios` ADD COLUMN `permisos15` BIGINT UNSIGNED NOT NULL AFTER `permisos14`;
+ALTER TABLE `tblperfilespermisos` ADD COLUMN `permisos15` BIGINT UNSIGNED NOT NULL AFTER `permisos14`;
+
+insert into tblactualizaciones(version) values('ver 9031 rev 26');
+

@@ -1,0 +1,4 @@
+ALTER TABLE `tblopciones2` ADD COLUMN `facturarsolocredito` TINYINT UNSIGNED NOT NULL AFTER `pediranticiporem`,
+ ADD COLUMN `remisionessolocredito` TINYINT UNSIGNED NOT NULL AFTER `facturarsolocredito`;
+
+insert into tblactualizaciones(version,versionchk) values('ver 9037 rev 9','00903709');

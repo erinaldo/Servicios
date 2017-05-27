@@ -1,0 +1,7 @@
+ALTER TABLE `tblopciones` ADD COLUMN `facturarsoloexistencia` TINYINT UNSIGNED NOT NULL AFTER `sobreescribeimploc`;
+update tblopciones set facturarsoloexistencia=1;
+
+ALTER TABLE `tblventasimpuestos` ADD COLUMN `importe` DOUBLE NOT NULL AFTER `tasa`;
+
+
+insert into tblactualizaciones(version) values('ver 9030 rev 2');

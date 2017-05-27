@@ -1,0 +1,23 @@
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(12,125,'Vendedor:','vendedor',160,20,'Lucida Console',8,0,0,0,0,0,1,1,0,0,'Vendedor');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(12,125,'Vendedor:','vendedor',160,20,'Lucida Console',8,0,0,0,0,0,2,1,0,0,'Vendedor');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(12,125,'Vendedor:','vendedor',160,20,'Lucida Console',8,0,0,0,0,0,3,1,0,0,'Vendedor');
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(12,125,'Vendedor:','vendedor',160,20,'Lucida Console',8,0,0,0,0,0,17,1,0,0,'Vendedor');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(12,125,'Vendedor:','vendedor',160,20,'Lucida Console',8,0,0,0,0,0,18,1,0,0,'Vendedor');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(12,125,'Vendedor:','vendedor',160,20,'Lucida Console',8,0,0,0,0,0,19,1,0,0,'Vendedor');
+
+ALTER TABLE `tblventascotizaciones` ADD COLUMN `idvendedor` INTEGER UNSIGNED NOT NULL AFTER `usado`;
+update tblventascotizaciones set idvendedor=1;
+ALTER TABLE `tblventascotizaciones` ADD CONSTRAINT `FK_tblventascotizaciones_3` FOREIGN KEY `FK_tblventascotizaciones_3` (`idvendedor`)
+    REFERENCES `tblvendedores` (`idvendedor`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblventaspedidos` ADD COLUMN `idvendedor` INTEGER UNSIGNED NOT NULL AFTER `usado`;
+update tblventaspedidos set idvendedor=1;
+ALTER TABLE `tblventaspedidos` ADD CONSTRAINT `FK_tblventaspedidos_3` FOREIGN KEY `FK_tblventaspedidos_3` (`idvendedor`)
+    REFERENCES `tblvendedores` (`idvendedor`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION;
+
+

@@ -1,0 +1,8 @@
+CREATE TABLE `tblpuntodeventacortex` (
+  `pos` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `concepto` VARCHAR(45) NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  `mostrarcantidad` TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`pos`)
+)
+ENGINE = InnoDB;

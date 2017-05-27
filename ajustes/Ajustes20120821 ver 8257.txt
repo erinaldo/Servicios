@@ -1,0 +1,18 @@
+insert into tblformasdepago(idforma,nombre,tipo) values(98,'PAGO EN PARCIALIDADES',0);
+insert into tblformasdepago(idforma,nombre,tipo) values(99,'NO IDENTIFICADO',2);
+
+ALTER TABLE `tblventas` ADD COLUMN `idventaorigen` INTEGER UNSIGNED NOT NULL AFTER `cargog`,
+ ADD COLUMN `parcialidad` INTEGER UNSIGNED NOT NULL AFTER `idventaorigen`,
+ ADD COLUMN `parcialidades` INTEGER UNSIGNED NOT NULL AFTER `parcialidad`;
+
+update tblventas set idventaorigen=0,parcialidad=1,parcialidades=1;
+
+ALTER TABLE `tbltiposcantidades` MODIFY COLUMN `abreviatura` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(567,51,'Forma de Pago:','formadepago',160,20,'Lucida Console',8,0,0,0,0,0,0,1,0,0,'Forma de Pago');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(567,51,'Folio Factura Original:','folioorigen',160,20,'Lucida Console',8,0,0,0,0,0,0,1,0,0,'Folio Original');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(567,51,'Serie Factura Original:','serieorigen',160,20,'Lucida Console',8,0,0,0,0,0,0,1,0,0,'Serie Original');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(567,51,'Monto Factura Original:','montoorigen',160,20,'Lucida Console',8,0,0,0,0,0,0,1,0,0,'Monto Original');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(567,51,'Fecha Factura Original:','fechaorigen',160,20,'Lucida Console',8,0,0,0,0,0,0,1,0,0,'Fecha Original');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(567,51,'Folio Fiscal Factura Original:','uuidorigen',160,20,'Lucida Console',8,0,0,0,0,0,0,1,0,0,'Folio Fiscal Original');
+

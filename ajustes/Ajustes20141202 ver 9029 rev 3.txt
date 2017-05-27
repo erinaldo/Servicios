@@ -1,0 +1,20 @@
+ALTER TABLE `tblcontabilidadmascaras` ADD COLUMN `canceladas` TINYINT UNSIGNED NOT NULL AFTER `credito`,
+ ADD COLUMN `idsucursal` INTEGER UNSIGNED NOT NULL AFTER `canceladas`,
+ ADD COLUMN `idclasificacion` INTEGER UNSIGNED NOT NULL AFTER `idsucursal`,
+ ADD COLUMN `tipopoliza` VARCHAR(5) NOT NULL AFTER `idclasificacion`;
+
+CREATE TABLE `tblContabilidadClas` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(250) NOT NULL,
+  PRIMARY KEY (`id`)
+)
+ENGINE = InnoDB;
+
+
+ALTER TABLE `tblpolizas` ADD COLUMN `clasificacion` INTEGER UNSIGNED NOT NULL AFTER `importe`;
+
+insert into tblContabilidadClas(id,nombre) values(1,'GENERAL');
+update tblpolizas set clasificacion=1;
+
+
+insert into tblactualizaciones(version) values('ver 9029 rev 3');

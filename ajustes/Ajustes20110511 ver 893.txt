@@ -1,0 +1,52 @@
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `db_services`.`spdatotalcompra` $$
+CREATE FUNCTION `db_services`.`spdatotalcompra` (pidcompra int,pconiva int,pidmoneda int) RETURNS double
+BEGIN
+declare vtotal double;
+declare vtipodecambio double;
+set vtipodecambio=ifnull((select tipodecambio from tblcompras where idcompra=pidcompra),1);
+if pconiva=0 then
+set vtotal=ifnull((select if(pidmoneda=2,sum(precio),if(pidmoneda<>idmoneda,sum(precio*vtipodecambio),sum(precio))) from tblcomprasdetalles where idcompra=pidcompra),0);
+else
+set vtotal=ifnull((select if(pidmoneda=2,sum(precio*((iva/100)+1)),if(pidmoneda<>idmoneda,sum(precio*vtipodecambio*((iva/100)+1)),sum(precio*((iva/100)+1)))) from tblcomprasdetalles where idcompra=pidcompra),0);
+end if;
+return vtotal;
+END $$
+
+DELIMITER ;
+
+
+
+
+
+
+DROP TABLE IF EXISTS `db_services`.`tblimpresiones`;
+CREATE TABLE  `db_services`.`tblimpresiones` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `y` int(10) unsigned NOT NULL,
+  `yl` int(10) unsigned NOT NULL,
+  `documento` int(10) unsigned NOT NULL,
+  `idsucursal` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_tblimpresiones_01` (`idsucursal`),
+  CONSTRAINT `FK_tblimpresiones_01` FOREIGN KEY (`idsucursal`) REFERENCES `tblsucursales` (`idsucursal`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
+
+
+
+
+insert into tblimpresiones(y,yl,documento,idsucursal) values(500,100,0,1);
+insert into tblimpresiones(y,yl,documento,idsucursal) values(500,100,1,1);
+insert into tblimpresiones(y,yl,documento,idsucursal) values(500,100,2,1);
+insert into tblimpresiones(y,yl,documento,idsucursal) values(500,100,3,1);
+insert into tblimpresiones(y,yl,documento,idsucursal) values(500,100,4,1);
+insert into tblimpresiones(y,yl,documento,idsucursal) values(500,100,5,1);
+insert into tblimpresiones(y,yl,documento,idsucursal) values(500,100,6,1);
+insert into tblimpresiones(y,yl,documento,idsucursal) values(500,100,7,1);
+insert into tblimpresiones(y,yl,documento,idsucursal) values(500,100,8,1);
+insert into tblimpresiones(y,yl,documento,idsucursal) values(500,100,9,1);
+insert into tblimpresiones(y,yl,documento,idsucursal) values(500,100,10,1);
+insert into tblimpresiones(y,yl,documento,idsucursal) values(500,100,11,1);
+insert into tblimpresiones(y,yl,documento,idsucursal) values(500,100,12,1);
+insert into tblimpresiones(y,yl,documento,idsucursal) values(500,100,13,1);

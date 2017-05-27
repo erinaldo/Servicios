@@ -1,0 +1,18 @@
+insert into tbllistasprecios(idlista,descripcion,numero) values(6,'LISTA 11','11');
+insert into tbllistasprecios(idlista,descripcion,numero) values(7,'LISTA 12','12');
+insert into tbllistasprecios(idlista,descripcion,numero) values(8,'LISTA 13','13');
+insert into tbllistasprecios(idlista,descripcion,numero) values(9,'LISTA 14','14');
+insert into tbllistasprecios(idlista,descripcion,numero) values(10,'LISTA 15','15');
+insert into tbllistasprecios(idlista,descripcion,numero) values(6,'LISTA 16','16');
+insert into tbllistasprecios(idlista,descripcion,numero) values(7,'LISTA 17','17');
+insert into tbllistasprecios(idlista,descripcion,numero) values(8,'LISTA 18','18');
+insert into tbllistasprecios(idlista,descripcion,numero) values(9,'LISTA 19','19');
+insert into tbllistasprecios(idlista,descripcion,numero) values(10,'LISTA 20','20');
+
+insert into tblinventarioprecios(idinventario,precio,comentario,idmoneda,idlista,utilidad,descuentoprecio)
+select i.idinventario,0,'',2,l.idlista,0,0 from tblinventario i
+left outer join tbllistasprecios l on true
+left outer join tblinventarioprecios p on p.idinventario=i.idinventario and p.idlista=l.idlista
+where isnull(p.precio);
+
+insert into tblactualizaciones(version,versionchk) values('ver 9035 rev 1','00903501');

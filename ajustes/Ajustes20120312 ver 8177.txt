@@ -1,0 +1,25 @@
+ALTER TABLE `db_services`.`tblopciones` ADD COLUMN `fechapunto2` VARCHAR(10) NOT NULL AFTER `formatototal`;
+update tblopciones set fechapunto2='2015/01/01';
+
+CREATE TABLE `db_services`.`tblclientescuentas` (
+  `idcuenta` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idcliente` INTEGER UNSIGNED NOT NULL,
+  `cuenta` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idcuenta`),
+  CONSTRAINT `FK_tblclientescuentas_1` FOREIGN KEY `FK_tblclientescuentas_1` (`idcliente`)
+    REFERENCES `tblclientes` (`idcliente`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `db_services`.`tblclientes` ADD COLUMN `curp` VARCHAR(45) NOT NULL AFTER `idlista`;
+update tblclientes set curp='';
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(10,10,'CURP','curpcliente',120,20,'Lucida Console',8.25,0,0,0,0,0,0,1,0,0,'CURP Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(10,10,'CURP','curpcliente',120,20,'Lucida Console',8.25,0,0,0,0,0,1,1,0,0,'CURP Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(10,10,'CURP','curpcliente',120,20,'Lucida Console',8.25,0,0,0,0,0,2,1,0,0,'CURP Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(10,10,'CURP','curpcliente',120,20,'Lucida Console',8.25,0,0,0,0,0,3,1,0,0,'CURP Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(10,10,'CURP','curpcliente',120,20,'Lucida Console',8.25,0,0,0,0,0,4,1,0,0,'CURP Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(10,10,'CURP','curpcliente',120,20,'Lucida Console',8.25,0,0,0,0,0,5,1,0,0,'CURP Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(10,10,'CURP','curpcliente',120,20,'Lucida Console',8.25,0,0,0,0,0,6,1,0,0,'CURP Cliente');

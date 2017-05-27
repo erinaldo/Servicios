@@ -1,0 +1,12 @@
+DROP TABLE IF EXISTS `tblrepmovimientosxarticulo`;
+CREATE TABLE `tblrepmovimientosxarticulo` (
+  `idventa` int(10) unsigned NOT NULL,
+  `tipodoc` varchar(2) NOT NULL,
+  `folio` varchar(45) NOT NULL,
+  `clave` varchar(45) NOT NULL,
+  `nombre` varchar(450) NOT NULL,
+  `cantidad` double NOT NULL,
+  `preciou` double NOT NULL,
+  `precio` double NOT NULL,
+  `fecha` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

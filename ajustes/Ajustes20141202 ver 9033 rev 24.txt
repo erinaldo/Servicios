@@ -1,0 +1,16 @@
+DROP TABLE IF EXISTS `tblintentoslogin`;
+CREATE TABLE  `tblintentoslogin` (
+  `idIntento` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idUsuario` int(10) unsigned NOT NULL,
+  `fecha` varchar(45) NOT NULL,
+  `hora` varchar(45) NOT NULL,
+  `licencia` varchar(45) NOT NULL,
+  `comentario` varchar(45) NOT NULL,
+  `exitosos` tinyint(3) unsigned NOT NULL,
+  `fallos` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`idIntento`),
+  KEY `FK_tblintentoslogin_1` (`idUsuario`),
+  CONSTRAINT `FK_tblintentoslogin_1` FOREIGN KEY (`idUsuario`) REFERENCES `tblusuarios` (`idusuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into tblactualizaciones(version) values('ver 9033 rev 24');

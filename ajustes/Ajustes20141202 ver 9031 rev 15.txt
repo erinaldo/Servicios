@@ -1,0 +1,51 @@
+DROP TABLE IF EXISTS `tbladendamodelo`;
+CREATE TABLE `tbladendamodelo` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `entityType` varchar(25) DEFAULT NULL,
+  `idCreador` varchar(45) DEFAULT NULL,
+  `texto` varchar(45) DEFAULT NULL,
+  `idReferencia` varchar(45) DEFAULT NULL,
+  `informacionComprador` varchar(45) DEFAULT NULL,
+  `idCreadorAlt` varchar(45) DEFAULT NULL,
+  `tipoDivisa` varchar(45) DEFAULT NULL,
+  `tipoCambio` double DEFAULT NULL,
+  `cantidadBase2` double DEFAULT NULL,
+  `porcentajeTax2` double DEFAULT NULL,
+  `cantidadTax2` double DEFAULT NULL,
+  `categoriaTax2` varchar(45) DEFAULT NULL,
+  `tipoTax` varchar(45) DEFAULT NULL,
+  `cantidadFinal` double DEFAULT NULL,
+  `idVenta` int(10) unsigned DEFAULT NULL,
+  `cantidadTotal` double DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_adendamodelo_1` (`idVenta`),
+  CONSTRAINT `FK_adendamodelo_1` FOREIGN KEY (`idVenta`) REFERENCES `tblventas` (`idventa`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tbladendamodelodetalle`;
+CREATE TABLE  `tbladendamodelodetalle` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idAdenda` int(10) unsigned DEFAULT NULL,
+  `posicionPedido` int(10) unsigned DEFAULT NULL,
+  `codigoEAN` varchar(45) DEFAULT NULL,
+  `numProveedor` varchar(45) DEFAULT NULL,
+  `idioma` varchar(45) DEFAULT NULL,
+  `cantidadProductosFacturada` double DEFAULT NULL,
+  `unidadMedida` varchar(45) DEFAULT NULL,
+  `precioBruto` double DEFAULT NULL,
+  `precioNeto` double DEFAULT NULL,
+  `descripcion` varchar(45) DEFAULT NULL,
+  `numReferenciaAdicional` varchar(45) DEFAULT NULL,
+  `tipoArancel` varchar(45) DEFAULT NULL,
+  `numIdImpuesto` varchar(45) DEFAULT NULL,
+  `porcentajeImpuesto` double DEFAULT NULL,
+  `montoImpuesto` double DEFAULT NULL,
+  `identificacionImpuesto` varchar(45) DEFAULT NULL,
+  `precioBrutoArticulos` double DEFAULT NULL,
+  `precioNetoArticulos` double DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_tbladendamodelodetalle_1` (`idAdenda`),
+  CONSTRAINT `FK_tbladendamodelodetalle_1` FOREIGN KEY (`idAdenda`) REFERENCES `tbladendamodelo` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+
+insert into tblactualizaciones(version) values('ver 9031 rev 15');

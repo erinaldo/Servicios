@@ -1,0 +1,32 @@
+CREATE TABLE `tblreprelacionesanaliticas` (
+  `Cuenta` VARCHAR(45) NOT NULL,
+  `descripcion` VARCHAR(450) NOT NULL,
+  `agrupador` VARCHAR(45) NOT NULL,
+  `Naturaleza` VARCHAR(15) NOT NULL,
+  `SaldoInicial` DOUBLE NOT NULL,
+  `cargo` DOUBLE NOT NULL,
+  `abono` DOUBLE NOT NULL,
+  `cuenta1` VARCHAR(45) NOT NULL,
+  `cuenta2` INTEGER UNSIGNED NOT NULL,
+  `Tipo` VARCHAR(45) NOT NULL,
+  `descripcionMAyor` VARCHAR(450) NOT NULL,
+  `agruMayor` VARCHAR(45) NOT NULL,
+  `SaldoInicMayor` DOUBLE NOT NULL,
+  `saldoCmay` DOUBLE NOT NULL,
+  `saldoAMay` DOUBLE NOT NULL
+)
+ENGINE = InnoDB;
+
+insert into tbllistasprecios(idlista,descripcion,numero) values(6,'LISTA 6','06');
+insert into tbllistasprecios(idlista,descripcion,numero) values(7,'LISTA 7','07');
+insert into tbllistasprecios(idlista,descripcion,numero) values(8,'LISTA 8','08');
+insert into tbllistasprecios(idlista,descripcion,numero) values(9,'LISTA 9','09');
+insert into tbllistasprecios(idlista,descripcion,numero) values(10,'LISTA 10','10');
+
+insert into tblinventarioprecios(idinventario,precio,comentario,idmoneda,idlista,utilidad,descuentoprecio)
+select i.idinventario,0,'',2,l.idlista,0,0 from tblinventario i
+left outer join tbllistasprecios l on true
+left outer join tblinventarioprecios p on p.idinventario=i.idinventario and p.idlista=l.idlista
+where isnull(p.precio);
+
+insert into tblactualizaciones(version) values('ver 9031 rev 14');

@@ -1,0 +1,5 @@
+
+ALTER TABLE `tblclientesviejossaldosex` ADD COLUMN `snombre` VARCHAR(250) NOT NULL AFTER `idsucursal`;
+
+
+insert into tblactualizaciones(version,versionchk) values('ver 9034 rev 5','00903405');

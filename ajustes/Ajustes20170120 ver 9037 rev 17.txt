@@ -1,0 +1,2 @@
+update tblimpresionesnodos set datapropertyname='totalletrac' where datapropertyname='totalletra' and (documento=35 or documento=51 or documento=41 or documento=57);
+insert into tblactualizaciones(version,versionchk) values('ver 9037 rev 17','00903717');

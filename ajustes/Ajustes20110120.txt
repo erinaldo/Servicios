@@ -1,0 +1,2 @@
+tblinventarioseries 
+idmovimiento int

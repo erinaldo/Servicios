@@ -1,0 +1,39 @@
+ALTER TABLE `tblcompras` ADD COLUMN `comentario` VARCHAR(1000) NOT NULL AFTER `folioi`;
+update tblcompras set comentario='';
+ALTER TABLE `tblcomprasremisiones` ADD COLUMN `comentario` VARCHAR(1000) NOT NULL AFTER `horacancelado`;
+update tblcomprasremisiones set comentario='';
+ALTER TABLE `tblcompraspedidos` ADD COLUMN `comentario` VARCHAR(1000) NOT NULL AFTER `serie`;
+update tblcompraspedidos set comentario='';
+ALTER TABLE `tblcomprascotizacionesb` ADD COLUMN `comentario` VARCHAR(1000) NOT NULL AFTER `serie`;
+update tblcomprascotizacionesb set comentario='';
+ALTER TABLE `tbldevoluciones` ADD COLUMN `comentario` VARCHAR(1000) NOT NULL AFTER `idremision`;
+update tbldevoluciones set comentario='';
+ALTER TABLE `tbldevolucionescompras` ADD COLUMN `comentario` VARCHAR(1000) NOT NULL AFTER `idremision`;
+update tbldevolucionescompras set comentario='';
+ALTER TABLE `tblnotasdecredito` ADD COLUMN `comentarionc` VARCHAR(1000) NOT NULL AFTER `idconcepto`;
+update tblnotasdecredito set comentarionc='';
+ALTER TABLE `tblnotasdecargo` ADD COLUMN `comentario` VARCHAR(1000) NOT NULL AFTER `idconcepto`;
+update tblnotasdecargo set comentario='';
+ALTER TABLE `tblnotasdecargocompras` ADD COLUMN `comentario` VARCHAR(1000) NOT NULL AFTER `idconcepto`;
+update tblnotasdecargocompras set comentario='';
+ALTER TABLE `tblnotasdecreditocompras` ADD COLUMN `comentarionc` VARCHAR(1000) NOT NULL AFTER `idconcepto`;
+update tblnotasdecreditocompras set comentarionc='';
+ALTER TABLE `tblventascotizaciones` ADD COLUMN `comentario` VARCHAR(1000) NOT NULL AFTER `idvendedor`;
+update tblventascotizaciones set comentario='';
+ALTER TABLE `tblventaspedidos` ADD COLUMN `comentario` VARCHAR(1000) NOT NULL AFTER `idvendedor`;
+update tblventaspedidos set comentario='';
+delete from tblimpresionesnodos where datapropertyname='cancelado' and (documento=15 or documento=31);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(13,643,'Comentario','comentario',700,20,'Lucida Console',8,0,0,0,0,0,1,1,0,0,'Comentario');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(13,643,'Comentario','comentario',700,20,'Lucida Console',8,0,0,0,0,0,17,1,0,0,'Comentario');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(13,643,'Comentario','comentario',700,20,'Lucida Console',8,0,0,0,0,0,2,1,0,0,'Comentario');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(13,643,'Comentario','comentario',700,20,'Lucida Console',8,0,0,0,0,0,18,1,0,0,'Comentario');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(13,643,'Comentario','comentario',700,20,'Lucida Console',8,0,0,0,0,0,4,1,0,0,'Comentario');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(13,643,'Comentario','comentario',700,20,'Lucida Console',8,0,0,0,0,0,20,1,0,0,'Comentario');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(13,643,'Comentario','comentario',700,20,'Lucida Console',8,0,0,0,0,0,5,1,0,0,'Comentario');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(13,643,'Comentario','comentario',700,20,'Lucida Console',8,0,0,0,0,0,21,1,0,0,'Comentario');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(13,643,'Comentario','comentario',700,20,'Lucida Console',8,0,0,0,0,0,6,1,0,0,'Comentario');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(13,643,'Comentario','comentario',700,20,'Lucida Console',8,0,0,0,0,0,22,1,0,0,'Comentario');
+
+
+

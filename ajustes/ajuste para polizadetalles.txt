@@ -1,0 +1,2 @@
+update tblpolizasdetalles set cuenta=(select concat(LPAD(c.cuenta,4,'0'),' ',if(c.n2='','',LPAD(c.n2,4,'0')),' ',if(c.n3='','',LPAD(c.n3,4,'0')),' ',if(c.n4='','',LPAD(c.n4,4,'0')),' ',if(c.n5='','',LPAD(c.n5,4,'0'))) from tblccontables as c where idccontable=tblpolizasdetalles.idcuenta);
+update tblmovimientosdetalles md inner join tblmovimientos m on md.idmovimiento=m.idmovimiento inner join tblinventarioconceptos ic on m.idconcepto=ic.idconcepto set md.idmoneda=2 where ic.tipo=1;

@@ -1,0 +1,41 @@
+DROP TABLE IF EXISTS `db_services`.`tbldevolucionestimbrado`;
+CREATE TABLE  `db_services`.`tbldevolucionestimbrado` (
+  `iddevolucion` int(10) unsigned NOT NULL,
+  `uuid` varchar(45) NOT NULL,
+  `fechatimbrado` varchar(45) NOT NULL,
+  `sellocfd` varchar(2000) NOT NULL,
+  `nocertificadosat` varchar(45) NOT NULL,
+  `sellosat` varchar(2000) NOT NULL,
+  KEY `FK_tbldevolucionestimbrado_1` (`iddevolucion`),
+  CONSTRAINT `FK_tbldevolucionestimbrado_1` FOREIGN KEY (`iddevolucion`) REFERENCES `tbldevoluciones` (`iddevolucion`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `db_services`.`tblnotasdecargotimbrado`;
+CREATE TABLE  `db_services`.`tblnotasdecargotimbrado` (
+  `idcargo` int(10) unsigned NOT NULL,
+  `uuid` varchar(45) NOT NULL,
+  `fechatimbrado` varchar(45) NOT NULL,
+  `sellocfd` varchar(2000) NOT NULL,
+  `nocertificadosat` varchar(45) NOT NULL,
+  `sellosat` varchar(2000) NOT NULL,
+  KEY `FK_tblnotasdecargotimbrado_1` (`idcargo`),
+  CONSTRAINT `FK_tblnotasdecargotimbrado_1` FOREIGN KEY (`idcargo`) REFERENCES `tblnotasdecargo` (`idcargo`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `db_services`.`tblnotasdecreditotimbrado`;
+CREATE TABLE  `db_services`.`tblnotasdecreditotimbrado` (
+  `idnota` int(10) unsigned NOT NULL,
+  `uuid` varchar(45) NOT NULL,
+  `fechatimbrado` varchar(45) NOT NULL,
+  `sellocfd` varchar(2000) NOT NULL,
+  `nocertificadosat` varchar(45) NOT NULL,
+  `sellosat` varchar(2000) NOT NULL,
+  KEY `FK_tblnotasdecreditotimbrado_1` (`idnota`),
+  CONSTRAINT `FK_tblnotasdecreditotimbrado_1` FOREIGN KEY (`idnota`) REFERENCES `tblnotasdecredito` (`idnota`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+tblventas
+descripcion varchar(2000)
+
+tbldevoluciones
+descripcion varchar(2000)

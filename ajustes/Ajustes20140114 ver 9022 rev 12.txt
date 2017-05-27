@@ -1,0 +1,716 @@
+
+
+DROP TABLE IF EXISTS `tblempenios`;
+CREATE TABLE  `tblempenios` (
+  `idmovimiento` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fecha` varchar(12) NOT NULL,
+  `folio` int(10) unsigned NOT NULL,
+  `hora` varchar(8) NOT NULL,
+  `estado` tinyint(3) unsigned NOT NULL,
+  `total` double NOT NULL,
+  `idsucursal` int(10) unsigned NOT NULL,
+  `serie` varchar(45) NOT NULL,
+  `idcaja` int(10) unsigned NOT NULL,
+  `idvendedor` int(10) unsigned NOT NULL,
+  `comentario` varchar(2000) NOT NULL,
+  `tipo` tinyint(3) unsigned NOT NULL,
+  `idcliente` int(10) unsigned NOT NULL,
+  `diasPrestamos` int(10) unsigned NOT NULL,
+  `A1a30` double NOT NULL,
+  `A31a60` double NOT NULL,
+  `A61a90` double NOT NULL,
+  `A90mas` double NOT NULL,
+  `B1a30` double NOT NULL,
+  `B31a60` double NOT NULL,
+  `B61a90` double NOT NULL,
+  `B90mas` double NOT NULL,
+  `fechaContrato` varchar(12) NOT NULL,
+  `pagado` tinyint(3) unsigned NOT NULL,
+  `TotalAux` double NOT NULL,
+  PRIMARY KEY (`idmovimiento`)
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `tblempeniosabono`;
+CREATE TABLE  `tblempeniosabono` (
+  `idAbono` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idEmpenio` int(10) unsigned NOT NULL,
+  `fecha` varchar(12) NOT NULL,
+  `cantidad` double NOT NULL,
+  `habilitado` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`idAbono`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `tblempeniosclasificacion`;
+CREATE TABLE  `tblempeniosclasificacion` (
+  `idClasificacion` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(45) NOT NULL,
+  PRIMARY KEY (`idClasificacion`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `tblempeniosconfiguracion`;
+CREATE TABLE  `tblempeniosconfiguracion` (
+  `idConfiguracion` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `factor` double NOT NULL,
+  `folio` tinyint(3) unsigned NOT NULL,
+  `interes` double NOT NULL,
+  `diasProrroga` double NOT NULL,
+  `numRegistro` varchar(20) NOT NULL,
+  `almacenaje` double NOT NULL,
+  `A1a30` double NOT NULL,
+  `A31a60` double NOT NULL,
+  `A61a90` double NOT NULL,
+  `A90mas` double NOT NULL,
+  `B1a30` double NOT NULL,
+  `B31a60` double NOT NULL,
+  `B61a90` double NOT NULL,
+  `B90mas` double NOT NULL,
+  `aumentoPrenda` double NOT NULL,
+  PRIMARY KEY (`idConfiguracion`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `tblempeniosdetalles`;
+CREATE TABLE `tblempeniosdetalles` (
+  `idDetalle` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idMovimiento` int(10) unsigned NOT NULL,
+  `descripcion` varchar(45) NOT NULL,
+  `precio` double NOT NULL,
+  `clasificacion` int(10) unsigned NOT NULL,
+  `kilates` double NOT NULL,
+  `peso` double NOT NULL,
+  `evaluo` double NOT NULL,
+  PRIMARY KEY (`idDetalle`)
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `tblgastos`;
+CREATE TABLE  `tblgastos` (
+  `idmovimiento` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fecha` varchar(10) NOT NULL,
+  `folio` int(10) unsigned NOT NULL,
+  `hora` varchar(8) NOT NULL,
+  `estado` tinyint(3) unsigned NOT NULL,
+  `total` double NOT NULL,
+  `idsucursal` int(10) unsigned NOT NULL,
+  `serie` varchar(45) NOT NULL,
+  `idcaja` int(10) unsigned NOT NULL,
+  `idvendedor` int(10) unsigned NOT NULL,
+  `comentario` varchar(2000) DEFAULT NULL,
+  `tipo` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`idmovimiento`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `tblgastosclasificacion`;
+CREATE TABLE  `tblgastosclasificacion` (
+  `idClasificacion` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(45) NOT NULL,
+  PRIMARY KEY (`idClasificacion`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `tblgastosdetalles`;
+CREATE TABLE  `tblgastosdetalles` (
+  `idDetalle` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idMovimiento` int(10) unsigned NOT NULL,
+  `descripcion` varchar(45) NOT NULL,
+  `precio` double NOT NULL,
+  `clasificacion` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`idDetalle`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `tblgastosprogradetalles`;
+CREATE TABLE  `tblgastosprogradetalles` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idGasto` int(10) unsigned NOT NULL,
+  `fecha` varchar(11) NOT NULL,
+  `hora` varchar(5) NOT NULL,
+  `frecuencia` varchar(5) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `tblgastosprogramables`;
+CREATE TABLE  `tblgastosprogramables` (
+  `idGasto` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `tipo` int(10) unsigned NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `fecha` varchar(11) NOT NULL,
+  `dias` int(10) unsigned NOT NULL,
+  `frecuencia` varchar(5) NOT NULL,
+  `inicio` varchar(11) NOT NULL,
+  `fin` varchar(11) NOT NULL,
+  `estado` tinyint(1) NOT NULL,
+  PRIMARY KEY (`idGasto`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+ALTER TABLE `tblgastosdetalles` ADD COLUMN `esSalario` INTEGER UNSIGNED NOT NULL AFTER `clasificacion`;
+
+DROP TABLE IF EXISTS `tblgastosempleados`;
+CREATE TABLE  `tblgastosempleados` (
+  `idEmpleado` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(45) NOT NULL,
+  `telefono` varchar(20) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `RFC` varchar(13) NOT NULL,
+  `CURP` varchar(19) NOT NULL,
+  `calle` varchar(30) NOT NULL,
+  `noInterior` varchar(8) NOT NULL,
+  `noExterior` varchar(8) NOT NULL,
+  `colonia` varchar(30) NOT NULL,
+  `municipio` varchar(30) NOT NULL,
+  `ciudad` varchar(30) NOT NULL,
+  `referencia` varchar(45) NOT NULL,
+  `estado` varchar(30) NOT NULL,
+  `CP` varchar(6) NOT NULL,
+  `pais` varchar(30) NOT NULL,
+  `salario` double NOT NULL,
+  PRIMARY KEY (`idEmpleado`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `tblsueldo`;
+CREATE TABLE  `tblsueldo` (
+  `idSueldo` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idGasto` int(10) unsigned NOT NULL,
+  `idEmpleado` int(10) unsigned NOT NULL,
+  `sueldo` double NOT NULL,
+  `dias` double NOT NULL,
+  `total` double NOT NULL,
+  PRIMARY KEY (`idSueldo`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
+
+
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho)values(500,300,40,1,40,4,0,864);
+
+delete from tblimpresionesnodos where documento=40 and idsucursal=1;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(650,62,'Folio:','docFolio',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Documento - Folio',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(186,81,'Fecha:','docFecha',300,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Documento - Fecha',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(43,122,'Nombre:','clienteNombre',300,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Cliente - Nombre',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(43,144,'Dirección:','clienteDireccion',300,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Cliente - Direccion',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(43,166,'Número de cliente:','clienteNumero',300,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Cliente - Número',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(412,122,'Evaluador:','docEvaluador',300,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Documento - Evaluador',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(411,167,'Fecha de Vencimiento:','docFechaVen',300,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Documento - Fecha de Vencimiento',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(145,191,'Prestamo:','docPrestamo',300,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Documento - Prestamo con letra',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(43,217,'Interés díario:','docInteresdoc',300,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Documento - Interés total',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(574,217,'Plazo para desempeño:','docPlazoDesempenio',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Documento - Plazo para desempeño',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(573,243,'Fecha límite finiquito:','docFechaLimiteFini',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Documento - Fecha límite finiquito',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(577,268,'Inicio de comercialización:','docInicioComerciali',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Documento - Inicio de comercialización',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(410,145,'Avalúo:','ArticuloAvaluo',300,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Artículo - Avalúo',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(36,317,'Descripción:','ArticuloDescripcion',300,20,'Arial',10,0,0,1,0,1,40,1,0,0,'Artículo - Descripcion',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(341,317,'Peso:','ArticuloPeso',100,20,'Arial',10,0,0,1,0,1,40,1,0,0,'Artículo - Peso',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(447,316,'Kilates:','ArticuloKilates',100,20,'Arial',10,0,0,1,0,1,40,1,0,0,'Artículo - Kilates',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(68,395,'PLAZO','et01',50,10,'Lucida Console',8,0,0,0,0,1,40,1,2,0,'Etiqueta01',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(149,396,'FECHA DE PAGO','et02',100,10,'Lucida Console',8,0,0,0,0,1,40,1,2,0,'Etiqueta02',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(279,396,'INTERÉS','et03',50,10,'Lucida Console',8,0,0,0,0,1,40,1,2,0,'Etiqueta03',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(375,397,'ALMACENAJE','et04',80,10,'Lucida Console',8,0,0,0,0,1,40,1,2,0,'Etiqueta04',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(479,397,'REFERIDO','et05',80,10,'Lucida Console',8,0,0,0,0,1,40,1,2,0,'Etiqueta05',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(588,394,'DESEMPEÑO','et06',80,10,'Lucida Console',8,0,0,0,0,1,40,1,2,0,'Etiqueta06',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(5,413,'Línea01','ln01',864,2,'Arial',10,0,0,0,0,1,40,1,1,0,'Línea01',0,8);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(350,218,'% del prestamo interes','docPorcentajeInteres',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Documento - % del prestamo interés',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(679,28,'Número de registro:','docNumerodeRegistro',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Documento - Número de registro',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(40,423,'Plazo:','ArticuloPlazo30',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Artículo - Plazo 30',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(148,423,'Fecha de Pago:','ArticuloFechaPago30',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Artículo - Fecha de pago 30',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(256,423,'Interés:','ArticuloInteres30',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Artículo - Interés 30',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(364,423,'Almacenaje:','ArticuloAlmacenaje30',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Artículo - Almacenaje 30',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(472,423,'Refrendo:','ArticuloRefrendo30',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Artículo - Refrendo 30',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(581,423,'Desempeño:','ArticuloDesempenio30',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Artículo - Desempeño 30',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(40,449,'Plazo:','ArticuloPlazo60',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Artículo - Plazo 60',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(148,449,'Fecha de Pago:','ArticuloFechaPago60',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Artículo - Fecha de pago 60',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(256,449,'Interés:','ArticuloInteres60',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Artículo - Interés 60',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(364,449,'Almacenaje:','ArticuloAlmacenaje60',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Artículo - Almacenaje 60',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(472,449,'Refrendo:','ArticuloRefrendo60',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Artículo - Refrendo 60',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(581,449,'Desempeño:','ArticuloDesempenio60',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Artículo - Desempeño 60',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(40,475,'Plazo:','ArticuloPlazo90',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Artículo - Plazo 90',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(148,475,'Fecha de Pago:','ArticuloFechaPago90',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Artículo - Fecha de pago 90',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(256,475,'Interés:','ArticuloInteres90',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Artículo - Interés 90',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(364,475,'Almacenaje:','ArticuloAlmacenaje90',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Artículo - Almacenaje 90',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(472,475,'Refrendo:','ArticuloRefrendo90',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Artículo - Refrendo 90',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(581,475,'Desempeño:','ArticuloDesempenio90',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Artículo - Desempeño 90',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(40,500,'Plazo:','ArticuloPlazo120',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Artículo - Plazo 120',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(148,500,'Fecha de Pago:','ArticuloFechaPago120',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Artículo - Fecha de pago 120',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(256,500,'Interés:','ArticuloInteres120',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Artículo - Interés 120',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(364,500,'Almacenaje:','ArticuloAlmacenaje120',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Artículo - Almacenaje 120',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(472,500,'Refrendo:','ArticuloRefrendo120',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Artículo - Refrendo 120',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(581,500,'Desempeño:','ArticuloDesempenio120',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Artículo - Desempeño 120',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(36,40,'Forma de pago:','docFormaPago',250,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Documento - Forma de Pago',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(43,191,'Prestamo:','docPrestamoNumero',100,20,'Arial',10,0,0,0,0,1,40,1,0,0,'Documento - Prestamo con Numero',0,1);
+
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho)values(500,300,40+16,1,40,4,0,864);
+
+delete from tblimpresionesnodos where documento=40+16 and idsucursal=1;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(650,62,'Folio:','docFolio',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Documento - Folio',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(186,81,'Fecha:','docFecha',300,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Documento - Fecha',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(43,122,'Nombre:','clienteNombre',300,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Cliente - Nombre',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(43,144,'Dirección:','clienteDireccion',300,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Cliente - Direccion',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(43,166,'Número de cliente:','clienteNumero',300,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Cliente - Número',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(412,122,'Evaluador:','docEvaluador',300,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Documento - Evaluador',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(411,167,'Fecha de Vencimiento:','docFechaVen',300,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Documento - Fecha de Vencimiento',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(145,191,'Prestamo:','docPrestamo',300,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Documento - Prestamo con letra',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(43,217,'Interés díario:','docInteresdoc',300,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Documento - Interés total',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(574,217,'Plazo para desempeño:','docPlazoDesempenio',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Documento - Plazo para desempeño',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(573,243,'Fecha límite finiquito:','docFechaLimiteFini',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Documento - Fecha límite finiquito',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(577,268,'Inicio de comercialización:','docInicioComerciali',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Documento - Inicio de comercialización',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(410,145,'Avalúo:','ArticuloAvaluo',300,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Artículo - Avalúo',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(36,317,'Descripción:','ArticuloDescripcion',300,20,'Arial',10,0,0,1,0,1,40+16,1,0,0,'Artículo - Descripcion',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(341,317,'Peso:','ArticuloPeso',100,20,'Arial',10,0,0,1,0,1,40+16,1,0,0,'Artículo - Peso',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(447,316,'Kilates:','ArticuloKilates',100,20,'Arial',10,0,0,1,0,1,40+16,1,0,0,'Artículo - Kilates',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(68,395,'PLAZO','et01',50,10,'Lucida Console',8,0,0,0,0,1,40+16,1,2,0,'Etiqueta01',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(149,396,'FECHA DE PAGO','et02',100,10,'Lucida Console',8,0,0,0,0,1,40+16,1,2,0,'Etiqueta02',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(279,396,'INTERÉS','et03',50,10,'Lucida Console',8,0,0,0,0,1,40+16,1,2,0,'Etiqueta03',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(375,397,'ALMACENAJE','et04',80,10,'Lucida Console',8,0,0,0,0,1,40+16,1,2,0,'Etiqueta04',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(479,397,'REFERIDO','et05',80,10,'Lucida Console',8,0,0,0,0,1,40+16,1,2,0,'Etiqueta05',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(588,394,'DESEMPEÑO','et06',80,10,'Lucida Console',8,0,0,0,0,1,40+16,1,2,0,'Etiqueta06',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(5,413,'Línea01','ln01',864,2,'Arial',10,0,0,0,0,1,40+16,1,1,0,'Línea01',0,8);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(350,218,'% del prestamo interes','docPorcentajeInteres',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Documento - % del prestamo interés',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(679,28,'Número de registro:','docNumerodeRegistro',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Documento - Número de registro',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(40,423,'Plazo:','ArticuloPlazo30',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Artículo - Plazo 30',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(148,423,'Fecha de Pago:','ArticuloFechaPago30',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Artículo - Fecha de pago 30',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(256,423,'Interés:','ArticuloInteres30',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Artículo - Interés 30',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(364,423,'Almacenaje:','ArticuloAlmacenaje30',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Artículo - Almacenaje 30',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(472,423,'Refrendo:','ArticuloRefrendo30',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Artículo - Refrendo 30',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(581,423,'Desempeño:','ArticuloDesempenio30',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Artículo - Desempeño 30',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(40,449,'Plazo:','ArticuloPlazo60',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Artículo - Plazo 60',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(148,449,'Fecha de Pago:','ArticuloFechaPago60',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Artículo - Fecha de pago 60',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(256,449,'Interés:','ArticuloInteres60',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Artículo - Interés 60',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(364,449,'Almacenaje:','ArticuloAlmacenaje60',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Artículo - Almacenaje 60',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(472,449,'Refrendo:','ArticuloRefrendo60',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Artículo - Refrendo 60',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(581,449,'Desempeño:','ArticuloDesempenio60',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Artículo - Desempeño 60',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(40,475,'Plazo:','ArticuloPlazo90',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Artículo - Plazo 90',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(148,475,'Fecha de Pago:','ArticuloFechaPago90',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Artículo - Fecha de pago 90',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(256,475,'Interés:','ArticuloInteres90',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Artículo - Interés 90',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(364,475,'Almacenaje:','ArticuloAlmacenaje90',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Artículo - Almacenaje 90',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(472,475,'Refrendo:','ArticuloRefrendo90',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Artículo - Refrendo 90',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(581,475,'Desempeño:','ArticuloDesempenio90',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Artículo - Desempeño 90',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(40,500,'Plazo:','ArticuloPlazo120',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Artículo - Plazo 120',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(148,500,'Fecha de Pago:','ArticuloFechaPago120',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Artículo - Fecha de pago 120',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(256,500,'Interés:','ArticuloInteres120',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Artículo - Interés 120',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(364,500,'Almacenaje:','ArticuloAlmacenaje120',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Artículo - Almacenaje 120',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(472,500,'Refrendo:','ArticuloRefrendo120',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Artículo - Refrendo 120',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(581,500,'Desempeño:','ArticuloDesempenio120',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Artículo - Desempeño 120',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(36,40,'Forma de pago:','docFormaPago',250,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Documento - Forma de Pago',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(43,191,'Prestamo:','docPrestamoNumero',100,20,'Arial',10,0,0,0,0,1,40+16,1,0,0,'Documento - Prestamo con Numero',0,1);
+
+
+
+
+insert into tblempeniosconfiguracion (factor,folio,interes,diasProrroga,numRegistro,almacenaje,A1a30,A31a60,A61a90,A90mas,B1a30,B31a60,B61a90,B90mas ,aumentoPrenda) Values(20,0,0.18,15,'xxxx-xxxx',0.12,0.18,0.18,0.18,0,0.12,0.12,0.12,0,20);
+
+
+update tblopciones set nombreempresalocal='0';
+
+ALTER TABLE `tblempenios` ADD COLUMN `idforma` INTEGER UNSIGNED NOT NULL AFTER `TotalAux`;
+update tblempenios set idforma=1;
+
+CREATE TABLE `tblAdquiriente` (
+  `ID` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `Nombre` VARCHAR(254) NOT NULL,
+  `ApellidoPaterno` VARCHAR(200) NOT NULL,
+  `ApellidoMaterno` VARCHAR(200) NOT NULL,
+  `RFC` VARCHAR(13) NOT NULL,
+  `CURP` VARCHAR(18) NOT NULL,
+  `IDNotario` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`ID`)
+)
+ENGINE = InnoDB;
+
+
+CREATE TABLE `tblAdquirientes` (
+  `ID` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `Nombre` VARCHAR(254) NOT NULL,
+  `ApellidoPaterno` VARCHAR(200) NOT NULL,
+  `ApellidoMaterno` VARCHAR(200) NOT NULL,
+  `RFC` VARCHAR(13) NOT NULL,
+  `CURP` VARCHAR(18) NOT NULL,
+  `Porcentaje` DOUBLE NOT NULL,
+  `IDNotario` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`ID`)
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tblEnajenante` (
+  `ID` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `Nombre` VARCHAR(254) NOT NULL,
+  `ApellidoPaterno` VARCHAR(200) NOT NULL,
+  `ApellidoMaterno` VARCHAR(200) NOT NULL,
+  `RFC` VARCHAR(13) NOT NULL,
+  `CURP` VARCHAR(18) NOT NULL,
+  `IDNotario` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`ID`)
+)
+ENGINE = InnoDB;
+
+
+CREATE TABLE `tblEnajenantes` (
+  `ID` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `Nombre` VARCHAR(254) NOT NULL,
+  `ApellidoPaterno` VARCHAR(200) NOT NULL,
+  `ApellidoMaterno` VARCHAR(200) NOT NULL,
+  `RFC` VARCHAR(13) NOT NULL,
+  `CURP` VARCHAR(18) NOT NULL,
+  `Porcentaje` DOUBLE NOT NULL,
+  `IDNotario` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`ID`)
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tblEstados` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `estado` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`)
+)
+ENGINE = InnoDB;
+
+insert into tblestados (estado) values("Aguascalientes");
+insert into tblestados (estado) values("Baja California Norte");
+insert into tblestados (estado) values("Baja California Sur");
+insert into tblestados (estado) values("Campeche");
+insert into tblestados (estado) values("Coahuila");
+insert into tblestados (estado) values("Colima");
+insert into tblestados (estado) values("Chiapas");
+insert into tblestados (estado) values("Chihuahua");
+insert into tblestados (estado) values("Distrito Federal");
+insert into tblestados (estado) values("Durango");
+insert into tblestados (estado) values("Guanajuato");
+insert into tblestados (estado) values("Guerrero");
+
+insert into tblestados (estado) values("Hidalgo");
+insert into tblestados (estado) values("Jalisco");
+insert into tblestados (estado) values("México");
+insert into tblestados (estado) values("Mmichoacán");
+insert into tblestados (estado) values("Morelos");
+insert into tblestados (estado) values("Nayarit");
+insert into tblestados (estado) values("Nuevo León");
+insert into tblestados (estado) values("Oaxaca");
+insert into tblestados (estado) values("Puebla");
+insert into tblestados (estado) values("Queretaro");
+
+insert into tblestados (estado) values("Quintana Roo");
+insert into tblestados (estado) values("San Luis Potosí");
+insert into tblestados (estado) values("Sinaloa");
+insert into tblestados (estado) values("Sonora");
+insert into tblestados (estado) values("Tabasco");
+insert into tblestados (estado) values("Tamaulipas");
+insert into tblestados (estado) values("Tlaxcala");
+insert into tblestados (estado) values("Veracruz");
+insert into tblestados (estado) values("Yucatan");
+insert into tblestados (estado) values("Zacatecas");
+
+CREATE TABLE `tblNotariosPublicos` (
+  `ID` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `TipoInmueble` VARCHAR(2) NOT NULL,
+  `Calle` VARCHAR(150) NOT NULL,
+  `NoExterior` VARCHAR(55) NOT NULL,
+  `NoInterior` VARCHAR(30) NOT NULL,
+  `Colonia` VARCHAR(100) NOT NULL,
+  `Localidad` VARCHAR(100) NOT NULL,
+  `Referencia` VARCHAR(100) NOT NULL,
+  `Municipio` VARCHAR(100) NOT NULL,
+  `Estado` INTEGER UNSIGNED NOT NULL,
+  `Pais` VARCHAR(3) NOT NULL,
+  `CodigoPostal` VARCHAR(5) NOT NULL,
+  `NumInstrumentoNotarial` INTEGER UNSIGNED NOT NULL,
+  `FechaInstNotarial` VARCHAR(11) NOT NULL,
+  `MontoOperacion` DOUBLE NOT NULL,
+  `Subtotal` DOUBLE NOT NULL,
+  `IVA` DOUBLE NOT NULL,
+  `CURP` VARCHAR(18) NOT NULL,
+  `NumNotaria` INTEGER UNSIGNED NOT NULL,
+  `EntidadFederativa` INTEGER UNSIGNED NOT NULL,
+  `Adscripcion` VARCHAR(255) NOT NULL,
+  `CoproSocConyugalE` BOOLEAN NOT NULL,
+  `CoproSocConyugalE2` BOOLEAN NOT NULL,
+  PRIMARY KEY (`ID`)
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `tblnotariospublicos` ADD COLUMN `idFactura` INTEGER UNSIGNED NOT NULL AFTER `CoproSocConyugalE2`;
+
+CREATE TABLE `tblTipoInmueble` (
+  `ID` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`ID`)
+)
+ENGINE = InnoDB;
+
+insert into tbltipoinmueble(nombre) values("Terreno");
+insert into tbltipoinmueble(nombre) values("Terreno uso comercial");
+insert into tbltipoinmueble(nombre) values("Construcción habitacional");
+insert into tbltipoinmueble(nombre) values("Construcción uso comercial");
+insert into tbltipoinmueble(nombre) values("Uso mixto");
+
+CREATE TABLE `tblPais` (
+  `ID` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(100) NOT NULL,
+  `clave` VARCHAR(3) NOT NULL,
+  PRIMARY KEY (`ID`)
+)
+ENGINE = InnoDB;
+
+insert into tblpais (nombre,clave) values("AFGANISTAN (EMIRATO ISLAMICO DE)","AFG");
+insert into tblpais (nombre,clave) values("ALBANIA (REPUBLICA DE)","ALB");
+insert into tblpais (nombre,clave) values("ALEMANIA (REPUBLICA FEDERAL DE)","DEU");
+insert into tblpais (nombre,clave) values("ANDORRA (PRINCIPADO DE)","AND");
+insert into tblpais (nombre,clave) values("ANGOLA (REPUBLICA DE)","AGO");
+insert into tblpais (nombre,clave) values("ANGUILA","AIA");
+insert into tblpais (nombre,clave) values("ANTIGUA Y BARBUDA (COMUNIDAD BRITANICA DE NACIONES)","ATG");
+insert into tblpais (nombre,clave) values("ANTILLAS NEERLANDESAS (TERRITORIO HOLANDES DE ULTRAMAR)","ANT");
+insert into tblpais (nombre,clave) values("ARABIA SAUDITA (REINO DE)","SAU");
+insert into tblpais (nombre,clave) values("ARGELIA (REPUBLICA DEMOCRATICA Y POPULAR DE)","DZA");
+insert into tblpais (nombre,clave) values("ARGENTINA(REPUBLICA)","ARG");
+insert into tblpais (nombre,clave) values("ARMENIA (REPUBLICA DE)","ARM");
+insert into tblpais (nombre,clave) values("ARUBA (TERRITORIO HOLANDES DE ULTRAMAR)","ABW");
+insert into tblpais (nombre,clave) values("AUSTRALIA (COMUNIDAD DE)","AUS");
+insert into tblpais (nombre,clave) values("AUSTRIA (REPUBLICA DE)","AUT");
+insert into tblpais (nombre,clave) values("AZERBAIJAN (REPUBLICA AZERBAIJANI)","AZE");
+insert into tblpais (nombre,clave) values("BAHAMAS (COMUNIDAD DE LAS)","BHS");
+insert into tblpais (nombre,clave) values("BAHREIN (ESTADO DE)","BHR");
+insert into tblpais (nombre,clave) values("BANGLADESH (REPUBLICA POPULAR DE)","BGD");
+insert into tblpais (nombre,clave) values("BARBADOS (COMUNIDAD BRITANICA DE NACIONES)","BRB");
+insert into tblpais (nombre,clave) values("BELGICA (REINO DE)","BEL");
+insert into tblpais (nombre,clave) values("BELICE","BLZ");
+insert into tblpais (nombre,clave) values("BENIN (REPUBLICA DE)","BEN");
+insert into tblpais (nombre,clave) values("BERMUDAS","BMU");
+insert into tblpais (nombre,clave) values("BIELORRUSIA (REPUBLICA DE)","BLR");
+insert into tblpais (nombre,clave) values("BOLIVIA (REPUBLICA DE)","BOL");
+insert into tblpais (nombre,clave) values("BOSNIA Y HERZEGOVINA","BIH");
+insert into tblpais (nombre,clave) values("BOTSWANA (REPUBLICA DE)","BWA");
+insert into tblpais (nombre,clave) values("BRASIL (REPUBLICA FEDERATIVA DE)","BRA");
+insert into tblpais (nombre,clave) values("BRUNEI (ESTADO DE)(RESIDENCIA DE PAZ)","BRN");
+insert into tblpais (nombre,clave) values("BULGARIA (REPUBLICA DE)","BGR");
+insert into tblpais (nombre,clave) values("BURKINA FASO","BFA");
+insert into tblpais (nombre,clave) values("BURUNDI (REPUBLICA DE)","BDI");
+insert into tblpais (nombre,clave) values("BUTAN (REINO DE)","BTN");
+insert into tblpais (nombre,clave) values("CABO VERDE (REPUBLICA DE)","CPV");
+insert into tblpais (nombre,clave) values("CHAD (REPUBLICA DEL)","TCD");
+insert into tblpais (nombre,clave) values("CAIMAN(ISLAS)","CYM");
+insert into tblpais (nombre,clave) values("CAMBOYA (REINO DE)","KHM");
+insert into tblpais (nombre,clave) values("CAMERUN (REPUBLICA DEL)","CMR");
+insert into tblpais (nombre,clave) values("CANADA","CAN");
+insert into tblpais (nombre,clave) values("CANAL, ISLAS DEL (ISLAS NORMANDAS)","RKE");
+insert into tblpais (nombre,clave) values("CHILE (REPUBLICA DE)","CHL");
+insert into tblpais (nombre,clave) values("CHINA (REPUBLICA POPULAR)","CHN");
+insert into tblpais (nombre,clave) values("CHIPRE (REPUBLICA DE)","CYP");
+insert into tblpais (nombre,clave) values("CIUDAD DEL VATICANO (ESTADO DE LA)","CIA");
+insert into tblpais (nombre,clave) values("COCOS (KEELING, ISLAS AUSTRALIANAS)","CCK");
+insert into tblpais (nombre,clave) values("COLOMBIA (REPUBLICA DE)","COL");
+insert into tblpais (nombre,clave) values("COMORAS(ISLAS)","COM");
+insert into tblpais (nombre,clave) values("COMUNIDAD EUROPEA","EMU");
+insert into tblpais (nombre,clave) values("CONGO (REPUBLICA DEL)","COG");
+insert into tblpais (nombre,clave) values("COOK(ISLAS)","COK");
+insert into tblpais (nombre,clave) values("COREA (REPUBLICA POPULAR DEMOCRATICA DE) (COREA DEL NORTE) ","PRK");
+insert into tblpais (nombre,clave) values("COREA (REPUBLICA DE) (COREA DEL SUR)","KOR");
+insert into tblpais (nombre,clave) values("A DE MARFIL (REPUBLICA DE LA)","COS");
+insert into tblpais (nombre,clave) values("COSTA RICA (REPUBLICA DE)","CRI");
+insert into tblpais (nombre,clave) values("CROACIA (REPUBLICA DE)","HRV");
+insert into tblpais (nombre,clave) values(" CUBA (REPUBLICA DE)","vCU");
+insert into tblpais (nombre,clave) values("CURAZAO (TERRITORIO HOLANDES DE ULTRAMAR)","CUR");
+insert into tblpais (nombre,clave) values("DINAMARCA (REINO DE)","DNK");
+insert into tblpais (nombre,clave) values("DJIBOUTI (REPUBLICA DE)","DJI");
+insert into tblpais (nombre,clave) values("DOMINICA (COMUNIDAD DE)","DMA");
+insert into tblpais (nombre,clave) values("ECUADOR (REPUBLICA DEL)","ECU");
+insert into tblpais (nombre,clave) values("EGIPTO (REPUBLICA ARABE DE)","EGY");
+insert into tblpais (nombre,clave) values("EL SALVADOR (REPUBLICA DE)","SLV");
+insert into tblpais (nombre,clave) values("EMIRATOS ARABES UNIDOS","ARE");
+insert into tblpais (nombre,clave) values("ERITREA (ESTADO DE)","ERI");
+insert into tblpais (nombre,clave) values("ESLOVENIA (REPUBLICA DE)","SVN");
+insert into tblpais (nombre,clave) values("ESPAÑA (REINO DE)","ESP");
+insert into tblpais (nombre,clave) values("ESTADO FEDERADO DE MICRONESIA","DSM");
+insert into tblpais (nombre,clave) values("ESTADOS UNIDOS DE AMERICA","USA");
+insert into tblpais (nombre,clave) values("ESTONIA (REPUBLICA DE)","EST");
+insert into tblpais (nombre,clave) values("ETIOPIA (REPUBLICA DEMOCRATICA FEDERAL)","ETH");
+insert into tblpais (nombre,clave) values("FIDJI (REPUBLICA DE)","FJI");
+insert into tblpais (nombre,clave) values("FILIPINAS (REPUBLICA DE LAS)","PHL");
+insert into tblpais (nombre,clave) values("FINLANDIA (REPUBLICA DE)","FIN");
+insert into tblpais (nombre,clave) values("FRANCIA (REPUBLICA FRANCESA)","FRA");
+insert into tblpais (nombre,clave) values("FRANJA DE GAZA","GZA");
+insert into tblpais (nombre,clave) values("GABONESA(REPUBLICA)","GAB");
+insert into tblpais (nombre,clave) values("GAMBIA (REPUBLICA DE LA)","GMB");
+insert into tblpais (nombre,clave) values("GEORGIA (REPUBLICA DE)","GEO");
+insert into tblpais (nombre,clave) values("GHANA (REPUBLICA DE)","GHA");
+insert into tblpais (nombre,clave) values("GIBRALTAR (R.U.)","GIB");
+insert into tblpais (nombre,clave) values("GRANADA","GRD");
+insert into tblpais (nombre,clave) values("GRECIA (REPUBLICA HELENICA)","GRC");
+insert into tblpais (nombre,clave) values("GROENLANDIA(DINAMARCA)","GRL");
+insert into tblpais (nombre,clave) values("GUADALUPE (DEPARTAMENTO DE)","GLP");
+insert into tblpais (nombre,clave) values("GUAM (E.U.A.) ","GUM");
+insert into tblpais (nombre,clave) values("GUATEMALA (REPUBLICA DE)","GTM");
+insert into tblpais (nombre,clave) values("GUINEA-BISSAU (REPUBLICA DE)","GNB");
+insert into tblpais (nombre,clave) values("GUINEA ECUATORIAL (REPUBLICA DE)","GNQ");
+insert into tblpais (nombre,clave) values("GUINEA (REPUBLICA DE)","GIN");
+insert into tblpais (nombre,clave) values("GUYANA FRANCESA","GUF");
+insert into tblpais (nombre,clave) values("GUYANA (REPUBLICA COOPERATIVA DE)","GUY");
+insert into tblpais (nombre,clave) values("HAITI (REPUBLICA DE)","HTI");
+insert into tblpais (nombre,clave) values("HONDURAS (REPUBLICA DE)","HND");
+insert into tblpais (nombre,clave) values("HONG KONG (REGION ADMINISTRATIVA ESPECIAL DE LA REPUBLICA) ","HKG");
+insert into tblpais (nombre,clave) values("HUNGRIA (REPUBLICA DE)","HUN");
+insert into tblpais (nombre,clave) values("INDIA (REPUBLICA DE)","IND");
+insert into tblpais (nombre,clave) values("INDONESIA (REPUBLICA DE)","IDN");
+insert into tblpais (nombre,clave) values("IRAK (REPUBLICA DE)","IRQ");
+insert into tblpais (nombre,clave) values("IRAN (REPUBLICA ISLAMICA DEL)","IRN");
+insert into tblpais (nombre,clave) values("IRLANDA (REPUBLICA DE)","IRL");
+insert into tblpais (nombre,clave) values("ISLANDIA (REPUBLICA DE)","ISL");
+insert into tblpais (nombre,clave) values("ISLAS HEARD Y MCDONALD","LHM");
+insert into tblpais (nombre,clave) values("ISLAS MALVINAS (R.U.)","FLK");
+insert into tblpais (nombre,clave) values("ISLAS MARIANAS SEPTENTRIONALES","MNP");
+insert into tblpais (nombre,clave) values("ISLAS MARSHALL","MHL");
+insert into tblpais (nombre,clave) values("ISLAS SALOMON (COMUNIDAD BRITANICA DE NACIONES)","SLB");
+insert into tblpais (nombre,clave) values("ISLAS SVALBARD Y JAN MAYEN (NORUEGA)","SJM");
+insert into tblpais (nombre,clave) values("ISLAS TOKELAU","TKL");
+insert into tblpais (nombre,clave) values("ISLAS WALLIS Y FUTUNA","WLF");
+insert into tblpais (nombre,clave) values("ISRAEL (ESTADO DE)","ISR");
+insert into tblpais (nombre,clave) values("ITALIA (REPUBLICA ITALIANA)","ITA");
+insert into tblpais (nombre,clave) values("JAMAICA","JAM");
+insert into tblpais (nombre,clave) values("JAPON","JPN");
+insert into tblpais (nombre,clave) values("JORDANIA (REINO HACHEMITA DE)","JOR");
+insert into tblpais (nombre,clave) values("KAZAKHSTAN (REPUBLICA DE) ","KAZ");
+insert into tblpais (nombre,clave) values("KENYA (REPUBLICA DE)","KEN");
+insert into tblpais (nombre,clave) values("KIRIBATI (REPUBLICA DE)","KIR");
+insert into tblpais (nombre,clave) values("KUWAIT (ESTADO DE)","KWT");
+insert into tblpais (nombre,clave) values("KYRGYZSTAN (REPUBLICA KIRGYZIA)","KGZ");
+insert into tblpais (nombre,clave) values("LESOTHO (REINO DE)","LSO");
+insert into tblpais (nombre,clave) values("LETONIA (REPUBLICA DE)","LVA");
+insert into tblpais (nombre,clave) values("LIBANO (REPUBLICA DE)","LBN");
+insert into tblpais (nombre,clave) values("LIBERIA (REPUBLICA DE)","LBR");
+insert into tblpais (nombre,clave) values("LIBIA (JAMAHIRIYA LIBIA ARABE POPULAR SOCIALISTA)","LBY");
+insert into tblpais (nombre,clave) values("LIECHTENSTEIN (PRINCIPADO DE)","LIE");
+insert into tblpais (nombre,clave) values("LITUANIA (REPUBLICA DE)","LTU");
+insert into tblpais (nombre,clave) values("LUXEMBURGO (GRAN DUCADO DE)","LUX");
+insert into tblpais (nombre,clave) values("MACAO","MAC");
+insert into tblpais (nombre,clave) values("MACEDONIA (ANTIGUA REPUBLICA YUGOSLAVA DE)","MKD");
+insert into tblpais (nombre,clave) values("MADAGASCAR (REPUBLICA DE)","MDG");
+insert into tblpais (nombre,clave) values("MALASIA","MYS");
+insert into tblpais (nombre,clave) values("MALAWI (REPUBLICA DE)","MWI");
+insert into tblpais (nombre,clave) values("MALDIVAS (REPUBLICA DE)","MDV");
+insert into tblpais (nombre,clave) values("MALI (REPUBLICA DE)","MLI");
+insert into tblpais (nombre,clave) values("MALTA (REPUBLICA DE)","MLT");
+insert into tblpais (nombre,clave) values("MARRUECOS (REINO DE)","MAR");
+insert into tblpais (nombre,clave) values("MARTINICA (DEPARTAMENTO DE) (FRANCIA)","MTQ");
+insert into tblpais (nombre,clave) values("MAURICIO (REPUBLICA DE)","MUS");
+insert into tblpais (nombre,clave) values("MAURITANIA (REPUBLICA ISLAMICA DE)","MRT");
+insert into tblpais (nombre,clave) values("MEXICO (ESTADOS UNIDOS MEXICANOS)","MEX");
+insert into tblpais (nombre,clave) values("MOLDAVIA (REPUBLICA DE)","MDA");
+insert into tblpais (nombre,clave) values("MONACO (PRINCIPADO DE)","MCO");
+insert into tblpais (nombre,clave) values("MONGOLIA","MNG");
+insert into tblpais (nombre,clave) values("MONSERRAT(ISLA)","MSR");
+insert into tblpais (nombre,clave) values("MOZAMBIQUE (REPUBLICA DE)","MOZ");
+insert into tblpais (nombre,clave) values("MYANMAR (UNION DE)","MMR");
+insert into tblpais (nombre,clave) values("NAMIBIA (REPUBLICA DE)","NAM");
+insert into tblpais (nombre,clave) values("NAURU","NRU");
+insert into tblpais (nombre,clave) values("NAVIDAD(CHRISTMAS)(ISLAS)","CXI");
+insert into tblpais (nombre,clave) values("NEPAL (REINO DE)","NPL");
+insert into tblpais (nombre,clave) values("NICARAGUA (REPUBLICA DE)","NIC");
+insert into tblpais (nombre,clave) values("NIGER (REPUBLICA DE)","NER");
+insert into tblpais (nombre,clave) values("NIGERIA (REPUBLICA FEDERAL DE)","NGA");
+insert into tblpais (nombre,clave) values("NIVE(ISLA)","NIU");
+insert into tblpais (nombre,clave) values("NORFOLK(ISLA)","NFK");
+insert into tblpais (nombre,clave) values("NORUEGA (REINO DE)","NOR");
+insert into tblpais (nombre,clave) values("NUEVA CALEDONIA (TERRITORIO FRANCES DE ULTRAMAR)","NCL");
+insert into tblpais (nombre,clave) values("NUEVA ZELANDIA","NZL");
+insert into tblpais (nombre,clave) values("OMAN (SULTANATO DE)","OMN");
+insert into tblpais (nombre,clave) values("PACIFICO, ISLAS DEL (ADMON. E.U.A.)","PIK");
+insert into tblpais (nombre,clave) values("PAISES BAJOS (REINO DE LOS) (HOLANDA)","ZYA");
+insert into tblpais (nombre,clave) values("PAISES NO DECLARADOS","KCD");
+insert into tblpais (nombre,clave) values("PAKISTAN (REPUBLICA ISLAMICA DE)","PAK");
+insert into tblpais (nombre,clave) values("PALAU (REPUBLICA DE)","PLW");
+insert into tblpais (nombre,clave) values("PANAMA (REPUBLICA DE)","PAN");
+insert into tblpais (nombre,clave) values("PAPUA NUEVA GUINEA (ESTADO INDEPENDIENTE DE)","PNG");
+insert into tblpais (nombre,clave) values("PARAGUAY (REPUBLICA DEL)","PRY");
+insert into tblpais (nombre,clave) values("PERU (REPUBLICA DEL)","PER");
+insert into tblpais (nombre,clave) values("PITCAIRNS (ISLAS DEPENDENCIA BRITANICA)","PCN");
+insert into tblpais (nombre,clave) values("POLINESIA FRANCESA","PYF");
+insert into tblpais (nombre,clave) values("POLONIA (REPUBLICA DE)","POL");
+insert into tblpais (nombre,clave) values("PORTUGAL (REPUBLICA PORTUGUESA)","PRT");
+insert into tblpais (nombre,clave) values("PUERTO RICO (ESTADO LIBRE ASOCIADO DE LA COMUNIDAD DE)","PRI");
+insert into tblpais (nombre,clave) values("QATAR (ESTADO DE)","QAT");
+insert into tblpais (nombre,clave) values("REINO UNIDO DE LA GRAN BRETAÑA E IRLANDA DEL NORTE","GBR");
+insert into tblpais (nombre,clave) values("REPUBLICA CHECA","CZE");
+insert into tblpais (nombre,clave) values("REPUBLICA CENTROAFRICANA","CAF");
+insert into tblpais (nombre,clave) values("REPUBLICA DEMOCRATICA POPULAR LAOS","LAO");
+insert into tblpais (nombre,clave) values("REPUBLICA DOMINICANA","DOM");
+insert into tblpais (nombre,clave) values("REPUBLICA ESLOVACA","SVK");
+insert into tblpais (nombre,clave) values("REPUBLICA POPULAR DEL CONGO","COD");
+insert into tblpais (nombre,clave) values("REPUBLICA RUANDESA","RWA");
+insert into tblpais (nombre,clave) values("REUNION (DEPARTAMENTO DE LA) (FRANCIA)","REU");
+insert into tblpais (nombre,clave) values("RUMANIA","ROM");
+insert into tblpais (nombre,clave) values("RUSIA (FEDERACION RUSA)","RUS");
+insert into tblpais (nombre,clave) values("SAHARA OCCIDENTAL (REPUBLICA ARABE SAHARAVI DEMOCRATICA)","ESH");
+insert into tblpais (nombre,clave) values("SAMOA (ESTADO INDEPENDIENTE DE)","WSM");
+insert into tblpais (nombre,clave) values("SAN CRISTOBAL Y NIEVES (FEDERACION DE) (SAN KITTS-NEVIS)","KNA");
+insert into tblpais (nombre,clave) values("SAN MARINO (SERENISIMA REPUBLICA DE)","SMR");
+insert into tblpais (nombre,clave) values("SAN PEDRO Y MIQUELON","SPM");
+insert into tblpais (nombre,clave) values("SAN VICENTE Y LAS GRANADINAS","VCT");
+insert into tblpais (nombre,clave) values("SANTA ELENA ","SHN");
+insert into tblpais (nombre,clave) values("SANTA LUCIA ","LCA");
+insert into tblpais (nombre,clave) values("SANTO TOME Y PRINCIPE (REPUBLICA DEMOCRATICA DE)","STP");
+insert into tblpais (nombre,clave) values("SENEGAL (REPUBLICA DEL)","SEN");
+insert into tblpais (nombre,clave) values("SEYCHELLES (REPUBLICA DE LAS)","SYC");
+insert into tblpais (nombre,clave) values("SIERRA LEONA (REPUBLICA DE)","SLE");
+insert into tblpais (nombre,clave) values("SINGAPUR (REPUBLICA DE)","SGP");
+insert into tblpais (nombre,clave) values("SIRIA (REPUBLICA ARABE)","SYR");
+insert into tblpais (nombre,clave) values("SOMALIA","SOM");
+insert into tblpais (nombre,clave) values("SRI LANKA (REPUBLICA DEMOCRATICA SOCIALISTA DE)","LKA");
+insert into tblpais (nombre,clave) values("SUDAFRICA (REPUBLICA DE)","ZAF");
+insert into tblpais (nombre,clave) values("SUDAN (REPUBLICA DEL)","SDN");
+insert into tblpais (nombre,clave) values("SUECIA (REINO DE)","SWE");
+insert into tblpais (nombre,clave) values("SUIZA(CONFEDERACION)","CHE");
+insert into tblpais (nombre,clave) values("SURINAME (REPUBLICA DE)","SUR");
+insert into tblpais (nombre,clave) values("SWAZILANDIA (REINO DE)","SWZ");
+insert into tblpais (nombre,clave) values("TADJIKISTAN (REPUBLICA DE)","TJK");
+insert into tblpais (nombre,clave) values("TAILANDIA (REINO DE)","THA");
+insert into tblpais (nombre,clave) values("TAIWAN (REPUBLICA DE CHINA)","TWN");
+insert into tblpais (nombre,clave) values("TANZANIA (REPUBLICA UNIDA DE)","TZA");
+insert into tblpais (nombre,clave) values("TERRITORIOS BRITANICOS DEL OCEANO INDICO","XCH");
+insert into tblpais (nombre,clave) values("TERRITORIOS FRANCESES, AUSTRALES Y ANTARTICOS","FXA");
+insert into tblpais (nombre,clave) values("TIMOR ORIENTAL","TMP");
+insert into tblpais (nombre,clave) values("TOGO (REPUBLICA TOGOLESA)","TGO");
+insert into tblpais (nombre,clave) values("TONGA (REINO DE)","TON");
+insert into tblpais (nombre,clave) values("TRINIDAD Y TOBAGO (REPUBLICA DE)","TTO");
+insert into tblpais (nombre,clave) values("TUNEZ (REPUBLICA DE)","TUN");
+insert into tblpais (nombre,clave) values("TURCAS Y CAICOS (ISLAS)","TCA");
+insert into tblpais (nombre,clave) values("TURKMENISTAN (REPUBLICA DE)","TKM");
+insert into tblpais (nombre,clave) values("TURQUIA (REPUBLICA DE)","TUR");
+insert into tblpais (nombre,clave) values("TUVALU (COMUNIDAD BRITANICA DE NACIONES)","TUV");
+insert into tblpais (nombre,clave) values("UCRANIA","UKR");
+insert into tblpais (nombre,clave) values("UGANDA (REPUBLICA DE)","UGA");
+insert into tblpais (nombre,clave) values("URUGUAY (REPUBLICA ORIENTAL DEL)","URY");
+insert into tblpais (nombre,clave) values("UZBEJISTAN (REPUBLICA DE)","UZB");
+insert into tblpais (nombre,clave) values("VANUATU","VUT");
+insert into tblpais (nombre,clave) values("VENEZUELA (REPUBLICA DE)","VEN");
+insert into tblpais (nombre,clave) values("VIETNAM (REPUBLICA SOCIALISTA DE)","VNM");
+insert into tblpais (nombre,clave) values("VIRGENES.ISLAS(BRITANICAS)","VGB");
+insert into tblpais (nombre,clave) values("VIRGENES.ISLAS(NORTEAMERICANAS)","VIR");
+insert into tblpais (nombre,clave) values("YEMEN (REPUBLICA DE)","YEM");
+insert into tblpais (nombre,clave) values("YUGOSLAVIA (REPUBLICA FEDERAL DE)","YUG");
+insert into tblpais (nombre,clave) values("ZAMBIA (REPUBLICA DE)","ZMB");
+insert into tblpais (nombre,clave) values("ZIMBABWE (REPUBLICA DE)","ZWE");
+insert into tblpais (nombre,clave) values("ZONA DEL CANAL DE PANAMA","PTY");
+insert into tblpais (nombre,clave) values("ZONA NEUTRAL IRAQ-ARABIA SAUDITA","RUH");
+
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(746,1016,'Total IEPS:','doctotalieps',100,20,'Lucida Console',8,0,0,0,1,0,7,1,0,1,'Documento - Total IEPS',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(746,1016,'Total IVA Ret:','doctotalivaret',100,20,'Lucida Console',8,0,0,0,1,0,7,1,0,1,'Documento - Total IVA Ret.',0,1);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(746,1016,'Total IEPS:','doctotalieps',100,20,'Lucida Console',8,0,0,0,1,0,7+16,1,0,1,'Documento - Total IEPS',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(746,1016,'Total IVA Ret:','doctotalivaret',100,20,'Lucida Console',8,0,0,0,1,0,7+16,1,0,1,'Documento - Total IVA Ret.',0,1);
+
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(746,1016,'Total IEPS:','doctotalieps',100,20,'Lucida Console',8,0,0,0,1,0,8,1,0,1,'Documento - Total IEPS',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(746,1016,'Total IVA Ret:','doctotalivaret',100,20,'Lucida Console',8,0,0,0,1,0,8,1,0,1,'Documento - Total IVA Ret.',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(746,1016,'Total IEPS:','doctotalieps',100,20,'Lucida Console',8,0,0,0,1,0,8+16,1,0,1,'Documento - Total IEPS',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(746,1016,'Total IVA Ret:','doctotalivaret',100,20,'Lucida Console',8,0,0,0,1,0,8+16,1,0,1,'Documento - Total IVA Ret.',0,1);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(746,1016,'Total IEPS:','doctotalieps',100,20,'Lucida Console',8,0,0,0,1,0,9,1,0,1,'Documento - Total IEPS',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(746,1016,'Total IVA Ret:','doctotalivaret',100,20,'Lucida Console',8,0,0,0,1,0,9,1,0,1,'Documento - Total IVA Ret.',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(746,1016,'Total IEPS:','doctotalieps',100,20,'Lucida Console',8,0,0,0,1,0,9+16,1,0,1,'Documento - Total IEPS',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(746,1016,'Total IVA Ret:','doctotalivaret',100,20,'Lucida Console',8,0,0,0,1,0,9+16,1,0,1,'Documento - Total IVA Ret.',0,1);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(746,1016,'Total IEPS:','doctotalieps',100,20,'Lucida Console',8,0,0,0,1,0,10,1,0,1,'Documento - Total IEPS',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(746,1016,'Total IVA Ret:','doctotalivaret',100,20,'Lucida Console',8,0,0,0,1,0,10,1,0,1,'Documento - Total IVA Ret.',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(746,1016,'Total IEPS:','doctotalieps',100,20,'Lucida Console',8,0,0,0,1,0,10+16,1,0,1,'Documento - Total IEPS',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(746,1016,'Total IVA Ret:','doctotalivaret',100,20,'Lucida Console',8,0,0,0,1,0,10+16,1,0,1,'Documento - Total IVA Ret.',0,1);
+
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(746,1016,'Total IEPS:','doctotalieps',100,20,'Lucida Console',8,0,0,0,1,0,11,1,0,1,'Documento - Total IEPS',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(746,1016,'Total IVA Ret:','doctotalivaret',100,20,'Lucida Console',8,0,0,0,1,0,11,1,0,1,'Documento - Total IVA Ret.',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(746,1016,'Total IEPS:','doctotalieps',100,20,'Lucida Console',8,0,0,0,1,0,11+16,1,0,1,'Documento - Total IEPS',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(746,1016,'Total IVA Ret:','doctotalivaret',100,20,'Lucida Console',8,0,0,0,1,0,11+16,1,0,1,'Documento - Total IVA Ret.',0,1);
+
+
+insert into tblactualizaciones(version) values('ver 9022 rev 12');

@@ -1,0 +1,17 @@
+insert into tblinventariopreciostemp(id,idinventario,precio,comentario,idmoneda,idlista,utilidad,descuentoprecio) values(6,0,0,'',2,6,0,0);
+insert into tblinventariopreciostemp(id,idinventario,precio,comentario,idmoneda,idlista,utilidad,descuentoprecio) values(7,0,0,'',2,7,0,0);
+insert into tblinventariopreciostemp(id,idinventario,precio,comentario,idmoneda,idlista,utilidad,descuentoprecio) values(8,0,0,'',2,8,0,0);
+insert into tblinventariopreciostemp(id,idinventario,precio,comentario,idmoneda,idlista,utilidad,descuentoprecio) values(9,0,0,'',2,9,0,0);
+insert into tblinventariopreciostemp(id,idinventario,precio,comentario,idmoneda,idlista,utilidad,descuentoprecio) values(10,0,0,'',2,10,0,0);
+insert into tblinventariopreciostemp(id,idinventario,precio,comentario,idmoneda,idlista,utilidad,descuentoprecio) values(11,0,0,'',2,11,0,0);
+insert into tblinventariopreciostemp(id,idinventario,precio,comentario,idmoneda,idlista,utilidad,descuentoprecio) values(12,0,0,'',2,12,0,0);
+insert into tblinventariopreciostemp(id,idinventario,precio,comentario,idmoneda,idlista,utilidad,descuentoprecio) values(13,0,0,'',2,13,0,0);
+insert into tblinventariopreciostemp(id,idinventario,precio,comentario,idmoneda,idlista,utilidad,descuentoprecio) values(14,0,0,'',2,14,0,0);
+insert into tblinventariopreciostemp(id,idinventario,precio,comentario,idmoneda,idlista,utilidad,descuentoprecio) values(15,0,0,'',2,15,0,0);
+insert into tblinventariopreciostemp(id,idinventario,precio,comentario,idmoneda,idlista,utilidad,descuentoprecio) values(16,0,0,'',2,16,0,0);
+insert into tblinventariopreciostemp(id,idinventario,precio,comentario,idmoneda,idlista,utilidad,descuentoprecio) values(17,0,0,'',2,17,0,0);
+insert into tblinventariopreciostemp(id,idinventario,precio,comentario,idmoneda,idlista,utilidad,descuentoprecio) values(18,0,0,'',2,18,0,0);
+insert into tblinventariopreciostemp(id,idinventario,precio,comentario,idmoneda,idlista,utilidad,descuentoprecio) values(19,0,0,'',2,19,0,0);
+insert into tblinventariopreciostemp(id,idinventario,precio,comentario,idmoneda,idlista,utilidad,descuentoprecio) values(20,0,0,'',2,20,0,0);
+
+insert into tblactualizaciones(version,versionchk) values('ver 9035 rev 5','00903505');

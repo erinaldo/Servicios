@@ -1,0 +1,6 @@
+ALTER TABLE `tblempenios` ADD COLUMN `renovado` INTEGER UNSIGNED NOT NULL AFTER `tipoEmpenio`;
+ALTER TABLE `tblempeniosconfiguracion` ADD COLUMN `claveautorizacion` VARCHAR(45) NOT NULL AFTER `almacenaje31a60T`;
+
+
+insert into tblactualizaciones(version) values('ver 9023 rev 18');
+

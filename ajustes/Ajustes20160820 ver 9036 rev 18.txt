@@ -1,0 +1,47 @@
+ALTER TABLE `tblventaspagosremisiones` ADD COLUMN `usado` INTEGER UNSIGNED NOT NULL AFTER `iddevolucion`,
+ ADD COLUMN `idusuarioalta` INTEGER UNSIGNED NOT NULL AFTER `usado`,
+ ADD COLUMN `fechaalta` VARCHAR(10) NOT NULL AFTER `idusuarioalta`,
+ ADD COLUMN `horaalta` VARCHAR(8) NOT NULL AFTER `fechaalta`,
+ ADD COLUMN `idusuariocambio` INTEGER UNSIGNED NOT NULL AFTER `horaalta`,
+ ADD COLUMN `fechacambio` VARCHAR(10) NOT NULL AFTER `idusuariocambio`,
+ ADD COLUMN `horacambio` VARCHAR(8) NOT NULL AFTER `fechacambio`;
+
+ALTER TABLE `tblreppagos` ADD COLUMN `factura` VARCHAR(20) NOT NULL  DEFAULT '' AFTER `iddeposito`;
+
+ALTER TABLE `tblopciones2` ADD COLUMN `facturarpagosrem` TINYINT UNSIGNED NOT NULL AFTER `acteneunodos`,
+ ADD COLUMN `pediranticiporem` TINYINT UNSIGNED NOT NULL AFTER `facturarpagosrem`;
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(729,741,'Abonado:','totalabonado',120,20,'Lucida Console',8,0,0,0,1,0,3,1,0,1,'Documento - Abonado',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(729,741,'Restante:','restante',120,20,'Lucida Console',8,0,0,0,1,0,3,1,0,1,'Documento - Restante',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(729,741,'Abonado:','totalabonado',120,20,'Lucida Console',8,0,0,0,1,0,19,1,0,1,'Documento - Abonado',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(729,741,'Restante:','restante',120,20,'Lucida Console',8,0,0,0,1,0,19,1,0,1,'Documento - Restante',0,1);
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdadetallesremisionesstr` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdadetallesremisionesstr`(piddocumento int) RETURNS varchar(2000) CHARSET utf8
+BEGIN
+declare varminid int;
+declare varmaxid int;
+declare varidinventario int;
+declare varidventa int;
+declare vardetalles varchar(2000);
+
+set vardetalles='';
+set varminid=ifnull((select min(iddetalle) from tblventasremisionesinventario where idremision=piddocumento),0);
+set varmaxid=ifnull((select max(iddetalle) from tblventasremisionesinventario where idremision=piddocumento),0);
+while varminid<=varmaxid and varminid<>0 do
+if vardetalles='' then
+set vardetalles=concat(vardetalles,(select concat(convert(cantidad using utf8),' ',descripcion) from tblventasremisionesinventario where iddetalle=varminid limit 1));
+else
+set vardetalles=concat(vardetalles,'\n',(select concat(convert(cantidad using utf8),' ',descripcion) from tblventasremisionesinventario where iddetalle=varminid limit 1));
+end if;
+set varminid=ifnull((select min(iddetalle) from tblventasremisionesinventario where idremision=piddocumento and iddetalle>varminid),0);
+end while;
+
+return vardetalles;
+END $$
+
+DELIMITER ;
+	
+insert into tblactualizaciones(version,versionchk) values('ver 9036 rev 18','00903618');

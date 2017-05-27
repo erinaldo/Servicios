@@ -1,0 +1,9 @@
+ALTER TABLE `tblfertilizantesequipos` ADD CONSTRAINT `FK_tblfertilizantesequipos_2` FOREIGN KEY `FK_tblfertilizantesequipos_2` (`idequipo`)
+    REFERENCES `tblsucequipos` (`idequipo`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION;
+
+
+
+insert into tblactualizaciones(version) values('ver 9027 rev 8');
+

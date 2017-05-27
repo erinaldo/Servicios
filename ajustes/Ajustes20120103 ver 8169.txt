@@ -1,0 +1,2 @@
+ALTER TABLE `db_services`.`tblventas` ADD COLUMN `nocuenta` VARCHAR(45) NOT NULL AFTER `comentariof`;
+update tblventas set nocuenta='';

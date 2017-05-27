@@ -1,0 +1,23 @@
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdaseriesventa` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdaseriesventa`(pidinventario int,pidventa int) RETURNS varchar(2000) CHARSET latin1
+BEGIN
+declare varminid int;
+declare varmaxid int;
+declare varseries varchar(2000);
+set varminid=ifnull((select min(idserie) from tblinventarioseries where idventa=pidventa and idinventario=pidinventario),0);
+set varmaxid=ifnull((select max(idserie) from tblinventarioseries where idventa=pidventa and idinventario=pidinventario),0);
+set varseries='';
+
+while varminid<=varmaxid and varminid<>0 do
+set varseries=concat(varseries,'\n','N/S: ',(select noserie from tblinventarioseries where idserie=varminid));
+set varminid=ifnull((select min(idserie) from tblinventarioseries where idventa=pidventa and idinventario=pidinventario and idserie>varminid),0);
+end while;
+return varseries;
+END $$
+
+DELIMITER ;
+
+ALTER TABLE `tblopciones` ADD COLUMN `limitarcredito` TINYINT UNSIGNED NOT NULL AFTER `agregaseriesventa`,
+ ADD COLUMN `passcredito` VARCHAR(45) NOT NULL AFTER `limitarcredito`;

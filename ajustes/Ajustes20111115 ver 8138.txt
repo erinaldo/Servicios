@@ -1,0 +1,97 @@
+ DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spclientesmovimientos` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spclientesmovimientos`(pidcliente int,pfecha1 varchar(10),pfecha2 varchar(10)) RETURNS int(11)
+BEGIN
+
+delete from tblclientesmovimientos where idcliente=pidcliente;
+
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select fecha,1,idventa,if(idconversion=2,totalapagar,totalapagar*tipodecambio),0,0,pidcliente,hora,3,serie,folio from tblventas inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where idcliente=pidcliente and (estado=3 or estado=4) and fecha>=pfecha1 and fecha<=pfecha2 and tblformasdepago.tipo=0;
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select fecha,1,idventa,if(idconversion=2,totalapagar,totalapagar*tipodecambio),if(idconversion=2,totalapagar,totalapagar*tipodecambio),0,pidcliente,hora,3,serie,folio from tblventas inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where idcliente=pidcliente and (estado=3 or estado=4) and fecha>=pfecha1 and fecha<=pfecha2 and tblformasdepago.tipo=1;
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select fecha,2,idnota,0,if(idmoneda=2,totalapagar,totalapagar*tipodecambio),0,pidcliente,hora,3,serie,folio from tblnotasdecredito where idcliente=pidcliente and (estado=3 or estado=4) and fecha>=pfecha1 and fecha<=pfecha2;
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select fecha,3,iddevolucion,0,if(idconversion=2,totalapagar,totalapagar*tipodecambio),0,pidcliente,hora,3,serie,folio from tbldevoluciones where idcliente=pidcliente and (estado=3 or estado=4) and fecha>=pfecha1 and fecha<=pfecha2;
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select tblventaspagos.fecha,4,idpago,0,if(idmoneda=2,cantidad,cantidad*ptipodecambio),0,pidcliente,tblventaspagos.hora,3,(select serie from tblventas where idventa=tblventaspagos.idventa limit 1) as serie,
+(select folio from tblventas where idventa=tblventaspagos.idventa limit 1) as folio from tblventaspagos where tblventaspagos.idcliente=pidcliente and (tblventaspagos.estado=3 or tblventaspagos.estado=4) and tblventaspagos.fecha>=pfecha1 and tblventaspagos.fecha<=pfecha2 and tblventaspagos.iddocumento=0 and tblventaspagos.idventa<>0;
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select tblventaspagos.fecha,4,idpago,0,if(idmoneda=2,cantidad,cantidad*ptipodecambio),0,pidcliente,tblventaspagos.hora,3,(select serie from tblnotasdecargo where idcargo=tblventaspagos.idcargo limit 1) as serie,
+(select folio from tblnotasdecargo where idcargo=tblventaspagos.idcargo limit 1) as folio from tblventaspagos where tblventaspagos.idcliente=pidcliente and (tblventaspagos.estado=3 or tblventaspagos.estado=4) and tblventaspagos.fecha>=pfecha1 and tblventaspagos.fecha<=pfecha2 and tblventaspagos.iddocumento=0 and tblventaspagos.idcargo<>0;
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select tblventaspagos.fecha,4,idpago,0,if(idmoneda=2,cantidad,cantidad*ptipodecambio),0,pidcliente,tblventaspagos.hora,3,(select if(tiposaldo=0,serie,seriereferencia) from tbldocumentosclientes where iddocumento=tblventaspagos.iddocumentod limit 1) as serie,
+(select if(tiposaldo=0,folio,folioreferencia) from tbldocumentosclientes where iddocumento=tblventaspagos.iddocumentod limit 1) as folio from tblventaspagos where tblventaspagos.idcliente=pidcliente and (tblventaspagos.estado=3 or tblventaspagos.estado=4) and tblventaspagos.fecha>=pfecha1 and tblventaspagos.fecha<=pfecha2 and tblventaspagos.iddocumento=0 and tblventaspagos.iddocumentod<>0;
+
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select fecha,5,idcargo,if(idmoneda=2,totalapagar,totalapagar*tipodecambio),0,0,pidcliente,hora,3,serie,folio from tblnotasdecargo where idcliente=pidcliente and (estado=3 or estado=4) and fecha>=pfecha1 and fecha<=pfecha2;
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select fecha,6,iddocumento,if(idmoneda=2,totalapagar,totalapagar*tipodecambio),0,0,pidcliente,hora,3,seriereferencia,folioreferencia from tbldocumentosclientes where idcliente=pidcliente and (estado=3 or estado=4) and fecha>=pfecha1 and fecha<=pfecha2 and tiposaldo=1;
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select fecha,7,iddocumento,if(idmoneda=2,totalapagar,totalapagar*tipodecambio),0,0,pidcliente,hora,3,serie,folio from tbldocumentosclientes where idcliente=pidcliente and (estado=3 or estado=4) and fecha>=pfecha1 and fecha<=pfecha2 and tiposaldo=0;
+
+
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select fechacancelado,1,idventa,0,if(idconversion=2,totalapagar,totalapagar*tipodecambio),0,pidcliente,horacancelado,4,serie,folio from tblventas inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where idcliente=pidcliente and estado=4 and fecha>=pfecha1 and fecha<=pfecha2 and tblformasdepago.tipo=0;
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select fechacancelado,1,idventa,if(idconversion=2,totalapagar,totalapagar*tipodecambio),if(idconversion=2,totalapagar,totalapagar*tipodecambio),0,pidcliente,horacancelado,4,serie,folio from tblventas inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where idcliente=pidcliente and estado=4 and fecha>=pfecha1 and fecha<=pfecha2 and tblformasdepago.tipo=1;
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select fechacancelado,2,idnota,if(idmoneda=2,totalapagar,totalapagar*tipodecambio),0,0,pidcliente,horacancelado,4,serie,folio from tblnotasdecredito where idcliente=pidcliente and estado=4 and fecha>=pfecha1 and fecha<=pfecha2;
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select fechacancelado,3,iddevolucion,if(idconversion=2,totalapagar,totalapagar*tipodecambio),0,0,pidcliente,horacancelado,4,serie,folio from tbldevoluciones where idcliente=pidcliente and estado=4 and fecha>=pfecha1 and fecha<=pfecha2;
+
+/*
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select tblventaspagos.fecha,4,idpago,if(idmoneda=2,cantidad,cantidad*ptipodecambio),0,0,pidcliente,tblventaspagos.hora,4,if(tblventaspagos.idventa<>0,(select serie from tblventas where idventa=tblventaspagos.idventa limit 1),(select serie from tblnotasdecargo where idcargo=tblventaspagos.idcargo limit 1)) as serie,
+if(tblventaspagos.idventa<>0,(select folio from tblventas where idventa=tblventaspagos.idventa limit 1),(select folio from tblnotasdecargo where idcargo=tblventaspagos.idcargo limit 1)) as folio from tblventaspagos where tblventaspagos.idcliente=pidcliente and tblventaspagos.estado=4 and tblventaspagos.fecha>=pfecha1 and tblventaspagos.fecha<=pfecha2 and tblventaspagos.iddocumento=0;
+*/
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select tblventaspagos.fechacancelado,4,idpago,0,if(idmoneda=2,cantidad,cantidad*ptipodecambio),0,pidcliente,tblventaspagos.horacancelado,4,(select serie from tblventas where idventa=tblventaspagos.idventa limit 1) as serie,
+(select folio from tblventas where idventa=tblventaspagos.idventa limit 1) as folio from tblventaspagos where tblventaspagos.idcliente=pidcliente and tblventaspagos.estado=4 and tblventaspagos.fecha>=pfecha1 and tblventaspagos.fecha<=pfecha2 and tblventaspagos.iddocumento=0 and tblventaspagos.idventa<>0;
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select tblventaspagos.fechacancelado,4,idpago,0,if(idmoneda=2,cantidad,cantidad*ptipodecambio),0,pidcliente,tblventaspagos.horacancelado,4,(select serie from tblnotasdecargo where idcargo=tblventaspagos.idcargo limit 1) as serie,
+(select folio from tblnotasdecargo where idcargo=tblventaspagos.idcargo limit 1) as folio from tblventaspagos where tblventaspagos.idcliente=pidcliente and tblventaspagos.estado=4 and tblventaspagos.fecha>=pfecha1 and tblventaspagos.fecha<=pfecha2 and tblventaspagos.iddocumento=0 and tblventaspagos.idcargo<>0;
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select tblventaspagos.fechacancelado,4,idpago,0,if(idmoneda=2,cantidad,cantidad*ptipodecambio),0,pidcliente,tblventaspagos.horacancelado,4,(select if(tiposaldo=0,serie,seriereferencia) from tbldocumentosclientes where iddocumento=tblventaspagos.iddocumentod limit 1) as serie,
+(select if(tiposaldo=0,folio,folioreferencia) from tbldocumentosclientes where iddocumento=tblventaspagos.iddocumentod limit 1) as folio from tblventaspagos where tblventaspagos.idcliente=pidcliente and tblventaspagos.estado=4 and tblventaspagos.fecha>=pfecha1 and tblventaspagos.fecha<=pfecha2 and tblventaspagos.iddocumento=0 and tblventaspagos.iddocumentod<>0;
+
+
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select fechacancelado,5,idcargo,0,if(idmoneda=2,totalapagar,totalapagar*tipodecambio),0,pidcliente,horacancelado,4,serie,folio from tblnotasdecargo where idcliente=pidcliente and estado=4 and fecha>=pfecha1 and fecha<=pfecha2;
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select fechacancelado,6,iddocumento,0,if(idmoneda=2,totalapagar,totalapagar*tipodecambio),0,pidcliente,horacancelado,4,seriereferencia,folioreferencia from tbldocumentosclientes where idcliente=pidcliente and estado=4 and fecha>=pfecha1 and fecha<=pfecha2 and tiposaldo=1;
+
+insert into tblclientesmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idcliente,hora,estado,serie,folio)
+select fechacancelado,7,iddocumento,0,if(idmoneda=2,totalapagar,totalapagar*tipodecambio),0,pidcliente,horacancelado,4,serie,folio from tbldocumentosclientes where idcliente=pidcliente and estado=4 and fecha>=pfecha1 and fecha<=pfecha2 and tiposaldo=0;
+
+
+
+
+
+
+
+
+return pidcliente;
+END $$
+
+DELIMITER ;

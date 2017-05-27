@@ -1,0 +1,5 @@
+ALTER TABLE `tblpolizasdetalles` MODIFY COLUMN `cargo` VARCHAR(45) NOT NULL,
+ MODIFY COLUMN `abono` VARCHAR(45) NOT NULL;
+
+insert into tblactualizaciones(version) values('ver 9025 rev 21');
+

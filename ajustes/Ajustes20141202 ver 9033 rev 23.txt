@@ -1,0 +1,19 @@
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdapreciolistauno` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdapreciolistauno`(pidinventario int) RETURNS double
+BEGIN
+return ifnull((select precio from tblinventarioprecios where idlista=1 and idinventario=pidinventario limit 1),0);
+END $$
+
+DELIMITER ;
+
+ALTER TABLE `tblcompraspedidos` ADD COLUMN `idusuarioalta` INTEGER UNSIGNED NOT NULL AFTER `comentario`,
+ ADD COLUMN `fechaalta` VARCHAR(10) NOT NULL AFTER `idusuarioalta`,
+ ADD COLUMN `horaalta` VARCHAR(10) NOT NULL AFTER `fechaalta`,
+ ADD COLUMN `idusuariocambio` INTEGER UNSIGNED NOT NULL AFTER `horaalta`,
+ ADD COLUMN `fechacambio` VARCHAR(10) NOT NULL AFTER `idusuariocambio`,
+ ADD COLUMN `horacambio` VARCHAR(10) NOT NULL AFTER `fechacambio`;
+
+
+insert into tblactualizaciones(version) values('ver 9033 rev 23');

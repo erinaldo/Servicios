@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:tns="http://www.buzonfiscal.com/TimbradoCFDI/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd2="http://www.sat.gob.mx/TimbreFiscalDigital" xmlns:xsd1="http://www.buzonfiscal.com/ns/xsd/bf/TimbradoCFD" name="TimbradoCFDI" targetNamespace="http://www.buzonfiscal.com/TimbradoCFDI/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.buzonfiscal.com/TimbradoCFDI/">
+      <xsd:element name="Error">
+        <xsd:complexType>
+          <xsd:sequence minOccurs="0">
+            <xsd:element maxOccurs="unbounded" name="descripcionError" type="xsd:string" />
+          </xsd:sequence>
+          <xsd:attribute name="codigo" use="required">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import schemaLocation="TimbradoCFD.xsd" namespace="http://www.buzonfiscal.com/ns/xsd/bf/TimbradoCFD" />
+      <xsd:import schemaLocation="TimbreFiscalDigital.xsd" namespace="http://www.sat.gob.mx/TimbreFiscalDigital" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="timbradoCFDRequest">
+    <wsdl:part name="request" element="xsd1:RequestTimbradoCFD" />
+  </wsdl:message>
+  <wsdl:message name="timbradoCFDResponse">
+    <wsdl:part name="response" element="xsd2:TimbreFiscalDigital" />
+  </wsdl:message>
+  <wsdl:message name="timbradoCFD_faultMsg">
+    <wsdl:part name="fault" element="tns:Error" />
+  </wsdl:message>
+  <wsdl:portType name="TimbradoCFDI">
+    <wsdl:operation name="timbradoCFD">
+      <wsdl:input message="tns:timbradoCFDRequest" />
+      <wsdl:output message="tns:timbradoCFDResponse" />
+      <wsdl:fault name="fault" message="tns:timbradoCFD_faultMsg" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TimbradoCFDISOAP" type="tns:TimbradoCFDI">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="timbradoCFD">
+      <soap:operation soapAction="http://www.buzonfiscal.com/TimbradoCFDI/timbradoCFD" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TimbradoCFDI">
+    <wsdl:port name="TimbradoCFDISOAP" binding="tns:TimbradoCFDISOAP">
+      <soap:address location="http://www.buzonfiscal.com" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

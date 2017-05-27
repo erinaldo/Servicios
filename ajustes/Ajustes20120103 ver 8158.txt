@@ -1,0 +1,13 @@
+CREATE TABLE `db_services`.`tblproveedoresmovimientossaldos` (
+  `idproveedor` INTEGER UNSIGNED NOT NULL,
+  `saldoant` DOUBLE NOT NULL
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `db_services`.`tblnotasdecreditodetalles` MODIFY COLUMN `descripcion` VARCHAR(2000) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+ALTER TABLE `db_services`.`tblventaspagos` MODIFY COLUMN `tipo` VARCHAR(2000) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL;
+
+
+
+
+

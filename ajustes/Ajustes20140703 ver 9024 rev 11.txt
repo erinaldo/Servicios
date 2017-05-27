@@ -1,0 +1,31 @@
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdasaldoafechaclientesrem` $$
+CREATE FUNCTION `spdasaldoafechaclientesrem` (pidcliente int,pfecha varchar(10)) RETURNS double
+BEGIN
+declare vsaldo double;
+set vsaldo=0;
+
+set vsaldo=ifnull((select if(idmoneda=2,sum(totalapagar),sum(totalapagar*tipodecambio)) from tblventasremisiones inner join tblformasdepagoremisiones on tblventasremisiones.idforma=tblformasdepagoremisiones.idforma where tblformasdepagoremisiones.tipo=3 and idcliente=pidcliente and fecha<pfecha and estado=3),0);
+set vsaldo=vsaldo-ifnull((select if(idmoneda=2,sum(cantidad),sum(cantidad*ptipodecambio)) from tblventaspagosremisiones where idcliente=pidcliente and tblventaspagosremisiones.estado=3 and tblventaspagosremisiones.fecha<pfecha),0);
+
+return vsaldo;
+END $$
+
+DELIMITER ;
+
+ALTER TABLE `tblopciones` ADD COLUMN `busquedaporclases` TINYINT UNSIGNED NOT NULL AFTER `tipoprorrateo`;
+
+ALTER TABLE `tblopciones` ADD COLUMN `maximizarventas` TINYINT UNSIGNED NOT NULL AFTER `busquedaporclases`;
+
+CREATE TABLE `tblCodigoBarras` (
+  `ID` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  `tipo` INTEGER UNSIGNED NOT NULL,
+  `codigo` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`ID`)
+)
+ENGINE = InnoDB;
+
+
+insert into tblactualizaciones(version) values('ver 9024 rev 11');

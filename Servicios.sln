@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Servicios", "Servicios\Servicios.vbproj", "{53FAF375-07FB-4D57-B043-2817B254F0D6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+		ReleaseFinal|Any CPU = ReleaseFinal|Any CPU
+		ReleaseFinal|x86 = ReleaseFinal|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{53FAF375-07FB-4D57-B043-2817B254F0D6}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{53FAF375-07FB-4D57-B043-2817B254F0D6}.Debug|Any CPU.Build.0 = Debug|x86
+		{53FAF375-07FB-4D57-B043-2817B254F0D6}.Debug|x86.ActiveCfg = Debug|x86
+		{53FAF375-07FB-4D57-B043-2817B254F0D6}.Debug|x86.Build.0 = Debug|x86
+		{53FAF375-07FB-4D57-B043-2817B254F0D6}.Release|Any CPU.ActiveCfg = Release|x86
+		{53FAF375-07FB-4D57-B043-2817B254F0D6}.Release|Any CPU.Build.0 = Release|x86
+		{53FAF375-07FB-4D57-B043-2817B254F0D6}.Release|x86.ActiveCfg = Release|x86
+		{53FAF375-07FB-4D57-B043-2817B254F0D6}.Release|x86.Build.0 = Release|x86
+		{53FAF375-07FB-4D57-B043-2817B254F0D6}.ReleaseFinal|Any CPU.ActiveCfg = ReleaseFinal|Any CPU
+		{53FAF375-07FB-4D57-B043-2817B254F0D6}.ReleaseFinal|Any CPU.Build.0 = ReleaseFinal|Any CPU
+		{53FAF375-07FB-4D57-B043-2817B254F0D6}.ReleaseFinal|x86.ActiveCfg = ReleaseFinal|x86
+		{53FAF375-07FB-4D57-B043-2817B254F0D6}.ReleaseFinal|x86.Build.0 = ReleaseFinal|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,160 @@
+ALTER TABLE `tblinventarioaduana` ADD COLUMN `yvalidacion` VARCHAR(3) NOT NULL AFTER `idinventario`,
+ ADD COLUMN `claveaduana` VARCHAR(4) NOT NULL AFTER `yvalidacion`,
+ ADD COLUMN `patente` VARCHAR(5) NOT NULL AFTER `claveaduana`;
+
+DROP TABLE IF EXISTS `db_catalogossat`.`tblunidadesmedidab`;
+CREATE TABLE  `db_catalogossat`.`tblunidadesmedidab` (
+  `clave` varchar(5) NOT NULL,
+  `nombre` varchar(450) NOT NULL,
+  `descripcion` varchar(450) NOT NULL,
+  `simbolo` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into db_catalogossat.tblunidadesmedidab(clave,nombre,descripcion,simbolo) select clave,nombre,descripcion,simbolo from db_catalogossat.tblunidadesmedida;
+delete from db_catalogossat.tblunidadesmedida;
+insert into db_catalogossat.tblunidadesmedida(clave,nombre,descripcion,simbolo) select distinct clave,nombre,descripcion,simbolo from db_catalogossat.tblunidadesmedidab;
+
+DROP TABLE IF EXISTS `db_catalogossat`.`tblunidadesmedidab`;
+
+update tblopciones set paccfdi=2;
+
+ALTER TABLE `tblinventario` ADD COLUMN `usaubicacion` BOOLEAN NOT NULL AFTER `cunidad`;
+ALTER TABLE `tblmovimientosdetalles` MODIFY COLUMN `idalmacen2` INT(10) UNSIGNED DEFAULT NULL;
+
+DROP TABLE IF EXISTS `tblalmacenesubicaciones`;
+CREATE TABLE  `tblalmacenesubicaciones` (
+  `idalmacen` int(10) unsigned NOT NULL,
+  `ubicacion` varchar(15) NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `Index_2` (`idalmacen`,`ubicacion`),
+  CONSTRAINT `FK_tblalmacenesubicaciones_1` FOREIGN KEY (`idalmacen`) REFERENCES `tblalmacenes` (`idalmacen`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `tblalmacenesi` ADD UNIQUE INDEX `Index_4`(`idalmacen`, `idinventario`);
+
+DROP TABLE IF EXISTS `tblalmacenesiubicaciones`;
+CREATE TABLE  `tblalmacenesiubicaciones` (
+  `ubicacion` varchar(15) NOT NULL,
+  `cantidad` float NOT NULL,
+  `idalmacen` int(10) unsigned NOT NULL,
+  `idinventario` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`ubicacion`,`idalmacen`,`idinventario`) USING BTREE,
+  KEY `FK_tblalmacenesiubicaciones_1` (`idalmacen`,`ubicacion`),
+  KEY `FK_tblalmacenesiubicaciones_2` (`idalmacen`,`idinventario`),
+  CONSTRAINT `FK_tblalmacenesiubicaciones_2` FOREIGN KEY (`idalmacen`, `idinventario`) REFERENCES `tblalmacenesi` (`idalmacen`, `idinventario`),
+  CONSTRAINT `FK_tblalmacenesiubicaciones_1` FOREIGN KEY (`idalmacen`, `ubicacion`) REFERENCES `tblalmacenesubicaciones` (`idalmacen`, `ubicacion`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `tblmovimientosubicaciones`;
+CREATE TABLE  `tblmovimientosubicaciones` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `ubicaciono` varchar(15) DEFAULT NULL,
+  `iddetalle` int(10) unsigned NOT NULL,
+  `cantidad` double NOT NULL,
+  `surtido` double NOT NULL,
+  `ubicaciond` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_tblmovimientosubicaciones_1` (`iddetalle`),
+  CONSTRAINT `FK_tblmovimientosubicaciones_1` FOREIGN KEY (`iddetalle`) REFERENCES `tblmovimientosdetalles` (`iddetalle`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spmodificainventarioubicacionesf` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spmodificainventarioubicacionesf`(pidinventario int,pidalmacen int,pcantidad double,pcantidadant double,pmodo tinyint,pmedida tinyint, pubicacion varchar(15)) RETURNS int(11)
+BEGIN
+
+declare vcontenido double;
+declare vcantidad double;
+declare vesinventariable tinyint;
+if (select inventariable from tblinventario where idinventario=pidinventario)=1 then
+  set vcantidad=ifnull((select ifnull(u.cantidad,0) from tblalmacenesi a left outer join tblalmacenesiubicaciones u on a.id=u.idalmaceni where idinventario=pidinventario and idalmacen=pidalmacen and ubicacion=pubicacion),0);
+  if pmedida=0 then
+    set vcontenido=(select contenido from tblinventario where idinventario=pidinventario);
+    if vcontenido<>0 then
+      if pmodo=0 then
+        set vcantidad=vcantidad+pcantidad/vcontenido;
+      end if;
+      if pmodo=1 then
+        set vcantidad=vcantidad-pcantidad/vcontenido;
+      end if;
+      if pmodo=2 then
+        set vcantidad=vcantidad-pcantidadant/vcontenido+pcantidad/vcontenido;
+      end if;
+      if pmodo=3 then
+        set vcantidad=vcantidad+pcantidadant/vcontenido-pcantidad/vcontenido;
+      end if;
+    end if;
+  else
+    if pmodo=0 then
+      set vcantidad=vcantidad+pcantidad;
+    end if;
+    if pmodo=1 then
+      set vcantidad=vcantidad-pcantidad;
+    end if;
+    if pmodo=2 then
+      set vcantidad=vcantidad-pcantidadant+pcantidad;
+    end if;
+    if pmodo=3 then
+      set vcantidad=vcantidad+pcantidadant-pcantidad;
+    end if;
+  end if;
+  if (select count(*) from tblalmacenesiubicaciones u inner join tblalmacenesi a on u.idalmaceni=a.id where a.idinventario=pidinventario and a.idalmacen=pidalmacen and u.ubicacion=pubicacion)=0 then
+    insert into tblalmacenesiubicaciones (idalmaceni, cantidad, ubicacion) select id, vcantidad, pubicacion from tblalmacenesi where idinventario=pidinventario and idalmacen=pidalmacen;
+  else
+    update tblalmacenesiubicaciones inner join tblalmacenesi on tblalmacenesiubicaciones.idalmaceni=tblalmacenesi.id set tblalmacenesiubicaciones.cantidad=vcantidad where tblalmacenesi.idinventario=pidinventario and idalmacen=pidalmacen and ubicacion=pubicacion;
+  end if;
+end if;
+return 1;
+
+END $$
+
+DELIMITER ;
+
+update tblimpresiones set documento = documento+1000-16 where documento >= 16 and documento <= 31;
+update tblimpresiones set documento = documento+1000-16 where documento >= 48 and documento <= 63;
+update tblimpresionesnodos set documento = documento+1000-16 where documento >= 16 and documento <= 31;
+update tblimpresionesnodos set documento = documento+1000-16 where documento >= 48 and documento <= 63;
+
+delete from tblimpresionesnodos where documento=44 and idsucursal=1;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(40,125,'Codigo de barras','codigobi',220,50,'Lucida Console',8,0,0,0,0,1,44,1,0,0,'codigo de barras 1',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(70,175,'Código','codigo',160,20,'Microsoft Sans Serif',10,1,0,0,0,1,44,1,0,0,'Documento - Código',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(10,11,'Descripción','nombreArticulo',280,70,'Microsoft Sans Serif',18,1,0,0,0,1,44,1,0,0,'documento - nombre 5',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(5,80,'Línea02','ln02',290,2,'Arial',10,0,0,0,0,1,44,1,1,0,'Línea02',0,8);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(10,85,'Ingredientes: Camarón, sal, metabisulfito de sodio (para prevenir decoloración)','et03',280,40,'Microsoft Sans Serif',10,0,0,0,0,1,44,1,2,0,'Etiqueta03',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(150,44,'NW: 2 LB','et08',140,40,'Microsoft Sans Serif',18,1,0,0,0,1,44,1,2,0,'Etiqueta08',0,7);
+
+delete from tblimpresionesnodos where documento=49 and idsucursal=1;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(8,235,'Codigo de barras','codigobi',200,60,'Lucida Console',8,0,0,0,0,1,49,1,0,0,'codigo de barras 1',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(434,338,'Código','codigo',200,20,'Microsoft Sans Serif',8,1,0,0,0,0,49,1,0,0,'Documento - Código',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(10,109,'Descripción','nombreArticulo',380,70,'Microsoft Sans Serif',20,1,0,0,0,1,49,1,0,0,'documento - nombre 5',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(5,228,'Línea02','ln02',390,2,'Arial',10,0,0,0,0,1,49,1,1,0,'Línea02',0,8);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(5,78,'Línea01','ln01',390,2,'Arial',10,0,0,0,0,1,49,1,1,0,'Línea01',0,8);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(11,2,'BG ALMACENES Y SERVICIOS SA DE CV','et01',380,25,'Microsoft Sans Serif',12,0,0,0,0,1,49,1,2,0,'Etiqueta01',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(11,27,'SUFRAGIO EFECTIVO 152-B, COL. CENTRO, CIUDAD OBREGÓN, SONORA MÉXICO CP 85000','et02',380,30,'Lucida Console',8,0,0,0,0,1,49,1,2,0,'Etiqueta02',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(12,184,'NW:','et03',30,20,'Lucida Console',8,0,0,0,0,1,49,1,2,0,'Etiqueta03',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(220,235,'MANTENER CONGELADO Elaborado por: BG Almacenes y Servicios','et06',170,60,'Lucida Console',8,0,0,0,0,1,49,1,2,0,'Etiqueta06',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,184,'NW: 10 KG','et08',170,40,'Microsoft Sans Serif',20,1,0,0,0,1,49,1,2,0,'Etiqueta08',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(130,57,'www.bgalmacenes.com','et14',150,20,'Lucida Console',8,0,0,0,0,1,49,1,2,0,'Etiqueta14',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(10,82,'11-185 --- Lote: 0 --- Folio: 171824309','et07',380,20,'Lucida Console',8,0,0,0,0,1,49,1,2,0,'Etiqueta07',0,7);
+
+delete from tblimpresionesnodos where documento=48 and idsucursal=1;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(60,265,'Codigo de barras','codigobi',200,60,'Lucida Console',8,0,0,0,0,1,48,1,0,0,'codigo de barras 1',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(448,341,'Código','codigo',200,20,'Microsoft Sans Serif',8,1,0,0,0,0,48,1,0,0,'Documento - Código',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(10,125,'Descripción','nombreArticulo',280,70,'Microsoft Sans Serif',22,1,0,0,0,1,48,1,0,0,'documento - nombre 5',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(5,103,'Línea01','ln01',290,2,'Arial',10,0,0,0,0,1,48,1,1,0,'Línea01',0,8);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(4,260,'Línea02','ln02',320,2,'Arial',10,0,0,0,0,1,48,1,1,0,'Línea02',0,8);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(10,2,'BG ALMACENES Y SERVICIOS','et01',280,25,'Microsoft Sans Serif',12,1,0,0,0,1,48,1,2,0,'Etiqueta01',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(10,50,'SUFRAGIO EFECTIVO 152-B, COL. CENTRO, CIUDAD OBREGÓN SONORA','et02',280,30,'Lucida Console',8,0,0,0,0,1,48,1,2,0,'Etiqueta02',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(110,214,'NW:','et03',30,20,'Lucida Console',8,0,0,0,0,1,48,1,2,0,'Etiqueta03',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(10,105,'11-185 --- Lote: 0 --- Folio 171733605','et04',280,20,'Lucida Console',8,0,0,0,0,1,48,1,2,0,'Etiqueta04',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(70,372,'PRODUCTO DE MÉXICO','et06',180,20,'Microsoft Sans Serif',10,1,0,0,0,1,48,1,2,0,'Etiqueta06',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(12,327,'Ingredientes: Camarón, sal, metabisulfito de sodio (para prevenir decoloración)','et07',280,40,'Lucida Console',8,0,0,0,0,1,48,1,2,0,'Etiqueta07',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(140,214,'20.00 kg','et08',150,40,'Microsoft Sans Serif',22,1,0,0,0,1,48,1,2,0,'Etiqueta08',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(65,197,'(LITOPENAEUS VANNAMEI)','et09',170,15,'Microsoft Sans Serif',8,1,0,0,0,1,48,1,2,0,'Etiqueta09',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(84,80,'www.bgalmacenes.com','et14',140,20,'Lucida Console',8,0,0,0,0,1,48,1,2,0,'Etiqueta14',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(95,27,'S.A. DE C.V.','et10',120,25,'Microsoft Sans Serif',12,1,0,0,0,1,48,1,2,0,'Etiqueta10',0,7);
+
+
+insert into tblactualizaciones(version,versionchk) values('ver 9037 rev 25','00903725');

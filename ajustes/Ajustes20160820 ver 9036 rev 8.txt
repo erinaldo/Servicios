@@ -1,0 +1,76 @@
+ALTER TABLE `tblccontables` ADD COLUMN `idcuentan2` INTEGER UNSIGNED NOT NULL AFTER `idcuentam`,
+ ADD COLUMN `idcuentan3` INTEGER UNSIGNED NOT NULL AFTER `idcuentan2`,
+ ADD COLUMN `idcuentan4` INTEGER UNSIGNED NOT NULL AFTER `idcuentan3`,
+ ADD COLUMN `idcuentan5` INTEGER UNSIGNED NOT NULL AFTER `idcuentan4`;
+
+ALTER TABLE `tblpolizasdetalles` ADD COLUMN `idcuentan1` INTEGER UNSIGNED NOT NULL AFTER `orden`,
+ ADD COLUMN `idcuentan2` INTEGER UNSIGNED NOT NULL AFTER `idcuentan1`,
+ ADD COLUMN `idcuentan3` INTEGER UNSIGNED NOT NULL AFTER `idcuentan2`,
+ ADD COLUMN `idcuentan4` INTEGER UNSIGNED NOT NULL AFTER `idcuentan3`,
+ ADD COLUMN `idcuentan5` INTEGER UNSIGNED NOT NULL AFTER `idcuentan4`,
+ ADD INDEX `Index_7`(`idcuentan1`),
+ ADD INDEX `Index_8`(`idcuentan2`);
+
+DROP TABLE IF EXISTS `tblccontablestemp`;
+CREATE TABLE  `tblccontablestemp` (
+  `idCContable` int(10) unsigned DEFAULT NULL,
+  `Cuenta` varchar(5) DEFAULT NULL,
+  `N2` varchar(5) DEFAULT NULL,
+  `N3` varchar(5) DEFAULT NULL,
+  `N4` varchar(5) DEFAULT NULL,
+  `Descripcion` varchar(65) DEFAULT NULL,
+  `Nivel` int(10) unsigned DEFAULT NULL,
+  `CuentaComp` varchar(35) DEFAULT NULL,
+  `Tipo` int(10) unsigned DEFAULT NULL,
+  `Naturaleza` int(10) unsigned DEFAULT NULL,
+  `N5` varchar(5) DEFAULT NULL,
+  `fecha` varchar(11) NOT NULL,
+  `cmb1` int(10) unsigned NOT NULL,
+  `cmb2` int(10) NOT NULL,
+  `idContable` int(10) unsigned NOT NULL,
+  `DIOT` int(10) unsigned NOT NULL,
+  `idUsuarioAlta` int(10) unsigned NOT NULL DEFAULT '1000',
+  `fechaAlta` varchar(45) NOT NULL,
+  `horaAlta` varchar(45) NOT NULL,
+  `idUsuarioCambio` int(10) unsigned NOT NULL DEFAULT '1000',
+  `fechaCambio` varchar(45) NOT NULL,
+  `horaCambio` varchar(45) NOT NULL,
+  `descontinuada` varchar(200) NOT NULL,
+  `idcuentam` int(10) unsigned NOT NULL,
+  `idcuentan2` int(10) unsigned NOT NULL,
+  `idcuentan3` int(10) unsigned NOT NULL,
+  `idcuentan4` int(10) unsigned NOT NULL,
+  `idcuentan5` int(10) unsigned NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into tblccontablestemp select * from tblccontables;
+update tblccontables a set idcuentan2=(select i.idccontable from tblccontablestemp i where i.cuenta=a.cuenta and i.n2=a.n2 and i.n3='' and i.n4='' and i.n5='' limit 1);
+update tblccontables a set idcuentan3=(select i.idccontable from tblccontablestemp i where i.cuenta=a.cuenta and i.n2=a.n2 and i.n3=a.n3 and i.n4='' and i.n5='' limit 1);
+update tblccontables a set idcuentan4=(select i.idccontable from tblccontablestemp i where i.cuenta=a.cuenta and i.n2=a.n2 and i.n3=a.n3 and i.n4=a.n4 and i.n5='' limit 1);
+update tblccontables a set idcuentan5=(select i.idccontable from tblccontablestemp i where i.cuenta=a.cuenta and i.n2=a.n2 and i.n3=a.n3 and i.n4=a.n4 and i.n5=a.n5 limit 1);
+
+DROP TABLE IF EXISTS `tblccontablestemp`;
+
+update tblpolizasdetalles set idcuentan1=(select c.idcuentam from tblccontables c where c.idccontable=tblpolizasdetalles.idcuenta),idcuentan2=(select c.idcuentan2 from tblccontables c where c.idccontable=tblpolizasdetalles.idcuenta),idcuentan3=(select c.idcuentan3 from tblccontables c where c.idccontable=tblpolizasdetalles.idcuenta),idcuentan4=(select c.idcuentan4 from tblccontables c where c.idccontable=tblpolizasdetalles.idcuenta),idcuentan5=(select c.idcuentan5 from tblccontables c where c.idccontable=tblpolizasdetalles.idcuenta);
+ALTER TABLE `tbldepostito` ADD COLUMN `fechaconta` VARCHAR(10) NOT NULL AFTER `idpagoprov`;
+ALTER TABLE `tbldepostito` ADD INDEX `Index_6`(`fechaconta`);
+update tbldepostito set fechaconta=fecha;
+
+DROP TABLE IF EXISTS `tblcontabilidadbalanzarep`;
+CREATE TABLE `tblcontabilidadbalanzarep` (
+  `cuenta` varchar(45) NOT NULL,
+  `descripcion` varchar(150) NOT NULL,
+  `agrupador` varchar(10) NOT NULL,
+  `naturaleza` tinyint(3) unsigned NOT NULL,
+  `cargoini` double NOT NULL,
+  `abonoini` double NOT NULL,
+  `cargo` double NOT NULL,
+  `abono` double NOT NULL,
+  `nivel` tinyint(3) unsigned NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `tblopciones2` ADD COLUMN `ventascorteremxm` TINYINT UNSIGNED NOT NULL AFTER `pvconfirmarcobrar`;
+ALTER TABLE `tblopciones2` ADD COLUMN `noimpsinguardar` TINYINT UNSIGNED NOT NULL AFTER `ventascorteremxm`;
+
+
+insert into tblactualizaciones(version,versionchk) values('ver 9036 rev 8','00903608');

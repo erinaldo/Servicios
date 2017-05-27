@@ -1,0 +1,31 @@
+CREATE TABLE  `tblventaslotes` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idlote` int(10) unsigned NOT NULL,
+  `iddetalle` int(10) unsigned NOT NULL,
+  `cantidad` double NOT NULL,
+  `surtido` double NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE  `tblventasremisioneslotes` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idlote` int(10) unsigned NOT NULL,
+  `iddetalle` int(10) unsigned NOT NULL,
+  `cantidad` double NOT NULL,
+  `surtido` double NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+ALTER TABLE `tblventasremisioneslotes` ADD CONSTRAINT `FK_tblventasremisioneslotes_1` FOREIGN KEY `FK_tblventasremisioneslotes_1` (`iddetalle`)
+    REFERENCES `tblventasremisionesinventario` (`iddetalle`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblventaslotes` ADD CONSTRAINT `FK_tblventaslotes_1` FOREIGN KEY `FK_tblventaslotes_1` (`iddetalle`)
+    REFERENCES `tblventasinventario` (`idventasinventario`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION;
+
+
+insert into tblactualizaciones(version) values('ver 9020 rev 8');
+

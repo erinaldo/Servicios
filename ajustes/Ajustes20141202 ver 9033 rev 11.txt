@@ -1,0 +1,5 @@
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA SIN LIGAR','TSISL',5,'SUMA DEL TOTAL SIN IVA DE LOS PAGOS QUE NO ESTAN LIGADOS A UNA FACTURA O UN PAGO.');
+ALTER TABLE `tblinventario` ADD COLUMN `descontinuado` TINYINT UNSIGNED NOT NULL AFTER `semillas`;
+
+insert into tblactualizaciones(version) values('ver 9033 rev 11');
+

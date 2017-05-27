@@ -1,0 +1,38 @@
+ALTER TABLE `tblpagoprov` DROP FOREIGN KEY `FK_tblpagoprov_1`;
+ALTER TABLE `tblpagoprov` DROP COLUMN `idproveedor`;
+
+ALTER TABLE `tblcompraspagos` ADD COLUMN `idpagoprov` INTEGER UNSIGNED NOT NULL AFTER `idconceptonotacompra`;
+
+ALTER TABLE `tblopciones` ADD COLUMN `integrarbancos` TINYINT UNSIGNED NOT NULL AFTER `pagosticket`;
+
+ALTER TABLE `tblventaspagos` ADD COLUMN `iddeposito` INTEGER UNSIGNED NOT NULL AFTER `idconceptonotaventa`;
+
+
+ALTER TABLE `tblopcionesoc` ADD COLUMN `horainicio2` VARCHAR(10) NOT NULL AFTER `foliooc`,
+ ADD COLUMN `horafin2` VARCHAR(10) NOT NULL AFTER `horainicio2`,
+ ADD COLUMN `idsucursal` INTEGER UNSIGNED NOT NULL AFTER `horafin2`;
+update tblopcionesoc set idsucursal=1;
+
+ALTER TABLE `tbldescuentos` ADD COLUMN `sucursal` INTEGER UNSIGNED NOT NULL AFTER `FechaFinalC`;
+
+ALTER TABLE `tblservicioseventos` MODIFY COLUMN `comentario` VARCHAR(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+ MODIFY COLUMN `precio` DOUBLE DEFAULT NULL;
+
+ALTER TABLE `tblservicioseventossuc` MODIFY COLUMN `comentario` VARCHAR(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+ALTER TABLE `tblservicios` MODIFY COLUMN `detalles` VARCHAR(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+ALTER TABLE `tblserviciossuc` MODIFY COLUMN `detalles` VARCHAR(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+ALTER TABLE `tblservicios` ADD COLUMN `idtecnico` INTEGER UNSIGNED NOT NULL AFTER `Serie`;
+
+ALTER TABLE `tblserviciossuc` ADD COLUMN `idtecnico` INTEGER UNSIGNED NOT NULL AFTER `Serie`;
+
+update tblservicios set idtecnico=1;
+update tblserviciossuc set idtecnico=1;
+
+ALTER TABLE `tblservicioseventos` DROP FOREIGN KEY `FK_tblservicioseventos_3`;
+
+
+insert into tblactualizaciones(version) values('ver 9025 rev 11');
+

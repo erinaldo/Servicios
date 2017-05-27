@@ -1,0 +1,58 @@
+CREATE TABLE `db_services`.`tbllistasprecios` (
+  `idlista` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `descripcion` VARCHAR(45) NOT NULL,
+  `numero` VARCHAR(2) NOT NULL,
+  PRIMARY KEY (`idlista`),
+  UNIQUE INDEX `Index_2`(`descripcion`),
+  UNIQUE INDEX `Index_3`(`numero`)
+)
+ENGINE = InnoDB;
+
+insert into tbllistasprecios (numero,descripcion)values
+('01','LISTA 1'),
+('02','LISTA 2'),
+('03','LISTA 3'),
+('04','LISTA 4'),
+('05','LISTA 5');
+
+ALTER TABLE `tblinventarioprecios` ADD COLUMN `idlista` INTEGER UNSIGNED NOT NULL AFTER `idmoneda`;
+update tblinventarioprecios set idlista=1;
+
+ALTER TABLE `db_services`.`tblclientes` ADD COLUMN `idlista` INTEGER UNSIGNED NOT NULL AFTER `idvendedor`;
+update tblclientes set idlista=1;
+
+ALTER TABLE `db_services`.`tblclientes` ADD CONSTRAINT `FK_tblclientes_2` FOREIGN KEY `FK_tblclientes_2` (`idlista`)
+    REFERENCES `tbllistasprecios` (`idlista`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblinventarioprecios` ADD COLUMN `utilidad` SMALLINT UNSIGNED NOT NULL AFTER `idlista`;
+ALTER TABLE `tblinventarioprecios` drop column `esdefault`;
+
+
+
+#ejecutar este select
+select idinventarioprecio,idinventario,precio,idlista modificar,
+if(@idanterior=idinventario,@rownum:=@rownum+1,@rownum:=1) valor,
+@idanterior:=idinventario idanterior
+from tblinventarioprecios,(select @rownum:=0) r order by idinventario,precio desc;
+#reemplazar los valores del siguiente update para todos los registros que no coincidan
+#las columnas modificar y valor
+update tblinventarioprecios set idlista=[valor] where idinventarioprecio=[idinventarioprecio];
+update tblinventarioprecios set idlista=2 where idinventarioprecio=5;
+
+ALTER TABLE `tblinventarioprecios` ADD UNIQUE INDEX `Index_4`(`idinventario`, `idlista`);
+ALTER TABLE `tblinventarioprecios` ADD CONSTRAINT `FK_tblinventarioprecios_3` FOREIGN KEY `FK_tblinventarioprecios_3` (`idlista`)
+    REFERENCES `tbllistasprecios` (`idlista`)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT;
+
+#Lo de ajustar las listas aqui termina
+
+insert into tblinventarioprecios(idinventario,precio,comentario,idmoneda,idlista,utilidad)
+select i.idinventario,0,'',2,l.idlista,0 from tblinventario i
+left outer join tbllistasprecios l on true
+left outer join tblinventarioprecios p on p.idinventario=i.idinventario and p.idlista=l.idlista
+where isnull(p.precio);
+
+

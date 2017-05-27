@@ -1,0 +1,2 @@
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(310,322,'Desc. Extra ','extra',700,300,'Lucida Console',8,1,0,1,0,1,0,1,0,0,'Desc. Extra');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(310,322,'Desc. Extra ','extra',700,300,'Lucida Console',8,1,0,1,0,1,16,1,0,0,'Desc. Extra');

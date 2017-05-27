@@ -1,0 +1,345 @@
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spmodificainventarioi` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spmodificainventarioi`(pidinventario int,pidalmacen int,pcantidad double,pcantidadant double,pmodo tinyint,pmedida tinyint) RETURNS int(11)
+BEGIN
+declare vcontenido double;
+declare vcantidad double;
+declare vesinventariable tinyint;
+declare checaalmacen tinyint;
+set vesinventariable=(select inventariable from tblinventario where idinventario=pidinventario);
+if vesinventariable=1 then
+set vcantidad=(select spdainventario(pidinventario,pidalmacen));
+if pmedida=0 then
+set vcontenido=(select contenido from tblinventario where idinventario=pidinventario);
+if vcontenido<>0 then
+  if pmodo=0 then
+  set vcantidad=vcantidad+pcantidad/vcontenido;
+  end if;
+  if pmodo=1 then
+  set vcantidad=vcantidad-pcantidad/vcontenido;
+  end if;
+  if pmodo=2 then
+  set vcantidad=vcantidad-pcantidadant/vcontenido+pcantidad/vcontenido;
+  end if;
+  if pmodo=3 then
+  set vcantidad=vcantidad+pcantidadant/vcontenido-pcantidad/vcontenido;
+  end if;
+end if;
+else
+  if pmodo=0 then
+  set vcantidad=vcantidad+pcantidad;
+  end if;
+  if pmodo=1 then
+  set vcantidad=vcantidad-pcantidad;
+  end if;
+  if pmodo=2 then
+  set vcantidad=vcantidad-pcantidadant+pcantidad;
+  end if;
+  if pmodo=3 then
+  set vcantidad=vcantidad+pcantidadant-pcantidad;
+  end if;
+end if;
+set checaalmacen=(select ifnull((select 1 from tblalmacenesi where idinventario=pidinventario and idalmacen=pidalmacen),0));
+if checaalmacen=0 then
+insert into tblalmacenesi(idalmacen,idinventario,cantidad) values(pidalmacen,pidinventario,0);
+end if;
+update tblalmacenesi set cantidad=vcantidad where idinventario=pidinventario and idalmacen=pidalmacen;
+end if;
+return 1;
+END $$
+
+DELIMITER ;
+
+
+ALTER TABLE `db_services`.`tblinventarioconceptos` ADD COLUMN `serie` VARCHAR(45) NOT NULL AFTER `tipo`,
+ ADD COLUMN `folio` INTEGER UNSIGNED NOT NULL AFTER `serie`,
+ ADD COLUMN `formato` VARCHAR(10) NOT NULL AFTER `folio`;
+
+update tblinventarioconceptos set serie='',folio=1,formato=''
+
+ALTER TABLE `db_services`.`tblinventarioconceptos` ADD COLUMN `idsucursal` INTEGER UNSIGNED NOT NULL AFTER `formato`;
+
+update tblinventarioconceptos set idsucursal=1
+
+ALTER TABLE `db_services`.`tblinventarioconceptos` ADD CONSTRAINT `FK_tblinventarioconceptos_1` FOREIGN KEY `FK_tblinventarioconceptos_1` (`idsucursal`)
+    REFERENCES `tblsucursales` (`idsucursal`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `db_services`.`tblmovimientos` ADD COLUMN `serie` VARCHAR(45) NOT NULL AFTER `comentario`,
+ ADD COLUMN `idsucursal` INTEGER UNSIGNED NOT NULL AFTER `serie`;
+ALTER TABLE `db_services`.`tblmovimientos` MODIFY COLUMN `comentario` VARCHAR(500) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+update tblmovimientos set idsucursal=1,serie=1
+
+ALTER TABLE `db_services`.`tblmovimientos` ADD CONSTRAINT `FK_tblmovimientos_1` FOREIGN KEY `FK_tblmovimientos_1` (`idsucursal`)
+    REFERENCES `tblsucursales` (`idsucursal`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `db_services`.`tblmovimientos` ADD COLUMN `total` DOUBLE NOT NULL AFTER `idsucursal`,
+ ADD COLUMN `totalapagar` DOUBLE NOT NULL AFTER `total`,
+ ADD COLUMN `fechacancelado` VARCHAR(10) NOT NULL AFTER `totalapagar`,
+ ADD COLUMN `horacancelado` VARCHAR(8) NOT NULL AFTER `fechacancelado`,
+ ADD COLUMN `hora` VARCHAR(8) NOT NULL AFTER `horacancelado`;
+
+ALTER TABLE `db_services`.`tblmovimientos` ADD CONSTRAINT `FK_tblmovimientos_2` FOREIGN KEY `FK_tblmovimientos_2` (`idconcepto`)
+    REFERENCES `tblinventarioconceptos` (`idconcepto`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION;
+
+
+CREATE TABLE `db_services`.`tblmovimientosdetalles` (
+  `iddetalle` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idinventario` INTEGER UNSIGNED NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  `precio` DOUBLE NOT NULL,
+  `idmovimiento` INTEGER UNSIGNED NOT NULL,
+  `descripcion` VARCHAR(45) NOT NULL,
+  `idalmacen` INTEGER UNSIGNED NOT NULL,
+  `idalmacen2` INTEGER UNSIGNED NOT NULL,
+  `idvariante` INTEGER UNSIGNED NOT NULL,
+  `surtido` DOUBLE NOT NULL,
+  `inventarioanterior` DOUBLE NOT NULL,
+  `idmoneda` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`iddetalle`),
+  CONSTRAINT `FK_tblmovimientosdetalles_1` FOREIGN KEY `FK_tblmovimientosdetalles_1` (`idinventario`)
+    REFERENCES `tblinventario` (`idinventario`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblmovimientosdetalles_2` FOREIGN KEY `FK_tblmovimientosdetalles_2` (`idmovimiento`)
+    REFERENCES `tblmovimientos` (`idmovimiento`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblmovimientosdetalles_3` FOREIGN KEY `FK_tblmovimientosdetalles_3` (`idalmacen`)
+    REFERENCES `tblalmacenes` (`idalmacen`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblmovimientosdetalles_4` FOREIGN KEY `FK_tblmovimientosdetalles_4` (`idalmacen2`)
+    REFERENCES `tblalmacenes` (`idalmacen`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblmovimientosdetalles_5` FOREIGN KEY `FK_tblmovimientosdetalles_5` (`idvariante`)
+    REFERENCES `tblproductosvariantes` (`idvariante`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblmovimientosdetalles_6` FOREIGN KEY `FK_tblmovimientosdetalles_6` (`idmoneda`)
+    REFERENCES `tblmonedas` (`idmoneda`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `db_services`.`tblmovimientos` ADD COLUMN `tipodecambio` DOUBLE NOT NULL AFTER `hora`;
+
+ALTER TABLE `db_services`.`tblmovimientosdetalles` MODIFY COLUMN `descripcion` VARCHAR(500) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+ALTER TABLE `db_services`.`tblmovimientos` ADD COLUMN `idmoneda` INTEGER UNSIGNED NOT NULL AFTER `tipodecambio`,
+ ADD CONSTRAINT `FK_tblmovimientos_3` FOREIGN KEY `FK_tblmovimientos_3` (`idmoneda`)
+    REFERENCES `tblmonedas` (`idmoneda`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spajustainventarioi` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spajustainventarioi`(pidinventario int,pidalmacen int,pcantidad double) RETURNS int(11)
+BEGIN
+
+declare vesinventariable tinyint;
+declare checaalmacen tinyint;
+set vesinventariable=(select inventariable from tblinventario where idinventario=pidinventario);
+if vesinventariable=1 then
+  set checaalmacen=(select ifnull((select 1 from tblalmacenesi where idinventario=pidinventario and idalmacen=pidalmacen),0));
+  if checaalmacen=0 then
+  insert into tblalmacenesi(idalmacen,idinventario,cantidad) values(pidalmacen,pidinventario,0);
+  end if;
+  update tblalmacenesi set cantidad=pcantidad where idinventario=pidinventario and idalmacen=pidalmacen;
+end if;
+return 1;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spajustainventariop` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spajustainventariop`(pidvariante int,pidalmacen int,pcantidad double) RETURNS int(11)
+BEGIN
+declare varidproducto int;
+declare varinventariable tinyint;
+declare checaalmacen tinyint;
+set varidproducto=(select idproducto from tblproductosvariantes where idvariante=pidvariante);
+set varinventariable=(select inventariable from tblproductos where idproducto=varidproducto);
+
+if varinventariable=1 then
+
+  set checaalmacen=ifnull((select 1 from tblalmacenesp where idproducto=varidproducto and idalmacen=pidalmacen),0);
+  if checaalmacen=0 then
+  insert into tblalmacenesp(idalmacen,idproducto,cantidad) values(pidalmacen,varidproducto,0);
+  end if;
+  update tblalmacenesp set cantidad=pcantidad where idproducto=varidproducto and idalmacen=pidalmacen;
+
+end if;
+return 1;
+END $$
+
+DELIMITER ;
+
+
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS `spanalisisinventario` $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spanalisisinventario`(pidinventario int,pfecha1 varchar(10),pfecha2 varchar(10),pidalmacen int)
+BEGIN
+if pidalmacen<=0 then
+if pidinventario=0 then
+
+delete from tblinventariomovimientos;
+
+insert into tblinventariomovimientos(idinventario,compras,comprasdev,ventas,ventasdev,entradas,salidas,traspasos,ajustes,fechaajuste,recepciones)
+select tblinventario.idinventario,
+ifnull((select sum(tblcomprasdetalles.cantidad) from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcomprasdetalles.idinventario=tblinventario.idinventario and tblcompras.estado=3 and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2),0),
+ifnull((select sum(tbldevolucionesdetallesc.cantidad) from tbldevolucionesdetallesc inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionesdetallesc.idinventario=tblinventario.idinventario and tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha>=pfecha1 and tbldevolucionescompras.fecha<=pfecha2),0),
+ifnull((select sum(tblventasinventario.cantidad) from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventasinventario.idinventario=tblinventario.idinventario and tblventas.estado=3 and tblventas.fecha>=pfecha1 and tblventas.fecha<=pfecha2),0),
+ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevolucionesdetalles.idinventario=tblinventario.idinventario and tbldevoluciones.estado=3 and tbldevoluciones.fecha>=pfecha1 and tbldevoluciones.fecha<=pfecha2),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=0 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=1 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=3 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2),0),
+ifnull((select tblmovimientosdetalles.cantidad from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=2 and tblmovimientos.estado=3 and tblmovimientos.fecha<=pfecha2 order by tblmovimientos.fecha desc limit 1),0),
+ifnull((select tblmovimientos.fecha from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=2 and tblmovimientos.estado=3 and tblmovimientos.fecha<=pfecha2 order by tblmovimientos.fecha desc limit 1),''),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=3 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2),0)
+from tblinventario where tblinventario.idinventario>1;
+else
+delete from tblinventariomovimientos where idinventario=pidinventario;
+
+insert into tblinventariomovimientos(idinventario,compras,comprasdev,ventas,ventasdev,entradas,salidas,traspasos,ajustes,fechaajuste,recepciones)
+select tblinventario.idinventario,
+ifnull((select sum(tblcomprasdetalles.cantidad) from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcomprasdetalles.idinventario=tblinventario.idinventario and tblcompras.estado=3 and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2),0),
+ifnull((select sum(tbldevolucionesdetallesc.cantidad) from tbldevolucionesdetallesc inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionesdetallesc.idinventario=tblinventario.idinventario and tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha>=pfecha1 and tbldevolucionescompras.fecha<=pfecha2),0),
+ifnull((select sum(tblventasinventario.cantidad) from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventasinventario.idinventario=tblinventario.idinventario and tblventas.estado=3 and tblventas.fecha>=pfecha1 and tblventas.fecha<=pfecha2),0),
+ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevolucionesdetalles.idinventario=tblinventario.idinventario and tbldevoluciones.estado=3 and tbldevoluciones.fecha>=pfecha1 and tbldevoluciones.fecha<=pfecha2),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=0 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=1 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=3 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2),0),
+ifnull((select tblmovimientosdetalles.cantidad from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=2 and tblmovimientos.estado=3 and tblmovimientos.fecha<=pfecha2 order by tblmovimientos.fecha desc limit 1),0),
+ifnull((select tblmovimientos.fecha from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=2 and tblmovimientos.estado=3 and tblmovimientos.fecha<=pfecha2 order by tblmovimientos.fecha desc limit 1),''),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=3 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2),0)
+from tblinventario where tblinventario.idinventario=pidinventario;
+end if;
+else
+if pidinventario=0 then
+
+delete from tblinventariomovimientos;
+
+insert into tblinventariomovimientos(idinventario,compras,comprasdev,ventas,ventasdev,entradas,salidas,traspasos,ajustes,fechaajuste,recepciones)
+select tblinventario.idinventario,
+ifnull((select sum(tblcomprasdetalles.cantidad) from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcomprasdetalles.idinventario=tblinventario.idinventario and tblcompras.estado=3 and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcomprasdetalles.idalmacen=pidalmacen),0),
+ifnull((select sum(tbldevolucionesdetallesc.cantidad) from tbldevolucionesdetallesc inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionesdetallesc.idinventario=tblinventario.idinventario and tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha>=pfecha1 and tbldevolucionescompras.fecha<=pfecha2 and tbldevolucionesdetallesc.idalmacen=pidalmacen),0),
+ifnull((select sum(tblventasinventario.cantidad) from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventasinventario.idinventario=tblinventario.idinventario and tblventas.estado=3 and tblventas.fecha>=pfecha1 and tblventas.fecha<=pfecha2 and tblventasinventario.idalmacen=pidalmacen),0),
+ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevolucionesdetalles.idinventario=tblinventario.idinventario and tbldevoluciones.estado=3 and tbldevoluciones.fecha>=pfecha1 and tbldevoluciones.fecha<=pfecha2 and tbldevolucionesdetalles.idalmacen=pidalmacen),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=0 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idalmacen=pidalmacen),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=1 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idalmacen=pidalmacen),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=3 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idalmacen=pidalmacen),0),
+ifnull((select tblmovimientosdetalles.cantidad from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=2 and tblmovimientos.estado=3 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idalmacen=pidalmacen order by tblmovimientos.fecha desc limit 1),0),
+ifnull((select tblmovimientos.fecha from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=2 and tblmovimientos.estado=3 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idalmacen=pidalmacen order by tblmovimientos.fecha desc limit 1),''),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=3 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idalmacen2=pidalmacen),0)
+from tblinventario where tblinventario.idinventario>1;
+else
+delete from tblinventariomovimientos where idinventario=pidinventario;
+
+insert into tblinventariomovimientos(idinventario,compras,comprasdev,ventas,ventasdev,entradas,salidas,traspasos,ajustes,fechaajuste,recepciones)
+select tblinventario.idinventario,
+ifnull((select sum(tblcomprasdetalles.cantidad) from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcomprasdetalles.idinventario=tblinventario.idinventario and tblcompras.estado=3 and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcomprasdetalles.idalmacen=pidalmacen),0),
+ifnull((select sum(tbldevolucionesdetallesc.cantidad) from tbldevolucionesdetallesc inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionesdetallesc.idinventario=tblinventario.idinventario and tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha>=pfecha1 and tbldevolucionescompras.fecha<=pfecha2 and tbldevolucionesdetallesc.idalmacen=pidalmacen),0),
+ifnull((select sum(tblventasinventario.cantidad) from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventasinventario.idinventario=tblinventario.idinventario and tblventas.estado=3 and tblventas.fecha>=pfecha1 and tblventas.fecha<=pfecha2 and tblventasinventario.idalmacen=pidalmacen),0),
+ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevolucionesdetalles.idinventario=tblinventario.idinventario and tbldevoluciones.estado=3 and tbldevoluciones.fecha>=pfecha1 and tbldevoluciones.fecha<=pfecha2 and tbldevolucionesdetalles.idalmacen=pidalmacen),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=0 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idalmacen=pidalmacen),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=1 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idalmacen=pidalmacen),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=3 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idalmacen=pidalmacen),0),
+ifnull((select tblmovimientosdetalles.cantidad from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=2 and tblmovimientos.estado=3 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idalmacen=pidalmacen order by tblmovimientos.fecha desc limit 1),0),
+ifnull((select tblmovimientos.fecha from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=2 and tblmovimientos.estado=3 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idalmacen=pidalmacen order by tblmovimientos.fecha desc limit 1),''),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=3 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idalmacen2=pidalmacen),0)
+from tblinventario where tblinventario.idinventario=pidinventario;
+end if;
+
+end if;
+
+
+
+END $$
+
+DELIMITER ;
+
+
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spsacacostoarticulo` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spsacacostoarticulo`(pidinventario int,ptipocosteo tinyint,pcantidadreceta double,ptipodecambio double) RETURNS double
+BEGIN
+declare vartotalcompras double;
+declare vartotalcomprasprecio double;
+declare varcantidadcontenido double;
+declare varultimafecha varchar(10);
+declare varidtemp int;
+declare varidtemp2 int;
+declare varidmoneda int;
+declare varcosto double;
+declare vartipodecambio double;
+if ptipocosteo=1 then
+            set vartotalcompras=(ifnull((select sum(cantidad) from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where idinventario=pidinventario and tblcompras.estado=3),0));
+            set vartotalcomprasprecio=(ifnull((select sum(precio) from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where idinventario=pidinventario and tblcompras.estado=3 and tblcompras.idmoneda=2),0));
+            set vartotalcomprasprecio=vartotalcomprasprecio+(ifnull((select sum(precio*tipodecambio) from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where idinventario=pidinventario and tblcompras.estado=3 and tblcompras.idmoneda<>2),0));
+            if vartotalcompras<>0 then
+              set varcantidadcontenido=(select contenido from tblinventario where idinventario=pidinventario);
+              if varcantidadcontenido<>0 then
+                  set varcosto=((vartotalcomprasprecio/vartotalcompras)/varcantidadcontenido)*pcantidadreceta;
+              else
+                  set varcosto=0;
+              end if;
+            else
+              set varcosto=0;
+            end if;
+        end if;
+        if ptipocosteo=2 then
+            set varultimafecha=(select ifnull((select max(fecha) from tblcompras inner join tblcomprasdetalles on tblcompras.idcompra=tblcomprasdetalles.idcompra where idinventario=pidinventario),''));
+            if varultimafecha<>'' then
+
+              set varidtemp=(select max(iddetalle) from tblcomprasdetalles inner join tblcompras on tblcompras.idcompra=tblcomprasdetalles.idcompra where idinventario=pidinventario and fecha=varultimafecha and tblcompras.estado=3);
+
+              set varidtemp2=(select ifnull((select idcompra from tblcomprasdetalles where iddetalle=varidtemp),0));
+              set vartipodecambio=(select ifnull((select tipodecambio from tblcompras where idcompra=varidtemp2),0));
+
+              set vartotalcompras=(ifnull((select cantidad from tblcomprasdetalles where iddetalle=varidtemp),0));
+              set vartotalcomprasprecio=(ifnull((select precio from tblcomprasdetalles where iddetalle=varidtemp),0));
+              set varidmoneda=(ifnull((select idmoneda from tblcomprasdetalles where iddetalle=varidtemp),0));
+              set varcantidadcontenido=(select contenido from tblinventario where idinventario=pidinventario);
+              if varcantidadcontenido<>0 then
+                  if varidmoneda=2 then
+                  set varcosto=((vartotalcomprasprecio/vartotalcompras)/varcantidadcontenido)*pcantidadreceta;
+                  else
+                  set varcosto=((vartotalcomprasprecio*vartipodecambio/vartotalcompras)/varcantidadcontenido)*pcantidadreceta;
+                  end if;
+              else
+                  set varcosto=0;
+              end if;
+            else
+              set varcosto=0;
+            end if;
+        end if;
+        if ptipocosteo=3 then
+              set vartotalcomprasprecio=(select costobase from tblinventario where idinventario=pidinventario);
+              set varcantidadcontenido=(select contenido from tblinventario where idinventario=pidinventario);
+              if varcantidadcontenido<>0 then
+                  set varcosto=(vartotalcomprasprecio/varcantidadcontenido)*pcantidadreceta;
+              else
+                  set varcosto=0;
+              end if;
+        end if;
+return varcosto;
+END $$
+
+DELIMITER ;

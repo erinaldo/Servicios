@@ -1,0 +1,4 @@
+tblsucursales
+nombrefiscal varchar(250)
+
+update tblsucursales set nombrefiscal=""

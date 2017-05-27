@@ -1,0 +1,79 @@
+delete from tblrestauranteventas;
+delete from tblrestauranteventasdetalles;
+delete from tblrestaurantemesaventa;
+ALTER TABLE `tblrestauranteventasdetalles` DROP INDEX `FK_tblrestauranteventasdetalles_1`;
+ALTER TABLE `tblrestauranteventasdetalles` ADD CONSTRAINT `FK_tblrestauranteventasdetalles_1` FOREIGN KEY `FK_tblrestauranteventasdetalles_1` (`idventa`)
+    REFERENCES `tblrestaurantemesaventa` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblgastosprogramables` DROP COLUMN `frecuencia`;
+ALTER TABLE `tblgastosprogradetalles` DROP COLUMN `frecuencia`;
+
+ALTER TABLE `tblrestauranteventas` DROP COLUMN `idforma`,
+ ADD COLUMN `nopersonas` INTEGER UNSIGNED NOT NULL AFTER `idSucursal`
+, DROP INDEX `FK_tblrestauranteventas_1`,
+ ADD CONSTRAINT `FK_tblrestauranteventas_1` FOREIGN KEY `FK_tblrestauranteventas_1` (`idmesero`)
+    REFERENCES `tblvendedores` (`idvendedor`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblrestauranteventas_2` FOREIGN KEY `FK_tblrestauranteventas_2` (`idSucursal`)
+    REFERENCES `tblsucursales` (`idsucursal`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblrestauranteventas_3` FOREIGN KEY `FK_tblrestauranteventas_3` (`idcliente`)
+    REFERENCES `tblclientes` (`idcliente`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION;
+ALTER TABLE `tblrestauranteventas` ADD COLUMN `serie` VARCHAR(20) NOT NULL AFTER `nopersonas`;
+
+ALTER TABLE `tblrestauranteventas` MODIFY COLUMN `folio` INTEGER UNSIGNED NOT NULL,
+ ADD INDEX `Index_5`(`folio`),
+ ADD INDEX `Index_6`(`fecha`),
+ ADD INDEX `Index_7`(`serie`);
+
+ALTER TABLE `tblrestauranteventas` DROP COLUMN `iva`;
+ALTER TABLE `tblrestauranteventas` ADD COLUMN `idmesa` INTEGER UNSIGNED NOT NULL AFTER `serie`;
+
+ALTER TABLE `tblrestauranteventaspagos` DROP INDEX `FK_tblrestauranteventaspagos_1`
+, DROP INDEX `FK_tblrestauranteventaspagos_2`;
+
+delete from tblrestauranteventaspagos;
+
+ALTER TABLE `tblrestauranteventaspagos` CHANGE COLUMN `idmedioPago` `idforma` INT(10) UNSIGNED NOT NULL,
+ ADD CONSTRAINT `FK_tblrestauranteventaspagos_1` FOREIGN KEY `FK_tblrestauranteventaspagos_1` (`idventa`)
+    REFERENCES `tblrestauranteventas` (`idventa`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblrestauranteventaspagos_2` FOREIGN KEY `FK_tblrestauranteventaspagos_2` (`idforma`)
+    REFERENCES `tblformasdepagoremisiones` (`idforma`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblrestauranteventas` ADD COLUMN `idcajero` INTEGER UNSIGNED NOT NULL AFTER `idmesa`,
+ ADD CONSTRAINT `FK_tblrestauranteventas_4` FOREIGN KEY `FK_tblrestauranteventas_4` (`idcajero`)
+    REFERENCES `tblvendedores` (`idvendedor`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblrestauranteventas` ADD COLUMN `idcaja` INTEGER UNSIGNED NOT NULL AFTER `idcajero`;
+ALTER TABLE `tblventastimbrado` ADD INDEX `Index_2`(`uuid`);
+
+Create table tblcomercioexteriorpropietario(
+ID int NOT NULL Primary key,
+numRegIdTrib varchar(45) not null,
+clavePais varchar(10) not null
+)
+
+ALTER TABLE `tblcomercioexteriorpropietario` ADD COLUMN `idComplemento` VARCHAR(10) NOT NULL AFTER `clavePais`;
+ALTER TABLE `tblcomercioexteriorpropietario` MODIFY COLUMN `ID` INT(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `tblcomercioexterior` ADD COLUMN `motivoTraslado` VARCHAR(10) NOT NULL AFTER `curpEmisor`;
+ALTER TABLE `tblcomercioexteriorreceptor` ADD COLUMN `clavePais` VARCHAR(10) NOT NULL AFTER `guardado`;
+
+ALTER TABLE `tblinventario` ADD COLUMN `fraccionarancel` VARCHAR(10) NOT NULL AFTER `restaurante`,
+ ADD COLUMN `unidadaduana` VARCHAR(20) NOT NULL AFTER `fraccionarancel`;
+
+update tblinventario set fraccionarancel='',unidadaduana='06 PIEZA';
+
+
+insert into tblactualizaciones(version,versionchk) values('ver 9037 rev 12','00903712');

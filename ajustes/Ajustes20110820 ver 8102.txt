@@ -1,0 +1,4 @@
+tblimpresiones 
+add
+rg int 66
+alt int 4

@@ -1,0 +1,24 @@
+ALTER TABLE `tblvendedores` ADD COLUMN `escajero` TINYINT UNSIGNED NOT NULL AFTER `horaCambio`,
+ ADD COLUMN `esmesero` TINYINT UNSIGNED NOT NULL AFTER `escajero`;
+
+ALTER TABLE `tblalmacenes` ADD COLUMN `idcuenta` INTEGER UNSIGNED NOT NULL AFTER `horaCambio`,
+ ADD COLUMN `idcuenta2` INTEGER UNSIGNED NOT NULL AFTER `idcuenta`,
+ ADD COLUMN `idcuenta3` INTEGER UNSIGNED NOT NULL AFTER `idcuenta2`,
+ ADD COLUMN `idcuenta4` INTEGER UNSIGNED NOT NULL AFTER `idcuenta3`;
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(31,255,'Medida:','medida',500,20,'Arial',10,0,0,1,1,0,7,1,0,0,'Artículos - Medida',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(31,255,'Medida:','medida',500,20,'Arial',10,0,0,1,1,0,8,1,0,0,'Artículos - Medida',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(31,255,'Medida:','medida',500,20,'Arial',10,0,0,1,1,0,9,1,0,0,'Artículos - Medida',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(31,255,'Medida:','medida',500,20,'Arial',10,0,0,1,1,0,10,1,0,0,'Artículos - Medida',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(31,255,'Medida:','medida',500,20,'Arial',10,0,0,1,1,0,11,1,0,0,'Artículos - Medida',0,4);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(31,255,'Medida:','medida',500,20,'Arial',10,0,0,1,1,0,7+16,1,0,0,'Artículos - Medida',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(31,255,'Medida:','medida',500,20,'Arial',10,0,0,1,1,0,8+16,1,0,0,'Artículos - Medida',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(31,255,'Medida:','medida',500,20,'Arial',10,0,0,1,1,0,9+16,1,0,0,'Artículos - Medida',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(31,255,'Medida:','medida',500,20,'Arial',10,0,0,1,1,0,10+16,1,0,0,'Artículos - Medida',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(31,255,'Medida:','medida',500,20,'Arial',10,0,0,1,1,0,11+16,1,0,0,'Artículos - Medida',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(616,161,'Afecta a:','docqueafecta',200,20,'Arial',10,0,0,0,0,0,11,1,0,1,'Documento - Afecta a',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(616,161,'Afecta a:','docqueafecta',200,20,'Arial',10,0,0,0,0,0,11+16,1,0,1,'Documento - Afecta a',0,1);
+
+
+insert into tblactualizaciones(version,versionchk) values('ver 9036 rev 10','00903610');

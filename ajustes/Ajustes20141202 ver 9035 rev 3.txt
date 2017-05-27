@@ -1,0 +1,4 @@
+ALTER TABLE `tblcomplementoine` ADD COLUMN `idcontabilidad` VARCHAR(10) NOT NULL AFTER `idFactura`;
+
+
+insert into tblactualizaciones(version,versionchk) values('ver 9035 rev 3','00903503');

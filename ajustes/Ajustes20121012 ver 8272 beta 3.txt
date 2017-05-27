@@ -1,0 +1,2 @@
+ALTER TABLE `tblopciones` ADD COLUMN `decimalesredondeo` TINYINT UNSIGNED NOT NULL AFTER `pedirprecio`;
+update tblopciones set decimalesredondeo=1;

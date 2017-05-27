@@ -1,0 +1,3 @@
+ALTER TABLE `tblimpresiones` ADD COLUMN `modo` TINYINT UNSIGNED NOT NULL AFTER `alt`;
+ALTER TABLE `tblimpresiones` ADD COLUMN `ancho` INTEGER UNSIGNED NOT NULL AFTER `modo`;
+update tblimpresiones set modo=0,ancho=864;

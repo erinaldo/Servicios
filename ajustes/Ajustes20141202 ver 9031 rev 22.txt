@@ -1,0 +1,9 @@
+ALTER TABLE `tblcontabilidadconf` ADD COLUMN `capital3` VARCHAR(15) NOT NULL AFTER `activarfecha`,
+ ADD COLUMN `capital4` VARCHAR(15) NOT NULL AFTER `capital3`;
+
+ALTER TABLE `tblproveedores` ADD COLUMN `idcuenta` INTEGER UNSIGNED NOT NULL AFTER `tipo`;
+
+
+
+
+insert into tblactualizaciones(version) values('ver 9031 rev 22');

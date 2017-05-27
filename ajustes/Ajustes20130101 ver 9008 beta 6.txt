@@ -1,0 +1,33 @@
+CREATE TABLE `tblrepventasporsurtir` (
+  `folio` INTEGER UNSIGNED NOT NULL,
+  `serie` VARCHAR(45) NOT NULL,
+  `fecha` VARCHAR(10) NOT NULL,
+  `idcliente` INTEGER UNSIGNED NOT NULL,
+  `nombre` VARCHAR(200) NOT NULL,
+  `clave` VARCHAR(45) NOT NULL,
+  `inombre` VARCHAR(200) NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  `csurtido` DOUBLE NOT NULL,
+  `tipo` VARCHAR(5) NOT NULL
+)
+ENGINE = InnoDB;
+
+CREATE TABLE  `tblrepventasporsurtird` (
+  `folio` int(10) unsigned NOT NULL,
+  `serie` varchar(45) NOT NULL,
+  `fecha` varchar(10) NOT NULL,
+  `idcliente` int(10) unsigned NOT NULL,
+  `nombre` varchar(200) NOT NULL,
+  `clave` varchar(45) NOT NULL,
+  `inombre` varchar(200) NOT NULL,
+  `cantidad` double NOT NULL,
+  `csurtido` double NOT NULL,
+  `tipo` varchar(5) NOT NULL,
+  `cantidadm` double NOT NULL,
+  `fecham` varchar(10) NOT NULL,
+  `seriem` varchar(45) NOT NULL,
+  `foliom` int(10) unsigned NOT NULL,
+  `idventa` int(10) unsigned NOT NULL,
+  `idmovimiento` int(10) unsigned NOT NULL
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

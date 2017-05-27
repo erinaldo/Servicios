@@ -1,0 +1,14 @@
+crear base de datos 
+db_servicesempresas
+
+DROP TABLE IF EXISTS `db_servicesempresas`.`tblempresas`;
+CREATE TABLE  `db_servicesempresas`.`tblempresas` (
+  `idempresa` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nombreempresa` varchar(200) NOT NULL,
+  `db` varchar(45) NOT NULL,
+  `pass` blob NOT NULL,
+  `servidor` varchar(250) NOT NULL,
+  `usuario` varchar(45) NOT NULL,
+  `esdefault` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`idempresa`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

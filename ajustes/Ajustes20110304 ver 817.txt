@@ -1,0 +1,118 @@
+tblnotasdecreditodetalles
+idvariate -> idventa
+
+tblventaspagos
+iddocumento integer
+tipodcumento tinyint
+hora varchar(8)
+fechacancelado varchar(10)
+horacancelado varchar(8)
+idcargo integer
+idcliente integer
+
+tblventas
+comentariof
+
+update tblventaspagos set idcliente=ifnull((if(tblventaspagos.idventa<>0,(select idcliente from tblventas where idventa=tblventaspagos.idventa limit 1),(select idcliente from tblnotasdecargo where idcargo=tblventaspagos.idcargo limit 1))),0);
+
+DROP TABLE IF EXISTS `db_services`.`tblclientesmovimientos`;
+CREATE TABLE  `db_services`.`tblclientesmovimientos` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fecha` varchar(10) NOT NULL,
+  `tipomovimiento` tinyint(3) unsigned NOT NULL,
+  `iddocumento` int(10) unsigned NOT NULL,
+  `cargo` double NOT NULL,
+  `abono` double NOT NULL,
+  `saldo` double NOT NULL,
+  `idcliente` int(10) unsigned NOT NULL,
+  `hora` varchar(8) NOT NULL,
+  `estado` tinyint(3) unsigned NOT NULL,
+  `serie` varchar(20) NOT NULL,
+  `folio` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `db_services`.`tblnotasdecargo`;
+CREATE TABLE  `db_services`.`tblnotasdecargo` (
+  `idcargo` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idcliente` int(10) unsigned NOT NULL,
+  `fecha` varchar(10) NOT NULL,
+  `folio` int(10) unsigned NOT NULL,
+  `total` double NOT NULL,
+  `hora` varchar(8) NOT NULL,
+  `estado` tinyint(3) unsigned NOT NULL,
+  `iva` double NOT NULL,
+  `totalapagar` double NOT NULL,
+  `idsucursal` int(10) unsigned NOT NULL,
+  `serie` varchar(20) NOT NULL,
+  `tipodecambio` double NOT NULL,
+  `noaprobacion` varchar(15) NOT NULL,
+  `yearaprobacion` varchar(6) NOT NULL,
+  `nocertificado` varchar(25) NOT NULL,
+  `eselectronica` tinyint(3) unsigned NOT NULL,
+  `idmoneda` int(10) unsigned NOT NULL,
+  `aplicado` double NOT NULL,
+  `fechacancelado` varchar(10) NOT NULL,
+  `horacancelado` varchar(8) NOT NULL,
+  `isr` double unsigned zerofill NOT NULL,
+  `ivaretenido` double NOT NULL,
+  PRIMARY KEY (`idcargo`),
+  KEY `FK_tblnotasdecargo_1` (`idsucursal`),
+  KEY `FK_tblnotasdecargo_2` (`idcliente`),
+  KEY `FK_tblnotasdecargo_3` (`idmoneda`),
+  CONSTRAINT `FK_tblnotasdecargo_1` FOREIGN KEY (`idsucursal`) REFERENCES `tblsucursales` (`idsucursal`) ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblnotasdecargo_2` FOREIGN KEY (`idcliente`) REFERENCES `tblclientes` (`idcliente`) ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblnotasdecargo_3` FOREIGN KEY (`idmoneda`) REFERENCES `tblmonedas` (`idmoneda`) ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `db_services`.`tblnotasdecargodetalles`;
+CREATE TABLE  `db_services`.`tblnotasdecargodetalles` (
+  `iddetalle` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idinventario` int(10) unsigned NOT NULL,
+  `idmoneda` int(10) unsigned NOT NULL,
+  `idcargo` int(10) unsigned NOT NULL,
+  `cantidad` double NOT NULL,
+  `precio` double NOT NULL,
+  `descripcion` varchar(300) NOT NULL,
+  `iva` double NOT NULL,
+  `extra` varchar(500) NOT NULL,
+  `descuento` double NOT NULL,
+  PRIMARY KEY (`iddetalle`),
+  KEY `FK_tblnotasdecargodetalles_1` (`idmoneda`),
+  KEY `FK_tblnotasdecargodetalles_2` (`idcargo`),
+  CONSTRAINT `FK_tblnotasdecargodetalles_1` FOREIGN KEY (`idmoneda`) REFERENCES `tblmonedas` (`idmoneda`) ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblnotasdecargodetalles_2` FOREIGN KEY (`idcargo`) REFERENCES `tblnotasdecargo` (`idcargo`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `db_services`.`tblclientesdeudas`;
+CREATE TABLE  `db_services`.`tblclientesdeudas` (
+  `idcliente` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `iddocumento` int(10) unsigned NOT NULL,
+  `tipo` tinyint(3) unsigned NOT NULL,
+  `fecha` varchar(10) NOT NULL,
+  `estado` tinyint(3) unsigned NOT NULL,
+  `serie` varchar(20) NOT NULL,
+  `folio` int(10) unsigned NOT NULL,
+  `credito` double NOT NULL,
+  `totalapagar` double NOT NULL,
+  KEY `Index_1` (`idcliente`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `db_services`.`tblclientesrepdeudas`;
+CREATE TABLE  `db_services`.`tblclientesrepdeudas` (
+  `idventa` int(10) unsigned NOT NULL,
+  `idcliente` int(10) unsigned NOT NULL,
+  `folio` int(10) unsigned NOT NULL,
+  `serie` varchar(20) NOT NULL,
+  `total` double NOT NULL,
+  `totalapagar` double NOT NULL,
+  `fecha` varchar(10) NOT NULL,
+  `tipodecambio` double NOT NULL,
+  `idconversion` int(10) unsigned NOT NULL,
+  `cnombre` varchar(200) NOT NULL,
+  `abonado` double NOT NULL,
+  `clave` varchar(20) NOT NULL,
+  `estado` tinyint(3) unsigned NOT NULL,
+  KEY `Index_1` (`idcliente`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

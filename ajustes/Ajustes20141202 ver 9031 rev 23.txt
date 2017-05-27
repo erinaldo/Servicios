@@ -1,0 +1,13 @@
+ALTER TABLE `tblempeniosabono` ADD COLUMN `vis` TINYINT UNSIGNED NOT NULL AFTER `hora`;
+update tblempeniosabono set vis=1;
+ALTER TABLE `tblempeniosconfiguracion` ADD COLUMN `vis` TINYINT UNSIGNED NOT NULL AFTER `impresion`;
+
+ALTER TABLE `tbladendamodelodetalle` MODIFY COLUMN `descripcion` VARCHAR(2000) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL;
+
+ALTER TABLE `tblempeniosconfiguracion` ADD COLUMN `rango1` DOUBLE NOT NULL AFTER `vis`,
+ ADD COLUMN `rango2` DOUBLE NOT NULL AFTER `rango1`,
+ ADD COLUMN `maximo` DOUBLE NOT NULL AFTER `rango2`,
+ ADD COLUMN `criterio` TINYINT UNSIGNED NOT NULL AFTER `maximo`;
+
+insert into tblactualizaciones(version) values('ver 9031 rev 23');
+

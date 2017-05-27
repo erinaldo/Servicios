@@ -1,0 +1,45 @@
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `sp_haymovimiento` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `sp_haymovimiento`(pidinventario int) RETURNS int(11)
+BEGIN
+declare vhay int;
+
+set vhay=ifnull((select count(idinventario) from tblventasinventario where idinventario=pidinventario),0);
+if vhay<>0 then
+return vhay;
+end if;
+set vhay=ifnull((select count(idinventario) from tblcomprasdetalles where idinventario=pidinventario),0);
+if vhay<>0 then
+return vhay;
+end if;
+set vhay=ifnull((select count(idinventario) from tblventascotizacionesinventario where idinventario=pidinventario),0);
+if vhay<>0 then
+return vhay;
+end if;
+set vhay=ifnull((select count(idinventario) from tblcomprascotizaciondetalles where idinventario=pidinventario),0);
+if vhay<>0 then
+return vhay;
+end if;
+set vhay=ifnull((select count(idinventario) from tblcompraspedidosdetalles where idinventario=pidinventario),0);
+if vhay<>0 then
+return vhay;
+end if;
+set vhay=ifnull((select count(idinventario) from tblcomprasremisionesdetalles where idinventario=pidinventario),0);
+if vhay<>0 then
+return vhay;
+end if;
+set vhay=ifnull((select count(idinventario) from tblmovimientosdetalles where idinventario=pidinventario),0);
+if vhay<>0 then
+return vhay;
+end if;
+set vhay=ifnull((select count(idinventario) from tblventaspedidosinventario where idinventario=pidinventario),0);
+if vhay<>0 then
+return vhay;
+end if;
+set vhay=ifnull((select count(idinventario) from tblventasremisionesinventario where idinventario=pidinventario),0);
+
+return vhay;
+END $$
+
+DELIMITER ;

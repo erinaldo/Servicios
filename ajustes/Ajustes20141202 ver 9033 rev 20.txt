@@ -1,0 +1,230 @@
+ALTER TABLE `tblbancosuuids` ADD COLUMN `fecha` VARCHAR(45) NOT NULL AFTER `idpagoprov`;
+ALTER TABLE `tblpagoprov` ADD COLUMN `estraspaso` TINYINT UNSIGNED NOT NULL AFTER `isr`;
+ALTER TABLE `tblpagoprov` ADD COLUMN `idcuentadest` INTEGER UNSIGNED NOT NULL AFTER `estraspaso`;
+ALTER TABLE `tbldepostito` ADD COLUMN `idpagoprov` INTEGER UNSIGNED NOT NULL AFTER `comentario`;
+
+update tblusuarios set idusuario=1000 where nombre='sistemas';
+
+ALTER TABLE `tblclientes` ADD COLUMN `fechaCambio` VARCHAR(15) NOT NULL AFTER `idtipo`,
+ ADD COLUMN `idUsuario` INTEGER UNSIGNED NOT NULL AFTER `fechaCambio`;
+
+
+ALTER TABLE `tblclientes` ADD COLUMN `fechaCreacion` VARCHAR(15) NOT NULL AFTER `idUsuario`,
+ ADD COLUMN `horaCreacion` VARCHAR(15) NOT NULL AFTER `fechaCreacion`,
+ ADD COLUMN `horaCambio` VARCHAR(15) NOT NULL AFTER `horaCreacion`,
+ ADD COLUMN `IdusuarioAlta` INTEGER UNSIGNED NOT NULL AFTER `horaCambio`;
+
+
+
+ALTER TABLE `tblproveedores` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL AFTER `idtipo`,
+ ADD COLUMN `fechaAlta` VARCHAR(15) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(15) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(15) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(15) NOT NULL AFTER `fechaCambio`;
+
+
+ALTER TABLE `tblvendedores` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL AFTER `zona`,
+ ADD COLUMN `fechaAlta` VARCHAR(15) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(15) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(15) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(15) NOT NULL AFTER `fechaCambio`;
+
+
+
+
+ALTER TABLE `tbllistasprecios` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL AFTER `numero`,
+ ADD COLUMN `fechaAlta` VARCHAR(15) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(15) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(15) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(15) NOT NULL AFTER `fechaCambio`;
+
+
+ALTER TABLE `tbltrabajadores` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL AFTER `idcuenta`,
+ ADD COLUMN `fechaAlta` VARCHAR(15) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(15) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(15) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(15) NOT NULL AFTER `fechaCambio`;
+
+
+ALTER TABLE `tblalmacenes` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `estado`,
+ ADD COLUMN `fechaAlta` VARCHAR(15) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(15) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(15) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(15) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblalmacenes_1` FOREIGN KEY `FK_tblalmacenes_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblalmacenes_2` FOREIGN KEY `FK_tblalmacenes_2` (`idUsuarioCambio`)
+REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblcajas` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `serieped`,
+ ADD COLUMN `fechaAlta` VARCHAR(15) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(15) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(15) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(15) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblcajas_2` FOREIGN KEY `FK_tblcajas_2` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblcajas_3` FOREIGN KEY `FK_tblcajas_3` (`idUsuarioCambio`)
+REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblsucursales` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `idalmacenm`,
+ ADD COLUMN `fechaAlta` VARCHAR(15) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(15) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(15) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(15) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblsucursales_1` FOREIGN KEY `FK_tblsucursales_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblsucursales_2` FOREIGN KEY `FK_tblsucursales_2` (`idUsuarioCambio`)
+REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblclientestipos` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `nombre`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblclientestipos_1` FOREIGN KEY `FK_tblclientestipos_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblclientestipos_1` FOREIGN KEY `FK_tblclientestipos_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+CREATE TABLE `tblcontadormodulos` (
+  `idContador` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `modulo` VARCHAR(15) NOT NULL,
+  `contador` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`idContador`)
+)
+ENGINE = InnoDB;
+
+update tblclientes set idUsuario=1000, idUsuarioAlta=1000;
+update tblproveedores set idUsuarioAlta=1000, idUsuarioCambio=1000;
+update tblvendedores set idUsuarioAlta=1000, idUsuarioCambio=1000;
+update tbllistasprecios set idUsuarioAlta=1000, idUsuarioCambio=1000;
+update tbltrabajadores set idUsuarioAlta=1000, idUsuarioCambio=1000;
+
+ALTER TABLE `tblclientes` ADD CONSTRAINT `FK_tblclientes_4` FOREIGN KEY `FK_tblclientes_4` (`idUsuario`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblclientes` ADD CONSTRAINT `FK_tblclientes_5` FOREIGN KEY `FK_tblclientes_5` (`IdusuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT;
+
+ALTER TABLE `tblproveedores` ADD CONSTRAINT `FK_tblproveedores_2` FOREIGN KEY `FK_tblproveedores_2` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblproveedores_3` FOREIGN KEY `FK_tblproveedores_3` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblvendedores` ADD CONSTRAINT `FK_tblvendedores_1` FOREIGN KEY `FK_tblvendedores_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblvendedores_2` FOREIGN KEY `FK_tblvendedores_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tbllistasprecios` ADD CONSTRAINT `FK_tbllistasprecios_1` FOREIGN KEY `FK_tbllistasprecios_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tbllistasprecios_2` FOREIGN KEY `FK_tbllistasprecios_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tbltrabajadores` ADD CONSTRAINT `FK_tbltrabajadores_1` FOREIGN KEY `FK_tbltrabajadores_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tbltrabajadores_2` FOREIGN KEY `FK_tbltrabajadores_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblinventario` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL AFTER `descontinuado`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`;
+
+update tblinventario set idUsuarioAlta=1000, idUsuarioCambio=1000;
+
+ALTER TABLE `tblinventario` ADD CONSTRAINT `FK_tblinventario_7` FOREIGN KEY `FK_tblinventario_7` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblinventario_8` FOREIGN KEY `FK_tblinventario_8` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(540,63,'No. Cuenta:','nocuenta',200,20,'Microsoft Sans Serif',7,0,0,0,0,0,39,1,0,0,'No. Cuenta',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(540,63,'Banco:','bancocuenta',200,20,'Microsoft Sans Serif',7,0,0,0,0,0,39,1,0,0,'Banco cuenta',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(540,63,'Folio:','folio',200,20,'Microsoft Sans Serif',7,0,0,0,0,0,39,1,0,0,'Folio',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(540,63,'Fecha Cobro:','fechacobro',200,20,'Microsoft Sans Serif',7,0,0,0,0,0,39,1,0,0,'Fecha Cobro',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(540,63,'Referencia:','referencia',200,20,'Microsoft Sans Serif',7,0,0,0,0,0,39,1,0,0,'Referencia',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(540,63,'Iva %:','ivapor',200,20,'Microsoft Sans Serif',7,0,0,0,1,0,39,1,0,0,'Iva %',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(540,63,'Iva importe:','ivaimp',200,20,'Microsoft Sans Serif',7,0,0,0,1,0,39,1,0,0,'Iva importe',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(540,63,'Iva ret %:','ivaretpor',200,20,'Microsoft Sans Serif',7,0,0,0,1,0,39,1,0,0,'Iva Ret. %',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(540,63,'Iva ret importe:','ivaretimp',200,20,'Microsoft Sans Serif',7,0,0,0,1,0,39,1,0,0,'Iva Ret. importe',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(540,63,'IEPS %:','iepspor',200,20,'Microsoft Sans Serif',7,0,0,0,1,0,39,1,0,0,'IEPS %',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(540,63,'IEPS importe:','iepsimp',200,20,'Microsoft Sans Serif',7,0,0,0,1,0,39,1,0,0,'IEPS importe',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(540,63,'Cuenta destino:','cuentadest',200,20,'Microsoft Sans Serif',7,0,0,0,0,0,39,1,0,0,'Cuenta Destino',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(540,63,'Banco destino:','bancodest',200,20,'Microsoft Sans Serif',7,0,0,0,0,0,39,1,0,0,'Banco Destino',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(540,63,'Banco destino extranjero:','bancodestex',200,20,'Microsoft Sans Serif',7,0,0,0,0,0,39,1,0,0,'Banco Destino Ex',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(540,63,'Moneda:','moneda',200,20,'Microsoft Sans Serif',7,0,0,0,0,0,39,1,0,0,'Moneda',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(540,63,'Tipo de cambio:','tipodecambio',200,20,'Microsoft Sans Serif',7,0,0,0,0,0,39,1,0,0,'Tipo de cambio',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(540,63,'Es traspaso:','estraspaso',200,20,'Microsoft Sans Serif',7,0,0,0,0,0,39,1,0,0,'Es Traspaso',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(540,63,'Cuenta destino traspaso:','cuentadesttras',200,20,'Microsoft Sans Serif',7,0,0,0,0,0,39,1,0,0,'Cuenta Dest. Tras.',0,0);
+
+ALTER TABLE `tblproveedoresviejossaldos` MODIFY COLUMN `serie` VARCHAR(450) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `tblproveedoresrepdeudas` MODIFY COLUMN `folio` VARCHAR(450) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `tblproveedoresmovimientos` MODIFY COLUMN `folio` VARCHAR(450) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL;
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL TRASPASO','TTRAS',5,'SUMA DEL TOTAL DE LOS TRASPASOS');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL TRASPASO DESTINO','TTRASD',5,'SUMA DEL TOTAL DE LOS TRASPASOS A LA CUENTA DESTINO');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL POR TRASPASO','TXTRAS',5,'TOTAL POR CADA TRASPASO');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL POR TRASPASO DESTINO','TXTRASD',5,'TOTAL POR CADA TRASPASO DESTINO');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO','TIVAR',6,'SUMA DEL IVA RETENIDO');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL ISR','TISR',6,'SUMA DEL ISR');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO POR NOTA','TIVARnetoxf',6,'TOTAL IVA RETENIDO POR NOTA DE CRÉDITO');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL ISR POR NOTA','TISRnetoxf',6,'TOTAL ISR POR NOTA DE CRÉDITO');
+
+ALTER TABLE `tblnotasdecredito` ADD COLUMN `ivaretenido` DOUBLE NOT NULL AFTER `comentarionc`,
+ ADD COLUMN `isr` DOUBLE NOT NULL AFTER `ivaretenido`;
+
+ALTER TABLE `tblopciones` ADD COLUMN `pvventanacomp` TINYINT UNSIGNED NOT NULL AFTER `integrarcont`;
+
+
+insert into tblactualizaciones(version) values('ver 9033 rev 20');

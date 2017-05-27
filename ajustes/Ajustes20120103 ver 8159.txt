@@ -1,0 +1,13 @@
+ALTER TABLE `db_services`.`tbldevolucionesdetalles` ADD COLUMN `cantidadm` DOUBLE NOT NULL AFTER `idservicio`,
+ ADD COLUMN `tipocantidadm` INTEGER UNSIGNED NOT NULL AFTER `cantidadm`;
+
+update tbldevolucionesdetalles set cantidadm=cantidad,tipocantidadm=(select tipocantidad from tblinventario where idinventario=tbldevolucionesdetalles.idinventario);
+
+ALTER TABLE `db_services`.`tbldevolucionesdetalles` ADD COLUMN `equivalencia` DOUBLE NOT NULL AFTER `tipocantidadm`,
+ ADD COLUMN `equivalenciab` DOUBLE NOT NULL AFTER `equivalencia`;
+
+update tbldevolucionesdetalles set equivalencia=1,equivalenciab=1;
+
+e-eb
+c-cm
+

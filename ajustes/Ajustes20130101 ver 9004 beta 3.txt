@@ -1,0 +1,5 @@
+ALTER TABLE `tblopciones` ADD COLUMN `pvrojo` INTEGER UNSIGNED NOT NULL AFTER `idiomacletras`,
+ ADD COLUMN `pvverde` INTEGER UNSIGNED NOT NULL AFTER `pvrojo`,
+ ADD COLUMN `pvazul` INTEGER UNSIGNED NOT NULL AFTER `pvverde`;
+update tblopciones set pvrojo=192,pvverde=255,pvazul=192;
+update tblusuarios set permisos7=127;

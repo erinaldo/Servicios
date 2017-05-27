@@ -1,0 +1,692 @@
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdainventarioafecha` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdainventarioafecha`(pidinventario int,pfecha1 varchar(10),pidsucursal int,pidalmacen int) RETURNS double
+BEGIN
+declare vcantidad double;
+declare vcontenido double;
+set vcantidad=0;
+set vcontenido=(select contenido from tblinventario where idinventario=pidinventario);
+if vcontenido=0 then
+set vcontenido=1;
+end if;
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fecha<pfecha1 and (tblmovimientos.estado=3 or tblmovimientos.estado=4) and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=4),0);
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fecha<pfecha1 and (tblmovimientos.estado=3 or tblmovimientos.estado=4) and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=4 and tblmovimientos.idsucursal=pidsucursal),0);
+else
+set vcantidad=vcantidad+ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fecha<pfecha1 and (tblmovimientos.estado=3 or tblmovimientos.estado=4) and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=4 and tblmovimientosdetalles.idalmacen=pidalmacen),0);
+end if;
+end if;
+
+
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fecha<pfecha1 and (tblmovimientos.estado=3 or tblmovimientos.estado=4) and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=0),0);
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fecha<pfecha1 and (tblmovimientos.estado=3 or tblmovimientos.estado=4) and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=0 and tblmovimientos.idsucursal=pidsucursal),0);
+else
+set vcantidad=vcantidad+ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fecha<pfecha1 and (tblmovimientos.estado=3 or tblmovimientos.estado=4) and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=0 and tblmovimientosdetalles.idalmacen=pidalmacen),0);
+end if;
+end if;
+
+
+
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fecha<pfecha1 and (tblmovimientos.estado=3 or tblmovimientos.estado=4) and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=1),0);
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fecha<pfecha1 and (tblmovimientos.estado=3 or tblmovimientos.estado=4)  and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=1 and tblmovimientos.idsucursal=pidsucursal),0);
+else
+set vcantidad=vcantidad-ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fecha<pfecha1 and (tblmovimientos.estado=3 or tblmovimientos.estado=4) and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=1 and tblmovimientosdetalles.idalmacen=pidalmacen),0);
+end if;
+end if;
+
+
+
+
+if pidsucursal>0 then
+
+if pidalmacen<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fecha<pfecha1 and (tblmovimientos.estado=3 or tblmovimientos.estado=4) and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=3 and tblmovimientos.idsucursal=pidsucursal),0);
+else
+set vcantidad=vcantidad-ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fecha<pfecha1 and (tblmovimientos.estado=3 or tblmovimientos.estado=4) and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=3 and tblmovimientosdetalles.idalmacen=pidalmacen),0);
+end if;
+end if;
+
+
+if pidsucursal>0 then
+if pidalmacen<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto inner join tblalmacenes on tblalmacenes.idalmacen=tblmovimientosdetalles.idalmacen2 and tblalmacenes.idsucursal=tblmovimientos.idsucursal
+where tblmovimientos.fecha<pfecha1 and (tblmovimientos.estado=3 or tblmovimientos.estado=4) and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=3 and tblmovimientos.idsucursal=pidsucursal),0);
+else
+set vcantidad=vcantidad+ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fecha<pfecha1 and (tblmovimientos.estado=3 or tblmovimientos.estado=4) and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=3 and tblmovimientosdetalles.idalmacen2=pidalmacen),0);
+end if;
+end if;
+
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblcomprasdetalles.cantidad)
+from tblcompras inner join tblcomprasdetalles on tblcompras.idcompra=tblcomprasdetalles.idcompra
+where tblcomprasdetalles.idinventario=pidinventario and tblcompras.fecha<pfecha1 and (tblcompras.estado=3 or tblcompras.estado=4)
+and (select count(tblcomprasremisiones.idcomprar) from tblcomprasremisiones where tblcomprasremisiones.idcomprar=tblcompras.idcompra)=0),0);
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblcomprasdetalles.cantidad)
+from tblcompras inner join tblcomprasdetalles on tblcompras.idcompra=tblcomprasdetalles.idcompra
+where tblcomprasdetalles.idinventario=pidinventario and tblcompras.fecha<pfecha1 and tblcompras.idsucursal=pidsucursal and (tblcompras.estado=3 or tblcompras.estado=4)
+and (select count(tblcomprasremisiones.idcomprar) from tblcomprasremisiones where tblcomprasremisiones.idcomprar=tblcompras.idcompra)=0),0);
+else
+set vcantidad=vcantidad+ifnull((select sum(tblcomprasdetalles.cantidad)
+from tblcompras inner join tblcomprasdetalles on tblcompras.idcompra=tblcomprasdetalles.idcompra
+where tblcomprasdetalles.idinventario=pidinventario and tblcompras.fecha<pfecha1 and tblcomprasdetalles.idalmacen=pidalmacen and (tblcompras.estado=3 or tblcompras.estado=4)
+and (select count(tblcomprasremisiones.idcomprar) from tblcomprasremisiones where tblcomprasremisiones.idcomprar=tblcompras.idcompra)=0),0);
+end if;
+end if;
+
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tbldevolucionesdetallesc.cantidad)
+from tbldevolucionescompras inner join tbldevolucionesdetallesc on tbldevolucionescompras.iddevolucion=tbldevolucionesdetallesc.iddevolucion
+where tbldevolucionesdetallesc.idinventario=pidinventario and tbldevolucionescompras.fecha<pfecha1 and (tbldevolucionescompras.estado=3 or tbldevolucionescompras.estado=4)),0);
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tbldevolucionesdetallesc.cantidad)
+from tbldevolucionescompras inner join tbldevolucionesdetallesc on tbldevolucionescompras.iddevolucion=tbldevolucionesdetallesc.iddevolucion
+where tbldevolucionesdetallesc.idinventario=pidinventario and tbldevolucionescompras.fecha<pfecha1 and tbldevolucionescompras.idsucursal=pidsucursal and (tbldevolucionescompras.estado=3 or tbldevolucionescompras.estado=4)),0);
+else
+set vcantidad=vcantidad-ifnull((select sum(tbldevolucionesdetallesc.cantidad)
+from tbldevolucionescompras inner join tbldevolucionesdetallesc on tbldevolucionescompras.iddevolucion=tbldevolucionesdetallesc.iddevolucion
+where tbldevolucionesdetallesc.idinventario=pidinventario and tbldevolucionescompras.fecha<pfecha1 and tbldevolucionesdetallesc.idalmacen=pidalmacen and (tbldevolucionescompras.estado=3 or tbldevolucionescompras.estado=4)),0);
+end if;
+end if;
+
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblcomprasremisionesdetalles.cantidad)
+from tblcomprasremisiones inner join tblcomprasremisionesdetalles on tblcomprasremisiones.idremision=tblcomprasremisionesdetalles.idremision
+where tblcomprasremisionesdetalles.idinventario=pidinventario and tblcomprasremisiones.fecha<pfecha1 and (tblcomprasremisiones.estado=3 or tblcomprasremisiones.estado=4)),0);
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblcomprasremisionesdetalles.cantidad)
+from tblcomprasremisiones inner join tblcomprasremisionesdetalles on tblcomprasremisiones.idremision=tblcomprasremisionesdetalles.idremision
+where tblcomprasremisionesdetalles.idinventario=pidinventario and tblcomprasremisiones.fecha<pfecha1 and tblcomprasremisiones.idsucursal=pidsucursal and (tblcomprasremisiones.estado=3 or tblcomprasremisiones.estado=4)),0);
+else
+set vcantidad=vcantidad+ifnull((select sum(tblcomprasremisionesdetalles.cantidad)
+from tblcomprasremisiones inner join tblcomprasremisionesdetalles on tblcomprasremisiones.idremision=tblcomprasremisionesdetalles.idremision
+where tblcomprasremisionesdetalles.idinventario=pidinventario and tblcomprasremisiones.fecha<pfecha1 and tblcomprasremisionesdetalles.idalmacen=pidalmacen and (tblcomprasremisiones.estado=3 or tblcomprasremisiones.estado=4)),0);
+end if;
+end if;
+
+
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblventasinventario.cantidad)
+from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa
+where tblventasinventario.idinventario=pidinventario and tblventas.fecha<pfecha1 and (tblventas.estado=3 or tblventas.estado=4) and tblventas.porsurtir=0
+and tblventas.deremision=0),0)/vcontenido;
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblventasinventario.cantidad)
+from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa
+where tblventasinventario.idinventario=pidinventario and tblventas.fecha<pfecha1 and (tblventas.estado=3 or tblventas.estado=4) and tblventas.idsucursal=pidsucursal and tblventas.porsurtir=0
+and tblventas.deremision=0),0)/vcontenido;
+else
+set vcantidad=vcantidad-ifnull((select sum(tblventasinventario.cantidad)
+from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa
+where tblventasinventario.idinventario=pidinventario and tblventas.fecha<pfecha1 and (tblventas.estado=3 or tblventas.estado=4) and tblventasinventario.idalmacen=pidalmacen and tblventas.porsurtir=0
+and tblventas.deremision=0),0)/vcontenido;
+end if;
+end if;
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblventaskits.cantidad)
+from tblventas inner join tblventaskits on tblventas.idventa=tblventaskits.idventa
+where tblventaskits.idinventario=pidinventario and tblventas.fecha<pfecha1 and (tblventas.estado=3 or tblventas.estado=4) and tblventas.porsurtir=0
+and tblventas.deremision=0),0)/vcontenido;
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblventaskits.cantidad)
+from tblventas inner join tblventaskits on tblventas.idventa=tblventaskits.idventa
+where tblventaskits.idinventario=pidinventario and tblventas.fecha<pfecha1 and (tblventas.estado=3 or tblventas.estado=4) and tblventas.idsucursal=pidsucursal and tblventas.porsurtir=0
+and tblventas.deremision=0),0)/vcontenido;
+else
+set vcantidad=vcantidad-ifnull((select sum(tblventaskits.cantidad)
+from tblventas inner join tblventaskits on tblventas.idventa=tblventaskits.idventa
+where tblventaskits.idinventario=pidinventario and tblventas.fecha<pfecha1 and (tblventas.estado=3 or tblventas.estado=4) and tblventaskits.idalmacen=pidalmacen and tblventas.porsurtir=0
+and tblventas.deremision=0),0)/vcontenido;
+end if;
+end if;
+
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tbldevolucionesdetalles.cantidad)
+from tbldevoluciones inner join tbldevolucionesdetalles on tbldevoluciones.iddevolucion=tbldevolucionesdetalles.iddevolucion
+where tbldevolucionesdetalles.idinventario=pidinventario and tbldevoluciones.fecha<pfecha1 and (tbldevoluciones.estado=3 or tbldevoluciones.estado=4)),0)/vcontenido;
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tbldevolucionesdetalles.cantidad)
+from tbldevoluciones inner join tbldevolucionesdetalles on tbldevoluciones.iddevolucion=tbldevolucionesdetalles.iddevolucion
+where tbldevolucionesdetalles.idinventario=pidinventario and tbldevoluciones.fecha<pfecha1 and (tbldevoluciones.estado=3 or tbldevoluciones.estado=4) and tbldevoluciones.idsucursal=pidsucursal),0)/vcontenido;
+else
+set vcantidad=vcantidad+ifnull((select sum(tbldevolucionesdetalles.cantidad)
+from tbldevoluciones inner join tbldevolucionesdetalles on tbldevoluciones.iddevolucion=tbldevolucionesdetalles.iddevolucion
+where tbldevolucionesdetalles.idinventario=pidinventario and tbldevoluciones.fecha<pfecha1 and (tbldevoluciones.estado=3 or tbldevoluciones.estado=4) and tbldevolucionesdetalles.idalmacen=pidalmacen),0)/vcontenido;
+end if;
+end if;
+
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblventasremisionesinventario.cantidad)
+from tblventasremisiones inner join tblventasremisionesinventario on tblventasremisiones.idremision=tblventasremisionesinventario.idremision
+where tblventasremisionesinventario.idinventario=pidinventario and tblventasremisiones.fecha<pfecha1 and (tblventasremisiones.estado=3 or tblventasremisiones.estado=4) and tblventasremisiones.porsurtir=0),0)/vcontenido;
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblventasremisionesinventario.cantidad)
+from tblventasremisiones inner join tblventasremisionesinventario on tblventasremisiones.idremision=tblventasremisionesinventario.idremision
+where tblventasremisionesinventario.idinventario=pidinventario and tblventasremisiones.fecha<pfecha1 and (tblventasremisiones.estado=3 or tblventasremisiones.estado=4) and tblventasremisiones.idsucursal=pidsucursal and tblventasremisiones.porsurtir=0),0)/vcontenido;
+else
+set vcantidad=vcantidad-ifnull((select sum(tblventasremisionesinventario.cantidad)
+from tblventasremisiones inner join tblventasremisionesinventario on tblventasremisiones.idremision=tblventasremisionesinventario.idremision
+where tblventasremisionesinventario.idinventario=pidinventario and tblventasremisiones.fecha<pfecha1 and (tblventasremisiones.estado=3 or tblventasremisiones.estado=4) and tblventasremisionesinventario.idalmacen=pidalmacen and tblventasremisiones.porsurtir=0),0)/vcontenido;
+end if;
+end if;
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblventaskitsr.cantidad)
+from tblventasremisiones inner join tblventaskitsr on tblventasremisiones.idremision=tblventaskitsr.idremision
+where tblventaskitsr.idinventario=pidinventario and tblventasremisiones.fecha<pfecha1 and (tblventasremisiones.estado=3 or tblventasremisiones.estado=4) and tblventasremisiones.porsurtir=0),0)/vcontenido;
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblventaskitsr.cantidad)
+from tblventasremisiones inner join tblventaskitsr on tblventasremisiones.idremision=tblventaskitsr.idremision
+where tblventaskitsr.idinventario=pidinventario and tblventasremisiones.fecha<pfecha1 and (tblventasremisiones.estado=3 or tblventasremisiones.estado=4) and tblventasremisiones.idsucursal=pidsucursal and tblventasremisiones.porsurtir=0),0)/vcontenido;
+else
+set vcantidad=vcantidad-ifnull((select sum(tblventaskitsr.cantidad)
+from tblventasremisiones inner join tblventaskitsr on tblventasremisiones.idremision=tblventaskitsr.idremision
+where tblventaskitsr.idinventario=pidinventario and tblventasremisiones.fecha<pfecha1 and (tblventasremisiones.estado=3 or tblventasremisiones.estado=4) and tblventaskitsr.idalmacen=pidalmacen and tblventasremisiones.porsurtir=0),0)/vcontenido;
+end if;
+end if;
+
+
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblmovimientosdetalles.inventarioanterior)*-1
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fecha<pfecha1 and (tblmovimientos.estado=3 or tblmovimientos.estado=4) and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=2 and tblmovimientosdetalles.inventarioanterior<=0),0);
+
+set vcantidad=vcantidad-ifnull((select sum(tblmovimientosdetalles.inventarioanterior)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fecha<pfecha1 and (tblmovimientos.estado=3 or tblmovimientos.estado=4) and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=2 and tblmovimientosdetalles.inventarioanterior>0),0);
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblmovimientosdetalles.inventarioanterior)*-1
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fecha<pfecha1 and (tblmovimientos.estado=3 or tblmovimientos.estado=4) and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=2 and tblmovimientosdetalles.inventarioanterior<=0 and tblmovimientos.idsucursal=pidsucursal),0);
+
+set vcantidad=vcantidad-ifnull((select sum(tblmovimientosdetalles.inventarioanterior)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fecha<pfecha1 and (tblmovimientos.estado=3 or tblmovimientos.estado=4) and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=2 and tblmovimientosdetalles.inventarioanterior>0 and tblmovimientos.idsucursal=pidsucursal),0);
+else
+set vcantidad=vcantidad+ifnull((select sum(tblmovimientosdetalles.inventarioanterior)*-1
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fecha<pfecha1 and (tblmovimientos.estado=3 or tblmovimientos.estado=4) and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=2 and tblmovimientosdetalles.inventarioanterior<=0 and tblmovimientosdetalles.idalmacen=pidalmacen),0);
+
+set vcantidad=vcantidad-ifnull((select sum(tblmovimientosdetalles.inventarioanterior)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fecha<pfecha1 and (tblmovimientos.estado=3 or tblmovimientos.estado=4) and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=2 and tblmovimientosdetalles.inventarioanterior>0 and tblmovimientosdetalles.idalmacen=pidalmacen),0);
+end if;
+end if;
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblventasapartadosdetalles.cantidad)
+from tblventasapartados inner join tblventasapartadosdetalles on tblventasapartados.idapartado=tblventasapartadosdetalles.idapartado
+where tblventasapartadosdetalles.idinventario=pidinventario and tblventasapartados.fecha<pfecha1 and tblventasapartados.estado=3 and tblventasapartados.dinventario=1 and tblventasapartados.surtido=0),0)/vcontenido;
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblventasapartadosdetalles.cantidad)
+from tblventasapartados inner join tblventasapartadosdetalles on tblventasapartados.idapartado=tblventasapartadosdetalles.idapartado
+where tblventasapartadosdetalles.idinventario=pidinventario and tblventasapartados.fecha<pfecha1 and tblventasapartados.estado=3 and tblventasapartados.idsucursal=pidsucursal and tblventasapartados.dinventario=1 and tblventasapartados.surtido=0),0)/vcontenido;
+else
+set vcantidad=vcantidad-ifnull((select sum(tblventasapartadosdetalles.cantidad)
+from tblventasapartados inner join tblventasapartadosdetalles on tblventasapartados.idapartado=tblventasapartadosdetalles.idapartado
+where tblventasapartadosdetalles.idinventario=pidinventario and tblventasapartados.fecha<pfecha1 and tblventasapartados.estado=3 and tblventasapartadosdetalles.idalmacen=pidalmacen and tblventasapartados.dinventario=1 and tblventasapartados.surtido=0),0)/vcontenido;
+end if;
+end if;
+
+
+
+
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblfertilizantesmovimientos.surtido)
+from tblfertilizantesmovimientos inner join tblfertilizantespedidos on tblfertilizantesmovimientos.idpedido=tblfertilizantespedidos.idpedido
+where tblfertilizantesmovimientos.fecha<pfecha1 and (tblfertilizantesmovimientos.estado=3 or tblfertilizantesmovimientos.estado=4) and tblfertilizantesmovimientos.idinventario=pidinventario and tblfertilizantesmovimientos.estadosurtido=1 and tblfertilizantesmovimientos.tipo<>2 and tblfertilizantesmovimientos.tipo<>3),0);
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblfertilizantesmovimientos.surtido)
+from tblfertilizantesmovimientos inner join tblfertilizantespedidos on tblfertilizantesmovimientos.idpedido=tblfertilizantespedidos.idpedido
+where tblfertilizantesmovimientos.fecha<pfecha1 and (tblfertilizantesmovimientos.estado=3 or tblfertilizantesmovimientos.estado=4) and tblfertilizantesmovimientos.idinventario=pidinventario and tblfertilizantesmovimientos.estadosurtido=1 and tblfertilizantespedidos.idsucursal=pidsucursal and tblfertilizantesmovimientos.tipo<>2 and tblfertilizantesmovimientos.tipo<>3),0);
+else
+set vcantidad=vcantidad-ifnull((select sum(tblfertilizantesmovimientos.surtido)
+from tblfertilizantesmovimientos inner join tblfertilizantespedidos on tblfertilizantesmovimientos.idpedido=tblfertilizantespedidos.idpedido
+where tblfertilizantesmovimientos.fecha<pfecha1 and (tblfertilizantesmovimientos.estado=3 or tblfertilizantesmovimientos.estado=4) and tblfertilizantesmovimientos.idinventario=pidinventario and tblfertilizantesmovimientos.estadosurtido=1 and tblfertilizantesmovimientos.idalmacen=pidalmacen and tblfertilizantesmovimientos.tipo<>2 and tblfertilizantesmovimientos.tipo<>3),0);
+end if;
+end if;
+
+
+
+
+
+
+if pidsucursal>0 then
+if pidalmacen<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblfertilizantesmovimientos.pesoneto)
+from tblfertilizantesmovimientos inner join tblfertilizantespedidos on tblfertilizantesmovimientos.idpedido=tblfertilizantespedidos.idpedido
+where tblfertilizantesmovimientos.fecha<pfecha1 and (tblfertilizantesmovimientos.estado=3 or tblfertilizantesmovimientos.estado=4) and tblfertilizantesmovimientos.idinventario=pidinventario and tblfertilizantesmovimientos.tipo=2 and tblfertilizantespedidos.idsucursal=pidsucursal),0);
+else
+set vcantidad=vcantidad-ifnull((select sum(tblfertilizantesmovimientos.pesoneto)
+from tblfertilizantesmovimientos inner join tblfertilizantespedidos on tblfertilizantesmovimientos.idpedido=tblfertilizantespedidos.idpedido
+where tblfertilizantesmovimientos.fecha<pfecha1 and (tblfertilizantesmovimientos.estado=3 or tblfertilizantesmovimientos.estado=4) and tblfertilizantesmovimientos.idinventario=pidinventario and tblfertilizantesmovimientos.tipo=2 and tblfertilizantesmovimientos.idalmacen=pidalmacen),0);
+end if;
+end if;
+
+
+if pidsucursal>0 then
+if pidalmacen<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblfertilizantesmovimientos.pesoneto)
+from tblfertilizantesmovimientos inner join tblfertilizantespedidos on tblfertilizantesmovimientos.idpedido=tblfertilizantespedidos.idpedido
+where tblfertilizantesmovimientos.fecha<pfecha1 and (tblfertilizantesmovimientos.estado=3 or tblfertilizantesmovimientos.estado=4) and tblfertilizantesmovimientos.idinventario=pidinventario and tblfertilizantesmovimientos.tipo=2 and tblfertilizantespedidos.idsucursal=pidsucursal),0);
+else
+set vcantidad=vcantidad+ifnull((select sum(tblfertilizantesmovimientos.pesoneto)
+from tblfertilizantesmovimientos inner join tblfertilizantespedidos on tblfertilizantesmovimientos.idpedido=tblfertilizantespedidos.idpedido
+where tblfertilizantesmovimientos.fecha<pfecha1 and (tblfertilizantesmovimientos.estado=3 or tblfertilizantesmovimientos.estado=4) and tblfertilizantesmovimientos.idinventario=pidinventario and tblfertilizantesmovimientos.tipo=2 and tblfertilizantesmovimientos.idalmacendestino=pidalmacen),0);
+end if;
+end if;
+
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblfertilizantesmovimientos.surtido)
+from tblfertilizantesmovimientos inner join tblfertilizantespedidos on tblfertilizantesmovimientos.idpedido=tblfertilizantespedidos.idpedido
+where tblfertilizantesmovimientos.fecha<pfecha1 and (tblfertilizantesmovimientos.estado=3 or tblfertilizantesmovimientos.estado=4) and tblfertilizantesmovimientos.idinventario=pidinventario and tblfertilizantesmovimientos.estadosurtido=1 and tblfertilizantesmovimientos.tipo=2),0);
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblfertilizantesmovimientos.surtido)
+from tblfertilizantesmovimientos inner join tblfertilizantespedidos on tblfertilizantesmovimientos.idpedido=tblfertilizantespedidos.idpedido
+where tblfertilizantesmovimientos.fecha<pfecha1 and (tblfertilizantesmovimientos.estado=3 or tblfertilizantesmovimientos.estado=4) and tblfertilizantesmovimientos.idinventario=pidinventario and tblfertilizantesmovimientos.estadosurtido=1 and tblfertilizantespedidos.idsucursal=pidsucursal and tblfertilizantesmovimientos.tipo=2),0);
+else
+set vcantidad=vcantidad-ifnull((select sum(tblfertilizantesmovimientos.surtido)
+from tblfertilizantesmovimientos inner join tblfertilizantespedidos on tblfertilizantesmovimientos.idpedido=tblfertilizantespedidos.idpedido
+where tblfertilizantesmovimientos.fecha<pfecha1 and (tblfertilizantesmovimientos.estado=3 or tblfertilizantesmovimientos.estado=4) and tblfertilizantesmovimientos.idinventario=pidinventario and tblfertilizantesmovimientos.estadosurtido=1 and tblfertilizantesmovimientos.idalmacendestino=pidalmacen and tblfertilizantesmovimientos.tipo=2),0);
+end if;
+end if;
+
+
+
+
+
+
+
+
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fechacancelado<pfecha1 and tblmovimientos.estado=4 and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=4),0);
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fechacancelado<pfecha1 and tblmovimientos.estado=4 and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=4 and tblmovimientos.idsucursal=pidsucursal),0);
+else
+set vcantidad=vcantidad-ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fechacancelado<pfecha1 and tblmovimientos.estado=4 and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=4 and tblmovimientosdetalles.idalmacen=pidalmacen),0);
+end if;
+end if;
+
+
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fechacancelado<pfecha1 and tblmovimientos.estado=4 and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=0),0);
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fechacancelado<pfecha1 and tblmovimientos.estado=4 and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=0 and tblmovimientos.idsucursal=pidsucursal),0);
+else
+set vcantidad=vcantidad-ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fechacancelado<pfecha1 and tblmovimientos.estado=4 and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=0 and tblmovimientosdetalles.idalmacen=pidalmacen),0);
+end if;
+end if;
+
+
+
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fechacancelado<pfecha1 and tblmovimientos.estado=4 and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=1),0);
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fechacancelado<pfecha1 and tblmovimientos.estado=4  and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=1 and tblmovimientos.idsucursal=pidsucursal),0);
+else
+set vcantidad=vcantidad+ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fechacancelado<pfecha1 and tblmovimientos.estado=4 and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=1 and tblmovimientosdetalles.idalmacen=pidalmacen),0);
+end if;
+end if;
+
+
+
+
+if pidsucursal>0 then
+
+if pidalmacen<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fechacancelado<pfecha1 and tblmovimientos.estado=4 and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=3 and tblmovimientos.idsucursal=pidsucursal),0);
+else
+set vcantidad=vcantidad+ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fechacancelado<pfecha1 and tblmovimientos.estado=4 and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=3 and tblmovimientosdetalles.idalmacen=pidalmacen),0);
+end if;
+end if;
+
+
+if pidsucursal>0 then
+if pidalmacen<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto inner join tblalmacenes on tblalmacenes.idalmacen=tblmovimientosdetalles.idalmacen2 and tblalmacenes.idsucursal=tblmovimientos.idsucursal
+where tblmovimientos.fechacancelado<pfecha1 and tblmovimientos.estado=4 and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=3 and tblmovimientos.idsucursal=pidsucursal),0);
+else
+set vcantidad=vcantidad-ifnull((select sum(tblmovimientosdetalles.cantidad)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fechacancelado<pfecha1 and tblmovimientos.estado=4 and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=3 and tblmovimientosdetalles.idalmacen2=pidalmacen),0);
+end if;
+end if;
+
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblcomprasdetalles.cantidad)
+from tblcompras inner join tblcomprasdetalles on tblcompras.idcompra=tblcomprasdetalles.idcompra
+where tblcomprasdetalles.idinventario=pidinventario and tblcompras.fechacancelado<pfecha1 and tblcompras.estado=4
+and (select count(tblcomprasremisiones.idcomprar) from tblcomprasremisiones where tblcomprasremisiones.idcomprar=tblcompras.idcompra)=0),0);
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblcomprasdetalles.cantidad)
+from tblcompras inner join tblcomprasdetalles on tblcompras.idcompra=tblcomprasdetalles.idcompra
+where tblcomprasdetalles.idinventario=pidinventario and tblcompras.fechacancelado<pfecha1 and tblcompras.idsucursal=pidsucursal and tblcompras.estado=4
+and (select count(tblcomprasremisiones.idcomprar) from tblcomprasremisiones where tblcomprasremisiones.idcomprar=tblcompras.idcompra)=0),0);
+else
+set vcantidad=vcantidad-ifnull((select sum(tblcomprasdetalles.cantidad)
+from tblcompras inner join tblcomprasdetalles on tblcompras.idcompra=tblcomprasdetalles.idcompra
+where tblcomprasdetalles.idinventario=pidinventario and tblcompras.fechacancelado<pfecha1 and tblcomprasdetalles.idalmacen=pidalmacen and tblcompras.estado=4
+and (select count(tblcomprasremisiones.idcomprar) from tblcomprasremisiones where tblcomprasremisiones.idcomprar=tblcompras.idcompra)=0),0);
+end if;
+end if;
+
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tbldevolucionesdetallesc.cantidad)
+from tbldevolucionescompras inner join tbldevolucionesdetallesc on tbldevolucionescompras.iddevolucion=tbldevolucionesdetallesc.iddevolucion
+where tbldevolucionesdetallesc.idinventario=pidinventario and tbldevolucionescompras.fechacancelado<pfecha1 and tbldevolucionescompras.estado=4),0);
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tbldevolucionesdetallesc.cantidad)
+from tbldevolucionescompras inner join tbldevolucionesdetallesc on tbldevolucionescompras.iddevolucion=tbldevolucionesdetallesc.iddevolucion
+where tbldevolucionesdetallesc.idinventario=pidinventario and tbldevolucionescompras.fechacancelado<pfecha1 and tbldevolucionescompras.idsucursal=pidsucursal and tbldevolucionescompras.estado=4),0);
+else
+set vcantidad=vcantidad+ifnull((select sum(tbldevolucionesdetallesc.cantidad)
+from tbldevolucionescompras inner join tbldevolucionesdetallesc on tbldevolucionescompras.iddevolucion=tbldevolucionesdetallesc.iddevolucion
+where tbldevolucionesdetallesc.idinventario=pidinventario and tbldevolucionescompras.fechacancelado<pfecha1 and tbldevolucionesdetallesc.idalmacen=pidalmacen and tbldevolucionescompras.estado=4),0);
+end if;
+end if;
+
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblcomprasremisionesdetalles.cantidad)
+from tblcomprasremisiones inner join tblcomprasremisionesdetalles on tblcomprasremisiones.idremision=tblcomprasremisionesdetalles.idremision
+where tblcomprasremisionesdetalles.idinventario=pidinventario and tblcomprasremisiones.fechacancelado<pfecha1 and tblcomprasremisiones.estado=4),0);
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblcomprasremisionesdetalles.cantidad)
+from tblcomprasremisiones inner join tblcomprasremisionesdetalles on tblcomprasremisiones.idremision=tblcomprasremisionesdetalles.idremision
+where tblcomprasremisionesdetalles.idinventario=pidinventario and tblcomprasremisiones.fechacancelado<pfecha1 and tblcomprasremisiones.idsucursal=pidsucursal and tblcomprasremisiones.estado=4),0);
+else
+set vcantidad=vcantidad-ifnull((select sum(tblcomprasremisionesdetalles.cantidad)
+from tblcomprasremisiones inner join tblcomprasremisionesdetalles on tblcomprasremisiones.idremision=tblcomprasremisionesdetalles.idremision
+where tblcomprasremisionesdetalles.idinventario=pidinventario and tblcomprasremisiones.fechacancelado<pfecha1 and tblcomprasremisionesdetalles.idalmacen=pidalmacen and tblcomprasremisiones.estado=4),0);
+end if;
+end if;
+
+
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblventasinventario.cantidad)
+from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa
+where tblventasinventario.idinventario=pidinventario and tblventas.fechacancelado<pfecha1 and tblventas.estado=4 and tblventas.porsurtir=0
+and tblventas.deremision=0),0)/vcontenido;
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblventasinventario.cantidad)
+from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa
+where tblventasinventario.idinventario=pidinventario and tblventas.fechacancelado<pfecha1 and tblventas.estado=4 and tblventas.idsucursal=pidsucursal and tblventas.porsurtir=0
+and tblventas.deremision=0),0)/vcontenido;
+else
+set vcantidad=vcantidad+ifnull((select sum(tblventasinventario.cantidad)
+from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa
+where tblventasinventario.idinventario=pidinventario and tblventas.fechacancelado<pfecha1 and tblventas.estado=4 and tblventasinventario.idalmacen=pidalmacen and tblventas.porsurtir=0
+and tblventas.deremision=0),0)/vcontenido;
+end if;
+end if;
+
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblventaskits.cantidad)
+from tblventas inner join tblventaskits on tblventas.idventa=tblventaskits.idventa
+where tblventaskits.idinventario=pidinventario and tblventas.fechacancelado<pfecha1 and tblventas.estado=4 and tblventas.porsurtir=0
+and tblventas.deremision=0),0)/vcontenido;
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblventaskits.cantidad)
+from tblventas inner join tblventaskits on tblventas.idventa=tblventaskits.idventa
+where tblventaskits.idinventario=pidinventario and tblventas.fechacancelado<pfecha1 and tblventas.estado=4 and tblventas.idsucursal=pidsucursal and tblventas.porsurtir=0
+and tblventas.deremision=0),0)/vcontenido;
+else
+set vcantidad=vcantidad+ifnull((select sum(tblventaskits.cantidad)
+from tblventas inner join tblventaskits on tblventas.idventa=tblventaskits.idventa
+where tblventaskits.idinventario=pidinventario and tblventas.fechacancelado<pfecha1 and tblventas.estado=4 and tblventaskits.idalmacen=pidalmacen and tblventas.porsurtir=0
+and tblventas.deremision=0),0)/vcontenido;
+end if;
+end if;
+
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tbldevolucionesdetalles.cantidad)
+from tbldevoluciones inner join tbldevolucionesdetalles on tbldevoluciones.iddevolucion=tbldevolucionesdetalles.iddevolucion
+where tbldevolucionesdetalles.idinventario=pidinventario and tbldevoluciones.fechacancelado<pfecha1 and tbldevoluciones.estado=4),0)/vcontenido;
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tbldevolucionesdetalles.cantidad)
+from tbldevoluciones inner join tbldevolucionesdetalles on tbldevoluciones.iddevolucion=tbldevolucionesdetalles.iddevolucion
+where tbldevolucionesdetalles.idinventario=pidinventario and tbldevoluciones.fechacancelado<pfecha1 and tbldevoluciones.estado=4 and tbldevoluciones.idsucursal=pidsucursal),0)/vcontenido;
+else
+set vcantidad=vcantidad-ifnull((select sum(tbldevolucionesdetalles.cantidad)
+from tbldevoluciones inner join tbldevolucionesdetalles on tbldevoluciones.iddevolucion=tbldevolucionesdetalles.iddevolucion
+where tbldevolucionesdetalles.idinventario=pidinventario and tbldevoluciones.fechacancelado<pfecha1 and tbldevoluciones.estado=4 and tbldevolucionesdetalles.idalmacen=pidalmacen),0)/vcontenido;
+end if;
+end if;
+
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblventasremisionesinventario.cantidad)
+from tblventasremisiones inner join tblventasremisionesinventario on tblventasremisiones.idremision=tblventasremisionesinventario.idremision
+where tblventasremisionesinventario.idinventario=pidinventario and tblventasremisiones.fechacancelado<pfecha1 and tblventasremisiones.estado=4 and tblventasremisiones.porsurtir=0),0)/vcontenido;
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblventasremisionesinventario.cantidad)
+from tblventasremisiones inner join tblventasremisionesinventario on tblventasremisiones.idremision=tblventasremisionesinventario.idremision
+where tblventasremisionesinventario.idinventario=pidinventario and tblventasremisiones.fechacancelado<pfecha1 and tblventasremisiones.estado=4 and tblventasremisiones.idsucursal=pidsucursal and tblventasremisiones.porsurtir=0),0)/vcontenido;
+else
+set vcantidad=vcantidad+ifnull((select sum(tblventasremisionesinventario.cantidad)
+from tblventasremisiones inner join tblventasremisionesinventario on tblventasremisiones.idremision=tblventasremisionesinventario.idremision
+where tblventasremisionesinventario.idinventario=pidinventario and tblventasremisiones.fechacancelado<pfecha1 and tblventasremisiones.estado=4 and tblventasremisionesinventario.idalmacen=pidalmacen and tblventasremisiones.porsurtir=0),0)/vcontenido;
+end if;
+end if;
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblventaskitsr.cantidad)
+from tblventasremisiones inner join tblventaskitsr on tblventasremisiones.idremision=tblventaskitsr.idremision
+where tblventaskitsr.idinventario=pidinventario and tblventasremisiones.fechacancelado<pfecha1 and tblventasremisiones.estado=4 and tblventasremisiones.porsurtir=0),0)/vcontenido;
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblventaskitsr.cantidad)
+from tblventasremisiones inner join tblventaskitsr on tblventasremisiones.idremision=tblventaskitsr.idremision
+where tblventaskitsr.idinventario=pidinventario and tblventasremisiones.fechacancelado<pfecha1 and tblventasremisiones.estado=4 and tblventasremisiones.idsucursal=pidsucursal and tblventasremisiones.porsurtir=0),0)/vcontenido;
+else
+set vcantidad=vcantidad+ifnull((select sum(tblventaskitsr.cantidad)
+from tblventasremisiones inner join tblventaskitsr on tblventasremisiones.idremision=tblventaskitsr.idremision
+where tblventaskitsr.idinventario=pidinventario and tblventasremisiones.fechacancelado<pfecha1 and tblventasremisiones.estado=4 and tblventaskitsr.idalmacen=pidalmacen and tblventasremisiones.porsurtir=0),0)/vcontenido;
+end if;
+end if;
+
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblmovimientosdetalles.inventarioanterior)*-1
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fechacancelado<pfecha1 and tblmovimientos.estado=4 and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=2 and tblmovimientosdetalles.inventarioanterior<=0),0);
+
+set vcantidad=vcantidad+ifnull((select sum(tblmovimientosdetalles.inventarioanterior)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fechacancelado<pfecha1 and tblmovimientos.estado=4 and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=2 and tblmovimientosdetalles.inventarioanterior>0),0);
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblmovimientosdetalles.inventarioanterior)*-1
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fechacancelado<pfecha1 and tblmovimientos.estado=4 and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=2 and tblmovimientosdetalles.inventarioanterior<=0 and tblmovimientos.idsucursal=pidsucursal),0);
+
+set vcantidad=vcantidad+ifnull((select sum(tblmovimientosdetalles.inventarioanterior)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fechacancelado<pfecha1 and tblmovimientos.estado=4 and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=2 and tblmovimientosdetalles.inventarioanterior>0 and tblmovimientos.idsucursal=pidsucursal),0);
+else
+set vcantidad=vcantidad-ifnull((select sum(tblmovimientosdetalles.inventarioanterior)*-1
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fechacancelado<pfecha1 and tblmovimientos.estado=4 and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=2 and tblmovimientosdetalles.inventarioanterior<=0 and tblmovimientosdetalles.idalmacen=pidalmacen),0);
+
+set vcantidad=vcantidad+ifnull((select sum(tblmovimientosdetalles.inventarioanterior)
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto
+where tblmovimientos.fechacancelado<pfecha1 and tblmovimientos.estado=4 and tblmovimientosdetalles.idinventario=pidinventario and tblinventarioconceptos.tipo=2 and tblmovimientosdetalles.inventarioanterior>0 and tblmovimientosdetalles.idalmacen=pidalmacen),0);
+end if;
+end if;
+
+
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblfertilizantesmovimientos.surtido)
+from tblfertilizantesmovimientos inner join tblfertilizantespedidos on tblfertilizantesmovimientos.idpedido=tblfertilizantespedidos.idpedido
+where tblfertilizantesmovimientos.fechacancelado<pfecha1 and tblfertilizantesmovimientos.estado=4 and tblfertilizantesmovimientos.idinventario=pidinventario and tblfertilizantesmovimientos.estadosurtido=1 and tblfertilizantesmovimientos.tipo<>2 and tblfertilizantesmovimientos.tipo<>3),0);
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblfertilizantesmovimientos.surtido)
+from tblfertilizantesmovimientos inner join tblfertilizantespedidos on tblfertilizantesmovimientos.idpedido=tblfertilizantespedidos.idpedido
+where tblfertilizantesmovimientos.fechacancelado<pfecha1 and tblfertilizantesmovimientos.estado=4 and tblfertilizantesmovimientos.idinventario=pidinventario and tblfertilizantesmovimientos.estadosurtido=1 and tblfertilizantespedidos.idsucursal=pidsucursal and tblfertilizantesmovimientos.tipo<>2 and tblfertilizantesmovimientos.tipo<>3),0);
+else
+set vcantidad=vcantidad+ifnull((select sum(tblfertilizantesmovimientos.surtido)
+from tblfertilizantesmovimientos inner join tblfertilizantespedidos on tblfertilizantesmovimientos.idpedido=tblfertilizantespedidos.idpedido
+where tblfertilizantesmovimientos.fechacancelado<pfecha1 and tblfertilizantesmovimientos.estado=4 and tblfertilizantesmovimientos.idinventario=pidinventario and tblfertilizantesmovimientos.estadosurtido=1 and tblfertilizantesmovimientos.idalmacen=pidalmacen and tblfertilizantesmovimientos.tipo<>2 and tblfertilizantesmovimientos.tipo<>3),0);
+end if;
+end if;
+
+
+if pidsucursal>0 then
+if pidalmacen<=0 then
+set vcantidad=vcantidad-ifnull((select sum(tblfertilizantesmovimientos.pesoneto)
+from tblfertilizantesmovimientos inner join tblfertilizantespedidos on tblfertilizantesmovimientos.idpedido=tblfertilizantespedidos.idpedido
+where tblfertilizantesmovimientos.fechacancelado<pfecha1 and tblfertilizantesmovimientos.estado=4 and tblfertilizantesmovimientos.idinventario=pidinventario and tblfertilizantesmovimientos.tipo=2 and tblfertilizantespedidos.idsucursal=pidsucursal),0);
+else
+set vcantidad=vcantidad-ifnull((select sum(tblfertilizantesmovimientos.pesoneto)
+from tblfertilizantesmovimientos inner join tblfertilizantespedidos on tblfertilizantesmovimientos.idpedido=tblfertilizantespedidos.idpedido
+where tblfertilizantesmovimientos.fechacancelado<pfecha1 and tblfertilizantesmovimientos.estado=4 and tblfertilizantesmovimientos.idinventario=pidinventario and tblfertilizantesmovimientos.tipo=2 and tblfertilizantesmovimientos.idalmacendestino=pidalmacen),0);
+end if;
+end if;
+
+
+if pidsucursal>0 then
+if pidalmacen<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblfertilizantesmovimientos.pesoneto)
+from tblfertilizantesmovimientos inner join tblfertilizantespedidos on tblfertilizantesmovimientos.idpedido=tblfertilizantespedidos.idpedido
+where tblfertilizantesmovimientos.fechacancelado<pfecha1 and tblfertilizantesmovimientos.estado=4 and tblfertilizantesmovimientos.idinventario=pidinventario and tblfertilizantesmovimientos.tipo=2 and tblfertilizantespedidos.idsucursal=pidsucursal),0);
+else
+set vcantidad=vcantidad+ifnull((select sum(tblfertilizantesmovimientos.pesoneto)
+from tblfertilizantesmovimientos inner join tblfertilizantespedidos on tblfertilizantesmovimientos.idpedido=tblfertilizantespedidos.idpedido
+where tblfertilizantesmovimientos.fechacancelado<pfecha1 and tblfertilizantesmovimientos.estado=4 and tblfertilizantesmovimientos.idinventario=pidinventario and tblfertilizantesmovimientos.tipo=2 and tblfertilizantesmovimientos.idalmacen=pidalmacen),0);
+end if;
+end if;
+
+
+
+if pidsucursal<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblfertilizantesmovimientos.surtido)
+from tblfertilizantesmovimientos inner join tblfertilizantespedidos on tblfertilizantesmovimientos.idpedido=tblfertilizantespedidos.idpedido
+where tblfertilizantesmovimientos.fechacancelado<pfecha1 and tblfertilizantesmovimientos.estado=4 and tblfertilizantesmovimientos.idinventario=pidinventario and tblfertilizantesmovimientos.estadosurtido=1 and tblfertilizantesmovimientos.tipo=2),0);
+else
+if pidalmacen<=0 then
+set vcantidad=vcantidad+ifnull((select sum(tblfertilizantesmovimientos.surtido)
+from tblfertilizantesmovimientos inner join tblfertilizantespedidos on tblfertilizantesmovimientos.idpedido=tblfertilizantespedidos.idpedido
+where tblfertilizantesmovimientos.fechacancelado<pfecha1 and tblfertilizantesmovimientos.estado=4 and tblfertilizantesmovimientos.idinventario=pidinventario and tblfertilizantesmovimientos.estadosurtido=1 and tblfertilizantespedidos.idsucursal=pidsucursal and tblfertilizantesmovimientos.tipo=2),0);
+else
+set vcantidad=vcantidad+ifnull((select sum(tblfertilizantesmovimientos.surtido)
+from tblfertilizantesmovimientos inner join tblfertilizantespedidos on tblfertilizantesmovimientos.idpedido=tblfertilizantespedidos.idpedido
+where tblfertilizantesmovimientos.fechacancelado<pfecha1 and tblfertilizantesmovimientos.estado=4 and tblfertilizantesmovimientos.idinventario=pidinventario and tblfertilizantesmovimientos.estadosurtido=1 and tblfertilizantesmovimientos.idalmacendestino=pidalmacen and tblfertilizantesmovimientos.tipo=2),0);
+end if;
+end if;
+
+
+return vcantidad;
+
+
+
+END $$
+
+DELIMITER ;
+
+ALTER TABLE `tblcompras` MODIFY COLUMN `deremision` TINYINT UNSIGNED NOT NULL;
+
+update tblcompras set deremision=if((select count(tblcomprasremisiones.idcomprar) from tblcomprasremisiones where tblcomprasremisiones.idcomprar=tblcompras.idcompra)=0,0,1);
+
+insert into tblactualizaciones(version,versionchk) values('ver 9036 rev 12','00903612');

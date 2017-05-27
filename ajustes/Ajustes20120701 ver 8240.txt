@@ -1,0 +1,8 @@
+ALTER TABLE `tblopciones` ADD COLUMN `espaciocantidad` TINYINT UNSIGNED NOT NULL AFTER `preguntarimpresora`,
+ ADD COLUMN `espaciopreciounitario` TINYINT UNSIGNED NOT NULL AFTER `espaciocantidad`,
+ ADD COLUMN `espacioimporte` TINYINT UNSIGNED NOT NULL AFTER `espaciopreciounitario`,
+ ADD COLUMN `espaciosubtotal` TINYINT UNSIGNED NOT NULL AFTER `espacioimporte`,
+ ADD COLUMN `espacioiva` TINYINT UNSIGNED NOT NULL AFTER `espaciosubtotal`,
+ ADD COLUMN `espaciototal` TINYINT UNSIGNED NOT NULL AFTER `espacioiva`;
+update tblopciones set espaciopreciounitario=13,espacioimporte=13,espaciosubtotal=13,espaciocantidad=8,espacioiva=13,espaciototal=13
+

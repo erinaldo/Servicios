@@ -1,0 +1,1001 @@
+ALTER TABLE `tblventas` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL default 1000 AFTER `sobreimploc`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL default 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`;
+
+ALTER TABLE `tblventaspedidos` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `comentario`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblventaspedidos_4` FOREIGN KEY `FK_tblventaspedidos_4` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblventaspedidos_5` FOREIGN KEY `FK_tblventaspedidos_5` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblventascotizaciones` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `idmoneda`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblventascotizaciones_4` FOREIGN KEY `FK_tblventascotizaciones_4` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblventascotizaciones_5` FOREIGN KEY `FK_tblventascotizaciones_5` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblventasremisiones` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `idventar`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL default 1000 AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblventasremisiones_4` FOREIGN KEY `FK_tblventasremisiones_4` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblventasremisiones_5` FOREIGN KEY `FK_tblventasremisiones_5` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+
+
+ALTER TABLE `tblventasapartados` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `dinventario`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblventasapartados_1` FOREIGN KEY `FK_tblventasapartados_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblventasapartados_2` FOREIGN KEY `FK_tblventasapartados_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblventascartaporte` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `fechapedimento`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblventascartaporte_2` FOREIGN KEY `FK_tblventascartaporte_2` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblventascartaporte_3` FOREIGN KEY `FK_tblventascartaporte_3` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+
+
+ALTER TABLE `tblcompraspedidos` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `comentario`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblcompraspedidos_4` FOREIGN KEY `FK_tblcompraspedidos_4` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblcompraspedidos_5` FOREIGN KEY `FK_tblcompraspedidos_5` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblcomprasremisiones` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `idcomprar`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblcomprasremisiones_4` FOREIGN KEY `FK_tblcomprasremisiones_4` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblcomprasremisiones_5` FOREIGN KEY `FK_tblcomprasremisiones_5` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+
+
+
+
+
+ALTER TABLE `tblcajasmovimientos` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `tipo`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblcajasmovimientos_4` FOREIGN KEY `FK_tblcajasmovimientos_4` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblcajasmovimientos_5` FOREIGN KEY `FK_tblcajasmovimientos_5` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblbancos` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `idBanco`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblbancos_1` FOREIGN KEY `FK_tblbancos_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblbancos_2` FOREIGN KEY `FK_tblbancos_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblnotasdecargocompras` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `foliocfdi`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblnotasdecargocompras_2` FOREIGN KEY `FK_tblnotasdecargocompras_2` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblnotasdecargocompras_3` FOREIGN KEY `FK_tblnotasdecargocompras_3` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblnominas` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `idforma`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblnominas_1` FOREIGN KEY `FK_tblnominas_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblnominas_2` FOREIGN KEY `FK_tblnominas_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblgastosempleados` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `salario`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblgastosempleados_1` FOREIGN KEY `FK_tblgastosempleados_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblgastosempleados_2` FOREIGN KEY `FK_tblgastosempleados_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblempeniosconfiguracion` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `criterio`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblempeniosconfiguracion_1` FOREIGN KEY `FK_tblempeniosconfiguracion_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblempeniosconfiguracion_2` FOREIGN KEY `FK_tblempeniosconfiguracion_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblempenioscompras` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `tipoempenio`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblempenioscompras_1` FOREIGN KEY `FK_tblempenioscompras_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblempenioscompras_2` FOREIGN KEY `FK_tblempenioscompras_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblempeniosadjudicaciones` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `fechaAdjudicacion`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblempeniosadjudicaciones_1` FOREIGN KEY `FK_tblempeniosadjudicaciones_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblempeniosadjudicaciones_2` FOREIGN KEY `FK_tblempeniosadjudicaciones_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblempeniosabono` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `folio`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblempeniosabono_2` FOREIGN KEY `FK_tblempeniosabono_2` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblempeniosabono_3` FOREIGN KEY `FK_tblempeniosabono_3` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblcontabilidadconf` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `rutaxmlingresos`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblcontabilidadconf_1` FOREIGN KEY `FK_tblcontabilidadconf_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblcontabilidadconf_2` FOREIGN KEY `FK_tblcontabilidadconf_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblccontables` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `DIOT`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblccontables_1` FOREIGN KEY `FK_tblccontables_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblccontables_2` FOREIGN KEY `FK_tblccontables_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblpolizas` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `clasificacion`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblpolizas_1` FOREIGN KEY `FK_tblpolizas_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblpolizas_2` FOREIGN KEY `FK_tblpolizas_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblfertilizantespedidos` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `idventa`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblfertilizantespedidos_1` FOREIGN KEY `FK_tblfertilizantespedidos_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblfertilizantespedidos_2` FOREIGN KEY `FK_tblfertilizantespedidos_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblfertilizantesmovimientos` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horacancelado`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblfertilizantesmovimientos_1` FOREIGN KEY `FK_tblfertilizantesmovimientos_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblfertilizantesmovimientos_2` FOREIGN KEY `FK_tblfertilizantesmovimientos_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblsemillasboletas` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `serie`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblsemillasboletas_4` FOREIGN KEY `FK_tblsemillasboletas_4` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblsemillasboletas_5` FOREIGN KEY `FK_tblsemillasboletas_5` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblsemillascomprobante` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `fecha`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblsemillascomprobante_4` FOREIGN KEY `FK_tblsemillascomprobante_4` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblsemillascomprobante_5` FOREIGN KEY `FK_tblsemillascomprobante_5` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblsemillasliquidacion` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `fecha`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblsemillasliquidacion_3` FOREIGN KEY `FK_tblsemillasliquidacion_3` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblsemillasliquidacion_4` FOREIGN KEY `FK_tblsemillasliquidacion_4` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblsemillasanticipos` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `guardado`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblsemillasanticipos_2` FOREIGN KEY `FK_tblsemillasanticipos_2` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblsemillasanticipos_3` FOREIGN KEY `FK_tblsemillasanticipos_3` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblsemillasanticiposfacturas` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `guardado`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblsemillasanticiposfacturas_3` FOREIGN KEY `FK_tblsemillasanticiposfacturas_3` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblsemillasanticiposfacturas_4` FOREIGN KEY `FK_tblsemillasanticiposfacturas_4` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblcomprascotizacionesb` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `comentario`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblcomprascotizacionesb_4` FOREIGN KEY `FK_tblcomprascotizacionesb_4` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblcomprascotizacionesb_5` FOREIGN KEY `FK_tblcomprascotizacionesb_5` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblempenios` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `idempenioant`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblempenios_2` FOREIGN KEY `FK_tblempenios_2` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblempenios_3` FOREIGN KEY `FK_tblempenios_3` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+ALTER TABLE `tblventasremisiones` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `idventar`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL default 1000 AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblventasremisiones_4` FOREIGN KEY `FK_tblventasremisiones_4` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblventasremisiones_5` FOREIGN KEY `FK_tblventasremisiones_5` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+
+ALTER TABLE `tblcompras` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `foliocfdi`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblcompras_4` FOREIGN KEY `FK_tblcompras_4` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblcompras_5` FOREIGN KEY `FK_tblcompras_5` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblcomprascotizacion` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `idsucursal`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblcomprascotizacion_1` FOREIGN KEY `FK_tblcomprascotizacion_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblcomprascotizacion_2` FOREIGN KEY `FK_tblcomprascotizacion_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+ALTER TABLE `tblmovimientos` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `idremision`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblmovimientos_4` FOREIGN KEY `FK_tblmovimientos_4` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblmovimientos_5` FOREIGN KEY `FK_tblmovimientos_5` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblnotasdecreditocompras` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `foliocfdi`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblnotasdecreditocompras_4` FOREIGN KEY `FK_tblnotasdecreditocompras_4` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblnotasdecreditocompras_5` FOREIGN KEY `FK_tblnotasdecreditocompras_5` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblnotasdecargo` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `comentario`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblnotasdecargo_5` FOREIGN KEY `FK_tblnotasdecargo_5` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblnotasdecargo_6` FOREIGN KEY `FK_tblnotasdecargo_6` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+ALTER TABLE `tblnotasdecredito` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `comentarionc`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblnotasdecredito_4` FOREIGN KEY `FK_tblnotasdecredito_4` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblnotasdecredito_5` FOREIGN KEY `FK_tblnotasdecredito_5` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+update tblventas set idusuarioalta=1000,idusuariocambio=1000,fechaalta='2016/02/02',horaalta='00:00',fechacambio='2016/02/02',horacambio='00:00';
+
+ALTER TABLE `tblcomprasremisiones` ADD COLUMN `idusuarioalta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `idcomprar`,
+ ADD COLUMN `fechaalta` VARCHAR(10) NOT NULL AFTER `idusuarioalta`,
+ ADD COLUMN `horaalta` VARCHAR(10) NOT NULL AFTER `fechaalta`,
+ ADD COLUMN `idusuariocambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaalta`,
+ ADD COLUMN `fechacambio` VARCHAR(10) NOT NULL AFTER `idusuariocambio`,
+ ADD COLUMN `horacambio` VARCHAR(10) NOT NULL AFTER `fechacambio`;
+
+ALTER TABLE `tblventaspagos` ADD COLUMN `idUsuarioalta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `iddeposito`,
+ ADD COLUMN `fechaalta` VARCHAR(10) NOT NULL AFTER `idUsuarioalta`,
+ ADD COLUMN `horaalta` VARCHAR(10) NOT NULL AFTER `fechaalta`,
+ ADD COLUMN `idusuariocambio` INTEGER UNSIGNED ZEROFILL NOT NULL DEFAULT 1000 AFTER `horaalta`,
+ ADD COLUMN `fechacambio` VARCHAR(10) NOT NULL AFTER `idusuariocambio`,
+ ADD COLUMN `horacambio` VARCHAR(10) NOT NULL AFTER `fechacambio`;
+
+ALTER TABLE `tblcompraspagos` ADD COLUMN `idusuarioalta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `idpagoprov`,
+ ADD COLUMN `fechaalta` VARCHAR(10) NOT NULL AFTER `idusuarioalta`,
+ ADD COLUMN `horaalta` VARCHAR(10) NOT NULL AFTER `fechaalta`,
+ ADD COLUMN `idusuariocambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaalta`,
+ ADD COLUMN `fechacambio` VARCHAR(10) NOT NULL AFTER `idusuariocambio`,
+ ADD COLUMN `horacambio` VARCHAR(10) NOT NULL AFTER `fechacambio`;
+
+ALTER TABLE `tbldepostito` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `comentario`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tbldepostito_1` FOREIGN KEY `FK_tbldepostito_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tbldepostito_2` FOREIGN KEY `FK_tbldepostito_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+CREATE TABLE `tbldevolucioneslotes` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idlote` INTEGER UNSIGNED NOT NULL,
+  `iddetalle` INTEGER UNSIGNED NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  `surtido` DOUBLE NOT NULL,
+  PRIMARY KEY (`id`)
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `tbldevolucioneslotes` ADD CONSTRAINT `FK_tbldevolucioneslotes_1` FOREIGN KEY `FK_tbldevolucioneslotes_1` (`iddetalle`)
+    REFERENCES `tbldevolucionesdetalles` (`iddetalle`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION;
+
+CREATE TABLE `tbldevolucionesclotes` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idlote` INTEGER UNSIGNED NOT NULL,
+  `iddetalle` INTEGER UNSIGNED NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  `surtido` DOUBLE NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `FK_tbldevolucionesclotes_1` FOREIGN KEY `FK_tbldevolucionesclotes_1` (`iddetalle`)
+    REFERENCES `tbldevolucionesdetallesc` (`iddetalle`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+
+CREATE TABLE `tblmovimientoslotes` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idlote` INTEGER UNSIGNED NOT NULL,
+  `iddetalle` INTEGER UNSIGNED NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  `surtido` DOUBLE NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `FK_tblmovimientoslotes_1` FOREIGN KEY `FK_tblmovimientoslotes_1` (`iddetalle`)
+    REFERENCES `tblmovimientosdetalles` (`iddetalle`)
+    ON DELETE CASCADE
+    ON UPDATE RESTRICT
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tbldevolucionesaduana` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idaduana` INTEGER UNSIGNED NOT NULL,
+  `iddetalle` INTEGER UNSIGNED NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  `surtido` DOUBLE NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `FK_tbldevolucionesaduana_1` FOREIGN KEY `FK_tbldevolucionesaduana_1` (`iddetalle`)
+    REFERENCES `tbldevolucionesdetalles` (`iddetalle`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tbldevolucionescaduana` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idaduana` INTEGER UNSIGNED NOT NULL,
+  `iddetalle` INTEGER UNSIGNED NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  `surtido` DOUBLE NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `FK_tbldevolucionescaduana_1` FOREIGN KEY `FK_tbldevolucionescaduana_1` (`iddetalle`)
+    REFERENCES `tbldevolucionesdetallesc` (`iddetalle`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+
+CREATE TABLE `tblmovimientosaduana` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idaduana` INTEGER UNSIGNED NOT NULL,
+  `iddetalle` INTEGER UNSIGNED NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  `surtido` DOUBLE NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `FK_tblmovimientosaduana_1` FOREIGN KEY `FK_tblmovimientosaduana_1` (`iddetalle`)
+    REFERENCES `tblmovimientosdetalles` (`iddetalle`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tblalmacenesilotes` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idlote` INTEGER UNSIGNED NOT NULL,
+  `idalmacen` INTEGER UNSIGNED NOT NULL,
+  `idinventario` INTEGER UNSIGNED NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `FK_tblalmacenesilotes_1` FOREIGN KEY `FK_tblalmacenesilotes_1` (`idlote`)
+    REFERENCES `tblinventariolotes` (`idlote`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblalmacenesilotes_2` FOREIGN KEY `FK_tblalmacenesilotes_2` (`idalmacen`)
+    REFERENCES `tblalmacenes` (`idalmacen`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tblalmacenesiaduanas` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idaduana` INTEGER UNSIGNED NOT NULL,
+  `idalmacen` INTEGER UNSIGNED NOT NULL,
+  `idinventario` INTEGER UNSIGNED NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `FK_tblalmacenesiaduanas_1` FOREIGN KEY `FK_tblalmacenesiaduanas_1` (`idaduana`)
+    REFERENCES `tblinventarioaduana` (`idaduana`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblalmacenesiaduanas_2` FOREIGN KEY `FK_tblalmacenesiaduanas_2` (`idalmacen`)
+    REFERENCES `tblalmacenes` (`idalmacen`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `tblinventariolotesconsulta` ADD COLUMN `cantidads` DOUBLE NOT NULL AFTER `cantidad`,
+ ADD COLUMN `idalmacen` INTEGER UNSIGNED NOT NULL AFTER `cantidads`,
+ ADD COLUMN `idalmacen2` INTEGER UNSIGNED NOT NULL AFTER `idalmacen`;
+
+ALTER TABLE `tblinventarioaduanaconsulta` ADD COLUMN `cantidads` DOUBLE NOT NULL AFTER `cantidad`,
+ ADD COLUMN `idalmacen` INTEGER UNSIGNED NOT NULL AFTER `cantidads`,
+ ADD COLUMN `idalmacen2` INTEGER UNSIGNED NOT NULL AFTER `idalmacen`;
+
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spmodificainventarioaduanaf` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spmodificainventarioaduanaf`(pidinventario int,pidalmacen int,pcantidad double,pcantidadant double,pmodo tinyint,pmedida tinyint,pidaduana int) RETURNS int(11)
+BEGIN
+
+declare vcontenido double;
+declare vcantidad double;
+declare vesinventariable tinyint;
+declare checaalmacen tinyint;
+set vesinventariable=(select inventariable from tblinventario where idinventario=pidinventario);
+if vesinventariable=1 then
+set vcantidad=(select ifnull((select cantidad from tblalmacenesiaduanas where idinventario=pidinventario and idalmacen=pidalmacen and idaduana=pidaduana),0));
+if pmedida=0 then
+set vcontenido=(select contenido from tblinventario where idinventario=pidinventario);
+if vcontenido<>0 then
+  if pmodo=0 then
+  set vcantidad=vcantidad+pcantidad/vcontenido;
+  end if;
+  if pmodo=1 then
+  set vcantidad=vcantidad-pcantidad/vcontenido;
+  end if;
+  if pmodo=2 then
+  set vcantidad=vcantidad-pcantidadant/vcontenido+pcantidad/vcontenido;
+  end if;
+  if pmodo=3 then
+  set vcantidad=vcantidad+pcantidadant/vcontenido-pcantidad/vcontenido;
+  end if;
+end if;
+else
+  if pmodo=0 then
+  set vcantidad=vcantidad+pcantidad;
+  end if;
+  if pmodo=1 then
+  set vcantidad=vcantidad-pcantidad;
+  end if;
+  if pmodo=2 then
+  set vcantidad=vcantidad-pcantidadant+pcantidad;
+  end if;
+  if pmodo=3 then
+  set vcantidad=vcantidad+pcantidadant-pcantidad;
+  end if;
+end if;
+set checaalmacen=(select ifnull((select 1 from tblalmacenesiaduanas where idinventario=pidinventario and idalmacen=pidalmacen and idaduana=pidaduana),0));
+if checaalmacen=0 then
+insert into tblalmacenesiaduanas(idalmacen,idinventario,cantidad,idaduana) values(pidalmacen,pidinventario,0,pidaduana);
+end if;
+update tblalmacenesiaduanas set cantidad=vcantidad where idinventario=pidinventario and idalmacen=pidalmacen and idaduana=pidaduana;
+end if;
+return 1;
+
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spmodificainventariolotesf` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spmodificainventariolotesf`(pidinventario int,pidalmacen int,pcantidad double,pcantidadant double,pmodo tinyint,pmedida tinyint,pidlote int) RETURNS int(11)
+BEGIN
+
+declare vcontenido double;
+declare vcantidad double;
+declare vesinventariable tinyint;
+declare checaalmacen tinyint;
+set vesinventariable=(select inventariable from tblinventario where idinventario=pidinventario);
+if vesinventariable=1 then
+set vcantidad=(select ifnull((select cantidad from tblalmacenesilotes where idinventario=pidinventario and idalmacen=pidalmacen and idlote=pidlote),0));
+if pmedida=0 then
+set vcontenido=(select contenido from tblinventario where idinventario=pidinventario);
+if vcontenido<>0 then
+  if pmodo=0 then
+  set vcantidad=vcantidad+pcantidad/vcontenido;
+  end if;
+  if pmodo=1 then
+  set vcantidad=vcantidad-pcantidad/vcontenido;
+  end if;
+  if pmodo=2 then
+  set vcantidad=vcantidad-pcantidadant/vcontenido+pcantidad/vcontenido;
+  end if;
+  if pmodo=3 then
+  set vcantidad=vcantidad+pcantidadant/vcontenido-pcantidad/vcontenido;
+  end if;
+end if;
+else
+  if pmodo=0 then
+  set vcantidad=vcantidad+pcantidad;
+  end if;
+  if pmodo=1 then
+  set vcantidad=vcantidad-pcantidad;
+  end if;
+  if pmodo=2 then
+  set vcantidad=vcantidad-pcantidadant+pcantidad;
+  end if;
+  if pmodo=3 then
+  set vcantidad=vcantidad+pcantidadant-pcantidad;
+  end if;
+end if;
+set checaalmacen=(select ifnull((select 1 from tblalmacenesilotes where idinventario=pidinventario and idalmacen=pidalmacen and idlote=pidlote),0));
+if checaalmacen=0 then
+insert into tblalmacenesilotes(idalmacen,idinventario,cantidad,idlote) values(pidalmacen,pidinventario,0,pidlote);
+end if;
+update tblalmacenesilotes set cantidad=vcantidad where idinventario=pidinventario and idalmacen=pidalmacen and idlote=pidlote;
+end if;
+return 1;
+
+END $$
+
+DELIMITER ;
+
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdainventarioafechalotes` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdainventarioafechalotes`(pidlote int,pIdinventario int,pfecha varchar(10),pidsucursal int,pidalmacen int) RETURNS int(11)
+BEGIN
+
+declare vcantidad double;
+declare vcontenido double;
+declare checaalmacen tinyint;
+set vcantidad=0;
+set vcontenido=(select contenido from tblinventario where idinventario=pidinventario);
+if vcontenido=0 then
+set vcontenido=1;
+end if;
+
+/*if pidalmacen<>0 then
+set checaalmacen=(select ifnull((select 1 from tblalmacenesilotes where idinventario=pidinventario and idalmacen=pidalmacen and idlote=pidlote),0));
+if checaalmacen=0 then
+insert into tblalmacenesilotes(idalmacen,idinventario,cantidad,idlote) values(pidalmacen,pidinventario,0,pidlote);
+end if;
+end if*/
+if pidalmacen>0 then
+/*por almacen*/
+set vcantidad=ifnull((select sum(tblcompraslotes.surtido) from tblcompraslotes inner join tblcomprasdetalles on tblcompraslotes.iddetalle=tblcomprasdetalles.iddetalle inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcompraslotes.idlote=pidlote and tblcompras.estado=3 and tblcompras.fecha<=pfecha and tblcomprasdetalles.idalmacen=pidalmacen),0);
+set vcantidad=vcantidad+ifnull((select sum(tblcomprasremisioneslotes.surtido) from tblcomprasremisioneslotes inner join tblcomprasremisionesdetalles on tblcomprasremisioneslotes.iddetalle=tblcomprasremisionesdetalles.iddetalle inner join tblcomprasremisiones on tblcomprasremisionesdetalles.idremision=tblcomprasremisiones.idremision where tblcomprasremisioneslotes.idlote=pidlote and tblcomprasremisiones.estado=3 and tblcomprasremisiones.fecha<=pfecha and tblcomprasremisionesdetalles.idalmacen=pidalmacen),0);
+set vcantidad=vcantidad-ifnull((select sum(tblventaslotes.surtido) from tblventaslotes inner join tblventasinventario on tblventaslotes.iddetalle=tblventasinventario.idventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventaslotes.idlote=pidlote and tblventas.estado=3 and tblventas.fecha<=pfecha and tblventasinventario.idalmacen=pidalmacen),0)/vcontenido;
+set vcantidad=vcantidad-ifnull((select sum(tblventasremisioneslotes.surtido) from tblventasremisioneslotes inner join tblventasremisionesinventario on tblventasremisioneslotes.iddetalle=tblventasremisionesinventario.iddetalle inner join tblventasremisiones on tblventasremisionesinventario.idremision=tblventasremisiones.idremision where tblventasremisioneslotes.idlote=pidlote and tblventasremisiones.estado=3 and tblventasremisiones.fecha<=pfecha and tblventasremisionesinventario.idalmacen=pidalmacen),0)/vcontenido;
+set vcantidad=vcantidad-ifnull((select sum(tbldevolucionesclotes.surtido) from tbldevolucionesclotes inner join tbldevolucionesdetallesc on tbldevolucionesclotes.iddetalle=tbldevolucionesdetallesc.iddetalle inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionesclotes.idlote=pidlote and tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha<=pfecha and tbldevolucionesdetallesc.idalmacen=pidalmacen),0);
+set vcantidad=vcantidad+ifnull((select sum(tbldevolucioneslotes.surtido) from tbldevolucioneslotes inner join tbldevolucionesdetalles on tbldevolucioneslotes.iddetalle=tbldevolucionesdetalles.iddetalle inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevolucioneslotes.idlote=pidlote and tbldevoluciones.estado=3 and tbldevoluciones.fecha<=pfecha and tbldevolucionesdetalles.idalmacen=pidalmacen),0)/vcontenido;
+set vcantidad=vcantidad+ifnull((select sum(cl.surtido) from tblmovimientoslotes cl inner join tblmovimientosdetalles cd on cl.iddetalle=cd.iddetalle inner join tblmovimientos c on c.idmovimiento=cd.idmovimiento inner join tblinventarioconceptos icon on c.idconcepto=icon.idconcepto where cl.idlote=pidlote and c.estado=3 and (icon.tipo=0 or icon.tipo=4) and c.fecha<=pfecha and cd.idalmacen=pidalmacen),0);
+set vcantidad=vcantidad-ifnull((select sum(cl.surtido) from tblmovimientoslotes cl inner join tblmovimientosdetalles cd on cl.iddetalle=cd.iddetalle inner join tblmovimientos c on c.idmovimiento=cd.idmovimiento inner join tblinventarioconceptos icon on c.idconcepto=icon.idconcepto where cl.idlote=pidlote and c.estado=3 and icon.tipo=1 and c.fecha<=pfecha and cd.idalmacen=pidalmacen),0);
+set vcantidad=vcantidad-ifnull((select sum(cl.surtido) from tblmovimientoslotes cl inner join tblmovimientosdetalles cd on cl.iddetalle=cd.iddetalle inner join tblmovimientos c on c.idmovimiento=cd.idmovimiento inner join tblinventarioconceptos icon on c.idconcepto=icon.idconcepto where cl.idlote=pidlote and c.estado=3 and icon.tipo=3 and c.fecha<=pfecha and cd.idalmacen=pidalmacen),0);
+set vcantidad=vcantidad+ifnull((select sum(cl.surtido) from tblmovimientoslotes cl inner join tblmovimientosdetalles cd on cl.iddetalle=cd.iddetalle inner join tblmovimientos c on c.idmovimiento=cd.idmovimiento inner join tblinventarioconceptos icon on c.idconcepto=icon.idconcepto where cl.idlote=pidlote and c.estado=3 and icon.tipo=3 and c.fecha<=pfecha and cd.idalmacen2=pidalmacen),0);
+/*Fin almacen*/
+else
+/*Por todo*/
+set vcantidad=ifnull((select sum(tblcompraslotes.surtido) from tblcompraslotes inner join tblcomprasdetalles on tblcompraslotes.iddetalle=tblcomprasdetalles.iddetalle inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcompraslotes.idlote=pidlote and tblcompras.estado=3 and tblcompras.fecha<=pfecha),0);
+set vcantidad=vcantidad+ifnull((select sum(tblcomprasremisioneslotes.surtido) from tblcomprasremisioneslotes inner join tblcomprasremisionesdetalles on tblcomprasremisioneslotes.iddetalle=tblcomprasremisionesdetalles.iddetalle inner join tblcomprasremisiones on tblcomprasremisionesdetalles.idremision=tblcomprasremisiones.idremision where tblcomprasremisioneslotes.idlote=pidlote and tblcomprasremisiones.estado=3 and tblcomprasremisiones.fecha<=pfecha),0);
+set vcantidad=vcantidad-ifnull((select sum(tblventaslotes.surtido) from tblventaslotes inner join tblventasinventario on tblventaslotes.iddetalle=tblventasinventario.idventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventaslotes.idlote=pidlote and tblventas.estado=3 and tblventas.fecha<=pfecha),0)/vcontenido;
+set vcantidad=vcantidad-ifnull((select sum(tblventasremisioneslotes.surtido) from tblventasremisioneslotes inner join tblventasremisionesinventario on tblventasremisioneslotes.iddetalle=tblventasremisionesinventario.iddetalle inner join tblventasremisiones on tblventasremisionesinventario.idremision=tblventasremisiones.idremision where tblventasremisioneslotes.idlote=pidlote and tblventasremisiones.estado=3 and tblventasremisiones.fecha<=pfecha),0)/vcontenido;
+set vcantidad=vcantidad-ifnull((select sum(tbldevolucionesclotes.surtido) from tbldevolucionesclotes inner join tbldevolucionesdetallesc on tbldevolucionesclotes.iddetalle=tbldevolucionesdetallesc.iddetalle inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionesclotes.idlote=pidlote and tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha<=pfecha),0);
+set vcantidad=vcantidad+ifnull((select sum(tbldevolucioneslotes.surtido) from tbldevolucioneslotes inner join tbldevolucionesdetalles on tbldevolucioneslotes.iddetalle=tbldevolucionesdetalles.iddetalle inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevolucioneslotes.idlote=pidlote and tbldevoluciones.estado=3 and tbldevoluciones.fecha<=pfecha),0)/vcontenido;
+set vcantidad=vcantidad+ifnull((select sum(cl.surtido) from tblmovimientoslotes cl inner join tblmovimientosdetalles cd on cl.iddetalle=cd.iddetalle inner join tblmovimientos c on c.idmovimiento=cd.idmovimiento inner join tblinventarioconceptos icon on c.idconcepto=icon.idconcepto where cl.idlote=pidlote and c.estado=3 and (icon.tipo=0 or icon.tipo=4) and c.fecha<=pfecha),0);
+set vcantidad=vcantidad-ifnull((select sum(cl.surtido) from tblmovimientoslotes cl inner join tblmovimientosdetalles cd on cl.iddetalle=cd.iddetalle inner join tblmovimientos c on c.idmovimiento=cd.idmovimiento inner join tblinventarioconceptos icon on c.idconcepto=icon.idconcepto where cl.idlote=pidlote and c.estado=3 and icon.tipo=1 and c.fecha<=pfecha),0);
+
+/*Fin todo*/
+end if;
+
+
+return vcantidad;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdainventarioafechaaduana` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdainventarioafechaaduana`(pidaduana int,pIdinventario int,pfecha varchar(10),pidsucursal int,pidalmacen int) RETURNS int(11)
+BEGIN
+
+declare vcantidad double;
+declare vcontenido double;
+set vcantidad=0;
+set vcontenido=(select contenido from tblinventario where idinventario=pidinventario);
+if vcontenido=0 then
+set vcontenido=1;
+end if;
+
+if pidalmacen>0 then
+/*Por almacen*/
+set vcantidad=ifnull((select sum(tblcomprasaduana.surtido) from tblcomprasaduana inner join tblcomprasdetalles on tblcomprasaduana.iddetalle=tblcomprasdetalles.iddetalle inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcomprasaduana.idaduana=pidaduana and tblcompras.estado=3 and tblcompras.fecha<=pfecha and tblcomprasdetalles.idalmacen=pidalmacen),0);
+set vcantidad=vcantidad+ifnull((select sum(tblcomprasremisionesaduana.surtido) from tblcomprasremisionesaduana inner join tblcomprasremisionesdetalles on tblcomprasremisionesaduana.iddetalle=tblcomprasremisionesdetalles.iddetalle inner join tblcomprasremisiones on tblcomprasremisionesdetalles.idremision=tblcomprasremisiones.idremision where tblcomprasremisionesaduana.idaduana=pidaduana and tblcomprasremisiones.estado=3 and tblcomprasremisiones.fecha<=pfecha and tblcomprasremisionesdetalles.idalmacen=pidalmacen),0);
+set vcantidad=vcantidad-ifnull((select sum(tblventasaduanan.surtido) from tblventasaduanan inner join tblventasinventario on tblventasaduanan.iddetalle=tblventasinventario.idventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventasaduanan.idaduana=pidaduana and tblventas.estado=3 and tblventas.fecha<=pfecha and tblventasinventario.idalmacen=pidalmacen),0)/vcontenido;
+set vcantidad=vcantidad-ifnull((select sum(tblventasremisionesaduana.surtido) from tblventasremisionesaduana inner join tblventasremisionesinventario on tblventasremisionesaduana.iddetalle=tblventasremisionesinventario.iddetalle inner join tblventasremisiones on tblventasremisionesinventario.idremision=tblventasremisiones.idremision where tblventasremisionesaduana.idaduana=pidaduana and tblventasremisiones.estado=3 and tblventasremisiones.fecha<=pfecha and tblventasremisionesinventario.idalmacen=pidalmacen),0)/vcontenido;
+set vcantidad=vcantidad-ifnull((select sum(tbldevolucionescaduana.surtido) from tbldevolucionescaduana inner join tbldevolucionesdetallesc on tbldevolucionescaduana.iddetalle=tbldevolucionesdetallesc.iddetalle inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionescaduana.idaduana=pidaduana and tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha<=pfecha and tbldevolucionesdetallesc.idalmacen=pidalmacen),0);
+set vcantidad=vcantidad+ifnull((select sum(tbldevolucionesaduana.surtido) from tbldevolucionesaduana inner join tbldevolucionesdetalles on tbldevolucionesaduana.iddetalle=tbldevolucionesdetalles.iddetalle inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevolucionesaduana.idaduana=pidaduana and tbldevoluciones.estado=3 and tbldevoluciones.fecha<=pfecha and tbldevolucionesdetalles.idalmacen=pidalmacen),0)/vcontenido;
+set vcantidad=vcantidad+ifnull((select sum(cl.surtido) from tblmovimientosaduana cl inner join tblmovimientosdetalles cd on cl.iddetalle=cd.iddetalle inner join tblmovimientos c on c.idmovimiento=cd.idmovimiento inner join tblinventarioconceptos icon on c.idconcepto=icon.idconcepto where cl.idaduana=pidaduana and c.estado=3 and (icon.tipo=0 or icon.tipo=4) and c.fecha<=pfecha and cd.idalmacen=pidalmacen),0);
+set vcantidad=vcantidad-ifnull((select sum(cl.surtido) from tblmovimientosaduana cl inner join tblmovimientosdetalles cd on cl.iddetalle=cd.iddetalle inner join tblmovimientos c on c.idmovimiento=cd.idmovimiento inner join tblinventarioconceptos icon on c.idconcepto=icon.idconcepto where cl.idaduana=pidaduana and c.estado=3 and icon.tipo=1 and c.fecha<=pfecha and cd.idalmacen=pidalmacen),0);
+set vcantidad=vcantidad-ifnull((select sum(cl.surtido) from tblmovimientosaduana cl inner join tblmovimientosdetalles cd on cl.iddetalle=cd.iddetalle inner join tblmovimientos c on c.idmovimiento=cd.idmovimiento inner join tblinventarioconceptos icon on c.idconcepto=icon.idconcepto where cl.idaduana=pidaduana and c.estado=3 and icon.tipo=3 and c.fecha<=pfecha and cd.idalmacen=pidalmacen),0);
+set vcantidad=vcantidad+ifnull((select sum(cl.surtido) from tblmovimientosaduana cl inner join tblmovimientosdetalles cd on cl.iddetalle=cd.iddetalle inner join tblmovimientos c on c.idmovimiento=cd.idmovimiento inner join tblinventarioconceptos icon on c.idconcepto=icon.idconcepto where cl.idaduana=pidaduana and c.estado=3 and icon.tipo=3 and c.fecha<=pfecha and cd.idalmacen2=pidalmacen),0);
+/*fin almacen*/
+else
+/*Por todo*/
+set vcantidad=ifnull((select sum(tblcomprasaduana.surtido) from tblcomprasaduana inner join tblcomprasdetalles on tblcomprasaduana.iddetalle=tblcomprasdetalles.iddetalle inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcomprasaduana.idaduana=pidaduana and tblcompras.estado=3 and tblcompras.fecha<=pfecha),0);
+set vcantidad=vcantidad+ifnull((select sum(tblcomprasremisionesaduana.surtido) from tblcomprasremisionesaduana inner join tblcomprasremisionesdetalles on tblcomprasremisionesaduana.iddetalle=tblcomprasremisionesdetalles.iddetalle inner join tblcomprasremisiones on tblcomprasremisionesdetalles.idremision=tblcomprasremisiones.idremision where tblcomprasremisionesaduana.idaduana=pidaduana and tblcomprasremisiones.estado=3 and tblcomprasremisiones.fecha<=pfecha),0);
+set vcantidad=vcantidad-ifnull((select sum(tblventasaduanan.surtido) from tblventasaduanan inner join tblventasinventario on tblventasaduanan.iddetalle=tblventasinventario.idventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventasaduanan.idaduana=pidaduana and tblventas.estado=3 and tblventas.fecha<=pfecha),0)/vcontenido;
+set vcantidad=vcantidad-ifnull((select sum(tblventasremisionesaduana.surtido) from tblventasremisionesaduana inner join tblventasremisionesinventario on tblventasremisionesaduana.iddetalle=tblventasremisionesinventario.iddetalle inner join tblventasremisiones on tblventasremisionesinventario.idremision=tblventasremisiones.idremision where tblventasremisionesaduana.idaduana=pidaduana and tblventasremisiones.estado=3 and tblventasremisiones.fecha<=pfecha),0)/vcontenido;
+set vcantidad=vcantidad-ifnull((select sum(tbldevolucionescaduana.surtido) from tbldevolucionescaduana inner join tbldevolucionesdetallesc on tbldevolucionescaduana.iddetalle=tbldevolucionesdetallesc.iddetalle inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionescaduana.idaduana=pidaduana and tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha<=pfecha),0);
+set vcantidad=vcantidad+ifnull((select sum(tbldevolucionesaduana.surtido) from tbldevolucionesaduana inner join tbldevolucionesdetalles on tbldevolucionesaduana.iddetalle=tbldevolucionesdetalles.iddetalle inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevolucionesaduana.idaduana=pidaduana and tbldevoluciones.estado=3 and tbldevoluciones.fecha<=pfecha),0)/vcontenido;
+set vcantidad=vcantidad+ifnull((select sum(cl.surtido) from tblmovimientosaduana cl inner join tblmovimientosdetalles cd on cl.iddetalle=cd.iddetalle inner join tblmovimientos c on c.idmovimiento=cd.idmovimiento inner join tblinventarioconceptos icon on c.idconcepto=icon.idconcepto where cl.idaduana=pidaduana and c.estado=3 and (icon.tipo=0 or icon.tipo=4) and c.fecha<=pfecha),0);
+set vcantidad=vcantidad-ifnull((select sum(cl.surtido) from tblmovimientosaduana cl inner join tblmovimientosdetalles cd on cl.iddetalle=cd.iddetalle inner join tblmovimientos c on c.idmovimiento=cd.idmovimiento inner join tblinventarioconceptos icon on c.idconcepto=icon.idconcepto where cl.idaduana=pidaduana and c.estado=3 and icon.tipo=1 and c.fecha<=pfecha),0);
+/*Fin por todo*/
+end if;
+
+
+
+return vcantidad;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spchecaalmaceneslotes` $$
+CREATE FUNCTION `spchecaalmaceneslotes` (pidinventario int,pidalmacen int,pidlote int) RETURNS INT
+BEGIN
+if ifnull((select 1 from tblalmacenesilotes where idinventario=pidinventario and idalmacen=pidalmacen and idlote=pidlote),0)=0 then
+insert into tblalmacenesilotes(idalmacen,idinventario,cantidad,idlote) values(pidalmacen,pidinventario,0,pidlote);
+return 1;
+end if;
+return 0;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spchecaalmacenesaduanas` $$
+CREATE FUNCTION `spchecaalmacenesaduanas` (pidinventario int,pidalmacen int,pidaduana int) RETURNS INT
+BEGIN
+if ifnull((select 1 from tblalmacenesiaduanas where idinventario=pidinventario and idalmacen=pidalmacen and idaduana=pidaduana),0)=0 then
+insert into tblalmacenesiaduanas(idalmacen,idinventario,cantidad,idaduana) values(pidalmacen,pidinventario,0,pidaduana);
+return 1;
+end if;
+return 0;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spchecaalmacenes` $$
+CREATE FUNCTION `spchecaalmacenes` (pidinventario int,pidalmacen int) RETURNS INT
+BEGIN
+if ifnull((select 1 from tblalmacenesi where idinventario=pidinventario and idalmacen=pidalmacen),0)=0 then
+insert into tblalmacenesi(idalmacen,idinventario,cantidad) values(pidalmacen,pidinventario,0);
+return 1;
+end if;
+return 0;
+END $$
+
+DELIMITER ;
+
+insert into tblactualizaciones(version) values('ver 9033 rev 22');

@@ -1,0 +1,5 @@
+ALTER TABLE `tblopciones` ADD COLUMN `siempreporsurtir` TINYINT UNSIGNED NOT NULL AFTER `boletasresumida`,
+ ADD COLUMN `siempreporsurtirr` TINYINT UNSIGNED NOT NULL AFTER `siempreporsurtir`;
+
+insert into tblactualizaciones(version) values('ver 9033 rev 4');
+

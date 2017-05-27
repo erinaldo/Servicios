@@ -1,0 +1,9 @@
+ALTER TABLE `tblinventario` ADD COLUMN `esrevdev` TINYINT UNSIGNED NOT NULL AFTER `urlImagen`;
+ALTER TABLE `tblventas` ADD COLUMN `descuentog2` DOUBLE NOT NULL AFTER `adicional`;
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(662,662,'Total Descuento 2:','totaldesc2',180,22,'Lucida Console',8,1,0,0,1,0,16,1,0,1,'Documento - Total Descuento 2',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(662,662,'Total Descuento 2:','totaldesc2',180,22,'Lucida Console',8,1,0,0,1,0,0,1,0,1,'Documento - Total Descuento 2',0,1);
+
+
+insert into tblactualizaciones(version) values('ver 9027 rev 13');
+

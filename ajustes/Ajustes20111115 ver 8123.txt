@@ -1,0 +1,204 @@
+DROP TABLE IF EXISTS `db_services`.`tblinventariomovimientosb`;
+CREATE TABLE  `db_services`.`tblinventariomovimientosb` (
+  `idinventario` int(10) unsigned NOT NULL,
+  `compras` double NOT NULL,
+  `comprasdev` double NOT NULL,
+  `ventas` double NOT NULL,
+  `ventasdev` double NOT NULL,
+  `entradas` double NOT NULL,
+  `salidas` double NOT NULL,
+  `ajustes` double NOT NULL,
+  `costo` double NOT NULL,
+  cantidad double not null,
+  PRIMARY KEY (`idinventario`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+DROP TABLE IF EXISTS `db_services`.`tbldocumentosclientes`;
+CREATE TABLE  `db_services`.`tbldocumentosclientes` (
+  `iddocumento` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `folio` int(10) unsigned NOT NULL,
+  `idcliente` int(10) unsigned NOT NULL,
+  `fecha` varchar(10) NOT NULL,
+  `credito` double NOT NULL,
+  `totalapagar` double NOT NULL,
+  `hora` varchar(8) NOT NULL,
+  `estado` tinyint(3) unsigned NOT NULL,
+  `serie` varchar(15) NOT NULL,
+  `idsucursal` int(10) unsigned NOT NULL,
+  `tipodecambio` double NOT NULL,
+  `fechacancelado` varchar(10) NOT NULL,
+  `horacancelado` varchar(8) NOT NULL,
+  `folioreferencia` int(10) unsigned NOT NULL,
+  `idmoneda` int(10) unsigned NOT NULL,
+  `seriereferencia` varchar(10) NOT NULL,
+  `idforma` int(10) unsigned NOT NULL,
+  `tiposaldo` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`iddocumento`) USING BTREE,
+  KEY `FK_tbldocumentosclientes_1` (`idcliente`),
+  KEY `FK_tbldocumentosclientes_2` (`idsucursal`),
+  KEY `FK_tbldocumentosclientes_3` (`idmoneda`),
+  KEY `FK_tbldocumentosclientes_4` (`idforma`),
+  KEY `unique1` (`folio`,`serie`),
+  KEY `unique2` (`folioreferencia`,`seriereferencia`) USING BTREE,
+  CONSTRAINT `FK_tbldocumentosclientes_1` FOREIGN KEY (`idcliente`) REFERENCES `tblclientes` (`idcliente`) ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tbldocumentosclientes_2` FOREIGN KEY (`idsucursal`) REFERENCES `tblsucursales` (`idsucursal`) ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tbldocumentosclientes_3` FOREIGN KEY (`idmoneda`) REFERENCES `tblmonedas` (`idmoneda`),
+  CONSTRAINT `FK_tbldocumentosclientes_4` FOREIGN KEY (`idforma`) REFERENCES `tblformasdepago` (`idforma`)
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
+
+
+
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS `spanalisisinventariob` $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spanalisisinventariob`(pidinventario int,pfecha1 varchar(10),pfecha2 varchar(10),pidalmacen int,pidsucursal int)
+BEGIN
+delete from tblinventariomovimientosb;
+if pidsucursal<=0 then/*Todas las sucursales*/
+  if pidalmacen<=0 then/*Todos los almacenes*/
+    if pidinventario<=1 then/*Todos los articulos todas sucursales todos almacenes*/
+
+
+insert into tblinventariomovimientosb(idinventario,compras,comprasdev,ventas,ventasdev,entradas,salidas,ajustes,costo,cantidad)
+select tblinventario.idinventario,
+ifnull((select sum(tblcomprasdetalles.cantidad) from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcomprasdetalles.idinventario=tblinventario.idinventario and tblcompras.estado=3 and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2),0),
+ifnull((select sum(tbldevolucionesdetallesc.cantidad) from tbldevolucionesdetallesc inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionesdetallesc.idinventario=tblinventario.idinventario and tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha>=pfecha1 and tbldevolucionescompras.fecha<=pfecha2),0),
+ifnull((select sum(tblventasinventario.cantidad) from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventasinventario.idinventario=tblinventario.idinventario and tblventas.estado=3 and tblventas.fecha>=pfecha1 and tblventas.fecha<=pfecha2),0),
+ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevolucionesdetalles.idinventario=tblinventario.idinventario and tbldevoluciones.estado=3 and tbldevoluciones.fecha>=pfecha1 and tbldevoluciones.fecha<=pfecha2),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=0 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=1 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2),0),
+0,
+tblinventario.costobase,
+spdainventario(tblinventario.idinventario,pidalmacen,pidsucursal)
+ from tblinventario where tblinventario.idinventario>1;
+
+
+    else /*Un solo articulo todas sucursales todos almances*/
+
+insert into tblinventariomovimientosb(idinventario,compras,comprasdev,ventas,ventasdev,entradas,salidas,ajustes,costo,cantidad)
+select tblinventario.idinventario,
+ifnull((select sum(tblcomprasdetalles.cantidad) from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcomprasdetalles.idinventario=tblinventario.idinventario and tblcompras.estado=3 and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2),0),
+ifnull((select sum(tbldevolucionesdetallesc.cantidad) from tbldevolucionesdetallesc inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionesdetallesc.idinventario=tblinventario.idinventario and tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha>=pfecha1 and tbldevolucionescompras.fecha<=pfecha2),0),
+ifnull((select sum(tblventasinventario.cantidad) from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventasinventario.idinventario=tblinventario.idinventario and tblventas.estado=3 and tblventas.fecha>=pfecha1 and tblventas.fecha<=pfecha2),0),
+ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevolucionesdetalles.idinventario=tblinventario.idinventario and tbldevoluciones.estado=3 and tbldevoluciones.fecha>=pfecha1 and tbldevoluciones.fecha<=pfecha2),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=0 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=1 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2),0),
+0,
+tblinventario.costobase,
+spdainventario(tblinventario.idinventario,pidalmacen,pidsucursal)
+ from tblinventario where tblinventario.idinventario=pidinventario;
+
+    end if;
+  else /*Un solo almacen todas las sucursales*/
+
+    if pidinventario=0 then /*Todos los articulos todas las sucursales un almacen */
+
+insert into tblinventariomovimientosb(idinventario,compras,comprasdev,ventas,ventasdev,entradas,salidas,ajustes,costo,cantidad)
+select tblinventario.idinventario,
+ifnull((select sum(tblcomprasdetalles.cantidad) from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcomprasdetalles.idinventario=tblinventario.idinventario and tblcompras.estado=3 and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcomprasdetalles.idalmacen=pidalmacen),0),
+ifnull((select sum(tbldevolucionesdetallesc.cantidad) from tbldevolucionesdetallesc inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionesdetallesc.idinventario=tblinventario.idinventario and tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha>=pfecha1 and tbldevolucionescompras.fecha<=pfecha2 and tbldevolucionesdetallesc.idalmacen=pidalmacen),0),
+ifnull((select sum(tblventasinventario.cantidad) from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventasinventario.idinventario=tblinventario.idinventario and tblventas.estado=3 and tblventas.fecha>=pfecha1 and tblventas.fecha<=pfecha2 and tblventasinventario.idalmacen=pidalmacen),0),
+ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevolucionesdetalles.idinventario=tblinventario.idinventario and tbldevoluciones.estado=3 and tbldevoluciones.fecha>=pfecha1 and tbldevoluciones.fecha<=pfecha2 and tbldevolucionesdetalles.idalmacen=pidalmacen),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=0 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idalmacen=pidalmacen),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=1 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idalmacen=pidalmacen),0),
+0,
+tblinventario.costobase,
+spdainventario(tblinventario.idinventario,pidalmacen,pidsucursal)
+ from tblinventario where tblinventario.idinventario>1;
+
+    else /*Un articulos todas las sucursales un almacen*/
+insert into tblinventariomovimientosb(idinventario,compras,comprasdev,ventas,ventasdev,entradas,salidas,ajustes,costo,cantidad)
+select tblinventario.idinventario,
+ifnull((select sum(tblcomprasdetalles.cantidad) from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcomprasdetalles.idinventario=tblinventario.idinventario and tblcompras.estado=3 and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcomprasdetalles.idalmacen=pidalmacen),0),
+ifnull((select sum(tbldevolucionesdetallesc.cantidad) from tbldevolucionesdetallesc inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionesdetallesc.idinventario=tblinventario.idinventario and tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha>=pfecha1 and tbldevolucionescompras.fecha<=pfecha2 and tbldevolucionesdetallesc.idalmacen=pidalmacen),0),
+ifnull((select sum(tblventasinventario.cantidad) from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventasinventario.idinventario=tblinventario.idinventario and tblventas.estado=3 and tblventas.fecha>=pfecha1 and tblventas.fecha<=pfecha2 and tblventasinventario.idalmacen=pidalmacen),0),
+ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevolucionesdetalles.idinventario=tblinventario.idinventario and tbldevoluciones.estado=3 and tbldevoluciones.fecha>=pfecha1 and tbldevoluciones.fecha<=pfecha2 and tbldevolucionesdetalles.idalmacen=pidalmacen),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=0 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idalmacen=pidalmacen),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=1 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idalmacen=pidalmacen),0),
+0,
+tblinventario.costobase,
+spdainventario(tblinventario.idinventario,pidalmacen,pidsucursal)
+ from tblinventario where tblinventario.idinventario=pidinventario;
+
+    end if;
+
+  end if;
+else /*Un sola sucursal*/
+  if pidalmacen<=0 then/*Una sucursal todos los almacenes*/
+    if pidinventario<=1 then /*Todos los articulos una sucursal todos los almacenes*/
+
+insert into tblinventariomovimientosb(idinventario,compras,comprasdev,ventas,ventasdev,entradas,salidas,ajustes,costo,cantidad)
+select tblinventario.idinventario,
+ifnull((select sum(tblcomprasdetalles.cantidad) from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcomprasdetalles.idinventario=tblinventario.idinventario and tblcompras.estado=3 and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcompras.idsucursal=pidsucursal),0),
+ifnull((select sum(tbldevolucionesdetallesc.cantidad) from tbldevolucionesdetallesc inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionesdetallesc.idinventario=tblinventario.idinventario and tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha>=pfecha1 and tbldevolucionescompras.fecha<=pfecha2 and tbldevolucionescompras.idsucursal=pidsucursal),0),
+ifnull((select sum(tblventasinventario.cantidad) from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventasinventario.idinventario=tblinventario.idinventario and tblventas.estado=3 and tblventas.fecha>=pfecha1 and tblventas.fecha<=pfecha2 and tblventas.idsucursal=pidsucursal),0),
+ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevolucionesdetalles.idinventario=tblinventario.idinventario and tbldevoluciones.estado=3 and tbldevoluciones.fecha>=pfecha1 and tbldevoluciones.fecha<=pfecha2 and tbldevoluciones.idsucursal=pidsucursal),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=0 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientos.idsucursal=pidsucursal),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=1 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientos.idsucursal=pidsucursal),0),
+0,
+tblinventario.costobase,
+spdainventario(tblinventario.idinventario,pidalmacen,pidsucursal)
+ from tblinventario where tblinventario.idinventario>1;
+
+    else /*Un articulo, una sucursal todos los almacenes*/
+
+insert into tblinventariomovimientosb(idinventario,compras,comprasdev,ventas,ventasdev,entradas,salidas,ajustes,costo,cantidad)
+select tblinventario.idinventario,
+ifnull((select sum(tblcomprasdetalles.cantidad) from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcomprasdetalles.idinventario=tblinventario.idinventario and tblcompras.estado=3 and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcompras.idsucursal=pidsucursal),0),
+ifnull((select sum(tbldevolucionesdetallesc.cantidad) from tbldevolucionesdetallesc inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionesdetallesc.idinventario=tblinventario.idinventario and tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha>=pfecha1 and tbldevolucionescompras.fecha<=pfecha2 and tbldevolucionescompras.idsucursal=pidsucursal),0),
+ifnull((select sum(tblventasinventario.cantidad) from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventasinventario.idinventario=tblinventario.idinventario and tblventas.estado=3 and tblventas.fecha>=pfecha1 and tblventas.fecha<=pfecha2 and tblventas.idsucursal=pidsucursal),0),
+ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevolucionesdetalles.idinventario=tblinventario.idinventario and tbldevoluciones.estado=3 and tbldevoluciones.fecha>=pfecha1 and tbldevoluciones.fecha<=pfecha2 and tbldevoluciones.idsucursal=pidsucursal),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=0 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientos.idsucursal=pidsucursal),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=1 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientos.idsucursal=pidsucursal),0),
+0,
+tblinventario.costobase,
+spdainventario(tblinventario.idinventario,pidalmacen,pidsucursal)
+ from tblinventario where tblinventario.idinventario=pidinventario;
+
+
+    end if;
+  else /*Una sucural un almacen*/
+
+    if pidinventario<=1 then /*Todos los articulos un almacen una sucursal*/
+
+insert into tblinventariomovimientosb(idinventario,compras,comprasdev,ventas,ventasdev,entradas,salidas,ajustes,costo,cantidad)
+select tblinventario.idinventario,
+ifnull((select sum(tblcomprasdetalles.cantidad) from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcomprasdetalles.idinventario=tblinventario.idinventario and tblcompras.estado=3 and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcomprasdetalles.idalmacen=pidalmacen),0),
+ifnull((select sum(tbldevolucionesdetallesc.cantidad) from tbldevolucionesdetallesc inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionesdetallesc.idinventario=tblinventario.idinventario and tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha>=pfecha1 and tbldevolucionescompras.fecha<=pfecha2 and tbldevolucionesdetallesc.idalmacen=pidalmacen),0),
+ifnull((select sum(tblventasinventario.cantidad) from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventasinventario.idinventario=tblinventario.idinventario and tblventas.estado=3 and tblventas.fecha>=pfecha1 and tblventas.fecha<=pfecha2 and tblventasinventario.idalmacen=pidalmacen),0),
+ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevolucionesdetalles.idinventario=tblinventario.idinventario and tbldevoluciones.estado=3 and tbldevoluciones.fecha>=pfecha1 and tbldevoluciones.fecha<=pfecha2 and tbldevolucionesdetalles.idalmacen=pidalmacen),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=0 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idalmacen=pidalmacen),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=1 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idalmacen=pidalmacen),0),
+0,
+tblinventario.costobase,
+spdainventario(tblinventario.idinventario,pidalmacen,pidsucursal)
+ from tblinventario where tblinventario.idinventario>1;
+
+
+      else /*Un articulo un almacen una sucursal*/
+
+insert into tblinventariomovimientosb(idinventario,compras,comprasdev,ventas,ventasdev,entradas,salidas,ajustes,costo,cantidad)
+select tblinventario.idinventario,
+ifnull((select sum(tblcomprasdetalles.cantidad) from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcomprasdetalles.idinventario=tblinventario.idinventario and tblcompras.estado=3 and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcomprasdetalles.idalmacen=pidalmacen),0),
+ifnull((select sum(tbldevolucionesdetallesc.cantidad) from tbldevolucionesdetallesc inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionesdetallesc.idinventario=tblinventario.idinventario and tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha>=pfecha1 and tbldevolucionescompras.fecha<=pfecha2 and tbldevolucionesdetallesc.idalmacen=pidalmacen),0),
+ifnull((select sum(tblventasinventario.cantidad) from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventasinventario.idinventario=tblinventario.idinventario and tblventas.estado=3 and tblventas.fecha>=pfecha1 and tblventas.fecha<=pfecha2 and tblventasinventario.idalmacen=pidalmacen),0),
+ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevolucionesdetalles.idinventario=tblinventario.idinventario and tbldevoluciones.estado=3 and tbldevoluciones.fecha>=pfecha1 and tbldevoluciones.fecha<=pfecha2 and tbldevolucionesdetalles.idalmacen=pidalmacen),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=0 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idalmacen=pidalmacen),0),
+ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where tblmovimientosdetalles.idinventario=tblinventario.idinventario and tblinventarioconceptos.tipo=1 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idalmacen=pidalmacen),0),
+0,
+tblinventario.costobase,
+spdainventario(tblinventario.idinventario,pidalmacen,pidsucursal)
+ from tblinventario where tblinventario.idinventario=pidalmacen;
+
+    end if;
+  end if;
+end if;
+
+
+
+END $$
+
+DELIMITER ;

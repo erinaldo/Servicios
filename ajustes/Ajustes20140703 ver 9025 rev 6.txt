@@ -1,0 +1,311 @@
+ALTER TABLE `tblclientes` MODIFY COLUMN `zona` INTEGER UNSIGNED NOT NULL,
+ MODIFY COLUMN `zona2` INTEGER UNSIGNED NOT NULL;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdapreciolistauno` $$
+CREATE FUNCTION `spdapreciolistauno` (pidinventario int) RETURNS INT
+BEGIN
+return ifnull((select precio from tblinventarioprecios where idlista=1 and idinventario=pidinventario limit 1),0);
+END $$
+
+DELIMITER ;
+
+
+CREATE TABLE `tblAgrupadorCuentas` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `codigo` VARCHAR(45) NOT NULL,
+  `nombre` VARCHAR(65) NOT NULL,
+  `tipo` VARCHAR(45) NOT NULL,
+  `subtipo` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`)
+)
+ENGINE = InnoDB;
+
+
+
+
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('1','CAJA','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('1.1','CAJA Y EFECTIVO','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('2','BANCOS','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('2.1','BANCOS NACIONALES','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('2.2','BANCOS EXTRANJEROS','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('3','INVERSIONES','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('3.1','INVERSIONES DE VALORES','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('3.2','INVERSIONES TEMPORALES','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('4','CLIENTES','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('4.1','CLIENTES NACIONALES','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('4.2','CLIENTES EXTRANJEROS','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('4.3','PARTES RELACIONADAS','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('5','CUENTAS POR COBRAR','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('5.1','DOCUMENTOS POR COBRAR CORTO PLAZO','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('5.2','PARTES RELACIONADAS','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('5.3','INTERESES POR COBRAR','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('6','TÍTULOS DE CRÉDITO','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('6.1','TÍTULOS DE CRÉDITO','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('7','CRÉDITOS OTORGADOS','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('7.1','CRÉDITOS OTORGADOS','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('8','DEUDORES DIVERSOS','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('8.1','FUNCIONARIOS Y EMPLEADOS','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('8.2','SOCIOS ACCIONISTAS','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('8.3','PARTES RELACIONADAS','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('8.4','OTROS DEUDORES DIVERSOS','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('9','ESTIMACIÓN DE CUENTAS INCOBRABLES','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('9.1','ESTIMACIÓN DE CUENTAS INCOBRABLES','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('10','PAGOS ANTICIPADOS','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('10.1','SEGUROS Y FINANZAS PAGADAS POR ANTICIPADO','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('10.2','RENTAS PAGADAS POR ANTICIPADO','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('10.3','INTERESES PAGADOS POR ANTICIPADO','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('10.4','OTROS PAGOS ANTICIPADOS','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('11','IMPUESTOS A FAVOR','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('11.1','IVA A FAVOR','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('11.2','ISR A FAVOR','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('11.3','IETU A FAVOR','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('11.4','IDE A FAVOR','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('11.5','IA A FAVOR','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('11.6','OTROS IMPUESTOS A FAVOR','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('12','PAGOS PROVISIONALES','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('12.1','PAGOS PROVISIONALES ISR','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('13','INVENTARIOS','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('13.1','INVENTARIOS','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('14','OBRAS EN PROCESO','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('14.1','OBRAS EN PROCESO','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('15','IMPUESTOS ACREDITABLES PAGADOS','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('15.1','IVA ACREDITABLE PAGADO','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('15.2','IVA ACREDITABLE DE IMPORTACIÓN PAGADO','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('15.3','IEPS ACREDITABLE PAGADO','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('15.4','IEPS PAGADO EN IMPORTACIÓN','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('15.5','IMPUESTOS ACREDITABLES POR PAGAR','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('15.6','IVA PENDIENTE DE PAGO','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('16','IMPUESTOS ACREDITABLES POR PAGAR','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('16.1','IVA PENDIENTE DE PAGO','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('16.2','IVA DE IMPORTACIÓN PENDIENTE DE PAGO','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('16.3','IEPS PENDIENTE DE PAGO','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('16.4','IEPS PENDIENTE DE PAGO EN IMPORTACIÓN','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('17','ANTICIPO DE PROVEEDORES','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('17.1','ANTICIPO DE PROVEEDORES','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('18','OTROS ACTIVOS CIRCULARES','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('18.1','OTROS ACTIVOS CIRCULARES','ACTIVO','ACTIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('19','TERRENOS','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('19.1','TERRENOS','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('20','EDIFICIOS','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('20.1','EDIFICIOS','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('21','MAQUINARIA Y EQUIPO','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('21.1','MAQUINARIA Y EQUIPO','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('22','EQUIPO DE TRANSPORTE','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('22.1','EQUIPO DE TRANSPORTE','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('23','MOBILIARIO Y EQUIPO DE OFICINA','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('23.1','MOBILIARIO Y EQUIPO DE OFICINA','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('24','EQUIPO DE CÓMPUTO','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('24.1','EQUIPO DE CÓMPUTO','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('25','DEPRECIACIÓN ACUMULADA','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('25.1','DEPRECIACIÓN ACUMULADA DE EDIFICIOS','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('25.2','DEPRECIACIÓN ACUMULADA DE MAQUINARIA Y EQUIPO','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('25.4','DEPRECIACIÓN ACUMULADA DE MOBILIARIO Y EQUIPO','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('25.5','DEPRECIACIÓN ACUMULADA DE EQUIPO DE CÓMPUTO','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('25.6','DEPRECIACIÓN ACUMULADA DE OTROS ACTIVOS','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('25.3','DEPRECIACIÓN ACUMULADA DE EQUIPO DE TRANSPORTE','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('26','ADAPTACIONES Y MEJORAS','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('26.1','ADAPTACIONES Y MEJORAS','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('27','GASTOS PRE OPERATIVOS','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('27.1','GASTOS PRE OPERATIVOS','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('28','GASTOS DE INSTALACIÓN','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('28.1','GASTOS DE INSTALACIÓN','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('29','GASTOS DE ORGANIZACIÓN','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('29.1','GASTOS DE ORGANIZACIÓN','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('30','INVESTIGACIÓN Y DESARROLLO DE MERCADO','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('30.1','INVESTIGACIÓN Y DESARROLLO DE MERCADO','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('31','MARCAS Y PATENTES','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('31.1','MARCAS Y PATENTES','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('32','DEPÓSITOS DE GARANTÍA','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('32.1','DEPÓSITOS DE GARANTÍA','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('33','CRÉDITO MERCANTIL','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('33.1','CRÉDITO MERCANTIL','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('34','IMPUESTOS DIFERIDOS','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('34.1','IMPUESTOS DIFERIDOS','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('35','CUENTAS POR COBRAR A LARGO PLAZO','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('35.1','CUENTAS POR COBRAR A LARGO PLAZO','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('36','OTROS ACTIVOS NO CIRCULARES','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('36.1','OTROS ACTIVOS NO CIRCULARES','ACTIVO','ACTIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('37','PROVEEDORES','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('37.1','PROVEEDORES NACIONALES','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('37.2','PROVEEDORES EXTRANJEROS','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('37.3','PARTES RELACIONADAS','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('38','CUENTAS POR PAGAR A CORTO PLAZO','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('38.1','DOCUMENTOS POR PAGAR','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('38.2','DOCUMENTOS POR PAGAR BANCARIOS','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('38.3','DIVIDENDOS POR PAGAR','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('38.4','PARTES RELACIONADAS','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('38.5','INTERESES POR PAGAR','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('39','ACREEDORES DIVERSOS','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('39.1','SOCIOS,  ACCIONISTAS O REPRESENTANTE LEGAL','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('39.2','PARTES RELACIONADAS','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('39.3','OTROS ACREEDORES DIVERSOS','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('40','ANTICIPO DE CLIENTES','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('40.1','ANTICIPO DE CLIENTES','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('41','IMPUESTOS TRASLADADOS','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('41.1','IVA TRASLADADO','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('41.2','IEPS TRASLADADO','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('42','IMPUESTOS TRASLADADOS COBRADOS','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('42.1','IVA TRASLADADO COBRADO','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('42.2','IEPS TRASLADADO COBRADO','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('43','IMPUESTOS TRASLADADOS NO COBRADOS','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('43.1','IVA TRASLADADO NO COBRADO','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('43.2','IVA TRASLADADO NO COBRADO','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('44','IMPUESTOS Y DERECHOS POR PAGAR','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('44.1','IVA POR PAGAR','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('44.2','IEPS POR PAGAR','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('44.3','ISR POR PAGAR','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('44.4','PTU POR PAGAR','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('44.5','IETU POR PAGAR','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('44.6','IMPUESTOS ESTATALES Y MUNICIPALES POR PAGAR','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('44.7','OTROS IMPUESTOS POR PAGAR','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('44.7','DERECHOS POR PAGAR','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('45','IMPUESTOS RETENIDOS','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('45.1','RETENCIONES SALARIOS Y ASIMILADOS','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('45.2','RETENCIONES IVA','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('45.3','RETENCIONES ARRENDAMIENTO ISR','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('45.4','RETENCIONES SERVICIOS PROFESIONALES ISR','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('45.5','RETENCIONES DIVIDENDOS','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('45.6','OTRAS RETENCIONES','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('46','PAGOS POR TERCEROS','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('46.1','PAGOS POR TERCEROS','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('47','OTROS PASIVOS CIRCULARES','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('47.1','OTROS PASIVOS CIRCULARES','PASIVO','PASIVOS CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('48','ACREEDORES A LARGO PLAZO','PASIVO','PASIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('48.1','SOCIOS, ACCIONISTAS, REPRESENTANTE LEGAL','PASIVO','PASIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('48.2','PARTES RELACIONADAS','PASIVO','PASIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('48.3','OTROS ACREEDORES A LARGO PLAZO','PASIVO','PASIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('49','CUENTAS POR PAGAR A LARGO PLAZO','PASIVO','PASIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('49.1','DOCUMENTOS POR PAGAR A LARGO PLAZO','PASIVO','PASIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('49.2','DOCUMENTOS POR PAGAR BANCARIOS A LARGO PLAZO','PASIVO','PASIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('49.3','PARTES RELACIONADAS','PASIVO','PASIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('49.4','HIPOTECAS POR PAGAR','PASIVO','PASIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('49.5','INTERESES POR PAGAR A LARGO PLAZO','PASIVO','PASIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('50','COBROS ANTICIPADOS','PASIVO','PASIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('50.1','RENTA COBRADAS POR ANTICIPADO','PASIVO','PASIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('50.2','INTERESES COBRADOS POR ANTICIPADO','PASIVO','PASIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('50.3','FACTORAJE FINANCIERO','PASIVO','PASIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('50.4','OTROS COBROS POR ANTICIPADO','PASIVO','PASIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('51',' OTROS PASIVOS A LARGO PLAZO','PASIVO','PASIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('51.1',' OTROS PASIVOS A LARGO PLAZO','PASIVO','PASIVOS NO CIRCULARES');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('52','CAPITAL SOCIAL','CAPITAL','CAPITAL');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('52.1','CAPITAL FIJO','CAPITAL','CAPITAL');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('52.2','CAPITAL VARIABLE','CAPITAL','CAPITAL');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('52.3','APORTACIONES PARA FUTUROS AUMENTOS A CAPITAL','CAPITAL','CAPITAL');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('53','RESERVA LEGAL','CAPITAL','CAPITAL');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('53.1','RESERVA LEGAL','CAPITAL','CAPITAL');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('54','RESULTADO DEL EJERCICIO','CAPITAL','CAPITAL');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('54.1','UTILIDAD DEL EJERCICIO','CAPITAL','CAPITAL');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('54.2','PÉRDIDA DEL EJERCICIO','CAPITAL','CAPITAL');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('55','RESULTADO DE EJERCICIOS ANTERIORES','CAPITAL','CAPITAL');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('55.1','UTILIDAD DE EJERCICIOS ANTERIORES','CAPITAL','CAPITAL');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('55.2','PÉRDIDA DE EJERCICIOS ANTERIORES','CAPITAL','CAPITAL');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('56','OTRAS CUENTAS DE CAPITAL','CAPITAL','CAPITAL');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('56.1','OTRAS CUENTAS DE CAPITAL','CAPITAL','CAPITAL');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('57','VENTAS','INGRESOS','INGRESOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('57.1','VENTAS GRAVADAS A TASA GENERAL CONTADO','INGRESOS','INGRESOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('57.2','VENTAS GRAVADAS A TASA GENERAL CRÉDITO','INGRESOS','INGRESOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('57.3','VENTAS GRAVADAS AL 0% CONTADO','INGRESOS','INGRESOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('57.4','VENTAS GRAVADAS AL 0% CRÉDITO','INGRESOS','INGRESOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('57.5','VENTAS EXENTAS CONTADO','INGRESOS','INGRESOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('57.6','VENTAS EXENTAS CRÉDITO','INGRESOS','INGRESOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('58','DEVOLUCIONES, DESCUENTOS Y REBAJAS SOBRE VENTAS','INGRESOS','INGRESOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('58.1','DEVOLUCIONES, DESCUENTOS Y REBAJAS SOBRE VENTAS A TASA GENERAL','INGRESOS','INGRESOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('58.2','DEVOLUCIONES, DESCUENTOS Y REBAJAS SOBRE VENTAS AL 0%','INGRESOS','INGRESOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('58.3','DEVOLUCIONES, DESCUENTOS Y REBAJAS SOBRE VENTAS EXENTAS','INGRESOS','INGRESOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('59','PRODUCTOS FINANCIEROS','INGRESOS','INGRESOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('59.1','PRODUCTOS FINANCIEROS','INGRESOS','INGRESOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('60','OTROS INGRESOS','INGRESOS','INGRESOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('60.1','OTROS INGRESOS','INGRESOS','INGRESOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('61','COSTO DE VENTAS','COSTOS','COSTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('61.1','COSTO DE VENTAS','COSTOS','COSTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('62','COMPRAS','COSTOS','COSTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('62.1','COMPRAS NACIONALES','COSTOS','COSTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('62.2','COMPRAS AL EXTRANJERO','COSTOS','COSTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('63','DEVOLUCIONES, DESCUENTOS, Y REBAJAS SOBRE COMPRAS','COSTOS','COSTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('63.1','DEVOLUCIONES, DESCUENTOS, Y REBAJAS SOBRE COMPRAS','COSTOS','COSTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('64','OTRAS CUENTAS DE COSTOS','COSTOS','COSTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('64.1','OTRAS CUENTAS DE COSTOS','COSTOS','COSTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65','GASTOS GENERALES','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.1','GASTOS GENERALES','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.2','COMBUSTIBLES Y LUBRICANTES','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.3','CORREOS','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.4','INTERNET','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.5','VIÁTICOS Y GASTOS DE VIAJE','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.6','GASTOS DE REPRESENTACIÓN','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.7','TELÉFONO','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.8','AGUA','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.9','ELECTRICIDAD','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.10','VIGILANCIA Y LIMPIEZA','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.11','MATERIALES DE OFICINA','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.12','GASTOS LEGALES','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.13','MANTENIMIENTO Y CONSERVACIÓN','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.14','SEGUROS Y FINANZAS','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.15','GASTOS NO DEDUCIBLES','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.16','OTROS IMPUESTOS Y DERECHOS','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.17','RECARGOS FISCALES','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.18','CUOTAS Y SUSCRIPCIONES','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.19','PROPAGANDA Y PUBLICIDAD','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.20','FOTOCOPIADO','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.21','DONATIVOS','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.22','ASISTENCIA TÉCNICA','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.23','FLETES','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.24','IMPUESTO DE IMPORTACIÓN','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.25','IMPUESTO DE EXPORTACIÓN','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.26','REGALÍAS SIN RETENCIÓN','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.27','REGALÍAS SUJETAS AL 5%','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.28','REGALÍAS SUJETAS AL 10%','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.29','REGALÍAS SUJETAS AL 25%','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.30','REGALÍAS SUJETAS AL 30%','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.31','COMISIONES SOBRE VENTAS','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.32','PATENTES Y MARCAS','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.33','MATERIAS PRIMAS DE PRODUCCIÓN','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.34','MATERIALES AUXILIARES DE PRODUCCIÓN','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('65.35','COMISIONES BANCARIAS','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('66','GASTOS DE VENTAS','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('66.1','GASTOS DE VENTAS','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('67','GASTOS DE ADMINISTRACIÓN','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('67.1','GASTOS DE ADMINISTRACIÓN','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('68','GASTOS FINANCIEROS','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('68.1','GASTOS DE ADMINISTRACIÓN','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('69','OTROS GASTOS','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('69.1','PERDIDA EN VENTA DE TERRENOS','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('69.2','PERDIDA EN VENTA DE EDIFICIOS Y CONSTRUCCIÓN','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('69.3','PERDIDA EN VENTA DE MAQUINARIA','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('69.4','PERDIDA EN VENTA DE EQUIPO DE TRANSPORTE','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('69.5','PERDIDA EN VENTA DE MOBILIARIO Y EQUIPO','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('69.6','PERDIDA EN VENTA DE EQUIPO DE COMPUTO','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('69.7','PERDIDA EN VENTA DE ACCIONES','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('69.8','PERDIDA POR DETERIORO DE ACTIVOS','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('69.9','OTROS','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('70','PARTICIPACIÓN DE LOS TRABAJADORES EN LAS UTILIDADES','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('70.1','PARTICIPACIÓN DE LOS TRABAJADORES EN LAS UTILIDADES','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('71','GASTOS NO DEDUCIBLES','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('71.1','GASTOS NO DEDUCIBLES','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('72','DEPRECIACIÓN CONTABLE','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('72.1','DEPRECIACIÓN CONTABLE DE EDIFICIOS','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('72.2','DEPRECIACIÓN CONTABLE DE MAQUINARIA Y EQUIPO','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('72.3','DEPRECIACIÓN CONTABLE DE EQUIPO DE TRANSPORTE','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('72.4','DEPRECIACIÓN CONTABLE DE MOBILIARIO Y EQUIPO','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('72.5','DEPRECIACIÓN CONTABLE DE EQUIPO DE CÓMPUTO','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('72.6','DEPRECIACIÓN CONTABLE DE OTROS ACTIVOS','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('73','AMORTIZACIÓN CONTABLE','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('73.1','AMORTIZACIÓN CONTABLE','GASTOS','GASTOS');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('74','CUCA','CUENTAS DE ORDEN','CUENTAS DE ORDEN');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('74.1','CUCA','CUENTAS DE ORDEN','CUENTAS DE ORDEN');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('75','CUFIN','CUENTAS DE ORDEN','CUENTAS DE ORDEN');
+insert into tblagrupadorcuentas (codigo,nombre,tipo,subtipo)values('75.1','CUFIN','CUENTAS DE ORDEN','CUENTAS DE ORDEN');
+
+ALTER TABLE `tblccontables` MODIFY COLUMN `Nivel` INTEGER UNSIGNED DEFAULT NULL,
+ MODIFY COLUMN `Tipo` INTEGER UNSIGNED DEFAULT NULL,
+ MODIFY COLUMN `Naturaleza` INTEGER UNSIGNED DEFAULT NULL,
+ ADD COLUMN `fecha` VARCHAR(11) NOT NULL AFTER `N5`;
+
+ALTER TABLE `tblccontables` ADD COLUMN `cmb1` INTEGER UNSIGNED NOT NULL AFTER `fecha`,
+ ADD COLUMN `cmb2` INTEGER UNSIGNED NOT NULL AFTER `cmb1`,
+ ADD COLUMN `idContable` INTEGER UNSIGNED NOT NULL AFTER `cmb2`;
+
+
+
+insert into tblactualizaciones(version) values('ver 9025 rev 6');

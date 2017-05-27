@@ -1,0 +1,4 @@
+ALTER TABLE `tblpolizas` MODIFY COLUMN `concepto` VARCHAR(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+
+insert into tblactualizaciones(version) values('ver 9025 rev 25');
+

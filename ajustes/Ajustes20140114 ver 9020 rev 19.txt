@@ -1,0 +1,13 @@
+insert into tblpercepciones(clave,descripcion) values('029','Vales de despensa');
+insert into tblpercepciones(clave,descripcion) values('030','Vales de restaurante');
+insert into tblpercepciones(clave,descripcion) values('031','Vales de gasolina');
+insert into tblpercepciones(clave,descripcion) values('032','Vales de ropa');
+insert into tblpercepciones(clave,descripcion) values('033','Ayuda para renta');
+insert into tblpercepciones(clave,descripcion) values('034','Ayuda para artículos escolares');
+insert into tblpercepciones(clave,descripcion) values('035','Ayuda para anteojos');
+insert into tblpercepciones(clave,descripcion) values('036','Ayuda para transporte');
+insert into tblpercepciones(clave,descripcion) values('037','Ayuda para gastos de funeral');
+insert into tblpercepciones(clave,descripcion) values('038','Otros ingresos por salarios');
+insert into tblpercepciones(clave,descripcion) values('039','Jubilaciones, pensione o haberes de retiro');
+
+insert into tblactualizaciones(version) values('ver 9020 rev 19');

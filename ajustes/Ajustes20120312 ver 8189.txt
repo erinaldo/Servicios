@@ -1,0 +1,4 @@
+ALTER TABLE `tblventaspagos` ADD INDEX `Index_5`(`fecha`);
+ALTER TABLE `tblventaspagos` ADD INDEX `Index_6`(`idventa`);
+ALTER TABLE `tblventaspagos` ADD INDEX `Index_7`(`idcargo`);
+ALTER TABLE `tblventas` ADD INDEX `Index_6`(`fecha`);

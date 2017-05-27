@@ -1,0 +1,3 @@
+ALTER TABLE `tblccontables` MODIFY COLUMN `cmb2` INT(10) NOT NULL;
+insert into tblactualizaciones(version) values('ver 9027 rev 4');
+

@@ -1,0 +1,6 @@
+ALTER TABLE `tblpagoprov` ADD COLUMN `ivaret` DOUBLE NOT NULL AFTER `tipodecambio`,
+ ADD COLUMN `ieps` DOUBLE NOT NULL AFTER `ivaret`,
+ ADD COLUMN `isr` DOUBLE NOT NULL AFTER `ieps`;
+
+insert into tblactualizaciones(version) values('ver 9033 rev 18');
+

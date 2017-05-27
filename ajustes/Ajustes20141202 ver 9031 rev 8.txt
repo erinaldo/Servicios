@@ -1,0 +1,424 @@
+CREATE TABLE `tblinventarioaduana` (
+  `idaduana` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `aduana` VARCHAR(250) NOT NULL,
+  `fecha` VARCHAR(10) NOT NULL,
+  `numero` VARCHAR(250) NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  `idinventario` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`idaduana`)
+)
+ENGINE = InnoDB;
+
+
+CREATE TABLE `tblcomprasaduana` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idaduana` INTEGER UNSIGNED NOT NULL,
+  `iddetalle` INTEGER UNSIGNED NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  `surtido` DOUBLE NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `FK_tblcomprasaduana_1` FOREIGN KEY `FK_tblcomprasaduana_1` (`iddetalle`)
+    REFERENCES `tblcomprasdetalles` (`iddetalle`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tblcomprasremisionesaduana` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idaduana` INTEGER UNSIGNED NOT NULL,
+  `iddetalle` INTEGER UNSIGNED NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  `surtido` DOUBLE NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `FK_tblcomprasremisionesaduana_1` FOREIGN KEY `FK_tblcomprasremisionesaduana_1` (`iddetalle`)
+    REFERENCES `tblcomprasremisionesdetalles` (`iddetalle`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tblventasaduanan` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idaduana` INTEGER UNSIGNED NOT NULL,
+  `iddetalle` INTEGER UNSIGNED NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  `surtido` DOUBLE NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `FK_tblventasaduanan_1` FOREIGN KEY `FK_tblventasaduanan_1` (`iddetalle`)
+    REFERENCES `tblventasinventario` (`idventasinventario`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tblventasremisionesaduana` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idaduana` INTEGER UNSIGNED NOT NULL,
+  `iddetalle` INTEGER UNSIGNED NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  `surtido` DOUBLE NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `FK_tblventasremisionesaduana_1` FOREIGN KEY `FK_tblventasremisionesaduana_1` (`iddetalle`)
+    REFERENCES `tblventasremisionesinventario` (`iddetalle`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `tblinventario` ADD COLUMN `aduana` TINYINT UNSIGNED NOT NULL AFTER `esrevdev`,
+ ADD COLUMN `semillas` TINYINT UNSIGNED NOT NULL AFTER `aduana`;
+update tblinventario set aduana=0,semillas=0;
+
+
+CREATE TABLE `tblinventarioaduanaconsulta` (
+  `idaduana` INTEGER UNSIGNED NOT NULL,
+  `iddocumento` INTEGER UNSIGNED NOT NULL,
+  `folio` VARCHAR(45) NOT NULL,
+  `fecha` VARCHAR(10) NOT NULL,
+  `tipodoc` VARCHAR(45) NOT NULL,
+  `cantidad` DOUBLE NOT NULL
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `tblventasremisionesinventario` CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE `tblventasremisiones` CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+update tblimpresionesnodos set datapropertyname='descripcion' where datapropertyname='artDesc';
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdadetallesaduana` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdadetallesaduana`(pidocumento int,piddetalle int,ptipo int,pnada tinyint) RETURNS varchar(2000) CHARSET utf8
+BEGIN
+declare varminid int;
+declare varmaxid int;
+declare varidinventario int;
+declare varidventa int;
+declare varhaynuevo int;
+declare vardetalles varchar(2000);
+set vardetalles='';
+
+set varhaynuevo=(select count(idaduana) from tblventasaduanan where iddetalle=piddetalle);
+
+if varhaynuevo=0 then
+
+if ptipo=0 and pnada=1 then
+set varminid=ifnull((select min(idaduana) from tblventasaduana where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(idaduana) from tblventasaduana where iddetalle=piddetalle),0);
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n No: ',(select numero from tblventasaduana where idaduana=varminid limit 1),' Fecha: ',(select fecha from tblventasaduana where idaduana=varminid limit 1),' Aduana: ',(select aduana from tblventasaduana where idaduana=varminid limit 1));
+set varminid=ifnull((select min(idaduana) from tblventasaduana where iddetalle=piddetalle and idaduana>varminid),0);
+end while;
+end if;
+
+else
+
+if ptipo=0 and pnada=1 then
+set varminid=ifnull((select min(id) from tblventasaduanan where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(id) from tblventasaduanan where iddetalle=piddetalle),0);
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n No: ',(select numero from tblventasaduanan inner join tblinventarioaduana on tblventasaduanan.idaduana=tblinventarioaduana.idaduana where id=varminid limit 1),' Fecha: ',(select fecha from tblventasaduanan inner join tblinventarioaduana on tblventasaduanan.idaduana=tblinventarioaduana.idaduana where id=varminid limit 1),' Aduana: ',(select aduana from tblventasaduanan inner join tblinventarioaduana on tblventasaduanan.idaduana=tblinventarioaduana.idaduana where id=varminid limit 1));
+set varminid=ifnull((select min(id) from tblventasaduanan where iddetalle=piddetalle and id>varminid),0);
+end while;
+end if;
+
+end if;
+
+
+return vardetalles;
+END $$
+
+DELIMITER ;
+
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdadetallesaduanaotros` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdadetallesaduanaotros`(pidocumento int,piddetalle int,ptipo int,pnada tinyint) RETURNS varchar(2000) CHARSET utf8
+BEGIN
+declare varminid int;
+declare varmaxid int;
+declare varidinventario int;
+declare varidventa int;
+declare vardetalles varchar(2000);
+
+set vardetalles='';
+if pnada=1 then
+if ptipo=0 then
+set varminid=ifnull((select min(id) from tblcomprasaduana where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(id) from tblcomprasaduana where iddetalle=piddetalle),0);
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n No: ',(select numero from tblcomprasaduana inner join tblinventarioaduana on tblcomprasaduana.idaduana=tblinventarioaduana.idaduana where id=varminid limit 1),' Fecha: ',(select fecha from tblcomprasaduana inner join tblinventarioaduana on tblcomprasaduana.idaduana=tblinventarioaduana.idaduana where id=varminid limit 1),' Aduana: ',(select aduana from tblcomprasaduana inner join tblinventarioaduana on tblcomprasaduana.idaduana=tblinventarioaduana.idaduana where id=varminid limit 1));
+set varminid=ifnull((select min(id) from tblcomprasaduana where iddetalle=piddetalle and id>varminid),0);
+end while;
+
+end if;
+
+if ptipo=1 then
+set varminid=ifnull((select min(id) from tblcomprasremisionesaduana where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(id) from tblcomprasremisionesaduana where iddetalle=piddetalle),0);
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n No: ',(select numero from tblcomprasremisionesaduana inner join tblinventarioaduana on tblcomprasremisionesaduana.idaduana=tblinventarioaduana.idaduana where id=varminid limit 1),' Fecha: ',(select fecha from tblcomprasremisionesaduana inner join tblinventarioaduana on tblcomprasremisionesaduana.idaduana=tblinventarioaduana.idaduana where id=varminid limit 1),' Aduana: ',(select aduana from tblcomprasremisionesaduana inner join tblinventarioaduana on tblcomprasremisionesaduana.idaduana=tblinventarioaduana.idaduana where id=varminid limit 1));
+set varminid=ifnull((select min(id) from tblcomprasremisionesaduana where iddetalle=piddetalle and id>varminid),0);
+end while;
+
+end if;
+
+if ptipo=2 then
+set varminid=ifnull((select min(id) from tblventasremisionesaduana where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(id) from tblventasremisionesaduana where iddetalle=piddetalle),0);
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n No: ',(select numero from tblventasremisionesaduana inner join tblinventarioaduana on tblventasremisionesaduana.idaduana=tblinventarioaduana.idaduana where id=varminid limit 1),' Fecha: ',(select fecha from tblventasremisionesaduana inner join tblinventarioaduana on tblventasremisionesaduana.idaduana=tblinventarioaduana.idaduana where id=varminid limit 1),' Aduana: ',(select aduana from tblventasremisionesaduana inner join tblinventarioaduana on tblventasremisionesaduana.idaduana=tblinventarioaduana.idaduana where id=varminid limit 1));
+set varminid=ifnull((select min(id) from tblventasremisionesaduana where iddetalle=piddetalle and id>varminid),0);
+end while;
+
+end if;
+end if;
+
+return vardetalles;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdadetalleslotes` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdadetalleslotes`(pidocumento int,piddetalle int,ptipo int,pnada tinyint) RETURNS varchar(2000) CHARSET utf8
+BEGIN
+declare varminid int;
+declare varmaxid int;
+declare varidinventario int;
+declare varidventa int;
+declare vardetalles varchar(2000);
+
+set vardetalles='';
+if pnada=1 then
+
+if ptipo=0 then
+set varminid=ifnull((select min(id) from tblcompraslotes where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(id) from tblcompraslotes where iddetalle=piddetalle),0);
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n Lote: ',(select lote from tblcompraslotes inner join tblinventariolotes on tblcompraslotes.idlote=tblinventariolotes.idlote where id=varminid limit 1),' Caducidad: ',(select fechacaducidad from tblcompraslotes inner join tblinventariolotes on tblcompraslotes.idlote=tblinventariolotes.idlote where id=varminid limit 1));
+set varminid=ifnull((select min(id) from tblcompraslotes where iddetalle=piddetalle and id>varminid),0);
+end while;
+
+end if;
+
+if ptipo=1 then
+set varminid=ifnull((select min(id) from tblcomprasremisioneslotes where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(id) from tblcomprasremisioneslotes where iddetalle=piddetalle),0);
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n Lote: ',(select lote from tblcomprasremisioneslotes inner join tblinventariolotes on tblcomprasremisioneslotes.idlote=tblinventariolotes.idlote where id=varminid limit 1),' Caducidad: ',(select fechacaducidad from tblcomprasremisioneslotes inner join tblinventariolotes on tblcomprasremisioneslotes.idlote=tblinventariolotes.idlote where id=varminid limit 1));
+set varminid=ifnull((select min(id) from tblcomprasremisioneslotes where iddetalle=piddetalle and id>varminid),0);
+end while;
+end if;
+
+if ptipo=2 then
+set varminid=ifnull((select min(id) from tblventasremisioneslotes where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(id) from tblventasremisioneslotes where iddetalle=piddetalle),0);
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n Lote: ',(select lote from tblventasremisioneslotes inner join tblinventariolotes on tblventasremisioneslotes.idlote=tblinventariolotes.idlote where id=varminid limit 1),' Caducidad: ',(select fechacaducidad from tblventasremisioneslotes inner join tblinventariolotes on tblventasremisioneslotes.idlote=tblinventariolotes.idlote where id=varminid limit 1));
+set varminid=ifnull((select min(id) from tblventasremisioneslotes where iddetalle=piddetalle and id>varminid),0);
+end while;
+end if;
+
+if ptipo=3 then
+set varminid=ifnull((select min(id) from tblventaslotes where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(id) from tblventaslotes where iddetalle=piddetalle),0);
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n Lote: ',(select lote from tblventaslotes inner join tblinventariolotes on tblventaslotes.idlote=tblinventariolotes.idlote where id=varminid limit 1),' Caducidad: ',(select fechacaducidad from tblventaslotes inner join tblinventariolotes on tblventaslotes.idlote=tblinventariolotes.idlote where id=varminid limit 1));
+set varminid=ifnull((select min(id) from tblventaslotes where iddetalle=piddetalle and id>varminid),0);
+end while;
+end if;
+end if;
+return vardetalles;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdainventarioafechaaduana` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdainventarioafechaaduana`(pidaduana int,pIdinventario int,pfecha varchar(10),pidsucursal int,pidalmacen int) RETURNS int(11)
+BEGIN
+
+declare vcantidad double;
+declare vcontenido double;
+set vcantidad=0;
+set vcontenido=(select contenido from tblinventario where idinventario=pidinventario);
+if vcontenido=0 then
+set vcontenido=1;
+end if;
+
+set vcantidad=ifnull((select sum(tblcomprasaduana.surtido) from tblcomprasaduana inner join tblcomprasdetalles on tblcomprasaduana.iddetalle=tblcomprasdetalles.iddetalle inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcomprasaduana.idaduana=pidaduana and tblcompras.estado=3 and tblcompras.fecha<=pfecha),0);
+set vcantidad=vcantidad+ifnull((select sum(tblcomprasremisionesaduana.surtido) from tblcomprasremisionesaduana inner join tblcomprasremisionesdetalles on tblcomprasremisionesaduana.iddetalle=tblcomprasremisionesdetalles.iddetalle inner join tblcomprasremisiones on tblcomprasremisionesdetalles.idremision=tblcomprasremisiones.idremision where tblcomprasremisionesaduana.idaduana=pidaduana and tblcomprasremisiones.estado=3 and tblcomprasremisiones.fecha<=pfecha),0);
+set vcantidad=vcantidad-ifnull((select sum(tblventasaduanan.surtido) from tblventasaduanan inner join tblventasinventario on tblventasaduanan.iddetalle=tblventasinventario.idventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventasaduanan.idaduana=pidaduana and tblventas.estado=3 and tblventas.fecha<=pfecha),0)/vcontenido;
+set vcantidad=vcantidad-ifnull((select sum(tblventasremisionesaduana.surtido) from tblventasremisionesaduana inner join tblventasremisionesinventario on tblventasremisionesaduana.iddetalle=tblventasremisionesinventario.iddetalle inner join tblventasremisiones on tblventasremisionesinventario.idremision=tblventasremisiones.idremision where tblventasremisionesaduana.idaduana=pidaduana and tblventasremisiones.estado=3 and tblventasremisiones.fecha<=pfecha),0)/vcontenido;
+
+
+return vcantidad;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdainventarioafechalotes` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdainventarioafechalotes`(pidlote int,pIdinventario int,pfecha varchar(10),pidsucursal int,pidalmacen int) RETURNS int(11)
+BEGIN
+
+declare vcantidad double;
+declare vcontenido double;
+set vcantidad=0;
+set vcontenido=(select contenido from tblinventario where idinventario=pidinventario);
+if vcontenido=0 then
+set vcontenido=1;
+end if;
+
+set vcantidad=ifnull((select sum(tblcompraslotes.surtido) from tblcompraslotes inner join tblcomprasdetalles on tblcompraslotes.iddetalle=tblcomprasdetalles.iddetalle inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcompraslotes.idlote=pidlote and tblcompras.estado=3 and tblcompras.fecha<=pfecha),0);
+set vcantidad=vcantidad+ifnull((select sum(tblcomprasremisioneslotes.surtido) from tblcomprasremisioneslotes inner join tblcomprasremisionesdetalles on tblcomprasremisioneslotes.iddetalle=tblcomprasremisionesdetalles.iddetalle inner join tblcomprasremisiones on tblcomprasremisionesdetalles.idremision=tblcomprasremisiones.idremision where tblcomprasremisioneslotes.idlote=pidlote and tblcomprasremisiones.estado=3 and tblcomprasremisiones.fecha<=pfecha),0);
+set vcantidad=vcantidad-ifnull((select sum(tblventaslotes.surtido) from tblventaslotes inner join tblventasinventario on tblventaslotes.iddetalle=tblventasinventario.idventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventaslotes.idlote=pidlote and tblventas.estado=3 and tblventas.fecha<=pfecha),0)/vcontenido;
+set vcantidad=vcantidad-ifnull((select sum(tblventasremisioneslotes.surtido) from tblventasremisioneslotes inner join tblventasremisionesinventario on tblventasremisioneslotes.iddetalle=tblventasremisionesinventario.iddetalle inner join tblventasremisiones on tblventasremisionesinventario.idremision=tblventasremisiones.idremision where tblventasremisioneslotes.idlote=pidlote and tblventasremisiones.estado=3 and tblventasremisiones.fecha<=pfecha),0)/vcontenido;
+
+
+return vcantidad;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spmodificainventarioaduanaf` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spmodificainventarioaduanaf`(pidaduana int,pcantidad double,pcantidadant double,pmodo tinyint,pmedida tinyint) RETURNS int(11)
+BEGIN
+
+declare vcantidad double;
+declare vidinventario int;
+declare vcontenido double;
+
+set vcantidad=ifnull((select cantidad from tblinventarioaduana where idaduana=pidaduana),0);
+
+if pmedida=1 then
+  if pmodo=0 then
+  set vcantidad=vcantidad+pcantidad;
+  end if;
+  if pmodo=1 then
+  set vcantidad=vcantidad-pcantidad;
+  end if;
+  if pmodo=2 then
+  set vcantidad=vcantidad-pcantidadant+pcantidad;
+  end if;
+  if pmodo=3 then
+  set vcantidad=vcantidad+pcantidadant-pcantidad;
+  end if;
+else
+
+set vidinventario=(select idinventario from tblinventarioaduana where idaduana=pidaduana);
+set vcontenido=(select contenido from tblinventario where idinventario=vidinventario);
+if vcontenido<>0 then
+  if pmodo=0 then
+  set vcantidad=vcantidad+pcantidad/vcontenido;
+  end if;
+  if pmodo=1 then
+  set vcantidad=vcantidad-pcantidad/vcontenido;
+  end if;
+  if pmodo=2 then
+  set vcantidad=vcantidad-pcantidadant/vcontenido+pcantidad/vcontenido;
+  end if;
+  if pmodo=3 then
+  set vcantidad=vcantidad+pcantidadant/vcontenido-pcantidad/vcontenido;
+  end if;
+end if;
+
+
+
+end if;
+
+update tblinventarioaduana set cantidad=vcantidad where idaduana=pidaduana;
+
+return 0;
+
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spmodificainventariolotesf` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spmodificainventariolotesf`(pidlote int,pcantidad double,pcantidadant double,pmodo tinyint,pmedida tinyint) RETURNS int(11)
+BEGIN
+
+declare vcantidad double;
+declare vidinventario int;
+declare vcontenido double;
+
+set vcantidad=ifnull((select cantidad from tblinventariolotes where idlote=pidlote),0);
+
+if pmedida=1 then
+if pmodo=0 then
+  set vcantidad=vcantidad+pcantidad;
+  end if;
+  if pmodo=1 then
+  set vcantidad=vcantidad-pcantidad;
+  end if;
+  if pmodo=2 then
+  set vcantidad=vcantidad-pcantidadant+pcantidad;
+  end if;
+  if pmodo=3 then
+  set vcantidad=vcantidad+pcantidadant-pcantidad;
+  end if;
+else
+
+  set vidinventario=(select idinventario from tblinventariolotes where idlote=pidlote);
+  set vcontenido=(select contenido from tblinventario where idinventario=vidinventario);
+  if vcontenido<>0 then
+  if pmodo=0 then
+  set vcantidad=vcantidad+pcantidad/vcontenido;
+  end if;
+  if pmodo=1 then
+  set vcantidad=vcantidad-pcantidad/vcontenido;
+  end if;
+  if pmodo=2 then
+  set vcantidad=vcantidad-pcantidadant/vcontenido+pcantidad/vcontenido;
+  end if;
+  if pmodo=3 then
+  set vcantidad=vcantidad+pcantidadant/vcontenido-pcantidad/vcontenido;
+  end if;
+  end if;
+end if;
+
+update tblinventariolotes set cantidad=vcantidad where idlote=pidlote;
+
+return 0;
+
+END $$
+
+DELIMITER ;
+
+update tblimpresionesnodos set texto='Mensaje Cancelado',nombre='Documento - Mensaje Cancelado' where texto='Mensaje Candelado';
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(246,10,'Empresa','nombrefiscal',500,20,'Lucida Console',8,1,0,0,0,0,3,1,0,0,'Documento - Empresa 2',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(14,163,'Cliente: ','nombrecliente',460,25,'Lucida Console',8,0,0,0,0,0,3,1,0,0,'Cliente - Nombre 2',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(729,741,'Total:','total',120,20,'Lucida Console',8,0,0,0,1,0,3,1,0,1,'Documento - Total 2',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(19,696,'Total letra','totalletra',600,50,'Lucida Console',8,0,0,0,0,0,3,1,0,0,'Documento - Total letra 2',0,1);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(246,10,'Condición de pago:','condicionpago',500,20,'Lucida Console',8,1,0,0,0,0,3,1,0,0,'Documento - Condicion de Pago',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(246,10,'Días crédito:','diascredito',500,20,'Lucida Console',8,1,0,0,0,0,3,1,0,0,'Documento - Días crédito',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(246,10,'Límite crédito:','limitecredito',500,20,'Lucida Console',8,1,0,0,0,0,3,1,0,0,'Documento - Límite crédito',0,1);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(246,10,'Empresa','nombrefiscal',500,20,'Lucida Console',8,1,0,0,0,0,19,1,0,0,'Documento - Empresa 2',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(14,163,'Cliente: ','nombrecliente',460,25,'Lucida Console',8,0,0,0,0,0,19,1,0,0,'Cliente - Nombre 2',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(729,741,'Total:','total',120,20,'Lucida Console',8,0,0,0,1,0,19,1,0,1,'Documento - Total 2',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(19,696,'Total letra','totalletra',600,50,'Lucida Console',8,0,0,0,0,0,19,1,0,0,'Documento - Total letra 2',0,1);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(246,10,'Condición de pago:','condicionpago',500,20,'Lucida Console',8,1,0,0,0,0,19,1,0,0,'Documento - Condicion de Pago',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(246,10,'Días crédito:','diascredito',500,20,'Lucida Console',8,1,0,0,0,0,19,1,0,0,'Documento - Días crédito',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(246,10,'Límite crédito:','limitecredito',500,20,'Lucida Console',8,1,0,0,0,0,19,1,0,0,'Documento - Límite crédito',0,1);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(246,10,'Límite crédito:','limitecredito',500,20,'Lucida Console',8,1,0,0,0,0,3,1,0,0,'Documento - Límite crédito 2',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(246,10,'Límite crédito:','limitecredito',500,20,'Lucida Console',8,1,0,0,0,0,19,1,0,0,'Documento - Límite crédito 2',0,1);
+
+
+
+insert into tblactualizaciones(version) values('ver 9031 rev 8');

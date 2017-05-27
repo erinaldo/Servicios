@@ -1,0 +1,165 @@
+delete from tblimpresionesnodos where documento=34 and idsucursal=1;
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(500,100,34,1,66,4,0,864);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(540,63,'Fecha:','fechaCheque',200,20,'Microsoft Sans Serif',7,0,0,0,0,1,34,1,0,0,'Fecha Cheque',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(43,122,'A nombre de:','nombreCheque',500,20,'Microsoft Sans Serif',7,0,0,0,0,1,34,1,0,0,'A nombre de',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(43,150,'SON:','cantidadLetra',400,20,'Microsoft Sans Serif',7,0,0,0,0,1,34,1,0,0,'Cantidad con letra',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(600,122,'Cantidad:','cantidad',200,20,'Microsoft Sans Serif',7,0,0,0,0,1,34,1,0,0,'Cantidad',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(43,388,'Concepto:','concepto',480,45,'Microsoft Sans Serif',7,0,0,0,0,1,34,1,0,0,'Concepto',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(546,388,'Firma Cheque Recibido:','firmaChequeRecibido',300,25,'Microsoft Sans Serif',7,0,0,0,0,1,34,1,0,0,'Firma Cheque Recibido',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(43,446,'Cuenta:','Cuenta',250,20,'Microsoft Sans Serif',7,0,0,1,0,1,34,1,0,0,'Cuenta',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(298,446,'Descripción:','descripcion',300,20,'Microsoft Sans Serif',7,0,0,1,0,1,34,1,0,0,'Descripción',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(607,446,'Debe:','debe',120,20,'Microsoft Sans Serif',7,0,0,1,0,1,34,1,0,0,'Debe',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(727,446,'Haber:','haber',120,20,'Microsoft Sans Serif',7,0,0,1,0,1,34,1,0,0,'Haber',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(607,900,'Total Debe:','totalDebe',120,20,'Microsoft Sans Serif',7,0,0,0,0,1,34,1,0,0,'Total debe',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(727,900,'Total Haber:','totalHacer',120,20,'Microsoft Sans Serif',7,0,0,0,0,1,34,1,0,0,'Total hacer',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(43,900,'Número Póliza:','numeroPoliza',120,20,'Microsoft Sans Serif',7,0,0,0,0,1,34,1,0,0,'Número Póliza',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(168,900,'Hecha por:','hechaPor',120,20,'Microsoft Sans Serif',7,0,0,0,0,1,34,1,0,0,'Hecha por',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(293,900,'Autorizada por::','autorizadaPor',120,20,'Microsoft Sans Serif',7,0,0,0,0,1,34,1,0,0,'Autorizada por',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(418,900,'Auxiliares:','auxiliares',120,20,'Microsoft Sans Serif',7,0,0,0,0,1,34,1,0,0,'Auxiliares',0,0);
+
+delete from tblimpresionesnodos where documento=37 and idsucursal=1;
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(500,100,37,1,66,4,0,864);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(43,388,'Concepto:','concepto',480,45,'Microsoft Sans Serif',7,0,0,0,0,1,37,1,0,0,'Concepto',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(546,388,'Firma Cheque Recibido:','firmaChequeRecibido',300,25,'Microsoft Sans Serif',7,0,0,0,0,1,37,1,0,0,'Firma Cheque Recibido',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(43,446,'Cuenta:','Cuenta',250,20,'Microsoft Sans Serif',7,0,0,1,0,1,37,1,0,0,'Cuenta',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(298,446,'Descripción:','descripcion',300,20,'Microsoft Sans Serif',7,0,0,1,0,1,37,1,0,0,'Descripción',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(607,446,'Debe:','debe',120,20,'Microsoft Sans Serif',7,0,0,1,0,1,37,1,0,0,'Debe',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(727,446,'Haber:','haber',120,20,'Microsoft Sans Serif',7,0,0,1,0,1,37,1,0,0,'Haber',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(607,900,'Total Debe:','totalDebe',120,20,'Microsoft Sans Serif',7,0,0,0,0,1,37,1,0,0,'Total debe',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(727,900,'Total Haber:','totalHacer',120,20,'Microsoft Sans Serif',7,0,0,0,0,1,37,1,0,0,'Total hacer',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(43,900,'Número Póliza:','numeroPoliza',120,20,'Microsoft Sans Serif',7,0,0,0,0,1,37,1,0,0,'Número Póliza',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(168,900,'Hecha por:','hechaPor',120,20,'Microsoft Sans Serif',7,0,0,0,0,1,37,1,0,0,'Hecha por',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(293,900,'Autorizada por::','autorizadaPor',120,20,'Microsoft Sans Serif',7,0,0,0,0,1,37,1,0,0,'Autorizada por',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(418,900,'Auxiliares:','auxiliares',120,20,'Microsoft Sans Serif',7,0,0,0,0,1,37,1,0,0,'Auxiliares',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(43,50,'Num. Cuenta','nCuenta',150,20,'Microsoft Sans Serif',7,0,0,0,0,1,37,1,0,0,'Num. Cuenta',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(214,50,'Banco','banco',150,20,'Microsoft Sans Serif',7,0,0,0,0,1,37,1,0,0,'Banco',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(645,15,'Fecha','fecha',200,20,'Microsoft Sans Serif',7,0,0,0,0,1,37,1,0,0,'Fecha',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(43,82,'Referencia','referencia',500,40,'Microsoft Sans Serif',7,0,0,0,0,1,37,1,0,0,'referencia',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(43,134,'Banco Cliente','bancoCliente',150,20,'Microsoft Sans Serif',7,0,0,0,0,1,37,1,0,0,'bancoCliente',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(43,167,'Cantidad','cantidad',150,20,'Microsoft Sans Serif',7,0,0,0,0,1,37,1,0,0,'cantidad',0,0);
+
+
+
+
+delete from tblimpresionesnodos where documento=35 and idsucursal=1;
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(500,100,35,1,66,4,0,864);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(600,42,'Mes I.:','mesInicial',50,20,'Microsoft Sans Serif',7,0,0,0,0,1,35,1,0,0,'Mes Inicial',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(655,42,'Mes F.:','mesFinal',50,20,'Microsoft Sans Serif',7,0,0,0,0,1,35,1,0,0,'Mes Final',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(710,42,'Ejercicio:','ejercico',50,20,'Microsoft Sans Serif',7,0,0,0,0,1,35,1,0,0,'Ejercicio',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(140,117,'RFC:','rfc',500,20,'Microsoft Sans Serif',7,0,0,0,0,1,35,1,0,0,'RFC.',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(140,147,'CURP:','curp',500,20,'Microsoft Sans Serif',7,0,0,0,0,1,35,1,0,0,'CURP.',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(140,177,'Nombre:','nombre',500,20,'Microsoft Sans Serif',7,0,0,0,0,1,35,1,0,0,'Nombre',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(229,412,'Cantidad Gravada - ISR','CGISR',150,20,'Microsoft Sans Serif',7,0,0,0,0,1,35,1,0,0,'Cantidad Grabada - ISR',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(395,412,'Cantidad Gravada - IVA','CGIVA',150,20,'Microsoft Sans Serif',7,0,0,0,0,1,35,1,0,0,'Cantidad Grabada - IVA',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(562,412,'Cantidad Gravada - IEPS','CGIEPS',150,20,'Microsoft Sans Serif',7,0,0,0,0,1,35,1,0,0,'Cantidad Grabada - IEPS',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(229,464,'Cantidad Retenida - ISR','CRISR',150,20,'Microsoft Sans Serif',7,0,0,0,0,1,35,1,0,0,'Cantidad Retenida - ISR',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(395,464,'Cantidad Retenida - IVA','CRIVA',150,20,'Microsoft Sans Serif',7,0,0,0,0,1,35,1,0,0,'Cantidad Retenida - IVA',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(562,464,'Cantidad Retenida - IEPS','CRIEPS',150,20,'Microsoft Sans Serif',7,0,0,0,0,1,35,1,0,0,'Cantidad Retenida - IEPS',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(181,525,'Retenedor - RFC','retenedorRFC',250,20,'Microsoft Sans Serif',7,0,0,0,0,1,35,1,0,0,'Retenedor - RFC',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(181,556,'Retenedor - Nombre','retenedorNombre',500,20,'Microsoft Sans Serif',7,0,0,0,0,1,35,1,0,0,'Retenedor - Nombre',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(181,586,'Retenedor - Nombre representante legal','retenedorRepresentante',500,20,'Microsoft Sans Serif',7,0,0,0,0,1,35,1,0,0,'Retenedor - Nombre representante legal',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(181,618,'Retenedor - RFC representante legal','retenedorRFCRepresentante',250,20,'Microsoft Sans Serif',7,0,0,0,0,1,35,1,0,0,'Retenedor - RFC representante legal',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(76,700,'Firma retenedor o representante','firmaRetenedor',250,20,'Microsoft Sans Serif',7,0,0,0,0,1,35,1,0,0,'Firma retenedor',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(250,700,'Firma recibido','firmaRecibido',250,20,'Microsoft Sans Serif',7,0,0,0,0,1,35,1,0,0,'Firma recibido',0,0);
+
+
+delete from tblimpresionesnodos where documento=36 and idsucursal=1;
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(500,100,36,1,66,4,0,864);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(740,58,'Formato - Clave:','formatoClave',100,20,'Microsoft Sans Serif',7,0,0,0,0,1,36,1,0,0,'Formato - Clave',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(682,89,'Numero:','numero',50,20,'Microsoft Sans Serif',7,0,0,0,0,1,36,1,0,0,'Numero',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(741,89,'Día:','dia',30,20,'Microsoft Sans Serif',7,0,0,0,0,1,36,1,0,0,'Día',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(783,89,'Mes:','mes',30,20,'Microsoft Sans Serif',7,0,0,0,0,1,36,1,0,0,'Mes',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(824,89,'Año:','anio',30,20,'Microsoft Sans Serif',7,0,0,0,0,1,36,1,0,0,'Año',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(112,147,'UR - Clave:','URClave',150,20,'Microsoft Sans Serif',7,0,0,0,0,1,36,1,0,0,'Unidad Responsable - Clave',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(275,147,'UR - Denominación:','URDenominacion',500,20,'Microsoft Sans Serif',7,0,0,0,0,1,36,1,0,0,'Unidad Responsable - Denominación',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(112,198,'Solicitante','solicitante',663,20,'Microsoft Sans Serif',7,0,0,0,0,1,36,1,0,0,'Solicitante',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(275,250,'Descripción','descripcion',500,60,'Microsoft Sans Serif',7,0,0,0,0,1,36,1,0,0,'Descripción',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(275,344,'Proveedor - Nombre','proveedorNombre',500,20,'Microsoft Sans Serif',7,0,0,0,0,1,36,1,0,0,'Proveedor - Nombre',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(275,379,'Proveedor - RFC','proveedorRFC',500,20,'Microsoft Sans Serif',7,0,0,0,0,1,36,1,0,0,'Proveedor - RFC',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(275,414,'Proveedor - Domicilio','proveedorDomicilio',500,20,'Microsoft Sans Serif',7,0,0,0,0,1,36,1,0,0,'Proveedor - Domicilio',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(112,474,'Partida:','partida',150,20,'Microsoft Sans Serif',7,0,0,0,0,1,36,1,0,0,'Partida',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(279,474,'Forma de pago:','formaPago',180,20,'Microsoft Sans Serif',7,0,0,0,0,1,36,1,0,0,'Forma de pago',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(478,474,'Costo:','costo',80,20,'Microsoft Sans Serif',7,0,0,0,0,1,36,1,0,0,'Costo',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(566,474,'% IVA','porcientoIVA',30,20,'Microsoft Sans Serif',7,0,0,0,0,1,36,1,0,0,'% IVA',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(604,474,'Importe IVA','importeIVA',80,20,'Microsoft Sans Serif',7,0,0,0,0,1,36,1,0,0,'Importe IVA',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(692,474,'Importe Total','importeTotal',82,20,'Microsoft Sans Serif',7,0,0,0,0,1,36,1,0,0,'Importe Total',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(112,573,'Firma Proveedor','firmaProveedor',200,20,'Microsoft Sans Serif',7,0,0,0,0,1,36,1,0,0,'Firma Proveedor',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(341,573,'Firma Servicios Admin.','firmaServicios',200,20,'Microsoft Sans Serif',7,0,0,0,0,1,36,1,0,0,'Firma Servicios Admin.',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(575,573,'Firma Titular','firmaTitular',200,20,'Microsoft Sans Serif',7,0,0,0,0,1,36,1,0,0,'Firma Titular',0,0);
+
+
+DROP TABLE IF EXISTS `tbldescuentos`;
+CREATE TABLE  `tbldescuentos` (
+  `idDescuento` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `activado` tinyint(1) NOT NULL,
+  `descuento` varchar(10) NOT NULL,
+  `descripcion` varchar(45) NOT NULL,
+  `fechai` varchar(25) NOT NULL,
+  `horai` varchar(16) NOT NULL,
+  `fechaf` varchar(25) NOT NULL,
+  `horaf` varchar(16) NOT NULL,
+  `productos` varchar(4000) NOT NULL,
+  `tipoDescuento` varchar(15) NOT NULL,
+  `Folio` int(11) NOT NULL,
+  `FechaInicioC` varchar(30) NOT NULL,
+  `FechaFinalC` varchar(30) NOT NULL,
+  PRIMARY KEY (`idDescuento`)
+) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `tblventasdesc`;
+CREATE TABLE  `tblventasdesc` (
+  `idVentasDesc` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idVenta` int(10) unsigned NOT NULL,
+  `idDescuento` int(10) unsigned NOT NULL,
+  `folioVenta` int(10) unsigned NOT NULL,
+  `perteneciente` int(10) unsigned NOT NULL,
+  `perte` varchar(45) NOT NULL,
+  PRIMARY KEY (`idVentasDesc`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `tbldescpromociones`;
+CREATE TABLE  `tbldescpromociones` (
+  `idPromociones` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `folioVenta` int(10) unsigned NOT NULL,
+  `folioDescuento` int(10) unsigned NOT NULL,
+  `idProducto` int(10) unsigned NOT NULL,
+  `renglon` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`idPromociones`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spmodificainventariolotesf` $$
+CREATE FUNCTION `spmodificainventariolotesf` (pidlote int,pcantidad double,pcantidadant double,pmodo tinyint) RETURNS INT
+BEGIN
+
+declare vcantidad double;
+
+set vcantidad=ifnull((select cantidad from tblinventariolotes where idlote=pidlote),0);
+
+
+if pmodo=0 then
+  set vcantidad=vcantidad+pcantidad;
+  end if;
+  if pmodo=1 then
+  set vcantidad=vcantidad-pcantidad;
+  end if;
+  if pmodo=2 then
+  set vcantidad=vcantidad-pcantidadant+pcantidad;
+  end if;
+  if pmodo=3 then
+  set vcantidad=vcantidad+pcantidadant-pcantidad;
+  end if;
+
+
+update tblinventariolotes set cantidad=vcantidad where idlote=pidlote;
+
+return 0;
+
+END $$
+
+DELIMITER ;
+
+insert into tblactualizaciones(version) values('ver 9017 rev 6');

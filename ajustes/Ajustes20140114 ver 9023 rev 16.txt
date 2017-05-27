@@ -1,0 +1,4 @@
+ALTER TABLE `tblopciones` ADD COLUMN `igualarfechas` TINYINT UNSIGNED NOT NULL AFTER `clientesmayus`;
+
+insert into tblactualizaciones(version) values('ver 9023 rev 16');
+

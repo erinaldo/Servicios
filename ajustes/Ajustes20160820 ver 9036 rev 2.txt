@@ -1,0 +1,97 @@
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdainventarioafechalotes` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdainventarioafechalotes`(pidlote int,pIdinventario int,pfecha varchar(10),pidsucursal int,pidalmacen int) RETURNS int(11)
+BEGIN
+
+declare vcantidad double;
+declare vcontenido double;
+declare checaalmacen tinyint;
+set vcantidad=0;
+set vcontenido=(select contenido from tblinventario where idinventario=pidinventario);
+if vcontenido=0 then
+set vcontenido=1;
+end if;
+
+
+if pidalmacen>0 then
+
+set vcantidad=ifnull((select sum(tblcompraslotes.surtido) from tblcompraslotes inner join tblcomprasdetalles on tblcompraslotes.iddetalle=tblcomprasdetalles.iddetalle inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcompraslotes.idlote=pidlote and tblcompras.estado=3 and tblcompras.fecha<=pfecha and tblcomprasdetalles.idalmacen=pidalmacen),0);
+set vcantidad=vcantidad+ifnull((select sum(tblcomprasremisioneslotes.surtido) from tblcomprasremisioneslotes inner join tblcomprasremisionesdetalles on tblcomprasremisioneslotes.iddetalle=tblcomprasremisionesdetalles.iddetalle inner join tblcomprasremisiones on tblcomprasremisionesdetalles.idremision=tblcomprasremisiones.idremision where tblcomprasremisioneslotes.idlote=pidlote and tblcomprasremisiones.estado=3 and tblcomprasremisiones.fecha<=pfecha and tblcomprasremisionesdetalles.idalmacen=pidalmacen),0);
+set vcantidad=vcantidad-ifnull((select sum(tblventaslotes.surtido) from tblventaslotes inner join tblventasinventario on tblventaslotes.iddetalle=tblventasinventario.idventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventaslotes.idlote=pidlote and tblventas.estado=3 and tblventas.fecha<=pfecha and tblventasinventario.idalmacen=pidalmacen and tblventas.deremision=0),0)/vcontenido;
+set vcantidad=vcantidad-ifnull((select sum(tblventasremisioneslotes.surtido) from tblventasremisioneslotes inner join tblventasremisionesinventario on tblventasremisioneslotes.iddetalle=tblventasremisionesinventario.iddetalle inner join tblventasremisiones on tblventasremisionesinventario.idremision=tblventasremisiones.idremision where tblventasremisioneslotes.idlote=pidlote and tblventasremisiones.estado=3 and tblventasremisiones.fecha<=pfecha and tblventasremisionesinventario.idalmacen=pidalmacen),0)/vcontenido;
+set vcantidad=vcantidad-ifnull((select sum(tbldevolucionesclotes.surtido) from tbldevolucionesclotes inner join tbldevolucionesdetallesc on tbldevolucionesclotes.iddetalle=tbldevolucionesdetallesc.iddetalle inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionesclotes.idlote=pidlote and tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha<=pfecha and tbldevolucionesdetallesc.idalmacen=pidalmacen),0);
+set vcantidad=vcantidad+ifnull((select sum(tbldevolucioneslotes.surtido) from tbldevolucioneslotes inner join tbldevolucionesdetalles on tbldevolucioneslotes.iddetalle=tbldevolucionesdetalles.iddetalle inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevolucioneslotes.idlote=pidlote and tbldevoluciones.estado=3 and tbldevoluciones.fecha<=pfecha and tbldevolucionesdetalles.idalmacen=pidalmacen),0)/vcontenido;
+set vcantidad=vcantidad+ifnull((select sum(cl.surtido) from tblmovimientoslotes cl inner join tblmovimientosdetalles cd on cl.iddetalle=cd.iddetalle inner join tblmovimientos c on c.idmovimiento=cd.idmovimiento inner join tblinventarioconceptos icon on c.idconcepto=icon.idconcepto where cl.idlote=pidlote and c.estado=3 and (icon.tipo=0 or icon.tipo=4) and c.fecha<=pfecha and cd.idalmacen=pidalmacen),0);
+set vcantidad=vcantidad-ifnull((select sum(cl.surtido) from tblmovimientoslotes cl inner join tblmovimientosdetalles cd on cl.iddetalle=cd.iddetalle inner join tblmovimientos c on c.idmovimiento=cd.idmovimiento inner join tblinventarioconceptos icon on c.idconcepto=icon.idconcepto where cl.idlote=pidlote and c.estado=3 and icon.tipo=1 and c.fecha<=pfecha and cd.idalmacen=pidalmacen),0);
+set vcantidad=vcantidad-ifnull((select sum(cl.surtido) from tblmovimientoslotes cl inner join tblmovimientosdetalles cd on cl.iddetalle=cd.iddetalle inner join tblmovimientos c on c.idmovimiento=cd.idmovimiento inner join tblinventarioconceptos icon on c.idconcepto=icon.idconcepto where cl.idlote=pidlote and c.estado=3 and icon.tipo=3 and c.fecha<=pfecha and cd.idalmacen=pidalmacen),0);
+set vcantidad=vcantidad+ifnull((select sum(cl.surtido) from tblmovimientoslotes cl inner join tblmovimientosdetalles cd on cl.iddetalle=cd.iddetalle inner join tblmovimientos c on c.idmovimiento=cd.idmovimiento inner join tblinventarioconceptos icon on c.idconcepto=icon.idconcepto where cl.idlote=pidlote and c.estado=3 and icon.tipo=3 and c.fecha<=pfecha and cd.idalmacen2=pidalmacen),0);
+
+else
+
+set vcantidad=ifnull((select sum(tblcompraslotes.surtido) from tblcompraslotes inner join tblcomprasdetalles on tblcompraslotes.iddetalle=tblcomprasdetalles.iddetalle inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcompraslotes.idlote=pidlote and tblcompras.estado=3 and tblcompras.fecha<=pfecha),0);
+set vcantidad=vcantidad+ifnull((select sum(tblcomprasremisioneslotes.surtido) from tblcomprasremisioneslotes inner join tblcomprasremisionesdetalles on tblcomprasremisioneslotes.iddetalle=tblcomprasremisionesdetalles.iddetalle inner join tblcomprasremisiones on tblcomprasremisionesdetalles.idremision=tblcomprasremisiones.idremision where tblcomprasremisioneslotes.idlote=pidlote and tblcomprasremisiones.estado=3 and tblcomprasremisiones.fecha<=pfecha),0);
+set vcantidad=vcantidad-ifnull((select sum(tblventaslotes.surtido) from tblventaslotes inner join tblventasinventario on tblventaslotes.iddetalle=tblventasinventario.idventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventaslotes.idlote=pidlote and tblventas.estado=3 and tblventas.fecha<=pfecha and tblventas.deremision=0),0)/vcontenido;
+set vcantidad=vcantidad-ifnull((select sum(tblventasremisioneslotes.surtido) from tblventasremisioneslotes inner join tblventasremisionesinventario on tblventasremisioneslotes.iddetalle=tblventasremisionesinventario.iddetalle inner join tblventasremisiones on tblventasremisionesinventario.idremision=tblventasremisiones.idremision where tblventasremisioneslotes.idlote=pidlote and tblventasremisiones.estado=3 and tblventasremisiones.fecha<=pfecha),0)/vcontenido;
+set vcantidad=vcantidad-ifnull((select sum(tbldevolucionesclotes.surtido) from tbldevolucionesclotes inner join tbldevolucionesdetallesc on tbldevolucionesclotes.iddetalle=tbldevolucionesdetallesc.iddetalle inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionesclotes.idlote=pidlote and tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha<=pfecha),0);
+set vcantidad=vcantidad+ifnull((select sum(tbldevolucioneslotes.surtido) from tbldevolucioneslotes inner join tbldevolucionesdetalles on tbldevolucioneslotes.iddetalle=tbldevolucionesdetalles.iddetalle inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevolucioneslotes.idlote=pidlote and tbldevoluciones.estado=3 and tbldevoluciones.fecha<=pfecha),0)/vcontenido;
+set vcantidad=vcantidad+ifnull((select sum(cl.surtido) from tblmovimientoslotes cl inner join tblmovimientosdetalles cd on cl.iddetalle=cd.iddetalle inner join tblmovimientos c on c.idmovimiento=cd.idmovimiento inner join tblinventarioconceptos icon on c.idconcepto=icon.idconcepto where cl.idlote=pidlote and c.estado=3 and (icon.tipo=0 or icon.tipo=4) and c.fecha<=pfecha),0);
+set vcantidad=vcantidad-ifnull((select sum(cl.surtido) from tblmovimientoslotes cl inner join tblmovimientosdetalles cd on cl.iddetalle=cd.iddetalle inner join tblmovimientos c on c.idmovimiento=cd.idmovimiento inner join tblinventarioconceptos icon on c.idconcepto=icon.idconcepto where cl.idlote=pidlote and c.estado=3 and icon.tipo=1 and c.fecha<=pfecha),0);
+
+
+end if;
+
+
+return vcantidad;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdainventarioafechaaduana` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdainventarioafechaaduana`(pidaduana int,pIdinventario int,pfecha varchar(10),pidsucursal int,pidalmacen int) RETURNS int(11)
+BEGIN
+
+declare vcantidad double;
+declare vcontenido double;
+set vcantidad=0;
+set vcontenido=(select contenido from tblinventario where idinventario=pidinventario);
+if vcontenido=0 then
+set vcontenido=1;
+end if;
+
+if pidalmacen>0 then
+
+set vcantidad=ifnull((select sum(tblcomprasaduana.surtido) from tblcomprasaduana inner join tblcomprasdetalles on tblcomprasaduana.iddetalle=tblcomprasdetalles.iddetalle inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcomprasaduana.idaduana=pidaduana and tblcompras.estado=3 and tblcompras.fecha<=pfecha and tblcomprasdetalles.idalmacen=pidalmacen),0);
+set vcantidad=vcantidad+ifnull((select sum(tblcomprasremisionesaduana.surtido) from tblcomprasremisionesaduana inner join tblcomprasremisionesdetalles on tblcomprasremisionesaduana.iddetalle=tblcomprasremisionesdetalles.iddetalle inner join tblcomprasremisiones on tblcomprasremisionesdetalles.idremision=tblcomprasremisiones.idremision where tblcomprasremisionesaduana.idaduana=pidaduana and tblcomprasremisiones.estado=3 and tblcomprasremisiones.fecha<=pfecha and tblcomprasremisionesdetalles.idalmacen=pidalmacen),0);
+set vcantidad=vcantidad-ifnull((select sum(tblventasaduanan.surtido) from tblventasaduanan inner join tblventasinventario on tblventasaduanan.iddetalle=tblventasinventario.idventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventasaduanan.idaduana=pidaduana and tblventas.estado=3 and tblventas.fecha<=pfecha and tblventasinventario.idalmacen=pidalmacen and tblventas.deremision=0),0)/vcontenido;
+set vcantidad=vcantidad-ifnull((select sum(tblventasremisionesaduana.surtido) from tblventasremisionesaduana inner join tblventasremisionesinventario on tblventasremisionesaduana.iddetalle=tblventasremisionesinventario.iddetalle inner join tblventasremisiones on tblventasremisionesinventario.idremision=tblventasremisiones.idremision where tblventasremisionesaduana.idaduana=pidaduana and tblventasremisiones.estado=3 and tblventasremisiones.fecha<=pfecha and tblventasremisionesinventario.idalmacen=pidalmacen),0)/vcontenido;
+set vcantidad=vcantidad-ifnull((select sum(tbldevolucionescaduana.surtido) from tbldevolucionescaduana inner join tbldevolucionesdetallesc on tbldevolucionescaduana.iddetalle=tbldevolucionesdetallesc.iddetalle inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionescaduana.idaduana=pidaduana and tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha<=pfecha and tbldevolucionesdetallesc.idalmacen=pidalmacen),0);
+set vcantidad=vcantidad+ifnull((select sum(tbldevolucionesaduana.surtido) from tbldevolucionesaduana inner join tbldevolucionesdetalles on tbldevolucionesaduana.iddetalle=tbldevolucionesdetalles.iddetalle inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevolucionesaduana.idaduana=pidaduana and tbldevoluciones.estado=3 and tbldevoluciones.fecha<=pfecha and tbldevolucionesdetalles.idalmacen=pidalmacen),0)/vcontenido;
+set vcantidad=vcantidad+ifnull((select sum(cl.surtido) from tblmovimientosaduana cl inner join tblmovimientosdetalles cd on cl.iddetalle=cd.iddetalle inner join tblmovimientos c on c.idmovimiento=cd.idmovimiento inner join tblinventarioconceptos icon on c.idconcepto=icon.idconcepto where cl.idaduana=pidaduana and c.estado=3 and (icon.tipo=0 or icon.tipo=4) and c.fecha<=pfecha and cd.idalmacen=pidalmacen),0);
+set vcantidad=vcantidad-ifnull((select sum(cl.surtido) from tblmovimientosaduana cl inner join tblmovimientosdetalles cd on cl.iddetalle=cd.iddetalle inner join tblmovimientos c on c.idmovimiento=cd.idmovimiento inner join tblinventarioconceptos icon on c.idconcepto=icon.idconcepto where cl.idaduana=pidaduana and c.estado=3 and icon.tipo=1 and c.fecha<=pfecha and cd.idalmacen=pidalmacen),0);
+set vcantidad=vcantidad-ifnull((select sum(cl.surtido) from tblmovimientosaduana cl inner join tblmovimientosdetalles cd on cl.iddetalle=cd.iddetalle inner join tblmovimientos c on c.idmovimiento=cd.idmovimiento inner join tblinventarioconceptos icon on c.idconcepto=icon.idconcepto where cl.idaduana=pidaduana and c.estado=3 and icon.tipo=3 and c.fecha<=pfecha and cd.idalmacen=pidalmacen),0);
+set vcantidad=vcantidad+ifnull((select sum(cl.surtido) from tblmovimientosaduana cl inner join tblmovimientosdetalles cd on cl.iddetalle=cd.iddetalle inner join tblmovimientos c on c.idmovimiento=cd.idmovimiento inner join tblinventarioconceptos icon on c.idconcepto=icon.idconcepto where cl.idaduana=pidaduana and c.estado=3 and icon.tipo=3 and c.fecha<=pfecha and cd.idalmacen2=pidalmacen),0);
+
+else
+
+set vcantidad=ifnull((select sum(tblcomprasaduana.surtido) from tblcomprasaduana inner join tblcomprasdetalles on tblcomprasaduana.iddetalle=tblcomprasdetalles.iddetalle inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcomprasaduana.idaduana=pidaduana and tblcompras.estado=3 and tblcompras.fecha<=pfecha),0);
+set vcantidad=vcantidad+ifnull((select sum(tblcomprasremisionesaduana.surtido) from tblcomprasremisionesaduana inner join tblcomprasremisionesdetalles on tblcomprasremisionesaduana.iddetalle=tblcomprasremisionesdetalles.iddetalle inner join tblcomprasremisiones on tblcomprasremisionesdetalles.idremision=tblcomprasremisiones.idremision where tblcomprasremisionesaduana.idaduana=pidaduana and tblcomprasremisiones.estado=3 and tblcomprasremisiones.fecha<=pfecha),0);
+set vcantidad=vcantidad-ifnull((select sum(tblventasaduanan.surtido) from tblventasaduanan inner join tblventasinventario on tblventasaduanan.iddetalle=tblventasinventario.idventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventasaduanan.idaduana=pidaduana and tblventas.estado=3 and tblventas.fecha<=pfecha and tblventas.deremision=0),0)/vcontenido;
+set vcantidad=vcantidad-ifnull((select sum(tblventasremisionesaduana.surtido) from tblventasremisionesaduana inner join tblventasremisionesinventario on tblventasremisionesaduana.iddetalle=tblventasremisionesinventario.iddetalle inner join tblventasremisiones on tblventasremisionesinventario.idremision=tblventasremisiones.idremision where tblventasremisionesaduana.idaduana=pidaduana and tblventasremisiones.estado=3 and tblventasremisiones.fecha<=pfecha),0)/vcontenido;
+set vcantidad=vcantidad-ifnull((select sum(tbldevolucionescaduana.surtido) from tbldevolucionescaduana inner join tbldevolucionesdetallesc on tbldevolucionescaduana.iddetalle=tbldevolucionesdetallesc.iddetalle inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionescaduana.idaduana=pidaduana and tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha<=pfecha),0);
+set vcantidad=vcantidad+ifnull((select sum(tbldevolucionesaduana.surtido) from tbldevolucionesaduana inner join tbldevolucionesdetalles on tbldevolucionesaduana.iddetalle=tbldevolucionesdetalles.iddetalle inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevolucionesaduana.idaduana=pidaduana and tbldevoluciones.estado=3 and tbldevoluciones.fecha<=pfecha),0)/vcontenido;
+set vcantidad=vcantidad+ifnull((select sum(cl.surtido) from tblmovimientosaduana cl inner join tblmovimientosdetalles cd on cl.iddetalle=cd.iddetalle inner join tblmovimientos c on c.idmovimiento=cd.idmovimiento inner join tblinventarioconceptos icon on c.idconcepto=icon.idconcepto where cl.idaduana=pidaduana and c.estado=3 and (icon.tipo=0 or icon.tipo=4) and c.fecha<=pfecha),0);
+set vcantidad=vcantidad-ifnull((select sum(cl.surtido) from tblmovimientosaduana cl inner join tblmovimientosdetalles cd on cl.iddetalle=cd.iddetalle inner join tblmovimientos c on c.idmovimiento=cd.idmovimiento inner join tblinventarioconceptos icon on c.idconcepto=icon.idconcepto where cl.idaduana=pidaduana and c.estado=3 and icon.tipo=1 and c.fecha<=pfecha),0);
+
+end if;
+
+
+
+return vcantidad;
+END $$
+
+DELIMITER ;
+
+insert into tblactualizaciones(version,versionchk) values('ver 9036 rev 2','00903602');

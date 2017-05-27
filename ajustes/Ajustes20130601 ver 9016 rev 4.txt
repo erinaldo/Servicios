@@ -1,0 +1,28 @@
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,27,'Por surtir','porsurtir',220,20,'Lucida Console',8,0,0,0,0,0,0,1,0,0,'Documento - Por Surtir',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,27,'Por surtir','porsurtir',220,20,'Lucida Console',8,0,0,0,0,0,16,1,0,0,'Documento - Por Surtir',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,27,'Por surtir','porsurtir',220,20,'Lucida Console',8,0,0,0,0,0,3,1,0,0,'Documento - Por Surtir',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,27,'Por surtir','porsurtir',220,20,'Lucida Console',8,0,0,0,0,0,19,1,0,0,'Documento - Por Surtir',0,1);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,27,'Valor Unitario:','cpvalorunitario',220,20,'Lucida Console',8,0,0,0,0,0,0,1,0,0,'Documento - CP Valor Unitario',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,27,'Valor Declarado:','cpvalordeclarado',220,20,'Lucida Console',8,0,0,0,0,0,0,1,0,0,'Documento - CP Valor Declarado',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,27,'CP Referencia:','cpreferencia',220,20,'Lucida Console',8,0,0,0,0,0,0,1,0,0,'Documento - CP Referencia',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,27,'CP Pedimento:','cppedimento',220,20,'Lucida Console',8,0,0,0,0,0,0,1,0,0,'Documento - CP Pedimento',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,27,'CP Pedimento Fecha:','cppedimentofecha',220,20,'Lucida Console',8,0,0,0,0,0,0,1,0,0,'Documento - CP Pedimento Fecha',0,1);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,27,'Valor Unitario:','cpvalorunitario',220,20,'Lucida Console',8,0,0,0,0,0,16,1,0,0,'Documento - CP Valor Unitario',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,27,'Valor Declarado:','cpvalordeclarado',220,20,'Lucida Console',8,0,0,0,0,0,16,1,0,0,'Documento - CP Valor Declarado',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,27,'CP Referencia:','cpreferencia',220,20,'Lucida Console',8,0,0,0,0,0,16,1,0,0,'Documento - CP Referencia',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,27,'CP Pedimento:','cppedimento',220,20,'Lucida Console',8,0,0,0,0,0,16,1,0,0,'Documento - CP Pedimento',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,27,'CP Pedimento Fecha:','cppedimentofecha',220,20,'Lucida Console',8,0,0,0,0,0,16,1,0,0,'Documento - CP Pedimento Fecha',0,1);
+
+ALTER TABLE `tblventascartaporte` MODIFY COLUMN `origen` VARCHAR(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+ MODIFY COLUMN `destino` VARCHAR(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+ ADD COLUMN `valorunitario` VARCHAR(45) NOT NULL AFTER `idventa`,
+ ADD COLUMN `valordeclarado` VARCHAR(45) NOT NULL AFTER `valorunitario`,
+ ADD COLUMN `referencia` VARCHAR(45) NOT NULL AFTER `valordeclarado`,
+ ADD COLUMN `pedimento` VARCHAR(45) NOT NULL AFTER `referencia`,
+ ADD COLUMN `fechapedimento` VARCHAR(10) NOT NULL AFTER `pedimento`;
+
+insert into tblactualizaciones(version) values('ver 9016 rev 4');
+
+

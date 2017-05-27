@@ -1,0 +1,31 @@
+http://www.facturafiel.com/websrv/servicio_timbrado_xml.php?wsdl
+
+http://www.facturafiel.com/websrv/servicio_cancelacion.php?wsdl
+
+http://www.facturafiel.com/websrv/servicio_recuperacion.php?wsdl
+
+R.Url = "http://www.facturafiel.com/websrv/servicio_recuperacion.php?wsdl"
+FF.Url = "http://www.facturafiel.com/websrv/servicio_timbrado_xml.php?wsdl"
+
+
+Public Shared Function GetProcessorID() As String
+	     
+	     
+	    Dim sProcessorID As String = ""
+	     
+	    Dim sQuery As String = "SELECT ProcessorId FROM Win32_Processor"
+	     
+	    Dim oManagementObjectSearcher As New ManagementObjectSearcher(sQuery)
+	     
+	    Dim oCollection As ManagementObjectCollection = oManagementObjectSearcher.[Get]()
+	     
+	    For Each oManagementObject As ManagementObject In oCollection
+	         
+	         
+	             
+	        sProcessorID = DirectCast(oManagementObject("ProcessorId"), String)
+	    Next
+	     
+	         
+	    Return (sProcessorID)
+	End Function

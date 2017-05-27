@@ -1,0 +1,591 @@
+ALTER TABLE `tblproveedorestipos` ADD COLUMN `idusuarioalta` INTEGER UNSIGNED NOT NULL AFTER `tipo`,
+ ADD COLUMN `fechaalta` VARCHAR(10) NOT NULL AFTER `idusuarioalta`,
+ ADD COLUMN `horaalta` VARCHAR(10) NOT NULL AFTER `fechaalta`,
+ ADD COLUMN `idusuariocambio` INTEGER UNSIGNED NOT NULL AFTER `horaalta`,
+ ADD COLUMN `fechacambio` VARCHAR(10) NOT NULL AFTER `idusuariocambio`,
+ ADD COLUMN `horacambio` VARCHAR(10) NOT NULL AFTER `fechacambio`;
+
+ALTER TABLE `tblclientesimpuestos` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `nombre`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `fechaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD CONSTRAINT `FK_tblclientesimpuestos_1` FOREIGN KEY `FK_tblclientesimpuestos_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblclientesimpuestos_2` FOREIGN KEY `FK_tblclientesimpuestos_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblclientesimpuestos` ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `horaAlta`;
+
+
+
+
+ALTER TABLE `tblsucursalescertificados` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `aviso`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `fechaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD CONSTRAINT `FK_tblsucursalescertificados_2` FOREIGN KEY `FK_tblsucursalescertificados_2` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblsucursalescertificados_3` FOREIGN KEY `FK_tblsucursalescertificados_3` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblsucursalescertificados` ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `horaAlta`;
+
+
+
+
+ALTER TABLE `tblsucursalesfolios` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `formato`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblsucursalesfolios_2` FOREIGN KEY `FK_tblsucursalesfolios_2` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblsucursalesfolios_3` FOREIGN KEY `FK_tblsucursalesfolios_3` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+
+ALTER TABLE `tblsucequipos` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `idsucursal`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblsucequipos_1` FOREIGN KEY `FK_tblsucequipos_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblsucequipos_2` FOREIGN KEY `FK_tblsucequipos_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+ALTER TABLE `tbldetallesequipos` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `fecha`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tbldetallesequipos_1` FOREIGN KEY `FK_tbldetallesequipos_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tbldetallesequipos_2` FOREIGN KEY `FK_tbldetallesequipos_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+ALTER TABLE `tbldetallesequiposs` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `fecha`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tbldetallesequiposs_1` FOREIGN KEY `FK_tbldetallesequiposs_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tbldetallesequiposs_2` FOREIGN KEY `FK_tbldetallesequiposs_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+
+ALTER TABLE `tblinventariodetalles` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `idinventariop`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblinventariodetalles_5` FOREIGN KEY `FK_tblinventariodetalles_5` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblinventariodetalles_6` FOREIGN KEY `FK_tblinventariodetalles_6` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+ALTER TABLE `tblformasdepagoremisiones` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `codigo`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblformasdepagoremisiones_1` FOREIGN KEY `FK_tblformasdepagoremisiones_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblformasdepagoremisiones_2` FOREIGN KEY `FK_tblformasdepagoremisiones_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+ALTER TABLE `tblinventariorelaciones` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `extra`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblinventariorelaciones_1` FOREIGN KEY `FK_tblinventariorelaciones_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblinventariorelaciones_2` FOREIGN KEY `FK_tblinventariorelaciones_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+ALTER TABLE `tblserviciosclasificaciones` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `nombre`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblserviciosclasificaciones_1` FOREIGN KEY `FK_tblserviciosclasificaciones_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblserviciosclasificaciones_2` FOREIGN KEY `FK_tblserviciosclasificaciones_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+ALTER TABLE `tblserviciosclasificaciones2` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `precio`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblserviciosclasificaciones2_2` FOREIGN KEY `FK_tblserviciosclasificaciones2_2` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblserviciosclasificaciones2_3` FOREIGN KEY `FK_tblserviciosclasificaciones2_3` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+ALTER TABLE `tblusuarios` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `permisos15`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblusuarios_1` FOREIGN KEY `FK_tblusuarios_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblusuarios_2` FOREIGN KEY `FK_tblusuarios_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT;
+
+
+
+ALTER TABLE `tblventaspagosapartados` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `idconceptonotaventa`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblventaspagosapartados_1` FOREIGN KEY `FK_tblventaspagosapartados_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblventaspagosapartados_2` FOREIGN KEY `FK_tblventaspagosapartados_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+ALTER TABLE `tbldocumentosclientes` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `tiposaldo`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tbldocumentosclientes_5` FOREIGN KEY `FK_tbldocumentosclientes_5` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tbldocumentosclientes_6` FOREIGN KEY `FK_tbldocumentosclientes_6` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+ALTER TABLE `tbldevoluciones` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `referenciadoc`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tbldevoluciones_3` FOREIGN KEY `FK_tbldevoluciones_3` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tbldevoluciones_4` FOREIGN KEY `FK_tbldevoluciones_4` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+ALTER TABLE `tbldevolucionescompras` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `uuid`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tbldevolucionescompras_3` FOREIGN KEY `FK_tbldevolucionescompras_3` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tbldevolucionescompras_4` FOREIGN KEY `FK_tbldevolucionescompras_4` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+ALTER TABLE `tbldocumentosproveedores` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `tiposaldo`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tbldocumentosproveedores_5` FOREIGN KEY `FK_tbldocumentosproveedores_5` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tbldocumentosproveedores_6` FOREIGN KEY `FK_tbldocumentosproveedores_6` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+ALTER TABLE `tblcuentas` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `idcuenta4`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblcuentas_1` FOREIGN KEY `FK_tblcuentas_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblcuentas_2` FOREIGN KEY `FK_tblcuentas_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT;
+
+
+
+ALTER TABLE `tblgastosclasificacion` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `clave`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblgastosclasificacion_1` FOREIGN KEY `FK_tblgastosclasificacion_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblgastosclasificacion_2` FOREIGN KEY `FK_tblgastosclasificacion_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+ALTER TABLE `tblgastosclasificacion2` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `clave`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblgastosclasificacion2_2` FOREIGN KEY `FK_tblgastosclasificacion2_2` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblgastosclasificacion2_3` FOREIGN KEY `FK_tblgastosclasificacion2_3` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+ALTER TABLE `tblgastosclasificacion3` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `clave`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblgastosclasificacion3_2` FOREIGN KEY `FK_tblgastosclasificacion3_2` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblgastosclasificacion3_3` FOREIGN KEY `FK_tblgastosclasificacion3_3` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+ALTER TABLE `tblgastos` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `tipo`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblgastos_1` FOREIGN KEY `FK_tblgastos_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblgastos_2` FOREIGN KEY `FK_tblgastos_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblidentificacion` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `nombre`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblidentificacion_1` FOREIGN KEY `FK_tblidentificacion_1` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblidentificacion_2` FOREIGN KEY `FK_tblidentificacion_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+ALTER TABLE `tblempeniosclasificacion` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `nombre`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblempeniosclasificacion_1` FOREIGN KEY `FK_tblempeniosclasificacion_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblempeniosclasificacion_2` FOREIGN KEY `FK_tblempeniosclasificacion_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+ALTER TABLE `tblcontabilidadclas` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `nombre`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblcontabilidadclas_1` FOREIGN KEY `FK_tblcontabilidadclas_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblcontabilidadclas_2` FOREIGN KEY `FK_tblcontabilidadclas_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+ALTER TABLE `tblcontabilidadmascaras` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `tipopoliza`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblcontabilidadmascaras_1` FOREIGN KEY `FK_tblcontabilidadmascaras_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblcontabilidadmascaras_2` FOREIGN KEY `FK_tblcontabilidadmascaras_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+ALTER TABLE `tblopciones` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `pvventanacomp`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblopciones_1` FOREIGN KEY `FK_tblopciones_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblopciones_2` FOREIGN KEY `FK_tblopciones_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblservicios` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `idtecnico`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblservicios_2` FOREIGN KEY `FK_tblservicios_2` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblservicios_3` FOREIGN KEY `FK_tblservicios_3` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblservicioseventos` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `iva`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblservicioseventos_5` FOREIGN KEY `FK_tblservicioseventos_5` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+ALTER TABLE `tblserviciosestados` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `final`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblserviciosestados_1` FOREIGN KEY `FK_tblserviciosestados_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblserviciosestados_2` FOREIGN KEY `FK_tblserviciosestados_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+
+ALTER TABLE `tblservicioseventossuc` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `iva`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCambio`,
+ ADD CONSTRAINT `FK_tblservicioseventossuc_1` FOREIGN KEY `FK_tblservicioseventossuc_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblservicioseventossuc_2` FOREIGN KEY `FK_tblservicioseventossuc_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblgastosprogramables` ADD COLUMN `idusuarioalta` INTEGER UNSIGNED NOT NULL AFTER `estado`,
+ ADD COLUMN `fechaalta` VARCHAR(10) NOT NULL AFTER `idusuarioalta`,
+ ADD COLUMN `horaalta` VARCHAR(10) NOT NULL AFTER `fechaalta`,
+ ADD COLUMN `idusuariocambio` INTEGER UNSIGNED NOT NULL AFTER `horaalta`,
+ ADD COLUMN `fechacambio` VARCHAR(10) NOT NULL AFTER `idusuariocambio`,
+ ADD COLUMN `horacambio` VARCHAR(10) NOT NULL AFTER `fechacambio`;
+
+ALTER TABLE `tblserviciossuc` ADD COLUMN `idUsuarioAlta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `idtecnico`,
+ ADD COLUMN `fechaAlta` VARCHAR(45) NOT NULL AFTER `idUsuarioAlta`,
+ ADD COLUMN `horaAlta` VARCHAR(45) NOT NULL AFTER `fechaAlta`,
+ ADD COLUMN `idUsuarioCambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaAlta`,
+ ADD COLUMN `fechaCambio` VARCHAR(45) NOT NULL AFTER `idUsuarioCambio`,
+ ADD COLUMN `horaCambio` VARCHAR(45) NOT NULL AFTER `fechaCabmio`,
+ ADD CONSTRAINT `FK_tblserviciossuc_1` FOREIGN KEY `FK_tblserviciossuc_1` (`idUsuarioAlta`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblserviciossuc_2` FOREIGN KEY `FK_tblserviciossuc_2` (`idUsuarioCambio`)
+    REFERENCES `tblusuarios` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+update tblproveedorestipos set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblclientesimpuestos set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblsucursalescertificados set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblsucursalesfolios set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblsucequipos set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tbldetallesequipos set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tbldetallesequiposs set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblinventariodetalles set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblinventariorelaciones set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblformasdepagoremisiones set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblserviciosclasificaciones set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblserviciosclasificaciones2 set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblusuarios set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblventaspagosapartados set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tbldocumentosclientes set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tbldevoluciones set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tbldevolucionescompras set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tbldocumentosproveedores set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblcuentas set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblgastosclasificacion set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblgastosclasificacion2 set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblgastosclasificacion3 set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblgastos set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblgastosprogramables set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblidentificacion set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblempeniosclasificacion set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblcontabilidadclas set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblcontabilidadmascaras set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblopciones set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblservicios set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblservicioseventos set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblserviciosestados set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblserviciossuc set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+update tblservicioseventossuc set idusuarioalta=1000,fechaalta='2016/03/08',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/03/08',horacambio='00:00:00';
+
+insert into tblactualizaciones(version,versionchk) values('ver 9033 rev 30','00903330');

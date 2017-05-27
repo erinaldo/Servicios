@@ -1,0 +1,14 @@
+ALTER TABLE `tbltiposcantidades` ADD COLUMN `pararemision` TINYINT UNSIGNED NOT NULL AFTER `horaCambio`;
+ALTER TABLE `tblopciones2` ADD COLUMN `remsindetallecd` TINYINT UNSIGNED NOT NULL AFTER `noimpsinguardar`;
+ALTER TABLE `tblopciones2` ADD COLUMN `idinventariocd` TINYINT UNSIGNED NOT NULL AFTER `remsindetallecd`;
+ALTER TABLE `tblopciones2` MODIFY COLUMN `idinventariocd` INTEGER UNSIGNED NOT NULL;
+
+ALTER TABLE `tblventasinventario` ADD COLUMN `noimp` TINYINT UNSIGNED NOT NULL AFTER `predial`,
+ ADD COLUMN `noimpimporte` DOUBLE NOT NULL AFTER `noimp`;
+ALTER TABLE `tblopciones2` ADD COLUMN `integrarbancoscc` TINYINT UNSIGNED NOT NULL AFTER `idinventariocd`,
+ ADD COLUMN `integrarbancoscp` TINYINT UNSIGNED NOT NULL AFTER `integrarbancoscc`,
+ ADD COLUMN `integrarbancosvp` TINYINT UNSIGNED NOT NULL AFTER `integrarbancoscp`;
+
+update tblopciones2 set integrarbancoscc=(select integrarbancos from tblopciones limit 1),integrarbancoscp=(select integrarbancos from tblopciones limit 1),integrarbancosvp=(select integrarbancos from tblopciones limit 1);
+
+insert into tblactualizaciones(version,versionchk) values('ver 9036 rev 9','00903609');

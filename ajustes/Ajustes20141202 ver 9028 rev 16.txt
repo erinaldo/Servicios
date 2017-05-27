@@ -1,0 +1,4 @@
+ALTER TABLE `tblpolizasdetalles` ADD COLUMN `DIOTHabilitado` INTEGER UNSIGNED NOT NULL AFTER `esDIOT`;
+
+
+insert into tblactualizaciones(version) values('ver 9028 rev 16');

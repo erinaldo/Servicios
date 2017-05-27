@@ -1,0 +1,44 @@
+CREATE TABLE `tblContabilidadCheque` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idPoliza` INTEGER UNSIGNED NOT NULL,
+  `idRenglon` INTEGER UNSIGNED NOT NULL,
+  `numero` VARCHAR(20) NOT NULL,
+  `banco` INTEGER UNSIGNED NOT NULL,
+  `ctaOri` VARCHAR(50) NOT NULL,
+  `fecha` VARCHAR(11) NOT NULL,
+  `monto` DOUBLE NOT NULL,
+  `benef` VARCHAR(300) NOT NULL,
+  `rfc` VARCHAR(13) NOT NULL,
+  PRIMARY KEY (`id`)
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tblContabilidadTrans` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idPoliza` INTEGER UNSIGNED NOT NULL,
+  `idRenglon` INTEGER UNSIGNED NOT NULL,
+  `ctaOri` VARCHAR(50) NOT NULL,
+  `bancoOri` INTEGER UNSIGNED NOT NULL,
+  `monto` DOUBLE NOT NULL,
+  `ctaDest` VARCHAR(50) NOT NULL,
+  `bancoDest` INTEGER UNSIGNED NOT NULL,
+  `fecha` VARCHAR(11) NOT NULL,
+  `benef` VARCHAR(300) NOT NULL,
+  `rfc` VARCHAR(13) NOT NULL,
+  PRIMARY KEY (`id`)
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tblContabilidadCompro` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idPoliza` INTEGER UNSIGNED NOT NULL,
+  `idRenglon` INTEGER UNSIGNED NOT NULL,
+  `UUID` VARCHAR(36) NOT NULL,
+  `monto` DOUBLE NOT NULL,
+  `rfc` VARCHAR(13) NOT NULL,
+  PRIMARY KEY (`id`)
+)
+ENGINE = InnoDB;
+
+insert into tblactualizaciones(version) values('ver 9026 rev 1');
+

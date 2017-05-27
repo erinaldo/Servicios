@@ -1,0 +1,18 @@
+ALTER TABLE `tblmovimientos` ADD COLUMN `idalmaceno` INTEGER UNSIGNED NOT NULL AFTER `idpedido`,
+ ADD COLUMN `idalmacend` INTEGER UNSIGNED NOT NULL AFTER `idalmaceno`;
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL ENTRADAS.','TNE',11,'SUMA DEL TOTAL DEL COSTO POR ENTRADAS.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SALIDAS.','TNS',11,'SUMA DEL TOTAL DEL COSTO POR SALIDAS.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL TRASPASOS.','TNT',11,'SUMA DEL TOTAL DEL COSTO POR TRASPASOS.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL RECEPCIONES.','TNTR',11,'SUMA DEL TOTAL DEL COSTO POR RECEPCIONES.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL ENTRADAS POR MOVIMIENTO.','TNEnetoxf',11,'TOTAL DEL COSTO POR ENTRADA POR MOVIMIENTO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SALIDAS POR MOVIMIENTO.','TNSnetoxf',11,'TOTAL DEL COSTO POR SALIDA POR MOVIMIENTO .');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL TRASPASOS POR MOVIMIENTO.','TNTnetoxf',11,'TOTAL DEL COSTO POR TRASPASO POR MOVIMIENTO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL RECEPCIONES POR MOVIMIENTO.','TNTRnetoxf',11,'TOTAL DEL COSTO POR RECEPCIÓN POR MOVIMIENTO.');
+
+update tblmovimientos m set m.idalmaceno=ifnull((select md.idalmacen from tblmovimientosdetalles md where md.idmovimiento=m.idmovimiento limit 1),0),m.idalmacend=ifnull((select md.idalmacen2 from tblmovimientosdetalles md where md.idmovimiento=m.idmovimiento limit 1),0);
+
+ALTER TABLE `tblcompras` MODIFY COLUMN `deremision` TINYINT UNSIGNED NOT NULL;
+
+
+insert into tblactualizaciones(version,versionchk) values('ver 9036 rev 11','00903611');

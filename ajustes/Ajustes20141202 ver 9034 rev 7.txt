@@ -1,0 +1,92 @@
+CREATE TABLE `tblinventariorelacionesconceptos` (
+  `idrelacion` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idconcepto` INTEGER UNSIGNED NOT NULL,
+  `tipo` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`idrelacion`)
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `tblinventariorelacionesconceptos` ADD COLUMN `idSucursal` INTEGER UNSIGNED NOT NULL AFTER `tipo`;
+
+
+ALTER TABLE `tblinventariorelacionesconceptos` ADD CONSTRAINT `FK_tblinventariorelacionesconceptos_1` FOREIGN KEY `FK_tblinventariorelacionesconceptos_1` (`idconcepto`)
+    REFERENCES `tblinventarioconceptos` (`idconcepto`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblinventariorelacionesconceptos_2` FOREIGN KEY `FK_tblinventariorelacionesconceptos_2` (`idSucursal`)
+    REFERENCES `tblsucursales` (`idsucursal`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+CREATE TABLE `tblopciones2` (
+  `checafoliofacturas` TINYINT UNSIGNED NOT NULL
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `tblopciones2` ADD COLUMN `surtidodefault` TINYINT UNSIGNED NOT NULL AFTER `checafoliofacturas`;
+
+CREATE TABLE `tblinventariopedidos` (
+  `idpedido` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `fecha` VARCHAR(10) NOT NULL,
+  `idsucursala` INTEGER UNSIGNED NOT NULL,
+  `idsucursalb` INTEGER UNSIGNED NOT NULL,
+  `serie` VARCHAR(20) NOT NULL,
+  `folio` INTEGER UNSIGNED NOT NULL,
+  `estado` TINYINT UNSIGNED NOT NULL,
+  `comentario` VARCHAR(1000) NOT NULL,
+  `total` DOUBLE NOT NULL,
+  `hora` VARCHAR(8) NOT NULL,
+  `fechacancelado` VARCHAR(10) NOT NULL,
+  `horacancelado` VARCHAR(8) NOT NULL,
+  `idusuarioalta` INTEGER UNSIGNED NOT NULL,
+  `fechaalta` VARCHAR(10) NOT NULL,
+  `horaalta` VARCHAR(8) NOT NULL,
+  `idusuariocambio` INTEGER UNSIGNED NOT NULL,
+  `fechacambio` VARCHAR(10) NOT NULL,
+  `horacambio` VARCHAR(8) NOT NULL,
+  PRIMARY KEY (`idpedido`),
+  INDEX `Index_2`(`fecha`),
+  INDEX `Index_3`(`serie`),
+  INDEX `Index_4`(`folio`),
+  INDEX `Index_5`(`hora`),
+  CONSTRAINT `FK_tblinventariopedidos_1` FOREIGN KEY `FK_tblinventariopedidos_1` (`idsucursala`)
+    REFERENCES `tblsucursales` (`idsucursal`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblinventariopedidos_2` FOREIGN KEY `FK_tblinventariopedidos_2` (`idsucursalb`)
+    REFERENCES `tblsucursales` (`idsucursal`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tblinventariopedidosdetalles` (
+  `iddetalle` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idpedido` INTEGER UNSIGNED NOT NULL,
+  `idinventario` INTEGER UNSIGNED NOT NULL,
+  `autorizado` TINYINT UNSIGNED NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  `cantidadaut` DOUBLE NOT NULL,
+  `precio` DOUBLE NOT NULL,
+  PRIMARY KEY (`iddetalle`)
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `tblinventariopedidosdetalles` ADD CONSTRAINT `FK_tblinventariopedidosdetalles_1` FOREIGN KEY `FK_tblinventariopedidosdetalles_1` (`idpedido`)
+    REFERENCES `tblinventariopedidos` (`idpedido`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblinventariopedidosdetalles_2` FOREIGN KEY `FK_tblinventariopedidosdetalles_2` (`idinventario`)
+    REFERENCES `tblinventario` (`idinventario`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblinventariopedidos` ADD COLUMN `tipo` TINYINT UNSIGNED NOT NULL AFTER `horacambio`;
+
+ALTER TABLE `tblmovimientos` ADD COLUMN `transito` TINYINT UNSIGNED NOT NULL AFTER `horaCambio`,
+ ADD COLUMN `idpedido` INTEGER UNSIGNED NOT NULL AFTER `transito`;
+
+insert into tblopciones2(checafoliofacturas,surtidodefault) values(0,1);
+update tblmovimientos set transito=1;
+
+insert into tblactualizaciones(version,versionchk) values('ver 9034 rev 7','00903407');

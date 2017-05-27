@@ -1,0 +1,7 @@
+ALTER TABLE `tblalmacenes` ADD COLUMN `peso` DOUBLE NOT NULL AFTER `idsucursal`,
+ ADD COLUMN `tipo` TINYINT UNSIGNED NOT NULL AFTER `peso`,
+ ADD COLUMN `estado` TINYINT UNSIGNED NOT NULL AFTER `tipo`;
+
+
+insert into tblactualizaciones(version) values('ver 9025 rev 24');
+

@@ -1,0 +1,335 @@
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spanalisisinventariocc` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spanalisisinventariocc`(pfecha1 varchar(10),pfecha2 varchar(10),pidinventario int,pidsucursal int,pidalmacen int) RETURNS int(11)
+BEGIN
+
+delete from tblinventarioanalisisc;
+
+if pidsucursal<=0 then
+
+if pidinventario<=0 then
+
+
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Compras',ifnull(sum(tblcomprasdetalles.cantidad),0),ifnull(sum(if(tblcomprasdetalles.idmoneda=2,tblcomprasdetalles.precio,tblcomprasdetalles.precio*tblcompras.tipodecambio)),0),0 from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where (tblcompras.estado=3 or tblcompras.estado=4) and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Gastos s/compra',ifnull(sum(tblcomprasdetalles.costoindirecto),0),ifnull(sum(tblcomprasdetalles.costoindirecto),0),1 from tblcompras inner join tblcomprasdetalles on tblcompras.idcompra=tblcomprasdetalles.idcompra where (tblcompras.estado=3 or tblcompras.estado=4) and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Devoluciones Ventas',ifnull(sum(tbldevolucionesdetalles.cantidad),0),ifnull(sum(tbldevolucionesdetalles.cantidad*(select costo from tblinventariocostoh where idinventario=tbldevolucionesdetalles.idinventario and fecha<=tbldevoluciones.fecha order by fecha desc limit 1)),0),2 from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion inner join tblinventario on tbldevolucionesdetalles.idinventario=tblinventario.idinventario where tbldevoluciones.estado=3 and tbldevoluciones.fecha>=pfecha1 and tbldevoluciones.fecha<=pfecha2;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Cancelaciones Ventas',ifnull(sum(tblventasinventario.cantidad),0),ifnull(sum(tblventasinventario.cantidad*(select costo from tblinventariocostoh where idinventario=tblventasinventario.idinventario and fecha<=tblventas.fechacancelado order by fecha desc limit 1)),0),3 from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario where tblventas.estado=4 and tblventas.fechacancelado>=pfecha1 and tblventas.fechacancelado<=pfecha2 and tblventas.porsurtir=0;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select tblinventarioconceptos.idconcepto,0,tblinventarioconceptos.nombre,ifnull(sum(tblmovimientosdetalles.cantidad),0),ifnull(sum(if(tblmovimientosdetalles.idmoneda=2,tblmovimientosdetalles.precio,tblmovimientosdetalles.precio*tblmovimientos.tipodecambio)),0),4 from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto inner join tblinventario on tblmovimientosdetalles.idinventario=tblinventario.idinventario where (tblinventarioconceptos.tipo=0 or tblinventarioconceptos.tipo=4) and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 group by tblinventarioconceptos.idconcepto;
+
+
+
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Ventas',ifnull(sum(tblventasinventario.cantidad),0),ifnull(sum(tblventasinventario.cantidad*(select costo from tblinventariocostoh where idinventario=tblventasinventario.idinventario and fecha<=tblventas.fecha order by fecha desc limit 1)),0),0 from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario where (tblventas.estado=3 or tblventas.estado=4) and tblventas.fecha>=pfecha1 and tblventas.fecha<=pfecha2 and tblventas.porsurtir=0;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Devoluciones Compras',ifnull(sum(tbldevolucionesdetallesc.cantidad),0),ifnull(sum(if(tbldevolucionesdetallesc.idmoneda=2,tbldevolucionesdetallesc.precio,tbldevolucionesdetallesc.precio*tbldevolucionescompras.tipodecambio)),0),1 from tbldevolucionesdetallesc inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha>=pfecha1 and tbldevolucionescompras.fecha<=pfecha2;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Cancelaciones Compras',ifnull(sum(tblcomprasdetalles.cantidad),0),ifnull(sum(if(tblcomprasdetalles.idmoneda=2,tblcomprasdetalles.costoindirecto+(tblcomprasdetalles.precio),tblcomprasdetalles.costoindirecto+(tblcomprasdetalles.precio*tblcompras.tipodecambio))),0),2 from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcompras.estado=4 and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select tblinventarioconceptos.idconcepto,1,tblinventarioconceptos.nombre,ifnull(sum(tblmovimientosdetalles.cantidad),0),ifnull(sum(tblmovimientosdetalles.cantidad*(select costo from tblinventariocostoh where idinventario=tblmovimientosdetalles.idinventario and fecha<=tblmovimientos.fecha order by fecha desc limit 1)),0),3 from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto inner join tblinventario on tblmovimientosdetalles.idinventario=tblinventario.idinventario where tblinventarioconceptos.tipo=1 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 group by tblinventarioconceptos.idconcepto;
+
+else
+
+
+
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Compras',ifnull(sum(tblcomprasdetalles.cantidad),0),ifnull(sum(if(tblcomprasdetalles.idmoneda=2,tblcomprasdetalles.precio,tblcomprasdetalles.precio*tblcompras.tipodecambio)),0),0 from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where (tblcompras.estado=3 or tblcompras.estado=4) and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcomprasdetalles.idinventario=pidinventario;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select tblcompras.idcompra,0,'Gastos s/compra',ifnull(sum(tblcomprasdetalles.cantidad),0),ifnull(sum(tblcomprasdetalles.costoindirecto),0),1 from tblcompras inner join tblcomprasdetalles on tblcompras.idcompra=tblcomprasdetalles.idcompra where (tblcompras.estado=3 or tblcompras.estado=4) and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcomprasdetalles.idinventario=pidinventario;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Devoluciones Ventas',ifnull(sum(tbldevolucionesdetalles.cantidad),0),ifnull(sum(tbldevolucionesdetalles.cantidad*(select costo from tblinventariocostoh where idinventario=tbldevolucionesdetalles.idinventario and fecha<=tbldevoluciones.fecha order by fecha desc limit 1)),0),2 from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion inner join tblinventario on tbldevolucionesdetalles.idinventario=tblinventario.idinventario where tbldevoluciones.estado=3 and tbldevoluciones.fecha>=pfecha1 and tbldevoluciones.fecha<=pfecha2 and tbldevolucionesdetalles.idinventario=pidinventario;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Cancelaciones Ventas',ifnull(sum(tblventasinventario.cantidad),0),ifnull(sum(tblventasinventario.cantidad*(select costo from tblinventariocostoh where idinventario=tblventasinventario.idinventario and fecha<=tblventas.fechacancelado order by fecha desc limit 1)),0),3 from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario where tblventas.estado=4 and tblventas.fechacancelado>=pfecha1 and tblventas.fechacancelado<=pfecha2 and tblventasinventario.idinventario=pidinventario and tblventas.porsurtir=0;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select tblinventarioconceptos.idconcepto,0,tblinventarioconceptos.nombre,ifnull(sum(tblmovimientosdetalles.cantidad),0),ifnull(sum(if(tblmovimientosdetalles.idmoneda=2,tblmovimientosdetalles.precio,tblmovimientosdetalles.precio*tblmovimientos.tipodecambio)),0),4 from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto inner join tblinventario on tblmovimientosdetalles.idinventario=tblinventario.idinventario where (tblinventarioconceptos.tipo=0 or tblinventarioconceptos.tipo=4) and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idinventario=pidinventario group by tblinventarioconceptos.idconcepto;
+
+
+
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Ventas',ifnull(sum(tblventasinventario.cantidad),0),ifnull(sum(tblventasinventario.cantidad*(select costo from tblinventariocostoh where idinventario=tblventasinventario.idinventario and fecha<=tblventas.fecha order by fecha desc limit 1)),0),0 from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario where (tblventas.estado=3 or tblventas.estado=4) and tblventas.fecha>=pfecha1 and tblventas.fecha<=pfecha2 and tblventasinventario.idinventario=pidinventario and tblventas.porsurtir=0;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Devoluciones Compras',ifnull(sum(tbldevolucionesdetallesc.cantidad),0),ifnull(sum(if(tbldevolucionesdetallesc.idmoneda=2,tbldevolucionesdetallesc.precio,tbldevolucionesdetallesc.precio*tbldevolucionescompras.tipodecambio)),0),1 from tbldevolucionesdetallesc inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha>=pfecha1 and tbldevolucionescompras.fecha<=pfecha2 and tbldevolucionesdetallesc.idinventario=pidinventario;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Cancelaciones Compras',ifnull(sum(tblcomprasdetalles.cantidad),0),ifnull(sum(if(tblcomprasdetalles.idmoneda=2,tblcomprasdetalles.costoindirecto+(tblcomprasdetalles.precio),tblcomprasdetalles.costoindirecto+(tblcomprasdetalles.precio*tblcompras.tipodecambio))),0),2 from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcompras.estado=4 and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcomprasdetalles.idinventario=pidinventario;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select tblinventarioconceptos.idconcepto,1,tblinventarioconceptos.nombre,ifnull(sum(tblmovimientosdetalles.cantidad),0),ifnull(sum(tblmovimientosdetalles.cantidad*(select costo from tblinventariocostoh where idinventario=tblmovimientosdetalles.idinventario and fecha<=tblmovimientos.fecha order by fecha desc limit 1)),0),3 from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto inner join tblinventario on tblmovimientosdetalles.idinventario=tblinventario.idinventario where tblinventarioconceptos.tipo=1 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idinventario=pidinventario group by tblinventarioconceptos.idconcepto;
+
+
+
+end if;
+else
+
+if pidinventario<=0 then
+
+
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Compras',ifnull(sum(tblcomprasdetalles.cantidad),0),ifnull(sum(if(tblcomprasdetalles.idmoneda=2,tblcomprasdetalles.precio,tblcomprasdetalles.precio*tblcompras.tipodecambio)),0),0 from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where (tblcompras.estado=3 or tblcompras.estado=4) and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcompras.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Gastos s/compra',ifnull(sum(tblcomprasdetalles.costoindirecto),0),ifnull(sum(tblcomprasdetalles.costoindirecto),0),1 from tblcompras inner join tblcomprasdetalles on tblcompras.idcompra=tblcomprasdetalles.idcompra where (tblcompras.estado=3 or tblcompras.estado=4) and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcompras.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Devoluciones Ventas',ifnull(sum(tbldevolucionesdetalles.cantidad),0),ifnull(sum(tbldevolucionesdetalles.cantidad*(select costo from tblinventariocostoh where idinventario=tbldevolucionesdetalles.idinventario and fecha<=tbldevoluciones.fecha order by fecha desc limit 1)),0),2 from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion inner join tblinventario on tbldevolucionesdetalles.idinventario=tblinventario.idinventario where tbldevoluciones.estado=3 and tbldevoluciones.fecha>=pfecha1 and tbldevoluciones.fecha<=pfecha2 and tbldevoluciones.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Cancelaciones Ventas',ifnull(sum(tblventasinventario.cantidad),0),ifnull(sum(tblventasinventario.cantidad*(select costo from tblinventariocostoh where idinventario=tblventasinventario.idinventario and fecha<=tblventas.fecha order by fecha desc limit 1)),0),3 from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario where tblventas.estado=4 and tblventas.fechacancelado>=pfecha1 and tblventas.fechacancelado<=pfecha2 and tblventas.porsurtir=0 and tblventas.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select tblinventarioconceptos.idconcepto,0,tblinventarioconceptos.nombre,ifnull(sum(tblmovimientosdetalles.cantidad),0),ifnull(sum(if(tblmovimientosdetalles.idmoneda=2,tblmovimientosdetalles.precio,tblmovimientosdetalles.precio*tblmovimientos.tipodecambio)),0),4 from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto inner join tblinventario on tblmovimientosdetalles.idinventario=tblinventario.idinventario where (tblinventarioconceptos.tipo=0 or tblinventarioconceptos.tipo=4) and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientos.idsucursal=pidsucursal group by tblinventarioconceptos.idconcepto;
+
+
+
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Ventas',ifnull(sum(tblventasinventario.cantidad),0),ifnull(sum(tblventasinventario.cantidad*(select costo from tblinventariocostoh where idinventario=tblventasinventario.idinventario and fecha<=tblventas.fecha order by fecha desc limit 1)),0),0 from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario where (tblventas.estado=3 or tblventas.estado=4) and tblventas.fecha>=pfecha1 and tblventas.fecha<=pfecha2 and tblventas.porsurtir=0 and tblventas.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Devoluciones Compras',ifnull(sum(tbldevolucionesdetallesc.cantidad),0),ifnull(sum(if(tbldevolucionesdetallesc.idmoneda=2,tbldevolucionesdetallesc.precio,tbldevolucionesdetallesc.precio*tbldevolucionescompras.tipodecambio)),0),1 from tbldevolucionesdetallesc inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha>=pfecha1 and tbldevolucionescompras.fecha<=pfecha2 and tbldevolucionescompras.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Cancelaciones Compras',ifnull(sum(tblcomprasdetalles.cantidad),0),ifnull(sum(if(tblcomprasdetalles.idmoneda=2,tblcomprasdetalles.costoindirecto+(tblcomprasdetalles.precio),tblcomprasdetalles.costoindirecto+(tblcomprasdetalles.precio*tblcompras.tipodecambio))),0),2 from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcompras.estado=4 and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcompras.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select tblinventarioconceptos.idconcepto,1,tblinventarioconceptos.nombre,ifnull(sum(tblmovimientosdetalles.cantidad),0),ifnull(sum(tblmovimientosdetalles.cantidad*(select costo from tblinventariocostoh where idinventario=tblmovimientosdetalles.idinventario and fecha<=tblmovimientos.fecha order by fecha desc limit 1)),0),3 from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto inner join tblinventario on tblmovimientosdetalles.idinventario=tblinventario.idinventario where tblinventarioconceptos.tipo=1 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientos.idsucursal=pidsucursal group by tblinventarioconceptos.idconcepto;
+
+else
+
+
+
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Compras',ifnull(sum(tblcomprasdetalles.cantidad),0),ifnull(sum(if(tblcomprasdetalles.idmoneda=2,tblcomprasdetalles.precio,tblcomprasdetalles.precio*tblcompras.tipodecambio)),0),0 from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where (tblcompras.estado=3 or tblcompras.estado=4) and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcomprasdetalles.idinventario=pidinventario and tblcompras.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select tblcompras.idcompra,0,'Gastos s/compra',ifnull(sum(tblcomprasdetalles.cantidad),0),ifnull(sum(tblcomprasdetalles.costoindirecto),0),1 from tblcompras inner join tblcomprasdetalles on tblcompras.idcompra=tblcomprasdetalles.idcompra where (tblcompras.estado=3 or tblcompras.estado=4) and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcomprasdetalles.idinventario=pidinventario and tblcompras.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Devoluciones Ventas',ifnull(sum(tbldevolucionesdetalles.cantidad),0),ifnull(sum(tbldevolucionesdetalles.cantidad*(select costo from tblinventariocostoh where idinventario=tbldevolucionesdetalles.idinventario and fecha<=tbldevoluciones.fecha order by fecha desc limit 1)),0),2 from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion inner join tblinventario on tbldevolucionesdetalles.idinventario=tblinventario.idinventario where tbldevoluciones.estado=3 and tbldevoluciones.fecha>=pfecha1 and tbldevoluciones.fecha<=pfecha2 and tbldevolucionesdetalles.idinventario=pidinventario and tbldevoluciones.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Cancelaciones Ventas',ifnull(sum(tblventasinventario.cantidad),0),ifnull(sum(tblventasinventario.cantidad*(select costo from tblinventariocostoh where idinventario=tblventasinventario.idinventario and fecha<=tblventas.fecha order by fecha desc limit 1)),0),3 from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario where tblventas.estado=4 and tblventas.fechacancelado>=pfecha1 and tblventas.fechacancelado<=pfecha2 and tblventasinventario.idinventario=pidinventario and tblventas.porsurtir=0 and tblventas.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select tblinventarioconceptos.idconcepto,0,tblinventarioconceptos.nombre,ifnull(sum(tblmovimientosdetalles.cantidad),0),ifnull(sum(if(tblmovimientosdetalles.idmoneda=2,tblmovimientosdetalles.precio,tblmovimientosdetalles.precio*tblmovimientos.tipodecambio)),0),4 from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto inner join tblinventario on tblmovimientosdetalles.idinventario=tblinventario.idinventario where (tblinventarioconceptos.tipo=0 or tblinventarioconceptos.tipo=4) and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idinventario=pidinventario and tblmovimientos.idsucursal=pidsucursal group by tblinventarioconceptos.idconcepto;
+
+
+
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Ventas',ifnull(sum(tblventasinventario.cantidad),0),ifnull(sum(tblventasinventario.cantidad*(select costo from tblinventariocostoh where idinventario=tblventasinventario.idinventario and fecha<=tblventas.fecha order by fecha desc limit 1)),0),0 from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario where (tblventas.estado=3 or tblventas.estado=4) and tblventas.fecha>=pfecha1 and tblventas.fecha<=pfecha2 and tblventasinventario.idinventario=pidinventario and tblventas.porsurtir=0 and tblventas.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Devoluciones Compras',ifnull(sum(tbldevolucionesdetallesc.cantidad),0),ifnull(sum(if(tbldevolucionesdetallesc.idmoneda=2,tbldevolucionesdetallesc.precio,tbldevolucionesdetallesc.precio*tbldevolucionescompras.tipodecambio)),0),1 from tbldevolucionesdetallesc inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha>=pfecha1 and tbldevolucionescompras.fecha<=pfecha2 and tbldevolucionesdetallesc.idinventario=pidinventario and tbldevolucionescompras.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Cancelaciones Compras',ifnull(sum(tblcomprasdetalles.cantidad),0),ifnull(sum(if(tblcomprasdetalles.idmoneda=2,tblcomprasdetalles.costoindirecto+(tblcomprasdetalles.precio),tblcomprasdetalles.costoindirecto+(tblcomprasdetalles.precio*tblcompras.tipodecambio))),0),2 from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcompras.estado=4 and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcomprasdetalles.idinventario=pidinventario and tblcompras.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select tblinventarioconceptos.idconcepto,1,tblinventarioconceptos.nombre,ifnull(sum(tblmovimientosdetalles.cantidad),0),ifnull(sum(tblmovimientosdetalles.cantidad*(select costo from tblinventariocostoh where idinventario=tblmovimientosdetalles.idinventario and fecha<=tblmovimientos.fecha order by fecha desc limit 1)),0),3 from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto inner join tblinventario on tblmovimientosdetalles.idinventario=tblinventario.idinventario where tblinventarioconceptos.tipo=1 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idinventario=pidinventario and tblmovimientos.idsucursal=pidsucursal group by tblinventarioconceptos.idconcepto;
+
+
+
+end if;
+
+end if;
+
+
+return 0;
+
+
+END $$
+
+DELIMITER ;
+
+CREATE TABLE `tblventasapartados` (
+  `idapartado` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `fecha` VARCHAR(10) NOT NULL,
+  `estado` TINYINT UNSIGNED NOT NULL,
+  `idsucursal` INTEGER UNSIGNED NOT NULL,
+  `folio` INTEGER UNSIGNED NOT NULL,
+  `serie` VARCHAR(20) NOT NULL,
+  `prioridad` TINYINT UNSIGNED NOT NULL,
+  `idcliente` INTEGER UNSIGNED NOT NULL,
+  `comentario` VARCHAR(2000) NOT NULL,
+  `prioridadstr` VARCHAR(150) NOT NULL,
+  `fechasalida` VARCHAR(10) NOT NULL,
+  `horasalida` VARCHAR(8) NOT NULL,
+  `hora` VARCHAR(8) NOT NULL,
+  `fechacancelado` VARCHAR(10) NOT NULL,
+  `horacancelado` VARCHAR(8) NOT NULL,
+  `totalapagar` DOUBLE NOT NULL,
+  `idmoneda` INTEGER UNSIGNED NOT NULL,
+  `credito` DOUBLE NOT NULL,
+  `tipodecambio` DOUBLE NOT NULL,
+  `idvendedor` INTEGER UNSIGNED NOT NULL,
+  `surtido` INTEGER UNSIGNED NOT NULL,
+  `surtidodonde` TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`idapartado`)
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tblventasapartadosdetalles` (
+  `iddetalle` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `precio` DOUBLE NOT NULL,
+  `idinventario` INTEGER UNSIGNED NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  `idmoneda` INTEGER UNSIGNED NOT NULL,
+  `idapartado` INTEGER UNSIGNED NOT NULL,
+  `descripcion` VARCHAR(2000) NOT NULL,
+  `idalmacen` INTEGER UNSIGNED NOT NULL,
+  `iva` DOUBLE NOT NULL,
+  `extra` VARCHAR(45) NOT NULL,
+  `descuento` DOUBLE NOT NULL,
+  `surtido` DOUBLE NOT NULL,
+  PRIMARY KEY (`iddetalle`),
+  CONSTRAINT `FK_tblventasapartadosdetalles_1` FOREIGN KEY `FK_tblventasapartadosdetalles_1` (`idapartado`)
+    REFERENCES `tblventasapartados` (`idapartado`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblventasapartadosdetalles_2` FOREIGN KEY `FK_tblventasapartadosdetalles_2` (`idinventario`)
+    REFERENCES `tblinventario` (`idinventario`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblventasapartadosdetalles_3` FOREIGN KEY `FK_tblventasapartadosdetalles_3` (`idalmacen`)
+    REFERENCES `tblalmacenes` (`idalmacen`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tblventaspagosapartados` (
+  `idpago` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `cantidad` DOUBLE NOT NULL,
+  `estado` TINYINT UNSIGNED NOT NULL,
+  `idremision` INTEGER UNSIGNED NOT NULL,
+  `fecha` VARCHAR(10) NOT NULL,
+  `tipo` TINYINT UNSIGNED NOT NULL,
+  `hora` VARCHAR(8) NOT NULL,
+  `fechacancelado` VARCHAR(10) NOT NULL,
+  `horacancelado` VARCHAR(8) NOT NULL,
+  `idcliente` INTEGER UNSIGNED NOT NULL,
+  `idmoneda` INTEGER UNSIGNED NOT NULL,
+  `ptipodecambio` DOUBLE NOT NULL,
+  `idconceptonotaventa` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`idpago`)
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `tblventasapartados` ADD COLUMN `dinventario` TINYINT UNSIGNED NOT NULL AFTER `surtidodonde`;
+update tblopciones set noexteriorlocal='0';
+
+ALTER TABLE `tblventaspagosapartados` MODIFY COLUMN `tipo` VARCHAR(2000) NOT NULL;
+
+delete from tblimpresionesnodos where documento=33 and idsucursal=1;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(246,10,'Empresa','nombrefiscal',500,20,'Arial',10,1,0,0,0,1,33,1,0,0,'Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(246,31,'Calle - Empresa','direccion',150,20,'Arial',10,0,0,0,0,1,33,1,0,0,'Calle - Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(397,31,'No. Exterior - Empresa','noexterior',220,20,'Arial',10,0,0,0,0,1,33,1,0,0,'No. Exterior - Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(622,7,'No. Interior - Empresa','nointerior',220,20,'Lucida Console',8,0,0,0,0,0,33,1,0,0,'No. Interior - Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(246,52,'Col:','colonia',160,20,'Arial',10,0,0,0,0,1,33,1,0,1,'Colonia- Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(407,52,'Ciudad - Empresa','ciudad',160,20,'Arial',10,0,0,0,0,1,33,1,0,0,'Ciudad - Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(567,52,'Estado - Empresa','estado',160,20,'Arial',10,0,0,0,0,1,33,1,0,0,'Estado - Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(246,72,'C.P:','cp',80,20,'Arial',10,0,0,0,0,1,33,1,0,1,'CP - Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(327,72,'RFC:','rfc',130,20,'Arial',10,0,0,0,0,1,33,1,0,1,'RFC - Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(458,72,'Tel:','tel',180,20,'Arial',10,0,0,0,0,1,33,1,0,1,'Telefono - Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(246,93,'Email - Empresa','email',400,20,'Arial',10,0,0,0,0,1,33,1,0,0,'Email - Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(624,31,'Referencia - Empresa','referencia',200,20,'Lucida Console',8,0,0,0,0,0,33,1,0,0,'Referencia - Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(14,163,'Cliente: ','nombrecliente',460,25,'Lucida Console',8,0,0,0,0,1,33,1,0,0,'Nombre Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(14,185,'Calle:','direccioncliente',350,20,'Lucida Console',8,0,0,0,0,1,33,1,0,1,'Calle - Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(365,185,'No:','noexteriorcliente',150,20,'Lucida Console',8,0,0,0,0,1,33,1,0,1,'No. Exterior - Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(84,95,'No Int:','nointeriorcliente',150,20,'Lucida Console',8,0,0,0,0,0,33,1,0,0,'No. Interior - Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(14,200,'Colonia:','coloniacliente',230,20,'Lucida Console',8,0,0,0,0,1,33,1,0,1,'Colonia - Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(245,200,'CP:','cpcliente',120,20,'Lucida Console',8,0,0,0,0,1,33,1,0,1,'CP - Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(19,237,'Ciudad:','ciudadcliente',140,20,'Lucida Console',8,0,0,0,0,1,33,1,0,0,'Ciudad - Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(156,217,'Estado:','estadocliente',160,20,'Lucida Console',8,0,0,0,0,1,33,1,0,0,'Estado - Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(360,217,'RFC:','rfccliente',150,20,'Lucida Console',8,0,0,0,0,1,33,1,0,0,'RFC - Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(662,117,'Serie','serie',50,20,'Arial',8,0,0,0,0,1,33,1,0,0,'Serie');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(713,117,'Folio','folio',100,20,'Arial',8,0,0,0,0,1,33,1,0,0,'Folio');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(663,141,'Fecha','fecha',100,20,'Microsoft Sans Serif',10,0,0,0,0,1,33,1,0,0,'Fecha');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(764,141,'Hora','hora',100,20,'Microsoft Sans Serif',10,0,0,0,0,1,33,1,0,0,'Hora');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(14,273,'Clave','clave',100,20,'Lucida Console',8,0,0,1,0,1,33,1,0,0,'Clave');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(116,273,'Descripción','descripcion',360,290,'Lucida Console',8,0,0,1,0,1,33,1,0,0,'Descripción');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(484,273,'Cantidad','cantidad',90,20,'Lucida Console',8,0,0,1,1,1,33,1,0,0,'Cantidad');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(609,273,'Precio Unitario','preciou',120,20,'Lucida Console',8,0,0,1,1,1,33,1,0,0,'Precio Unitario');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(729,273,'Importe','importe',120,20,'Lucida Console',8,0,0,1,1,1,33,1,0,0,'Importe');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(729,681,'Subtotal','subtotal',120,20,'Lucida Console',8,0,0,0,1,1,33,1,0,1,'Subtotal');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(729,700,'Iva','iva',120,20,'Lucida Console',8,0,0,0,1,1,33,1,0,1,'Iva');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(729,732,'Total','total',120,20,'Lucida Console',8,0,0,0,1,1,33,1,0,1,'Total');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(19,696,'Total letra','totalletra',600,50,'Lucida Console',8,0,0,0,0,1,33,1,0,0,'Total letra');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(24,108,'Clave cliente','clavecliente',120,20,'Arial',8,0,0,0,0,0,33,1,0,0,'Clave Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(34,73,'Municipio cliente','municipiocliente',136,20,'Arial',8,0,0,0,0,0,33,1,0,0,'Municipio Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(101,22,'Municipio empresa','municipio',136,20,'Arial',8,0,0,0,0,0,33,1,0,0,'Municipio Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(562,273,'Tipo','tipocantidad',32,20,'Lucida Console',8,0,0,1,0,1,33,1,0,0,'Tipo Cantidad');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(10,10,'CURP','curpcliente',120,20,'Lucida Console',8,0,0,0,0,0,33,1,0,0,'CURP Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(567,51,'Contacto:','contactocliente',160,20,'Lucida Console',8,0,0,0,0,0,33,1,0,0,'Contacto Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(567,51,'Referencia:','refcliente',160,20,'Lucida Console',8,0,0,0,0,0,33,1,0,0,'Ref. Dom. Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'% Descuento','descuentopor',120,25,'Lucida Console',8,1,0,1,1,0,33,1,0,0,'% Descuento');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'Cant. Descuento','descuentocant',120,25,'Lucida Console',8,1,0,1,1,0,33,1,0,0,'Cant. Descuento');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'Precio s/desc','preciosindesc',120,25,'Lucida Console',8,1,0,1,1,1,33,1,0,0,'Precio s/desc');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'Importe+Iva','importeiva',120,25,'Lucida Console',8,1,0,1,0,0,33,1,0,0,'Importe + IVA');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'Preciou+Iva','preciouiva',120,25,'Lucida Console',8,1,0,1,0,0,33,1,0,0,'PrecioU + IVA');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(12,136,'Vendedor:','vendedor',160,20,'Lucida Console',8,0,0,0,0,1,33,1,0,0,'Vendedor');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(179,132,'Prioridad Mensaje:','prioridadstr',300,20,'Lucida Console',8,0,0,0,0,1,33,1,0,0,'Prioridad Mensaje');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(324,492,'Mensaje Candelado','cancelado',170,20,'Arial',18,0,0,1,0,1,33,1,0,0,'Mensaje Candelado');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(14,642,'Comentario','comentario',700,20,'Lucida Console',8,0,0,0,0,1,33,1,0,0,'Comentario');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(651,751,'Subtotal s/desc:','subtotalsindesc',180,22,'Lucida Console',8,1,0,0,1,1,33,1,0,1,'Subtotal s/desc');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(651,780,'Total Descuento:','totaldesc',180,22,'Lucida Console',8,1,0,0,1,1,33,1,0,1,'Total Descuento');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(179,132,'Prioridad:','prioridad',300,20,'Lucida Console',8,0,0,0,0,1,33,1,0,0,'Prioridad');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(13,673,'Peso: ','peso',300,20,'Lucida Console',8,0,0,0,0,1,33,1,0,0,'Peso');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(663,141,'Fecha salida:','fechasalida',100,20,'Lucida Console',10,0,0,0,0,1,33,1,0,0,'Fecha Salida');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(764,141,'Hora salida:','horasalida',100,20,'Lucida Console',10,0,0,0,0,1,33,1,0,0,'Hora Salida');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(14,642,'Surtido:','surtido',700,20,'Lucida Console',8,0,0,0,0,1,33,1,0,0,'Surtido');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(339,59,'Total Cantidad: ','totalcantidad',200,20,'Lucida Console',8,0,0,0,0,0,33,1,0,1,'Total Cantidad');
+
+delete from tblimpresionesnodos where documento=49 and idsucursal=1;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(246,10,'Empresa','nombrefiscal',500,20,'Arial',10,1,0,0,0,1,49,1,0,0,'Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(246,31,'Calle - Empresa','direccion',150,20,'Arial',10,0,0,0,0,1,49,1,0,0,'Calle - Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(397,31,'No. Exterior - Empresa','noexterior',220,20,'Arial',10,0,0,0,0,1,49,1,0,0,'No. Exterior - Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(622,7,'No. Interior - Empresa','nointerior',220,20,'Lucida Console',8,0,0,0,0,0,49,1,0,0,'No. Interior - Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(246,52,'Col:','colonia',160,20,'Arial',10,0,0,0,0,1,49,1,0,1,'Colonia- Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(407,52,'Ciudad - Empresa','ciudad',160,20,'Arial',10,0,0,0,0,1,49,1,0,0,'Ciudad - Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(567,52,'Estado - Empresa','estado',160,20,'Arial',10,0,0,0,0,1,49,1,0,0,'Estado - Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(246,72,'C.P:','cp',80,20,'Arial',10,0,0,0,0,1,49,1,0,1,'CP - Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(327,72,'RFC:','rfc',130,20,'Arial',10,0,0,0,0,1,49,1,0,1,'RFC - Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(458,72,'Tel:','tel',180,20,'Arial',10,0,0,0,0,1,49,1,0,1,'Telefono - Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(246,93,'Email - Empresa','email',400,20,'Arial',10,0,0,0,0,1,49,1,0,0,'Email - Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(624,31,'Referencia - Empresa','referencia',200,20,'Lucida Console',8,0,0,0,0,0,49,1,0,0,'Referencia - Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(14,163,'Cliente: ','nombrecliente',460,25,'Lucida Console',8,0,0,0,0,1,49,1,0,0,'Nombre Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(14,185,'Calle:','direccioncliente',350,20,'Lucida Console',8,0,0,0,0,1,49,1,0,1,'Calle - Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(365,185,'No:','noexteriorcliente',150,20,'Lucida Console',8,0,0,0,0,1,49,1,0,1,'No. Exterior - Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(84,95,'No Int:','nointeriorcliente',150,20,'Lucida Console',8,0,0,0,0,0,49,1,0,0,'No. Interior - Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(14,200,'Colonia:','coloniacliente',230,20,'Lucida Console',8,0,0,0,0,1,49,1,0,1,'Colonia - Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(245,200,'CP:','cpcliente',120,20,'Lucida Console',8,0,0,0,0,1,49,1,0,1,'CP - Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(19,237,'Ciudad:','ciudadcliente',140,20,'Lucida Console',8,0,0,0,0,1,49,1,0,0,'Ciudad - Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(156,217,'Estado:','estadocliente',160,20,'Lucida Console',8,0,0,0,0,1,49,1,0,0,'Estado - Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(360,217,'RFC:','rfccliente',150,20,'Lucida Console',8,0,0,0,0,1,49,1,0,0,'RFC - Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(662,117,'Serie','serie',50,20,'Arial',8,0,0,0,0,1,49,1,0,0,'Serie');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(713,117,'Folio','folio',100,20,'Arial',8,0,0,0,0,1,49,1,0,0,'Folio');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(663,141,'Fecha','fecha',100,20,'Microsoft Sans Serif',10,0,0,0,0,1,49,1,0,0,'Fecha');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(764,141,'Hora','hora',100,20,'Microsoft Sans Serif',10,0,0,0,0,1,49,1,0,0,'Hora');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(14,273,'Clave','clave',100,20,'Lucida Console',8,0,0,1,0,1,49,1,0,0,'Clave');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(116,273,'Descripción','descripcion',360,290,'Lucida Console',8,0,0,1,0,1,49,1,0,0,'Descripción');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(484,273,'Cantidad','cantidad',90,20,'Lucida Console',8,0,0,1,1,1,49,1,0,0,'Cantidad');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(609,273,'Precio Unitario','preciou',120,20,'Lucida Console',8,0,0,1,1,1,49,1,0,0,'Precio Unitario');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(729,273,'Importe','importe',120,20,'Lucida Console',8,0,0,1,1,1,49,1,0,0,'Importe');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(729,681,'Subtotal','subtotal',120,20,'Lucida Console',8,0,0,0,1,1,49,1,0,1,'Subtotal');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(729,700,'Iva','iva',120,20,'Lucida Console',8,0,0,0,1,1,49,1,0,1,'Iva');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(729,732,'Total','total',120,20,'Lucida Console',8,0,0,0,1,1,49,1,0,1,'Total');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(19,696,'Total letra','totalletra',600,50,'Lucida Console',8,0,0,0,0,1,49,1,0,0,'Total letra');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(24,108,'Clave cliente','clavecliente',120,20,'Arial',8,0,0,0,0,0,49,1,0,0,'Clave Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(34,73,'Municipio cliente','municipiocliente',136,20,'Arial',8,0,0,0,0,0,49,1,0,0,'Municipio Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(101,22,'Municipio empresa','municipio',136,20,'Arial',8,0,0,0,0,0,49,1,0,0,'Municipio Empresa');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(562,273,'Tipo','tipocantidad',32,20,'Lucida Console',8,0,0,1,0,1,49,1,0,0,'Tipo Cantidad');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(10,10,'CURP','curpcliente',120,20,'Lucida Console',8,0,0,0,0,0,49,1,0,0,'CURP Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(567,51,'Contacto:','contactocliente',160,20,'Lucida Console',8,0,0,0,0,0,49,1,0,0,'Contacto Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(567,51,'Referencia:','refcliente',160,20,'Lucida Console',8,0,0,0,0,0,49,1,0,0,'Ref. Dom. Cliente');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'% Descuento','descuentopor',120,25,'Lucida Console',8,1,0,1,1,0,49,1,0,0,'% Descuento');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'Cant. Descuento','descuentocant',120,25,'Lucida Console',8,1,0,1,1,0,49,1,0,0,'Cant. Descuento');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'Precio s/desc','preciosindesc',120,25,'Lucida Console',8,1,0,1,1,1,49,1,0,0,'Precio s/desc');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'Importe+Iva','importeiva',120,25,'Lucida Console',8,1,0,1,0,0,49,1,0,0,'Importe + IVA');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'Preciou+Iva','preciouiva',120,25,'Lucida Console',8,1,0,1,0,0,49,1,0,0,'PrecioU + IVA');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(12,136,'Vendedor:','vendedor',160,20,'Lucida Console',8,0,0,0,0,1,49,1,0,0,'Vendedor');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(179,132,'Prioridad Mensaje:','prioridadstr',300,20,'Lucida Console',8,0,0,0,0,1,49,1,0,0,'Prioridad Mensaje');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(324,492,'Mensaje Candelado','cancelado',170,20,'Arial',18,0,0,1,0,1,49,1,0,0,'Mensaje Candelado');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(14,642,'Comentario','comentario',700,20,'Lucida Console',8,0,0,0,0,1,49,1,0,0,'Comentario');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(651,751,'Subtotal s/desc:','subtotalsindesc',180,22,'Lucida Console',8,1,0,0,1,1,49,1,0,1,'Subtotal s/desc');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(651,780,'Total Descuento:','totaldesc',180,22,'Lucida Console',8,1,0,0,1,1,49,1,0,1,'Total Descuento');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(179,132,'Prioridad:','prioridad',300,20,'Lucida Console',8,0,0,0,0,1,49,1,0,0,'Prioridad');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(13,673,'Peso: ','peso',300,20,'Lucida Console',8,0,0,0,0,1,49,1,0,0,'Peso');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(663,141,'Fecha salida:','fechasalida',100,20,'Lucida Console',10,0,0,0,0,1,49,1,0,0,'Fecha Salida');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(764,141,'Hora salida:','horasalida',100,20,'Lucida Console',10,0,0,0,0,1,49,1,0,0,'Hora Salida');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(14,642,'Surtido:','surtido',700,20,'Lucida Console',8,0,0,0,0,1,49,1,0,0,'Surtido');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(339,59,'Total Cantidad: ','totalcantidad',200,20,'Lucida Console',8,0,0,0,0,0,49,1,0,1,'Total Cantidad');
+
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(270,350,33,1,20,3,0,864);
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(270,350,49,1,20,3,0,864);
+
+
+insert into tblactualizaciones values('ver 9012 rev 10');

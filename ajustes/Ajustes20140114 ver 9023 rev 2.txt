@@ -1,0 +1,51 @@
+CREATE TABLE `tblInmueble` (
+  `ID` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idNotario` INTEGER UNSIGNED NOT NULL,
+  `TipoInmueble` VARCHAR(2) NOT NULL,
+  `Calle` VARCHAR(150) NOT NULL,
+  `NoExterior` VARCHAR(55) NOT NULL,
+  `NoInterior` VARCHAR(30) NOT NULL,
+  `Colonia` VARCHAR(100) NOT NULL,
+  `Localidad` VARCHAR(100) NOT NULL,
+  `Referencia` VARCHAR(100) NOT NULL,
+  `Municipio` VARCHAR(100) NOT NULL,
+  `Estado` INTEGER UNSIGNED NOT NULL,
+  `Pais` VARCHAR(3) NOT NULL,
+  `CodigoPostal` VARCHAR(5) NOT NULL,
+  PRIMARY KEY (`ID`)
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `tblnotariospublicos` DROP COLUMN `TipoInmueble`,
+ DROP COLUMN `Calle`,
+ DROP COLUMN `NoExterior`,
+ DROP COLUMN `NoInterior`,
+ DROP COLUMN `Colonia`,
+ DROP COLUMN `Localidad`,
+ DROP COLUMN `Referencia`,
+ DROP COLUMN `Municipio`,
+ DROP COLUMN `Estado`,
+ DROP COLUMN `Pais`,
+ DROP COLUMN `CodigoPostal`;
+
+
+CREATE TABLE `tblClientesIdenti` (
+  `ID` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idcliente` VARCHAR(45) NOT NULL,
+  `identificacion` VARCHAR(45) NOT NULL,
+  `numero` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`ID`)
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `tblclientesidenti` MODIFY COLUMN `idcliente` INTEGER UNSIGNED NOT NULL,
+ MODIFY COLUMN `identificacion` INTEGER UNSIGNED NOT NULL;
+
+ALTER TABLE `tblclientes` DROP COLUMN `identificacion`,
+ DROP COLUMN `numeroID`;
+
+ALTER TABLE `tblopciones` ADD COLUMN `correocontenido` VARCHAR(2000) NOT NULL AFTER `emailssl`;
+
+
+
+insert into tblactualizaciones(version) values('ver 9023 rev 2');

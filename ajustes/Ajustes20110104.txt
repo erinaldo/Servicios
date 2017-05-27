@@ -1,0 +1,43 @@
+
+
+CREATE TABLE `db_services`.`tblsucursalesarchivos` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idsucursal` INTEGER UNSIGNED NOT NULL,
+  `rutafactura` VARCHAR(300) NOT NULL,
+  `rutacer` VARCHAR(300) NOT NULL,
+  `rutakey` VARCHAR(300) NOT NULL,
+  `passkey` VARCHAR(45) NOT NULL,
+  `idmaquina` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `FK_tblsucursalesarchivos_1` FOREIGN KEY `FK_tblsucursalesarchivos_1` (`idsucursal`)
+    REFERENCES `tblsucursales` (`idsucursal`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+
+
+update tblventasinventario set idvariante=1,idservicio=0
+insert into tblproductosvariantes values(1,1,'-',0,1)
+
+tblventasinvetario
+idvariante integer
+idservicio integer
+
+tblventasremisionesinvetario
+idvariante integer
+idservicio integer
+
+tblventaspedidosinvetario
+idvariante integer
+
+tblventascotizacionesinvetario
+idvariante integer
+
+tblventasremisiones
+tipodecambio double
+idmoneda integer
+
+tblclientes
+email varchar(600)

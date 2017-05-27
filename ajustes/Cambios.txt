@@ -1,0 +1,1054 @@
+****Cambios en la versión 0.9.037 rev 25
+*Conciliacion Diot ahora es más rápida.
+*Cambio en la pantalla de consulta de saldos contabilidad.
+*Ajuste en cálculo de costos cuando se usa el costo mayor y costo indirecto.
+*Se agregó el poder crear máscaras para documentos de proveedores.
+*Se agregó filtro por tipo de proveedor en reportes de compras.
+
+****Cambios en la versión 0.9.037 rev 24
+*Se agregó addenda Soriana y Walmart
+*Se agregó poder quitar permiso para usar un almacén.
+*Se agregó opción en artículos para indicar si solo se usan
+ en ventas, solo en compras o solo en movimientos de inventario.
+*Se agregó el poder ligar un movimiento de inventario a un cliente.
+*En reporte de inventario se agregó opción de mostrar solo descontinuados.
+
+****Cambios en la versión 0.9.037 rev 23
+*Ajuste en reporte de costos.
+*Reporte de Auxiliar de cuentas se libero la primer fecha para poder poner
+ cualquier rango de fechas.
+*Buscador de cuentas en reportes ya no obliga a que sea una cuenta de 
+ último nivel.
+*Cambio en conciliación de bancos.
+*Reporte de relaciones analiticas al hacerce por rango de cuentas se mostrará agrupado
+ por cuenta mayor.
+
+****Cambios en la versión 0.9.037 rev 22
+*Corrección en reporte de compras por artículos y remisiones de compra
+ por artículo, marcaba error.
+*Ajuste en movimientos de inventario, al hacer salidas se indicará el
+ costo promedio actual y no el último costo.
+*Se agregó opcion en reportes de movimientos de inventario para indicar
+ si se mostraran en pesos o en moneda original los importes.
+
+****Cambios en la versión 0.9.037 rev 21
+*Se cambio el formato del reporte por tasa de IEPS
+*Se agregó el precio del restante en reporte ventas por surtir.
+*En contabilidad a las cuentas se les puede indicar que son de depreciación.
+*Corrección en reporte de lista de precios, mostraba artículos descontinuados.
+
+****Cambios en la versión 0.9.037 rev 20
+*Ajustes en reportes.
+
+****Cambios en la versión 0.9.037 rev 19
+*Ajuste en búqueda de artículos.
+
+****Cambios en la versión 0.9.037 rev 18
+*Ajustes en reportes de compras.
+*Ajustes en crear desde XML.
+
+****Cambios en la versión 0.9.037 rev 17
+*Ajustes en reportes.
+*Se agregó en pólizas de contabilidad el poder indicar la cantidad de cheque y se agregó
+en la impresión.
+*Generar compras desde el XML.
+
+****Cambios en la versión 0.9.037 rev 16
+*Ajuste en catálogo de cuentas en contabilidad, no funcionaba el poder asignar el
+ agrupador del SAT a las subcuentas.
+*Ajuste en importador de pólizas.
+*Cambios en catálogos de clientes, sucursales y artículos para cfdi 3.3.
+*El tipo de cambio por default se tomará de Banxico.
+*Se agregó cantidad con letra en impresión de pólizas.
+
+****Cambios en la versión 0.9.037 rev 15
+*Corrección en corte global no separaba correctamente los métodos de pago en remisiones.
+*Se agregó en compras reporte por articulo mensual por proveedor.
+*Se agregó reporte por tasa de IEPS.
+*Ajuste en reportes de ventas para que salgan en todos que filtros que usaron.
+*Crear desde cotizaciones o pedidos ya no restringe la sucursal.
+*Se agregó manejo de backorder.
+
+****Cambios en la versión 0.9.037 rev 14
+*Se agregó el poder cambiar de serie en extra.
+*Se agregó opción para indicar a un cliente que no se cheque su crédito al seleccionarlo.
+*Corrección en el cierre del ejercicio en contabilidad.
+*Corrección al hacer una factura por parcialidad marcaba error.
+
+****Cambios en la versión 0.9.037 rev 13
+*Permiso de ventas consulta ya se toma en cuenta al presionar F6 en pantallas de ventas.
+*Corrección en reportes de contabilidad, a veces no permitia indicar mas de un nivel al filtrar 
+ por cuenta.
+*En captura de pólizas ya aparece la etiqueta de valor de los actos.
+*Se agregó permiso para permitir ver notificaciones de gastos.
+*Complemento comercio exterior 1.1 listo para probarse.
+*Se agregó reporte de analítica de proveedores.
+
+****Cambios en la versión 0.9.037 rev 12
+*Corrección en impresora copia de flujo, imprimia en la misma impresora que la estático.
+*Corrección en reportes de contabilidad para que no tomen en cuenta pólizas no guardadas.
+*Nueva versión de gastos programables.
+*Se agregó opción para elegir si el vendedor será por el asignado al usuario o el asignado
+ al cliente.
+*En reportes de antigüedad de clientes se agregó filtrar por zona de cliente.
+
+****Cambios en la versión 0.9.037 rev 11
+*Corrección en al crear póliza de apertura al cerrar un ejercicio en contabilidad.
+*Corrección en impresión de facturas la impresora PDF no salía correctamente.
+
+****Cambios en la versión 0.9.037 rev 10
+*Al importar precios se le agregó que si se actualiza el precio de lista uno y si hay
+ descuentos en las demás listas se actualizan automáticamente ahora.
+*Se agregó reporte de apartados por artículo concentrado.
+*Corrección en reportes comparativo mensual.
+*Ajuste en carta tiremax.
+*Cambios en gastos, ya no se llena la descripción automáticamente. Y en los sueldos
+ se agregó opción para separar concepto por empleado o concentrado en un solo concepto.
+*En ventas y gastos el vendedor por default que se seleccionará, será el ligado con el 
+ usuario si tiene un vendedor ligado.
+*Se agregó opción para solo poder hacer ventas a crédito.
+*Se agregó filtro en reporte de clientes, para mostrar solo clientes de crédito.
+
+****Cambios en la versión 0.9.037 rev 9
+*Se agregó el envió de cartas para Tiremax
+*Se agregó el poder importar precios.
+
+****Cambios en la versión 0.9.037 rev 8
+*Corrección al agregar kits en facturas marcaba error.
+
+****Cambios en la versión 0.9.037 rev 7
+*Se agregaron variables en pagos y depositos para calcular el monto en tipo de cambio original.
+*Se actualizaron catálogos para nómina.
+
+****Cambios en la versión 0.9.037 rev 6
+*Ajuste en las últimas variables agregadas.
+*Se agregaron variables para pérdida y ganancia cambiaria.
+
+****Cambios en la versión 0.9.037 rev 5
+*Corrección en reporte de remisiones por método de pago y clasificación.
+*Se agregaron variables para gravable y no gravable en módulos de pagos y depósitos
+ en las máscaras.
+*Se agregó reporte de pedidos concentrado por artículo.
+*Se agregó permiso por usuario para poder haber ventas a crédito.
+
+****Cambios en la versión 0.9.037 rev 4
+*Ajuste en nómina.
+
+****Cambios en la versión 0.9.037 rev 3
+*Ajuste de horas extra en nómina.
+
+****Cambios en la versión 0.9.037 rev 2
+*Se agregó herramienta para generar RFC en trabajadores.
+*Ajustes en nómina.
+
+****Cambios en la versión 0.9.037 rev 1
+*Se agregó el poder facturar pagos de remisiones.
+*Se agregó total de pagos al imprimir un recibo de pago.
+*Corrección en captura de pólizas, al agregar una cuenta diot y después se modifica
+ se quedaba registrada como si fuera de DIOT
+*Se agregó opción de agregar directamente el archivo XML al agregar comprobantes en la
+ captura de pólizas.
+*Cambio en el cálculo de la antigüedad del trabajador en nómina.
+
+
+****Cambios en la versión 0.9.036 rev 18
+*Ajustes en nómina.
+*Se agregó reporte de compras concentrado por proveedor.
+*Se habilitó el poder cambiar de sucursal al surtir una remisión hecha por surtir.
+
+****Cambios en la versión 0.9.036 rev 17
+*Ajustes en nómina.
+
+****Cambios en la versión 0.9.036 rev 16
+*En nómina ya aparece el selector de tipo de nómina.
+*En reporte de costos se agregó la opción de dar el costo de inventario basado en el último costo.
+*Los catálogos en nómina ahora tienen clave.
+
+****Cambios en la versión 0.9.036 rev 15
+*Cambio en impresión de corte, cuando se imprime todo ya no aparece el total.
+*Corrección en remisiones al consultar una remisión a veces no indicaba correctamente si era
+ de contado o crédito.
+*Ajuste en reportes de conciliación en inventario.
+*Reporte de movimientos de caja se agrego en reporte de gastos.
+*Corrección en impresión de depósitos marcaba error y se ajustaron los tamaños de los campos.
+*Corrección en notas de crédito al hacerce a un paso los precios de los conceptos no salian correctamente
+ en la impresión.
+*Se agregó en la herramienta de cambios de precio poder aumentar precios por porcentaje.
+*Ajuste de saldo inicial en reporte de estado de cuenta en bancos.
+*Nómina para 2017 lista.
+**Detalles a revisar para nómina:
+   **En sucursales seleccionar el regimen fiscal para la nomina.
+   **Revisar en los trabajadores los siguientes datos que ahora son por catálogos:
+      Tipo jornada, Tipo Contrato,Periodicidad.
+   **Indicar el estado donde labora, si es sindicalizado y si el jefe es un tercero indicar el RFC.
+   **Llenar los datos de subcontratación si se requieren.
+
+
+
+****Cambios en la versión 0.9.036 rev 14
+*Ajuste en punto de venta y remisiones, no hacia movimiento de caja al hacer
+ una venta con múltiples formas de pago.
+*Notas de crédito se cambió el método de pago a 99.
+*Se agregó reporte de pedidos de venta concentrado por cliente y día.
+*Corrección en pagos bancos, el checkbox de la fecha siempre quedaba activado.
+
+****Cambios en la versión 0.9.036 rev 13
+*Ajuste en addenda PEPSICO
+*Corrección en reporte de auxiliar de cuentas
+*Corrección en recalculos de inventario cuando se crean compras desde remisiones
+ de compra.
+
+****Cambios en la versión 0.9.036 rev 12
+*Se agregó módulo de movimientos de inventario en las máscaras de contabilidad.
+*Corrección reporte de ventas pedidos, no filtraba correctamente al cliente.
+
+****Cambios en la versión 0.9.036 rev 11
+*Se agregó la unidad de medida en las impresiones de compras.
+*Corrección en captura de pólizas con algunas cuentas que eran último nivel
+ marcaba que no lo eran y la impresión salía vacia.
+*Se agregó poder eviar por correo ordenes de compra.
+
+****Cambios en la versión 0.9.036 rev 10
+*Se agregó opción para que al crear desde remisiones se agregue un concetrado por remisión
+ en la factura.
+*Corrección en captura de pólizas no dejama modificar renglones.
+*Corrección en reportes de estado de cuenta salía incorrecto el salgo inicial.
+*La integración a bancos ahora se puede configurar por separado.
+
+****Cambios en la versión 0.9.036 rev 9
+*Se corrigió reporte de balanza.
+*Se agregó fecha para contabilidad en depósitos, ahora tomará esa
+ fecha el sistema para procesar las pólizas.
+*Se agregó opción para que el reporte de balanza salga a último nivel.
+*Se agregó opción para no permitir imprimir documentos sin guardar.
+
+****Cambios en la versión 0.9.036 rev 8
+*Corrección reporte de impresión de pólizas.
+*Ajustes en captura de pólizas.
+*Se agregó el campo de usuario en compras y movimientos de inventario.
+*Se agregaron variables para impuestos locales en máscaras.
+*Se agregó mensaje de confirmación en punto de venta al cobrar.
+*Se agregó cantidad máxima en cajas para que avise el sistema si se pasa 
+ de esa cantidad la caja en punto de venta.
+*En corte global las remisiones de contado ahora se separan en "Efectivo"
+ y "No efectivo".
+*En los métodos de pago de contado ahora se puede indicar si se muestran en
+ bancos o no.
+*Se corrigió la variable total sin iva en pagos.
+*Se agregaron variables para total sin iva gravable y no gravable en ventas y
+ compras.
+*Se agregó ISR en proveedores y bancos->pagos.
+*Se agregó variables de ISR en módulo de pagos en máscaras.
+
+
+****Cambios en la versión 0.9.036 rev 7
+*Nueva captura de pólizas lista para usarse.
+*Pólizas de Egresos ahora tienen configuración separada para impresión.
+*Ajuste en el concepto de pólizas al generarse automáticamente.
+*Número de póliza ahora se lleva por clasificación.
+
+****Cambios en la versión 0.9.036 rev 6
+*Corrección en boletas al darle guardar la impresión no salía correcta.
+*Cambio de formato de fechas en reportes de semillas.
+*Nueva captura de pólizas lista para probar.
+*Ajuste en reporte de boletas se agrupará por serie.
+
+****Cambios en la versión 0.9.036 rev 5
+*Corrección en impresión de empeños la fecha de vencimiento no salía correctamente.
+*Ajustes en Corte global, se agregó un comentario, configuración para remisiones y
+ filtro por horas.
+*Se agregó usuario en impresión de ventas.
+*Se agregó poder indicar un comentario en punto de venta.
+*Se agregó leyenda en impresión de pagos bancos.
+*Se agregó tipos de sucursales.
+*Correción en punto de venta, el permiso para asignar cantidad no estaba funcionando
+ correctamente.
+*Se agregó serie en reporte de boletas.
+*Se agregaron totales en impresión de liquidación y el total neto sin analizar en las
+ impresión de boleta.
+*Corrección en consulta de boletas el grid cambiaba de tamaño.
+*Cambio en complemento INE se ajustó a la versón 1.1.
+
+
+****Cambios en la versión 0.9.036 rev 4
+*Corrección en reporte de antigüedad de saldos de proveedores, marcaba error.
+*Ajuste en nómina se actualizó el catálogo de percepciones.
+*Corrección al consultar un remisión de una sucursal diferente a la que esté
+seleccionada, el folio se cambiaba y provocaba cambios de folios.
+*Se agregó configuración de corte global.
+
+****Cambios en la versión 0.9.036 rev 3
+*Al crear desde remisiones si tienen lotes o importaciones se pasaran a la factura.
+*Al crear desde remisiones y tienen devoluciones aplicadas, se tomarán en cuenta al hacer
+ la factura. (En el caso de que se usen lotes o importaciones y tenga devoluciones la 
+remisión, se tienen que ajustar manualmente los lotes o importaciones en la factura.)
+*Ajuste al imprimir una factura pendiente o sin guardar, como método de pago
+ se mostrará el que este en pantalla seleccionado si no se han agregado métodos de pago.
+*Se agregaron reportes comparativos.
+
+
+****Cambios en la versión 0.9.036 rev 2
+*Corrección en reporte de por método de pago en remisiones contaba las canceladas.
+*Corrección en reporte de antigüedad de salgo extendidos marcaba error cuando se
+ seleccionaba mostrar en moneda original.
+*En documentos de clientes y proveedores se agregó que se muestre la moneda y el tipo 
+ de cambio.
+
+****Cambios en la versión 0.9.036 rev 1
+*Ahora se pueden agregar varios métodos de pago en facturación.
+*Ahora se pueden agregar varios métodos de pago en nominas.
+*Ahora se pueden agregar varios métodos de pago en remisiones.
+*Reporte de devoluciones ahora tiene el folio de la factura o remisión de la que se hizo.
+*Corrección al enviar cotizaciones y pedidos por correo, no salían los datos de la empresa.
+*Se agregó consulta de movimientos de una factura, remisión o compra.
+*Se agrego el método de pago NA en la lista del SAT.
+*Ajuste en conector macropro para que tome la clave del sat en los métodos de pago.
+
+****Cambios en la versión 0.9.035 rev 19
+*Corrección al cancelar notas de crédito de compras marcaba error.
+*Ya no se podrán guardar facturas de mas de 3 días.
+*Ajuste en el xml en facturas que usan un concepto de tipo ret/dev y lo indican
+ positivo. El iva se indicaba mal.
+
+****Cambios en la versión 0.9.035 rev 18
+*Corrección al generar pólizas de nómina.
+*Cambio en la captura de métodos de pago, ahora se debe seleccionar primero el tipo.
+
+****Cambios en la versión 0.9.035 rev 17
+*Se agregó el poder asignar descuentos por clasificación a clientes.
+
+****Cambios en la versión 0.9.035 rev 16
+*Ajuste en complemento INE
+
+****Cambios en la versión 0.9.035 rev 15
+*Ajuste en variables de contabilidad para tomar las canceladas que estaban vivas al momento de
+ generar la poliza (los demas módulos que faltaban)
+*Corrección en reporte de notas de crédito no consideraba cuando habia retenciones.
+*Corrección en cotizaciones y pedidos, en algunos casos indicaba mal la cantidad con letra.
+*Cambio en reporte de antigüedad de saldos y pagos de proveedores, en compras hechas en dolares
+ y pagadas en pesos lo abonado sumara los pesos sin importar el tipo de cambio al mostrarse en
+ pesos las consultas.
+
+****Cambios en la versión 0.9.035 rev 14
+*Se agregó reporte por clasificación y método de pago en ventas.
+*Corrección al enviar por correos facturas no indicada el UUID en el correo.
+*Se agregó opción para reporte de ventas canceladas para mostrar todas las canceladas en le periodo
+ o solo las canceladas que fueron antes del periodo indicado.
+*Se agregó en punto de venta que la copias de remisiones también salgan.
+*Ajuste en variables de contabilidad para tomar las canceladas que estaban vivas al momento de
+ generar la poliza (solo facturación,compras y devoluciones ventas)
+*Corrección en reporte de ventas canceladas, totales por sucursal no salían corréctamente.
+*Corrección en reporte de devoluciones, los totales no salían correctamente.
+
+****Cambios en la versión 0.9.035 rev 13
+*Agregó complemento de comercio exterior.
+*Las búsquedas ahora se mostraran de las mas recientes a las mas viejitas.
+*Corrección en impresión de compras, la imprimir al guardar marcaba que era
+ una impresión de prueba.
+*Se agregó reportes de ventas por cliente concentrado.
+*Se agregó opción para reportes por vendedor de salir de forma concentrada.
+*Se agregó reporte de utilidad por clasificación.
+*Corrección en notas de crédito, notas de cargo y devoluciones, estaban con el código del
+primer catálogo de metodos de pago.
+
+****Cambios en la versión 0.9.035 rev 12
+*Ajuste en impresión de facturas no aparecia el total de negativos.
+
+****Cambios en la versión 0.9.035 rev 11
+*Corrección al comparar precios con el costo para avisar si un precio estaba bajo costo. No se consideraba
+ los precios netos ni si estaba en dólares.
+*Se agregaron campos para descuentos en impresión de compras.
+*Se agregó fecha para contabilidad en facturación.
+*Se agregaron los campos codigo2 y noparte en la importación de artículos.
+
+****Cambios en la versión 0.9.035 rev 10
+*Ajuste en las facturas configuradas como egreso, todos los negativos apareceran positivos en el XML.
+*Corrección en punto de venta en ofertas de tipo X por Y.
+*Se agregó Reporte de estatus de empeños. 
+
+****Cambios en la versión 0.9.035 rev 9
+*Corrección al imprimir documentos con totales negativos.
+*Corrección el imprimir una factura de flujo que estuviera con la configuración
+ sin corte activada y sin encabezado desactivada.
+
+****Cambios en la versión 0.9.035 rev 8
+*Ajuste en reporte de antigüedad de saldos de compras y ventas.
+*Se agregó opción para cambiar el xml de las facturas a egreso.
+*Se agregó columna de último costo en reporte de costos de inventario.
+*Corrección en captura de cuentas de contabilidad al modificar un número de cuenta
+ no se modificaban las sub cuentas si tenia esa cuenta.
+*Se agregó clave del sat en los métodos de pago al imprimir.
+*Ajustes en auditoria de usuarios.
+*Ajuste al timbrar una factura ya guardada que marco error previamente al timbrar, para evitar
+ el error de duplicidad de hash.
+*Corrección al imprimir reporte de remisiones resumido, pedia una sucursal.
+
+****Cambios en la versión 0.9.035 rev 7
+*Ajuste en reportes de antigüedad de saldos.
+*Ajuste en tabla de formas de pago del sat.
+
+****Cambios en la versión 0.9.035 rev 6
+*Ajuste al maximizar ventanas.
+*Ajuste en el reporte de impresión de pólizas.
+
+****Cambios en la versión 0.9.035 rev 5
+*Ahora las formas de pago se definen en el cliente y es el que tomará el sistema
+ al seleccionar un cliente en facturación y remisiones.
+*Se agregó en las formas de pago, poderlas ligar al catálogo del SAT el cual es el que 
+ saldra en el XML.
+*Se agregó opción para no bloquear el agregar mas conceptos en una factura hecha en crear 
+ desde.
+
+****Cambios en la versión 0.9.035 rev 4
+*Ajuste en complemento INE
+*Se agregó el poder seleccionar otra sucursal para el reporte de control de inventario.
+
+****Cambios en la versión 0.9.035 rev 3
+*Se agregó manejo para el complemento del INE.
+*Ajustes en pedidos de inventario.
+*Ajustes en auditoria de usuarios.
+
+****Cambios en la versión 0.9.035 rev 2
+*Se agreron mas listas de precios.
+*Ajuste a reportes de control de inventario.
+
+****Cambios en la versión 0.9.035 rev 1
+*Se agregó módulo para pedidos en inventario.
+*Ajustes a los reportes de control de entrega.
+*En remisiones se ajustó que si el primer artículo que se agrega esta
+ en dólares los totales se cambian a dólares.
+
+****Cambios en la versión 0.9.034 rev 9
+*Ajustes en los reportes agregados en la versión anterior.
+
+****Cambios en la versión 0.9.034 rev 8
+*Corrección en impresión de pólizas no estaba apareciendo el nombre de la cuenta.
+*Se agregó reporte Control entrega mercancia.
+*Se agregó reporte Control de entrega de mercancia detallado.
+*Se agregó opción de checa folio para facturas.
+
+****Cambios en la versión 0.9.034 rev 7
+*Corrección en validador, a veces imprimia en blanco el reporte de validación.
+*Ajuste en impresión de facturas y remisiones si el código de un artículo tiene una Ñ 
+ marcaba error.
+*Corrección en la impresión de cheque en pagos bancos, no salia correctamente el folio y 
+ la imagen de fondo tampoco salía.
+*Se agregaron reportes de ventas por articulo con peso y con cliente. 
+*Corrección en captura de clasificaciónes de inventario no se mostraba el nombre de la
+ clasificación al seleccionarla.
+
+****Cambios en la versión 0.9.034 rev 6
+*Al crear una factura desde una remisión y querer modificar un concepto, y tener activada la 
+ opción de facturar solo con existencia, el sistema marcaba que no hay existencia suficiente
+ y no permitia modificar el concepto.
+*Ajustes en los reportes de ventas para agrupa por sucursal y se agrego el filtro de tipo
+ de cliente.
+
+****Cambios en la versión 0.9.034 rev 5
+*Se corrigió al agregar o modificar un proveedor en bancos pagos no se actualizaba el rfc en la 
+ ventana de pagos.
+*Al agregar un comprobante en bancos pagos no estaba tomando correctamente la fecha del xml.
+*Corrección en captura de cuentas de proveedores al modificar exigia que hubiera una cuenta y
+ se guardaba la misma información en clabe y cuenta.
+*Se ajustó en la generación de XMLs en contabilidad que se puedan mover libremente las fechas.
+*Mas ajustes en los pagos para evitar centavos volando.
+*Cambio en la captura del catálogo de cuentas en contabilidad.
+*Cambio en el manejo de las cuentas descontinuadas en contabilidad.
+*Correcciones al generar el XML de la balanza en contabilidad.
+*En revisión de inventario ahora mostrará el inventario a la fecha que se indique y no el actual.
+*Se agregó en las remisiones se imprima los detalles de un kit.
+*Corrección en la variable de total por factura contado en depósitos.
+
+****Cambios en la versión 0.9.034 rev 4
+*Se revirtió el reporte de estado de posisión financiera a como estaba antes.
+*Se agregó el poder obtener el acuse de cancelación en los demás documentos que se timbran.
+*Se agredó opción para poder importar documentos desde un archivo de excel.
+*Se agregó función para poner los inventarios en cero.
+*Ajustes en pagos para evitar (eso espero) centavos que quedaban volando.
+
+****Cambios en la versión 0.9.034 rev 3
+*Se agrego el poder obtener acuse de cancelación en facturación.
+*Corrección en reporte de estado de resultados.
+
+****Cambios en la versión 0.9.034 rev 2
+*Se quitó restricción de no poder agregar un comprobante que ya estuviera agregado en otra póliza
+ en contabilidad.
+*Se corrigió un error al generar pólizas de pagos que estuvieran ligadas a la cartera de proveedores.
+*Se corrigió un detalle que pasaba al capturar una cuenta de diot los siguientes renglones los tomaba
+ para diot aunque no lo fueran.
+*Se corrigió un detalle que pasaba al consultar un renglon en una póliza con cuenta de diot
+ y modificarla se perdia de la diot.
+*Se corrigió reporte de estado de posición financiera y estado de resultados, solo se generaba hasta 
+ la fecha final y no en el rango de fechas seleccionado.
+*Corrección en reporte de estado de posición financiera si hay muchas cuentas y el reporte se extendía
+ a mas de una hoja marcaba error.
+*Corrección al recuperar facturas, los XML recuperados quedaban con el nombre anterior de los XML.
+
+****Cambios en la versión 0.9.034 rev 1
+*Corrección en la búsqueda de artículos en punto de venta, no hacía caso a la opción modo de búsqueda b.
+*Se agregó función para hacer una factura por medio de un archivo de excel.
+*Se agregó registro de errores en facturación.
+*Se agregó en la impresión de remisiones que agregue las series en el concepto si tiene.
+*Se agregó en la impresión de movimientos de inventario que agregue las series en el concepto si tiene.
+*Se agregó en la impresión de movimientos de inventario que agregue en el concepto la información 
+ de aduana o lotes si tiene.
+*Corrección en reporte de auxiliar de cuentas en los saldos iniciales cuando se agrupa por mes.
+*En validador ahora se puede imprimir el reporte de solo uno o de todos los xml validados.
+*Corrección al consultar una factura dentro de otra consulta marcaba error al tratar de ver los lotes.
+*Cambio en el funcionamiento de las facturas, ahora al marcar un error de timbrado la factura quedará
+ guardada para poderse timbrar en otro momento, ya no se guardaran pendientes o se eliminarán.
+*Ya se puede asignar licencias para ver los movimientos de usuarios, pero aun no queda la consulta.
+*Se agrego opción para que en la facturación cambie la forma en que toma los folios. Las que esten en
+ el limbo o pendientes también contarán.
+
+
+****Cambios en la versión 0.9.033 rev 33
+*Corrección en reporte de auxiliar de cuentas en contabilidad, no mostraba el agrupador del sat en las
+cuentas de mayor.
+*Se agregó un reporte por artículo de facturas para mostrar lo capturado en escritura y el cliente.
+*Se agregó que al seleccionar un xml en el módulo de compras por default la carpeta que se abra será
+la que este configurada en contabilidad xml ingresos.
+
+****Cambios en la versión 0.9.033 rev 32
+*Ajustes en validador.
+
+****Cambios en la versión 0.9.033 rev 31
+*Corrección en reporte de auxiliar de cuentas marcaba error.
+*Cambio en el catálogo de cuentas las cuentas descontinuadas solo se mostrarán al indicar la nueva opción
+que tiene la consulta, la opción también afecta en el reporte.
+*Ajustes en validador.
+
+****Cambios en la versión 0.9.033 rev 30
+*Ahora el sistema solo entrará en la versión de base de datos que sea compatible.
+*Corrección: Al imprimir remisiones en punto de venta y agregar lotes no se imprimia la información de lote.
+*En empeños al renovar ahora la caja se cambiará a donde se hizó el pago.
+*Se agregó la opción de copiar una póliza en contabilidad, usando el botón guardar como nueva al consultar
+ una póliza ya guardada.
+*En Bancos depositos se muestra el folio interno y se puede buscar por ese folio.
+*En Bancos pagos se muestra el folio interno y se puede buscar por ese folio.
+*Corrección en notas de cargo al tener activada la impresora PDF la segunda impresión salía sin conceptos.
+*Se modificaron los reportes de cobranza de ventas y compras para indicar si estan ligados a bancos o no.
+*Corrección al guardar ofertas marcaba error.
+*Corrección cuando se agregan series a una remisión y se cierra la ventana sin guardar o se da click en
+nuevo, no se liberaban las series agregadas.
+*Se agregaron mas cuentas para comodines de clientes,proveedores,cuentas de banco y trabajadores.
+*Corrección en punto de venta se mostraban en el buscador articulos descontinuados.
+*Se agregó opción en reportes de ventas por artículo para mostrar el dato capturado en predial en ves de la
+descripción del artículo.
+*Se agregó opción en la facturación para cambiar la forma de pago a N/A en ves de pago en una sola exhibición.
+*Cambios en el validador y corrección de detalles.
+
+
+****Cambios en la versión 0.9.033 rev 29
+*Ajuste al recuperar xmls para que no se guarde doble la información del timbrado.
+*Ajuste en el contador de timbres ya no contará las canceladas.
+
+****Cambios en la versión 0.9.033 rev 28
+*Se agregó opción para el reporte de balanza en contabilidad solo muestre cuentas de mayor.
+*Se corrigió en empeños al guardar un pago marcaba error.
+*Se agrego opción en el reporte de conceptos de nómina concentrado para mostrarse como estaba al principio.
+*Corrección en pagos de cobranza al ligar con bancos, usando múltiples clientes y combinando el tipo de pago
+ normal y automático no realizaba el comportamiento esperado.
+*Se agregó opción para ordenar por descripción los artículos en reportes de inventario.
+*Se agregó poder asignar lotes e importaciones en punto de venta.
+*Corrección en reporte de estado de resultados, la información por mes salia incorrecta si se consultaba fuera
+ del periodo de trabajo.
+*Corrección en captura de pólizas al no indicar un folio en una cuenta para diot no aparecia en la conciliacion diot.
+*Corrección en bancos pagos marcaba error al guardar un pago que era traspaso.
+*Corrección en bancos pagos al dar un proveedor de alta.
+
+
+****Cambios en la versión 0.9.033 rev 27
+*Corrección en catálago de cuentas de contabilidad, marcaba error al agregar una nueva.
+*Correcciones en la generación de póliza de apertura.
+*Cambio en la configuración de empresas, ahora tomara la conexión de lo que está configura en
+ la empresa y no en los datos de conexión general del sistema. Esos se utilizan para configurar
+ donde esta la base de datos de db_servicesempresas.
+
+
+****Cambios en la versión 0.9.033 rev 26
+*Ajustes al agregar UUIDs e Información de cheque o transferencia al generar pólizas de pagos.
+*Ajustes al agregar UUIDs al generar pólizas de depositos.
+*Se agregó impresión en las máscaras de contabilidad.
+*Se agregó en Bancos Pagos que al seleccionar un proveedor y este tiene una cuenta dada de alta, al seleccionar
+ un tipo de pago diferente a cheque se llenaran los datos de cuenta destino y banco destino automáticamente.
+*Corrección al imprimir pólizas, marcaba error cuando una póliza era muy larga.
+*Se agregó la opción de agrupar el reporte de auxiliar de cuentas en contabilidad por mes.
+*Ajustes de redondeos en reportes de contabilidad.
+
+****Cambios en la versión 0.9.033 rev 25
+*Corrección en Bancos depósitos marcaba error al guardar.
+*Corrección en Compras al eliminar un renglón marcaba error.
+
+
+****Cambios en la versión 0.9.033 rev 24
+*Corrección al modificar descuentos de forma masiva.
+*Corrección en orden de compra, no se podian agregar conceptos.
+
+****Cambios en la versión 0.9.033 rev 23
+*Mas correcciones en la impresión de pólizas. Alineacion de las cantidades.
+*Buscador de comprobantes en contabilidad cuando son de ingresos ya se puede buscar por cliente.
+*Corrección al generar pólizas de pagos y era un cuenta que manejaba DIOT con iva 0 y habia compras de contado
+ marcaba error.
+*Corrección en impresión de notas de crédito el porcentaje del iva retenido salía mal.
+*Corrección en pago bancos, en la consulta, en el campo proveedor no dejaba poner nada.
+*Corrección en importador de artículos.
+*Corrección en Ventas Cotizaciones, no se mostraba en pantalla el vendedor correcto en una cotización guardada.
+*Se agregó manejo de inventario de lotes e importaciones por almacen.
+*En Bancos Depositos ahora la consulta solo muestra los registros de la cuenta seleccionada.
+*En Bancos Pagos ahora la consulta solo muestra los registros de la cuenta seleccionada.
+*Corrección al generar polizas de pagos, las cuentas que eran para diot no aparecian en la conciliación.
+
+
+
+****Cambios en la versión 0.9.033 rev 22
+*Corrección en captura de sucursales marcaba error al modificar un registro.
+*Corrección en la conciliación DIOT marcaba error al regresar un registro a un mes anterior.
+*En Reportes de ventas ya se muestran todos los reportes de nuevo. Hay que seleccionar la opción de Otros
+ en el Combo Box
+*En la conciliación DIOT se le ajustó la resta de las operaciones en tránsito.
+*Corrección al generar polízas de depositos, marcaba error.
+*En empeños la caja ya no se podrá cambiar. Dependerá de la caja default configurada.
+*Corrección en la impresión de pólizas no salian acomodadas de forma correcta los valores.
+
+
+****Cambios en la versión 0.9.033 rev 21
+*Corrección al generar pólizas de pagos no ponia correctamente el beneficiario al usar ciertas variables.
+*Corrección en compras al consultar una compra que no fuera de la sucursal seleccionada no se refrescaban 
+ los almacenes.
+*Consulta de remisiones ya se deben ordenar correctamente los folios de menor a mayor.
+*Al generar pólizas automáticas de pagos o depósitos ya se agregan los uuids.
+*En bancos pagos, al seleccionar un tipo de pago que diga "CHEQUE" se habilitará el campo de número de cheque y se 
+ deshabilitan los campos de cuenta destino y banco destino.
+*Ajustitos en la generación del concepto en pólizas de depósitos y pagos.
+*Se agrego poder indicar que un artículo está descontinuado, ya no aparecerá en las búsquedas ni en reportes
+ de inventario.
+*Al indicar que un kit se separa ya no queda el precio unitario como total de cada artículo, se multiplica 
+ si tiene mas de uno.
+*Corrección: En devoluciones al tener activada la impresora PDF en la segunda impresión no salían los conceptos de la
+ devolución.
+*Cambio en el comportamiento cuando un artículo usa formula. Ahora siempre se remplazará la descripción entera
+ por los nuevos valores en ves de concatenar los cambios.
+*Se agrego configuración para folios de remisiones por surtir. Se configura en Sucursales Folios.
+*Corrección en remisiones al consultar una remisión guardada y después una remisión pendiente, en la pendiente
+ no se habilitaba el botón guardar.
+*Corrección: La opción para poner por surtir como default para remisiones y facturación no funcionaba correctamente.
+*Corrección: En punto de venta si un usario no tenia permiso para entrar a movimientos de caja se podía entrar
+ desde el punto de venta presionando F10, ahora ya hace caso al permiso ahí también.
+*Lo mismo que el punto anterior pasaba con apartados en el punto de venta.
+*Se agregó la opción de crear traspasos en bancos.
+*Se agregaron campos en la impresión de cheque, en Bancos-Pagos.
+*Se hicieron ajustes en los reportes de saldos,antigüedad de saldos y movimientos de proveedores en proveedores.
+ por que en IQ se les ocurrio poner folio de mas de 45 caracteres.
+*Corrección en Notas de crédito cuando esta activa la impresora PDF la segunda impresión no salían los conceptos.
+*Se agrego ISR e Iva Retenido en Notas de crédito.
+*Se cambio que al surtir una remisión o factura por surtir, en movimientos de inventario la salida tomará el
+ importe neto de cada artículo.
+*Corrección en varios reportes de remisiones que no filtraban correctamente cuando se indicaban clasificaciones.
+*En punto se venta se agrego la opción de cambiar la imagen a que cubra la ventana completa en ves de solo el área
+ chica que tenia.
+*En punto de venta se agregaron permisos para poder cambiar de vendedor y caja. Y también para poder eliminar
+ artículos o asignar cantidad, si no tiene permiso pedirá autorización.
+
+****Cambios en la versión 0.9.033 rev 20
+*Se agregaron nuevas variables en las máscaras para desglose de impuestos y agregue los datos para DIOT.
+*Reporte de estados financieros en contabilidad se corrigio unos totales que no salian correctos y sale
+ mas rápido el reporte.
+*Corrección al seleccionar una máscara por rango en el generador de pólizas, no se habilitaba la segunda
+ fecha.
+*Corrección al tomar los datos de los pagos al generar pólizas automáticas no tomaba bien los datos de los
+ bancos.
+*Corrección al tomar los datos de los pagos al generar pólizas automáticas todo lo ponia como transferencia.
+
+
+****Cambios en la versión 0.9.033 rev 19
+*Corrección al facturar y no tener permiso de dejar pendiente y habia un error el inventario no se regresaba.
+*Corrección al tener activado el ver una póliza generada se cerraba luego luego al abrirse.
+*Corrección al tener varias máscaras de un mismo tipo al generar una póliza por movimiento el seleccionador
+ mostraba siempre máscaras de ventas y no el módulo correspondiente.
+*En contabilidad ya se agregan los datos del UUID y de los datos del Pago en las pólizas generadas automáticamente.
+*En pagos de bancos se agregó la captura de IVA Retenido y de IEPS.
+
+
+****Cambios en la versión 0.9.033 rev 18
+*Corrección: En el diseño de documentos no guardaba correctamente la altura de los renglones si no se le daba guardar cambios.
+*Corrección: En las impresiones de facturación al estar activado que se muestren los detalles de un kit no imprimia las seríes.
+*Corrección: En liquidación de semillas, no tomaba correctamente la configuración de impresión.
+*Corrección: En liquidación de semillas ya no se pierden los datos al estar haciendo una liquidación y sin guardarla abrir una
+ que ya estaba guardada.
+*En máscaras de contabilidad se le agrego para indicar si a una variabe se le va a agregar la información del uuid o del pago.
+*Reporte de inventario de salidas por cliente se le agrandó el campo que muestra la fecha.
+*En liquidaciones de semillas ahora al abrir la pantalla se eliminan todas liquidaciones que hayan quedado en el limbo para
+ y evitar que se pierdan boletas o facturas.
+
+
+
+****Cambios en la versión 0.9.033 rev 17
+*Se cambio en liquidaciones de semillas que al imprimir el precio por kilo se multiplique por 1000
+*Se corrigio el total con letra, en unos números salia mal.
+*Corrección en la variable de total iva de pagos en las máscaras.
+
+****Cambios en la versión 0.9.033 rev 16
+*Aumento de tiempo de espera en reportes de contabilidad.
+*Ajuste en la impresion de liquidación de semillas. En precio decimales hasta 5 y faltaban campos en la
+ impresión de flujo.
+*En remisiones si un código tiene Ñ en el código de barras se cambia a N para que no marque error.
+
+
+****Cambios en la versión 0.9.033 rev 15
+*Reporte de nómina de conceptos concentrado se agrego el importe gravado y exento.
+*Se agrego permiso para mostrar una poliza después de que se generó.
+*Correcciones en los conceptos de las pólizas al generarse automáticamente.
+*Correcciones en los comodines de las máscaras no se podía usar mas de 2 diferentes por máscara.
+*Se agrego en los datos de la diot en las pólizas también poder indicar el ieps y el iva retenido.
+*En la conciliación diot se ajusto para reflejar lo de iva retenido.
+*Se agregó captura para tipos de clientes y proveedores.
+*Se agrandó el espacio para la descripción en gastos y se modificó el reporte para mostrar las descripciones
+ completas.
+*Corrección en gastos, daba mal el folio.
+*Se agrego configuración de folios en gastos.
+*En Bancos Pagos se agregaron campos para los datos del cheque o transferencia.
+*En Bancos Pagos se agrego manejo para agregar UUIDs a un Pago.
+*Se agrego en el registro de cuentas de bancos el poder indicarle a la cuenta si es extrajera.
+*En el cambio de precios masivos no tomaba en cuenta el método por división para sacar el precio, ahora
+ ya lo hace.
+*Corrección: Al imprimir cheque en pago proveedores no aparecia el nombre del proveedor.
+*En boletas de semillas se le quito que redondeo el precio por kilo y que se pueda modificar el peso total
+ sin importar los calculos de los castigos.
+*En liquidaciones de semillas se le agrego el poder cambiar desde ahi el precio de cada boleta.
+*Se agregaron permisos para permitir cambiar las fechas en facturación y remisiones.
+*Se agregaron permisos para permitir dejar pendientes facturas y remisiones.
+
+****Cambios en la versión 0.9.033 rev 14
+*Se agrego etiquetas en impresiones de facturas y remisiones para el total por ofertas.
+*Se agrego que cuando un articulo tiene contenido mayor a 1 el costo lo divide por el contenido para avisar 
+ por bajo costo.
+
+****Cambios en la versión 0.9.033 rev 13
+*Se agrego cuenta contable en trabajadores.
+*Corrección al generar polizas por movimiento en devoluciones.
+*Corrección al generar pólizas por movimiento en nóminas.
+*En máscaras de contabilidad ya se puede cambiar el módulo.
+
+
+****Cambios en la versión 0.9.033 rev 12
+*Corrección en máscaras de contabilidad al indicar comodines con algunos marcaba error.
+*Integración de contabilidad lista.
+
+
+****Cambios en la versión 0.9.033 rev 11
+*Correción en variables de iva en máscaras de contabilidad de depositos y pagos.
+*Cambio de nombre en bancos de Pago proveedores a Pagos.
+*Cambios en el manejo de las máscaras ahora se pueden mezclar todo tipo de variables.
+*Se agregaron nuevas variables para mascaras de contabilidad en nóminas, en percepciones y en deducciones.
+*Se agregó mas tiempo de espera en reportes de utilidad de remisiones.
+
+
+****Cambios en la versión 0.9.033 rev 10
+*Se modificó el reporte de ventas con detalle por cliente para que también muestre resultados
+sin importar si un cliente tiene una zona definida.
+*Se agregaron reportes de ventas y remisiones canceladas.
+*Se agilizó el reporte de utilidad de venta.
+*Correción de variables en contabilidad.
+
+
+
+****Cambios en la versión 0.9.033 rev 9
+*Correción: no se mostraban en la lista de reportes los reportes de importación.
+*Correción al imprimir con flujo activada.
+
+
+****Cambios en la versión 0.9.033 rev 8
+*Corrección en reportes de semillas, al seleccionar un artículo en el reporte de boletas
+marcaba error.
+*Se agregaron reportes de ventas y compras de lotes y aduana.
+*Se agregaron reportes de inventario de lotes y aduana.
+*Se agregaron nuevas variables para las máscaras de contabilidad.
+*Corrección del selecctor de cuentas en catalogos, marcaba que una cuenta de último nivel
+no lo era.
+*Corrección en catalogo de cuentas, marcaba error al modificar una cuenta que no tuviera agrupador sat.
+*Se agregaron permisos para poder modificar los dias de crédito y el monto de crédito de clientes.
+*Se agrego opción para imprimir copia en impresora de flujo en facturas y remisiones.
+*Se cambio en empeños adjudicaciones que al entrar las fechas sean del dia actual.
+*Posible corrección en pagos cuando se hacian pagos a varias documentos con un pago y en el último de 
+ la lista quedaban milesimas de centavos y se marcaba como que no estaba pagado.
+
+
+****Cambios en la versión 0.9.033 rev 7
+*Se agrego mas tiempo de espera en reportes de inventario a fecha.
+*Al consultar una remisión de compra que estuviera facturada solo mostraba el folio
+interno ahora se agregó también la referencia.
+*Correción en la consulta de movimientos de empeños, marcaba error.
+*Agrego totales en reporte de boletas de semillas.
+*Se agrego ruta para comprobantes de ingresos en contabilidad.
+*Ventas y compras de contado se pueden ligar a bancos.
+*Se agregaron permisos para permitir cambiar fecha en pagos.
+*En reportes de Movimientos y Salidas por Cliente en inventarios ahora muestra las canceladas.
+*Corrección en la conciliación de bancos. El saldo inicial ya es correcto al tener varias cuentas.
+*Ajustes en reportes de semillas.
+
+****Cambios en la versión 0.9.033 rev 6
+*Corrección en el calculo de costos, ya toma en cuenta las remisiones de compra.
+*Ajustes de formatos en módulo de semillas, comprobante, liquidación.
+*Corrección al consultar una boleta de semillas redondeaba los porcentajes de los castigos.
+*Corrección al guardar una boleta salía el mensaje de: "Debe seleccionar un producto".
+*Se agregó que al agregar una boleta por movimientos de inventario la cantidad del peso final
+se ponga en la cantidad del movimiento.
+*Se agrego configuración para impresora para semillas se usa la misma para boletas y liquidación.
+*El campo empresa2 en las liquidaciones se cambio al nombre del productor.
+
+****Cambios en la versión 0.9.033 rev 5
+*Correción en la impresion de liquidaciones en el formato del total y que agarre el precio de la boleta.
+*Se agregó permiso para mostrar o no mostrar precio e importe en boletas de semillas.
+*Se agrego opción para poner poner en facturación y remisiones por surtir activado por default.
+*Reporte de intereses en empeños ahora esta ordenado por folio.
+
+****Cambios en la versión 0.9.033 rev 4
+*Ajustes en los formatos en las boletas de semillas en pantalla.
+*Se agrego en la bodega ponga el almacen cuando se hacen boletas por movimientos de inventario.
+*Se agrego el folio en los pagos de empeños.
+*Se agrego reporte de intereses en empeños.
+*Se agrego que se puedan poner en negativo una variable en las máscaras de contabilidad.
+*En pagos de empeños se cambio a que se tenga que seleccionar siempre un empeño antes de cada pago.
+*En pagos de empeños se corrigió al modificar un pago de un empeño ya pagado generaba un nuevo 
+empeño.
+*Se agrego serie en boletas de semillas.
+*Se puede editar el folio en boletas de semillas.
+*Cambios en el forma de la boleta de semillas.
+*Se agrego el poder modificar la configuración de los castigos para poder indicar cuantos kilos por
+punto porcentual se van a descontar.
+*Reportes de remisiones se agrego el filtro de caja.
+*Reportes de cotizaciones se agrego el filtro de caja.
+*Reportes de pedidos se agrego el filtro de caja.
+*En remisiones la caja por default configurada en el punto de venta es la que aparecerá 
+seleccionada en cada nueva remisión.
+
+****Cambios en la versión 0.9.033 rev 3
+*Ajustes en los formatos de liquidación de semillas.
+
+****Cambios en la versión 0.9.033 rev 2
+*Ajustes en formato de cantidades en semillas.
+*Ajustes de redondeo de castigos en boletas.
+*Corrección en generación de pólizas de nómina.
+*Corrección en generación de pólizas de devoluciones de venta y compras.
+*Se agregaron las variables Total neto y total sin iva en las máscaras de depositos y pago proveedores.
+*Ultimo costo ahora también toma en cuenta las remisiones, en compras ahora da el último costo en ves
+de el costo de la última compra.
+*En las impresiones clave se cambio a código y se ordenó a los datos del artículo como debía de ser.
+*Se agrego campo código 2 en impresión de facturación y remisiones.
+*Se agregaron campos para código de barras de código y código 2 en facturación y remisiones.
+*Se quito la selección de precios en la impresión de código de barras.
+*Correción en movimientos de inventario al guardar un movimiento guardado marcaba folio repetido.
+
+****Cambios en la versión 0.9.033 rev 1
+*Corrección en pagos de compras y ventas, cuando era un pago a un documento no se ligaba a bancos.
+*Ajustes de manejo en semillas.
+*Corrección en Reportes de Empeños no estaba habilitado el botón de imprimir al seleccionar compras.
+*Generación de pólizas está listo para probarse.
+*Correción en reportes de inventario, reporte de inventario por clasificación marcaba error al
+seleccionar la casilla de útimo costo.
+*Casilla con costo en reportes por clasificación de inventario estaba al reves.
+
+****Cambios en la versión 0.9.032 rev 14
+*Ajustes en el manejo de las boletas.
+*Ajustes en en liquidación en el formato de las cantidades.
+*Se agrego que se redondeen los pesos en las boletas.
+*Se agrego el representante legal en los proveedores.
+*Se corrigió error al eliminar proveedores.
+*Se agrego selección de caja en remisiones.
+
+****Cambios en la versión 0.9.032 rev 13
+*Se agrego un boton en facturas y remisiones para poder ver la conversión en documentos guardados.
+*Se agrego el cliente en las boletas de salida en semillas.
+*Se agrego opción para mostrar o no mostrar todos los datos en las boletas de semillas.
+*Corrección en punto de venta al modificar cantidades.
+
+Ajuste para los que no usan conversion en remisiones y tenian el problema al facturar:
+update tblventasremisionesinventario set cantidadm=cantidad;
+
+****Cambios en la versión 0.9.032 rev 12
+*Corrección al abrir una boleta de salida, no mostraba el destino.
+
+****Cambios en la versión 0.9.032 rev 11
+*Corrección al abrir una boleta desde movimientos de inventario.
+
+****Cambios en la versión 0.9.032 rev 10
+*Ajustes en la impresión de liquidaciones.
+*Ajuste en facturación cuando marca error al timbrar y esta hecha la factura de remisiones las 
+remisiones se liberan.
+*Ajustes en la impresión del comprobante.
+
+****Cambios en la versión 0.9.032 rev 9
+*Corrección en impresión de liquidaciones al imprimir varias veces ya sale todo correcto.
+*Ajustes en la impresión del comprobante.
+*Ajustes en boletas cuando son de salida.
+
+****Cambios en la versión 0.9.032 rev 8
+*Corrección al imprimir comprobantes, marcaba error.
+*Corrección al cancelar movimientos de inventario marcaba error.
+*Si uno sale de los movimientos de inventario y no guarda el movimiento y habia boletas esas boletas
+ ahora se eliminan.
+
+****Cambios en la versión 0.9.032 rev 7
+*Correccion en semillas liquidaciones al imprimir mas de una ves seguidas.
+*Ajuste en la vista de articulos agregados en remisiones en los tamaños de los campos.
+*Se agrego configuración para mostrar el manejo de boletas en inventarios.
+*Se agrego integración de boletas con movimientos de inventario.
+*Correccion en impresiones de flujo en facturacion, remisiones y cotizaciones cuando se configuraba
+la impresion sin corte o sin pie de página la impresión no salía completa.
+*Se cambio la función sin corte a sin encabezado en impresiones de flujo.
+
+****Cambios en la versión 0.9.032 rev 6
+*Se agrego mensaje al eliminar cosas en semillas.
+*Ya no se permite eliminar boletas liquidadas.
+*Si se elimina una liquidación ahora las boletas agregadas a esa liquidación quedan sin liquidar.
+*Se agrego la impresión de boletas y liquidaciónes en semillas.
+*Se agregaron unos reportes de semillas.
+*Corrección en boletas cuando se consultaba una ya no se podian agregar mas.
+*Corrección al exportar comprobantes a excel.
+
+****Cambios en la versión 0.9.032 rev 5
+*Se agrego permiso para configuracion de semillas.
+*Corrección en boletas no modificaba.
+
+****Cambios en la versión 0.9.032 rev 4
+*Corrección al modificar máscaras de contabilidad, ya se puede cambiar el tipo de máscara.
+*Corrección en punto de venta cuando se usan cantidades muy grandes marcaba error.
+*Lo de semillas esta listo para usarse.
+
+****Cambios en la versión 0.9.032 rev 3
+*Se regreso a como estaba anteriormente el sello al regenerar un XML.
+*Ajustes en Addenda modelo.
+*Corrección en reportes de utilidad, de nuevo funciona la opción de sacarlos por úlimo costo.
+*Se agrego captura de cuentas para conceptos de nómina en contabilidad.
+
+****Cambios en la versión 0.9.032 rev 2
+*Correción al agregar sueldos en Gastos.
+
+****Cambios en la versión 0.9.032 rev 1
+*Se agrego licencia para semillas.
+*Se agrego licencia para extra.
+*Se agrego hasta 3 niveles de clasificación en Gastos.
+*En las clasificaciones de gastos se agregó código.
+*Se agrego lo de semillas. (Aun falta probarlo, agregarle permisos y algunos detalles.)
+
+****Cambios en la versión 0.9.031 rev 26
+*Corrección en reporte de ventas por surtir estaba considerando las canceladas.
+*Corrección en movimientos de inventario al revisar si un folio estaba repetido.
+*Se agregaron permisos para Extras de empeños.
+
+****Cambios en la versión 0.9.031 rev 25
+*Ajustes en Extra de empeños.
+
+****Cambios en la versión 0.9.031 rev 24
+*Se hicieron correcciones en la addenda de Modelo.
+*Se cambio que al volver a generar un XML y este timbrado utilice el sello creado en el timbre en ves
+del generado por el sistema.
+*Corrección en reporte de pagos en empeños, estaba volteado las etiquetas de capital e interés.
+*Extra funcionando en empeños.
+
+****Cambios en la versión 0.9.031 rev 23
+*Se agrego un rango de cuentas en capital para reportes de estado de resutados y estado financiero
+ en contabilidad.
+
+****Cambios en la versión 0.9.031 rev 22
+*Se agrego conversión en remisiones.
+*Se hicieron correcciones en la impresiones de remisiones en el punto de venta.
+*Se hizo un ajuste en la factuación  para que el iva salga igual que en la pantalla cuando hay descuento y 
+ cálculo alterno activo.
+
+****Cambios en la versión 0.9.031 rev 21
+*Se agrego lectura de báscula en facturación y remisiones, presionando F3.
+*Se hicieron unos ajustes en el validador.
+*Corrección en compras al combinar dolares y pesos aunque avisaba guardaba de todas maneras.
+*Se agrego el aviso de no poder combinar monedas en remisiones de compras.
+*En remisiones de compras se corrigió que el agregar el mismo articulo se sumaba si ya estaba
+agregado en ves de agregarse como otro concepto.
+
+****Cambios en la versión 0.9.031 rev 20
+*Corrección a reporte de balanza en contabilidad.
+*Se agregaron variables en la captura de máscaras contabilidad.
+*Se cambio de posición en el menú de la consulta de ofertas, ahora esta en ventas->consultas.
+
+****Cambios en la versión 0.9.031 rev 19
+*Corrección de total de abonos en reporte de relaciones analíticas.
+*Addenda Modelo completada.
+
+****Cambios en la versión 0.9.031 rev 18
+*Ajuste en saldos iniciales en reportes de contabilidad.
+*Ajuste de espacio y formato en el folio de reportes de ventas.
+
+****Cambios en la versión 0.9.031 rev 17
+*Ajustes en captura de depositos y pago proveedores para mejorar su uso.
+*Los movimientos de los pago a proveedores ahora se basan en la fecha de cobro.
+
+****Cambios en la versión 0.9.031 rev 16
+*Addenda Modelo 50% listo
+*Correción en devoluciones de compras marcaba error al intentar hacer una en algunas situaciones.
+*En proveedores las etiquetas estaban al reves de limite de crédito y días de crédito.
+*Correcciones en reportes de antigüedad de saldos de ventas y compras cuando se manejan dolares.
+*Corrección en captura de artículos relacionados al buscar un artículo marcaba error.
+
+****Cambios en la versión 0.9.031 rev 15
+*Corrección en saldos iniciales en reportes de contabilidad relaciones analíticas y auxiliar de cuentas.
+*Se agregaron 5 listas mas de precios.
+*Se corrigió que al seleccionar el filtro de surtido o en transito en reportes de fertilizantes no daba los resultados
+esperados.
+
+****Cambios en la versión 0.9.031 rev 14
+*Corrección en consulta de reportes cuando en el rango o al indicar una cuenta de mas de un nivel marcaba error.
+*Corrección en reporte auxiliar de cuentas en contabilidad no consultaba bien por rangos cuando hay mas de 2 niveles.
+*Correccion en formato de reportes de auxiliar de cuentas y relaciones analíticas para dar mas espacio a las cuentas.
+*Se agrego el nombre de usuario en la barra de herramientas junto al nombre de la empresa.
+
+****Cambios en la versión 0.9.031 rev 13
+*Corrección reporte de auxiliar de cuentas en contabilidad. no mostraba cuentas de mas de 2 niveles.
+*Corrección de reportes de estado de posición financiera y esta de resultados marcaba error en algunas situaciones.
+*Corrección en devoluciones no se sumaba el ieps al total.
+
+****Cambios en la versión 0.9.031 rev 12
+*Cambios y correcciones en los reportes de bancos.
+*Corrección al eliminar un concepto en compras.
+*Se agregó el numbre del usuario en el título de varias ventanas.
+
+****Cambios en la versión 0.9.031 rev 11
+*Reporte de Relaciones analíticas en contabilidad tiene opción para no mostrar
+saldos en cero.
+
+****Cambios en la versión 0.9.031 rev 10
+*Se agrego el IEPS en la importación de artículos.
+
+****Cambios en la versión 0.9.031 rev 9
+*Se completó el manejo de lotes.
+ ---Corrección al modificar, y se agrego que avise si no hay inventario.
+*Manejo de importaciones.
+ ---Corrección al modificar, y se agrego que avise si no hay inventario.
+*Corrección Empeños el descuento estaba disponible para todos.
+*Impresiones compras la descripción ya debe funcionar como en ventas.
+*Correción de error en pagos al hacer pagos automáticos sin seleccionar 
+ningún documento. Corregido en pagos y pagos remisiones.
+*Pago automático ya genera recibos.
+*Pago automático ya se liga a bancos.
+*Pago automatico en remisiones ya funciona.
+*Pago automático en remisiones genera recibos.
+*Correción en remisiones de compra el botón eliminar concepto quedaba
+siempre disponible.
+*Contabilidad configuración se cambio el texto de "Cerrar perioro" a 
+"Cierre de ejercicio" y en seleccionar periodo a ejercicio.
+*Captura de Artículos da un código por default.
+*En impresión de remisiones se agregaron los siguientes campos: Empresa 2,
+nombre2, total letra 2,condición de pago, días crédito,límite crédito,
+límite crédito 2.
+*Mensaje candelado corregido.
+*Corrección de Diot en el archivo de texto estaban al reves los valores.
+*Corrección en Diot al pasar un registro hacia el siguiente mes o el anterior si era diciembre o enero causaba error.
+*Ajuste de diot en el orden en que se muestran los registros.
+*Ajuste en XMLs para tomar hasta 6 decimales en las cantidades.
+*Captura de artículos tiene las opciones para activar Aduana y Semillas, 
+aduana sirve para indicar que el artículo maneja pedimentos de importación
+y semillas para indicar que maneja el almacenamiento de semillas próximamente a 
+usarse en los movimientos de inventario.
+*Cambio de posición de almacen en facturación remisiones y compras remisiones
+*Reporte Análitica de clientes se agrego opción para no mostrar los que tienen 
+saldo en cero.
+*Reporte verificador de diot se agregaron totales por RFC.

@@ -1,0 +1,133 @@
+ALTER TABLE `tblempeniosconfiguracion` ADD COLUMN `valorPlata` DOUBLE NOT NULL AFTER `aumentoPrenda`;
+
+ALTER TABLE `tblempeniosconfiguracion` ADD COLUMN `aumentoPlata` DOUBLE NOT NULL AFTER `valorPlata`;
+
+ALTER TABLE `tblempeniosdetalles` ADD COLUMN `tipo` INTEGER UNSIGNED NOT NULL AFTER `evaluo`;
+
+CREATE TABLE `tblempeniosclasificacionV` (
+  `idClasificacion` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idClasificacion`)
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `tblempenios` ADD COLUMN `tipoEmpenio` INTEGER UNSIGNED NOT NULL AFTER `Adjudicado`;
+
+CREATE TABLE `tblempeniosdetallesv` (
+  `idDetalle` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idMovimiento` VARCHAR(45) NOT NULL,
+  `clasificacion` INTEGER UNSIGNED NOT NULL,
+  `marca` VARCHAR(45) NOT NULL,
+  `modelo` VARCHAR(45) NOT NULL,
+  `color` VARCHAR(45) NOT NULL,
+  `noSerie` VARCHAR(45) NOT NULL,
+  `placas` VARCHAR(45) NOT NULL,
+  `evaluo` DOUBLE NOT NULL,
+  `importe` DOUBLE NOT NULL,
+  PRIMARY KEY (`idDetalle`)
+);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(5,318,'Clasificación:','ArticuloClasificacionV',100,20,'Arial',10,0,0,1,0,1,40,1,0,0,'Artículo - Clasificacion',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(67,315,'Marca:','ArticuloMarca',150,20,'Arial',10,0,0,1,0,1,40,1,0,0,'Artículo - Marca',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(201,316,'Modelo:','ArticuloModelo',150,20,'Arial',10,0,0,1,0,1,40,1,0,0,'Artículo - Modelo',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(443,317,'Color:','ArticuloColor',120,20,'Arial',10,0,0,1,0,1,40,1,0,0,'Artículo - Color',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(548,317,'No. Serie:','ArticuloNoSerie',150,20,'Arial',10,0,0,1,0,1,40,1,0,0,'Artículo - No. Serie',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(702,316,'Placas:','ArticuloPlacas',150,20,'Arial',10,0,0,1,0,1,40,1,0,0,'Artículo - Placas',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(114,315,'Descripción:','ArticuloDescripcionT',700,20,'Arial',10,0,0,1,0,1,40,1,0,0,'Artículo - Descripción Terreno',0,3);
+
+
+
+
+ALTER TABLE `tblempeniosconfiguracion` ADD COLUMN `diasProrrogaV` DOUBLE NOT NULL AFTER `aumentoPlata`,
+ ADD COLUMN `diasProrrogaT` DOUBLE NOT NULL AFTER `diasProrrogaV`,
+ ADD COLUMN `interes1a15V` DOUBLE NOT NULL AFTER `diasProrrogaT`,
+ ADD COLUMN `interes16a30V` DOUBLE NOT NULL AFTER `interes1a15V`,
+ ADD COLUMN `interes31a60V` DOUBLE NOT NULL AFTER `interes16a30V`,
+ ADD COLUMN `almacenaje1a15V` DOUBLE NOT NULL AFTER `interes31a60V`,
+ ADD COLUMN `almacenaje16a30V` DOUBLE NOT NULL AFTER `almacenaje1a15V`,
+ ADD COLUMN `almacenaje31a60V` DOUBLE NOT NULL AFTER `almacenaje16a30V`,
+ ADD COLUMN `interes1a15T` DOUBLE NOT NULL AFTER `almacenaje31a60V`,
+ ADD COLUMN `interes16a30T` DOUBLE NOT NULL AFTER `interes1a15T`,
+ ADD COLUMN `interes31a60T` DOUBLE NOT NULL AFTER `interes16a30T`,
+ ADD COLUMN `almacenaje1a15T` DOUBLE NOT NULL AFTER `interes31a60T`,
+ ADD COLUMN `almacenaje16a30T` DOUBLE NOT NULL AFTER `almacenaje1a15T`,
+ ADD COLUMN `almacenaje31a60T` DOUBLE NOT NULL AFTER `almacenaje16a30T`,
+ ADD COLUMN `aumentoValorPrendaV` DOUBLE NOT NULL AFTER `almacenaje31a60V`,
+ ADD COLUMN `aumentoValorPrendaT` DOUBLE NOT NULL AFTER `aumentoValorPrendaV`;
+
+
+CREATE TABLE `tblempeniosdetallest` (
+  `idDetalle` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idMovimiento` INTEGER UNSIGNED NOT NULL,
+  `descripcion` VARCHAR(400) NOT NULL,
+  `evaluo` DOUBLE NOT NULL,
+  `importe` DOUBLE NOT NULL,
+  PRIMARY KEY (`idDetalle`)
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `tblempeniosdetallest` ADD COLUMN `clasificacion` INTEGER UNSIGNED NOT NULL AFTER `importe`;
+
+CREATE TABLE `tblEmpeniosCompras` (
+  `idmovimiento` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `fecha` VARCHAR(11) NOT NULL,
+  `hora` VARCHAR(9) NOT NULL,
+  `folio` INTEGER UNSIGNED NOT NULL,
+  `serie` INTEGER UNSIGNED NOT NULL,
+  `total` DOUBLE NOT NULL,
+  `estado` INTEGER UNSIGNED NOT NULL,
+  `comentario` VARCHAR(2000) NOT NULL,
+  `idsucursal` INTEGER UNSIGNED NOT NULL,
+  `idcaja` INTEGER UNSIGNED NOT NULL,
+  `idvendedor` INTEGER UNSIGNED NOT NULL,
+  `idcliente` INTEGER UNSIGNED NOT NULL,
+  `idforma` INTEGER UNSIGNED NOT NULL,
+  `tipo` INTEGER UNSIGNED NOT NULL,
+  `tipoempenio` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`idmovimiento`)
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tblempeniosGastosDetalles` (
+  `idDetalle` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idMovimiento` INTEGER UNSIGNED NOT NULL,
+  `descripcion` VARCHAR(45) NOT NULL,
+  `precio` DOUBLE NOT NULL,
+  `clasificacion` INTEGER UNSIGNED NOT NULL,
+  `kilates` INTEGER UNSIGNED NOT NULL,
+  `peso` DOUBLE NOT NULL,
+  `evaluo` DOUBLE NOT NULL,
+  `tipo` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`idDetalle`)
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tblempeniosComprasdetallesv` (
+  `idDetalle` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idMovimiento` VARCHAR(45) NOT NULL,
+  `clasificacion` INTEGER UNSIGNED NOT NULL,
+  `marca` VARCHAR(45) NOT NULL,
+  `modelo` VARCHAR(45) NOT NULL,
+  `color` VARCHAR(45) NOT NULL,
+  `noSerie` VARCHAR(45) NOT NULL,
+  `placas` VARCHAR(45) NOT NULL,
+  `evaluo` DOUBLE NOT NULL,
+  `importe` DOUBLE NOT NULL,
+  PRIMARY KEY (`idDetalle`)
+);
+
+CREATE TABLE `tblempenioscomprasdetallest` (
+  `idDetalle` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idMovimiento` INTEGER UNSIGNED NOT NULL,
+  `descripcion` VARCHAR(400) NOT NULL,
+  `evaluo` DOUBLE NOT NULL,
+  `importe` DOUBLE NOT NULL,
+  PRIMARY KEY (`idDetalle`)
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `tblempenioscomprasdetallest` ADD COLUMN `clasificacion` INTEGER UNSIGNED NOT NULL AFTER `importe`;
+
+
+
+insert into tblactualizaciones(version) values('ver 9023 rev 8');

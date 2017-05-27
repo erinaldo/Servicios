@@ -1,0 +1,4 @@
+update tblvendedores set zona='0';
+
+insert into tblactualizaciones(version) values('ver 9020 rev 5');
+

@@ -1,0 +1,2 @@
+ALTER TABLE `tblventas` ADD COLUMN `descuentog` DOUBLE NOT NULL AFTER `nocuenta`,
+ ADD COLUMN `cargog` DOUBLE NOT NULL AFTER `descuentog`;

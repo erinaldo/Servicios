@@ -1,0 +1,4 @@
+ALTER TABLE `tbladendamodelo` MODIFY COLUMN `entityType` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL;
+
+
+insert into tblactualizaciones(version) values('ver 9031 rev 16');

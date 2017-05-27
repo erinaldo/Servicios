@@ -1,0 +1,11 @@
+/*primero eliminar la llave foranea de tblnominasetalles,tblnominahorasextra y tblnominaincapacidades en la base de datos vieja en la buena no.*/
+/*dbb=base de datos buena*/
+/*dbv=base de datos viejita*/
+update dbv.tblnominas set idnomina=idnomina+1000;
+update dbv.tblnominadetalles set idnomina=idnomina+1000;
+update dbv.tblnominahorasextra set idnomina=idnomina+1000;
+update dbv.tblnominaincapacidades set idnomina=idnomina+1000;
+insert into dbb.tblnominas select * from dbv.tblnominas where idnomina>=; /*o por folio*/
+insert into dbb.tblnominadetalles(idnomina,tipo,tipodetalle,clave,concepto,importegravado,importeexento) select  nd.idnomina,nd.tipo,nd.tipodetalle,nd.clave,nd.concepto,nd.importegravado,nd.importeexento from dbv.tblnominadetalles as nd inner join dbv.tblnominas on dbv.tblnominas.idnomina=nd.idnomina where dbv.tblnominas.fecha=>'xxxx' and dbv.tblnominas.fecha<='xxxxx'; /*o igual por folio*/
+insert into dbb.tblnominahorasextra(idnomina,dias,tipohoras,horasextra,importepagado) select  nd.idnomina,nd.dias,nd.tipohoras,nd.clave,nd.horasextra,nd.importepagado from dbv.tblnominahorasextra as nd inner join dbv.tblnominas on dbv.tblnominas.idnomina=nd.idnomina where dbv.tblnominas.fecha=>'xxxx' and dbv.tblnominas.fecha<='xxxxx'; /*o igual por folio*/
+insert into dbb.tblnominaincapacidades(idnomina,tipoincapacidad,dias,descuento) select  nd.idnomina,nd.tipoincapacidad,nd.dias,nd.descuento from dbv.tblnominaincapacidades as nd inner join dbv.tblnominas on dbv.tblnominas.idnomina=nd.idnomina where dbv.tblnominas.fecha=>'xxxx' and dbv.tblnominas.fecha<='xxxxx'; /*o igual por folio*/

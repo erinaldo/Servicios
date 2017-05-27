@@ -1,0 +1,2 @@
+ALTER TABLE `db_services`.`tblsucursales` ADD COLUMN `regimenfiscal` VARCHAR(1000) NOT NULL AFTER `nombrefiscal`;
+update tblsucursales set regimenfiscal='';

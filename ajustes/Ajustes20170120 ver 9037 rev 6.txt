@@ -1,0 +1,14 @@
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL ORIGINAL.','TPO',4,'SUMA DEL TOTAL DE LOS PAGOS BASADOS EN SU TIPO DE CAMBIO CUANDO SE ELABORÓ LA FACTURA');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL ORIGINAL POR PAGO.','TXPO',4,'TOTAL POR PAGO BASADO EN EL TIPO DE CAMBIO DE CUANDO SE ELABORÓ LA FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL ORIGINAL.','TPO',5,'SUMA DEL TOTAL DE LOS PAGOS BASADOS EN SU TIPO DE CAMBIO CUANDO SE ELABORÓ LA COMPRA');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL ORIGINAL POR PAGO.','TXPO',5,'TOTAL POR PAGO BASADO EN EL TIPO DE CAMBIO DE CUANDO SE ELABORÓ LA COMPRA.');
+
+insert into tblpercepciones(clave,descripcion,idcuenta,visible) values('050','Viáticos',0,1);
+update tbldeducciones set descripcion='Ajuste en Viáticos gravados' where clave='080';
+update tbldeducciones set descripcion='Ajuste en Viáticos (entregados al trabajador)' where clave='081';
+insert into tbldeducciones(clave,descripcion,idcuenta) values('100','Ajuste en Viáticos exentos',0);
+
+update tblusuarios set permisos3=(permisos3 | 2251799813685248);
+update tblusuarios set permisos3=(permisos3 | 4503599627370496);
+
+insert into tblactualizaciones(version,versionchk) values('ver 9037 rev 6','00903706');

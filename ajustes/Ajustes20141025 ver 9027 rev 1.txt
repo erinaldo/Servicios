@@ -1,0 +1,8 @@
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(729,732,'Total2','total2',120,20,'Lucida Console',8,0,0,0,1,1,42,1,0,1,'Documento - Total2',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(19,696,'Total letra2','totalletra2',600,50,'Lucida Console',8,0,0,0,0,1,42,1,0,0,'Documento - Total letra2',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(663,141,'Fecha2','fecha',100,20,'Microsoft Sans Serif',10,0,0,0,0,1,42,1,0,0,'Documento - Fecha2',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(663,141,'Fecha Vencimiento','fechavencimiento',100,20,'Microsoft Sans Serif',10,0,0,0,0,1,42,1,0,0,'Documento - Fecha Vencimiento',0,1);
+
+
+insert into tblactualizaciones(version) values('ver 9027 rev 1');
+

@@ -1,0 +1,7 @@
+UPDATE tbldepostito SET Fecha = REPLACE(Fecha, "-", '/');
+UPDATE tblpagoprov SET Fecha = REPLACE(Fecha, "-", '/');
+UPDATE tblpagoprov SET FechaCobro = REPLACE(FechaCobro, "-", '/');
+
+
+insert into tblactualizaciones(version) values('ver 9026 rev 4');
+

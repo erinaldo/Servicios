@@ -1,0 +1,106 @@
+CREATE TABLE  `tblconceptosnotasventas` (
+  `idconceptonotaventa` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(45) NOT NULL,
+  `tipo` tinyint NOT NULL,
+  PRIMARY KEY (`idconceptonotaventa`)
+) ENGINE=InnoDB;
+
+CREATE TABLE  `tblconceptosnotascompras` (
+  `idconceptonotaventa` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(45) NOT NULL,
+  `tipo` tinyint NOT NULL,
+  PRIMARY KEY (`idconceptonotaventa`)
+) ENGINE=InnoDB;
+
+ALTER TABLE `tblusuarios` ADD COLUMN `permisos6` integer NOT NULL AFTER `permisos5`;
+
+DROP TABLE IF EXISTS `db_services`.`tblclientesviejossaldos`;
+CREATE TABLE  `db_services`.`tblclientesviejossaldos` (
+  `fecha` varchar(10) NOT NULL,
+  `idcliente` int(10) unsigned NOT NULL,
+  `serie` varchar(45) NOT NULL,
+  `folio` int(10) unsigned NOT NULL,
+  `limite` varchar(10) NOT NULL,
+  `sietedias` double NOT NULL,
+  `quincedias` double NOT NULL,
+  `treintadias` double NOT NULL,
+  `sesentadias` double NOT NULL,
+  `credito` double NOT NULL,
+  `tipo` tinyint(3) unsigned NOT NULL,
+  KEY `Index_1` (`fecha`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `db_services`.`tblproveedoresviejossaldos`;
+CREATE TABLE  `db_services`.`tblproveedoresviejossaldos` (
+  `fecha` varchar(10) NOT NULL,
+  `idproveedor` int(10) unsigned NOT NULL,
+  `serie` varchar(45) NOT NULL,
+  `folio` int(10) unsigned NOT NULL,
+  `limite` varchar(10) NOT NULL,
+  `sietedias` double NOT NULL,
+  `quincedias` double NOT NULL,
+  `treintadias` double NOT NULL,
+  `sesentadias` double NOT NULL,
+  `credito` double NOT NULL,
+  `tipo` tinyint(3) unsigned NOT NULL,
+  KEY `Index_2` (`fecha`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `db_services`.`tblclientesmovimientossaldos` (
+  `idcliente` INTEGER UNSIGNED NOT NULL,
+  `saldoant` DOUBLE NOT NULL
+)
+ENGINE = InnoDB;
+
+delete from tblconceptosnotasventas;
+delete from tblconceptosnotascompras;
+insert into tblconceptosnotasventas values(1,'Cargo Venta',0),(2,'Bonificacion Venta',1),(3,'Efectivo',2),(4,'Nota de Crédito',2),(5,'Devolución',2);
+insert into tblconceptosnotascompras values(1,'Cargo Compra',0),(2,'Bonificacion Compra',1),(3,'Efectivo',2),(4,'Nota de Crédito',2),(5,'Devolución',2);
+
+ALTER TABLE `tblconceptosnotascompras` CHANGE COLUMN `idconceptonotaventa` `idconceptonotacompra` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+ DROP PRIMARY KEY,
+ ADD PRIMARY KEY  USING BTREE(`idconceptonotacompra`);
+
+ALTER TABLE `tblnotasdecredito` ADD COLUMN `idconcepto` INTEGER UNSIGNED NOT NULL AFTER `horacancelado`;
+update tblnotasdecredito set idconcepto=2;
+ALTER TABLE `tblnotasdecredito` ADD CONSTRAINT `FK_tblnotasdecredito_3` FOREIGN KEY `FK_tblnotasdecredito_3` (`idconcepto`)
+    REFERENCES `tblconceptosnotasventas` (`idconceptonotaventa`)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT;
+
+ALTER TABLE `tblnotasdecreditocompras` ADD COLUMN `idconcepto` INTEGER UNSIGNED NOT NULL AFTER `horacancelado`;
+update tblnotasdecreditocompras set idconcepto=2;
+ALTER TABLE `tblnotasdecreditocompras` ADD CONSTRAINT `FK_tblnotasdecreditocompras_3` FOREIGN KEY `FK_tblnotasdecreditocompras_3` (`idconcepto`)
+    REFERENCES `tblconceptosnotascompras` (`idconceptonotacompra`)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT;
+
+ALTER TABLE `tblnotasdecargo` ADD COLUMN `idconcepto` INTEGER UNSIGNED NOT NULL AFTER `ivaretenido`;
+update tblnotasdecargo set idconcepto=1;
+ALTER TABLE `tblnotasdecargo` ADD CONSTRAINT `FK_tblnotasdecargo_4` FOREIGN KEY `FK_tblnotasdecargo_4` (`idconcepto`)
+    REFERENCES `tblconceptosnotasventas` (`idconceptonotaventa`)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT;
+
+ALTER TABLE `tblnotasdecargocompras` ADD COLUMN `idconcepto` INTEGER UNSIGNED NOT NULL AFTER `horacancelado`;
+update tblnotasdecargocompras set idconcepto=1;
+ALTER TABLE `tblnotasdecargocompras` ADD CONSTRAINT `FK_tblnotasdecargocompras_1` FOREIGN KEY `FK_tblnotasdecargocompras_1` (`idconcepto`)
+    REFERENCES `tblconceptosnotascompras` (`idconceptonotacompra`)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT;
+
+ALTER TABLE `db_services`.`tblventaspagos` ADD COLUMN `idconceptonotaventa` INTEGER UNSIGNED NOT NULL AFTER `tipodoci`;
+update tblventaspagos set idconceptonotaventa=3;
+
+ALTER TABLE `db_services`.`tblventaspagos` ADD CONSTRAINT `FK_tblventaspagos_2` FOREIGN KEY `FK_tblventaspagos_2` (`idconceptonotaventa`)
+    REFERENCES `tblconceptosnotasventas` (`idconceptonotaventa`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `db_services`.`tblcompraspagos` ADD COLUMN `idconceptonotacompra` INTEGER UNSIGNED NOT NULL AFTER `tipodoci`;
+update tblcompraspagos set idconceptonotacompra=3;
+
+ALTER TABLE `db_services`.`tblcompraspagos` ADD CONSTRAINT `FK_tblcompraspagos_2` FOREIGN KEY `FK_tblcompraspagos_2` (`idconceptonotacompra`)
+    REFERENCES `tblconceptosnotascompras` (`idconceptonotacompra`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION;

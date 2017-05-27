@@ -1,0 +1,29 @@
+ALTER TABLE `tbllistasprecios` DROP COLUMN `idUsuarioAlta`,
+ DROP COLUMN `fechaAlta`,
+ DROP COLUMN `horaAlta`,
+ DROP COLUMN `idUsuarioCambio`,
+ DROP COLUMN `fechaCambio`,
+ DROP COLUMN `horaCambio`
+, DROP INDEX `FK_tbllistasprecios_1`
+, DROP INDEX `FK_tbllistasprecios_2`,
+ DROP FOREIGN KEY `FK_tbllistasprecios_1`,
+ DROP FOREIGN KEY `FK_tbllistasprecios_2`;
+
+insert into tbllistasprecios(idlista,descripcion,numero) values(11,'LISTA 11','11');
+insert into tbllistasprecios(idlista,descripcion,numero) values(12,'LISTA 12','12');
+insert into tbllistasprecios(idlista,descripcion,numero) values(13,'LISTA 13','13');
+insert into tbllistasprecios(idlista,descripcion,numero) values(14,'LISTA 14','14');
+insert into tbllistasprecios(idlista,descripcion,numero) values(15,'LISTA 15','15');
+insert into tbllistasprecios(idlista,descripcion,numero) values(16,'LISTA 16','16');
+insert into tbllistasprecios(idlista,descripcion,numero) values(17,'LISTA 17','17');
+insert into tbllistasprecios(idlista,descripcion,numero) values(18,'LISTA 18','18');
+insert into tbllistasprecios(idlista,descripcion,numero) values(19,'LISTA 19','19');
+insert into tbllistasprecios(idlista,descripcion,numero) values(20,'LISTA 20','20');
+
+insert into tblinventarioprecios(idinventario,precio,comentario,idmoneda,idlista,utilidad,descuentoprecio)
+select i.idinventario,0,'',2,l.idlista,0,0 from tblinventario i
+left outer join tbllistasprecios l on true
+left outer join tblinventarioprecios p on p.idinventario=i.idinventario and p.idlista=l.idlista
+where isnull(p.precio);
+
+insert into tblactualizaciones(version,versionchk) values('ver 9035 rev 1','00903501');

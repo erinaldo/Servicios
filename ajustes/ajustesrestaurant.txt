@@ -1,0 +1,212 @@
+DROP TABLE IF EXISTS `tblrestaurantecolores`;
+CREATE TABLE  `tblrestaurantecolores` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idClasificacion` int(10) unsigned NOT NULL,
+  `color` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tblrestaurantecomensalesplatillos`;
+CREATE TABLE  `tblrestaurantecomensalesplatillos` (
+  `idcomensal` int(10) unsigned NOT NULL,
+  `iddetalle` int(10) unsigned NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tblrestaurantecomidacorrida`;
+CREATE TABLE `tblrestaurantecomidacorrida` (
+  `idcomida` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idinventario` int(10) unsigned NOT NULL,
+  `dia` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`idcomida`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tblrestauranteconfiguracion`;
+CREATE TABLE  `tblrestauranteconfiguracion` (
+  `idconfig` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `producto1` varchar(45) NOT NULL,
+  `producto2` varchar(45) NOT NULL,
+  `producto3` varchar(45) NOT NULL,
+  `producto4` varchar(45) NOT NULL,
+  `producto5` varchar(45) NOT NULL,
+  `fuente` varchar(45) NOT NULL,
+  `tamanoLetra` double NOT NULL,
+  `colorLetraLibre` varchar(45) NOT NULL,
+  `colorLibre` varchar(45) NOT NULL,
+  `colorOcupado` varchar(45) NOT NULL,
+  `colorReservado` varchar(45) NOT NULL,
+  `colorLetraOcupado` varchar(45) NOT NULL,
+  `colorLetraReservado` varchar(45) NOT NULL,
+  `textoLibre` varchar(45) NOT NULL,
+  `textoOcupado` varchar(45) NOT NULL,
+  `textoReservado` varchar(45) NOT NULL,
+  `clienteDefault` int(11) unsigned NOT NULL,
+  `cajaDefault` int(11) unsigned NOT NULL,
+  `vendedorDefault` int(11) unsigned NOT NULL DEFAULT '0',
+  `meseroDefault` int(10) unsigned NOT NULL DEFAULT '0',
+  `colorVentanas` varchar(45) NOT NULL,
+  `activarTeclado` tinyint(1) NOT NULL,
+  `horizontal` int(10) unsigned NOT NULL DEFAULT '0',
+  `vertical` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`idconfig`),
+  KEY `FK_tblrestauranteconfiguracion_1` (`clienteDefault`),
+  KEY `FK_tblrestauranteconfiguracion_2` (`cajaDefault`),
+  CONSTRAINT `FK_tblrestauranteconfiguracion_1` FOREIGN KEY (`clienteDefault`) REFERENCES `tblclientes` (`idcliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblrestauranteconfiguracion_2` FOREIGN KEY (`cajaDefault`) REFERENCES `tblcajas` (`idcaja`) ON DELETE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tblrestaurantedescuentos`;
+CREATE TABLE  `tblrestaurantedescuentos` (
+  `iddescuento` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idcliente` int(10) unsigned NOT NULL,
+  `idusuario` int(10) unsigned NOT NULL,
+  `descuento` double NOT NULL,
+  PRIMARY KEY (`iddescuento`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tblrestauranteformaspagos`;
+CREATE TABLE  `tblrestauranteformaspagos` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(45) NOT NULL,
+  `clave` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `tblrestaurantemeseros`;
+CREATE TABLE  `tblrestaurantemeseros` (
+  `idmesero` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(45) NOT NULL,
+  `usuario` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  PRIMARY KEY (`idmesero`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tblrestaurantepedidos`;
+CREATE TABLE  `tblrestaurantepedidos` (
+  `idpedido` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idventa` int(10) unsigned NOT NULL,
+  `serie` varchar(45) NOT NULL,
+  `folio` int(10) unsigned NOT NULL,
+  `estado` int(10) unsigned NOT NULL,
+  `fecha` varchar(45) NOT NULL,
+  `hora` varchar(45) NOT NULL,
+  `idvendedor` int(10) unsigned NOT NULL,
+  `llevar` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`idpedido`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tblrestaurantesecciones`;
+CREATE TABLE  `tblrestaurantesecciones` (
+  `idSeccion` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idSucursal` int(10) unsigned NOT NULL,
+  `numSeccion` int(10) unsigned NOT NULL,
+  `nombre` varchar(45) NOT NULL,
+  `rutaMapa` varchar(200) NOT NULL,
+  PRIMARY KEY (`idSeccion`),
+  KEY `secciones_sucursales` (`idSucursal`),
+  CONSTRAINT `secciones_sucursales` FOREIGN KEY (`idSucursal`) REFERENCES `tblsucursales` (`idsucursal`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tblrestauranteventas`;
+CREATE TABLE  `tblrestauranteventas` (
+  `idventa` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `folio` varchar(45) NOT NULL,
+  `fecha` varchar(45) NOT NULL,
+  `hora` varchar(45) NOT NULL,
+  `total` double NOT NULL,
+  `totalapagar` double NOT NULL,
+  `idcliente` int(10) unsigned NOT NULL,
+  `iva` double NOT NULL,
+  `idmesero` int(10) unsigned NOT NULL,
+  `descuento` double NOT NULL,
+  `estado` int(10) unsigned NOT NULL,
+  `idforma` int(10) unsigned NOT NULL,
+  `idSucursal` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`idventa`) USING BTREE,
+  KEY `FK_tblrestauranteventas_1` (`idmesero`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tblrestauranteventasdetalles`;
+CREATE TABLE  `tblrestauranteventasdetalles` (
+  `iddetalle` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idinventario` int(10) unsigned NOT NULL,
+  `cantidad` double NOT NULL,
+  `descripcion` varchar(45) NOT NULL,
+  `precio` double NOT NULL,
+  `iva` double NOT NULL,
+  `idventa` int(10) unsigned NOT NULL,
+  `pagado` tinyint(1) NOT NULL,
+  `comentario` varchar(100) NOT NULL,
+  `estado` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`iddetalle`),
+  KEY `FK_tblrestauranteventasdetalles_1` (`idventa`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tblrestauranteventaspagos`;
+CREATE TABLE  `tblrestauranteventaspagos` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idventa` int(10) unsigned NOT NULL,
+  `idmedioPago` int(10) unsigned NOT NULL,
+  `total` double NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_tblrestauranteventaspagos_1` (`idventa`),
+  KEY `FK_tblrestauranteventaspagos_2` (`idmedioPago`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `tblrestaurantemesas`;
+CREATE TABLE  `tblrestaurantemesas` (
+  `idMesa` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `numero` int(10) unsigned NOT NULL,
+  `seccion` int(10) unsigned NOT NULL,
+  `ancho` double NOT NULL,
+  `alto` varchar(45) NOT NULL,
+  `x` double NOT NULL,
+  `y` double NOT NULL,
+  `estado` int(10) unsigned NOT NULL,
+  `capacidad` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`idMesa`),
+  KEY `mesas_secciones` (`seccion`),
+  CONSTRAINT `mesas_secciones` FOREIGN KEY (`seccion`) REFERENCES `tblrestaurantesecciones` (`idSeccion`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tblrestaurantecomensales`;
+CREATE TABLE  `tblrestaurantecomensales` (
+  `idComensal` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `numero` int(10) unsigned NOT NULL,
+  `mesa` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`idComensal`),
+  KEY `FK_tblrestaurantecomensales_1` (`mesa`),
+  CONSTRAINT `FK_tblrestaurantecomensales_1` FOREIGN KEY (`mesa`) REFERENCES `tblrestaurantemesas` (`idMesa`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tblrestaurantemesaventa`;
+CREATE TABLE  `tblrestaurantemesaventa` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idMesa` int(10) unsigned NOT NULL,
+  `idVenta` int(10) unsigned NOT NULL,
+  `idvendedor` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_tblrestauranteMesaVenta_1` (`idMesa`),
+  KEY `FK_tblrestaurantemesaventa_3` (`idvendedor`),
+  KEY `FK_tblrestauranteMesaVenta_2` (`idVenta`),
+  CONSTRAINT `FK_tblrestauranteMesaVenta_1` FOREIGN KEY (`idMesa`) REFERENCES `tblrestaurantemesas` (`idMesa`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tblrestaurantereservaciones`;
+CREATE TABLE  `tblrestaurantereservaciones` (
+  `idreservacion` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idMesa` int(10) unsigned NOT NULL,
+  `fecha` varchar(45) NOT NULL,
+  `horaInicio` varchar(45) NOT NULL,
+  `idSeccion` int(10) unsigned NOT NULL,
+  `idCliente` int(10) unsigned NOT NULL,
+  `horaFin` varchar(45) NOT NULL,
+  PRIMARY KEY (`idreservacion`),
+  KEY `FK_tblrestaurantereservaciones_1` (`idMesa`),
+  KEY `FK_tblrestaurantereservaciones_2` (`idSeccion`),
+  KEY `FK_tblrestaurantereservaciones_3` (`idCliente`),
+  CONSTRAINT `FK_tblrestaurantereservaciones_1` FOREIGN KEY (`idMesa`) REFERENCES `tblrestaurantemesas` (`idMesa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblrestaurantereservaciones_2` FOREIGN KEY (`idSeccion`) REFERENCES `tblrestaurantesecciones` (`idSeccion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblrestaurantereservaciones_3` FOREIGN KEY (`idCliente`) REFERENCES `tblclientes` (`idcliente`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

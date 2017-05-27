@@ -1,0 +1,3 @@
+ALTER TABLE `tblopciones2` ADD COLUMN `vendedorusuario` TINYINT UNSIGNED NOT NULL AFTER `remisionessolocredito`;
+
+insert into tblactualizaciones(version,versionchk) values('ver 9037 rev 11','00903711');

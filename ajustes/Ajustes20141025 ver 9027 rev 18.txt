@@ -1,0 +1,5 @@
+ALTER TABLE `tblopciones` ADD COLUMN `sobreescribeimploc` TINYINT UNSIGNED NOT NULL AFTER `clientessinrepetir`;
+ALTER TABLE `tblventas` ADD COLUMN `sobreimploc` DOUBLE NOT NULL AFTER `descuentog2`;
+
+
+insert into tblactualizaciones(version) values('ver 9027 rev 18');

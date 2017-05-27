@@ -1,0 +1,1 @@
+insert into tblformasdepagoremisiones values(3,'CRÉDITO',3,'CRT');

@@ -1,0 +1,93 @@
+ALTER TABLE `tblventasremisionesinventario` ADD COLUMN `preciooriginal` DOUBLE NOT NULL AFTER `surtido`;
+update tblventasremisionesinventario set preciooriginal=precio;
+ALTER TABLE `tblventaspedidosinventario` ADD COLUMN `preciooriginal` DOUBLE NOT NULL AFTER `surtido`;
+update tblventaspedidosinventario set preciooriginal=precio;
+ALTER TABLE `tblventascotizacionesinventario` ADD COLUMN `preciooriginal` DOUBLE NOT NULL AFTER `idvariante`;
+update tblventascotizacionesinventario set preciooriginal=precio;
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(602,42,'Folio Barras','foliobarras',150,50,'Code 128',28,0,0,0,0,0,1,1,0,0,'Folio Barras');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(602,42,'Folio Barras','foliobarras',150,50,'Code 128',28,0,0,0,0,0,17,1,0,0,'Folio Barras');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(602,42,'Folio Barras','foliobarras',150,50,'Code 128',28,0,0,0,0,0,2,1,0,0,'Folio Barras');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(602,42,'Folio Barras','foliobarras',150,50,'Code 128',28,0,0,0,0,0,18,1,0,0,'Folio Barras');
+
+ALTER TABLE `tblopciones` ADD COLUMN `costeotiemporeal` TINYINT UNSIGNED NOT NULL AFTER `decimalesredondeo`;
+update tblopciones set costeotiemporeal=0;
+
+ALTER TABLE `tblinventariocostoh` ADD INDEX `Index_1`(`fecha`);
+
+ALTER TABLE `tblventaspedidos` ADD COLUMN `usado` TINYINT UNSIGNED NOT NULL AFTER `idcaja`;
+ALTER TABLE `tblventascotizaciones` ADD COLUMN `usado` TINYINT UNSIGNED NOT NULL AFTER `idcaja`;
+update tblventaspedidos set usado=0;
+update tblventascotizaciones set usado=0;
+
+ALTER TABLE `tblopciones` ADD COLUMN `eliminarrefpv` TINYINT UNSIGNED NOT NULL AFTER `costeotiemporeal`;
+update tblopciones set eliminarrefpv=0;
+
+
+
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spsacacostoarticulo` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spsacacostoarticulo`(pidinventario int,ptipocosteo tinyint,pcantidadreceta double,ptipodecambio double,ptipocosteo2 tinyint) RETURNS double
+BEGIN
+declare vartotalcompras double;
+declare vartotalcomprasprecio double;
+declare varcantidadcontenido double;
+declare varultimafecha varchar(10);
+declare varidtemp int;
+declare varidtemp2 int;
+declare varidmoneda int;
+declare varcosto double;
+declare vartipodecambio double;
+declare varfechamax varchar(10);
+        if ptipocosteo=1 then
+
+          set varfechamax=ifnull((select max(fecha) from tblinventariocostoh where idinventario=pidinventario),'3000/01/01');
+          set varcosto=ifnull((select costo from tblinventariocostoh where idinventario=pidinventario and fecha=varfechamax),0);
+    #spsacacostoarticuloafecha(pidinventario,'3000/01/01',ptipocosteo2);
+
+        end if;
+        if ptipocosteo=2 then
+            set varultimafecha=(select ifnull((select max(fecha) from tblcompras inner join tblcomprasdetalles on tblcompras.idcompra=tblcomprasdetalles.idcompra where idinventario=pidinventario),''));
+            if varultimafecha<>'' then
+
+              set varidtemp=(select max(iddetalle) from tblcomprasdetalles inner join tblcompras on tblcompras.idcompra=tblcomprasdetalles.idcompra where idinventario=pidinventario and fecha=varultimafecha and tblcompras.estado=3);
+
+              set varidtemp2=(select ifnull((select idcompra from tblcomprasdetalles where iddetalle=varidtemp),0));
+              set vartipodecambio=(select ifnull((select tipodecambio from tblcompras where idcompra=varidtemp2),0));
+
+              set vartotalcompras=(ifnull((select cantidad from tblcomprasdetalles where iddetalle=varidtemp),0));
+              set vartotalcomprasprecio=(ifnull((select precio+costoindirecto from tblcomprasdetalles where iddetalle=varidtemp),0));
+              set varidmoneda=(ifnull((select idmoneda from tblcomprasdetalles where iddetalle=varidtemp),0));
+              set varcantidadcontenido=(select contenido from tblinventario where idinventario=pidinventario);
+              if varcantidadcontenido<>0 then
+                  if varidmoneda=2 then
+                  set varcosto=((vartotalcomprasprecio/vartotalcompras)/varcantidadcontenido)*pcantidadreceta;
+                  else
+                  set varcosto=((vartotalcomprasprecio*vartipodecambio/vartotalcompras)/varcantidadcontenido)*pcantidadreceta;
+                  end if;
+              else
+                  set varcosto=0;
+              end if;
+            else
+              set varcosto=0;
+            end if;
+        end if;
+        if ptipocosteo=3 then
+              set vartotalcomprasprecio=(select costobase from tblinventario where idinventario=pidinventario);
+              set varcantidadcontenido=(select contenido from tblinventario where idinventario=pidinventario);
+              if varcantidadcontenido<>0 then
+                  set varcosto=(vartotalcomprasprecio/varcantidadcontenido)*pcantidadreceta;
+              else
+                  set varcosto=0;
+              end if;
+        end if;
+return varcosto;
+END $$
+
+DELIMITER ;
+
+
+
+

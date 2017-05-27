@@ -1,0 +1,7 @@
+ALTER TABLE `db_services`.`tblcomprasrequisicion` ADD COLUMN `autorizar` TINYINT UNSIGNED NOT NULL AFTER `estado`;
+update tblcomprasrequisicion set autorizar=0
+
+
+ALTER TABLE `db_services`.`tblopciones` ADD COLUMN `consultarealtime` TINYINT UNSIGNED NOT NULL AFTER `piedepaginaemail`;
+
+update tblopciones set consultarealtime=0

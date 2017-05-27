@@ -1,0 +1,29 @@
+tblcomprasremisiones
+idalmacen int
+update tblcomprasremisionesdetalles set idalmacen=1
+
+
+tblnotasdecargodetallesc
+cambio idetalle a iddetalle
+
+tbldevolucionescompras
+tipocambio a tipodecambio
+idventa a idcompra
+
+
+DROP TABLE IF EXISTS `db_services`.`tblproveedoresmovimientos`;
+CREATE TABLE  `db_services`.`tblproveedoresmovimientos` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fecha` varchar(10) NOT NULL,
+  `tipomovimiento` tinyint(3) unsigned NOT NULL,
+  `iddocumento` int(10) unsigned NOT NULL,
+  `cargo` double NOT NULL,
+  `abono` double NOT NULL,
+  `saldo` double NOT NULL,
+  `idproveedor` int(10) unsigned NOT NULL,
+  `hora` varchar(8) NOT NULL,
+  `estado` tinyint(3) unsigned NOT NULL,
+  `folio` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+

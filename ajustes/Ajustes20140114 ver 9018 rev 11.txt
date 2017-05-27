@@ -1,0 +1,354 @@
+delete from tblimpresionesnodos where documento=8 and idsucursal=1;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(680,52,'Folio Compra:','docFolio',50,20,'Lucida Console',8,0,0,0,0,1,8,1,0,0,'Documento - Folio Pre-Orden',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(638,102,'Fecha','docFecha',150,20,'Lucida Console',8,0,0,0,0,1,8,1,0,0,'Documento - Fecha',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,410,'SubTotal ','docSubTotal',100,20,'Lucida Console',8,0,0,0,0,1,8,1,0,0,'Documento - SubTotal',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,434,'IVA ','docIVA',100,20,'Lucida Console',8,0,0,0,0,1,8,1,0,0,'Documento - IVA',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,458,'Total ','docTotal',100,20,'Lucida Console',8,0,0,0,0,1,8,1,0,0,'Documento - Total',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(692,434,'% IVA ','docIVAcant',25,20,'Lucida Console',8,0,0,0,0,1,8,1,0,0,'Documento - IVA cantidad',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,410,'Cantidad Letra ','docCantLetra',500,20,'Lucida Console',8,0,0,0,0,1,8,1,0,0,'Documento - Cantidad Letra',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(324,492,'Mensaje Cancelado','cancelado',170,20,'Arial',18,0,0,1,0,0,8,1,0,0,'Documento - Mensaje Candelado',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,63,'Nombre','empresaNombre',300,20,'Lucida Console',8,0,0,0,0,1,8,1,0,0,'Empresa - Nombre',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,84,'Calle:','empresaCalle',300,20,'Lucida Console',8,0,0,0,0,1,8,1,0,1,'Empresa - Dirección calle',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,104,'Col:','empresaColonia',300,20,'Lucida Console',8,0,0,0,0,1,8,1,0,1,'Empresa - Dirección colonia',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,124,'CP:','empresaCP',150,20,'Lucida Console',8,0,0,0,0,1,8,1,0,1,'Empresa - CP',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(192,124,'RFC:','empresaRFC',150,20,'Lucida Console',8,0,0,0,0,1,8,1,0,1,'Empresa - RFC',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,144,'Tel:','empresaTel',300,20,'Lucida Console',8,0,0,0,0,1,8,1,0,1,'Empresa - Telefono',0,2);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,164,'E-mail:','empresaEMail',300,20,'Lucida Console',8,0,0,0,0,1,8,1,0,1,'Empresa - EMail',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,210,'Nombre ','provNombre',300,20,'Lucida Console',8,0,0,0,0,1,8,1,0,0,'Proveedor - Nombre',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,230,'Dom:','provDom',300,20,'Lucida Console',8,0,0,0,0,1,8,1,0,1,'Proveedor - Domicilio',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,250,'Col:','provCol',210,20,'Lucida Console',8,0,0,0,0,1,8,1,0,1,'Proveedor - Col',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(252,250,'CP:','provCP',90,20,'Lucida Console',8,0,0,0,0,1,8,1,0,1,'Proveedor - CP',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,270,'Ciudad:','provCiudad',300,20,'Lucida Console',8,0,0,0,0,1,8,1,0,1,'Proveedor - Ciudad',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,290,'RFC:','provRFC',300,20,'Lucida Console',8,0,0,0,0,1,8,1,0,1,'Proveedor - RFC',0,3);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(46,369,'Codigo','artCod',100,20,'Lucida Console',8,0,0,1,0,1,8,1,0,0,'Artículos - Cant',0,4);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(548,369,'Cant:','artCant',100,20,'Lucida Console',8,0,0,1,0,1,8,1,0,0,'Artículos - Cant',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(148,369,'Descripcion ','artDesc',400,20,'Lucida Console',8,0,0,1,0,1,8,1,0,0,'Artículos - Descripción',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(648,369,'Precio U','artPrecioU',100,20,'Lucida Console',8,0,0,1,0,1,8,1,0,0,'Artículos - Precio U.',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,369,'Importe:','provImporte',100,20,'Lucida Console',8,0,0,1,0,1,8,1,0,0,'Artículos - Importe',0,4);
+
+delete from tblimpresionesnodos where documento=11 and idsucursal=1;
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(680,52,'Folio Devolución:','docFolio',50,20,'Lucida Console',8,0,0,0,0,1,11,1,0,0,'Documento - Folio Dev',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(638,102,'Fecha','docFecha',150,20,'Lucida Console',8,0,0,0,0,1,11,1,0,0,'Documento - Fecha',0,1);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,410,'SubTotal ','docSubTotal',100,20,'Lucida Console',8,0,0,0,0,1,11,1,0,0,'Documento - SubTotal',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,434,'IVA ','iva',100,20,'Lucida Console',8,0,0,0,1,1,11,1,0,0,'Documento - IVA',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,458,'Total ','docTotal',100,20,'Lucida Console',8,0,0,0,0,1,11,1,0,0,'Documento - Total',0,1);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,410,'Cantidad Letra ','docCantLetra',500,20,'Lucida Console',8,0,0,0,0,1,11,1,0,0,'Documento - Cantidad Letra',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(324,492,'Mensaje Cancelado','cancelado',170,20,'Arial',18,0,0,1,0,0,11,1,0,0,'Documento - Mensaje Candelado',0,1);
+
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,63,'Nombre','empresaNombre',300,20,'Lucida Console',8,0,0,0,0,1,11,1,0,0,'Empresa - Nombre',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,84,'Calle: ','empresaCalle',300,20,'Lucida Console',8,0,0,0,0,1,11,1,0,1,'Empresa - Dirección calle',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,104,'Col: ','empresaColonia',300,20,'Lucida Console',8,0,0,0,0,1,11,1,0,1,'Empresa - Dirección colonia',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,124,'CP: ','empresaCP',150,20,'Lucida Console',8,0,0,0,0,1,11,1,0,1,'Empresa - CP',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(192,124,'RFC: ','empresaRFC',150,20,'Lucida Console',8,0,0,0,0,1,11,1,0,1,'Empresa - RFC',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,144,'Tel: ','empresaTel',150,20,'Lucida Console',8,0,0,0,0,1,11,1,0,1,'Empresa - Telefono',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(192,144,'Tel:','empresaTel2',150,20,'Lucida Console',8,0,0,0,0,1,11,1,0,1,'Empresa - Telefono2',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,164,'E-mail: ','empresaEMail',150,20,'Lucida Console',8,0,0,0,0,1,11,1,0,1,'Empresa - EMail',0,2);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,210,'Nombre ','provNombre',300,20,'Lucida Console',8,0,0,0,0,1,11,1,0,0,'Proveedor - Nombre',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,230,'Dom: ','provDom',300,20,'Lucida Console',8,0,0,0,0,1,11,1,0,1,'Proveedor - Domicilio',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,250,'Col: ','provCol',210,20,'Lucida Console',8,0,0,0,0,1,11,1,0,1,'Proveedor - Col',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(252,250,'CP: ','provCP',90,20,'Lucida Console',8,0,0,0,0,1,11,1,0,1,'Proveedor - CP',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,270,'Ciudad: ','provCiudad',300,20,'Lucida Console',8,0,0,0,0,1,11,1,0,1,'Proveedor - Ciudad',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,290,'RFC: ','provRFC',300,20,'Lucida Console',8,0,0,0,0,1,11,1,0,1,'Proveedor - RFC',0,3);
+
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(142,369,'Código','artCod',100,20,'Lucida Console',8,0,0,1,0,1,11,1,0,0,'Artículos - Codigo',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(242,369,'Cant: ','artCant',100,20,'Lucida Console',8,0,0,1,0,1,11,1,0,0,'Artículos - Cant',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(348,369,'Descripcion ','artDesc',300,20,'Lucida Console',8,0,0,1,0,1,11,1,0,0,'Artículos - Descripción',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(648,369,'Precio U','artPrecioU',100,20,'Lucida Console',8,0,0,1,0,1,11,1,0,0,'Artículos - Precio U.',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,369,'Importe: ','provImporte',100,20,'Lucida Console',8,0,0,1,0,1,11,1,0,0,'Artículos - Importe',0,4);
+
+
+delete from tblimpresionesnodos where documento=7 and idsucursal=1;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(652,52,'Folio Compra:','docFolio',50,20,'Lucida Console',8,0,0,0,0,1,7,1,0,0,'Documento - Folio Compra',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(702,52,'Serie Compra','docSerie',50,20,'Lucida Console',8,0,0,0,0,1,7,1,0,0,'Documento - Serie Compra',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(638,102,'Fecha','docFecha',150,20,'Lucida Console',8,0,0,0,0,1,7,1,0,0,'Documento - Fecha',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,410,'SubTotal ','docSubTotal',100,20,'Lucida Console',8,0,0,0,0,1,7,1,0,0,'Documento - SubTotal',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,434,'IVA ','iva',100,20,'Lucida Console',8,0,0,0,1,1,7,1,0,0,'Documento - IVA',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,458,'Total ','docTotal',100,20,'Lucida Console',8,0,0,0,0,1,7,1,0,0,'Documento - Total',0,1);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,410,'Cantidad Letra ','docCantLetra',500,20,'Lucida Console',8,0,0,0,0,1,7,1,0,0,'Documento - Cantidad Letra',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,434,'Costo indirecto: ','docCostoIndirecto',300,20,'Lucida Console',8,0,0,0,0,1,7,1,0,0,'Documento - Costo indirecto',0,1);
+
+
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,63,'Nombre','empresaNombre',300,20,'Lucida Console',8,0,0,0,0,1,7,1,0,0,'Empresa - Nombre',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,84,'Calle:','empresaCalle',400,20,'Lucida Console',8,0,0,0,0,1,7,1,0,1,'Empresa - Dirección calle',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,104,'Col:','empresaColonia',300,20,'Lucida Console',8,0,0,0,0,1,7,1,0,1,'Empresa - Dirección colonia',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,124,'CP:','empresaCP',150,20,'Lucida Console',8,0,0,0,0,1,7,1,0,1,'Empresa - CP',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(192,124,'RFC:','empresaRFC',150,20,'Lucida Console',8,0,0,0,0,1,7,1,0,1,'Empresa - RFC',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,144,'Tel:','empresaTel',300,20,'Lucida Console',8,0,0,0,0,1,7,1,0,1,'Empresa - Telefono',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,164,'E-mail:','empresaEMail',300,20,'Lucida Console',8,0,0,0,0,1,7,1,0,1,'Empresa - EMail',0,2);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,210,'Nombre ','provNombre',300,20,'Lucida Console',8,0,0,0,0,1,7,1,0,0,'Proveedor - Nombre',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,230,'Dom:','provDom',300,20,'Lucida Console',8,0,0,0,0,1,7,1,0,1,'Proveedor - Domicilio',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,250,'Col:','provCol',210,20,'Lucida Console',8,0,0,0,0,1,7,1,0,1,'Proveedor - Col',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(252,250,'CP:','provCP',90,20,'Lucida Console',8,0,0,0,0,1,7,1,0,1,'Proveedor - CP',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,270,'Ciudad: ','provCiudad',300,20,'Lucida Console',8,0,0,0,0,1,7,1,0,1,'Proveedor - Ciudad',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,290,'RFC: ','provRFC',300,20,'Lucida Console',8,0,0,0,0,1,7,1,0,1,'Proveedor - RFC',0,3);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,369,'Cant:','artCant',100,20,'Lucida Console',8,0,0,1,0,1,7,1,0,0,'Artículos - Cant',0,4);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(148,369,'Descripcion ','artDesc',500,20,'Lucida Console',8,0,0,1,0,1,7,1,0,0,'Artículos - Descripción',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(648,369,'Precio U','artPrecioU',100,20,'Lucida Console',8,0,0,1,0,1,7,1,0,0,'Artículos - Precio U.',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,369,'Importe: ','provImporte',100,20,'Lucida Console',8,0,0,1,0,1,7,1,0,0,'Artículos - Importe',0,4);
+
+delete from tblimpresionesnodos where documento=13 and idsucursal=1;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(680,52,'Folio Notas de cargo:','docFolio',50,20,'Lucida Console',8,0,0,0,0,1,13,1,0,0,'Documento - Folio Notas',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(638,102,'Fecha','docFecha',150,20,'Lucida Console',8,0,0,0,0,1,13,1,0,0,'Documento - Fecha',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,410,'SubTotal ','docSubTotal',100,20,'Lucida Console',8,0,0,0,0,1,13,1,0,0,'Documento - SubTotal',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,434,'IVA ','iva',100,20,'Lucida Console',8,0,0,0,1,1,13,1,0,0,'Documento - IVA',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,458,'Total ','docTotal',100,20,'Lucida Console',8,0,0,0,0,1,13,1,0,0,'Documento - Total',0,1);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,410,'Cantidad Letra ','docCantLetra',500,20,'Lucida Console',8,0,0,0,0,1,13,1,0,0,'Documento - Cantidad Letra',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(324,492,'Mensaje Cancelado','cancelado',170,20,'Arial',18,0,0,1,0,0,13,1,0,0,'Documento - Mensaje Candelado',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,63,'Nombre','empresaNombre',300,20,'Lucida Console',8,0,0,0,0,1,13,1,0,0,'Empresa - Nombre',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,84,'Calle: ','empresaCalle',300,20,'Lucida Console',8,0,0,0,0,1,13,1,0,1,'Empresa - Dirección calle',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,104,'Col: ','empresaColonia',300,20,'Lucida Console',8,0,0,0,0,1,13,1,0,1,'Empresa - Dirección colonia',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,124,'CP: ','empresaCP',150,20,'Lucida Console',8,0,0,0,0,1,13,1,0,1,'Empresa - CP',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(192,124,'RFC: ','empresaRFC',150,20,'Lucida Console',8,0,0,0,0,1,13,1,0,1,'Empresa - RFC',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,144,'Tel: ','empresaTel',150,20,'Lucida Console',8,0,0,0,0,1,13,1,0,1,'Empresa - Telefono',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(192,144,', ','empresaTel2',150,20,'Lucida Console',8,0,0,0,0,1,13,1,0,1,'Empresa - Telefono2',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,164,'E-mail: ','empresaEMail',150,20,'Lucida Console',8,0,0,0,0,1,13,1,0,1,'Empresa - EMail',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,210,'Nombre ','provNombre',300,20,'Lucida Console',8,0,0,0,0,1,13,1,0,0,'Proveedor - Nombre',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,230,'Dom: ','provDom',300,20,'Lucida Console',8,0,0,0,0,1,13,1,0,1,'Proveedor - Domicilio',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,250,'Col: ','provCol',210,20,'Lucida Console',8,0,0,0,0,1,13,1,0,1,'Proveedor - Col',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(252,250,'CP: ','provCP',90,20,'Lucida Console',8,0,0,0,0,1,13,1,0,1,'Proveedor - CP',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,270,'Ciudad: ','provCiudad',300,20,'Lucida Console',8,0,0,0,0,1,13,1,0,1,'Proveedor - Ciudad',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,290,'RFC: ','provRFC',300,20,'Lucida Console',8,0,0,0,0,1,13,1,0,1,'Proveedor - RFC',0,3);
+
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(242,369,'Cant: ','artCant',100,20,'Lucida Console',8,0,0,1,0,1,13,1,0,0,'Artículos - Cant',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(348,369,'Descripcion ','artDesc',300,20,'Lucida Console',8,0,0,1,0,1,13,1,0,0,'Artículos - Descripción',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(648,369,'Precio U','artPrecioU',100,20,'Lucida Console',8,0,0,1,0,1,13,1,0,0,'Artículos - Precio U.',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,369,'Importe: ','provImporte',100,20,'Lucida Console',8,0,0,1,0,1,13,1,0,0,'Artículos - Importe',0,4);
+
+delete from tblimpresionesnodos where documento=12 and idsucursal=1;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(680,52,'Folio Notas de crédito:','docFolio',50,20,'Lucida Console',8,0,0,0,0,1,12,1,0,0,'Documento - Folio Notas',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(638,102,'Fecha','docFecha',150,20,'Lucida Console',8,0,0,0,0,1,12,1,0,0,'Documento - Fecha',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,410,'SubTotal ','docSubTotal',100,20,'Lucida Console',8,0,0,0,0,1,12,1,0,0,'Documento - SubTotal',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,434,'IVA ','iva',100,20,'Lucida Console',8,0,0,0,1,1,12,1,0,0,'Documento - IVA',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,458,'Total ','docTotal',100,20,'Lucida Console',8,0,0,0,0,1,12,1,0,0,'Documento - Total',0,1);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,410,'Cantidad Letra ','docCantLetra',500,20,'Lucida Console',8,0,0,0,0,1,12,1,0,0,'Documento - Cantidad Letra',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(324,492,'Mensaje Cancelado','cancelado',170,20,'Arial',18,0,0,1,0,0,12,1,0,0,'Documento - Mensaje Candelado',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,63,'Nombre','empresaNombre',300,20,'Lucida Console',8,0,0,0,0,1,12,1,0,0,'Empresa - Nombre',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,84,'Calle: ','empresaCalle',300,20,'Lucida Console',8,0,0,0,0,1,12,1,0,1,'Empresa - Dirección calle',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,104,'Col: ','empresaColonia',300,20,'Lucida Console',8,0,0,0,0,1,12,1,0,1,'Empresa - Dirección colonia',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,124,'CP: ','empresaCP',150,20,'Lucida Console',8,0,0,0,0,1,12,1,0,1,'Empresa - CP',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(192,124,'RFC: ','empresaRFC',150,20,'Lucida Console',8,0,0,0,0,1,12,1,0,1,'Empresa - RFC',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,144,'Tel: ','empresaTel',150,20,'Lucida Console',8,0,0,0,0,1,12,1,0,1,'Empresa - Telefono',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(192,144,', ','empresaTel2',150,20,'Lucida Console',8,0,0,0,0,1,12,1,0,1,'Empresa - Telefono2',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,164,'E-mail: ','empresaEMail',150,20,'Lucida Console',8,0,0,0,0,1,12,1,0,1,'Empresa - EMail',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,210,'Nombre ','provNombre',300,20,'Lucida Console',8,0,0,0,0,1,12,1,0,0,'Proveedor - Nombre',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,230,'Dom: ','provDom',300,20,'Lucida Console',8,0,0,0,0,1,12,1,0,1,'Proveedor - Domicilio',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,250,'Col: ','provCol',210,20,'Lucida Console',8,0,0,0,0,1,12,1,0,1,'Proveedor - Col',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(252,250,'CP: ','provCP',90,20,'Lucida Console',8,0,0,0,0,1,12,1,0,1,'Proveedor - CP',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,270,'Ciudad: ','provCiudad',300,20,'Lucida Console',8,0,0,0,0,1,12,1,0,1,'Proveedor - Ciudad',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,290,'RFC: ','provRFC',300,20,'Lucida Console',8,0,0,0,0,1,12,1,0,1,'Proveedor - RFC',0,3);
+
+
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(242,369,'Cant: ','artCant',100,20,'Lucida Console',8,0,0,1,0,1,12,1,0,0,'Artículos - Cant',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(348,369,'Descripcion ','artDesc',300,20,'Lucida Console',8,0,0,1,0,1,12,1,0,0,'Artículos - Descripción',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(648,369,'Precio U','artPrecioU',100,20,'Lucida Console',8,0,0,1,0,1,12,1,0,0,'Artículos - Precio U.',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,369,'Importe: ','provImporte',100,20,'Lucida Console',8,0,0,1,0,1,12,1,0,0,'Artículos - Importe',0,4);
+
+delete from tblimpresionesnodos where documento=9 and idsucursal=1;
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(680,52,'Folio Compra:','docFolio',50,20,'Lucida Console',8,0,0,0,0,1,9,1,0,0,'Documento - Folio Pedido',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(638,102,'Fecha','docFecha',150,20,'Lucida Console',8,0,0,0,0,1,9,1,0,0,'Documento - Fecha',0,1);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,410,'SubTotal ','docSubTotal',100,20,'Lucida Console',8,0,0,0,0,1,9,1,0,0,'Documento - SubTotal',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,434,'IVA ','iva',100,20,'Lucida Console',8,0,0,0,1,1,9,1,0,0,'Documento - IVA',0,1);
+                                                                                     															                                                     
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,458,'Total ','docTotal',100,20,'Lucida Console',8,0,0,0,0,1,9,1,0,0,'Documento - Total',0,1);
+                                                                                                                                                                                                                                                                   
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,410,'Cantidad Letra ','docCantLetra',500,20,'Lucida Console',8,0,0,0,0,1,9,1,0,0,'Documento - Cantidad Letra',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(324,492,'Mensaje Cancelado','cancelado',170,20,'Arial',18,0,0,1,0,0,9,1,0,0,'Documento - Mensaje Candelado',0,1);
+
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,63,'Nombre','empresaNombre',300,20,'Lucida Console',8,0,0,0,0,1,9,1,0,0,'Empresa - Nombre',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,84,'Calle: ','empresaCalle',300,20,'Lucida Console',8,0,0,0,0,1,9,1,0,1,'Empresa - Dirección calle',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,104,'Col: ','empresaColonia',300,20,'Lucida Console',8,0,0,0,0,1,9,1,0,1,'Empresa - Dirección colonia',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,124,'CP: ','empresaCP',150,20,'Lucida Console',8,0,0,0,0,1,9,1,0,1,'Empresa - CP',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(192,124,'RFC: ','empresaRFC',150,20,'Lucida Console',8,0,0,0,0,1,9,1,0,1,'Empresa - RFC',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,144,'Tel: ','empresaTel',150,20,'Lucida Console',8,0,0,0,0,1,9,1,0,1,'Empresa - Telefono',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(192,144,', ','empresaTel2',150,20,'Lucida Console',8,0,0,0,0,1,9,1,0,1,'Empresa - Telefono2',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,164,'E-mail: ','empresaEMail',300,20,'Lucida Console',8,0,0,0,0,1,9,1,0,1,'Empresa - EMail',0,2);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,210,'Nombre ','provNombre',300,20,'Lucida Console',8,0,0,0,0,1,9,1,0,0,'Proveedor - Nombre',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,230,'Dom: ','provDom',300,20,'Lucida Console',8,0,0,0,0,1,9,1,0,1,'Proveedor - Domicilio',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,250,'Col: ','provCol',210,20,'Lucida Console',8,0,0,0,0,1,9,1,0,1,'Proveedor - Col',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(252,250,'CP: ','provCP',90,20,'Lucida Console',8,0,0,0,0,1,9,1,0,1,'Proveedor - CP',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,270,'Ciudad: ','provCiudad',300,20,'Lucida Console',8,0,0,0,0,1,9,1,0,1,'Proveedor - Ciudad',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,290,'RFC: ','provRFC',300,20,'Lucida Console',8,0,0,0,0,1,9,1,0,1,'Proveedor - RFC',0,3);
+
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,369,'Código','artCod',100,20,'Lucida Console',8,0,0,1,0,1,9,1,0,0,'Artículos - Codigo',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(145,369,'Cant: ','artCant',100,20,'Lucida Console',8,0,0,1,0,1,9,1,0,0,'Artículos - Cant',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(247,369,'Descripcion ','artDesc',400,20,'Lucida Console',8,0,0,1,0,1,9,1,0,0,'Artículos - Descripción',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(648,369,'Precio U','artPrecioU',100,20,'Lucida Console',8,0,0,1,0,1,9,1,0,0,'Artículos - Precio U.',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,369,'Importe: ','provImporte',100,20,'Lucida Console',8,0,0,1,0,1,9,1,0,0,'Artículos - Importe',0,4);
+
+
+delete from tblimpresionesnodos where documento=8 and idsucursal=1;
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(680,52,'Folio Compra:','docFolio',50,20,'Lucida Console',8,0,0,0,0,1,8,1,0,0,'Documento - Folio Pre-Orden',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(638,102,'Fecha','docFecha',150,20,'Lucida Console',8,0,0,0,0,1,8,1,0,0,'Documento - Fecha',0,1);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,410,'SubTotal ','docSubTotal',100,20,'Lucida Console',8,0,0,0,0,1,8,1,0,0,'Documento - SubTotal',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,434,'IVA ','iva',100,20,'Lucida Console',8,0,0,0,1,1,8,1,0,0,'Documento - IVA',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,458,'Total ','docTotal',100,20,'Lucida Console',8,0,0,0,0,1,8,1,0,0,'Documento - Total',0,1);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,410,'Cantidad Letra ','docCantLetra',500,20,'Lucida Console',8,0,0,0,0,1,8,1,0,0,'Documento - Cantidad Letra',0,7);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(324,492,'Mensaje Cancelado','cancelado',170,20,'Arial',18,0,0,1,0,0,8,1,0,0,'Documento - Mensaje Candelado',0,7);
+
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,63,'Nombre','empresaNombre',300,20,'Lucida Console',8,0,0,0,0,1,8,1,0,0,'Empresa - Nombre',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,84,'Calle: ','empresaCalle',300,20,'Lucida Console',8,0,0,0,0,1,8,1,0,1,'Empresa - Dirección calle',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,104,'Col: ','empresaColonia',300,20,'Lucida Console',8,0,0,0,0,1,8,1,0,1,'Empresa - Dirección colonia',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,124,'CP: ','empresaCP',150,20,'Lucida Console',8,0,0,0,0,1,8,1,0,1,'Empresa - CP',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(192,124,'RFC: ','empresaRFC',150,20,'Lucida Console',8,0,0,0,0,1,8,1,0,1,'Empresa - RFC',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,144,'Tel: ','empresaTel',150,20,'Lucida Console',8,0,0,0,0,1,8,1,0,1,'Empresa - Telefono',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(192,144,', ','empresaTel2',150,20,'Lucida Console',8,0,0,0,0,1,8,1,0,1,'Empresa - Telefono2',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,164,'E-mail: ','empresaEMail',150,20,'Lucida Console',8,0,0,0,0,1,8,1,0,1,'Empresa - EMail',0,2);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,210,'Nombre ','provNombre',300,20,'Lucida Console',8,0,0,0,0,1,8,1,0,0,'Proveedor - Nombre',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,230,'Dom: ','provDom',300,20,'Lucida Console',8,0,0,0,0,1,8,1,0,1,'Proveedor - Domicilio',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,250,'Col: ','provCol',210,20,'Lucida Console',8,0,0,0,0,1,8,1,0,1,'Proveedor - Col',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(252,250,'CP: ','provCP',90,20,'Lucida Console',8,0,0,0,0,1,8,1,0,1,'Proveedor - CP',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,270,'Ciudad: ','provCiudad',300,20,'Lucida Console',8,0,0,0,0,1,8,1,0,1,'Proveedor - Ciudad',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,290,'RFC: ','provRFC',300,20,'Lucida Console',8,0,0,0,0,1,8,1,0,1,'Proveedor - RFC',0,3);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,369,'Cant: ','artCant',100,20,'Lucida Console',8,0,0,1,1,1,8,1,0,0,'Artículos - Cant',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(148,369,'Descripcion ','artDesc',500,20,'Lucida Console',8,0,0,1,1,1,8,1,0,0,'Artículos - Descripción',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(648,369,'Precio U','artPrecioU',100,20,'Lucida Console',8,0,0,1,1,1,8,1,0,0,'Artículos - Precio U.',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,369,'Importe: ','provImporte',100,20,'Lucida Console',8,0,0,1,1,1,8,1,0,0,'Artículos - Importe',0,4);
+
+
+delete from tblimpresionesnodos where documento=10 and idsucursal=1;
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(680,52,'Folio Remisión:','docFolio',50,20,'Lucida Console',8,0,0,0,0,1,10,1,0,0,'Documento - Folio Remisiones',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(638,102,'Fecha','docFecha',150,20,'Lucida Console',8,0,0,0,0,1,10,1,0,0,'Documento - Fecha',0,1);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,410,'SubTotal ','docSubTotal',100,20,'Lucida Console',8,0,0,0,0,1,10,1,0,0,'Documento - SubTotal',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,434,'IVA ','docIVA',100,20,'Lucida Console',8,0,0,0,1,1,10,1,0,0,'Documento - IVA',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,458,'Total ','docTotal',100,20,'Lucida Console',8,0,0,0,0,1,10,1,0,0,'Documento - Total',0,1);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,410,'Cantidad Letra ','docCantLetra',500,20,'Lucida Console',8,0,0,0,0,1,10,1,0,0,'Documento - Cantidad Letra',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(324,492,'Mensaje Cancelado','cancelado',170,20,'Arial',18,0,0,1,0,0,10,1,0,0,'Documento - Mensaje Candelado',0,1);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,63,'Nombre','empresaNombre',300,20,'Lucida Console',8,0,0,0,0,1,10,1,0,0,'Empresa - Nombre',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,84,'Calle: ','empresaCalle',300,20,'Lucida Console',8,0,0,0,0,1,10,1,0,1,'Empresa - Dirección calle',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,104,'Col: ','empresaColonia',300,20,'Lucida Console',8,0,0,0,0,1,10,1,0,1,'Empresa - Dirección colonia',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,124,'CP: ','empresaCP',150,20,'Lucida Console',8,0,0,0,0,1,10,1,0,1,'Empresa - CP',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(192,124,'RFC: ','empresaRFC',150,20,'Lucida Console',8,0,0,0,0,1,10,1,0,1,'Empresa - RFC',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,144,'Tel: ','empresaTel',150,20,'Lucida Console',8,0,0,0,0,1,10,1,0,1,'Empresa - Telefono',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(192,144,', ','empresaTel2',150,20,'Lucida Console',8,0,0,0,0,1,10,1,0,1,'Empresa - Telefono2',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,164,'E-mail: ','empresaEMail',150,20,'Lucida Console',8,0,0,0,0,1,10,1,0,1,'Empresa - EMail',0,2);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,210,'Nombre ','provNombre',300,20,'Lucida Console',8,0,0,0,0,1,10,1,0,0,'Proveedor - Nombre',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,230,'Dom: ','provDom',300,20,'Lucida Console',8,0,0,0,0,1,10,1,0,1,'Proveedor - Domicilio',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,250,'Col: ','provCol',210,20,'Lucida Console',8,0,0,0,0,1,10,1,0,1,'Proveedor - Col',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(252,250,'CP: ','provCP',90,20,'Lucida Console',8,0,0,0,0,1,10,1,0,1,'Proveedor - CP',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,270,'Ciudad: ','provCiudad',300,20,'Lucida Console',8,0,0,0,0,1,10,1,0,1,'Proveedor - Ciudad',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(42,290,'RFC: ','provRFC',300,20,'Lucida Console',8,0,0,0,0,1,10,1,0,1,'Proveedor - RFC',0,3);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(142,369,'Código','artCodigo',100,20,'Lucida Console',8,0,0,1,0,1,10,1,0,0,'Artículos - Codigo',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(242,369,'Cant: ','artCant',100,20,'Lucida Console',8,0,0,1,0,1,10,1,0,0,'Artículos - Cant',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(348,369,'Descripcion ','artDesc',300,20,'Lucida Console',8,0,0,1,0,1,10,1,0,0,'Artículos - Descripción',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(648,369,'Precio U','artPrecioU',100,20,'Lucida Console',8,0,0,1,0,1,10,1,0,0,'Artículos - Precio U.',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(748,369,'Importe: ','provImporte',100,20,'Lucida Console',8,0,0,1,0,1,10,1,0,0,'Artículos - Importe',0,4);
+
+
+DROP TABLE IF EXISTS `tbladdendapepsico`;
+CREATE TABLE  `tbladdendapepsico` (
+  `idAddenda` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `tipo` varchar(10) NOT NULL,
+  `version` int(10) unsigned NOT NULL,
+  `idPedido` varchar(10) NOT NULL,
+  `idSolicitudPago` varchar(10) DEFAULT NULL,
+  `referencia` varchar(46) DEFAULT NULL,
+  `serie` varchar(10) DEFAULT NULL,
+  `folio` varchar(20) DEFAULT NULL,
+  `folioUUID` varchar(36) DEFAULT NULL,
+  `tipoDoc` int(10) unsigned NOT NULL,
+  `idProveedor` varchar(10) NOT NULL,
+  `idVenta` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`idAddenda`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `tbladdendapesicorecepcion`;
+CREATE TABLE  `tbladdendapesicorecepcion` (
+  `idRecepcion` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idAddenda` int(10) unsigned NOT NULL,
+  `idInventario` int(10) unsigned NOT NULL,
+  `recepcion` varchar(10) NOT NULL,
+  PRIMARY KEY (`idRecepcion`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+
+ALTER TABLE `tblcomprasdetalles` ADD COLUMN `IEPS` DOUBLE NOT NULL AFTER `costoindirecto`,
+ ADD COLUMN `ivaRetenido` DOUBLE NOT NULL AFTER `IEPS`;
+
+
+ALTER TABLE `tblcompraspedidosdetalles` ADD COLUMN `IEPS` DOUBLE NOT NULL AFTER `surtido`,
+ ADD COLUMN `ivaRetenido` DOUBLE NOT NULL AFTER `IEPS`;
+
+
+ALTER TABLE `tblcomprascotizacionesdetalles` ADD COLUMN `IEPS` DOUBLE NOT NULL AFTER `descuento`,
+ ADD COLUMN `ivaRetenido` DOUBLE NOT NULL AFTER `IEPS`;
+
+ALTER TABLE `tblcomprasremisionesdetalles` ADD COLUMN `IEPS` DOUBLE NOT NULL AFTER `surtido`,
+ ADD COLUMN `ivaRetenido` DOUBLE NOT NULL AFTER `IEPS`;
+
+ALTER TABLE `tbldevolucionesdetalles` ADD COLUMN `IEPS` DOUBLE NOT NULL AFTER `equivalenciab`,
+ ADD COLUMN `ivaRetenido` DOUBLE NOT NULL AFTER `IEPS`;
+
+
+
+ALTER TABLE `tbldevolucionesdetallesc` ADD COLUMN `IEPS` DOUBLE NOT NULL AFTER `descuento`,
+ ADD COLUMN `ivaRetenido` DOUBLE NOT NULL AFTER `IEPS`;
+
+DROP TABLE IF EXISTS `tbladdendapepsico`;
+CREATE TABLE  `tbladdendapepsico` (
+  `idAddenda` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `tipo` varchar(10) NOT NULL,
+  `version` int(10) unsigned NOT NULL,
+  `idPedido` varchar(10) NOT NULL,
+  `idSolicitudPago` varchar(10) DEFAULT NULL,
+  `referencia` varchar(46) DEFAULT NULL,
+  `serie` varchar(10) DEFAULT NULL,
+  `folio` varchar(20) DEFAULT NULL,
+  `folioUUID` varchar(36) DEFAULT NULL,
+  `tipoDoc` int(10) unsigned NOT NULL,
+  `idProveedor` varchar(10) NOT NULL,
+  `idVenta` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`idAddenda`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `tbladdendapesicorecepcion`;
+CREATE TABLE  `tbladdendapesicorecepcion` (
+  `idRecepcion` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idAddenda` int(10) unsigned NOT NULL,
+  `idInventario` int(10) unsigned NOT NULL,
+  `recepcion` varchar(10) NOT NULL,
+  PRIMARY KEY (`idRecepcion`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+
+
+ALTER TABLE `tblnominas` ADD COLUMN `diaspagados` DOUBLE NOT NULL AFTER `clabe`,
+ ADD COLUMN `antiguedad` INTEGER UNSIGNED NOT NULL AFTER `diaspagados`;
+
+
+
+insert into tblactualizaciones(version) values('ver 9018 rev 11');
+

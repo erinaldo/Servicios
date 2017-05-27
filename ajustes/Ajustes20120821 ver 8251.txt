@@ -1,0 +1,27 @@
+DROP TABLE IF EXISTS `tbladendafemsa`;
+CREATE TABLE `tbladendafemsa` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idventa` int(10) unsigned NOT NULL,
+  `version` smallint(5) unsigned NOT NULL,
+  `clasedoc` smallint(5) unsigned NOT NULL,
+  `nosociedad` varchar(5) NOT NULL,
+  `noproveedor` varchar(11) NOT NULL,
+  `nopedido` varchar(45) NOT NULL,
+  `moneda` varchar(3) NOT NULL,
+  `noentrada` varchar(45) NOT NULL,
+  `noremision` varchar(45) NOT NULL,
+  `nosocio` varchar(45) NOT NULL,
+  `centro` varchar(5) NOT NULL,
+  `iniperliq` varchar(10) NOT NULL,
+  `finperliq` varchar(10) NOT NULL,
+  `retencion1` varchar(45) NOT NULL,
+  `retencion2` varchar(45) NOT NULL,
+  `retencion3` varchar(45) NOT NULL,
+  `datosadicionales` varchar(45) NOT NULL,
+  `tipooperacion` varchar(45) NOT NULL,
+  `tipodocumento` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `tblclientes` ADD COLUMN `usaadenda` INTEGER UNSIGNED NOT NULL AFTER `representanteregistro`;
+update tblclientes set usaadenda=0;

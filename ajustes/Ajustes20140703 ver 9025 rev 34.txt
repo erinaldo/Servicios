@@ -1,0 +1,8 @@
+update tblpolizasdetalles set cargo='-999999999' where cargo='';
+update tblpolizasdetalles set abono='-999999999' where abono='';
+ALTER TABLE `tblpolizas` MODIFY COLUMN `beneficiario` VARCHAR(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+ALTER TABLE `tblpolizasdetalles` MODIFY COLUMN `cargo` DOUBLE NOT NULL,
+ MODIFY COLUMN `abono` DOUBLE NOT NULL;
+
+insert into tblactualizaciones(version) values('ver 9025 rev 34');
+

@@ -1,0 +1,4 @@
+ALTER TABLE `tblproveedoresviejossaldos` ADD COLUMN `creditoreal` DOUBLE NOT NULL AFTER `totalapagar`;
+
+
+insert into tblactualizaciones(version,versionchk) values('ver 9035 rev 14','00903514');

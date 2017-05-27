@@ -1,0 +1,5 @@
+ALTER TABLE `tblclientesequipos` ADD COLUMN `fechaEnvio` VARCHAR(10) NOT NULL AFTER `horaCambio`,
+ADD COLUMN `estado` TINYINT(3) UNSIGNED NOT NULL AFTER `fechaEnvio`;
+update tblclientesequipos set fechaenvio='2017/01/30';
+
+insert into tblactualizaciones(version,versionchk) values('ver 9037 rev 8','00903708');

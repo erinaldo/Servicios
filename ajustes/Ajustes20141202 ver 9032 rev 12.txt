@@ -1,0 +1,14 @@
+ALTER TABLE `tblcuentas` ADD COLUMN `idCcontable` INTEGER UNSIGNED NOT NULL AFTER `Tipo`;
+update tblimpresionesnodos set datapropertyname='total deducciones' where nombre='Liquidacion - deducciones';
+ALTER TABLE `tblopciones` ADD COLUMN `boletasresumida` TINYINT UNSIGNED NOT NULL AFTER `boletasinventario`;
+
+ALTER TABLE `tblsemillasboletas` DROP COLUMN `destino`,
+ ADD COLUMN `idCliente` INTEGER UNSIGNED AFTER `horasalida`,
+ ADD CONSTRAINT `boletas_clientes` FOREIGN KEY `boletas_clientes` (`idCliente`)
+    REFERENCES `tblclientes` (`idcliente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+
+insert into tblactualizaciones(version) values('ver 9032 rev 12');
+

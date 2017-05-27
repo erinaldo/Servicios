@@ -1,0 +1,5 @@
+ALTER TABLE `tblpolizasdetalles` MODIFY COLUMN `idProveedor` VARCHAR(45) NOT NULL;
+ALTER TABLE `tblopciones` ADD COLUMN `clientessinrepetir` TINYINT UNSIGNED NOT NULL AFTER `integrarbancos`;
+
+insert into tblactualizaciones(version) values('ver 9025 rev 26');
+

@@ -1,0 +1,100 @@
+ALTER TABLE `tblinventario` ADD COLUMN `soloventas` TINYINT UNSIGNED NOT NULL AFTER `cunidad`,
+ ADD COLUMN `solocompras` TINYINT UNSIGNED NOT NULL AFTER `soloventas`,
+ ADD COLUMN `soloinventario` TINYINT UNSIGNED NOT NULL AFTER `solocompras`;
+
+ALTER TABLE `tblmovimientos` ADD COLUMN `idcliente` INTEGER UNSIGNED NOT NULL AFTER `idalmacend`,
+ ADD COLUMN `idpedidov` INTEGER UNSIGNED NOT NULL AFTER `idcliente`;
+
+update tblmovimientos set idcliente=(select tblventas.idcliente from tblventas where tblventas.idventa=tblmovimientos.idventa) where tblmovimientos.idventa<>0;
+update tblmovimientos set idcliente=(select tblventasremisiones.idcliente from tblventasremisiones where tblventasremisiones.idremision=tblmovimientos.idremision) where tblmovimientos.idremision<>0;
+
+CREATE TABLE `tblalmacenespermisos` (
+  `idalmacen` INTEGER UNSIGNED NOT NULL,
+  `idusuario` INTEGER UNSIGNED NOT NULL
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `tblopciones2` ADD COLUMN `noproveedorsoriana` INTEGER UNSIGNED NOT NULL AFTER `vendedorusuario`;
+
+CREATE TABLE `tbladdendasoriana` (
+  `idventa` INTEGER UNSIGNED NOT NULL,
+  `remision` VARCHAR(45) NOT NULL,
+  `tienda` SMALLINT UNSIGNED NOT NULL,
+  `tipomoneda` SMALLINT UNSIGNED NOT NULL,
+  `tipobulto` SMALLINT UNSIGNED NOT NULL,
+  `entregamercancia` SMALLINT UNSIGNED NOT NULL,
+  `cantidadbultos` FLOAT NOT NULL,
+  `fechaentregamercancia` DATETIME NOT NULL,
+  `cita` SMALLINT UNSIGNED NOT NULL,
+  `folionotaentrada` SMALLINT UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`idventa`),
+  CONSTRAINT `FK_tbladdendasoriana_1` FOREIGN KEY `FK_tbladdendasoriana_1` (`idventa`)
+    REFERENCES `tblventas` (`idventa`)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tbladdendasorianapedimento` (
+  `idventa` INTEGER UNSIGNED NOT NULL,
+  `pedimento` INTEGER UNSIGNED NOT NULL,
+  `aduana` SMALLINT UNSIGNED NOT NULL,
+  `agenteaduanal` SMALLINT UNSIGNED NOT NULL,
+  `tipopedimento` VARCHAR(45) NOT NULL,
+  `fechapedimento` DATETIME NOT NULL,
+  `fecharecibolaredo` DATETIME NOT NULL,
+  `fechabilloflanding` DATETIME NOT NULL,
+  PRIMARY KEY (`idventa`),
+  CONSTRAINT `FK_tbladdendasorianapedimento_1` FOREIGN KEY `FK_tbladdendasorianapedimento_1` (`idventa`)
+    REFERENCES `tbladdendasoriana` (`idventa`)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tbladdendasorianapedido` (
+  `idventa` INTEGER UNSIGNED NOT NULL,
+  `foliopedido` INTEGER UNSIGNED NOT NULL,
+  `tienda` SMALLINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`idventa`, `foliopedido`),
+  CONSTRAINT `FK_tbladdendasorianapedido_1` FOREIGN KEY `FK_tbladdendasorianapedido_1` (`idventa`)
+    REFERENCES `tbladdendasoriana` (`idventa`)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tbladdendasorianaarticulo` (
+  `idventa` INTEGER UNSIGNED NOT NULL,
+  `foliopedido` INTEGER UNSIGNED NOT NULL,
+  `codigo` INTEGER UNSIGNED NOT NULL,
+  `cantidadunidadcompra` FLOAT NOT NULL,
+  `costonetounidadcompra` FLOAT NOT NULL,
+  `porcentajeieps` TINYINT UNSIGNED NOT NULL,
+  `porcentajeiva` TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`idventa`, `foliopedido`, `codigo`),
+  CONSTRAINT `FK_tbladdendasorianaarticulo_1` FOREIGN KEY `FK_tbladdendasorianaarticulo_1` (`idventa`, `foliopedido`)
+    REFERENCES `tbladdendasorianapedido` (`idventa`, `foliopedido`)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `tblopciones2` ADD COLUMN `noproveedorwalmart` INTEGER UNSIGNED NOT NULL AFTER `noproveedorsoriana`;
+
+DROP TABLE IF EXISTS `tbladdendawalmart`;
+CREATE TABLE  `tbladdendawalmart` (
+  `idventa` int(10) unsigned NOT NULL,
+  `ClaveLugarEntrega` varchar(45) NOT NULL,
+  `NombreLugarEntrega` varchar(85) NOT NULL,
+  `FolioOrdenCompra` int(10) unsigned DEFAULT NULL,
+  `FechaOrdenCompra` datetime NOT NULL,
+  `FolioRecibo` int(10) unsigned DEFAULT NULL,
+  `FechaRecibo` datetime NOT NULL,
+  `CedulaIEPS` varchar(45) NOT NULL,
+  PRIMARY KEY (`idventa`),
+  CONSTRAINT `FK_tblAddendaWalmart_1` FOREIGN KEY (`idventa`) REFERENCES `tblventas` (`idventa`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+insert into tblactualizaciones(version,versionchk) values('ver 9037 rev 23','00903723');

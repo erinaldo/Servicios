@@ -1,0 +1,16 @@
+dbrutas
+agregar idempresa y asignar el valor
+
+agregar tabla
+rutasarchivos
+	id auto
+	idempresa numero
+	idsucursal numero
+	tipo numero	
+	ruta texto
+
+opciones
+	id auto
+	rutapfx texto
+	passwordpfx texto
+	sucursaldefault numero

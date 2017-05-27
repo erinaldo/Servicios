@@ -1,0 +1,46 @@
+ALTER TABLE `db_services`.`tblventaspagos` ADD COLUMN `tipodoci` TINYINT UNSIGNED NOT NULL AFTER `iddocumentod`;
+update tblventaspagos set tipodoci=0 where idventa<>0;
+update tblventaspagos set tipodoci=1 where idcargo<>0;
+update tblventaspagos inner join tbldocumentosclientes on  tbldocumentosclientes.iddocumento=iddocumentod set tipodoci=2 where tiposaldo=0;
+update tblventaspagos inner join tbldocumentosclientes on  tbldocumentosclientes.iddocumento=iddocumentod set tipodoci=3 where tiposaldo=1;
+
+ALTER TABLE `db_services`.`tblcompraspagos` ADD COLUMN `tipodoci` TINYINT UNSIGNED NOT NULL AFTER `iddocumentod`;
+update tblcompraspagos set tipodoci=0 where idcompra<>0;
+update tblcompraspagos set tipodoci=1 where idcargo<>0;
+update tblcompraspagos inner join tbldocumentosproveedores on  tbldocumentosproveedores.iddocumento=iddocumentod set tipodoci=2 where tiposaldo=0;
+update tblcompraspagos inner join tbldocumentosproveedores on  tbldocumentosproveedores.iddocumento=iddocumentod set tipodoci=3 where tiposaldo=1;
+
+
+CREATE TABLE `db_services`.`tblinventariomovimientosk` (
+  `idinventario` INTEGER UNSIGNED NOT NULL,
+  `fecha` VARCHAR(10) NOT NULL,
+  `hora` VARCHAR(8) NOT NULL,
+  `tipomovimiento` TINYINT UNSIGNED NOT NULL,
+  `iddocumento` INTEGER UNSIGNED NOT NULL,
+  `estado` TINYINT UNSIGNED NOT NULL,
+  `serie` VARCHAR(45) NOT NULL,
+  `folio` INTEGER UNSIGNED NOT NULL,
+  `entrada` DOUBLE NOT NULL,
+  `salida` DOUBLE NOT NULL,
+  `costo` DOUBLE NOT NULL
+);
+
+ALTER TABLE `db_services`.`tblinventariomovimientosk` ADD COLUMN `idalmacen1` INTEGER UNSIGNED NOT NULL AFTER `costo`,
+ ADD COLUMN `idalmacen2` INTEGER UNSIGNED NOT NULL AFTER `idalmacen1`;
+
+ALTER TABLE `db_services`.`tblcomprasremisiones` ADD COLUMN `usado` TINYINT UNSIGNED NOT NULL AFTER `tipodecambio`;
+update tblcomprasremisiones set usado=0;
+
+ALTER TABLE `db_services`.`tblventasremisiones` ADD COLUMN `usado` TINYINT UNSIGNED NOT NULL AFTER `idmoneda`;
+update tblventasremisiones set usado=0;
+
+ALTER TABLE `db_services`.`tblcomprasremisiones` ADD COLUMN `fechacancelado` VARCHAR(10) NOT NULL AFTER `usado`,
+ ADD COLUMN `horacancelado` VARCHAR(8) NOT NULL AFTER `fechacancelado`;
+update tblcomprasremisiones set fechacancelado=fecha,horacancelado=hora;
+
+ALTER TABLE `db_services`.`tblventasremisiones` ADD COLUMN `fechacancelado` VARCHAR(10) NOT NULL AFTER `usado`,
+ ADD COLUMN `horacancelado` VARCHAR(8) NOT NULL AFTER `fechacancelado`;
+update tblventasremisiones set fechacancelado=fecha,horacancelado=hora;
+
+ALTER TABLE `db_services`.`tblinventario` ADD COLUMN `precioneto` TINYINT UNSIGNED NOT NULL AFTER `fabricante`;
+update tblinventario set precioneto=0;

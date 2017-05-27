@@ -1,0 +1,31 @@
+DROP TABLE IF EXISTS `tblcomplementoine`;
+CREATE TABLE `tblcomplementoine` (
+  `idComplemento` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `comite` varchar(50) NOT NULL,
+  `proceso` varchar(45) NOT NULL,
+  `idFactura` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`idComplemento`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tblcomplementoineentidad`;
+CREATE TABLE `tblcomplementoineentidad` (
+  `idtblcomplementoineEntidad` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idComplemento` int(10) unsigned NOT NULL,
+  `entidad` varchar(45) NOT NULL,
+  `ambito` varchar(45) NOT NULL,
+  PRIMARY KEY (`idtblcomplementoineEntidad`),
+  KEY `FK_tblcomplementoineEntidad_1` (`idComplemento`),
+  CONSTRAINT `FK_tblcomplementoineEntidad_1` FOREIGN KEY (`idComplemento`) REFERENCES `tblcomplementoine` (`idComplemento`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tblcomplementoinecontabilidad`;
+CREATE TABLE `tblcomplementoinecontabilidad` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idEntidad` int(10) unsigned NOT NULL,
+  `idcontabilidad` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `FK_tblcomplementoineContabilidad_1` (`idEntidad`) USING BTREE,
+  CONSTRAINT `FK_tblcomplementoineContabilidad_1` FOREIGN KEY (`idEntidad`) REFERENCES `tblcomplementoineentidad` (`idtblcomplementoineEntidad`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+insert into tblactualizaciones(version,versionchk) values('ver 9035 rev 2','00903502');

@@ -1,0 +1,14 @@
+
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(5,318,'Clasificación:','ArticuloClasificacionV',100,20,'Arial',10,0,0,1,0,1,56,1,0,0,'Artículo - Clasificacion',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(67,315,'Marca:','ArticuloMarca',150,20,'Arial',10,0,0,1,0,1,56,1,0,0,'Artículo - Marca',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(201,316,'Modelo:','ArticuloModelo',150,20,'Arial',10,0,0,1,0,1,56,1,0,0,'Artículo - Modelo',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(443,317,'Color:','ArticuloColor',120,20,'Arial',10,0,0,1,0,1,56,1,0,0,'Artículo - Color',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(548,317,'No. Serie:','ArticuloNoSerie',150,20,'Arial',10,0,0,1,0,1,56,1,0,0,'Artículo - No. Serie',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(702,316,'Placas:','ArticuloPlacas',150,20,'Arial',10,0,0,1,0,1,56,1,0,0,'Artículo - Placas',0,3);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(114,315,'Descripción:','ArticuloDescripcionT',700,20,'Arial',10,0,0,1,0,1,56,1,0,0,'Artículo - Descripción Terreno',0,3);
+
+
+
+
+insert into tblactualizaciones(version) values('ver 9023 rev 11');

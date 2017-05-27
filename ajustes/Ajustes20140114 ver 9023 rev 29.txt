@@ -1,0 +1,28 @@
+CREATE TABLE `tblinventariorelaciones` (
+  `idrelacion` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  `extra` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idrelacion`)
+)
+ENGINE = InnoDB;
+
+
+CREATE TABLE `tblinventariorelacionesdetalles` (
+  `iddetalle` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idrelacion` INTEGER UNSIGNED NOT NULL,
+  `idinventario` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`iddetalle`),
+  CONSTRAINT `FK_tblinventariorelacionesdetalles_1` FOREIGN KEY `FK_tblinventariorelacionesdetalles_1` (`idrelacion`)
+    REFERENCES `tblinventariorelaciones` (`idrelacion`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblinventariorelacionesdetalles_2` FOREIGN KEY `FK_tblinventariorelacionesdetalles_2` (`idinventario`)
+    REFERENCES `tblinventario` (`idinventario`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+
+
+insert into tblactualizaciones(version) values('ver 9023 rev 29');

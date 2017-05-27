@@ -1,0 +1,38 @@
+tblalmacenes
+idinvetario-Cascade llave  foranea
+
+tbldepartamentosareas
+iddepartamento-Cascade llave foranea
+
+tblinventario
+retieneiva tinyint nuevo campo - update tblinventario set retieneiva=0
+
+tblcompras
+idsucursal integer nuevo campo	
+tipodecambio double nuevo campo
+
+
+tblcomprasremisiones
+idsucursal integer nuevo campo	
+tipodecambio double nuevo campo
+
+tblpedidos
+idsucursal integer nuevo campo
+
+tblcomprascotizacion
+idsucursal integer nuevo campo
+
+tblcomprasrequisicion
+idsucursal integer nuevo campo
+
+tblclientes
+ivaretenido double nuevo campo - ya no pendiente en db micro tambien
+isr double nuevo campo
+
+
+tblventas
+ivaretenido double nuevo campo - ya no pendiente en db micro tambien
+isr double nuevo campo
+fechacancelado varchar(10) nuevo campo
+hora cancelado varchar(8) nuevo campo
+

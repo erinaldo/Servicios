@@ -1,0 +1,376 @@
+update tblopciones set nocertificado='Predial:';
+CREATE TABLE `tbllogdeerrores` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `descripcion` VARCHAR(1000) NOT NULL,
+  `dondefue` VARCHAR(450) NOT NULL,
+  `fecha` VARCHAR(10) NOT NULL,
+  `hora` VARCHAR(10) NOT NULL,
+  `idmovimiento` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tbllogdeerrorest` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `descripcion` VARCHAR(1000) NOT NULL,
+  `dondefue` VARCHAR(450) NOT NULL,
+  `fecha` VARCHAR(10) NOT NULL,
+  `hora` VARCHAR(10) NOT NULL,
+  `idmovimiento` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+)
+ENGINE = InnoDB;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdaseriesmovimiento` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdaseriesmovimiento`(pidinventario int,pidmovimiento int,pconseries tinyint) RETURNS varchar(2000) CHARSET latin1
+BEGIN
+declare varminid int;
+declare varmaxid int;
+declare varseries varchar(2000);
+set varseries='';
+if pconseries=1 then
+set varminid=ifnull((select min(idserie) from tblinventarioseries where idmovimiento=pidmovimiento and idinventario=pidinventario),0);
+set varmaxid=ifnull((select max(idserie) from tblinventarioseries where idmovimiento=pidmovimiento and idinventario=pidinventario),0);
+set varseries='';
+
+while varminid<=varmaxid and varminid<>0 do
+set varseries=concat(varseries,'\n','N/S: ',(select noserie from tblinventarioseries where idserie=varminid));
+set varminid=ifnull((select min(idserie) from tblinventarioseries where idmovimiento=pidmovimiento and idinventario=pidinventario and idserie>varminid),0);
+end while;
+end if;
+return varseries;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdaseriesremisiones` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdaseriesremisiones`(pidinventario int,pidremision int,pconseries tinyint) RETURNS varchar(2000) CHARSET latin1
+BEGIN
+declare varminid int;
+declare varmaxid int;
+declare varseries varchar(2000);
+set varseries='';
+if pconseries=1 then
+set varminid=ifnull((select min(idserie) from tblinventarioseries where idremision=pidremision and idinventario=pidinventario),0);
+set varmaxid=ifnull((select max(idserie) from tblinventarioseries where idremision=pidremision and idinventario=pidinventario),0);
+set varseries='';
+
+while varminid<=varmaxid and varminid<>0 do
+set varseries=concat(varseries,'\n','N/S: ',(select noserie from tblinventarioseries where idserie=varminid));
+set varminid=ifnull((select min(idserie) from tblinventarioseries where idremision=pidremision and idinventario=pidinventario and idserie>varminid),0);
+end while;
+end if;
+return varseries;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdadetallesaduanaotros` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdadetallesaduanaotros`(pidocumento int,piddetalle int,ptipo int,pnada tinyint) RETURNS varchar(2000) CHARSET utf8
+BEGIN
+declare varminid int;
+declare varmaxid int;
+declare varidinventario int;
+declare varidventa int;
+declare vardetalles varchar(2000);
+
+set vardetalles='';
+if pnada=1 then
+if ptipo=0 then
+set varminid=ifnull((select min(id) from tblcomprasaduana where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(id) from tblcomprasaduana where iddetalle=piddetalle),0);
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n No: ',(select numero from tblcomprasaduana inner join tblinventarioaduana on tblcomprasaduana.idaduana=tblinventarioaduana.idaduana where id=varminid limit 1),' Fecha: ',(select fecha from tblcomprasaduana inner join tblinventarioaduana on tblcomprasaduana.idaduana=tblinventarioaduana.idaduana where id=varminid limit 1),' Aduana: ',(select aduana from tblcomprasaduana inner join tblinventarioaduana on tblcomprasaduana.idaduana=tblinventarioaduana.idaduana where id=varminid limit 1));
+set varminid=ifnull((select min(id) from tblcomprasaduana where iddetalle=piddetalle and id>varminid),0);
+end while;
+
+end if;
+
+if ptipo=1 then
+set varminid=ifnull((select min(id) from tblcomprasremisionesaduana where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(id) from tblcomprasremisionesaduana where iddetalle=piddetalle),0);
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n No: ',(select numero from tblcomprasremisionesaduana inner join tblinventarioaduana on tblcomprasremisionesaduana.idaduana=tblinventarioaduana.idaduana where id=varminid limit 1),' Fecha: ',(select fecha from tblcomprasremisionesaduana inner join tblinventarioaduana on tblcomprasremisionesaduana.idaduana=tblinventarioaduana.idaduana where id=varminid limit 1),' Aduana: ',(select aduana from tblcomprasremisionesaduana inner join tblinventarioaduana on tblcomprasremisionesaduana.idaduana=tblinventarioaduana.idaduana where id=varminid limit 1));
+set varminid=ifnull((select min(id) from tblcomprasremisionesaduana where iddetalle=piddetalle and id>varminid),0);
+end while;
+
+end if;
+
+if ptipo=2 then
+set varminid=ifnull((select min(id) from tblventasremisionesaduana where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(id) from tblventasremisionesaduana where iddetalle=piddetalle),0);
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n No: ',(select numero from tblventasremisionesaduana inner join tblinventarioaduana on tblventasremisionesaduana.idaduana=tblinventarioaduana.idaduana where id=varminid limit 1),' Fecha: ',(select fecha from tblventasremisionesaduana inner join tblinventarioaduana on tblventasremisionesaduana.idaduana=tblinventarioaduana.idaduana where id=varminid limit 1),' Aduana: ',(select aduana from tblventasremisionesaduana inner join tblinventarioaduana on tblventasremisionesaduana.idaduana=tblinventarioaduana.idaduana where id=varminid limit 1));
+set varminid=ifnull((select min(id) from tblventasremisionesaduana where iddetalle=piddetalle and id>varminid),0);
+end while;
+
+end if;
+
+if ptipo=3 then
+set varminid=ifnull((select min(id) from tblmovimientosaduana where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(id) from tblmovimientosaduana where iddetalle=piddetalle),0);
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n No: ',(select numero from tblmovimientosaduana inner join tblinventarioaduana on tblmovimientosaduana.idaduana=tblinventarioaduana.idaduana where id=varminid limit 1),' Fecha: ',(select fecha from tblmovimientosaduana inner join tblinventarioaduana on tblmovimientosaduana.idaduana=tblinventarioaduana.idaduana where id=varminid limit 1),' Aduana: ',(select aduana from tblmovimientosaduana inner join tblinventarioaduana on tblmovimientosaduana.idaduana=tblinventarioaduana.idaduana where id=varminid limit 1));
+set varminid=ifnull((select min(id) from tblmovimientosaduana where iddetalle=piddetalle and id>varminid),0);
+end while;
+
+end if;
+
+end if;
+
+return vardetalles;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdadetalleslotes` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdadetalleslotes`(pidocumento int,piddetalle int,ptipo int,pnada tinyint) RETURNS varchar(2000) CHARSET utf8
+BEGIN
+declare varminid int;
+declare varmaxid int;
+declare varidinventario int;
+declare varidventa int;
+declare vardetalles varchar(2000);
+
+set vardetalles='';
+if pnada=1 then
+
+if ptipo=0 then
+set varminid=ifnull((select min(id) from tblcompraslotes where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(id) from tblcompraslotes where iddetalle=piddetalle),0);
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n Lote: ',(select lote from tblcompraslotes inner join tblinventariolotes on tblcompraslotes.idlote=tblinventariolotes.idlote where id=varminid limit 1),' Caducidad: ',(select fechacaducidad from tblcompraslotes inner join tblinventariolotes on tblcompraslotes.idlote=tblinventariolotes.idlote where id=varminid limit 1));
+set varminid=ifnull((select min(id) from tblcompraslotes where iddetalle=piddetalle and id>varminid),0);
+end while;
+
+end if;
+
+if ptipo=1 then
+set varminid=ifnull((select min(id) from tblcomprasremisioneslotes where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(id) from tblcomprasremisioneslotes where iddetalle=piddetalle),0);
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n Lote: ',(select lote from tblcomprasremisioneslotes inner join tblinventariolotes on tblcomprasremisioneslotes.idlote=tblinventariolotes.idlote where id=varminid limit 1),' Caducidad: ',(select fechacaducidad from tblcomprasremisioneslotes inner join tblinventariolotes on tblcomprasremisioneslotes.idlote=tblinventariolotes.idlote where id=varminid limit 1));
+set varminid=ifnull((select min(id) from tblcomprasremisioneslotes where iddetalle=piddetalle and id>varminid),0);
+end while;
+end if;
+
+if ptipo=2 then
+set varminid=ifnull((select min(id) from tblventasremisioneslotes where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(id) from tblventasremisioneslotes where iddetalle=piddetalle),0);
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n Lote: ',(select lote from tblventasremisioneslotes inner join tblinventariolotes on tblventasremisioneslotes.idlote=tblinventariolotes.idlote where id=varminid limit 1),' Caducidad: ',(select fechacaducidad from tblventasremisioneslotes inner join tblinventariolotes on tblventasremisioneslotes.idlote=tblinventariolotes.idlote where id=varminid limit 1));
+set varminid=ifnull((select min(id) from tblventasremisioneslotes where iddetalle=piddetalle and id>varminid),0);
+end while;
+end if;
+
+if ptipo=3 then
+set varminid=ifnull((select min(id) from tblventaslotes where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(id) from tblventaslotes where iddetalle=piddetalle),0);
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n Lote: ',(select lote from tblventaslotes inner join tblinventariolotes on tblventaslotes.idlote=tblinventariolotes.idlote where id=varminid limit 1),' Caducidad: ',(select fechacaducidad from tblventaslotes inner join tblinventariolotes on tblventaslotes.idlote=tblinventariolotes.idlote where id=varminid limit 1));
+set varminid=ifnull((select min(id) from tblventaslotes where iddetalle=piddetalle and id>varminid),0);
+end while;
+end if;
+
+if ptipo=4 then
+set varminid=ifnull((select min(id) from tblmovimientoslotes where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(id) from tblmovimientoslotes where iddetalle=piddetalle),0);
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n Lote: ',(select lote from tblmovimientoslotes inner join tblinventariolotes on tblmovimientoslotes.idlote=tblinventariolotes.idlote where id=varminid limit 1),' Caducidad: ',(select fechacaducidad from tblmovimientoslotes inner join tblinventariolotes on tblmovimientoslotes.idlote=tblinventariolotes.idlote where id=varminid limit 1));
+set varminid=ifnull((select min(id) from tblmovimientoslotes where iddetalle=piddetalle and id>varminid),0);
+end while;
+end if;
+
+end if;
+return vardetalles;
+END $$
+
+DELIMITER ;
+
+ALTER TABLE `tblcajas` ADD INDEX `Index_5`(`nombre`);
+
+ALTER TABLE `tblcajasmovimientos` ADD INDEX `Index_7`(`folio`),
+ ADD INDEX `Index_8`(`serie`),
+ ADD INDEX `Index_9`(`fecha`);
+
+ALTER TABLE `tblccontables` DROP INDEX `Naturaleza`;
+
+ALTER TABLE `tblccontables` ADD INDEX `Index_6`(`N3`),
+ ADD INDEX `Index_7`(`N4`),
+ ADD INDEX `Index_8`(`N5`);
+
+ALTER TABLE `tblclientes` DROP INDEX `Index_4`;
+
+ALTER TABLE `tblclientes` ADD INDEX `Index_7`(`nombre`),
+ ADD INDEX `Index_8`(`rfc`),
+ ADD INDEX `Index_9`(`clave`);
+
+ALTER TABLE `tblcompras` ADD INDEX `Index_8`(`referencia`),
+ ADD INDEX `Index_9`(`serie`),
+ ADD INDEX `Index_10`(`folioi`);
+
+ALTER TABLE `tblcompraspagos` ADD INDEX `Index_5`(`idcompra`),
+ ADD INDEX `Index_6`(`iddocumento`),
+ ADD INDEX `Index_7`(`idcargo`),
+ ADD INDEX `Index_8`(`iddocumentod`);
+
+ALTER TABLE `tbldepostito` ADD INDEX `Index_4`(`Fecha`),
+ ADD INDEX `Index_5`(`Referencia`);
+
+ALTER TABLE `tbldevoluciones` ADD INDEX `Index_7`(`idventa`),
+ ADD INDEX `Index_8`(`serie`),
+ ADD INDEX `Index_9`(`folio`);
+
+ALTER TABLE `tbldevolucionescompras` ADD INDEX `Index_7`(`serie`),
+ ADD INDEX `Index_8`(`uuid`),
+ ADD INDEX `Index_9`(`idcompra`),
+ ADD INDEX `Index_10`(`folio`);
+
+ALTER TABLE `tblempenios` DROP INDEX `Index_2`;
+
+ALTER TABLE `tblempenios` ADD INDEX `Index_5`(`fecha`),
+ ADD INDEX `Index_6`(`serie`),
+ ADD INDEX `Index_7`(`folio`);
+
+ALTER TABLE `tblempenioscompras` ADD INDEX `Index_4`(`fecha`),
+ ADD INDEX `Index_5`(`folio`),
+ ADD INDEX `Index_6`(`serie`);
+
+ALTER TABLE `tblfertilizantesmovimientos` ADD INDEX `Index_4`(`serie`),
+ ADD INDEX `Index_5`(`folio`);
+
+ALTER TABLE `tblfertilizantespedidos` ADD INDEX `Index_4`(`fecha`),
+ ADD INDEX `Index_5`(`folio`),
+ ADD INDEX `Index_6`(`serie`);
+
+ALTER TABLE `tblgastos` ADD INDEX `Index_4`(`fecha`),
+ ADD INDEX `Index_5`(`serie`),
+ ADD INDEX `Index_6`(`folio`);
+
+ALTER TABLE `tblgastos` ADD CONSTRAINT `FK_tblgastos_3` FOREIGN KEY `FK_tblgastos_3` (`idcaja`)
+    REFERENCES `tblcajas` (`idcaja`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblinventario` DROP INDEX `Index_8`;
+
+ALTER TABLE `tblinventario` ADD INDEX `Index_10`(`clave`),
+ ADD INDEX `Index_11`(`nombre`),
+ ADD INDEX `Index_12`(`fabricante`),
+ ADD INDEX `Index_13`(`clave2`);
+
+ALTER TABLE `tblmovimientos` ADD INDEX `Index_8`(`folio`),
+ ADD INDEX `Index_9`(`serie`);
+
+ALTER TABLE `tblnominas` ADD INDEX `Index_4`(`fecha`),
+ ADD INDEX `Index_5`(`serie`),
+ ADD INDEX `Index_7`(`folio`);
+
+ALTER TABLE `tblnotasdecargo` DROP INDEX `Index_6`;
+
+ALTER TABLE `tblnotasdecargo` ADD INDEX `Index_8`(`fecha`),
+ ADD INDEX `Index_9`(`folio`),
+ ADD INDEX `Index_10`(`serie`);
+
+ALTER TABLE `tblnotasdecargocompras` DROP INDEX `Index_3`;
+
+ALTER TABLE `tblnotasdecargocompras` ADD INDEX `Index_5`(`fecha`),
+ ADD INDEX `Index_6`(`folio`),
+ ADD INDEX `Index_7`(`serie`),
+ ADD INDEX `Index_8`(`folioi`);
+
+ALTER TABLE `tblnotasdecredito` DROP INDEX `Index_5`;
+
+ALTER TABLE `tblnotasdecredito` ADD INDEX `Index_7`(`fecha`),
+ ADD INDEX `Index_8`(`folio`),
+ ADD INDEX `Index_9`(`serie`);
+
+ALTER TABLE `tblnotasdecreditocompras` DROP INDEX `Index_5`;
+
+ALTER TABLE `tblnotasdecreditocompras` ADD INDEX `Index_7`(`fecha`),
+ ADD INDEX `Index_8`(`folio`),
+ ADD INDEX `Index_9`(`serie`),
+ ADD INDEX `Index_10`(`folioi`);
+
+ALTER TABLE `tblpolizas` ADD INDEX `Index_6`(`numero`);
+
+ALTER TABLE `tblpolizasdetalles` ADD INDEX `Index_6`(`cuenta`);
+
+ALTER TABLE `tblpolizasdetalles` DROP INDEX `idCuenta`;
+
+ALTER TABLE `tblpolizasdetalles` ADD CONSTRAINT `FK_tblpolizasdetalles_2` FOREIGN KEY `FK_tblpolizasdetalles_2` (`idCuenta`)
+    REFERENCES `tblccontables` (`idCContable`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblproveedores` DROP INDEX `Index_2`;
+
+ALTER TABLE `tblproveedores` ADD INDEX `Index_5`(`clave`),
+ ADD INDEX `Index_6`(`nombre`);
+
+ALTER TABLE `tblsemillasliquidacion` ADD INDEX `Index_6`(`folio`),
+ ADD INDEX `Index_7`(`serie`),
+ ADD INDEX `Index_8`(`fecha`);
+
+ALTER TABLE `tblsemillasboletas` ADD INDEX `Index_7`(`fecha`),
+ ADD INDEX `Index_8`(`folio`),
+ ADD INDEX `Index_9`(`serie`);
+
+ALTER TABLE `tblsemillascomprobante` ADD INDEX `Index_7`(`folio`),
+ ADD INDEX `Index_8`(`serie`),
+ ADD INDEX `Index_9`(`fecha`);
+
+ALTER TABLE `tblservicios` ADD INDEX `Index_5`(`fechae`),
+ ADD INDEX `Index_6`(`Folio`),
+ ADD INDEX `Index_7`(`Serie`);
+
+ALTER TABLE `tblserviciossuc` ADD INDEX `Index_4`(`fechae`),
+ ADD INDEX `Index_5`(`Folio`),
+ ADD INDEX `Index_6`(`Serie`);
+
+ALTER TABLE `tblventas` DROP INDEX `Index_7`;
+
+ALTER TABLE `tblventas` ADD INDEX `Index_7`(`folio`),
+ ADD INDEX `Index_8`(`serie`),
+ ADD INDEX `Index_9`(`estado`);
+
+ALTER TABLE `tblventasapartados` ADD INDEX `Index_4`(`fecha`),
+ ADD INDEX `Index_5`(`folio`),
+ ADD INDEX `Index_6`(`serie`);
+
+ALTER TABLE `tblventascotizaciones` DROP INDEX `Index_4`;
+
+ALTER TABLE `tblventascotizaciones` ADD INDEX `Index_7`(`fecha`),
+ ADD INDEX `Index_8`(`folio`),
+ ADD INDEX `Index_9`(`serie`);
+
+ALTER TABLE `tblventaspagos` ADD INDEX `Index_10`(`iddocumento`),
+ ADD INDEX `Index_11`(`iddocumentod`),
+ ADD INDEX `Index_12`(`iddeposito`);
+
+ALTER TABLE `tblventaspedidos` DROP INDEX `Index_4`;
+
+ALTER TABLE `tblventaspedidos` ADD INDEX `Index_7`(`fecha`),
+ ADD INDEX `Index_8`(`folio`),
+ ADD INDEX `Index_9`(`serie`);
+
+ALTER TABLE `tblventasremisiones` DROP INDEX `Index_5`;
+
+ALTER TABLE `tblventasremisiones` ADD INDEX `Index_7`(`fecha`),
+ ADD INDEX `Index_8`(`folio`),
+ ADD INDEX `Index_9`(`serie`),
+ ADD INDEX `Index_10`(`estado`),
+ ADD INDEX `Index_11`(`idventar`);
+
+delete from tblcompraslotes where idlote=0;
+
+insert into tblactualizaciones(version,versionchk) values('ver 9033 rev 33','00903333');
+

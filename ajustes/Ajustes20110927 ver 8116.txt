@@ -1,0 +1,16 @@
+DROP TABLE IF EXISTS `db_services`.`tblproveedoresrepdeudas`;
+CREATE TABLE  `db_services`.`tblproveedoresrepdeudas` (
+  `idcompra` int(10) unsigned NOT NULL,
+  `idproveedor` int(10) unsigned NOT NULL,
+  `folio` varchar(45) NOT NULL,
+  `total` double NOT NULL,
+  `totalapagar` double NOT NULL,
+  `tipodecambio` double NOT NULL,
+  `idmoneda` int(10) unsigned NOT NULL,
+  `cnombre` varchar(200) NOT NULL,
+  `abonado` double NOT NULL,
+  `clave` varchar(45) NOT NULL,
+  `estado` tinyint(3) unsigned NOT NULL,
+  `fecha` varchar(10) NOT NULL,
+  KEY `Index_1` (`idproveedor`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -1,0 +1,28 @@
+ALTER TABLE `tblinventario` ADD COLUMN `eskit` TINYINT UNSIGNED NOT NULL AFTER `minimo`;
+
+DROP TABLE IF EXISTS `tblinventariodetalles`;
+CREATE TABLE  `tblinventariodetalles` (
+  `iddetalle` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idinventario` int(10) unsigned NOT NULL,
+  `cantidad` double NOT NULL,
+  `idinventariop` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`iddetalle`),
+  KEY `FK_tblinventariodetalles_1` (`idinventariop`),
+  CONSTRAINT `FK_tblinventariodetalles_1` FOREIGN KEY (`idinventariop`) REFERENCES `tblinventario` (`idinventario`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tblventaskits`;
+CREATE TABLE `tblventaskits` (
+  `iddetallekit` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idventa` int(10) unsigned NOT NULL,
+  `idinventario` int(10) unsigned NOT NULL,
+  `cantidad` double NOT NULL,
+  `surtido` double NOT NULL,
+  `iddetalle` int(10) unsigned NOT NULL,
+  `idalmacen` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`iddetallekit`),
+  KEY `FK_tblventaskits_1` (`idventa`),
+  CONSTRAINT `FK_tblventaskits_1` FOREIGN KEY (`idventa`) REFERENCES `tblventas` (`idventa`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+

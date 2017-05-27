@@ -1,0 +1,6 @@
+ALTER TABLE `tblproveedores` ADD COLUMN `representantelegal` VARCHAR(100) NOT NULL AFTER `idcuenta`;
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(39,488,'Representante Legal','representante',120,120,'Lucida Console',8,0,1,0,0,1,46,1,0,0,'Liquidacion - Representante',0,6);
+
+insert into tblactualizaciones(version) values('ver 9032 rev 13');
+

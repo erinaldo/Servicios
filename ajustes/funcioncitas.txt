@@ -1,0 +1,69 @@
+Public Function reporteBalanzaXML(ByVal pMes As String)
+        Dim DS2 As New DataSet
+        Dim pHasta As Date = Date.Parse("01/" + pMes + "/" + anio)
+        SaldosIniciales(pHasta.ToString("yyyy/MM/dd"), pMes)
+        Comm.CommandText = "Select (select concat(LPAD(tblccontables.Cuenta," + NNiv1.ToString + ",'0'),' ',if(tblccontables.N2<>'',LPAD(tblccontables.N2," + NNiv2.ToString + ",'0'),'')) from tblccontables where idCContable=detalles.idCuenta) as Cuenta"
+        Comm.CommandText += " ,(select descripcion from tblccontables where concat(Cuenta,N2)=(select concat(Cuenta,N2) from tblccontables where idCContable=detalles.idCuenta)) as descripcion "
+        Comm.CommandText += " ,(select codigo from tblagrupadorcuentas where id=(select idContable from tblccontables where concat(Cuenta,N2)=(select concat(Cuenta,N2) from tblccontables where idCContable=detalles.idCuenta))) as agrupador"
+        Comm.CommandText += " ,(select if(tblccontables.Naturaleza=0,'D','A') from tblccontables where tblccontables.idCContable=detalles.idCuenta) as Naturaleza "
+        'Comm.CommandText += " ,(select ifnull(sum(if(tblccontables.Naturaleza=0,if(cargo=-999999999,0,cargo)-if(abono=-999999999,0,abono),if(abono=-999999999,0,abono)-if(cargo=-999999999,0,cargo))),0) from tblpolizasdetalles as detalles2 inner join tblccontables on  tblccontables.idCContable=detalles2.idCuenta inner join tblPolizas as  polizas2 on polizas2.id=detalles2.idPoliza  where concat(tblccontables.Cuenta,tblccontables.N2)=(select concat(Cuenta,N2) from tblccontables where idCContable=detalles.idCuenta) and "
+        'If pMes = "01" Then
+        '    Comm.CommandText += "polizas2.fecha>='" + anio + "/01/01' and polizas2.fecha<='" + anio.ToString + "/12/31' and polizas2.tipo='A') as saldoInicial"
+        'Else
+        '    Comm.CommandText += "polizas2.fecha<'" + anio + "/" + pMes + "/01') as saldoInicial"
+        'End If
+        Comm.CommandText += ",ifnull((select ifnull(saldoI,0) from tblcontabilidadsaldosi where concat(tblcontabilidadsaldosi.Cuenta,tblcontabilidadsaldosi.N1)=(select concat(Cuenta,N2) from tblccontables where idCContable=detalles.idCuenta) limit 1),0) as saldoInicial"
+        Comm.CommandText += ", (select if(p.tipo<>'A' and p.fecha>='" + anio + "/" + pMes + "/01',ifnull(if(cargo=-999999999,0,cargo),0),0) from tblpolizasdetalles as d inner join tblPolizas as p on d.idPoliza=p.id where d.id=detalles.id ) as cargo, (select if(p2.tipo<>'A' and p2.fecha>='" + anio + "/" + pMes + "/01',ifnull(if (abono=-999999999,0,abono),0),0) from tblpolizasdetalles as d2 inner join tblPolizas as p2 on d2.idPoliza=p2.id where d2.id=detalles.id )as abono"
+        Comm.CommandText += ", (select tblccontables.cuenta from tblccontables where tblccontables.idCContable=detalles.idCuenta) as cuenta1"
+        Comm.CommandText += ", (select ifnull(tblccontables.N2,'') from tblccontables where tblccontables.idCContable=detalles.idCuenta) as cuenta2"
+        Comm.CommandText += " from tblpolizasdetalles as detalles inner join tblPolizas as poliza on detalles.idPoliza=poliza.id "
+        Comm.CommandText += " where  poliza.tipo<>'O'  and poliza.fecha<='" + anio + "/" + pMes + "/31' order by Cuenta"
+        Comm.CommandTimeout = 30000000
+        Dim DA2 As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
+        DA2.Fill(DS2, "tblBalanza")
+
+        Return DS2.Tables("tblBalanza")
+
+    End Function
+
+
+    Public Sub SaldosIniciales(ByVal pHasta As String, ByVal pMes As String)
+        'Dim DS2 As New DataSet
+        'Dim tb As DataTable
+        Comm.CommandText = "Delete from tblcontabilidadsaldosi "
+        Comm.ExecuteNonQuery()
+
+        Comm.CommandText = "insert into tblcontabilidadsaldosi(idCContable,Cuenta,N1,naturaleza,saldoI) Select tblccontables.idCContable, tblccontables.Cuenta, tblccontables.N2, tblccontables.Naturaleza,(select ifnull(sum(if(tblccontables.Naturaleza=0,if( tblpolizasdetalles.cargo=-999999999,0,tblpolizasdetalles.cargo)-if(tblpolizasdetalles.abono=-999999999,0,tblpolizasdetalles.abono),if(tblpolizasdetalles.abono=-999999999,0,tblpolizasdetalles.abono)-if(tblpolizasdetalles.cargo=-999999999,0,tblpolizasdetalles.cargo))),0) from tblpolizasdetalles inner join tblPolizas on tblpolizasdetalles.idPoliza=tblPolizas.id where "
+        If pMes = "01" Then
+            Comm.CommandText += "tblPolizas.fecha>='" + anio + "/01/01' and tblPolizas.fecha<='" + anio.ToString + "/12/31' and tblPolizas.tipo='A' "
+        Else
+            Comm.CommandText += " tblPolizas.fecha>='" + anio + "/01/01' and tblPolizas.fecha<'" + pHasta + "' "
+        End If
+
+        Comm.CommandText += " and concat(tblccontables.Cuenta,tblccontables.N2)=(select concat(conta.Cuenta,conta.N2) from tblccontables as conta where conta.idCContable=tblpolizasdetalles.idCuenta)) as saldoInicial from tblccontables  "
+        Comm.CommandText += "  where tblccontables.Nivel<=2  "
+        'Comm.CommandText += " and (select ifnull(sum(if(tblccontables.Naturaleza=0,if( tblpolizasdetalles.cargo=-999999999,0,tblpolizasdetalles.cargo)-if(tblpolizasdetalles.abono=-999999999,0,tblpolizasdetalles.abono),if(tblpolizasdetalles.abono=-999999999,0,tblpolizasdetalles.abono)-if(tblpolizasdetalles.cargo=-999999999,0,tblpolizasdetalles.cargo))),0) from tblpolizasdetalles inner join tblPolizas on tblpolizasdetalles.idPoliza=tblPolizas.id where "
+        'If pMes = "01" Then
+        '    Comm.CommandText += "tblPolizas.fecha>='" + anio + "/01/01' and tblPolizas.fecha<='" + anio.ToString + "/12/31' and tblPolizas.tipo='A' "
+        'Else
+        '    Comm.CommandText += "  tblPolizas.fecha>='" + anio + "/01/01' and tblPolizas.fecha<'" + pHasta + "'  "
+        'End If
+        'Comm.CommandText += " and concat(tblccontables.Cuenta,tblccontables.N2)=(select concat(conta.Cuenta,conta.N2) from tblccontables as conta where conta.idCContable=tblpolizasdetalles.idCuenta)) <>0"
+        Comm.ExecuteNonQuery()
+        'Comm.CommandText += "  HAVING tblccontables.Nivel<=2 "
+        'Dim DA2 As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
+        'DA2.Fill(DS2, "tblSI")
+        'tb = DS2.Tables("tblSI")
+
+        'Comm.CommandText = ""
+        'For i As Integer = 0 To tb.Rows.Count - 1
+        '    '  If (tb.Rows(i)(4) <> 0) Then
+        '    Comm.CommandText += "insert into tblcontabilidadsaldosi(idCContable,Cuenta,N1,naturaleza,saldoI) values(" + tb.Rows(i)(0).ToString + ",'" + tb.Rows(i)(1) + "','" + tb.Rows(i)(2) + "'," + tb.Rows(i)(3).ToString + "," + tb.Rows(i)(4).ToString + ");"
+        '    '  End If
+        'Next
+        'If Comm.CommandText <> "" Then
+        '    Comm.ExecuteNonQuery()
+        'End If
+        'aqui me quede, hacer más agil la busqueda en el where tratar de poner Saldoinicial que es una aprte de la busqueda
+
+    End Sub

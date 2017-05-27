@@ -1,0 +1,19 @@
+CREATE TABLE `tblventasdepositos` (
+  `idventa` INTEGER UNSIGNED NOT NULL,
+  `iddeposito` INTEGER UNSIGNED NOT NULL
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tblcomprasretiros` (
+  `idcompra` INTEGER UNSIGNED NOT NULL,
+  `idpagoprov` INTEGER UNSIGNED NOT NULL
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `tblcontabilidadconf` MODIFY COLUMN `rutaUUID` VARCHAR(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+ ADD COLUMN `rutaxmlingresos` VARCHAR(1000) NOT NULL AFTER `capital4`;
+
+ALTER TABLE `tblrepmovimientosclientes` ADD COLUMN `estado` TINYINT UNSIGNED NOT NULL AFTER `idconcepto`;
+
+insert into tblactualizaciones(version) values('ver 9033 rev 6');
+

@@ -1,0 +1,6 @@
+ALTER TABLE `tblopciones` ADD COLUMN `tipoprorrateo` TINYINT UNSIGNED NOT NULL AFTER `nopermitirremisioncredito`;
+
+ALTER TABLE `tblempeniosabono` ADD COLUMN `caja` INTEGER UNSIGNED NOT NULL AFTER `tipoPago`;
+ALTER TABLE `tblempeniosabono` ADD COLUMN `idMovimiento` INTEGER UNSIGNED NOT NULL AFTER `caja`;
+
+insert into tblactualizaciones(version) values('ver 9024 rev 7');

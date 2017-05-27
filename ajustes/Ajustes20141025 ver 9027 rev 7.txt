@@ -1,0 +1,44 @@
+ALTER TABLE `tblfertilizantespedidos` ADD COLUMN `estadopedido` TINYINT UNSIGNED NOT NULL AFTER `idforma`;
+
+CREATE TABLE `tblfertilizantesequipos` (
+  `idequipop` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idequipo` INTEGER UNSIGNED NOT NULL,
+  `idpedido` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`idequipop`)
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `tblccontables` ADD INDEX `cuenta`(`Cuenta`),
+ ADD INDEX `N2`(`N2`),
+ ADD INDEX `Naturaleza`(`Naturaleza`);
+
+ALTER TABLE `tblpolizas` ADD INDEX `fecha`(`fecha`),
+ ADD INDEX `tipo`(`tipo`);
+
+ALTER TABLE `tblpolizasdetalles` ADD INDEX `idPoliza`(`idPoliza`),
+ ADD INDEX `idCuenta`(`idCuenta`),
+ ADD INDEX `cargo`(`cargo`),
+ ADD INDEX `abono`(`abono`);
+
+CREATE TABLE `tblContabilidadSaldosI` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idCContable` INTEGER UNSIGNED NOT NULL,
+  `Cuenta` INTEGER UNSIGNED NOT NULL,
+  `N1` INTEGER UNSIGNED NOT NULL,
+  `naturaleza` VARCHAR(1) NOT NULL,
+  `saldoI` DOUBLE NOT NULL,
+  PRIMARY KEY (`id`)
+)
+ENGINE = InnoDB;
+ALTER TABLE `tblcontabilidadsaldosi` MODIFY COLUMN `Cuenta` VARCHAR(45) NOT NULL,
+ MODIFY COLUMN `N1` VARCHAR(45) NOT NULL;
+ALTER TABLE `tblcontabilidadsaldosi` MODIFY COLUMN `naturaleza` INTEGER UNSIGNED NOT NULL;
+
+ALTER TABLE `tblfertilizantesequipos` ADD CONSTRAINT `FK_tblfertilizantesequipos_1` FOREIGN KEY `FK_tblfertilizantesequipos_1` (`idpedido`)
+    REFERENCES `tblfertilizantespedidos` (`idpedido`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION;
+
+
+insert into tblactualizaciones(version) values('ver 9027 rev 7');
+

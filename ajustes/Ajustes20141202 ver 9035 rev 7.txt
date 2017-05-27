@@ -1,0 +1,10 @@
+
+CREATE TABLE `tblopciones3` (
+  `idsucursal` INTEGER UNSIGNED NOT NULL,
+  `facturacomoegreso` TINYINT UNSIGNED NOT NULL
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `tblempenios` ADD COLUMN `estatus` INTEGER UNSIGNED NOT NULL DEFAULT 0 AFTER `horaCambio`;
+
+insert into tblactualizaciones(version,versionchk) values('ver 9035 rev 7','00903507');

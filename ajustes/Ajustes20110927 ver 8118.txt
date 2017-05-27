@@ -1,0 +1,33 @@
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt) values(170,600,14,1,66,4)
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdainventario` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdainventario`(pidinventario int,pidalmacen int) RETURNS double
+BEGIN
+declare varinventario double;
+if pidalmacen>0 then
+set varinventario=(select ifnull((select cantidad from tblalmacenesi where idinventario=pidinventario and idalmacen=pidalmacen),0));
+else
+set varinventario=(select ifnull((select sum(cantidad) from tblalmacenesi where idinventario=pidinventario),0));
+end if;
+return varinventario;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdainventariop` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdainventariop`(pidproducto int,pidalmacen int) RETURNS double
+BEGIN
+declare varinventario double;
+if pidalmacen>0 then
+set varinventario=ifnull((select cantidad from tblalmacenesp where idproducto=pidproducto and idalmacen=pidalmacen),0);
+else
+set varinventario=ifnull((select sum(cantidad) from tblalmacenesp where idproducto=pidproducto),0);
+end if;
+return varinventario;
+END $$
+
+DELIMITER ;

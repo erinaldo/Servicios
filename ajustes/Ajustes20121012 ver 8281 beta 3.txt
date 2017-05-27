@@ -1,0 +1,10 @@
+CREATE TABLE `tblopcionesoc` (
+  `documento` TINYINT UNSIGNED NOT NULL,
+  `horainicio` VARCHAR(10) NOT NULL,
+  `horafin` VARCHAR(10) NOT NULL,
+  `activaroc` TINYINT UNSIGNED NOT NULL,
+  `ocultaroc` TINYINT UNSIGNED NOT NULL,
+  `serieoc` VARCHAR(45) NOT NULL,
+  `foliooc` INTEGER UNSIGNED NOT NULL
+)
+ENGINE = InnoDB;

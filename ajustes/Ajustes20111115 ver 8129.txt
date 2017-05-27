@@ -1,0 +1,2 @@
+ALTER TABLE `db_services`.`tblcompraspagos` ADD COLUMN `iddocumentod` INTEGER UNSIGNED NOT NULL AFTER `ptipodecambio`;
+update tblcompraspagos set iddocumentod=0

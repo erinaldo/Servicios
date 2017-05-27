@@ -1,0 +1,6 @@
+update tblpercepciones set descripcion='Gratificación Anual Aguinaldo' where clave='002';
+update tbldeducciones set descripcion='Ajuste en Gratificación Anual Aguinaldo Exento' where clave='024';
+update tbldeducciones set descripcion='Ajuste en Gratificación Anual Aguinaldo Gravado' where clave='025';
+update tbldeducciones set descripcion='Ajuste en Subsidio para el empleo efectivamente entregado al trabajador' where clave='071';
+
+insert into tblactualizaciones(version,versionchk) values('ver 9036 rev 17','00903617');

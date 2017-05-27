@@ -1,0 +1,6 @@
+ALTER TABLE `tblcontabilidadmascarasd` ADD COLUMN `inpagoinfo` TINYINT UNSIGNED NOT NULL AFTER `modulo`,
+ ADD COLUMN `inuuids` TINYINT UNSIGNED NOT NULL AFTER `inpagoinfo`;
+
+
+insert into tblactualizaciones(version) values('ver 9033 rev 17');
+

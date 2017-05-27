@@ -1,0 +1,23 @@
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `db_services`.`spdaseriesventa` $$
+CREATE FUNCTION `db_services`.`spdaseriesventa` (pidinventario int,pidventa int) RETURNS varchar(2000)
+BEGIN
+declare varminid int;
+declare varmaxid int;
+declare varseries varchar(2000);
+set varminid=ifnull((select min(idserie) from tblinventarioseries where idventa=pidventa and idinventario=pidinventario),0);
+set varmaxid=ifnull((select max(idserie) from tblinventarioseries where idventa=pidventa and idinventario=pidinventario),0);
+set varseries='';
+
+while varminid<=varmaxid and varminid<>0 do
+set varseries=concat(varseries,'\n',(select noserie from tblinventarioseries where idserie=varminid));
+set varminid=ifnull((select min(idserie) from tblinventarioseries where idventa=pidventa and idinventario=pidinventario and idserie>varminid),0);
+end while;
+return varseries;
+END $$
+
+DELIMITER ;
+
+ALTER TABLE `db_services`.`tblopciones` ADD COLUMN `agregaseriesventa` TINYINT UNSIGNED NOT NULL AFTER `conector`;
+update tblopciones set agregaseriesventa=0;

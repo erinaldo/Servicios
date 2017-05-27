@@ -1,0 +1,6 @@
+ALTER TABLE `tblpolizasdetalles` ADD COLUMN `fechaDiot` VARCHAR(11) NOT NULL AFTER `DIOTHabilitado`,
+ ADD COLUMN `valorActos` DOUBLE NOT NULL AFTER `fechaDiot`;
+
+
+
+insert into tblactualizaciones(version) values('ver 9028 rev 18');

@@ -1,0 +1,21 @@
+update tblcontabilidadvariables set descripcion='TOTAL POR PAGO (COMPRAS CRÉDITO)' where modulo=5 and codigo='TXP';
+update tblcontabilidadvariables set descripcion='TOTAL POR PAGO CONTADO' where modulo=5 and codigo='TDEPcon';
+update tblcontabilidadvariables set descripcion='TOTAL POR PAGO CRÉDITO' where modulo=5 and codigo='TDEPcr';
+update tblcontabilidadvariables set descripcion='TOTAL POR PAGO' where modulo=5 and codigo='TDEP';
+update tblcontabilidadvariables set descripcion='TOTAL POR PAGO (COBRANZA)' where modulo=4 and codigo='TXP';
+
+ALTER TABLE `tblcontabilidadmascarasd` ADD COLUMN `modulo` TINYINT UNSIGNED NOT NULL AFTER `beneficiario`;
+delete from tblcontabilidadmascaras;
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL PERCEPCIONES POR CONCEPTO','TPXC',10,'TOTAL PERCEPCIONES POR CONCEPTO. SE AGREGA UN RENGLÓN A LA PÓLIZA POR CADA TIPO DE PERCEPCIÓN');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL DEDUCCIONES POR CONCEPTO','TDXC',10,'TOTAL DEDUCCIONES POR CONCEPTO. SE AGREGA UN RENGLÓN A LA PÓLIZA POR CADA TIPO DE PERCEPCIÓN');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL DEPÓSITOS SIN LIGAR','TNSL',4,'SUMA DEL TOTAL DE LOS DEPÓSITOS QUE NO ESTAN LIGADOS AUNA FACTURA O UN PAGO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL PAGOS SIN LIGAR','TNSL',5,'SUMA DEL TOTAL DE LOS PAGOS QUE NO ESTAN LIGADOS AUNA FACTURA O UN PAGO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA DE PAGOS SIN LIGAR','TIVASL',5,'SUMA DEL TOTAL DE IVA DE LOS PAGOS QUE NO ESTAN LIGADOS AUNA FACTURA O UN PAGO.');
+
+ALTER TABLE `tblopciones` ADD COLUMN `integrarcont` TINYINT UNSIGNED NOT NULL AFTER `siempreporsurtirr`;
+
+
+insert into tblactualizaciones(version) values('ver 9033 rev 10');
+

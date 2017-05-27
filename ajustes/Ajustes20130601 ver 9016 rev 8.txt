@@ -1,0 +1,48 @@
+ALTER TABLE `tblinventariodetalles` ADD CONSTRAINT `FK_tblinventariodetalles_2` FOREIGN KEY `FK_tblinventariodetalles_2` (`idinventario`)
+    REFERENCES `tblinventario` (`idinventario`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION;
+
+update tblopciones set municipiolocal='0';
+
+CREATE TABLE `tblventasexpedicion` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `lugarexp` VARCHAR(450) NOT NULL,
+  `numexp` VARCHAR(450) NOT NULL,
+  `calexp` VARCHAR(450) NOT NULL,
+  `documento` TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `tblventasexpedicion` ADD COLUMN `iddocumento` INTEGER UNSIGNED NOT NULL AFTER `documento`;
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,76,'Lugar Exp:','lugarexp',100,20,'Arial',9,0,0,0,0,0,0,1,0,1,'Empresa - Lugar Expedición',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,76,'Número Exp:','numeroexp',100,20,'Arial',9,0,0,0,0,0,0,1,0,1,'Empresa - Número Expedición',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,76,'Calle Exp:','callerexp',100,20,'Arial',9,0,0,0,0,0,0,1,0,1,'Empresa - Calle Expedición',0,2);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,76,'Lugar Exp:','lugarexp',100,20,'Arial',9,0,0,0,0,0,16,1,0,1,'Empresa - Lugar Expedición',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,76,'Número Exp:','numeroexp',100,20,'Arial',9,0,0,0,0,0,16,1,0,1,'Empresa - Número Expedición',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,76,'Calle Exp:','callerexp',100,20,'Arial',9,0,0,0,0,0,16,1,0,1,'Empresa - Calle Expedición',0,2);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,76,'Lugar Exp:','lugarexp',100,20,'Arial',9,0,0,0,0,0,5,1,0,1,'Empresa - Lugar Expedición',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,76,'Número Exp:','numeroexp',100,20,'Arial',9,0,0,0,0,5,0,1,0,1,'Empresa - Número Expedición',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,76,'Calle Exp:','callerexp',100,20,'Arial',9,0,0,0,0,0,5,1,0,1,'Empresa - Calle Expedición',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,76,'Lugar Exp:','lugarexp',100,20,'Arial',9,0,0,0,0,0,21,1,0,1,'Empresa - Lugar Expedición',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,76,'Número Exp:','numeroexp',100,20,'Arial',9,0,0,0,0,0,21,1,0,1,'Empresa - Número Expedición',0,2);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(259,76,'Calle Exp:','callerexp',100,20,'Arial',9,0,0,0,0,0,21,1,0,1,'Empresa - Calle Expedición',0,2);
+
+CREATE TABLE `tblconectorenvios` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `iddocumento` INTEGER UNSIGNED NOT NULL,
+  `documento` TINYINT UNSIGNED NOT NULL,
+  `enviado` TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+)
+ENGINE = InnoDB;
+
+update tblopciones set nointeriorlocal='0';
+
+ALTER TABLE `tblconectorenvios` ADD COLUMN `lic` VARCHAR(45) NOT NULL AFTER `enviado`;
+
+insert into tblactualizaciones(version) values('ver 9016 rev 8');

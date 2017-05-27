@@ -1,0 +1,9 @@
+ALTER TABLE `tblusuarios` ADD COLUMN `permisos7` BIGINT UNSIGNED NOT NULL AFTER `idvendedor`;
+update tblusuarios set permisos=4611686018427387903,permisos2=1023,permisos3=68719476735,permisos4=17179869119,permisos5=31743,permisos6=1023,permisos7=31;
+ALTER TABLE `tblopciones` ADD COLUMN `formatofechapv` VARCHAR(12) NOT NULL AFTER `seriencconector`;
+update tblopciones set formatofechapv='yyyy/MM/dd';
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(17,216,'Método de pago:','metodopago',300,20,'Lucida Console',8,0,0,0,0,0,3,1,0,0,'Método de Pago');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(17,216,'Método de pago:','metodopago',300,20,'Lucida Console',8,0,0,0,0,0,19,1,0,0,'Método de Pago');
+ALTER TABLE `tblventaspagosremisiones` ADD COLUMN `tipo` VARCHAR(2000) NOT NULL AFTER `idconceptonotaventa`;
+ALTER TABLE `tblventasremisiones` MODIFY COLUMN `credito` DOUBLE NOT NULL;
+

@@ -1,0 +1,3 @@
+ALTER TABLE `tblcontabilidadconf` ADD COLUMN `guardarcuadrada` TINYINT UNSIGNED NOT NULL AFTER `rutaUUID`;
+
+insert into tblactualizaciones(version) values('ver 9030 rev 8');

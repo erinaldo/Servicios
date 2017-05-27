@@ -1,0 +1,3 @@
+ALTER TABLE `tblempeniosabono` ADD COLUMN `descuento` INTEGER UNSIGNED NOT NULL AFTER `idMovimiento`;
+
+insert into tblactualizaciones(version) values('ver 9028 rev 33');

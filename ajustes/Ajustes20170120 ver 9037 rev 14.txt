@@ -1,0 +1,4 @@
+ALTER TABLE `tblcompras` ADD COLUMN `idpedido` INTEGER UNSIGNED NOT NULL AFTER `horaCambio`;
+ALTER TABLE `tblcomprasremisiones` ADD COLUMN `idpedido` INTEGER UNSIGNED NOT NULL AFTER `horacambio`;
+
+insert into tblactualizaciones(version,versionchk) values('ver 9037 rev 14','00903714');

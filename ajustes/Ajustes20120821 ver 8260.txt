@@ -1,0 +1,11 @@
+insert into tblcajas values(1,'CAJADEFAULT',1);
+
+ALTER TABLE `tblventaspedidos` ADD COLUMN `idcaja` INTEGER UNSIGNED NOT NULL AFTER `serie`;
+ALTER TABLE `tblventascotizaciones` ADD COLUMN `idcaja` INTEGER UNSIGNED NOT NULL AFTER `serie`;
+ALTER TABLE `tblventasremisiones` ADD COLUMN `idcaja` INTEGER UNSIGNED NOT NULL AFTER `horacancelado`;
+
+update tblventascotizaciones set idcaja=1;
+update tblventaspedidos set idcaja=1;
+update tblventasremisiones set idcaja=1;
+
+

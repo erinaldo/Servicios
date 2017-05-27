@@ -1,0 +1,44 @@
+ALTER TABLE `tblsemillasliquidaciondetalle` DROP INDEX `detalles_boletas`
+, DROP INDEX `detalles_liquidaciones`,
+ DROP FOREIGN KEY `detalles_boletas`,
+ DROP FOREIGN KEY `detalles_liquidaciones`;
+
+ALTER TABLE `tblsemillasanticipos` DROP FOREIGN KEY `anticipos_liquidacion`;
+
+DROP TABLE IF EXISTS `tblsemillasliquidacion`;
+CREATE TABLE  `tblsemillasliquidacion` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `subtotal` double DEFAULT NULL,
+  `total` double DEFAULT NULL,
+  `idProveedor` int(10) unsigned DEFAULT NULL,
+  `folio` int(10) unsigned DEFAULT NULL,
+  `idventa` int(10) unsigned DEFAULT NULL,
+  `serie` varchar(45) DEFAULT NULL,
+  `estado` int(10) unsigned DEFAULT NULL,
+  `sucursal` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `liquidacion_proveedor` (`idProveedor`),
+  KEY `liquidacion_sucursal` (`sucursal`),
+  CONSTRAINT `liquidacion_proveedor` FOREIGN KEY (`idProveedor`) REFERENCES `tblproveedores` (`idproveedor`) ON UPDATE NO ACTION,
+  CONSTRAINT `liquidacion_sucursal` FOREIGN KEY (`sucursal`) REFERENCES `tblsucursales` (`idsucursal`) ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
+
+ALTER TABLE `tblsemillasanticipos` DROP INDEX `anticipos_liquidacion`,
+ ADD CONSTRAINT `FK_tblsemillasanticipos_2` FOREIGN KEY `FK_tblsemillasanticipos_2` (`idLiquidacion`)
+    REFERENCES `tblsemillasliquidacion` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblsemillasliquidaciondetalle` ADD CONSTRAINT `FK_tblsemillasliquidaciondetalle_1` FOREIGN KEY `FK_tblsemillasliquidaciondetalle_1` (`idboleta`)
+    REFERENCES `tblsemillasboletas` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblsemillasliquidaciondetalle_2` FOREIGN KEY `FK_tblsemillasliquidaciondetalle_2` (`idliquidacion`)
+    REFERENCES `tblsemillasliquidacion` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION;
+
+
+
+insert into tblactualizaciones(version) values('ver 9032 rev 2');
+

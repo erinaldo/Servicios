@@ -1,0 +1,21 @@
+CREATE TABLE `tblinventariolotesi` (
+  `idlote` INTEGER UNSIGNED NOT NULL,
+  `idalmacen` INTEGER UNSIGNED NOT NULL,
+  `cantidad` DOUBLE NOT NULL
+)
+ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS `tblinventariolotesconsulta`;
+CREATE TABLE  `tblinventariolotesconsulta` (
+  `idlote` int(10) unsigned NOT NULL,
+  `lote` varchar(150) NOT NULL,
+  `caducidad` varchar(10) NOT NULL,
+  `iddocumento` int(10) unsigned NOT NULL,
+  `folio` varchar(150) NOT NULL,
+  `fecha` varchar(10) NOT NULL,
+  `tipodoc` varchar(45) NOT NULL,
+  `cantidad` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+insert into tblactualizaciones(version) values('ver 9031 rev 4');

@@ -1,0 +1,52 @@
+CREATE TABLE `tblcontabilidadvariables` (
+  `idvariable` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `descripcion` VARCHAR(45) NOT NULL,
+  `codigo` VARCHAR(45) NOT NULL,
+  `modulo` TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`idvariable`)
+)
+ENGINE = InnoDB;
+
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL NETO','TN',0);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL SIN IVA','TSI',0);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IVA','TIVA',0);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IVA RETENIDO','TIVAR',0);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL ISR','TISR',0);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IEPS','TIEPS',0);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IVA NETO','TIVAN',0);
+
+CREATE TABLE `tblcontabilidadmascaras` (
+  `idmascara` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `titulo` VARCHAR(200) NOT NULL,
+  `modulo` INTEGER UNSIGNED NOT NULL,
+  `tipo` TINYINT UNSIGNED NOT NULL,
+  `activo` TINYINT UNSIGNED NOT NULL,
+  `estado` TINYINT UNSIGNED NOT NULL,
+  `paracancelacion` TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`idmascara`)
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tblcontabilidadmascarasd` (
+  `idvariable` int(10) unsigned NOT NULL,
+  `idcuenta` int(10) unsigned NOT NULL,
+  `cargo` tinyint(3) unsigned NOT NULL,
+  `abono` tinyint(3) unsigned NOT NULL,
+  `idmascara` int(10) unsigned NOT NULL,
+  `iddetalle` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`iddetalle`),
+  KEY `FK_tblcontabilidadmascarasd_1` (`idmascara`),
+  KEY `FK_tblcontabilidadmascarasd_2` (`idvariable`),
+  CONSTRAINT `FK_tblcontabilidadmascarasd_2` FOREIGN KEY (`idvariable`) REFERENCES `tblcontabilidadvariables` (`idvariable`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblcontabilidadmascarasd_1` FOREIGN KEY (`idmascara`) REFERENCES `tblcontabilidadmascaras` (`idmascara`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `tblmascarasusadas` (
+  `idmascara` int(10) unsigned NOT NULL,
+  `fecha` varchar(10) NOT NULL,
+  `idpoliza` int(10) unsigned NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+insert into tblactualizaciones(version) values('ver 9028 rev 28');

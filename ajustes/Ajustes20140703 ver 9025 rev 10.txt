@@ -1,0 +1,41 @@
+
+ALTER TABLE `tblopciones` ADD COLUMN `integrarbancos` TINYINT UNSIGNED NOT NULL AFTER `pagosticket`;
+ALTER TABLE `tblpagoprov` ADD COLUMN `idproveedor` INTEGER UNSIGNED NOT NULL AFTER `Banco`;
+update tblpagoprov set idproveedor=(select idproveedor from tblproveedores limit 1);
+
+ALTER TABLE `tblpagoprov` ADD CONSTRAINT `FK_tblpagoprov_1` FOREIGN KEY `FK_tblpagoprov_1` (`idproveedor`)
+    REFERENCES `tblproveedores` (`idproveedor`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION;
+
+
+
+CREATE TABLE  `tblpolizas` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `tipo` varchar(1) NOT NULL,
+  `numero` int(10) unsigned NOT NULL,
+  `fecha` varchar(10) NOT NULL,
+  `concepto` varchar(45) NOT NULL,
+  `beneficiario` varchar(45) NOT NULL,
+  `importe` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE  `tblpolizasdetalles` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idPoliza` int(10) unsigned NOT NULL,
+  `cuenta` varchar(25) NOT NULL,
+  `descripcion` varchar(80) NOT NULL,
+  `cargo` double NOT NULL,
+  `abono` double NOT NULL,
+  `idCuenta` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+
+ALTER TABLE `tblpolizasdetalles` MODIFY COLUMN `cuenta` VARCHAR(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+
+
+
+
+insert into tblactualizaciones(version) values('ver 9025 rev 10');

@@ -1,0 +1,117 @@
+DROP TABLE IF EXISTS `tblventascartaporte`;
+CREATE TABLE  `tblventascartaporte` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `origen` varchar(245) NOT NULL,
+  `destino` varchar(245) NOT NULL,
+  `chofer` varchar(245) NOT NULL,
+  `matricula` varchar(45) NOT NULL,
+  `mercancia` varchar(45) NOT NULL,
+  `peso` varchar(45) NOT NULL,
+  `fecha` varchar(45) NOT NULL,
+  `idventa` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_tblventascartaporte_1` (`idventa`),
+  CONSTRAINT `FK_tblventascartaporte_1` FOREIGN KEY (`idventa`) REFERENCES `tblventas` (`idventa`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon) values(259,27,'Origen:','cporigen',220,20,'Lucida Console',8,0,0,0,0,0,0,1,0,0,'CP - Origen',0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon) values(259,27,'Destino:','cpdestino',220,20,'Lucida Console',8,0,0,0,0,0,0,1,0,0,'CP - Destino',0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon) values(259,27,'Chofer:','cpchofer',220,20,'Lucida Console',8,0,0,0,0,0,0,1,0,0,'CP - Chofer',0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon) values(259,27,'Mercancia:','cpmercancia',220,20,'Lucida Console',8,0,0,0,0,0,0,1,0,0,'CP - Mercancia',0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon) values(259,27,'Matrícula:','cpmatricula',220,20,'Lucida Console',8,0,0,0,0,0,0,1,0,0,'CP - Matrícula',0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon) values(259,27,'Peso:','cppeso',220,20,'Lucida Console',8,0,0,0,0,0,0,1,0,0,'CP - Peso',0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon) values(259,27,'Fecha:','cpfecha',220,20,'Lucida Console',8,0,0,0,0,0,0,1,0,0,'CP - Fecha',0);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon) values(259,27,'Origen:','cporigen',220,20,'Lucida Console',8,0,0,0,0,0,16,1,0,0,'CP - Origen',0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon) values(259,27,'Destino:','cpdestino',220,20,'Lucida Console',8,0,0,0,0,0,16,1,0,0,'CP - Destino',0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon) values(259,27,'Chofer:','cpchofer',220,20,'Lucida Console',8,0,0,0,0,0,16,1,0,0,'CP - Chofer',0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon) values(259,27,'Mercancia:','cpmercancia',220,20,'Lucida Console',8,0,0,0,0,0,16,1,0,0,'CP - Mercancia',0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon) values(259,27,'Matrícula:','cpmatricula',220,20,'Lucida Console',8,0,0,0,0,0,16,1,0,0,'CP - Matrícula',0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon) values(259,27,'Peso:','cppeso',220,20,'Lucida Console',8,0,0,0,0,0,16,1,0,0,'CP - Peso',0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon) values(259,27,'Fecha:','cpfecha',220,20,'Lucida Console',8,0,0,0,0,0,16,1,0,0,'CP - Fecha',0);
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdadetallesaduana` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdadetallesaduana`(pidocumento int,piddetalle int,ptipo int,pnada tinyint) RETURNS varchar(2000) CHARSET utf8
+BEGIN
+declare varminid int;
+declare varmaxid int;
+declare varidinventario int;
+declare varidventa int;
+declare vardetalles varchar(2000);
+set vardetalles='';
+if ptipo=0 and pnada=1 then
+set varminid=ifnull((select min(idaduana) from tblventasaduana where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(idaduana) from tblventasaduana where iddetalle=piddetalle),0);
+
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n No: ',(select numero from tblventasaduana where idaduana=varminid limit 1),' Fecha: ',(select fecha from tblventasaduana where idaduana=varminid limit 1),' Aduana: ',(select aduana from tblventasaduana where idaduana=varminid limit 1));
+set varminid=ifnull((select min(iddetallekit) from tblventaskits where iddetalle=piddetalle and iddetallekit>varminid),0);
+
+end while;
+end if;
+
+/*
+if ptipo=1 then /*remision**
+set varminid=ifnull((select min(iddetallekit) from tblventaskitsr where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(iddetallekit) from tblventaskitsr where iddetalle=piddetalle),0);
+
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n',convert((select cantidad from tblventaskitsr where iddetallekit=varminid limit 1) using utf8),' ',(select tblinventario.nombre from tblinventario inner join tblventaskitsr on tblventaskitsr.idinventario=tblinventario.idinventario where iddetallekit=varminid limit 1));
+/*if pconseries=1 then
+set varidinventario=(select idinventario from tblventaskitsr where iddetallekit=varminid);
+set varidventa=(select idventa from tblventaskitsr where iddetallekit=varminid);
+set vardetalles=concat(vardetalles,(select spdaseriesventa(varidinventario,varidventa)));
+end if;**
+set varminid=ifnull((select min(iddetallekit) from tblventaskitsr where iddetalle=piddetalle and iddetallekit>varminid),0);
+
+end while;
+end if;
+
+if ptipo=2 then /*pedido**
+set varminid=ifnull((select min(iddetallekit) from tblventaskitsp where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(iddetallekit) from tblventaskitsp where iddetalle=piddetalle),0);
+
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n',convert((select cantidad from tblventaskitsp where iddetallekit=varminid limit 1) using utf8),' ',(select tblinventario.nombre from tblinventario inner join tblventaskitsp on tblventaskitsp.idinventario=tblinventario.idinventario where iddetallekit=varminid limit 1));
+/*if pconseries=1 then
+set varidinventario=(select idinventario from tblventaskitsr where iddetallekit=varminid);
+set varidventa=(select idventa from tblventaskitsr where iddetallekit=varminid);
+set vardetalles=concat(vardetalles,(select spdaseriesventa(varidinventario,varidventa)));
+end if;**
+set varminid=ifnull((select min(iddetallekit) from tblventaskitsp where iddetalle=piddetalle and iddetallekit>varminid),0);
+
+end while;
+end if;
+
+if ptipo=3 then /*cotizacion**
+set varminid=ifnull((select min(iddetallekit) from tblventaskitsc where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(iddetallekit) from tblventaskitsc where iddetalle=piddetalle),0);
+
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n',convert((select cantidad from tblventaskitsc where iddetallekit=varminid limit 1) using utf8),' ',(select tblinventario.nombre from tblinventario inner join tblventaskitsc on tblventaskitsc.idinventario=tblinventario.idinventario where iddetallekit=varminid limit 1));
+/*if pconseries=1 then
+set varidinventario=(select idinventario from tblventaskitsr where iddetallekit=varminid);
+set varidventa=(select idventa from tblventaskitsr where iddetallekit=varminid);
+set vardetalles=concat(vardetalles,(select spdaseriesventa(varidinventario,varidventa)));
+end if;**
+set varminid=ifnull((select min(iddetallekit) from tblventaskitsc where iddetalle=piddetalle and iddetallekit>varminid),0);
+
+end while;
+end if;
+*/
+return vardetalles;
+END $$
+
+DELIMITER ;
+
+
+ALTER TABLE `tblopciones` ADD COLUMN `email` VARCHAR(450) NOT NULL AFTER `buscamodob`,
+ ADD COLUMN `emailusuario` VARCHAR(450) NOT NULL AFTER `email`,
+ ADD COLUMN `emailhost` VARCHAR(450) NOT NULL AFTER `emailusuario`,
+ ADD COLUMN `emailpass` VARCHAR(45) NOT NULL AFTER `emailhost`,
+ ADD COLUMN `emailpuerto` VARCHAR(15) NOT NULL AFTER `emailpass`,
+ ADD COLUMN `emailssl` TINYINT UNSIGNED NOT NULL AFTER `emailpuerto`;
+
+ALTER TABLE `tblusuarios` ADD COLUMN `permisos8` BIGINT UNSIGNED NOT NULL AFTER `permisos7`;

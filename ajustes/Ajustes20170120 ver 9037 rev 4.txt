@@ -1,0 +1,172 @@
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdaivaproporcionalf` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdaivaproporcionalf`(pidventa int,pcantidad double,ptipo tinyint) RETURNS double
+BEGIN
+
+declare vtiva double;
+declare vsubtotal double;
+declare vtieps double;
+declare vivarett double;
+declare vivaret double;
+declare visr double;
+declare visrt double;
+declare vresultado double;
+declare vtipodecambio double;
+declare vidmoneda integer;
+
+set vidmoneda=(select idmoneda from tblventasinventario where idventa=pidventa limit 1);
+set vtipodecambio=(select tipodecambio from tblventas where idventa=pidventa);
+set vsubtotal=(select sum(precio) from tblventasinventario where idventa=pidventa);
+set vtiva=(select sum(precio*iva/100) from tblventasinventario where idventa=pidventa);
+set vtieps=(select sum(precio*ieps/100) from tblventasinventario where idventa=pidventa);
+set vivarett=(select sum(precio*ivaretenido/100) from tblventasinventario where idventa=pidventa);
+set vivaret=(select ivaretenido from tblventas where idventa=pidventa);
+set visr=(select isr from tblventas where idventa=pidventa);
+set vivarett=vivarett+(vsubtotal*vivaret/100);
+set visrt=vsubtotal*visr/100;
+
+if ptipo=0 then
+set vresultado=pcantidad*vtiva/(vsubtotal+vtiva);
+end if;
+if ptipo=1 then
+set vresultado=pcantidad*vtieps/(vsubtotal+vtieps);
+end if;
+if ptipo=2 then
+set vresultado=pcantidad*vivarett/(vsubtotal-vivarett);
+end if;
+if ptipo=3 then
+set vresultado=pcantidad*visrt/(vsubtotal-visrt);
+end if;
+
+if vidmoneda<>2 then
+set vresultado=vresultado*vtipodecambio;
+end if;
+
+return ifnull(vresultado,0);
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdaivaproporcionalnc` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdaivaproporcionalnc`(pidcargo int,pcantidad double) RETURNS double
+BEGIN
+
+declare vtiva double;
+declare vsubtotal double;
+declare vresultado double;
+declare vtipodecambio double;
+declare vidmoneda integer;
+
+set vidmoneda=(select idmoneda from tblnotasdecargodetalles where idcargo=pidcargo limit 1);
+set vtipodecambio=(select tipodecambio from tblnotasdecargo where idcargo=pidcargo);
+set vsubtotal=(select sum(precio) from tblnotasdecargodetalles where idcargo=pidcargo);
+set vtiva=(select sum(precio*iva/100) from tblnotasdecargodetalles where idcargo=pidcargo);
+
+set vresultado=pcantidad*vtiva/(vsubtotal+vtiva);
+
+if vidmoneda<>2 then
+set vresultado=vresultado*vtipodecambio;
+end if;
+return ifnull(vresultado,0);
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdaivaproporcionalnccompras` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdaivaproporcionalnccompras`(pidcargo int,pcantidad double) RETURNS double
+BEGIN
+
+declare vtiva double;
+declare vsubtotal double;
+declare vresultado double;
+declare vtipodecambio double;
+declare vidmoneda integer;
+
+set vidmoneda=(select idmoneda from tblnotasdecargodetallesc where idcargo=pidcargo limit 1);
+set vtipodecambio=(select tipodecambio from tblnotasdecargocompras where idcargo=pidcargo);
+
+set vsubtotal=(select sum(precio) from tblnotasdecargodetallesc where idcargo=pidcargo);
+set vtiva=(select sum(precio*iva/100) from tblnotasdecargodetallesc where idcargo=pidcargo);
+
+set vresultado=pcantidad*vtiva/(vsubtotal+vtiva);
+if vidmoneda<>2 then
+set vresultado=vresultado*vtipodecambio;
+end if;
+return ifnull(vresultado,0);
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdaivaproporcionalfcompras` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdaivaproporcionalfcompras`(pidventa int,pcantidad double,ptipo tinyint) RETURNS double
+BEGIN
+
+declare vtiva double;
+declare vsubtotal double;
+declare vtieps double;
+declare vivarett double;
+declare vivaret double;
+declare visr double;
+declare visrt double;
+declare vresultado double;
+declare vtipodecambio double;
+declare vidmoneda integer;
+
+set vidmoneda=(select idmoneda from tblcomprasdetalles where idcompra=pidventa limit 1);
+set vtipodecambio=(select tipodecambio from tblcompras where idcompra=pidventa);
+set vsubtotal=(select sum(precio) from tblcomprasdetalles where idcompra=pidventa);
+set vtiva=(select sum(precio*iva/100) from tblcomprasdetalles where idcompra=pidventa);
+set vtieps=(select sum(precio*ieps/100) from tblcomprasdetalles where idcompra=pidventa);
+set vivarett=(select sum(precio*ivaretenido/100) from tblcomprasdetalles where idcompra=pidventa);
+
+if ptipo=0 then
+set vresultado=pcantidad*vtiva/(vsubtotal+vtiva);
+end if;
+if ptipo=1 then
+set vresultado=pcantidad*vtieps/(vsubtotal+vtieps);
+end if;
+if ptipo=2 then
+set vresultado=pcantidad*vivarett/(vsubtotal-vivarett);
+end if;
+
+if vidmoneda<>2 then
+set vresultado=vresultado*vtipodecambio;
+end if;
+
+return ifnull(vresultado,0);
+END $$
+
+DELIMITER ;
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA GRABABLE.','TSIG',4,'SUMA DEL TOTAL SIN IVA GRABABLE.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA NO GRABABLE.','TSING',4,'SUMA DEL TOTAL SIN IVA NO GRABABLE.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA GRABABLE CREDITO.','TSIGCr',4,'SUMA DEL TOTAL SIN IVA GRABABLE DE PAGOS A COBRANZA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA NO GRABABLE CREDITO.','TSINGCr',4,'SUMA DEL TOTAL NO GRABABLE DE PAGOS A COBRANZA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA GRABABLE CONTADO.','TSIGCon',4,'SUMA DEL TOTAL SIN IVA GRABABLE DE FACTURAS DE CONTADO LIGADAS.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA NO GRABABLE CONTADO.','TSINGCon',4,'SUMA DEL TOTAL NO GRABABLE DE FACTURAS DE CONTADO LIGADAS.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA GRABABLE POR FAC CON.','TXPSIGCon',4,'DA EL TOTAL SIN IVA GRABABLE POR FACTURA LIGADA DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA NO GRABABLE POR FAC CON.','TXPSINGCon',4,'DA EL TOTAL NO GRABABLE POR FACTURA LIGADA DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA GRABABLE POR PAGO LIGADO.','TXPSIGCr',4,'DA EL TOTAL SIN IVA GRABABLE POR PAGO DE COBRANZA LIGADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA NO GRABABLE POR PAGO LIGADO.','TXPSINGCr',4,'DA EL TOTAL NO GRABABLE POR PAGO DE COBRANZA LIGADO.');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA GRABABLE.','TSIG',5,'SUMA DEL TOTAL SIN IVA GRABABLE.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA NO GRABABLE.','TSING',5,'SUMA DEL TOTAL NO GRABABLE.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA GRABABLE CREDITO.','TSIGCr',5,'SUMA DEL TOTAL SIN IVA GRABABLE DE PAGOS A COBRANZA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA NO GRABABLE CREDITO.','TSINGCr',5,'SUMA DEL TOTAL NO GRABABLE DE PAGOS A COBRANZA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA GRABABLE CONTADO.','TSIGCon',5,'SUMA DEL TOTAL SIN IVA GRABABLE DE COMPRAS DE CONTADO LIGADAS.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA NO GRABABLE CONTADO.','TSINGCon',5,'SUMA DEL TOTAL NO GRABABLE DE COMPRAS DE CONTADO LIGADAS.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA GRABABLE POR FAC CON.','TXPSIGCon',5,'DA EL TOTAL SIN IVA GRABABLE POR COMPRA LIGADA DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA NO GRABABLE POR FAC CON.','TXPSINGCon',5,'DA EL TOTAL NO GRABABLE POR COMPRA LIGADA DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA GRABABLE POR PAGO LIGADO.','TXPSIGCr',5,'DA EL TOTAL SIN IVA GRABABLE POR PAGO DE COMPRA LIGADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA NO GRABABLE POR PAGO LIGADO.','TXPSINGCr',5,'DA EL TOTAL NO GRABABLE POR PAGO DE COMPRA LIGADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA GRABABLE POR PAGO SIN LIGAR.','TXPSIGSL',5,'DA EL TOTAL POR PAGO GRAVABLE SIN LIGAR.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA NO GRABABLE POR PAGO SIN LIGAR.','TXPSINGSL',5,'DA EL TOTAL POR PAGO NO GRABABLE SIN LIGAR.');
+
+insert into tblactualizaciones(version,versionchk) values('ver 9037 rev 4','00903704');

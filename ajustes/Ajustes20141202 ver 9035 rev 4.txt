@@ -1,0 +1,50 @@
+CREATE TABLE `tblformasdepagosat` (
+  `clave` INTEGER UNSIGNED NOT NULL,
+  `nombre` VARCHAR(150) NOT NULL,
+  PRIMARY KEY (`clave`)
+)
+ENGINE = InnoDB;
+
+insert into tblformasdepagosat(clave,nombre) values(1,'Efectivo');
+insert into tblformasdepagosat(clave,nombre) values(2,'Cheque');
+insert into tblformasdepagosat(clave,nombre) values(3,'Transferencia');
+insert into tblformasdepagosat(clave,nombre) values(4,'Tarjetas de crédito');
+insert into tblformasdepagosat(clave,nombre) values(5,'Monederos Electrónicos');
+insert into tblformasdepagosat(clave,nombre) values(6,'Dinero Electrónico');
+insert into tblformasdepagosat(clave,nombre) values(7,'Tarjetas digitales');
+insert into tblformasdepagosat(clave,nombre) values(8,'Vales de despensa');
+insert into tblformasdepagosat(clave,nombre) values(9,'Bienes');
+insert into tblformasdepagosat(clave,nombre) values(10,'Servicio');
+insert into tblformasdepagosat(clave,nombre) values(11,'Por cuenta de tercero');
+insert into tblformasdepagosat(clave,nombre) values(12,'Dación en pago');
+insert into tblformasdepagosat(clave,nombre) values(13,'Pago por subrogación');
+insert into tblformasdepagosat(clave,nombre) values(14,'Pago por consignación');
+insert into tblformasdepagosat(clave,nombre) values(15,'Condonación');
+insert into tblformasdepagosat(clave,nombre) values(16,'Cancelación');
+insert into tblformasdepagosat(clave,nombre) values(17,'Compensación');
+insert into tblformasdepagosat(clave,nombre) values(98,'NA');
+insert into tblformasdepagosat(clave,nombre) values(99,'Otros');
+
+ALTER TABLE `tblformasdepago` ADD COLUMN `clavesat` INTEGER UNSIGNED NOT NULL AFTER `horaCambio`;
+update tblformasdepago set clavesat=98;
+update tblformasdepago set clavesat=1 where nombre like '%efectivo%';
+update tblformasdepago set clavesat=2 where nombre like '%cheque%';
+update tblformasdepago set clavesat=3 where nombre like '%transferencia%';
+update tblformasdepago set clavesat=4 where nombre like '%tarjeta de credito%';
+update tblformasdepago set clavesat=4 where nombre like '%tarjetas de credito%';
+
+ALTER TABLE `tblclientes` ADD COLUMN `idformaf` INTEGER UNSIGNED NOT NULL DEFAULT 1 AFTER `idcuenta4`,
+ ADD COLUMN `idformar` INTEGER UNSIGNED NOT NULL DEFAULT 1 AFTER `idformaf`,
+ ADD CONSTRAINT `FK_tblclientes_6` FOREIGN KEY `FK_tblclientes_6` (`idformaf`)
+    REFERENCES `tblformasdepago` (`idforma`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION,
+ ADD CONSTRAINT `FK_tblclientes_7` FOREIGN KEY `FK_tblclientes_7` (`idformar`)
+    REFERENCES `tblformasdepagoremisiones` (`idforma`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION;
+
+update tblclientes set idformaf=2,idformar=3 where credito<>0 or creditodias<>0;
+ALTER TABLE `tblopciones2` ADD COLUMN `nobloquearcd` TINYINT UNSIGNED NOT NULL AFTER `surtidodefault`;
+
+insert into tblactualizaciones(version,versionchk) values('ver 9035 rev 4','00903504');

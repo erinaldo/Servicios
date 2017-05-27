@@ -1,0 +1,5 @@
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(339,59,'Total Cantidad: ','anticipo',200,20,'Lucida Console',8,0,0,0,0,0,49,1,0,1,'Anticipo');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(339,59,'Total Cantidad: ','restante',200,20,'Lucida Console',8,0,0,0,0,0,49,1,0,1,'Restante');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(339,59,'Total Cantidad: ','anticipo',200,20,'Lucida Console',8,0,0,0,0,0,33,1,0,1,'Anticipo');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(339,59,'Total Cantidad: ','restante',200,20,'Lucida Console',8,0,0,0,0,0,33,1,0,1,'Restante');
+insert into tblactualizaciones values('ver 9013 rev 5');

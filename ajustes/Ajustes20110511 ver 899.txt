@@ -1,0 +1,50 @@
+tblcompraspedidos
+folio varchar(45)
+
+
+DROP TABLE IF EXISTS `db_services`.`tblcomprasremisionesdetalles`;
+DROP TABLE IF EXISTS `db_services`.`tblcomprasremisiones`;
+CREATE TABLE  `db_services`.`tblcomprasremisiones` (
+  `idremision` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idproveedor` int(10) unsigned NOT NULL,
+  `fecha` varchar(10) NOT NULL,
+  `folio` varchar(45) NOT NULL,
+  `total` double NOT NULL,
+  `hora` varchar(8) NOT NULL,
+  `estado` tinyint(3) unsigned NOT NULL,
+  `iva` double NOT NULL,
+  `totalapagar` double NOT NULL,
+  `idmoneda` int(10) unsigned NOT NULL,
+  `idsucursal` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`idremision`),
+  KEY `FK_tblcomprasremisiones_1` (`idproveedor`),
+  KEY `FK_tblcomprasremisiones_2` (`idmoneda`),
+  KEY `FK_tblcomprasremisiones_3` (`idsucursal`),
+  CONSTRAINT `FK_tblcomprasremisiones_1` FOREIGN KEY (`idproveedor`) REFERENCES `tblproveedores` (`idproveedor`) ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblcomprasremisiones_2` FOREIGN KEY (`idmoneda`) REFERENCES `tblmonedas` (`idmoneda`) ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblcomprasremisiones_3` FOREIGN KEY (`idsucursal`) REFERENCES `tblsucursales` (`idsucursal`) ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE  `db_services`.`tblcomprasremisionesdetalles` (
+  `iddetalle` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idinventario` int(10) unsigned NOT NULL,
+  `idmoneda` int(10) unsigned NOT NULL,
+  `idremision` int(10) unsigned NOT NULL,
+  `cantidad` double NOT NULL,
+  `precio` double NOT NULL,
+  `descripcion` varchar(200) NOT NULL,
+  `iva` double NOT NULL,
+  `extra` varchar(45) NOT NULL,
+  `descuento` double NOT NULL,
+  `idalmacen` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`iddetalle`),
+  KEY `FK_tblcomprasremisionesdetalles_1` (`idinventario`),
+  KEY `FK_tblcomprasremisionesdetalles_2` (`idmoneda`),
+  KEY `FK_tblcomprasremisionesdetalles_3` (`idremision`),
+  KEY `FK_tblcomprasremisionesdetalles_4` (`idalmacen`),
+  CONSTRAINT `FK_tblcomprasremisionesdetalles_1` FOREIGN KEY (`idinventario`) REFERENCES `tblinventario` (`idinventario`) ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblcomprasremisionesdetalles_2` FOREIGN KEY (`idmoneda`) REFERENCES `tblmonedas` (`idmoneda`) ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblcomprasremisionesdetalles_3` FOREIGN KEY (`idremision`) REFERENCES `tblcomprasremisiones` (`idremision`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblcomprasremisionesdetalles_4` FOREIGN KEY (`idalmacen`) REFERENCES `tblalmacenes` (`idalmacen`) ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;

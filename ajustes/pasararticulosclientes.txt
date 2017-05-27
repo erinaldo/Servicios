@@ -1,0 +1,21 @@
+/*copiar clientes*/
+/*Le cambias el db_servicesorlando por el nombre de la base de datos nueva*/
+/*Y si de la que quieres copiar los datos no es db_services lo cambias por el nombre*/
+/*de la base de datos de la que se va a copiar*/
+delete  FROM db_servicesorlando.tblclientes;
+delete from tblvendedores;
+insert into db_servicesorlando.tblvendedores select * from db_services.tblvendedores;
+insert into db_servicesorlando.tblclientes select * from db_services.tblclientes;
+
+/*copiar articulos (inventario)*/
+delete from tblinventarioclasificaciones where idclasificacion>1;
+delete from tblinventarioclasificaciones2 where idclasificacion>1;
+delete from tblinventarioclasificaciones3 where idclasificacion>1;
+insert into db_servicesorlando.tblinventarioclasificaciones select * from db_services.tblinventarioclasificaciones where idclasificacion>1;
+insert into db_servicesorlando.tblinventarioclasificaciones2 select * from db_services.tblinventarioclasificaciones2 where idclasificacion>1;
+insert into db_servicesorlando.tblinventarioclasificaciones3 select * from db_services.tblinventarioclasificaciones3 where idclasificacion>1;
+delete  FROM tblinventario;
+delete from tbltiposcantidades where idtipocantidad>1;
+insert into db_servicesorlando.tbltiposcantidades select * from db_services.tbltiposcantidades where idtipocantidad>1;
+insert into db_servicesorlando.tblinventario select * from db_services.tblinventario;
+insert into db_servicesorlando.tblinventarioprecios select * from db_services.tblinventarioprecios;

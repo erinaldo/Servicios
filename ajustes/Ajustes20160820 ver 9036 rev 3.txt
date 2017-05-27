@@ -1,0 +1,15 @@
+ALTER TABLE `tblpercepciones` MODIFY COLUMN `descripcion` VARCHAR(500) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+insert into tblpercepciones(clave,descripcion,idcuenta) values('040','Ingreso  pagado  por  Entidades  Federativas,  municipios  o  demarcaciones territoriales  del  Distrito  Federal,  organismos  autónomos  y  entidades paraestatales  y  paramunicipales  con  cargo  a  sus  participaciones  u  otros ingresos locales.',0);
+ALTER TABLE `tblpercepciones` ADD COLUMN `visible` TINYINT UNSIGNED NOT NULL AFTER `idcuenta`;
+update tblpercepciones set visible=1;
+update tblpercepciones set visible=0 where clave='007' or clave='008' or clave='018';
+insert into tblpercepciones(clave,descripcion,idcuenta,visible) values('041','Ingreso  pagado  por Entidades  Federativas,  municipios  o  demarcaciones territoriales  del  Distrito  Federal,  organismos  autónomos  y  entidades paraestatales  y  paramunicipales  con  recursos  federales,  distintos  a  las participaciones.',0,1);
+insert into tblpercepciones(clave,descripcion,idcuenta,visible) values('042','Ingreso  pagado  por Entidades  Federativas,  municipios  o  demarcaciones territoriales  del  Distrito  Federal,  organismos  autónomos  y  entidades paraestatales  y  paramunicipales  con  cargo  a  sus  participaciones  u  otros ingresos locales y con recursos federales distintos a las participaciones.',0,1);
+delete from tblbancoscatalogo where  clave='999';
+ALTER TABLE `tblventascorte` ADD COLUMN `tipo` TINYINT UNSIGNED NOT NULL AFTER `posicion`;
+DROP TABLE IF EXISTS `tblventasconfiguracioncorte`;
+CREATE TABLE  `tblventasconfiguracioncorte` (
+  `nombre` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into tblactualizaciones(version,versionchk) values('ver 9036 rev 3','00903603');

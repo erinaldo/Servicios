@@ -1,0 +1,284 @@
+ALTER TABLE `tblcontabilidadvariables` ADD COLUMN `quehace` VARCHAR(450) NOT NULL AFTER `modulo`;
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL NETO CONTADO','TNCon',0,'SUMA DEL TOTAL NETO DE LAS FACTURAS DE CONTADO. SUBTOTAL+IMPUESTOS-RETENCIONES.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA CONTADO','TSICon',0,'SUMA DEL SUBTOTAL DE LAS FACTURAS DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA NETO CONTADO','TIVANCon',0,'SUMA DEL IVA NETO DE LAS FACTURAS DE CONTADO. IVA+IEPS-IVA RETENIDO-ISR.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA CONTADO','TIVACon',0,'SUMA IVA DE LAS FACTURAS DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO CONTADO','TIVARCon',0,'SUMA DEL IVA RETENIDO DE LAS FACTURAS DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL ISR CONTADO','TISRCon',0,'SUMA DEL ISR DE LAS FACTURAS DE CONTADO');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS CONTADO','TIEPSCon',0,'SUMA DEL IEPS DE LAS FACTURAS DE CONTADO');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA CRÉDITO','TSICr',0,'SUMA DEL SUBTOTAL DE LAS FACTURAS A CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA NETO CRÉDITO','TIVANCr',0,'SUMA DEL IVA NETO DE LAS FACTURAS A CRÉDITO. IVA+IEPS-IVA RETENIDO-ISR.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA CRÉDITO','TIVACr',0,'SUMA DEL IVA DE LAS FACTURAS A CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO CRÉDITO','TIVARCr',0,'SUMA DEL IVA RETENIDO DE LAS FACTURAS A CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL ISR CRÉDITO','TISRCr',0,'SUMA DEL ISR DE LAS FACTURAS A CRÉDITO');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS CRÉDITO','TIEPSCr',0,'SUMA DEL IEPS DE LAS FACTURAS A CRÉDITO');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL NETO CRÉDITO','TNCr',0,'SUMA DEL TOTAL NETO DE LAS FACTURAS A CRÉDITO. SUBTOTAL+IMPUESTOS-RETENCIONES.');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA CONTADO POR FAC','TSIConxf',0,'SUBTOTAL POR FACTURA DE CONTADO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA NETO CONTADO POR FAC','TIVANConxf',0,'TOTAL IVA NETO POR FACTURA DE CONTADO. IVA+IEPS-IVA RETENIDO-ISR. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA CONTADO POR FAC','TIVAConxf',0,'TOTAL IVA POR FACTURA DE CONTADO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO CONTADO POR FAC','TIVARConxf',0,'TOTAL IVA RETENIDO POR FACTURA DE CONTADO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL ISR CONTADO POR FAC','TISRConxf',0,'TOTAL IVA ISR POR FACTURA DE CONTADO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS CONTADO POR FAC','TIEPSConxf',0,'TOTAL IEPS POR FACTURA DE CONTADO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL NETO CONTADO POR FAC','TNConxf',0,'TOTAL NETO POR FACTURA DE CONTADO. SUBTOTAL+IMPUESTOS-RETENCIONES SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA FACTURA.');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA CRÉDITO POR FAC','TSICrxf',0,'SUBTOTAL POR FACTURA A CRÉDITO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA NETO CRÉDITO POR FAC','TIVANCrxf',0,'TOTAL IVA NETO POR FACTURA A CRÉDITO. IVA+IEPS-IVA RETENIDO-ISR. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA CRÉDITO POR FAC','TIVACrxf',0,'TOTAL IVA POR FACTURA A CRÉDITO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO CRÉDITO POR FAC','TIVARCrxf',0,'TOTAL IVA RETENIDO POR FACTURA A CRÉDITO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL ISR CRÉDITO POR FAC','TISRCrxf',0,'TOTAL IVA ISR POR FACTURA A CRÉDITO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS CRÉDITO POR FAC','TIEPSCrxf',0,'TOTAL IEPS POR FACTURA A CRÉDITO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL NETO CRÉDITO POR FAC','TNCrxf',0,'TOTAL NETO POR FACTURA A CRÉDITO. SUBTOTAL+IMPUESTOS-RETENCIONES SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA FACTURA.');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL NETO POR FAC','TNnetoxf',0,'TOTAL NETO POR FACTURA. SUBTOTAL+IMPUESTOS-RETENCIONES. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA POR FAC','TSInetoxf',0,'SUBTOTAL POR FACTURA. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA NETO POR FAC','TIVANnetoxf',0,'TOTAL IVA NETO POR FACTURA. IVA+IEPS-IVA RETENIDO-ISR. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA POR FAC','TIVAnetoxf',0,'TOTAL IVA POR FACTURA. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO POR FAC','TIVARnetoxf',0,'TOTAL IVA RETENIDO POR FACTURA. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL ISR POR FAC','TISRnetoxf',0,'TOTAL ISR POR FACTURA SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS POR FAC','TIEPSnetoxf',0,'TOTAL IEPS POR FACTURA SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA FACTURA.');
+
+/*COMPRAS*/
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL NETO CONTADO','TNCon',1,'SUMA DEL TOTAL NETO DE LAS COMPRAS DE CONTADO. SUBTOTAL+IMPUESTOS-RETENCIONES.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA CONTADO','TSICon',1,'SUMA DEL SUBTOTAL DE LAS COMPRAS DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA NETO CONTADO','TIVANCon',1,'SUMA DEL IVA NETO DE LAS COMPRAS DE CONTADO. IVA+IEPS-IVA RETENIDO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA CONTADO','TIVACon',1,'SUMA IVA DE LAS COMPRAS DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO CONTADO','TIVARCon',1,'SUMA DEL IVA RETENIDO DE LAS COMPRAS DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS CONTADO','TIEPSCon',1,'SUMA DEL IEPS DE LAS COMPRAS DE CONTADO');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA CRÉDITO','TSICr',1,'SUMA DEL SUBTOTAL DE LAS COMPRAS A CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA NETO CRÉDITO','TIVANCr',1,'SUMA DEL IVA NETO DE LAS COMPRAS A CRÉDITO. IVA+IEPS-IVA RETENIDO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA CRÉDITO','TIVACr',1,'SUMA DEL IVA DE LAS COMPRAS A CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO CRÉDITO','TIVARCr',1,'SUMA DEL IVA RETENIDO DE LAS COMPRAS A CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS CRÉDITO','TIEPSCr',1,'SUMA DEL IEPS DE LAS COMPRAS A CRÉDITO');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL NETO CRÉDITO','TNCr',1,'SUMA DEL TOTAL NETO DE LAS COMPRAS A CRÉDITO. SUBTOTAL+IMPUESTOS-RETENCIONES.');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA CONTADO POR COMPRA','TSIConxf',1,'SUBTOTAL POR COMPRA DE CONTADO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA COMPRA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA NETO CONTADO POR COMPRA','TIVANConxf',1,'TOTAL IVA NETO POR COMPRA DE CONTADO. IVA+IEPS-IVA RETENIDO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA COMPRA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA CONTADO POR COMPRA','TIVAConxf',1,'TOTAL IVA POR COMPRA DE CONTADO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA COMPRA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO CONTADO POR COMPRA','TIVARConxf',1,'TOTAL IVA RETENIDO POR COMPRA DE CONTADO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA COMPRA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS CONTADO POR COMPRA','TIEPSConxf',1,'TOTAL IEPS POR COMPRA DE CONTADO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA COMPRA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL NETO CONTADO POR COMPRA','TNConxf',1,'TOTAL NETO POR COMPRA DE CONTADO. SUBTOTAL+IMPUESTOS-RETENCIONES SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA COMPRA.');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA CRÉDITO POR COMPRA','TSICrxf',1,'SUBTOTAL POR COMPRA A CRÉDITO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA COMPRA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA NETO CRÉDITO POR COMPRA','TIVANCrxf',1,'TOTAL IVA NETO POR COMPRA A CRÉDITO. IVA+IEPS-IVA RETENIDO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA COMPRA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA CRÉDITO POR COMPRA','TIVACrxf',1,'TOTAL IVA POR COMPRA A CRÉDITO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA COMPRA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO CRÉDITO POR COMPRA','TIVARCrxf',1,'TOTAL IVA RETENIDO POR COMPRA A CRÉDITO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA COMPRA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS CRÉDITO POR COMPRA','TIEPSCrxf',1,'TOTAL IEPS POR COMPRA A CRÉDITO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA COMPRA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL NETO CRÉDITO POR COMPRA','TNCrxf',1,'TOTAL NETO POR COMPRA A CRÉDITO. SUBTOTAL+IMPUESTOS-RETENCIONES SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA COMPRA.');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL NETO POR COMPRA','TNnetoxf',1,'TOTAL NETO POR COMPRA. SUBTOTAL+IMPUESTOS-RETENCIONES. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA COMPRA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA POR COMPRA','TSInetoxf',1,'SUBTOTAL POR COMPRA. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA COMPRA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA NETO POR COMPRA','TIVANnetoxf',1,'TOTAL IVA NETO POR COMPRA. IVA+IEPS-IVA RETENIDO-ISR. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA COMPRA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA POR COMPRA','TIVAnetoxf',1,'TOTAL IVA POR COMPRA. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA COMPRA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO POR COMPRA','TIVARnetoxf',1,'TOTAL IVA RETENIDO POR COMPRA. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA COMPRA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS POR COMPRA','TIEPSnetoxf',1,'TOTAL IEPS POR COMPRA SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA COMPRA.');
+
+
+/*DEVOLUCIONES*/
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL NETO CONTADO','TNCon',2,'SUMA DEL TOTAL NETO DE LAS DEVOLUCIONES DE CONTADO. SUBTOTAL+IMPUESTOS-RETENCIONES.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA CONTADO','TSICon',2,'SUMA DEL SUBTOTAL DE LAS DEVOLUCIONES DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA NETO CONTADO','TIVANCon',2,'SUMA DEL IVA NETO DE LAS DEVOLUCIONES DE CONTADO. IVA+IEPS-IVA RETENIDO-ISR.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA CONTADO','TIVACon',2,'SUMA IVA DE LAS DEVOLUCIONES DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO CONTADO','TIVARCon',2,'SUMA DEL IVA RETENIDO DE LAS DEVOLUCIONES DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL ISR CONTADO','TISRCon',2,'SUMA DEL ISR DE LAS DEVOLUCIONES DE CONTADO');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS CONTADO','TIEPSCon',2,'SUMA DEL IEPS DE LAS DEVOLUCIONES DE CONTADO');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA CRÉDITO','TSICr',2,'SUMA DEL SUBTOTAL DE LAS DEVOLUCIONES A CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA NETO CRÉDITO','TIVANCr',2,'SUMA DEL IVA NETO DE LAS DEVOLUCIONES A CRÉDITO. IVA+IEPS-IVA RETENIDO-ISR.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA CRÉDITO','TIVACr',2,'SUMA DEL IVA DE LAS DEVOLUCIONES A CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO CRÉDITO','TIVARCr',2,'SUMA DEL IVA RETENIDO DE LAS DEVOLUCIONES A CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL ISR CRÉDITO','TISRCr',2,'SUMA DEL ISR DE LAS DEVOLUCIONES A CRÉDITO');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS CRÉDITO','TIEPSCr',2,'SUMA DEL IEPS DE LAS DEVOLUCIONES A CRÉDITO');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL NETO CRÉDITO','TNCr',2,'SUMA DEL TOTAL NETO DE LAS DEVOLUCIONES A CRÉDITO. SUBTOTAL+IMPUESTOS-RETENCIONES.');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA CONTADO POR DEV','TSIConxf',2,'SUBTOTAL POR DEVOLUCIÓN DE CONTADO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA NETO CONTADO POR DEV','TIVANConxf',2,'TOTAL IVA NETO POR DEVOLUCIÓN DE CONTADO. IVA+IEPS-IVA RETENIDO-ISR. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA CONTADO POR DEV','TIVAConxf',2,'TOTAL IVA POR DEVOLUCIÓN DE CONTADO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO CONTADO POR DEV','TIVARConxf',2,'TOTAL IVA RETENIDO POR DEVOLUCIÓN DE CONTADO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL ISR CONTADO POR DEV','TISRConxf',2,'TOTAL IVA ISR POR DEVOLUCIÓN DE CONTADO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS CONTADO POR DEV','TIEPSConxf',2,'TOTAL IEPS POR DEVOLUCIÓN DE CONTADO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL NETO CONTADO POR DEV','TNConxf',2,'TOTAL NETO POR DEVOLUCIÓN DE CONTADO. SUBTOTAL+IMPUESTOS-RETENCIONES SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA CRÉDITO POR DEV','TSICrxf',2,'SUBTOTAL POR DEVOLUCIÓN A CRÉDITO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA NETO CRÉDITO POR DEV','TIVANCrxf',2,'TOTAL IVA NETO POR DEVOLUCIÓN A CRÉDITO. IVA+IEPS-IVA RETENIDO-ISR. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA CRÉDITO POR DEV','TIVACrxf',2,'TOTAL IVA POR DEVOLUCIÓN A CRÉDITO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO CRÉDITO POR DEV','TIVARCrxf',2,'TOTAL IVA RETENIDO POR DEVOLUCIÓN A CRÉDITO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL ISR CRÉDITO POR DEV','TISRCrxf',2,'TOTAL IVA ISR POR DEVOLUCIÓN A CRÉDITO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS CRÉDITO POR DEV','TIEPSCrxf',2,'TOTAL IEPS POR DEVOLUCIÓN A CRÉDITO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL NETO CRÉDITO POR DEV','TNCrxf',2,'TOTAL NETO POR DEVOLUCIÓN A CRÉDITO. SUBTOTAL+IMPUESTOS-RETENCIONES. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL NETO POR DEV','TNnetoxf',2,'TOTAL NETO POR DEVOLUCIÓN. SUBTOTAL+IMPUESTOS-RETENCIONES. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA POR DEV','TSInetoxf',2,'SUBTOTAL POR DEVOLUCIÓN. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA NETO POR DEV','TIVANnetoxf',2,'TOTAL IVA NETO POR DEVOLUCIÓN. IVA+IEPS-IVA RETENIDO-ISR. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA POR DEV','TIVAnetoxf',2,'TOTAL IVA POR DEVOLUCIÓN. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO POR DEV','TIVARnetoxf',2,'TOTAL IVA RETENIDO POR DEVOLUCIÓN. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL ISR POR DEV','TISRnetoxf',2,'TOTAL ISR POR DEVOLUCIÓN. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS POR DEV','TIEPSnetoxf',2,'TOTAL IEPS POR DEVOLUCIÓN. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+
+/*DEV COMPRAS*/
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL NETO CONTADO','TNCon',3,'SUMA DEL TOTAL NETO DE LAS DEVOLUCIONES DE CONTADO. SUBTOTAL+IMPUESTOS-RETENCIONES.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA CONTADO','TSICon',3,'SUMA DEL SUBTOTAL DE LAS DEVOLUCIONES DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA NETO CONTADO','TIVANCon',3,'SUMA DEL IVA NETO DE LAS DEVOLUCIONES DE CONTADO. IVA+IEPS-IVA RETENIDO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA CONTADO','TIVACon',3,'SUMA IVA DE LAS DEVOLUCIONES DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO CONTADO','TIVARCon',3,'SUMA DEL IVA RETENIDO DE LAS DEVOLUCIONES DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS CONTADO','TIEPSCon',3,'SUMA DEL IEPS DE LAS DEVOLUCIONES DE CONTADO');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA CRÉDITO','TSICr',3,'SUMA DEL SUBTOTAL DE LAS DEVOLUCIONES A CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA NETO CRÉDITO','TIVANCr',3,'SUMA DEL IVA NETO DE LAS DEVOLUCIONES A CRÉDITO. IVA+IEPS-IVA RETENIDO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA CRÉDITO','TIVACr',3,'SUMA DEL IVA DE LAS DEVOLUCIONES A CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO CRÉDITO','TIVARCr',3,'SUMA DEL IVA RETENIDO DE LAS DEVOLUCIONES A CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS CRÉDITO','TIEPSCr',3,'SUMA DEL IEPS DE LAS DEVOLUCIONES A CRÉDITO');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL NETO CRÉDITO','TNCr',3,'SUMA DEL TOTAL NETO DE LAS DEVOLUCIONES A CRÉDITO. SUBTOTAL+IMPUESTOS-RETENCIONES.');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA CONTADO POR DEV','TSIConxf',3,'SUBTOTAL POR DEVOLUCIÓN DE CONTADO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA NETO CONTADO POR DEV','TIVANConxf',3,'TOTAL IVA NETO POR DEVOLUCIÓN DE CONTADO. IVA+IEPS-IVA RETENIDO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA CONTADO POR DEV','TIVAConxf',3,'TOTAL IVA POR DEVOLUCIÓN DE CONTADO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO CONTADO POR DEV','TIVARConxf',3,'TOTAL IVA RETENIDO POR DEVOLUCIÓN DE CONTADO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS CONTADO POR DEV','TIEPSConxf',3,'TOTAL IEPS POR DEVOLUCIÓN DE CONTADO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL NETO CONTADO POR DEV','TNConxf',3,'TOTAL NETO POR DEVOLUCIÓN DE CONTADO. SUBTOTAL+IMPUESTOS-RETENCIONES. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA CRÉDITO POR DEV','TSICrxf',3,'SUBTOTAL POR DEVOLUCIÓN A CRÉDITO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA NETO CRÉDITO POR DEV','TIVANCrxf',3,'TOTAL IVA NETO POR DEVOLUCIÓN A CRÉDITO. IVA+IEPS-IVA RETENIDO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA CRÉDITO POR DEV','TIVACrxf',3,'TOTAL IVA POR DEVOLUCIÓN A CRÉDITO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO CRÉDITO POR DEV','TIVARCrxf',3,'TOTAL IVA RETENIDO POR DEVOLUCIÓN A CRÉDITO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS CRÉDITO POR DEV','TIEPSCrxf',3,'TOTAL IEPS POR DEVOLUCIÓN A CRÉDITO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL NETO CRÉDITO POR DEV','TNCrxf',3,'TOTAL NETO POR DEVOLUCIÓN A CRÉDITO. SUBTOTAL+IMPUESTOS-RETENCIONES SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL NETO POR DEV','TNnetoxf',3,'TOTAL NETO POR DEVOLUCIÓN. SUBTOTAL+IMPUESTOS-RETENCIONES. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA POR DEV','TSInetoxf',3,'SUBTOTAL POR DEVOLUCIÓN. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA NETO POR DEV','TIVANnetoxf',3,'TOTAL IVA NETO POR DEVOLUCIÓN. IVA+IEPS-IVA RETENIDO-ISR. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA POR DEV','TIVAnetoxf',3,'TOTAL IVA POR DEVOLUCIÓN. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO POR DEV','TIVARnetoxf',3,'TOTAL IVA RETENIDO POR DEVOLUCIÓN. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS POR DEV','TIEPSnetoxf',3,'TOTAL IEPS POR DEVOLUCIÓN. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEVOLUCIÓN.');
+
+/*DEPOSITOS*/
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL POR FICHA POR CONTADO','TDEPcon',4,'TOTAL POR DEPOSITO HECHO A FACTURAS DE CONTADO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEPOSITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL POR FICHA POR CRÉDITO','TDEPcr',4,'TOTAL POR DEPOSITO HECHO EN PAGOS DE FACTURAS DE CRÉDITO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEPOSITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL POR FACTURA DE CONTADO','TXPcon',4,'TOTAL POR FACTURA DE CONTADO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA FACTURA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA CONTADO','TSIcon',4,'SUMA DEL SUBTOTAL DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA CONTADO','TIVAcon',4,'SUMA DEL TOTAL IVA DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO CONTADO','TIVARcon',4,'SUMA DEL TOTAL DE IVA RETENIDO DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL ISR CONTADO','TISRcon',4,'SUMA DEL TOTAL DE ISR DE CONTADO');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS CONTADO','TIEPScon',4,'SUMA DEL TOTAL DE IEPS CONTADO');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA CRÉDITO','TSIcr',4,'SUMA DEL SUBTOTAL DE CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA CRÉDITO','TIVAcr',4,'SUMA DEL TOTAL IVA DE CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO CRÉDITO','TIVARcr',4,'SUMA DEL TOTAL DE IVA RETENIDO DE CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL ISR CRÉDITO','TISRcr',4,'SUMA DEL TOTAL DE ISR DE CRÉDITO');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS CRÉDITO','TIEPScr',4,'SUMA DEL TOTAL DE IEPS DE CRÉDITO');
+
+/*RETIROS*/
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL POR FICHA POR CONTADO','TDEPcon',5,'TOTAL POR DEPOSITO HECHO A FACTURAS DE CONTADO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA PAGO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL POR FICHA POR CRÉDITO','TDEPcr',5,'TOTAL POR DEPOSITO HECHO EN PAGOS DE COMPRAS DE CRÉDITO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA PAGO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL POR FACTURA DE CONTADO','TXPcon',5,'TOTAL POR FACTURA DE CONTADO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA COMPRA.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA CONTADO','TSIcon',5,'SUMA DEL SUBTOTAL DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA CONTADO','TIVAcon',5,'SUMA DEL TOTAL IVA DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO CONTADO','TIVARcon',5,'SUMA DEL TOTAL DE IVA RETENIDO DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS CONTADO','TIEPScon',5,'SUMA DEL TOTAL DE IEPS CONTADO');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA CRÉDITO','TSIcr',5,'SUMA DEL SUBTOTAL DE CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA CRÉDITO','TIVAcr',5,'SUMA DEL TOTAL IVA DE CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RETENIDO CRÉDITO','TIVARcr',5,'SUMA DEL TOTAL DE IVA RETENIDO DE CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS CRÉDITO','TIEPScr',5,'SUMA DEL TOTAL DE IEPS DE CRÉDITO');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL NETO POR NOTA','TNnetoxf',6,'TOTAL NETO POR NOTA DE CRÉDITO. SUBTOTAL+IMPUESTOS. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA NOTA DE CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA POR NOTA','TSInetoxf',6,'SUBTOTAL POR NOTA DE CRÉDITO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA NOTA DE CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA POR NOTA','TIVANnetoxf',6,'TOTAL IVA POR NOTA DE CRÉDITO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA NOTA DE CRÉDITO.');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL NETO POR NOTA','TNnetoxf',7,'TOTAL NETO POR NOTA DE CRÉDITO. SUBTOTAL+IMPUESTOS. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA NOTA DE CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA POR NOTA','TSInetoxf',7,'SUBTOTAL POR NOTA DE CRÉDITO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA NOTA DE CRÉDITO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA POR NOTA','TIVANnetoxf',7,'TOTAL IVA POR NOTA DE CRÉDITO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA NOTA DE CRÉDITO.');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL NETO POR NOTA','TNnetoxf',8,'TOTAL NETO POR NOTA DE CARGO. SUBTOTAL+IMPUESTOS. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA NOTA DE CARGO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA POR NOTA','TSInetoxf',8,'SUBTOTAL POR NOTA DE CARGO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA NOTA DE CARGO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA POR NOTA','TIVANnetoxf',8,'TOTAL IVA POR NOTA DE CARGO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA NOTA DE CARGO.');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL NETO POR NOTA','TNnetoxf',9,'TOTAL NETO POR NOTA DE CARGO. SUBTOTAL+IMPUESTOS. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA NOTA DE CARGO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL SIN IVA POR NOTA','TSInetoxf',9,'SUBTOTAL POR NOTA DE CARGO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA NOTA DE CARGO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA POR NOTA','TIVANnetoxf',9,'TOTAL IVA POR NOTA DE CARGO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA NOTA DE CARGO.');
+
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL IVA NETO. IVA+IEPS-IVA RETENIDO-ISR' where modulo=0 and codigo='TIVAN';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL NETO. SUBTOTAL+IMPUESTOS-RETENCIONES' where modulo=0 and codigo='TN';
+update tblcontabilidadvariables set quehace='SUMA DEL SUBTOTAL.' where modulo=0 and codigo='TSI';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL DE IVA.' where modulo=0 and codigo='TIVA';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL DEL IVA RETENIDO.' where modulo=0 and codigo='TIVAR';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL DE ISR.' where modulo=0 and codigo='TISR';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL DE IEPS.' where modulo=0 and codigo='TIEPS';
+
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL IVA NETO. IVA+IEPS-IVA RETENIDO' where modulo=1 and codigo='TIVAN';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL NETO. SUBTOTAL+IMPUESTOS-RETENCIONES' where modulo=1 and codigo='TN';
+update tblcontabilidadvariables set quehace='SUMA DEL SUBTOTAL.' where modulo=1 and codigo='TSI';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL DE IVA.' where modulo=1 and codigo='TIVA';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL DEL IVA RETENIDO.' where modulo=1 and codigo='TIVAR';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL DE IEPS.' where modulo=1 and codigo='TIEPS';
+
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL IVA NETO. IVA+IEPS-IVA RETENIDO-ISR' where modulo=2 and codigo='TIVAN';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL NETO. SUBTOTAL+IMPUESTOS-RETENCIONES' where modulo=2 and codigo='TN';
+update tblcontabilidadvariables set quehace='SUMA DEL SUBTOTAL.' where modulo=2 and codigo='TSI';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL DE IVA.' where modulo=2 and codigo='TIVA';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL DEL IVA RETENIDO.' where modulo=2 and codigo='TIVAR';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL DE ISR.' where modulo=2 and codigo='TISR';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL DE IEPS.' where modulo=2 and codigo='TIEPS';
+
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL IVA NETO. IVA+IEPS-IVA RETENIDO' where modulo=3 and codigo='TIVAN';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL NETO. SUBTOTAL+IMPUESTOS-RETENCIONES' where modulo=3 and codigo='TN';
+update tblcontabilidadvariables set quehace='SUMA DEL SUBTOTAL.' where modulo=3 and codigo='TSI';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL DE IVA.' where modulo=3 and codigo='TIVA';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL DEL IVA RETENIDO.' where modulo=3 and codigo='TIVAR';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL DE IEPS.' where modulo=3 and codigo='TIEPS';
+
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL IVA.' where modulo=6 and codigo='TIVAN';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL NETO. SUBTOTAL+IMPUESTOS' where modulo=6 and codigo='TN';
+update tblcontabilidadvariables set quehace='SUMA DEL SUBTOTAL.' where modulo=6 and codigo='TSI';
+
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL IVA.' where modulo=7 and codigo='TIVAN';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL NETO. SUBTOTAL+IMPUESTOS' where modulo=7 and codigo='TN';
+update tblcontabilidadvariables set quehace='SUMA DEL SUBTOTAL.' where modulo=7 and codigo='TSI';
+
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL IVA.' where modulo=8 and codigo='TIVAN';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL NETO. SUBTOTAL+IMPUESTOS' where modulo=8 and codigo='TN';
+update tblcontabilidadvariables set quehace='SUMA DEL SUBTOTAL.' where modulo=8 and codigo='TSI';
+
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL IVA.' where modulo=9 and codigo='TIVAN';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL NETO. SUBTOTAL+IMPUESTOS' where modulo=9 and codigo='TN';
+update tblcontabilidadvariables set quehace='SUMA DEL SUBTOTAL.' where modulo=9 and codigo='TSI';
+
+update tblcontabilidadvariables set quehace='TOTAL NETO DE LA NÓMINA. PERCEPCIONES-DEDUCCIONES' where modulo=10 and codigo='TN';
+update tblcontabilidadvariables set quehace='TOTAL PERCEPCIONES. GRAVADO+EXENTO' where modulo=10 and codigo='TP';
+update tblcontabilidadvariables set quehace='TOTAL DEDUCCIONES. GRAVADO+EXENTO' where modulo=10 and codigo='TD';
+update tblcontabilidadvariables set quehace='TOTAL HORAS EXTRA.' where modulo=10 and codigo='THE';
+update tblcontabilidadvariables set quehace='TOTAL INCAPACIDADES' where modulo=10 and codigo='TI';
+update tblcontabilidadvariables set quehace='TOTAL PERCEPCIONES SOLO GRAVADO' where modulo=10 and codigo='TPG';
+update tblcontabilidadvariables set quehace='TOTAL PERCEPCIONES SOLO EXENTO' where modulo=10 and codigo='TPE';
+update tblcontabilidadvariables set quehace='TOTAL DEDUCCIONES SOLO GRAVADO' where modulo=10 and codigo='TDG';
+update tblcontabilidadvariables set quehace='TOTAL DEDUCCIONES SOLO EXENTO' where modulo=10 and codigo='TDE';
+
+update tblcontabilidadvariables set quehace='TOTAL POR FICHA (DEPOSITOS NO RELACIONADOS A NINGUNA FACTURA).  SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA DEPOSITO.' where modulo=4 and codigo='TDEP';
+update tblcontabilidadvariables set quehace='TOTAL POR PAGO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA PAGO.' where modulo=4 and codigo='TXP';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL POR IVA' where modulo=4 and codigo='TIVA';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL POR IEPS' where modulo=4 and codigo='TIEPS';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL POR IVA RETENIDO' where modulo=4 and codigo='TIVAR';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL POR ISR' where modulo=4 and codigo='TISR';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL DE DEPOSITOS' where modulo=4 and codigo='TN';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL DE DEPOSITOS MENOS IVA' where modulo=4 and codigo='TSI';
+
+update tblcontabilidadvariables set quehace='TOTAL POR FICHA (PAGOS NO RELACIONADOS A NINGUNA COMPRA). SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA PAGO. ' where modulo=5 and codigo='TDEP';
+update tblcontabilidadvariables set quehace='TOTAL POR PAGO. SE GENERA UN RENGLÓN EN LA PÓLIZA POR CADA PAGO A COMPRAS. ' where modulo=5 and codigo='TXP';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL POR IVA' where modulo=5 and codigo='TIVA';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL POR IEPS' where modulo=5 and codigo='TIEPS';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL POR IVA RETENIDO' where modulo=5 and codigo='TIVAR';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL DE PAGOS' where modulo=5 and codigo='TN';
+update tblcontabilidadvariables set quehace='SUMA DEL TOTAL DE PAGOS MENOS IVA' where modulo=5 and codigo='TSI';
+
+ALTER TABLE `tblcontabilidadmascarasd` ADD COLUMN `beneficiario` TINYINT UNSIGNED NOT NULL AFTER `negativo`;
+
+ALTER TABLE `tblopciones` ADD COLUMN `copiaflujoventas` TINYINT UNSIGNED NOT NULL AFTER `preciosultimocosto`,
+ ADD COLUMN `copiaflujorem` TINYINT UNSIGNED NOT NULL AFTER `copiaflujoventas`;
+
+insert into tblactualizaciones(version) values('ver 9033 rev 7');
+

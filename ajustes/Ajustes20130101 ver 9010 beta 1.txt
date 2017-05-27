@@ -1,0 +1,5 @@
+ALTER TABLE `tblcajas` ADD COLUMN `serie` VARCHAR(20) NOT NULL AFTER `idsucursal`;
+ALTER TABLE `tblcajas` ADD COLUMN `deposito` DOUBLE NOT NULL AFTER `serie`;
+ALTER TABLE `tblcajas` ADD COLUMN `seriecot` VARCHAR(20) NOT NULL AFTER `deposito`,
+ ADD COLUMN `serieped` VARCHAR(20) NOT NULL AFTER `seriecot`;
+insert into tblactualizaciones values('ver 9010 beta 1');

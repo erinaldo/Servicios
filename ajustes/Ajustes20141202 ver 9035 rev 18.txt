@@ -1,0 +1,53 @@
+CREATE TABLE `tblventasformasdepago` (
+  `idmetodo` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idventa` INTEGER UNSIGNED NOT NULL,
+  `idforma` INTEGER UNSIGNED NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  PRIMARY KEY (`idmetodo`),
+  CONSTRAINT `FK_tblventasformasdepago_1` FOREIGN KEY `FK_tblventasformasdepago_1` (`idventa`)
+    REFERENCES `tblventas` (`idventa`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblventasformasdepago_2` FOREIGN KEY `FK_tblventasformasdepago_2` (`idforma`)
+    REFERENCES `tblformasdepago` (`idforma`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tblremisionesformasdepago` (
+  `idmetodo` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idremision` INTEGER UNSIGNED NOT NULL,
+  `idforma` INTEGER UNSIGNED NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  PRIMARY KEY (`idmetodo`),
+  CONSTRAINT `FK_tblremisionesformasdepago_1` FOREIGN KEY `FK_tblremisionesformasdepago_1` (`idremision`)
+    REFERENCES `tblventasremisiones` (`idremision`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblremisionesformasdepago_2` FOREIGN KEY `FK_tblremisionesformasdepago_2` (`idforma`)
+    REFERENCES `tblformasdepagoremisiones` (`idforma`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tblnominasformasdepago` (
+  `idmetodo` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idnomina` INTEGER UNSIGNED NOT NULL,
+  `idforma` INTEGER UNSIGNED NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  PRIMARY KEY (`idmetodo`),
+  CONSTRAINT `FK_tblnominasformasdepago_1` FOREIGN KEY `FK_tblnominasformasdepago_1` (`idnomina`)
+    REFERENCES `tblnominas` (`idnomina`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblnominasformasdepago_2` FOREIGN KEY `FK_tblnominasformasdepago_2` (`idforma`)
+    REFERENCES `tblformasdepago` (`idforma`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+insert into tblventasformasdepago(idventa,idforma,cantidad) select idventa,idforma,totalapagar from tblventas where estado=3 or estado=4;
+
+insert into tblactualizaciones(version,versionchk) values('ver 9035 rev 18','00903518');

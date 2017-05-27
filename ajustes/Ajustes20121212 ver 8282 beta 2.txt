@@ -1,0 +1,9 @@
+ALTER TABLE `tbladdendaoxxo` ADD CONSTRAINT `FK_tbladdendaoxxo_1` FOREIGN KEY `FK_tbladdendaoxxo_1` (`idventa`)
+    REFERENCES `tblventas` (`idventa`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tbladdendaoxxodetalles` ADD CONSTRAINT `FK_tbladdendaoxxodetalles_1` FOREIGN KEY `FK_tbladdendaoxxodetalles_1` (`idAddenda`)
+    REFERENCES `tbladdendaoxxo` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION;

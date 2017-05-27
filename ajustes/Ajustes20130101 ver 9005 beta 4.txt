@@ -1,0 +1,3 @@
+ALTER TABLE `tblopciones` ADD COLUMN `nparcialidades` TINYINT UNSIGNED NOT NULL AFTER `buscaxfabricante`,
+ ADD COLUMN `buscamodob` TINYINT UNSIGNED NOT NULL AFTER `nparcialidades`;
+update tblopciones set nparcialidades=0,buscamodob=1;

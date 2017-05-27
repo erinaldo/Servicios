@@ -1,0 +1,40 @@
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL SIN IVA','TSI',1);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IVA','TIVA',1);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IVA RETENIDO','TIVAR',1);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IEPS','TIEPS',1);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IVA NETO','TIVAN',1);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL NETO','TN',1);
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL SIN IVA','TSI',2);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IVA','TIVA',2);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IVA RETENIDO','TIVAR',2);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IVA ISR','TISR',2);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IEPS','TIEPS',2);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IVA NETO','TIVAN',2);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL NETO','TN',2);
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL SIN IVA','TSI',3);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IVA','TIVA',3);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IVA RETENIDO','TIVAR',3);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IEPS','TIEPS',3);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IVA NETO','TIVAN',3);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL NETO','TN',3);
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL SIN IVA','TSI',8);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IVA NETO','TIVAN',8);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL NETO','TN',8);
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL SIN IVA','TSI',9);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IVA NETO','TIVAN',9);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL NETO','TN',9);
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL SIN IVA','TSI',6);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IVA NETO','TIVAN',6);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL NETO','TN',6);
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL SIN IVA','TSI',7);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL IVA NETO','TIVAN',7);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL NETO','TN',7);
+
+
+insert into tblactualizaciones(version) values('ver 9031 rev 19');

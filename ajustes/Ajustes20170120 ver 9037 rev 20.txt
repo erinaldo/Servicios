@@ -1,0 +1,9 @@
+ALTER TABLE `tblrepventasporsurtir` ADD COLUMN `preciou` DOUBLE NOT NULL AFTER `idSucursal`;
+ALTER TABLE `tblccontables` ADD COLUMN `depreciacion` TINYINT UNSIGNED NOT NULL AFTER `idcuentan5`;
+ALTER TABLE `tblcontabilidadbalanzarep` ADD COLUMN `dep` TINYINT UNSIGNED NOT NULL AFTER `nivel`;
+ALTER TABLE `tblventas` ADD COLUMN `usocfdi` VARCHAR(5) NOT NULL AFTER `fechaconta`;
+ALTER TABLE `tblclientes` ADD COLUMN `regidtrib` VARCHAR(45) NOT NULL AFTER `clavepais`,
+ ADD COLUMN `usocfdi` VARCHAR(5) NOT NULL AFTER `regidtrib`;
+ALTER TABLE `tblventas` ADD COLUMN `noconfirmacion` VARCHAR(6) NOT NULL AFTER `usocfdi`;
+
+insert into tblactualizaciones(version,versionchk) values('ver 9037 rev 20','00903720');

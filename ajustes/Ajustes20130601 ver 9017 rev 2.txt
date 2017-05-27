@@ -1,0 +1,2 @@
+update tblopciones set localidadlocal='0';
+insert into tblactualizaciones(version) values('ver 9017 rev 2');

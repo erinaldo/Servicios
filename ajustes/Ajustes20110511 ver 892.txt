@@ -1,0 +1,74 @@
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdasaldoafechaproveedor` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdasaldoafechaproveedor`(pidproveedor int,pfecha varchar(10)) RETURNS double
+BEGIN
+declare varsaldo double;
+
+set varsaldo=(select ifnull((select if(idmoneda=2,sum(totalapagar),sum(totalapagar*tipodecambio)) from tblcompras inner join tblformasdepago on tblcompras.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and idproveedor=pidproveedor and fecha<pfecha and estado=3),0));
+set varsaldo=varsaldo+(select ifnull((select if(idmoneda=2,sum(totalapagar),sum(totalapagar*tipodecambio)) from tblnotasdecargocompras where idproveedor=pidproveedor and fecha<pfecha and estado=3),0));
+set varsaldo=varsaldo-(select ifnull((select if(idmoneda=2,sum(cantidad),sum(cantidad*ptipodecambio)) from tblcompraspagos where idproveedor=pidproveedor and tblcompraspagos.estado=3 and tblcompraspagos.fecha<pfecha),0));
+Return varsaldo;
+
+END $$
+
+DELIMITER ;
+
+
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spproveedoresmovimientos` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spproveedoresmovimientos`(pidproveedor int,pfecha1 varchar(10),pfecha2 varchar(10)) RETURNS int(11)
+BEGIN
+
+delete from tblproveedoresmovimientos where idproveedor=pidproveedor;
+
+
+insert into tblproveedoresmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idproveedor,hora,estado,folio)
+select fecha,1,idcompra,if(idmoneda=2,totalapagar,totalapagar*tipodecambio),0,0,pidproveedor,hora,3,referencia from tblcompras inner join tblformasdepago on tblcompras.idforma=tblformasdepago.idforma where idproveedor=pidproveedor and (estado=3 or estado=4) and fecha>=pfecha1 and fecha<=pfecha2 and tblformasdepago.tipo=0;
+
+insert into tblproveedoresmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idproveedor,hora,estado,folio)
+select fecha,1,idcompra,if(idmoneda=2,totalapagar,totalapagar*tipodecambio),if(idmoneda=2,totalapagar,totalapagar*tipodecambio),0,pidproveedor,hora,3,referencia from tblcompras inner join tblformasdepago on tblcompras.idforma=tblformasdepago.idforma where idproveedor=pidproveedor and (estado=3 or estado=4) and fecha>=pfecha1 and fecha<=pfecha2 and tblformasdepago.tipo=1;
+
+insert into tblproveedoresmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idproveedor,hora,estado,folio)
+select fecha,2,idnota,0,if(idmoneda=2,totalapagar,totalapagar*tipodecambio),0,pidproveedor,hora,3,folio from tblnotasdecreditocompras where idproveedor=pidproveedor and (estado=3 or estado=4) and fecha>=pfecha1 and fecha<=pfecha2;
+
+insert into tblproveedoresmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idproveedor,hora,estado,folio)
+select fecha,3,iddevolucion,0,if(idconversion=2,totalapagar,totalapagar*tipodecambio),0,pidproveedor,hora,3,folio from tbldevolucionescompras where idproveedor=pidproveedor and (estado=3 or estado=4) and fecha>=pfecha1 and fecha<=pfecha2;
+
+insert into tblproveedoresmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idproveedor,hora,estado,folio)
+select tblcompraspagos.fecha,4,idpago,0,if(idmoneda=2,cantidad,cantidad*ptipodecambio),0,pidproveedor,tblcompraspagos.hora,3,
+if(tblcompraspagos.idcompra<>0,(select referencia from tblcompras where idcompra=tblcompraspagos.idcompra limit 1),(select folio from tblnotasdecargocompras where idcargo=tblcompraspagos.idcargo limit 1)) as folio from tblcompraspagos where tblcompraspagos.idproveedor=pidproveedor and (tblcompraspagos.estado=3 or tblcompraspagos.estado=4) and tblcompraspagos.fecha>=pfecha1 and tblcompraspagos.fecha<=pfecha2 and tblcompraspagos.iddocumento=0;
+
+insert into tblproveedoresmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idproveedor,hora,estado,folio)
+select fecha,5,idcargo,if(idmoneda=2,totalapagar,totalapagar*tipodecambio),0,0,pidproveedor,hora,3,folio from tblnotasdecargocompras where idproveedor=pidproveedor and (estado=3 or estado=4) and fecha>=pfecha1 and fecha<=pfecha2;
+
+
+/*Cancelados*/
+
+
+insert into tblproveedoresmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idproveedor,hora,estado,folio)
+select fechacancelado,1,idcompra,0,if(idmoneda=2,totalapagar,totalapagar*tipodecambio),0,pidproveedor,horacancelado,4,referencia from tblcompras inner join tblformasdepago on tblcompras.idforma=tblformasdepago.idforma where idproveedor=pidproveedor and estado=4 and fecha>=pfecha1 and fecha<=pfecha2 and tblformasdepago.tipo=0;
+
+insert into tblproveedoresmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idproveedor,hora,estado,folio)
+select fechacancelado,1,idcompra,if(idmoneda=2,totalapagar,totalapagar*tipodecambio),if(idmoneda=2,totalapagar,totalapagar*tipodecambio),0,pidproveedor,horacancelado,4,referencia from tblcompras inner join tblformasdepago on tblcompras.idforma=tblformasdepago.idforma where idproveedor=pidproveedor and estado=4 and fecha>=pfecha1 and fecha<=pfecha2 and tblformasdepago.tipo=1;
+
+insert into tblproveedoresmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idproveedor,hora,estado,folio)
+select fechacancelado,2,idnota,if(idmoneda=2,totalapagar,totalapagar*tipodecambio),0,0,pidproveedor,horacancelado,4,folio from tblnotasdecreditocompras where idproveedor=pidproveedor and estado=4 and fecha>=pfecha1 and fecha<=pfecha2;
+
+insert into tblproveedoresmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idproveedor,hora,estado,folio)
+select fechacancelado,3,iddevolucion,if(idconversion=2,totalapagar,totalapagar*tipodecambio),0,0,pidproveedor,horacancelado,4,folio from tbldevolucionescompras where idproveedor=pidproveedor and estado=4 and fecha>=pfecha1 and fecha<=pfecha2;
+
+
+insert into tblproveedoresmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idproveedor,hora,estado,folio)
+select tblcompraspagos.fecha,4,idpago,if(idmoneda=2,cantidad,cantidad*ptipodecambio),0,0,pidproveedor,tblcompraspagos.hora,4,
+if(tblcompraspagos.idcompra<>0,(select referencia from tblcompras where idcompra=tblcompraspagos.idcompra limit 1),(select folio from tblnotasdecargocompras where idcargo=tblcompraspagos.idcargo limit 1)) as folio from tblcompraspagos where tblcompraspagos.idproveedor=pidproveedor and tblcompraspagos.estado=4 and tblcompraspagos.fecha>=pfecha1 and tblcompraspagos.fecha<=pfecha2 and tblcompraspagos.iddocumento=0;
+
+insert into tblproveedoresmovimientos(fecha,tipomovimiento,iddocumento,cargo,abono,saldo,idproveedor,hora,estado,folio)
+select fechacancelado,5,idcargo,0,if(idmoneda=2,totalapagar,totalapagar*tipodecambio),0,pidproveedor,horacancelado,4,folio from tblnotasdecargocompras where idproveedor=pidproveedor and estado=4 and fecha>=pfecha1 and fecha<=pfecha2;
+
+return pidproveedor;
+END $$
+
+DELIMITER ;

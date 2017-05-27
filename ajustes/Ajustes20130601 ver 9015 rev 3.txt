@@ -1,0 +1,131 @@
+CREATE TABLE `tblmodelos` (
+  `idmodelo` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  `codigo` VARCHAR(45) NOT NULL,
+  `comentario` VARCHAR(450) NOT NULL,
+  PRIMARY KEY (`idmodelo`)
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tbltallas` (
+  `idtalla` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  `codigo` VARCHAR(45) NOT NULL,
+  `comentario` VARCHAR(450) NOT NULL,
+  PRIMARY KEY (`idtalla`)
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tblcolores` (
+  `idcolor` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  `codigo` VARCHAR(45) NOT NULL,
+  `comentario` VARCHAR(450) NOT NULL,
+  PRIMARY KEY (`idcolor`)
+)
+ENGINE = InnoDB;
+
+
+DROP TABLE IF EXISTS `tblbancos`;
+CREATE TABLE  `tblbancos` (
+  `codigo` varchar(15) NOT NULL,
+  `Nombre` varchar(150) NOT NULL,
+  `idBanco` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`idBanco`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `tblcuentas`;
+CREATE TABLE  `tblcuentas` (
+  `idCuenta` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Numero` varchar(20) NOT NULL,
+  `Banco` varchar(45) NOT NULL,
+  `Tipo` varchar(20) NOT NULL,
+  PRIMARY KEY (`idCuenta`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `tblccontables`;
+CREATE TABLE  `tblccontables` (
+  `idCContable` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Cuenta` varchar(5) DEFAULT NULL,
+  `N2` varchar(5) DEFAULT NULL,
+  `N3` varchar(5) DEFAULT NULL,
+  `N4` varchar(5) DEFAULT NULL,
+  `Descripcion` varchar(65) DEFAULT NULL,
+  `Nivel` varchar(1) DEFAULT NULL,
+  `CuentaComp` varchar(35) DEFAULT NULL,
+  `Tipo` varchar(20) DEFAULT NULL,
+  `Naturaleza` varchar(12) DEFAULT NULL,
+  `N5` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`idCContable`)
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `tblpagoprov`;
+CREATE TABLE  `tblpagoprov` (
+  `idPagoProv` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Tipo` varchar(100) NOT NULL,
+  `Folio` varchar(20) NOT NULL,
+  `Proveedor` varchar(65) NOT NULL,
+  `Fecha` varchar(10) NOT NULL,
+  `FechaCobro` varchar(10) NOT NULL,
+  `Referencia` varchar(80) NOT NULL,
+  `Cantidad` varchar(20) NOT NULL,
+  `IVA` varchar(5) NOT NULL,
+  `Leyenda` tinyint(1) NOT NULL,
+  `EsCheque` tinyint(1) NOT NULL,
+  `Estado` varchar(10) NOT NULL,
+  `nCuenta` varchar(45) DEFAULT NULL,
+  `Banco` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idPagoProv`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `tblpolizapagoprov`;
+CREATE TABLE  `tblpolizapagoprov` (
+  `idPoliza` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idPagoProv` int(10) NOT NULL,
+  `NumPoliza` varchar(10) NOT NULL,
+  `ID` varchar(2) NOT NULL,
+  `Cuenta` varchar(30) NOT NULL,
+  `Descripcion` varchar(80) NOT NULL,
+  `Cargo` varchar(20) NOT NULL,
+  `Abono` varchar(20) NOT NULL,
+  `Elabora` varchar(50) NOT NULL,
+  `Autoriza` varchar(50) NOT NULL,
+  `Registra` varchar(50) NOT NULL,
+  `Solicitud` varchar(5) NOT NULL,
+  `CantidadGravadaISR` varchar(10) NOT NULL,
+  `CantidadGravadaIVA` varchar(10) NOT NULL,
+  `CantidadGravadaIEPS` varchar(10) NOT NULL,
+  `CantidadRetenidaISR` varchar(10) NOT NULL,
+  `CantidadRetenidaIVA` varchar(10) NOT NULL,
+  `CantidadRetenidaIEPS` varchar(10) NOT NULL,
+  PRIMARY KEY (`idPoliza`)
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `tbldepostito`;
+CREATE TABLE  `tbldepostito` (
+  `idDeposito` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Fecha` varchar(12) NOT NULL,
+  `Referencia` varchar(80) NOT NULL,
+  `Banco` varchar(20) NOT NULL,
+  `Cantidad` varchar(20) NOT NULL,
+  `nCuenta` varchar(45) DEFAULT NULL,
+  `Banco2` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idDeposito`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `tblpolizadeposito`;
+CREATE TABLE  `tblpolizadeposito` (
+  `idPoliza` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idDeposito` int(10) unsigned NOT NULL,
+  `NumPoliza` varchar(10) NOT NULL,
+  `ID` varchar(2) NOT NULL,
+  `Cuenta` varchar(30) NOT NULL,
+  `Descripcion` varchar(80) NOT NULL,
+  `Cargo` varchar(20) NOT NULL,
+  `Abono` varchar(20) NOT NULL,
+  `Elabora` varchar(50) NOT NULL,
+  `Autoriza` varchar(50) NOT NULL,
+  `Registra` varchar(50) NOT NULL,
+  PRIMARY KEY (`idPoliza`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+

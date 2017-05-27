@@ -1,0 +1,10 @@
+ALTER TABLE `tbltiposcantidades` ADD COLUMN `usabascula` TINYINT UNSIGNED NOT NULL AFTER `abreviatura`;
+update tbltiposcantidades set usabascula=0;
+
+ALTER TABLE `tblopciones` ADD COLUMN `puertobascula` VARCHAR(45) NOT NULL AFTER `tituloparcialidad`,
+ ADD COLUMN `basculabaudrate` INTEGER UNSIGNED NOT NULL AFTER `puertobascula`,
+ ADD COLUMN `basculaparity` INTEGER UNSIGNED NOT NULL AFTER `basculabaudrate`,
+ ADD COLUMN `basculadatabits` INTEGER UNSIGNED NOT NULL AFTER `basculaparity`,
+ ADD COLUMN `basculahandshake` INTEGER UNSIGNED NOT NULL AFTER `basculadatabits`,
+ ADD COLUMN `basculasecuencia` VARCHAR(45) NOT NULL AFTER `basculahandshake`;
+update tblopciones set puertobascula='',basculabaudrate=9600,basculaparity=0,basculadatabits=8,basculahandshake=0,basculasecuencia='P';

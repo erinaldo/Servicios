@@ -1,0 +1,4 @@
+ALTER TABLE `tblcontabilidadconf` ADD COLUMN `rutaUUID` VARCHAR(500) NOT NULL AFTER `egresos2`;
+
+
+insert into tblactualizaciones(version) values('ver 9028 rev 15');

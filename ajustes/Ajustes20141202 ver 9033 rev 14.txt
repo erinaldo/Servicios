@@ -1,0 +1,75 @@
+
+ALTER TABLE `tblpolizasdetalles` ADD COLUMN `ivaret` DOUBLE NOT NULL AFTER `referencia`,
+ ADD COLUMN `ieps` DOUBLE NOT NULL AFTER `ivaret`;
+
+ALTER TABLE `tblproveedores` ADD COLUMN `ivaretp` DOUBLE NOT NULL AFTER `representantelegal`,
+ ADD COLUMN `iepsp` DOUBLE NOT NULL AFTER `ivaretp`;
+
+CREATE TABLE `tblclientestipos` (
+  `idtipo` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(250) NOT NULL,
+  PRIMARY KEY (`idtipo`)
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tblproveedorestipos` (
+  `idtipo` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  `tipo` TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`idtipo`)
+)
+ENGINE = InnoDB;
+
+insert into tblclientestipos(nombre) values('GENERAL');
+insert into tblproveedorestipos(nombre,tipo) values('GENERAL',0);
+
+ALTER TABLE `tblgastosdetalles` MODIFY COLUMN `descripcion` VARCHAR(1001) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL;
+
+ALTER TABLE `tblclientes` ADD COLUMN `idtipo` INTEGER UNSIGNED NOT NULL AFTER `idcuenta`;
+ALTER TABLE `tblproveedores` ADD COLUMN `idtipo` INTEGER UNSIGNED NOT NULL AFTER `iepsp`;
+
+update tblclientes set idtipo=1;
+update tblproveedores set idtipo=1;
+
+ALTER TABLE `tblproveedores` ADD CONSTRAINT `FK_tblproveedores_1` FOREIGN KEY `FK_tblproveedores_1` (`idtipo`)
+    REFERENCES `tblproveedorestipos` (`idtipo`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblclientes` ADD CONSTRAINT `FK_tblclientes_3` FOREIGN KEY `FK_tblclientes_3` (`idtipo`)
+    REFERENCES `tblclientestipos` (`idtipo`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblpagoprov` ADD COLUMN `cuentadestino` VARCHAR(450) NOT NULL AFTER `idproveedor`,
+ ADD COLUMN `idbancod` INTEGER UNSIGNED NOT NULL AFTER `cuentadestino`,
+ ADD COLUMN `bancoorigenex` VARCHAR(450) NOT NULL AFTER `idbancod`,
+ ADD COLUMN `bancodestinoex` VARCHAR(450) NOT NULL AFTER `bancoorigenex`,
+ ADD COLUMN `idmoneda` INTEGER UNSIGNED NOT NULL AFTER `bancodestinoex`,
+ ADD COLUMN `tipodecambio` DOUBLE NOT NULL AFTER `idmoneda`;
+
+ALTER TABLE `tblcuentas` ADD COLUMN `esextranjero` TINYINT UNSIGNED NOT NULL AFTER `idCcontable`;
+
+ALTER TABLE `tblcuentas` ADD COLUMN `nombreex` VARCHAR(450) NOT NULL AFTER `esextranjero`;
+
+CREATE TABLE `tblbancosuuids` (
+  `iduuid` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `uuid` VARCHAR(150) NOT NULL,
+  `moneda` VARCHAR(10) NOT NULL,
+  `tipocambio` DOUBLE NOT NULL,
+  `monto` DOUBLE NOT NULL,
+  PRIMARY KEY (`iduuid`)
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `tblbancosuuids` MODIFY COLUMN `moneda` INTEGER UNSIGNED NOT NULL;
+
+
+ALTER TABLE `tblbancosuuids` ADD COLUMN `idpagoprov` INTEGER UNSIGNED NOT NULL AFTER `monto`,
+ ADD CONSTRAINT `FK_tblbancosuuids_1` FOREIGN KEY `FK_tblbancosuuids_1` (`idpagoprov`)
+    REFERENCES `tblpagoprov` (`idPagoProv`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION;
+
+insert into tblactualizaciones(version) values('ver 9033 rev 14');
+

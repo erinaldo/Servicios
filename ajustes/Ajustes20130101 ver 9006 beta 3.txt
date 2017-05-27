@@ -1,0 +1,176 @@
+DROP TABLE IF EXISTS `tblinventariocostohtemp2`;
+CREATE TABLE  `tblinventariocostohtemp2` (
+  `idinventario` int(10) unsigned NOT NULL,
+  `fecha` varchar(10) NOT NULL,
+  `costo` double NOT NULL,
+  KEY `Index_1` (`fecha`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tblinventariocostohex`;
+CREATE TABLE  `tblinventariocostohex` (
+  `idinventario` int(10) unsigned NOT NULL,
+  `fecha` varchar(10) NOT NULL,
+  `costo` double NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`),
+  KEY `Index_1` (`fecha`)
+) ENGINE=InnoDB AUTO_INCREMENT=24825 DEFAULT CHARSET=utf8;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `sprecalculacostos` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `sprecalculacostos`(pfecha varchar(10),pidInventario int,ptipocosteo tinyint) RETURNS int(11)
+BEGIN
+
+declare varfechamax varchar(10);
+declare vcosto double;
+
+if pidinventario<=0 then
+delete from tblinventariocostoh where fecha>=pfecha;
+delete from tblinventariocostohc;
+delete from tblinventariocostohm;
+delete from tblinventariocostohtemp;
+delete from tblinventariocostohex;
+delete from tblinventariocostohtemp2;
+/******************/
+
+  set varfechamax=ifnull((select max(fecha) from tblinventariocostoh where idinventario=pidinventario and fecha<pfecha),'1900/01/01');
+  set vcosto=ifnull((select costo from tblinventariocostoh where idinventario=pidinventario and fecha=varfechamax limit 1),0);
+  /*update tblinventarioultimo set fecha=varfechamax;*/
+  insert into tblinventariocostohex(idinventario,fecha,costo) values(pidinventario,varfechamax,vcosto);
+
+/*******/
+
+insert into tblinventariocostohc(idinventario,fecha,costo) select idinventario,fecha,0 from
+tblcompras inner join tblcomprasdetalles on tblcompras.idcompra=tblcomprasdetalles.idcompra where tblcompras.fecha>=pfecha and tblcompras.estado=3 group by fecha,idinventario;
+
+insert into tblinventariocostohm(idinventario,fecha,costo) select tblmovimientosdetalles.idinventario,tblmovimientos.fecha,0
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblinventarioconceptos.idconcepto=tblmovimientos.idconcepto  where tblmovimientos.fecha>=pfecha and (tblinventarioconceptos.tipo=0 or tblinventarioconceptos.tipo=4) and  tblmovimientos.estado=3 group by fecha,idinventario;
+
+insert into tblinventariocostohtemp(idinventario,fecha,costo) select idinventario,fecha,costo from tblinventariocostohc;
+insert into tblinventariocostohtemp(idinventario,fecha,costo) select idinventario,fecha,costo from tblinventariocostohm;
+insert into tblinventariocostohtemp2(idinventario,fecha,costo) select idinventario,fecha,0 from tblinventariocostohtemp group by idinventario,fecha,costo order by idinventario,fecha;
+insert into tblinventariocostoh(idinventario,fecha,costo) select idinventario,fecha,spsacacostoarticuloafechaa(idinventario,fecha,ptipocosteo) from tblinventariocostohtemp2 order by fecha;
+
+else
+
+
+delete from tblinventariocostoh where fecha>=pfecha and idinventario=pidinventario;
+delete from tblinventariocostohc;
+delete from tblinventariocostohm;
+delete from tblinventariocostohtemp;
+delete from tblinventariocostohtemp2;
+delete from tblinventariocostohex;
+/******************/
+
+  set varfechamax=ifnull((select max(fecha) from tblinventariocostoh where idinventario=pidinventario and fecha<pfecha),'1900/01/01');
+  set vcosto=ifnull((select costo from tblinventariocostoh where idinventario=pidinventario and fecha=varfechamax limit 1),0);
+  /*update tblinventarioultimo set fecha=varfechamax;*/
+  insert into tblinventariocostohex(idinventario,fecha,costo) values(pidinventario,varfechamax,vcosto);
+
+/*******/
+
+insert into tblinventariocostohm(idinventario,fecha,costo) select tblmovimientosdetalles.idinventario,tblmovimientos.fecha,0
+from tblmovimientos inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento inner join tblinventarioconceptos on tblinventarioconceptos.idconcepto=tblmovimientos.idconcepto  where tblmovimientos.fecha>=pfecha and (tblinventarioconceptos.tipo=0 or tblinventarioconceptos.tipo=4) and tblmovimientosdetalles.idinventario=pidinventario and tblmovimientos.estado=3 group by fecha,idinventario;
+
+insert into tblinventariocostohc(idinventario,fecha,costo) select idinventario,fecha,0 from
+tblcompras inner join tblcomprasdetalles on tblcompras.idcompra=tblcomprasdetalles.idcompra where tblcompras.fecha>=pfecha and tblcomprasdetalles.idinventario=pidinventario and tblcompras.estado=3 group by fecha,idinventario;
+
+
+
+insert into tblinventariocostohtemp(idinventario,fecha,costo) select idinventario,fecha,costo from tblinventariocostohc order by fecha;
+insert into tblinventariocostohtemp(idinventario,fecha,costo) select idinventario,fecha,costo from tblinventariocostohm order by fecha;
+insert into tblinventariocostohtemp2(idinventario,fecha,costo) select idinventario,fecha,0 from tblinventariocostohtemp group by idinventario,fecha,costo order by fecha;
+insert into tblinventariocostoh(idinventario,fecha,costo) select idinventario,fecha,spsacacostoarticuloafechaa(idinventario,fecha,ptipocosteo) from tblinventariocostohtemp2 order by fecha;
+
+end if;
+
+return 1;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spsacacostoarticuloafechaa` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spsacacostoarticuloafechaa`(pidinventario int,pfecha1 varchar(10),ptipocosteo tinyint) RETURNS double
+BEGIN
+
+declare c int;
+declare minimo int;
+declare maximo int;
+declare vcantidad double;
+declare vprecio double;
+declare vcosto double;
+declare vcosto2 double;
+declare vcosto3 double;
+declare vinvfinal double;
+declare varfechamax varchar(10);
+declare varinvant double;
+declare varidmax int;
+if ptipocosteo=0 then
+
+  delete from tblinventariosacacostos where idinventario=pidinventario;
+  delete from tblinventariosacacostosm where idinventario=pidinventario;
+  delete from tblinventariosacacostosr where idinventario=pidinventario;
+  delete from tblinventariosacacostosf where idinventario=pidinventario;
+  delete from tblinventariosacacostosf2 where idinventario=pidinventario;
+
+  insert into tblinventariosacacostos(idinventario,fecha,cantidad,precio) select idinventario,fecha,sum(tblcomprasdetalles.cantidad),sum(tblcomprasdetalles.costoindirecto+(if(tblcomprasdetalles.idmoneda=2,tblcomprasdetalles.precio,tblcomprasdetalles.precio*tblcompras.tipodecambio)))  from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where (tblcompras.estado=3) and  tblcompras.fecha=pfecha1 and tblcomprasdetalles.idinventario=pidinventario group by fecha,idinventario;
+  insert into tblinventariosacacostosr(idinventario,fecha,cantidad,precio) select idinventario,fecha,sum(tblcomprasremisionesdetalles.cantidad),sum(if(tblcomprasremisionesdetalles.idmoneda=2,tblcomprasremisionesdetalles.precio,tblcomprasremisionesdetalles.precio*tblcomprasremisiones.tipodecambio))  from tblcomprasremisionesdetalles inner join tblcomprasremisiones on tblcomprasremisionesdetalles.idremision=tblcomprasremisiones.idremision where tblcomprasremisiones.estado=3 and  tblcomprasremisiones.fecha=pfecha1 and tblcomprasremisionesdetalles.idinventario=pidinventario and tblcomprasremisiones.usado=0 group by fecha,idinventario;
+  insert into tblinventariosacacostosm(idinventario,fecha,cantidad,precio) select idinventario,fecha,sum(tblmovimientosdetalles.cantidad),sum(if(tblmovimientosdetalles.idmoneda=2,tblmovimientosdetalles.precio,tblmovimientosdetalles.precio*tblmovimientos.tipodecambio))  from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where (tipo=0 or tipo=4) and estado=3 and  fecha=pfecha1 and idinventario=pidinventario group by fecha,idinventario;
+
+
+  insert into tblinventariosacacostosf(idinventario,fecha,cantidad,precio) select tblinventariosacacostos.idinventario,tblinventariosacacostos.fecha,ifnull(tblinventariosacacostos.cantidad,0)+ifnull(tblinventariosacacostosm.cantidad,0),ifnull(tblinventariosacacostos.precio,0)+ifnull(tblinventariosacacostosm.precio,0) from tblinventariosacacostos left outer join tblinventariosacacostosm on tblinventariosacacostos.idinventario=tblinventariosacacostosm.idinventario and tblinventariosacacostos.fecha=tblinventariosacacostosm.fecha where tblinventariosacacostos.idinventario=pidinventario;
+  insert into tblinventariosacacostosf(idinventario,fecha,cantidad,precio) select tblinventariosacacostosm.idinventario,tblinventariosacacostosm.fecha,ifnull(tblinventariosacacostos.cantidad,0)+ifnull(tblinventariosacacostosm.cantidad,0),ifnull(tblinventariosacacostos.precio,0)+ifnull(tblinventariosacacostosm.precio,0) from tblinventariosacacostos right outer join tblinventariosacacostosm on tblinventariosacacostos.idinventario=tblinventariosacacostosm.idinventario and tblinventariosacacostos.fecha=tblinventariosacacostosm.fecha where tblinventariosacacostosm.idinventario=pidinventario;
+  insert into tblinventariosacacostosf(idinventario,fecha,cantidad,precio) select tblinventariosacacostosr.idinventario,tblinventariosacacostosr.fecha,ifnull(tblinventariosacacostosr.cantidad,0)+ifnull(tblinventariosacacostosm.cantidad,0),ifnull(tblinventariosacacostosr.precio,0)+ifnull(tblinventariosacacostosm.precio,0) from tblinventariosacacostosr left outer join tblinventariosacacostosm on tblinventariosacacostosr.idinventario=tblinventariosacacostosm.idinventario and tblinventariosacacostosr.fecha=tblinventariosacacostosm.fecha where tblinventariosacacostosr.idinventario=pidinventario;
+  insert into tblinventariosacacostosf(idinventario,fecha,cantidad,precio) select tblinventariosacacostosm.idinventario,tblinventariosacacostosm.fecha,ifnull(tblinventariosacacostosr.cantidad,0)+ifnull(tblinventariosacacostosm.cantidad,0),ifnull(tblinventariosacacostosr.precio,0)+ifnull(tblinventariosacacostosm.precio,0) from tblinventariosacacostosr right outer join tblinventariosacacostosm on tblinventariosacacostosr.idinventario=tblinventariosacacostosm.idinventario and tblinventariosacacostosr.fecha=tblinventariosacacostosm.fecha where tblinventariosacacostosm.idinventario=pidinventario;
+  insert into tblinventariosacacostosf2(idinventario,fecha,cantidad,precio,invfinal) select idinventario,fecha,cantidad,precio,spdainventarioafecha(idinventario,f2.fecha,0,0)
+   from tblinventariosacacostosf as f2 where f2.idinventario=pidinventario group by f2.fecha order by f2.fecha;
+
+  set minimo=ifnull((select min(id) from tblinventariosacacostosf2 where idinventario=pidinventario),0);
+  set maximo=ifnull((select max(id) from tblinventariosacacostosf2 where idinventario=pidinventario),0);
+  set c=minimo;
+  /*set vcosto=0;*/
+  /*set varidmax=ifnull((select max(fecha) from tblinventariocostohex where idinventario=pidinventario and fecha<pfecha1),0);*/
+  set varfechamax=ifnull((select max(fecha) from tblinventariocostohex where fecha<pfecha1),'1900/01/01');
+  /*set varfechamax=(select fecha from tblinventarioultimo);*/
+  set vcosto=ifnull((select costo from tblinventariocostohex where fecha=varfechamax limit 1),0);
+  /*insert into tbldebug values(pidinventario,pfecha1,vcosto,varfechamax,0,0,0,0,0,0,c);*/
+  while c<=maximo do
+
+    set vcantidad=(select cantidad from tblinventariosacacostosf2 where id=c);
+    set vprecio=(select precio from tblinventariosacacostosf2 where id=c);
+    set vinvfinal=(select invfinal from tblinventariosacacostosf2 where id=c);
+    if vcantidad+vinvfinal>0 then
+      set vcosto=(vprecio+(vinvfinal*vcosto))/(vcantidad+vinvfinal);
+    else
+      set vcosto=0;
+    end if;
+
+    set c=c+1;
+     /*insert into tbldebug values(pidinventario,pfecha1,vcosto,varfechamax,vcantidad,vprecio,vinvfinal,1,vprecio+(vinvfinal*vcosto),vcantidad+vinvfinal,c);*/
+  end while;
+/*    update tblinventarioultimo set fecha=pfecha1;*/
+    insert into tblinventariocostohex(idinventario,fecha,costo) values(pidinventario,pfecha1,vcosto);
+else
+
+set vcosto=ifnull((select if(tblcomprasdetalles.idmoneda=2,max(tblcomprasdetalles.precio/tblcomprasdetalles.cantidad+tblcomprasdetalles.costoindirecto),max(tblcomprasdetalles.costoindirecto+(tblcomprasdetalles.precio/tblcomprasdetalles.cantidad)*tblcompras.tipodecambio)) from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where (tblcompras.estado=3) and  tblcompras.fecha<=pfecha1 and tblcomprasdetalles.idinventario=pidinventario and tblcomprasdetalles.cantidad<>0),0);
+set vcosto3=ifnull((select if(tblcomprasremisionesdetalles.idmoneda=2,max(tblcomprasremisionesdetalles.precio/tblcomprasremisionesdetalles.cantidad),max((tblcomprasremisionesdetalles.precio/tblcomprasremisionesdetalles.cantidad)*tblcomprasremisiones.tipodecambio)) from tblcomprasremisionesdetalles inner join tblcomprasremisiones on tblcomprasremisionesdetalles.idremision=tblcomprasremisiones.idremision where (tblcomprasremisiones.estado=3) and  tblcomprasremisiones.fecha<=pfecha1 and tblcomprasremisionesdetalles.idinventario=pidinventario and tblcomprasremisionesdetalles.cantidad<>0 and tblcomprasremisiones.usado=0),0);
+set vcosto2=ifnull((select if(tblmovimientosdetalles.idmoneda=2,max(tblmovimientosdetalles.precio/tblmovimientosdetalles.cantidad),max((tblmovimientosdetalles.precio/tblmovimientosdetalles.cantidad)*tblmovimientos.tipodecambio)) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto where (tipo=0 or tipo=4) and estado=3 and  fecha<=pfecha1 and idinventario=pidinventario and tblmovimientosdetalles.cantidad<>0),0);
+if vcosto2>vcosto then
+set vcosto=vcosto2;
+end if;
+if vcosto3>vcosto then
+set vcosto=vcosto3;
+end if;
+
+end if;
+
+return ifnull(vcosto,0);
+
+
+
+END $$
+
+DELIMITER ;

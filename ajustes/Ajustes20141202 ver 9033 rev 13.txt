@@ -1,0 +1,6 @@
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(692,889,'Total Ofertas:','totalofertas',120,20,'Lucida Console',8,0,0,0,1,0,0,1,0,1,'Documento - Total Ofertas',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(692,889,'Total Ofertas:','totalofertas',120,20,'Lucida Console',8,0,0,0,1,0,16,1,0,1,'Documento - Total Ofertas',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(692,889,'Total Ofertas:','totalofertas',120,20,'Lucida Console',8,0,0,0,1,0,3,1,0,1,'Documento - Total Ofertas',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(692,889,'Total Ofertas:','totalofertas',120,20,'Lucida Console',8,0,0,0,1,0,19,1,0,1,'Documento - Total Ofertas',0,1);
+insert into tblactualizaciones(version) values('ver 9033 rev 13');
+

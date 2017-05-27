@@ -1,0 +1,29 @@
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(601,321,'% Descuento','descuentopor',120,25,'Lucida Console',8,1,0,1,1,0,7,1,0,0,'Artículos - % Descuento',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(601,321,'Descuento:','descuentocant',120,25,'Lucida Console',8,1,0,1,1,0,7,1,0,0,'Artículos - Cant. Descuento',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(601,321,'Precio sin desc:','preciosindesc',120,25,'Lucida Console',8,1,0,1,1,0,7,1,0,0,'Artículos - Precio s/desc.',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(601,321,'Importe s/desc:','importesindesc',120,25,'Lucida Console',8,1,0,1,1,0,7,1,0,0,'Artículos - Importe s/desc.',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(601,321,'Descuento PU:','descuentocantuni',120,25,'Lucida Console',8,1,0,1,1,0,7,1,0,0,'Artículos - Descuento PU.',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(651,780,'Total Descuento:','totaldesc',180,22,'Lucida Console',8,1,0,0,1,0,7,1,0,1,'Documento - Total Descuento',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(651,780,'Mensaje Cancelado:','cancelado',180,22,'Lucida Console',8,1,0,0,1,1,7,1,0,1,'Documento - Mensaje cancelado',0,1);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(601,321,'% Descuento','descuentopor',120,25,'Lucida Console',8,1,0,1,1,0,23,1,0,0,'Artículos - % Descuento',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(601,321,'Descuento:','descuentocant',120,25,'Lucida Console',8,1,0,1,1,0,23,1,0,0,'Artículos - Cant. Descuento',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(601,321,'Precio sin desc:','preciosindesc',120,25,'Lucida Console',8,1,0,1,1,0,23,1,0,0,'Artículos - Precio s/desc.',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(601,321,'Importe s/desc:','importesindesc',120,25,'Lucida Console',8,1,0,1,1,0,23,1,0,0,'Artículos - Importe s/desc.',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(601,321,'Descuento PU:','descuentocantuni',120,25,'Lucida Console',8,1,0,1,1,0,23,1,0,0,'Artículos - Descuento PU.',0,4);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(651,780,'Total Descuento:','totaldesc',180,22,'Lucida Console',8,1,0,0,1,0,23,1,0,1,'Documento - Total Descuento',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(651,780,'Mensaje Cancelado:','cancelado',180,22,'Lucida Console',8,1,0,0,1,1,23,1,0,1,'Documento - Mensaje cancelado',0,1);
+
+update tblempenios set estatus=1 where adjudicado=1;
+update tblempenios set estatus=2 where pagado=1 and adjudicado=0 and idempenioant=0;
+update tblempenios set estatus=3 where pagado=1 and adjudicado=0 and idempenioant<>0;
+update tblempenios set estatus=3 where idempenioant<>0 and adjudicado=0 and pagado=1;
+update tblempenios set estatus=0 where adjudicado=0 and pagado=0 and ifnull((select sum(tblempeniosabono.cantidad) from tblempeniosabono where tblempeniosabono.idempenio=tblempenios.idmovimiento),0)<=0;
+
+ALTER TABLE `tblventas` ADD COLUMN `fechaconta` VARCHAR(10) NOT NULL AFTER `formapagona`;
+ALTER TABLE `tblventas` ADD INDEX `Index_10`(`fechaconta`);
+update tblventas set fechaconta=fecha;
+
+
+insert into tblactualizaciones(version,versionchk) values('ver 9035 rev 10','00903510');

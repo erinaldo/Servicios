@@ -1,0 +1,1 @@
+update tblventaspagos set iddocumento=0,tipo='Efectivo' where idpago=333;

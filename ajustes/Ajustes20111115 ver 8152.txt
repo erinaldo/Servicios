@@ -1,0 +1,70 @@
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spanalisisinventariocc` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spanalisisinventariocc`(pfecha1 varchar(10),pfecha2 varchar(10),pidinventario int,pidsucursal int,pidalmacen int) RETURNS int(11)
+BEGIN
+
+delete from tblinventarioanalisisc;
+
+if pidsucursal<=0 then
+if pidalmacen <=0 then
+if pidinventario<=0 then
+/*Todos los articulos todas las sucursales todos los almacenes*/
+/*Entradas*/
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Compras',ifnull(sum(tblcomprasdetalles.cantidad),0),ifnull(sum(tblcomprasdetalles.precio*(1+(tblcomprasdetalles.iva/100))),0),0 from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcompras.estado=3 and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Devoluciones Ventas',ifnull(sum(tbldevolucionesdetalles.cantidad),0),ifnull(sum(tbldevolucionesdetalles.cantidad*tblinventario.costobase),0),1 from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion inner join tblinventario on tbldevolucionesdetalles.idinventario=tblinventario.idinventario where tbldevoluciones.estado=3 and tbldevoluciones.fecha>=pfecha1 and tbldevoluciones.fecha<=pfecha2;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Cancelaciones Ventas',ifnull(sum(tblventasinventario.cantidad),0),ifnull(sum(tblventasinventario.cantidad*tblinventario.costobase),0),2 from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario where tblventas.estado=4 and tblventas.fecha>=pfecha1 and tblventas.fecha<=pfecha2;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select tblinventarioconceptos.idconcepto,0,tblinventarioconceptos.nombre,ifnull(sum(tblmovimientosdetalles.cantidad),0),ifnull(sum(tblmovimientosdetalles.cantidad*tblinventario.costobase),0),3 from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto inner join tblinventario on tblmovimientosdetalles.idinventario=tblinventario.idinventario where (tblinventarioconceptos.tipo=0 or tblinventarioconceptos.tipo=4) and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 group by tblinventarioconceptos.idconcepto;
+
+/*Salidas*/
+
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Ventas',ifnull(sum(tblventasinventario.cantidad),0),ifnull(sum(tblventasinventario.cantidad*tblinventario.costobase),0),0 from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario where tblventas.estado=3 and tblventas.fecha>=pfecha1 and tblventas.fecha<=pfecha2;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Devoluciones Compras',ifnull(sum(tbldevolucionesdetallesc.cantidad),0),ifnull(sum(tbldevolucionesdetallesc.precio*(1+(tbldevolucionesdetallesc.iva/100))),0),1 from tbldevolucionesdetallesc inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha>=pfecha1 and tbldevolucionescompras.fecha<=pfecha2;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Cancelaciones Compras',ifnull(sum(tblcomprasdetalles.cantidad),0),ifnull(sum(tblcomprasdetalles.precio*(1+(tblcomprasdetalles.iva/100))),0),2 from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcompras.estado=4 and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select tblinventarioconceptos.idconcepto,1,tblinventarioconceptos.nombre,ifnull(sum(tblmovimientosdetalles.cantidad),0),ifnull(sum(tblmovimientosdetalles.cantidad*tblinventario.costobase),0),3 from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto inner join tblinventario on tblmovimientosdetalles.idinventario=tblinventario.idinventario where tblinventarioconceptos.tipo=1 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 group by tblinventarioconceptos.idconcepto;
+
+else
+/*Un artículo todas las sucursales todos los almacenes*/
+
+
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Compras',ifnull(sum(tblcomprasdetalles.cantidad),0),ifnull(sum(tblcomprasdetalles.precio*(1+(tblcomprasdetalles.iva/100))),0),0 from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcompras.estado=3 and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcomprasdetalles.idinventario=pidinventario;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Devoluciones Ventas',ifnull(sum(tbldevolucionesdetalles.cantidad),0),ifnull(sum(tbldevolucionesdetalles.cantidad*tblinventario.costobase),0),1 from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion inner join tblinventario on tbldevolucionesdetalles.idinventario=tblinventario.idinventario where tbldevoluciones.estado=3 and tbldevoluciones.fecha>=pfecha1 and tbldevoluciones.fecha<=pfecha2 and tbldevolucionesdetalles.idinventario=pidinventario;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Cancelaciones Ventas',ifnull(sum(tblventasinventario.cantidad),0),ifnull(sum(tblventasinventario.cantidad*tblinventario.costobase),0),2 from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario where tblventas.estado=4 and tblventas.fecha>=pfecha1 and tblventas.fecha<=pfecha2 and tblventasinventario.idinventario=pidinventario;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select tblinventarioconceptos.idconcepto,0,tblinventarioconceptos.nombre,ifnull(sum(tblmovimientosdetalles.cantidad),0),ifnull(sum(tblmovimientosdetalles.cantidad*tblinventario.costobase),0),3 from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto inner join tblinventario on tblmovimientosdetalles.idinventario=tblinventario.idinventario where (tblinventarioconceptos.tipo=0 or tblinventarioconceptos.tipo=4) and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idinventario=pidinventario group by tblinventarioconceptos.idconcepto;
+
+/*Salidas*/
+
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Ventas',ifnull(sum(tblventasinventario.cantidad),0),ifnull(sum(tblventasinventario.cantidad*tblinventario.costobase),0),0 from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario where tblventas.estado=3 and tblventas.fecha>=pfecha1 and tblventas.fecha<=pfecha2 and tblventasinventario.idinventario=pidinventario;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Devoluciones Compras',ifnull(sum(tbldevolucionesdetallesc.cantidad),0),ifnull(sum(tbldevolucionesdetallesc.precio*(1+(tbldevolucionesdetallesc.iva/100))),0),1 from tbldevolucionesdetallesc inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha>=pfecha1 and tbldevolucionescompras.fecha<=pfecha2 and tbldevolucionesdetallesc.idinventario=pidinventario;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Cancelaciones Compras',ifnull(sum(tblcomprasdetalles.cantidad),0),ifnull(sum(tblcomprasdetalles.precio*(1+(tblcomprasdetalles.iva/100))),0),2 from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcompras.estado=4 and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcomprasdetalles.idinventario=pidinventario;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select tblinventarioconceptos.idconcepto,1,tblinventarioconceptos.nombre,ifnull(sum(tblmovimientosdetalles.cantidad),0),ifnull(sum(tblmovimientosdetalles.cantidad*tblinventario.costobase),0),3 from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto inner join tblinventario on tblmovimientosdetalles.idinventario=tblinventario.idinventario where tblinventarioconceptos.tipo=1 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idinventario=pidinventario group by tblinventarioconceptos.idconcepto;
+
+
+
+end if;
+end if;
+end if;
+
+
+return 0;
+
+
+END $$
+
+DELIMITER ;

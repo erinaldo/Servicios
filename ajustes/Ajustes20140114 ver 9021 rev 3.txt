@@ -1,0 +1,27 @@
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdaultimocostoinv` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdaultimocostoinv`(pidinventario int) RETURNS double
+BEGIN
+
+declare vcosto double;
+declare vfmax varchar(10);
+declare vfmax2 varchar(10);
+
+set vfmax=ifnull((select max(fecha) from tblcompras inner join tblcomprasdetalles on tblcompras.idcompra=tblcomprasdetalles.idcompra where estado=3 and idinventario=pidinventario),'1900/01/01');
+set vfmax2=ifnull((select max(fecha) from tblmovimientos inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento where (tipo=0 or tipo=4) and estado=3 and idinventario=pidinventario),'1900/01/01');
+
+if vfmax>=vfmax2 then
+set vcosto=ifnull((select (precio/cantidad)+(tblcomprasdetalles.costoindirecto/surtido) from tblcompras inner join tblcomprasdetalles on tblcompras.idcompra=tblcomprasdetalles.idcompra where estado=3 and idinventario=pidinventario and fecha=vfmax order by tblcompras.idcompra desc limit 1),0);
+else
+set vcosto=ifnull((select (precio/cantidad) from tblmovimientos inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto inner join tblmovimientosdetalles on tblmovimientos.idmovimiento=tblmovimientosdetalles.idmovimiento where (tipo=0 or tipo=4) and estado=3 and idinventario=pidinventario and fecha=vfmax2 order by tblmovimientos.idmovimiento desc limit 1),0);
+end if;
+
+return vcosto;
+END $$
+
+DELIMITER ;
+
+insert into tblactualizaciones(version) values('ver 9021 rev 3');
+
+

@@ -1,0 +1,17 @@
+DROP TABLE IF EXISTS `db_services`.`tblinventarioconciliaciones`;
+CREATE TABLE  `db_services`.`tblinventarioconciliaciones` (
+  `fecha` varchar(10) NOT NULL,
+  `idsucursal` int(10) NOT NULL,
+  `idalmacen` int(10) NOT NULL,
+  `idinventario` int(10) unsigned NOT NULL,
+  `clave` varchar(20) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `invactual` double NOT NULL,
+  `existencia` double NOT NULL,
+  `diferencia` double NOT NULL,
+  `precio` double NOT NULL,
+  `importedif` double NOT NULL,
+  PRIMARY KEY (`fecha`,`idsucursal`,`idalmacen`,`idinventario`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(10,10,'País:','paiscliente',100,20,'Lucida Console',8,0,0,0,0,0,0,1,0,0,'País Cliente')

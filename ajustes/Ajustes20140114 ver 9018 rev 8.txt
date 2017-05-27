@@ -1,0 +1,15 @@
+ALTER TABLE `tblventas` ADD COLUMN `refdocumento` VARCHAR(25) NOT NULL AFTER `deremision`;
+ALTER TABLE `tblventas` ADD COLUMN `adicional` VARCHAR(150) NOT NULL AFTER `refdocumento`;
+
+update tblventas set refdocumento='',adicional='';
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(231,98,'Clave vendedor:','clavevendedor',300,20,'Lucida Console',8,0,0,0,0,0,0,1,0,0,'Documento - Clave vendedor',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(231,98,'Documento Referencia:','refdocumento',300,20,'Lucida Console',8,0,0,0,0,0,0,1,0,0,'Documento - Documento Referencia',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(231,98,'Adicional:','adicional',300,20,'Lucida Console',8,0,0,0,0,0,0,1,0,0,'Documento - Adicional',0,0);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(231,98,'Clave vendedor:','clavevendedor',300,20,'Lucida Console',8,0,0,0,0,0,16,1,0,0,'Documento - Clave vendedor',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(231,98,'Documento Referencia:','refdocumento',300,20,'Lucida Console',8,0,0,0,0,0,16,1,0,0,'Documento - Documento Referencia',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(231,98,'Adicional:','adicional',300,20,'Lucida Console',8,0,0,0,0,0,16,1,0,0,'Documento - Adicional',0,0);
+
+insert into tblactualizaciones(version) values('ver 9018 rev 8');
+

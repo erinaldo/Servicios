@@ -1,0 +1,6 @@
+ALTER TABLE `tblclientes` ADD COLUMN `saldoafavor` DOUBLE NOT NULL AFTER `usaadenda`;
+ALTER TABLE `tblinventario` ADD COLUMN `esamortizacion` TINYINT UNSIGNED NOT NULL AFTER `usaformula`,
+ ADD COLUMN `peso` DOUBLE NOT NULL AFTER `esamortizacion`,
+ ADD COLUMN `maximo` DOUBLE NOT NULL AFTER `peso`,
+ ADD COLUMN `minimo` DOUBLE NOT NULL AFTER `maximo`;
+

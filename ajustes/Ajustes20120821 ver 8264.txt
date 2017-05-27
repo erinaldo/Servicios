@@ -1,0 +1,13 @@
+
+Archivo rutas
+Cambiar tabla opciones agregar campos
+idcaja numérico entero largo
+documentopv numérico byte
+y poner en 0 los valores.
+
+ALTER TABLE `tblopciones` ADD COLUMN `idclientedefault` INTEGER UNSIGNED NOT NULL AFTER `avisodias`,
+ ADD COLUMN `cierreconventana` TINYINT UNSIGNED NOT NULL AFTER `idclientedefault`,
+ ADD COLUMN `tiporedondeo` TINYINT UNSIGNED NOT NULL AFTER `cierreconventana`;
+
+
+

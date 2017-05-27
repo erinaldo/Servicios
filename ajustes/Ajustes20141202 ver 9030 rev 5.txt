@@ -1,0 +1,24 @@
+ALTER TABLE `tblusuarios` ADD COLUMN `permisos13` BIGINT UNSIGNED NOT NULL AFTER `permisos12`,
+ ADD COLUMN `permisos14` BIGINT UNSIGNED NOT NULL AFTER `permisos13`;
+
+CREATE TABLE `tblperfilespermisos` (
+  `idperfil` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  `permisos` BIGINT UNSIGNED NOT NULL,
+  `permisos2` BIGINT UNSIGNED NOT NULL,
+  `permisos3` BIGINT UNSIGNED NOT NULL,
+  `permisos4` BIGINT UNSIGNED NOT NULL,
+  `permisos5` BIGINT UNSIGNED NOT NULL,
+  `permisos6` BIGINT UNSIGNED NOT NULL,
+  `permisos7` BIGINT UNSIGNED NOT NULL,
+  `permisos8` BIGINT UNSIGNED NOT NULL,
+  `permisos9` BIGINT UNSIGNED NOT NULL,
+  `permisos10` BIGINT UNSIGNED NOT NULL,
+  `permisos11` BIGINT UNSIGNED NOT NULL,
+  `permisos12` BIGINT UNSIGNED NOT NULL,
+  `permisos13` BIGINT UNSIGNED NOT NULL,
+  `permisos14` BIGINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`idperfil`)
+)
+ENGINE = InnoDB;
+insert into tblactualizaciones(version) values('ver 9030 rev 5');

@@ -1,0 +1,25 @@
+DROP TABLE IF EXISTS `tblclientesdescuentos`;
+CREATE TABLE  `tblclientesdescuentos` (
+  `iddescuento` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idcliente` int(10) unsigned NOT NULL,
+  `idclasificacion1` int(10) NOT NULL,
+  `idclasificacion2` int(10) NOT NULL,
+  `idclasificacion3` int(10) NOT NULL,
+  `descuento` double NOT NULL,
+  `modo` int(10) unsigned NOT NULL,
+  `idUsuarioAlta` int(10) unsigned NOT NULL,
+  `fechaAlta` varchar(45) NOT NULL,
+  `horaAlta` varchar(45) NOT NULL,
+  `idUsuarioCambio` int(10) unsigned NOT NULL,
+  `fechaCambio` varchar(45) NOT NULL,
+  `horaCambio` varchar(45) NOT NULL,
+  PRIMARY KEY (`iddescuento`),
+  KEY `FK_tblclientesdescuentos_1` (`idcliente`),
+  KEY `FK_tblclientesdescuentos_2` (`idUsuarioAlta`),
+  KEY `FK_tblclientesdescuentos_3` (`idUsuarioCambio`),
+  CONSTRAINT `FK_tblclientesdescuentos_1` FOREIGN KEY (`idcliente`) REFERENCES `tblclientes` (`idcliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblclientesdescuentos_2` FOREIGN KEY (`idUsuarioAlta`) REFERENCES `tblusuarios` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblclientesdescuentos_3` FOREIGN KEY (`idUsuarioCambio`) REFERENCES `tblusuarios` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+insert into tblactualizaciones(version,versionchk) values('ver 9035 rev 16','00903516');

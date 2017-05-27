@@ -1,0 +1,21 @@
+DROP TABLE IF EXISTS `tblformasdepagoremisiones`;
+CREATE TABLE  `tblformasdepagoremisiones` (
+  `idforma` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(45) NOT NULL,
+  `tipo` tinyint(3) unsigned NOT NULL,
+  `codigo` varchar(45) NOT NULL,
+  PRIMARY KEY (`idforma`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+insert into tblformasdepagoremisiones values(1,'EFECTIVO',1,'E');
+
+ALTER TABLE `tblventasremisiones` ADD COLUMN `idforma` INTEGER UNSIGNED NOT NULL AFTER `idcaja`;
+update tblventasremisiones set idforma=1;
+
+ALTER TABLE `tblventasremisiones` ADD COLUMN `idvendedor` INTEGER UNSIGNED NOT NULL AFTER `idforma`;
+update tblventasremisiones set idvendedor=1;
+
+ALTER TABLE `tblinventario` ADD COLUMN `ubicacion` VARCHAR(250) NOT NULL AFTER `precioneto`;
+update tblinventario set ubicacion='';
+
+ALTER TABLE `tblinventario` ADD COLUMN `usaformula` TINYINT UNSIGNED NOT NULL AFTER `ubicacion`;
+update tblinventario set usaformula=0;

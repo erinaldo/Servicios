@@ -1,0 +1,10 @@
+ALTER TABLE `tblventasremisionesinventario` ADD COLUMN `cantidadm` DOUBLE NOT NULL AFTER `IVARetenido`,
+ ADD COLUMN `tipocantidadm` INTEGER UNSIGNED NOT NULL AFTER `cantidadm`;
+
+update tblventasremisionesinventario set cantidadm=cantidad,tipocantidadm=(select (tipocontenido) from tblinventario where idinventario=tblventasremisionesinventario.idinventario);
+
+ALTER TABLE `tblclientes` ADD COLUMN `idcuenta` INTEGER UNSIGNED NOT NULL AFTER `imagen`;
+
+
+
+insert into tblactualizaciones(version) values('ver 9031 rev 21');

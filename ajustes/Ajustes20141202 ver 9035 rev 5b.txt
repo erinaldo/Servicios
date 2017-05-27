@@ -1,0 +1,22 @@
+update tblformasdepago set clavesat=99 where clavesat=98;
+delete from tblformasdepagosat where clave=7;
+delete from tblformasdepagosat where clave=9;
+delete from tblformasdepagosat where clave=10;
+delete from tblformasdepagosat where clave=11;
+delete from tblformasdepagosat where clave=12;
+delete from tblformasdepagosat where clave=13;
+delete from tblformasdepagosat where clave=14;
+delete from tblformasdepagosat where clave=15;
+delete from tblformasdepagosat where clave=16;
+delete from tblformasdepagosat where clave=17;
+delete from tblformasdepagosat where clave=98;
+
+insert into tblformasdepagosat(clave,nombre)
+values(28,'Tarjeta de Débito.'),(29,'Tarjeta de Servicio.');
+update tblformasdepagosat set nombre='Cheque nominativo' where clave=2;
+update tblformasdepagosat set nombre='Transferencia electrónica de fondos' where clave=3;
+update tblformasdepagosat set nombre='Monedero electrónico' where clave=5;
+
+update tblopciones set nombreempresalocal='0';
+
+insert into tblactualizaciones(version,versionchk) values('ver 9035 rev 5b','00903505');

@@ -1,0 +1,58 @@
+CREATE TABLE `db_services`.`tblinventariosacacostos` (
+  `idinventario` INTEGER UNSIGNED NOT NULL,
+  `fecha` VARCHAR(10) NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  `precio` DOUBLE NOT NULL
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `db_services`.`tblinventariosacacostosm` (
+  `idinventario` INTEGER UNSIGNED NOT NULL,
+  `fecha` VARCHAR(10) NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  `precio` DOUBLE NOT NULL
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `db_services`.`tblinventariosacacostosf` (
+  `idinventario` INTEGER UNSIGNED NOT NULL,
+  `fecha` VARCHAR(10) NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  `precio` DOUBLE NOT NULL
+)
+ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS `db_services`.`tblinventariosacacostosf2`;
+CREATE TABLE  `db_services`.`tblinventariosacacostosf2` (
+  `idinventario` int(10) unsigned NOT NULL,
+  `fecha` varchar(10) NOT NULL,
+  `cantidad` double NOT NULL,
+  `precio` double NOT NULL,
+  `invfinal` double NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13753 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `db_services`.`tblinventariomovimientosk2` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `fecha` VARCHAR(10) NOT NULL,
+  `hora` VARCHAR(8) NOT NULL,
+  `movimiento` VARCHAR(15) NOT NULL,
+  `tipomovimiento` TINYINT UNSIGNED NOT NULL,
+  `estado` VARCHAR(2) NOT NULL,
+  `serie` VARCHAR(20) NOT NULL,
+  `folio` INTEGER UNSIGNED NOT NULL,
+  `entrada` DOUBLE NOT NULL,
+  `salida` DOUBLE NOT NULL,
+  `existencia` DOUBLE NOT NULL,
+  `costo` DOUBLE NOT NULL,
+  `costoe` DOUBLE NOT NULL,
+  `costou` DOUBLE NOT NULL,
+  `almaceno` VARCHAR(45) NOT NULL,
+  `almacend` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`)
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `db_services`.`tblinventariomovimientosk2` ADD COLUMN `idinventario` INTEGER UNSIGNED NOT NULL AFTER `almacend`;
+ALTER TABLE `db_services`.`tblinventariomovimientosk2` ADD COLUMN `iddocumento` INTEGER UNSIGNED NOT NULL AFTER `idinventario`;

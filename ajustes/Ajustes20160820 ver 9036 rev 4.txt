@@ -1,0 +1,92 @@
+ALTER TABLE `tblpolizas` ADD COLUMN `estado` TINYINT UNSIGNED NOT NULL AFTER `horaCambio`;
+ALTER TABLE `tblpolizasdetalles` ADD COLUMN `orden` INTEGER UNSIGNED NOT NULL AFTER `ieps`;
+update tblpolizas set estado=3;
+update tblpolizasdetalles set orden=id;
+ALTER TABLE `tblcontabilidadconf` ADD COLUMN `soloivadiot` TINYINT UNSIGNED NOT NULL AFTER `horaCambio`;
+update tblcontabilidadconf set soloivadiot=1;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(246,10,'Usuario','usuario',500,20,'Arial',10,1,0,0,0,0,1,1,0,0,'Documento - Usuario',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(246,10,'Usuario','usuario',500,20,'Arial',10,1,0,0,0,0,17,1,0,0,'Documento - Usuario',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(246,10,'Usuario','usuario',500,20,'Arial',10,1,0,0,0,0,2,1,0,0,'Documento - Usuario',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(246,10,'Usuario','usuario',500,20,'Arial',10,1,0,0,0,0,18,1,0,0,'Documento - Usuario',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(246,10,'Usuario','usuario',500,20,'Arial',10,1,0,0,0,0,3,1,0,0,'Documento - Usuario',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(246,10,'Usuario','usuario',500,20,'Arial',10,1,0,0,0,0,19,1,0,0,'Documento - Usuario',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(246,10,'Usuario','usuario',500,20,'Arial',10,1,0,0,0,0,0,1,0,0,'Documento - Usuario',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(246,10,'Usuario','usuario',500,20,'Arial',10,1,0,0,0,0,16,1,0,0,'Documento - Usuario',0,1);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(43,122,'Leyenda:','leyendacheque',500,20,'Microsoft Sans Serif',7,0,0,0,0,0,39,1,0,0,'Leyenda',0,0);
+ALTER TABLE `tblopciones2` ADD COLUMN `ventascorteremtodas` TINYINT UNSIGNED NOT NULL AFTER `nobloquearcd`;
+
+ALTER TABLE `tblcontabilidadcompro` ADD CONSTRAINT `FK_tblcontabilidadcompro_1` FOREIGN KEY `FK_tblcontabilidadcompro_1` (`idRenglon`)
+    REFERENCES `tblpolizasdetalles` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblcontabilidadcompro2` ADD CONSTRAINT `FK_tblcontabilidadcompro2_1` FOREIGN KEY `FK_tblcontabilidadcompro2_1` (`idRenglon`)
+    REFERENCES `tblpolizasdetalles` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblcontabilidadcheque` ADD CONSTRAINT `FK_tblcontabilidadcheque_1` FOREIGN KEY `FK_tblcontabilidadcheque_1` (`idRenglon`)
+    REFERENCES `tblpolizasdetalles` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION;
+
+
+ALTER TABLE `tblcontabilidadcomproe` ADD CONSTRAINT `FK_tblcontabilidadcomproe_1` FOREIGN KEY `FK_tblcontabilidadcomproe_1` (`idRenglon`)
+    REFERENCES `tblpolizasdetalles` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblcontabilidadtrans` ADD CONSTRAINT `FK_tblcontabilidadtrans_1` FOREIGN KEY `FK_tblcontabilidadtrans_1` (`idRenglon`)
+    REFERENCES `tblpolizasdetalles` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblcontabilidadotros` ADD CONSTRAINT `FK_tblcontabilidadotros_1` FOREIGN KEY `FK_tblcontabilidadotros_1` (`idRenglon`)
+    REFERENCES `tblpolizasdetalles` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION;
+DROP TABLE IF EXISTS `tblsucursalestipos`;
+CREATE TABLE  `tblsucursalestipos` (
+  `idtipo` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(250) NOT NULL,
+  `idUsuarioAlta` int(10) unsigned NOT NULL DEFAULT '1000',
+  `fechaAlta` varchar(45) NOT NULL,
+  `horaAlta` varchar(45) NOT NULL,
+  `idUsuarioCambio` int(10) unsigned NOT NULL DEFAULT '1000',
+  `fechaCambio` varchar(45) NOT NULL,
+  `horaCambio` varchar(45) NOT NULL,
+  PRIMARY KEY (`idtipo`),
+  KEY `FK_tblsucursalestipos_1` (`idUsuarioAlta`),
+  KEY `FK_tblsucursalestipos_2` (`idUsuarioCambio`),
+  CONSTRAINT `FK_tblsucursalestipos_1` FOREIGN KEY (`idUsuarioAlta`) REFERENCES `tblusuarios` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblsucursalestipos_2` FOREIGN KEY (`idUsuarioCambio`) REFERENCES `tblusuarios` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+insert into tblsucursalestipos(idtipo,nombre,idusuarioalta,fechaalta,horaalta,idusuariocambio,fechacambio,horacambio) values(1,'GENERAL',1000,'2016/10/01','00:00:00',1000,'2016/10/01','00:00');
+ALTER TABLE `tblsucursales` ADD COLUMN `idtipo` INTEGER UNSIGNED NOT NULL AFTER `horaCambio`;
+update tblsucursales set idtipo=1;
+ALTER TABLE `tblsucursales` ADD CONSTRAINT `FK_tblsucursales_3` FOREIGN KEY `FK_tblsucursales_3` (`idtipo`)
+    REFERENCES `tblsucursalestipos` (`idtipo`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblcontabilidadmascaras` ADD COLUMN `idtipos` INTEGER UNSIGNED NOT NULL AFTER `horaCambio`;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(215,53,'peso neto sin analizar:','netoSinAnalizar',60,20,'Lucida Console',8,0,0,0,0,0,45,1,0,0,'Boleta - netoSinAnalizar',0,0);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(210,429,'Total pesoLiquida:','totalPesoLiquidar',50,50,'Microsoft Sans Serif',7,0,0,0,0,0,46,1,0,1,'Liquidacion - totaPesoLiquidar',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(185,372,'Total deducciones2:','totalDeducciones2',50,50,'Microsoft Sans Serif',7,0,0,0,0,0,46,1,0,1,'Liquidacion - totalDeducciones2',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(308,412,'Total humedad:','totalHumedad',50,50,'Microsoft Sans Serif',7,0,0,0,0,0,46,1,0,1,'Liquidacion - totalhumedad',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(104,351,'Total dañado:','totalDanado',50,50,'Microsoft Sans Serif',7,0,0,0,0,0,46,1,0,1,'Liquidacion - totalDañado',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(388,375,'Total impurezas:','totalImpurezas',50,50,'Microsoft Sans Serif',7,0,0,0,0,0,46,1,0,1,'Liquidacion - totalImpurezas',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(550,386,'Total quebrado:','totalQuebrado',50,50,'Microsoft Sans Serif',7,0,0,0,0,0,46,1,0,1,'Liquidacion - totalQuebrado',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(442,440,'Total peso:','totaPeso',50,50,'Microsoft Sans Serif',7,0,0,0,0,0,46,1,0,1,'Liquidacion - totalPeso',0,0);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(210,429,'Total pesoLiquida:','totalPesoLiquidar',50,50,'Microsoft Sans Serif',7,0,0,0,0,0,46+16,1,0,1,'Liquidacion - totaPesoLiquidar',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(185,372,'Total deducciones2:','totalDeducciones2',50,50,'Microsoft Sans Serif',7,0,0,0,0,0,46+16,1,0,1,'Liquidacion - totalDeducciones2',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(308,412,'Total humedad:','totalHumedad',50,50,'Microsoft Sans Serif',7,0,0,0,0,0,46+16,1,0,1,'Liquidacion - totalhumedad',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(104,351,'Total dañado:','totalDanado',50,50,'Microsoft Sans Serif',7,0,0,0,0,0,46+16,1,0,1,'Liquidacion - totalDañado',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(388,375,'Total impurezas:','totalImpurezas',50,50,'Microsoft Sans Serif',7,0,0,0,0,0,46+16,1,0,1,'Liquidacion - totalImpurezas',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(550,386,'Total quebrado:','totalQuebrado',50,50,'Microsoft Sans Serif',7,0,0,0,0,0,46+16,1,0,1,'Liquidacion - totalQuebrado',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(442,440,'Total peso:','totaPeso',50,50,'Microsoft Sans Serif',7,0,0,0,0,0,46+16,1,0,1,'Liquidacion - totalPeso',0,0);
+update tblimpresionesnodos set tipo=0 where datapropertyname='total deducciones' and documento=45;
+
+insert into tblactualizaciones(version,versionchk) values('ver 9036 rev 4','00903604');

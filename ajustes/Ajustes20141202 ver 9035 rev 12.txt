@@ -1,0 +1,107 @@
+DROP TABLE IF EXISTS `tblcomercioexterior`;
+CREATE TABLE  `tblcomercioexterior` (
+  `idComplemento` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `tipoOperacion` varchar(45) NOT NULL,
+  `clavePedimiento` varchar(45) NOT NULL,
+  `certificadoOrigen` int(10) unsigned NOT NULL,
+  `numCertificado` varchar(45) NOT NULL,
+  `numExportarConfiable` varchar(45) NOT NULL,
+  `incoterm` varchar(45) NOT NULL,
+  `subdivision` int(10) unsigned NOT NULL,
+  `observaciones` varchar(200) NOT NULL,
+  `tipoCambioUSD` double NOT NULL,
+  `totalUSD` double NOT NULL,
+  `idFactura` int(10) unsigned NOT NULL,
+  `estado` int(10) unsigned NOT NULL,
+  `curpEmisor` varchar(45) NOT NULL,
+  PRIMARY KEY (`idComplemento`),
+  KEY `FK_tblcomercioexterior_1` (`idFactura`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `tblcomercioexteriordescripciones`;
+CREATE TABLE  `tblcomercioexteriordescripciones` (
+  `idDescripcion` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `marca` varchar(200) NOT NULL,
+  `modelo` varchar(100) NOT NULL,
+  `subModelo` varchar(100) NOT NULL,
+  `numeroSerie` varchar(100) NOT NULL,
+  `idMercancia` int(10) unsigned NOT NULL,
+  `guardado` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`idDescripcion`),
+  KEY `FK_tblComercioExteriorDescripciones_1` (`idMercancia`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `tblcomercioexteriordestinatario`;
+CREATE TABLE `tblcomercioexteriordestinatario` (
+  `idDestinatario` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `numRegIdTrip` varchar(45) NOT NULL,
+  `rfc` varchar(45) NOT NULL,
+  `curp` varchar(45) NOT NULL,
+  `nombre` varchar(45) NOT NULL,
+  `idComplemento` int(10) unsigned NOT NULL,
+  `guardado` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`idDestinatario`),
+  KEY `FK_tblComeroExteriorDestinatario_1` (`idComplemento`),
+  CONSTRAINT `FK_tblComeroExteriorDestinatario_1` FOREIGN KEY (`idComplemento`) REFERENCES `tblcomercioexterior` (`idComplemento`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `tblcomercioexteriordomicilio`;
+CREATE TABLE  `tblcomercioexteriordomicilio` (
+  `idDomicilio` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `calle` varchar(100) NOT NULL,
+  `numExterior` varchar(45) NOT NULL,
+  `numInterior` varchar(45) NOT NULL,
+  `colonia` varchar(100) NOT NULL,
+  `localidad` varchar(100) NOT NULL,
+  `referencia` varchar(100) NOT NULL,
+  `municipio` varchar(100) NOT NULL,
+  `estado` varchar(100) NOT NULL,
+  `pais` varchar(45) NOT NULL,
+  `CP` varchar(45) NOT NULL,
+  `idDestinatario` int(10) unsigned NOT NULL,
+  `guardado` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`idDomicilio`),
+  KEY `FK_tblComercioExteriorDomicilio_1` (`idDestinatario`),
+  CONSTRAINT `FK_tblComercioExteriorDomicilio_1` FOREIGN KEY (`idDestinatario`) REFERENCES `tblcomercioexteriordestinatario` (`idDestinatario`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `tblcomercioexteriormercancia`;
+CREATE TABLE `tblcomercioexteriormercancia` (
+  `idMercancia` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `NoIdentificacion` varchar(45) NOT NULL,
+  `FraccionArancelaria` varchar(45) NOT NULL,
+  `CantidadAduana` double NOT NULL,
+  `UnidadAduana` varchar(45) NOT NULL,
+  `ValorUnitarioAduana` double NOT NULL,
+  `ValorDolares` double NOT NULL,
+  `idComplemento` int(10) unsigned NOT NULL,
+  `guardado` int(10) unsigned NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  PRIMARY KEY (`idMercancia`),
+  KEY `FK_tblComercioExteriorMercancia_1` (`idComplemento`),
+  CONSTRAINT `FK_tblComercioExteriorMercancia_1` FOREIGN KEY (`idComplemento`) REFERENCES `tblcomercioexterior` (`idComplemento`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `tblcomercioexteriorreceptor`;
+CREATE TABLE  `tblcomercioexteriorreceptor` (
+  `idreceptor` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `numRegIdTrib` varchar(45) NOT NULL,
+  `idComplemento` int(10) unsigned NOT NULL,
+  `curp` varchar(45) NOT NULL,
+  `guardado` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`idreceptor`),
+  KEY `FK_tblcomercioexteriorreceptor_1` (`idComplemento`),
+  CONSTRAINT `FK_tblcomercioexteriorreceptor_1` FOREIGN KEY (`idComplemento`) REFERENCES `tblcomercioexterior` (`idComplemento`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `tbllogdeerrores` MODIFY COLUMN `descripcion` VARCHAR(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `tbllogdeerrorest` MODIFY COLUMN `descripcion` VARCHAR(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+update tblclientescuentas set idbanco=1 where idbanco=0;
+
+insert into tblactualizaciones(version,versionchk) values('ver 9035 rev 12','00903512');

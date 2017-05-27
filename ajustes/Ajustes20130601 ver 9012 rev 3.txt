@@ -1,0 +1,209 @@
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spanalisisinventariocc` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spanalisisinventariocc`(pfecha1 varchar(10),pfecha2 varchar(10),pidinventario int,pidsucursal int,pidalmacen int) RETURNS int(11)
+BEGIN
+
+delete from tblinventarioanalisisc;
+
+if pidsucursal<=0 then
+
+if pidinventario<=0 then
+
+
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Compras',ifnull(sum(tblcomprasdetalles.cantidad),0),ifnull(sum(if(tblcomprasdetalles.idmoneda=2,tblcomprasdetalles.precio,tblcomprasdetalles.precio*tblcompras.tipodecambio)),0),0 from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where (tblcompras.estado=3 or tblcompras.estado=4) and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Gastos s/compra',ifnull(sum(tblcomprasdetalles.costoindirecto),0),ifnull(sum(tblcomprasdetalles.costoindirecto),0),1 from tblcompras inner join tblcomprasdetalles on tblcompras.idcompra=tblcomprasdetalles.idcompra where (tblcompras.estado=3 or tblcompras.estado=4) and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Devoluciones Ventas',ifnull(sum(tbldevolucionesdetalles.cantidad),0),ifnull(sum(tbldevolucionesdetalles.cantidad*(select costo from tblinventariocostoh where idinventario=tbldevolucionesdetalles.idinventario and fecha<=tbldevoluciones.fecha order by fecha desc limit 1)),0),2 from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion inner join tblinventario on tbldevolucionesdetalles.idinventario=tblinventario.idinventario where tbldevoluciones.estado=3 and tbldevoluciones.fecha>=pfecha1 and tbldevoluciones.fecha<=pfecha2;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Cancelaciones Ventas',ifnull(sum(tblventasinventario.cantidad),0),ifnull(sum(tblventasinventario.cantidad*(select costo from tblinventariocostoh where idinventario=tblventasinventario.idinventario and fecha<=tblventas.fechacancelado order by fecha desc limit 1)),0),3 from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario where tblventas.estado=4 and tblventas.fechacancelado>=pfecha1 and tblventas.fechacancelado<=pfecha2 and tblventas.porsurtir=0;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select tblinventarioconceptos.idconcepto,0,tblinventarioconceptos.nombre,ifnull(sum(tblmovimientosdetalles.cantidad),0),ifnull(sum(if(tblmovimientosdetalles.idmoneda=2,tblmovimientosdetalles.precio,tblmovimientosdetalles.precio*tblmovimientos.tipodecambio)),0),4 from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto inner join tblinventario on tblmovimientosdetalles.idinventario=tblinventario.idinventario where (tblinventarioconceptos.tipo=0 or tblinventarioconceptos.tipo=4) and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 group by tblinventarioconceptos.idconcepto;
+
+
+
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Ventas',ifnull(sum(tblventasinventario.cantidad),0),ifnull(sum(tblventasinventario.cantidad*(select costo from tblinventariocostoh where idinventario=tblventasinventario.idinventario and fecha<=tblventas.fecha order by fecha desc limit 1)),0),0 from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario where (tblventas.estado=3 or tblventas.estado=4) and tblventas.fecha>=pfecha1 and tblventas.fecha<=pfecha2 and tblventas.porsurtir=0;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Devoluciones Compras',ifnull(sum(tbldevolucionesdetallesc.cantidad),0),ifnull(sum(if(tbldevolucionesdetallesc.idmoneda=2,tbldevolucionesdetallesc.precio,tbldevolucionesdetallesc.precio*tbldevolucionescompras.tipodecambio)),0),1 from tbldevolucionesdetallesc inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha>=pfecha1 and tbldevolucionescompras.fecha<=pfecha2;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Cancelaciones Compras',ifnull(sum(tblcomprasdetalles.cantidad),0),ifnull(sum(if(tblcomprasdetalles.idmoneda=2,tblcomprasdetalles.costoindirecto+(tblcomprasdetalles.precio),tblcomprasdetalles.costoindirecto+(tblcomprasdetalles.precio*tblcompras.tipodecambio))),0),2 from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcompras.estado=4 and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select tblinventarioconceptos.idconcepto,1,tblinventarioconceptos.nombre,ifnull(sum(tblmovimientosdetalles.cantidad),0),ifnull(sum(tblmovimientosdetalles.cantidad*(select costo from tblinventariocostoh where idinventario=tblmovimientosdetalles.idinventario and fecha<=tblmovimientos.fecha order by fecha desc limit 1)),0),3 from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto inner join tblinventario on tblmovimientosdetalles.idinventario=tblinventario.idinventario where tblinventarioconceptos.tipo=1 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 group by tblinventarioconceptos.idconcepto;
+
+else
+
+
+
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Compras',ifnull(sum(tblcomprasdetalles.cantidad),0),ifnull(sum(if(tblcomprasdetalles.idmoneda=2,tblcomprasdetalles.precio,tblcomprasdetalles.precio*tblcompras.tipodecambio)),0),0 from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where (tblcompras.estado=3 or tblcompras.estado=4) and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcomprasdetalles.idinventario=pidinventario;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select tblcompras.idcompra,0,'Gastos s/compra',ifnull(sum(tblcomprasdetalles.cantidad),0),ifnull(sum(tblcomprasdetalles.costoindirecto),0),1 from tblcompras inner join tblcomprasdetalles on tblcompras.idcompra=tblcomprasdetalles.idcompra where (tblcompras.estado=3 or tblcompras.estado=4) and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcomprasdetalles.idinventario=pidinventario;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Devoluciones Ventas',ifnull(sum(tbldevolucionesdetalles.cantidad),0),ifnull(sum(tbldevolucionesdetalles.cantidad*(select costo from tblinventariocostoh where idinventario=tbldevolucionesdetalles.idinventario and fecha<=tbldevoluciones.fecha order by fecha desc limit 1)),0),2 from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion inner join tblinventario on tbldevolucionesdetalles.idinventario=tblinventario.idinventario where tbldevoluciones.estado=3 and tbldevoluciones.fecha>=pfecha1 and tbldevoluciones.fecha<=pfecha2 and tbldevolucionesdetalles.idinventario=pidinventario;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Cancelaciones Ventas',ifnull(sum(tblventasinventario.cantidad),0),ifnull(sum(tblventasinventario.cantidad*(select costo from tblinventariocostoh where idinventario=tblventasinventario.idinventario and fecha<=tblventas.fechacancelado order by fecha desc limit 1)),0),3 from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario where tblventas.estado=4 and tblventas.fechacancelado>=pfecha1 and tblventas.fechacancelado<=pfecha2 and tblventasinventario.idinventario=pidinventario and tblventas.porsurtir=0;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select tblinventarioconceptos.idconcepto,0,tblinventarioconceptos.nombre,ifnull(sum(tblmovimientosdetalles.cantidad),0),ifnull(sum(if(tblmovimientosdetalles.idmoneda=2,tblmovimientosdetalles.precio,tblmovimientosdetalles.precio*tblmovimientos.tipodecambio)),0),4 from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto inner join tblinventario on tblmovimientosdetalles.idinventario=tblinventario.idinventario where (tblinventarioconceptos.tipo=0 or tblinventarioconceptos.tipo=4) and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idinventario=pidinventario group by tblinventarioconceptos.idconcepto;
+
+
+
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Ventas',ifnull(sum(tblventasinventario.cantidad),0),ifnull(sum(tblventasinventario.cantidad*(select costo from tblinventariocostoh where idinventario=tblventasinventario.idinventario and fecha<=tblventas.fecha order by fecha desc limit 1)),0),0 from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario where (tblventas.estado=3 or tblventas.estado=4) and tblventas.fecha>=pfecha1 and tblventas.fecha<=pfecha2 and tblventasinventario.idinventario=pidinventario and tblventas.porsurtir=0;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Devoluciones Compras',ifnull(sum(tbldevolucionesdetallesc.cantidad),0),ifnull(sum(if(tbldevolucionesdetallesc.idmoneda=2,tbldevolucionesdetallesc.precio,tbldevolucionesdetallesc.precio*tbldevolucionescompras.tipodecambio)),0),1 from tbldevolucionesdetallesc inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha>=pfecha1 and tbldevolucionescompras.fecha<=pfecha2 and tbldevolucionesdetallesc.idinventario=pidinventario;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Cancelaciones Compras',ifnull(sum(tblcomprasdetalles.cantidad),0),ifnull(sum(if(tblcomprasdetalles.idmoneda=2,tblcomprasdetalles.costoindirecto+(tblcomprasdetalles.precio),tblcomprasdetalles.costoindirecto+(tblcomprasdetalles.precio*tblcompras.tipodecambio))),0),2 from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcompras.estado=4 and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcomprasdetalles.idinventario=pidinventario;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select tblinventarioconceptos.idconcepto,1,tblinventarioconceptos.nombre,ifnull(sum(tblmovimientosdetalles.cantidad),0),ifnull(sum(tblmovimientosdetalles.cantidad*(select costo from tblinventariocostoh where idinventario=tblmovimientosdetalles.idinventario and fecha<=tblmovimientos.fecha order by fecha desc limit 1)),0),3 from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto inner join tblinventario on tblmovimientosdetalles.idinventario=tblinventario.idinventario where tblinventarioconceptos.tipo=1 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idinventario=pidinventario group by tblinventarioconceptos.idconcepto;
+
+
+
+end if;
+else
+
+if pidinventario<=0 then
+
+
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Compras',ifnull(sum(tblcomprasdetalles.cantidad),0),ifnull(sum(if(tblcomprasdetalles.idmoneda=2,tblcomprasdetalles.precio,tblcomprasdetalles.precio*tblcompras.tipodecambio)),0),0 from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where (tblcompras.estado=3 or tblcompras.estado=4) and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcompras.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Gastos s/compra',ifnull(sum(tblcomprasdetalles.costoindirecto),0),ifnull(sum(tblcomprasdetalles.costoindirecto),0),1 from tblcompras inner join tblcomprasdetalles on tblcompras.idcompra=tblcomprasdetalles.idcompra where (tblcompras.estado=3 or tblcompras.estado=4) and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcompras.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Devoluciones Ventas',ifnull(sum(tbldevolucionesdetalles.cantidad),0),ifnull(sum(tbldevolucionesdetalles.cantidad*(select costo from tblinventariocostoh where idinventario=tbldevolucionesdetalles.idinventario and fecha<=tbldevoluciones.fecha order by fecha desc limit 1)),0),2 from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion inner join tblinventario on tbldevolucionesdetalles.idinventario=tblinventario.idinventario where tbldevoluciones.estado=3 and tbldevoluciones.fecha>=pfecha1 and tbldevoluciones.fecha<=pfecha2 and tbldevoluciones.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Cancelaciones Ventas',ifnull(sum(tblventasinventario.cantidad),0),ifnull(sum(tblventasinventario.cantidad*(select costo from tblinventariocostoh where idinventario=tblventasinventario.idinventario and fecha<=tblventas.fecha order by fecha desc limit 1)),0),3 from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario where tblventas.estado=4 and tblventas.fechacancelado>=pfecha1 and tblventas.fechacancelado<=pfecha2 and tblventas.porsurtir=0 and tblventas.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select tblinventarioconceptos.idconcepto,0,tblinventarioconceptos.nombre,ifnull(sum(tblmovimientosdetalles.cantidad),0),ifnull(sum(if(tblmovimientosdetalles.idmoneda=2,tblmovimientosdetalles.precio,tblmovimientosdetalles.precio*tblmovimientos.tipodecambio)),0),4 from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto inner join tblinventario on tblmovimientosdetalles.idinventario=tblinventario.idinventario where (tblinventarioconceptos.tipo=0 or tblinventarioconceptos.tipo=4) and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientos.idsucursal=pidsucursal group by tblinventarioconceptos.idconcepto;
+
+
+
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Ventas',ifnull(sum(tblventasinventario.cantidad),0),ifnull(sum(tblventasinventario.cantidad*(select costo from tblinventariocostoh where idinventario=tblventasinventario.idinventario and fecha<=tblventas.fecha order by fecha desc limit 1)),0),0 from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario where (tblventas.estado=3 or tblventas.estado=4) and tblventas.fecha>=pfecha1 and tblventas.fecha<=pfecha2 and tblventas.porsurtir=0 and tblventas.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Devoluciones Compras',ifnull(sum(tbldevolucionesdetallesc.cantidad),0),ifnull(sum(if(tbldevolucionesdetallesc.idmoneda=2,tbldevolucionesdetallesc.precio,tbldevolucionesdetallesc.precio*tbldevolucionescompras.tipodecambio)),0),1 from tbldevolucionesdetallesc inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha>=pfecha1 and tbldevolucionescompras.fecha<=pfecha2 and tbldevolucionescompras.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Cancelaciones Compras',ifnull(sum(tblcomprasdetalles.cantidad),0),ifnull(sum(if(tblcomprasdetalles.idmoneda=2,tblcomprasdetalles.costoindirecto+(tblcomprasdetalles.precio),tblcomprasdetalles.costoindirecto+(tblcomprasdetalles.precio*tblcompras.tipodecambio))),0),2 from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcompras.estado=4 and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcompras.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select tblinventarioconceptos.idconcepto,1,tblinventarioconceptos.nombre,ifnull(sum(tblmovimientosdetalles.cantidad),0),ifnull(sum(tblmovimientosdetalles.cantidad*(select costo from tblinventariocostoh where idinventario=tblmovimientosdetalles.idinventario and fecha<=tblmovimientos.fecha order by fecha desc limit 1)),0),3 from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto inner join tblinventario on tblmovimientosdetalles.idinventario=tblinventario.idinventario where tblinventarioconceptos.tipo=1 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientos.idsucursal=pidsucursal group by tblinventarioconceptos.idconcepto;
+
+else
+
+
+
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Compras',ifnull(sum(tblcomprasdetalles.cantidad),0),ifnull(sum(if(tblcomprasdetalles.idmoneda=2,tblcomprasdetalles.precio,tblcomprasdetalles.precio*tblcompras.tipodecambio)),0),0 from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where (tblcompras.estado=3 or tblcompras.estado=4) and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcomprasdetalles.idinventario=pidinventario and tblcompras.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select tblcompras.idcompra,0,'Gastos s/compra',ifnull(sum(tblcomprasdetalles.cantidad),0),ifnull(sum(tblcomprasdetalles.costoindirecto),0),1 from tblcompras inner join tblcomprasdetalles on tblcompras.idcompra=tblcomprasdetalles.idcompra where (tblcompras.estado=3 or tblcompras.estado=4) and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcomprasdetalles.idinventario=pidinventario and tblcompras.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Devoluciones Ventas',ifnull(sum(tbldevolucionesdetalles.cantidad),0),ifnull(sum(tbldevolucionesdetalles.cantidad*(select costo from tblinventariocostoh where idinventario=tbldevolucionesdetalles.idinventario and fecha<=tbldevoluciones.fecha order by fecha desc limit 1)),0),2 from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion inner join tblinventario on tbldevolucionesdetalles.idinventario=tblinventario.idinventario where tbldevoluciones.estado=3 and tbldevoluciones.fecha>=pfecha1 and tbldevoluciones.fecha<=pfecha2 and tbldevolucionesdetalles.idinventario=pidinventario and tbldevoluciones.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,0,'Cancelaciones Ventas',ifnull(sum(tblventasinventario.cantidad),0),ifnull(sum(tblventasinventario.cantidad*(select costo from tblinventariocostoh where idinventario=tblventasinventario.idinventario and fecha<=tblventas.fecha order by fecha desc limit 1)),0),3 from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario where tblventas.estado=4 and tblventas.fechacancelado>=pfecha1 and tblventas.fechacancelado<=pfecha2 and tblventasinventario.idinventario=pidinventario and tblventas.porsurtir=0 and tblventas.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select tblinventarioconceptos.idconcepto,0,tblinventarioconceptos.nombre,ifnull(sum(tblmovimientosdetalles.cantidad),0),ifnull(sum(if(tblmovimientosdetalles.idmoneda=2,tblmovimientosdetalles.precio,tblmovimientosdetalles.precio*tblmovimientos.tipodecambio)),0),4 from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto inner join tblinventario on tblmovimientosdetalles.idinventario=tblinventario.idinventario where (tblinventarioconceptos.tipo=0 or tblinventarioconceptos.tipo=4) and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idinventario=pidinventario and tblmovimientos.idsucursal=pidsucursal group by tblinventarioconceptos.idconcepto;
+
+
+
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Ventas',ifnull(sum(tblventasinventario.cantidad),0),ifnull(sum(tblventasinventario.cantidad*(select costo from tblinventariocostoh where idinventario=tblventasinventario.idinventario and fecha<=tblventas.fecha order by fecha desc limit 1)),0),0 from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario where (tblventas.estado=3 or tblventas.estado=4) and tblventas.fecha>=pfecha1 and tblventas.fecha<=pfecha2 and tblventasinventario.idinventario=pidinventario and tblventas.porsurtir=0 and tblventas.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Devoluciones Compras',ifnull(sum(tbldevolucionesdetallesc.cantidad),0),ifnull(sum(if(tbldevolucionesdetallesc.idmoneda=2,tbldevolucionesdetallesc.precio,tbldevolucionesdetallesc.precio*tbldevolucionescompras.tipodecambio)),0),1 from tbldevolucionesdetallesc inner join tbldevolucionescompras on tbldevolucionesdetallesc.iddevolucion=tbldevolucionescompras.iddevolucion where tbldevolucionescompras.estado=3 and tbldevolucionescompras.fecha>=pfecha1 and tbldevolucionescompras.fecha<=pfecha2 and tbldevolucionesdetallesc.idinventario=pidinventario and tbldevolucionescompras.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select 0,1,'Cancelaciones Compras',ifnull(sum(tblcomprasdetalles.cantidad),0),ifnull(sum(if(tblcomprasdetalles.idmoneda=2,tblcomprasdetalles.costoindirecto+(tblcomprasdetalles.precio),tblcomprasdetalles.costoindirecto+(tblcomprasdetalles.precio*tblcompras.tipodecambio))),0),2 from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where tblcompras.estado=4 and tblcompras.fecha>=pfecha1 and tblcompras.fecha<=pfecha2 and tblcomprasdetalles.idinventario=pidinventario and tblcompras.idsucursal=pidsucursal;
+insert into tblinventarioanalisisc(idinventario,tipo,concepto,cantidad,precio,orden)
+select tblinventarioconceptos.idconcepto,1,tblinventarioconceptos.nombre,ifnull(sum(tblmovimientosdetalles.cantidad),0),ifnull(sum(tblmovimientosdetalles.cantidad*(select costo from tblinventariocostoh where idinventario=tblmovimientosdetalles.idinventario and fecha<=tblmovimientos.fecha order by fecha desc limit 1)),0),3 from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblmovimientos.idconcepto=tblinventarioconceptos.idconcepto inner join tblinventario on tblmovimientosdetalles.idinventario=tblinventario.idinventario where tblinventarioconceptos.tipo=1 and tblmovimientos.estado=3 and tblmovimientos.fecha>=pfecha1 and tblmovimientos.fecha<=pfecha2 and tblmovimientosdetalles.idinventario=pidinventario and tblmovimientos.idsucursal=pidsucursal group by tblinventarioconceptos.idconcepto;
+
+
+
+end if;
+
+end if;
+
+
+return 0;
+
+
+END $$
+
+DELIMITER ;
+
+CREATE TABLE `tblventasapartados` (
+  `idapartado` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `fecha` VARCHAR(10) NOT NULL,
+  `estado` TINYINT UNSIGNED NOT NULL,
+  `idsucursal` INTEGER UNSIGNED NOT NULL,
+  `folio` INTEGER UNSIGNED NOT NULL,
+  `serie` VARCHAR(20) NOT NULL,
+  `prioridad` TINYINT UNSIGNED NOT NULL,
+  `idcliente` INTEGER UNSIGNED NOT NULL,
+  `comentario` VARCHAR(2000) NOT NULL,
+  `prioridadstr` VARCHAR(150) NOT NULL,
+  `fechasalida` VARCHAR(10) NOT NULL,
+  `horasalida` VARCHAR(6) NOT NULL,
+  `hora` VARCHAR(6) NOT NULL,
+  `fechacancelado` VARCHAR(10) NOT NULL,
+  `horacancelado` VARCHAR(6) NOT NULL,
+  `totalapagar` DOUBLE NOT NULL,
+  `idmoneda` INTEGER UNSIGNED NOT NULL,
+  `credito` DOUBLE NOT NULL,
+  `tipodecambio` DOUBLE NOT NULL,
+  `idvendedor` INTEGER UNSIGNED NOT NULL,
+  `surtido` INTEGER UNSIGNED NOT NULL,
+  `surtidodonde` TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`idapartado`)
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tblventasapartadosdetalles` (
+  `iddetalle` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `precio` DOUBLE NOT NULL,
+  `idinventario` INTEGER UNSIGNED NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  `idmoneda` INTEGER UNSIGNED NOT NULL,
+  `idapartado` INTEGER UNSIGNED NOT NULL,
+  `descripcion` VARCHAR(2000) NOT NULL,
+  `idalmacen` INTEGER UNSIGNED NOT NULL,
+  `iva` DOUBLE NOT NULL,
+  `extra` VARCHAR(45) NOT NULL,
+  `descuento` DOUBLE NOT NULL,
+  `surtido` DOUBLE NOT NULL,
+  PRIMARY KEY (`iddetalle`),
+  CONSTRAINT `FK_tblventasapartadosdetalles_1` FOREIGN KEY `FK_tblventasapartadosdetalles_1` (`idapartado`)
+    REFERENCES `tblventasapartados` (`idapartado`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblventasapartadosdetalles_2` FOREIGN KEY `FK_tblventasapartadosdetalles_2` (`idinventario`)
+    REFERENCES `tblinventario` (`idinventario`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblventasapartadosdetalles_3` FOREIGN KEY `FK_tblventasapartadosdetalles_3` (`idalmacen`)
+    REFERENCES `tblalmacenes` (`idalmacen`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `tblventaspagosapartados` (
+  `idpago` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `cantidad` DOUBLE NOT NULL,
+  `estado` TINYINT UNSIGNED NOT NULL,
+  `idremision` INTEGER UNSIGNED NOT NULL,
+  `fecha` VARCHAR(10) NOT NULL,
+  `tipo` TINYINT UNSIGNED NOT NULL,
+  `hora` VARCHAR(6) NOT NULL,
+  `fechacancelado` VARCHAR(10) NOT NULL,
+  `horacancelado` VARCHAR(6) NOT NULL,
+  `idcliente` INTEGER UNSIGNED NOT NULL,
+  `idmoneda` INTEGER UNSIGNED NOT NULL,
+  `ptipodecambio` DOUBLE NOT NULL,
+  `idconceptonotaventa` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`idpago`)
+)
+ENGINE = InnoDB;
+
+ALTER TABLE `tblventasapartados` ADD COLUMN `dinventario` TINYINT UNSIGNED NOT NULL AFTER `surtidodonde`;
+
+
+insert into tblactualizaciones values('ver 9012 rev 3');

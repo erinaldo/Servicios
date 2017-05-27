@@ -1,0 +1,9 @@
+ALTER TABLE `tblusuarios` ADD COLUMN `permisos11` BIGINT UNSIGNED NOT NULL AFTER `permisos10`,
+ ADD COLUMN `permisos12` BIGINT UNSIGNED NOT NULL AFTER `permisos11`;
+
+ALTER TABLE `tblventascotizaciones` ADD COLUMN `idmoneda` INTEGER UNSIGNED NOT NULL AFTER `comentario`;
+
+update tblventascotizaciones set idmoneda=2;
+
+insert into tblactualizaciones(version) values('ver 9023 rev 6');
+

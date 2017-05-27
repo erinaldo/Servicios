@@ -1,0 +1,2 @@
+update tblopciones set nombreempresalocal='0';
+insert into tblactualizaciones(version) values('ver 9022 rev 7');

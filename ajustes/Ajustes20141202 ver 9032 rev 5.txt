@@ -1,0 +1,24 @@
+ALTER TABLE `tblcontabilidadmascarasd` MODIFY COLUMN `idcuenta` INT(10) NOT NULL;
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL NETO','TN',10);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL PERCEPCIONES','TP',10);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL DEDUCCIONES','TD',10);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL HORAS EXTRA','THE',10);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL INCAPACIDADES','TI',10);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL PERCEPCIONES GRAVADO','TPG',10);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL PERCEPCIONES EXENTO','TPE',10);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL DEDUCCIONES GRAVADO','TDG',10);
+insert into tblcontabilidadvariables(descripcion,codigo,modulo) values('TOTAL DEDUCCIONES EXENTO','TDE',10);
+
+ALTER TABLE `tblsemillasboletas` ADD COLUMN `iddetalle` INTEGER UNSIGNED NOT NULL DEFAULT 0 AFTER `idventa`;
+
+ALTER TABLE `tblsemillasboletas` DROP INDEX `boletas_vents`,
+ DROP FOREIGN KEY `boletas_vents`;
+
+ALTER TABLE `tblsemillasboletas` DROP COLUMN `idventa`;
+
+ALTER TABLE `tblopciones` ADD COLUMN `boletasinventario` TINYINT UNSIGNED NOT NULL AFTER `preciosultimocosto`;
+
+
+insert into tblactualizaciones(version) values('ver 9032 rev 5');
+

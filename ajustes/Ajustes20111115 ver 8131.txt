@@ -1,0 +1,8 @@
+ALTER TABLE `db_services`.`tblcomprasremisiones` ADD COLUMN `folioi` INTEGER UNSIGNED NOT NULL AFTER `idsucursal`,
+ ADD COLUMN `serie` VARCHAR(20) NOT NULL AFTER `folioi`,
+ ADD COLUMN `tipodecambio` DOUBLE NOT NULL AFTER `serie`;
+update tblcomprasremisiones set serie='',folioi=idremision,tipodecambio=1;
+
+ALTER TABLE `db_services`.`tblcompras` ADD COLUMN `serie` VARCHAR(20) NOT NULL AFTER `costoindirecto`,
+ ADD COLUMN `folioi` INTEGER UNSIGNED NOT NULL AFTER `serie`;
+update tblcompras set serie='',folioi=idcompra;

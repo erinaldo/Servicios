@@ -1,0 +1,102 @@
+ALTER TABLE `tblactualizaciones` ADD COLUMN `versionchk` VARCHAR(45) NOT NULL AFTER `version`;
+update tblactualizaciones set versionchk='00903324';
+ALTER TABLE `tblreppagos` ADD COLUMN `iddeposito` INTEGER UNSIGNED NOT NULL AFTER `idsucursal`;
+ALTER TABLE `tblreppagosc` ADD COLUMN `idpagoprov` INTEGER UNSIGNED NOT NULL AFTER `nombre1`;
+
+ALTER TABLE `tblpagoprov` ADD COLUMN `idusuarioalta` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `idcuentadest`,
+ ADD COLUMN `fechaalta` VARCHAR(10) NOT NULL DEFAULT 2016 AFTER `idusuarioalta`,
+ ADD COLUMN `horaalta` VARCHAR(10) NOT NULL DEFAULT 0 AFTER `fechaalta`,
+ ADD COLUMN `idusuariocambio` INTEGER UNSIGNED NOT NULL DEFAULT 1000 AFTER `horaalta`,
+ ADD COLUMN `fechacambio` VARCHAR(10) NOT NULL DEFAULT 2016 AFTER `idusuariocambio`,
+ ADD COLUMN `horacambio` VARCHAR(10) NOT NULL DEFAULT 0 AFTER `fechacambio`;
+
+ALTER TABLE `tblclientes` ADD COLUMN `idcuenta2` INTEGER UNSIGNED NOT NULL AFTER `IdusuarioAlta`,
+ ADD COLUMN `idcuenta3` INTEGER UNSIGNED NOT NULL AFTER `idcuenta2`,
+ ADD COLUMN `idcuenta4` INTEGER UNSIGNED NOT NULL AFTER `idcuenta3`;
+
+ALTER TABLE `tblproveedores` ADD COLUMN `idcuenta2` INTEGER UNSIGNED NOT NULL AFTER `horaCambio`,
+ ADD COLUMN `idcuenta3` INTEGER UNSIGNED NOT NULL AFTER `idcuenta2`,
+ ADD COLUMN `idcuenta4` INTEGER UNSIGNED NOT NULL AFTER `idcuenta3`;
+
+ALTER TABLE `tblcuentas` ADD COLUMN `idcuenta2` INTEGER UNSIGNED NOT NULL AFTER `nombreex`,
+ ADD COLUMN `idcuenta3` INTEGER UNSIGNED NOT NULL AFTER `idcuenta2`,
+ ADD COLUMN `idcuenta4` INTEGER UNSIGNED NOT NULL AFTER `idcuenta3`;
+
+ALTER TABLE `tbltrabajadores` ADD COLUMN `idcuenta2` INTEGER UNSIGNED NOT NULL AFTER `horaCambio`,
+ ADD COLUMN `idcuenta3` INTEGER UNSIGNED NOT NULL AFTER `idcuenta2`,
+ ADD COLUMN `idcuenta4` INTEGER UNSIGNED NOT NULL AFTER `idcuenta3`;
+
+
+update tblclientestipos set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblclientes set idusuarioalta=1000,fechacreacion='2016/02/29',horacreacion='00:00:00',idusuario=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblclientesequipos set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblclientescuentas set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblzona set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblvendedores set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblproveedores set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblsucursales set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblalmacenes set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblinventarioclasificaciones set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblinventarioclasificaciones2 set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblinventarioclasificaciones3 set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblinventario set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblinventarioconceptos set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblmodelos set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblformasdepago set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblcajas set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tbltecnicos set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tbltiposcantidades set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblmonedas set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblconceptosnotasventas set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblconceptosnotascompras set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tbldescuentos set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblventascotizaciones set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblventaspedidos set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblventasremisiones set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblventas set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblnotasdecredito set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblnotasdecargo set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblventasapartados set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblcomprascotizacionesb set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblcompraspedidos set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblcomprasremisiones set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblcompras set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblnotasdecreditocompras set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblnotasdecargocompras set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblcompraspagos set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblmovimientos set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblcajasmovimientos set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tbldepostito set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblpagoprov set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tbltrabajadores set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblnominas set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblgastosempleados set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblempeniosconfiguracion set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblempenios set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblempeniosabono set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblempeniosadjudicaciones set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblempenioscompras set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblcontabilidadconf set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblccontables set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblpolizas set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblfertilizantespedidos set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblfertilizantesmovimientos set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblsemillasboletas set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblsemillasliquidacion set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+update tblsemillascomprobante set idusuarioalta=1000,fechaalta='2016/02/29',horaalta='00:00:00',idusuariocambio=1000,fechacambio='2016/02/29',horacambio='00:00:00';
+
+ALTER TABLE `tbldepostito` MODIFY COLUMN `comentario` VARCHAR(2000) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL;
+
+ALTER TABLE `tblpolizas` MODIFY COLUMN `concepto` VARCHAR(1500) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+ MODIFY COLUMN `beneficiario` VARCHAR(1500) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+
+ALTER TABLE `tblpolizasdetalles` MODIFY COLUMN `descripcion` VARCHAR(1500) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+ MODIFY COLUMN `concepto` VARCHAR(1500) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+
+ALTER TABLE `tblventas` ADD COLUMN `formapagona` TINYINT UNSIGNED NOT NULL AFTER `horaCambio`;
+
+ALTER TABLE `tblccontables` ADD COLUMN `descontinuada` TINYINT UNSIGNED NOT NULL AFTER `horaCambio`;
+
+ALTER TABLE `tblproveedorescuentas` DROP FOREIGN KEY `FK_tblproveedorescuentas_1`;
+
+insert into tblactualizaciones(version,versionchk) values('ver 9033 rev 29','00903329');

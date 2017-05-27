@@ -1,0 +1,33 @@
+CREATE TABLE `tblventaspagosremisiones` (
+  `idpago` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `cantidad` DOUBLE NOT NULL,
+  `estado` TINYINT UNSIGNED NOT NULL,
+  `idremision` INTEGER UNSIGNED NOT NULL,
+  `fecha` VARCHAR(10) NOT NULL,
+  `hora` VARCHAR(8) NOT NULL,
+  `fechacancelado` VARCHAR(10) NOT NULL,
+  `horacancelado` VARCHAR(8) NOT NULL,
+  `idcliente` INTEGER UNSIGNED NOT NULL,
+  `idmoneda` INTEGER UNSIGNED NOT NULL,
+  `ptipodecambio` DOUBLE NOT NULL,
+  `idconceptonotaventa` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`idpago`),
+  INDEX `Index_2`(`fecha`, `hora`),
+  CONSTRAINT `FK_tblventaspagosremisiones_1` FOREIGN KEY `FK_tblventaspagosremisiones_1` (`idremision`)
+    REFERENCES `tblventasremisiones` (`idremision`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblventaspagosremisiones_2` FOREIGN KEY `FK_tblventaspagosremisiones_2` (`idcliente`)
+    REFERENCES `tblclientes` (`idcliente`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblventaspagosremisiones_3` FOREIGN KEY `FK_tblventaspagosremisiones_3` (`idconceptonotaventa`)
+    REFERENCES `tblconceptosnotasventas` (`idconceptonotaventa`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblventaspagosremisiones_4` FOREIGN KEY `FK_tblventaspagosremisiones_4` (`idmoneda`)
+    REFERENCES `tblmonedas` (`idmoneda`)
+    ON DELETE RESTRICT
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;

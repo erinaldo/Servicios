@@ -1,0 +1,1 @@
+update tblformasdepago set nombre='No aplica' where idforma=1 or idforma=2;

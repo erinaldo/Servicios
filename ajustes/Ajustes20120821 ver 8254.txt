@@ -1,0 +1,29 @@
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'Importe+Iva','importeiva',120,25,'Lucida Console',8,1,0,1,0,0,0,1,0,0,'Importe + IVA');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'Importe+Iva','importeiva',120,25,'Lucida Console',8,1,0,1,0,0,1,1,0,0,'Importe + IVA');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'Importe+Iva','importeiva',120,25,'Lucida Console',8,1,0,1,0,0,2,1,0,0,'Importe + IVA');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'Importe+Iva','importeiva',120,25,'Lucida Console',8,1,0,1,0,0,3,1,0,0,'Importe + IVA');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'Importe+Iva','importeiva',120,25,'Lucida Console',8,1,0,1,0,0,16,1,0,0,'Importe + IVA');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'Importe+Iva','importeiva',120,25,'Lucida Console',8,1,0,1,0,0,17,1,0,0,'Importe + IVA');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'Importe+Iva','importeiva',120,25,'Lucida Console',8,1,0,1,0,0,18,1,0,0,'Importe + IVA');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'Importe+Iva','importeiva',120,25,'Lucida Console',8,1,0,1,0,0,19,1,0,0,'Importe + IVA');
+
+CREATE TABLE `tblcajas` (
+  `idcaja` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  `idsucursal` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`idcaja`),
+  CONSTRAINT `FK_tblcajas_1` FOREIGN KEY `FK_tblcajas_1` (`idsucursal`)
+    REFERENCES `tblsucursales` (`idsucursal`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'Preciou+Iva','preciouiva',120,25,'Lucida Console',8,1,0,1,0,0,0,1,0,0,'PrecioU + IVA');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'Preciou+Iva','preciouiva',120,25,'Lucida Console',8,1,0,1,0,0,1,1,0,0,'PrecioU + IVA');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'Preciou+Iva','preciouiva',120,25,'Lucida Console',8,1,0,1,0,0,2,1,0,0,'PrecioU + IVA');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'Preciou+Iva','preciouiva',120,25,'Lucida Console',8,1,0,1,0,0,3,1,0,0,'PrecioU + IVA');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'Preciou+Iva','preciouiva',120,25,'Lucida Console',8,1,0,1,0,0,16,1,0,0,'PrecioU + IVA');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'Preciou+Iva','preciouiva',120,25,'Lucida Console',8,1,0,1,0,0,17,1,0,0,'PrecioU + IVA');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'Preciou+Iva','preciouiva',120,25,'Lucida Console',8,1,0,1,0,0,18,1,0,0,'PrecioU + IVA');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(601,321,'Preciou+Iva','preciouiva',120,25,'Lucida Console',8,1,0,1,0,0,19,1,0,0,'PrecioU + IVA');

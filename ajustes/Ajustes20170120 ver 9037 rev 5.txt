@@ -1,0 +1,132 @@
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdaivaproporcionalf` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdaivaproporcionalf`(pidventa int,pcantidad double,ptipo tinyint,ptipodecambio double) RETURNS double
+BEGIN
+
+declare vtiva double;
+declare vsubtotal double;
+declare vtieps double;
+declare vivarett double;
+declare vivaret double;
+declare visr double;
+declare visrt double;
+declare vresultado double;
+
+set vsubtotal=(select sum(if(idmoneda=2,precio,precio*ptipodecambio)) from tblventasinventario where idventa=pidventa);
+set vtiva=(select sum(if(idmoneda=2,precio,precio*ptipodecambio)*iva/100) from tblventasinventario where idventa=pidventa);
+set vtieps=(select sum(if(idmoneda=2,precio,precio*ptipodecambio)*ieps/100) from tblventasinventario where idventa=pidventa);
+set vivarett=(select sum(if(idmoneda=2,precio,precio*ptipodecambio)*ivaretenido/100) from tblventasinventario where idventa=pidventa);
+set vivaret=(select ivaretenido from tblventas where idventa=pidventa);
+set visr=(select isr from tblventas where idventa=pidventa);
+set vivarett=vivarett+(vsubtotal*vivaret/100);
+set visrt=vsubtotal*visr/100;
+
+if ptipo=0 then
+set vresultado=pcantidad*vtiva/(vsubtotal+vtiva);
+end if;
+if ptipo=1 then
+set vresultado=pcantidad*vtieps/(vsubtotal+vtieps);
+end if;
+if ptipo=2 then
+set vresultado=pcantidad*vivarett/(vsubtotal-vivarett);
+end if;
+if ptipo=3 then
+set vresultado=pcantidad*visrt/(vsubtotal-visrt);
+end if;
+
+
+return ifnull(vresultado,0);
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdaivaproporcionalnc` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdaivaproporcionalnc`(pidcargo int,pcantidad double,ptipodecambio double) RETURNS double
+BEGIN
+
+declare vtiva double;
+declare vsubtotal double;
+declare vresultado double;
+
+
+set vsubtotal=(select sum(if(idmoneda=2,precio,precio*ptipodecambio)) from tblnotasdecargodetalles where idcargo=pidcargo);
+set vtiva=(select sum(if(idmoneda=2,precio,precio*ptipodecambio)*iva/100) from tblnotasdecargodetalles where idcargo=pidcargo);
+
+set vresultado=pcantidad*vtiva/(vsubtotal+vtiva);
+
+return ifnull(vresultado,0);
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdaivaproporcionalfcompras` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdaivaproporcionalfcompras`(pidventa int,pcantidad double,ptipo tinyint,ptipodecambio double) RETURNS double
+BEGIN
+
+declare vtiva double;
+declare vsubtotal double;
+declare vtieps double;
+declare vivarett double;
+declare vivaret double;
+declare visr double;
+declare visrt double;
+declare vresultado double;
+
+set vsubtotal=(select sum(if(idmoneda=2,precio,precio*ptipodecambio)) from tblcomprasdetalles where idcompra=pidventa);
+set vtiva=(select sum(if(idmoneda=2,precio,precio*ptipodecambio)*iva/100) from tblcomprasdetalles where idcompra=pidventa);
+set vtieps=(select sum(if(idmoneda=2,precio,precio*ptipodecambio)*ieps/100) from tblcomprasdetalles where idcompra=pidventa);
+set vivarett=(select sum(if(idmoneda=2,precio,precio*ptipodecambio)*ivaretenido/100) from tblcomprasdetalles where idcompra=pidventa);
+
+if ptipo=0 then
+set vresultado=pcantidad*vtiva/(vsubtotal+vtiva);
+end if;
+if ptipo=1 then
+set vresultado=pcantidad*vtieps/(vsubtotal+vtieps);
+end if;
+if ptipo=2 then
+set vresultado=pcantidad*vivarett/(vsubtotal-vivarett);
+end if;
+
+
+
+return ifnull(vresultado,0);
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdaivaproporcionalnccompras` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdaivaproporcionalnccompras`(pidcargo int,pcantidad double,ptipodecambio double) RETURNS double
+BEGIN
+
+declare vtiva double;
+declare vsubtotal double;
+declare vresultado double;
+
+set vsubtotal=(select sum(if(idmoneda=2,precio,precio*ptipodecambio)) from tblnotasdecargodetallesc where idcargo=pidcargo);
+set vtiva=(select sum(if(idmoneda=2,precio,precio*ptipodecambio)*iva/100) from tblnotasdecargodetallesc where idcargo=pidcargo);
+
+set vresultado=pcantidad*vtiva/(vsubtotal+vtiva);
+
+return ifnull(vresultado,0);
+END $$
+
+DELIMITER ;
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL GANANCIA CAMBIARIA.','TGC',4,'SUMA DEL TOTAL DE GANANCIAS CAMBIARIAS.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL PERDIDA CAMBIARIA.','TPC',4,'SUMA DEL TOTAL DE PERDIDAS CAMBIARIAS.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL GANANCIA CAMBIARIA POR PAGO.','TXPGC',4,'TOTAL DE GANANCIAS CAMBIARIAS POR PAGO LIGADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL PERDIDA CAMBIARIA POR PAGO.','TXPPC',4,'TOTAL DE PERDIDAS CAMBIARIAS POR PAGO LIGADO.');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL GANANCIA CAMBIARIA.','TGC',5,'SUMA DEL TOTAL DE GANANCIAS CAMBIARIAS.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL PERDIDA CAMBIARIA.','TPC',5,'SUMA DEL TOTAL DE PERDIDAS CAMBIARIAS.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL GANANCIA CAMBIARIA POR PAGO.','TXPGC',5,'TOTAL DE GANANCIAS CAMBIARIAS POR PAGO LIGADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL PERDIDA CAMBIARIA POR PAGO.','TXPPC',5,'TOTAL DE PERDIDAS CAMBIARIAS POR PAGO LIGADO.');
+
+insert into tblactualizaciones(version,versionchk) values('ver 9037 rev 5','00903705');

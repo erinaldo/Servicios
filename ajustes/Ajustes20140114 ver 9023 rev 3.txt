@@ -1,0 +1,6 @@
+ALTER TABLE `tblnotariospublicos` ADD COLUMN `nombrenotario` VARCHAR(250) NOT NULL AFTER `idFactura`;
+
+update tblopciones set correocontenido='Comprobante fiscal digital por internet enviado por medio del sistema de facturación de Pull System Soft, S.A. de C.V.\r\nhttp://pullsystemsoft.com';
+
+
+insert into tblactualizaciones(version) values('ver 9023 rev 3');

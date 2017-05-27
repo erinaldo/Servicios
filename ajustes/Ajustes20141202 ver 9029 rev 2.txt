@@ -1,0 +1,19 @@
+ALTER TABLE `tblmascarasusadas` ADD CONSTRAINT `FK_tblmascarasusadas_1` FOREIGN KEY `FK_tblmascarasusadas_1` (`idpoliza`)
+    REFERENCES `tblpolizas` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION;
+
+ALTER TABLE `tblcontabilidadmascaras` CHANGE COLUMN `paracancelacion` `credito` TINYINT(3) UNSIGNED NOT NULL;
+
+CREATE TABLE `tblXMLValidados` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `fecha` VARCHAR(45) NOT NULL,
+  `uuid` VARCHAR(45) NOT NULL,
+  `rfc` VARCHAR(45) NOT NULL,
+  `monto` DOUBLE NOT NULL,
+  PRIMARY KEY (`id`)
+)
+ENGINE = InnoDB;
+
+
+insert into tblactualizaciones(version) values('ver 9029 rev 2');

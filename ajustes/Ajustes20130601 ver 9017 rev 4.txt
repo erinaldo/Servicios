@@ -1,0 +1,73 @@
+ALTER TABLE `tblinventario` ADD COLUMN `porlotes` TINYINT UNSIGNED NOT NULL AFTER `separarkit`;
+
+CREATE TABLE `tblcompraslotes` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idlote` INTEGER UNSIGNED NOT NULL,
+  `iddetalle` INTEGER UNSIGNED NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  `surtido` DOUBLE NOT NULL,
+  PRIMARY KEY (`id`)
+)
+ENGINE = InnoDB;
+
+
+CREATE TABLE `tblinventariolotes` (
+  `idlote` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `lote` VARCHAR(45) NOT NULL,
+  `fechacaducidad` VARCHAR(10) NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  `idinventario` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`idlote`)
+)
+ENGINE = InnoDB;
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS `spmodificainventariolotes` $$
+CREATE PROCEDURE `spmodificainventariolotes` (pidlote int,pcantidad double,pcantidadant double,pmodo tinyint)
+BEGIN
+
+declare vcantidad double;
+
+set vcantidad=ifnull((select cantidad from tblinventariolotes where idlote=pidlote),0);
+
+  if pmodo=0 then
+  set vcantidad=vcantidad+pcantidad;
+  end if;
+  if pmodo=1 then
+  set vcantidad=vcantidad-pcantidad;
+  end if;
+  if pmodo=2 then
+  set vcantidad=vcantidad-pcantidadant+pcantidad;
+  end if;
+  if pmodo=3 then
+  set vcantidad=vcantidad+pcantidadant-pcantidad;
+  end if;
+
+update tblinventariolotes set cantidad=vcantidad where idlote=pidlote;
+
+END $$
+
+DELIMITER ;
+
+CREATE TABLE `tblrepmovimientosclientes` (
+  `idmovimiento` INTEGER UNSIGNED NOT NULL,
+  `fecha` VARCHAR(10) NOT NULL,
+  `concepto` VARCHAR(100) NOT NULL,
+  `serie` VARCHAR(20) NOT NULL,
+  `folio` INTEGER UNSIGNED NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  `nombrei` VARCHAR(450) NOT NULL,
+  `clavei` VARCHAR(45) NOT NULL,
+  `precio` DOUBLE NOT NULL,
+  `preciou` DOUBLE NOT NULL,
+  `almacen1` VARCHAR(45) NOT NULL,
+  `almacen2` VARCHAR(45) NOT NULL,
+  `costobase` DOUBLE NOT NULL,
+  `conceptotipo` TINYINT UNSIGNED NOT NULL,
+  `referencia` VARCHAR(45) NOT NULL,
+  `idcliente` INTEGER UNSIGNED NOT NULL,
+  `nombrec` VARCHAR(450) NOT NULL
+)
+ENGINE = InnoDB;
+ALTER TABLE `tblrepmovimientosclientes` ADD COLUMN `idconcepto` INTEGER UNSIGNED NOT NULL AFTER `nombrec`;

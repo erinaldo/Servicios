@@ -1,0 +1,57 @@
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdainventariop` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdainventariop`(pidproducto int,pidalmacen int,pidsucursal int) RETURNS double
+BEGIN
+declare varinventario double;
+
+if pidsucursal>0 then
+
+if pidalmacen>0 then
+set varinventario=ifnull((select cantidad from tblalmacenesp where idproducto=pidproducto and idalmacen=pidalmacen),0);
+else
+set varinventario=(select ifnull((select sum(cantidad) from tblalmacenesp inner join tblalmacenes on tblalmacenesp.idalmacen=tblalmacenes.idalmacen inner join tblsucursales on tblalmacenes.idsucursal=tblsucursales.idsucursal where tblalmacenesp.idproducto=pidproducto and tblalmacenes.idsucursal=pidsucursal),0));
+end if;
+
+else
+
+if pidalmacen>0 then
+set varinventario=ifnull((select cantidad from tblalmacenesp where idproducto=pidproducto and idalmacen=pidalmacen),0);
+else
+set varinventario=ifnull((select sum(cantidad) from tblalmacenesp where idproducto=pidproducto),0);
+end if;
+
+end if;
+
+
+return varinventario;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdainventario` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdainventario`(pidinventario int,pidalmacen int,pidsucursal int) RETURNS double
+BEGIN
+declare varinventario double;
+
+if pidsucursal>0 then
+if pidalmacen>0 then
+set varinventario=(select ifnull((select cantidad from tblalmacenesi where idinventario=pidinventario and idalmacen=pidalmacen),0));
+else
+set varinventario=(select ifnull((select sum(cantidad) from tblalmacenesi inner join tblalmacenes on tblalmacenesi.idalmacen=tblalmacenes.idalmacen inner join tblsucursales on tblalmacenes.idsucursal=tblsucursales.idsucursal where tblalmacenesi.idinventario=pidinventario and tblalmacenes.idsucursal=pidsucursal),0));
+end if;
+else
+if pidalmacen>0 then
+set varinventario=(select ifnull((select cantidad from tblalmacenesi where idinventario=pidinventario and idalmacen=pidalmacen),0));
+else
+set varinventario=(select ifnull((select sum(cantidad) from tblalmacenesi where idinventario=pidinventario),0));
+end if;
+end if;
+
+
+return varinventario;
+END $$
+
+DELIMITER ;

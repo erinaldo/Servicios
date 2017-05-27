@@ -1,0 +1,33 @@
+update tblimpresionesnodos set tipodato=1 where datapropertyname='peso bruto';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='humedad';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='quebrado';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='impurezas';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='dañado';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='total deducciones';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='peso liquidar';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='precio/ton';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='importe';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='porcentajeHumedad';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='porcentajeImpurezas';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='porcentajeDanado';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='porcentajeQuebrado';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='HumedadPermitida';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='ImpurezasPermitidas';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='QuebradoPermitido';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='DanadoPermitido';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='tara';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='brutosinanalizar';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='pesoBruto';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='danado';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='pesoanalizado';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='precio';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='importe';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='subtotal';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='total';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='importefactura';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='importeAnticipo';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='totalAnticipos';
+update tblimpresionesnodos set tipodato=1 where datapropertyname='totalFacturas';
+
+insert into tblactualizaciones(version) values('ver 9033 rev 2');
+

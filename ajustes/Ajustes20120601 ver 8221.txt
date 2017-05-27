@@ -1,0 +1,44 @@
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(500,100,16,1,66,4,1,864);
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(500,100,17,1,66,4,1,864);
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(500,100,18,1,66,4,1,864);
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(500,100,19,1,66,4,1,864);
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(500,100,20,1,66,4,1,864);
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(500,100,21,1,66,4,1,864);
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(500,100,22,1,66,4,1,864);
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(500,100,23,1,66,4,1,864);
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(500,100,24,1,66,4,1,864);
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(500,100,25,1,66,4,1,864);
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(500,100,26,1,66,4,1,864);
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(500,100,27,1,66,4,1,864);
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(500,100,28,1,66,4,1,864);
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(500,100,29,1,66,4,1,864);
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(500,100,30,1,66,4,1,864);
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(500,100,31,1,66,4,1,864);
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) select x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,16,idsucursal,tiponodo,conetiqueta,nombre from tblimpresionesnodos where documento=0;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) select x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,17,idsucursal,tiponodo,conetiqueta,nombre from tblimpresionesnodos where documento=1;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) select x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,18,idsucursal,tiponodo,conetiqueta,nombre from tblimpresionesnodos where documento=2;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) select x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,19,idsucursal,tiponodo,conetiqueta,nombre from tblimpresionesnodos where documento=3;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) select x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,20,idsucursal,tiponodo,conetiqueta,nombre from tblimpresionesnodos where documento=4;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) select x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,21,idsucursal,tiponodo,conetiqueta,nombre from tblimpresionesnodos where documento=5;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) select x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,22,idsucursal,tiponodo,conetiqueta,nombre from tblimpresionesnodos where documento=6;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) select x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,23,idsucursal,tiponodo,conetiqueta,nombre from tblimpresionesnodos where documento=7;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) select x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,24,idsucursal,tiponodo,conetiqueta,nombre from tblimpresionesnodos where documento=8;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) select x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,25,idsucursal,tiponodo,conetiqueta,nombre from tblimpresionesnodos where documento=9;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) select x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,26,idsucursal,tiponodo,conetiqueta,nombre from tblimpresionesnodos where documento=10;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) select x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,27,idsucursal,tiponodo,conetiqueta,nombre from tblimpresionesnodos where documento=11;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) select x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,28,idsucursal,tiponodo,conetiqueta,nombre from tblimpresionesnodos where documento=12;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) select x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,29,idsucursal,tiponodo,conetiqueta,nombre from tblimpresionesnodos where documento=13;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) select x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,30,idsucursal,tiponodo,conetiqueta,nombre from tblimpresionesnodos where documento=14;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) select x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,31,idsucursal,tiponodo,conetiqueta,nombre from tblimpresionesnodos where documento=15;
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(567,51,'Método de pago:','metodopago',160,20,'Lucida Console',8,0,0,0,0,0,0,1,0,0,'Método de Pago');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(567,51,'Método de pago:','metodopago',160,20,'Lucida Console',8,0,0,0,0,0,16,1,0,0,'Método de Pago');
+
+En archivo rutas crear tabla impresoras con estos campos
+id autonumérico
+impresora texto 255
+idsucursal entero largo
+idempresa entero largo
+tipo byte
+activa byte

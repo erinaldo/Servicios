@@ -1,0 +1,4 @@
+ALTER TABLE `tblclientes` ADD COLUMN `iva` DOUBLE NOT NULL AFTER `curp`,
+ ADD COLUMN `sobreescribeiva` TINYINT UNSIGNED NOT NULL AFTER `iva`;
+update tblclientes set iva=0,sobreescribeiva=0;
+update tblopciones set fechapunto2='2014/03/20',conector=1;

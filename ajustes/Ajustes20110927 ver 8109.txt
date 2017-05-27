@@ -1,0 +1,360 @@
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdainventario` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdainventario`(pidinventario int,pidalmacen int) RETURNS double
+BEGIN
+declare varinventario double;
+if pidalmacen<>0 then
+set varinventario=(select ifnull((select cantidad from tblalmacenesi where idinventario=pidinventario and idalmacen=pidalmacen),0));
+else
+set varinventario=(select ifnull((select sum(cantidad) from tblalmacenesi where idinventario=pidinventario),0));
+end if;
+return varinventario;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdainventariop` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdainventariop`(pidproducto int,pidalmacen int) RETURNS double
+BEGIN
+declare varinventario double;
+if pidalmacen<>0 then
+set varinventario=ifnull((select cantidad from tblalmacenesp where idproducto=pidproducto and idalmacen=pidalmacen),0);
+else
+set varinventario=ifnull((select sum(cantidad) from tblalmacenesp where idproducto=pidproducto),0);
+end if;
+return varinventario;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdainventariovariante` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdainventariovariante`(pidvariante int,pidalmacen int) RETURNS double
+BEGIN
+declare varidmin2 int;
+declare varidmax2 int;
+declare varidinventario int;
+declare varidproducto int;
+declare varcantidadreceta double;
+declare varidtemp int;
+declare varcantidad double;
+declare varcontenido double;
+declare varinventariable tinyint;
+declare varidvariante int;
+declare checaalmacen tinyint;
+declare varinventario double;
+declare menor double;
+set menor=-255;
+set varidmin2=(select min(idreceta) from tblproductosrecetas where idvariante=pidvariante);
+set varidmax2=(select max(idreceta) from tblproductosrecetas where idvariante=pidvariante);
+
+while varidmin2<=varidmax2 do
+
+  if ifnull((select idreceta from tblproductosrecetas where idvariante=pidvariante and idreceta=varidmin2),-1)<>-1 then
+      set varidinventario=(select idinventario from tblproductosrecetas where idreceta=varidmin2);
+      set varidproducto=(select idproducto from tblproductosrecetas where idreceta=varidmin2);
+      set varcantidadreceta=(select cantidad from tblproductosrecetas where idreceta=varidmin2);
+      if varidproducto<>1 then
+        set varinventariable=(select inventariable from tblproductos where idproducto=varidproducto);
+        if varinventariable=0 then
+            set varidvariante=(select idvariante from tblproductosvariantes where idproducto=varidproducto limit 1);
+            set varinventario=spdainventariovariante2(varidvariante,pidalmacen)/varcantidadreceta/varcontenido;
+
+            if varinventario<menor or menor=-255 then
+              set menor=varinventario;
+            end if;
+        else
+             set varcantidad=spdainventariop(varidproducto,pidalmacen);
+             set varcontenido=(select contenido from tblproductos where idproducto=varidproducto);
+           if varcontenido<>0 then
+            set varinventario=varcantidad/varcantidadreceta/varcontenido;
+            if varinventario<menor or menor=-255 then
+              set menor=varinventario;
+            end if;
+           end if;
+        end if;
+      else
+         set varcantidad=spdainventario(varidinventario,pidalmacen);
+         set varcontenido=(select contenido from tblinventario where idinventario=varidinventario);
+         if varcontenido<>0 then
+          set varinventario=varcantidad/varcantidadreceta/varcontenido;
+            if varinventario<menor or menor=-255 then
+              set menor=varinventario;
+            end if;
+
+         end if;
+      end if;
+  end if;
+  set varidmin2=varidmin2+1;
+end while;
+return menor;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdainventariovariante2` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdainventariovariante2`(pidvariante int,pidalmacen int) RETURNS double
+BEGIN
+declare varidmin2 int;
+declare varidmax2 int;
+declare varidinventario int;
+declare varidproducto int;
+declare varcantidadreceta double;
+declare varidtemp int;
+declare varcantidad double;
+declare varcontenido double;
+declare varinventariable tinyint;
+declare varidvariante int;
+declare checaalmacen tinyint;
+declare varinventario double;
+declare menor double;
+set menor=-255;
+set varidmin2=(select min(idreceta) from tblproductosrecetas where idvariante=pidvariante);
+set varidmax2=(select max(idreceta) from tblproductosrecetas where idvariante=pidvariante);
+
+while varidmin2<=varidmax2 do
+
+  if ifnull((select idreceta from tblproductosrecetas where idvariante=pidvariante and idreceta=varidmin2),-1)<>-1 then
+      set varidinventario=(select idinventario from tblproductosrecetas where idreceta=varidmin2);
+      set varidproducto=(select idproducto from tblproductosrecetas where idreceta=varidmin2);
+      set varcantidadreceta=(select cantidad from tblproductosrecetas where idreceta=varidmin2);
+      if varidproducto<>1 then
+        set varinventariable=(select inventariable from tblproductos where idproducto=varidproducto);
+        if varinventariable=0 then
+            set varidvariante=(select idvariante from tblproductosvariantes where idproducto=varidproducto limit 1);
+            set varinventario=spdainventariovariante3(varidvariante,pidalmacen)/varcantidadreceta/varcontenido;
+
+            if varinventario<menor or menor=-255 then
+              set menor=varinventario;
+            end if;
+        else
+             set varcantidad=spdainventariop(varidproducto,pidalmacen);
+             set varcontenido=(select contenido from tblproductos where idproducto=varidproducto);
+           if varcontenido<>0 then
+            set varinventario=varcantidad/varcantidadreceta/varcontenido;
+            if varinventario<menor or menor=-255 then
+              set menor=varinventario;
+            end if;
+           end if;
+        end if;
+      else
+         set varcantidad=spdainventario(varidinventario,pidalmacen);
+         set varcontenido=(select contenido from tblinventario where idinventario=varidinventario);
+         if varcontenido<>0 then
+          set varinventario=varcantidad/varcantidadreceta/varcontenido;
+            if varinventario<menor or menor=-255 then
+              set menor=varinventario;
+            end if;
+
+         end if;
+      end if;
+  end if;
+  set varidmin2=varidmin2+1;
+end while;
+return menor;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdainventariovariante3` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdainventariovariante3`(pidvariante int,pidalmacen int) RETURNS double
+BEGIN
+declare varidmin2 int;
+declare varidmax2 int;
+declare varidinventario int;
+declare varidproducto int;
+declare varcantidadreceta double;
+declare varidtemp int;
+declare varcantidad double;
+declare varcontenido double;
+declare varinventariable tinyint;
+declare varidvariante int;
+declare checaalmacen tinyint;
+declare varinventario double;
+declare menor double;
+set menor=-255;
+set varidmin2=(select min(idreceta) from tblproductosrecetas where idvariante=pidvariante);
+set varidmax2=(select max(idreceta) from tblproductosrecetas where idvariante=pidvariante);
+
+while varidmin2<=varidmax2 do
+
+  if ifnull((select idreceta from tblproductosrecetas where idvariante=pidvariante and idreceta=varidmin2),-1)<>-1 then
+      set varidinventario=(select idinventario from tblproductosrecetas where idreceta=varidmin2);
+      set varidproducto=(select idproducto from tblproductosrecetas where idreceta=varidmin2);
+      set varcantidadreceta=(select cantidad from tblproductosrecetas where idreceta=varidmin2);
+      if varidproducto<>1 then
+        set varinventariable=(select inventariable from tblproductos where idproducto=varidproducto);
+        if varinventariable=0 then
+            set varidvariante=(select idvariante from tblproductosvariantes where idproducto=varidproducto limit 1);
+            set varinventario=spdainventariovariante4(varidvariante,pidalmacen)/varcantidadreceta/varcontenido;
+
+            if varinventario<menor or menor=-255 then
+              set menor=varinventario;
+            end if;
+        else
+             set varcantidad=spdainventariop(varidproducto,pidalmacen);
+             set varcontenido=(select contenido from tblproductos where idproducto=varidproducto);
+           if varcontenido<>0 then
+            set varinventario=varcantidad/varcantidadreceta/varcontenido;
+            if varinventario<menor or menor=-255 then
+              set menor=varinventario;
+            end if;
+           end if;
+        end if;
+      else
+         set varcantidad=spdainventario(varidinventario,pidalmacen);
+         set varcontenido=(select contenido from tblinventario where idinventario=varidinventario);
+         if varcontenido<>0 then
+          set varinventario=varcantidad/varcantidadreceta/varcontenido;
+            if varinventario<menor or menor=-255 then
+              set menor=varinventario;
+            end if;
+
+         end if;
+      end if;
+  end if;
+  set varidmin2=varidmin2+1;
+end while;
+return menor;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdainventariovariante4` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdainventariovariante4`(pidvariante int,pidalmacen int) RETURNS double
+BEGIN
+declare varidmin2 int;
+declare varidmax2 int;
+declare varidinventario int;
+declare varidproducto int;
+declare varcantidadreceta double;
+declare varidtemp int;
+declare varcantidad double;
+declare varcontenido double;
+declare varinventariable tinyint;
+declare varidvariante int;
+declare checaalmacen tinyint;
+declare varinventario double;
+declare menor double;
+set menor=-255;
+set varidmin2=(select min(idreceta) from tblproductosrecetas where idvariante=pidvariante);
+set varidmax2=(select max(idreceta) from tblproductosrecetas where idvariante=pidvariante);
+
+while varidmin2<=varidmax2 do
+
+  if ifnull((select idreceta from tblproductosrecetas where idvariante=pidvariante and idreceta=varidmin2),-1)<>-1 then
+      set varidinventario=(select idinventario from tblproductosrecetas where idreceta=varidmin2);
+      set varidproducto=(select idproducto from tblproductosrecetas where idreceta=varidmin2);
+      set varcantidadreceta=(select cantidad from tblproductosrecetas where idreceta=varidmin2);
+      if varidproducto<>1 then
+        set varinventariable=(select inventariable from tblproductos where idproducto=varidproducto);
+        if varinventariable=0 then
+            set varidvariante=(select idvariante from tblproductosvariantes where idproducto=varidproducto limit 1);
+            set varinventario=spdainventariovariante5(varidvariante,pidalmacen)/varcantidadreceta/varcontenido;
+
+            if varinventario<menor or menor=-255 then
+              set menor=varinventario;
+            end if;
+        else
+             set varcantidad=spdainventariop(varidproducto,pidalmacen);
+             set varcontenido=(select contenido from tblproductos where idproducto=varidproducto);
+           if varcontenido<>0 then
+            set varinventario=varcantidad/varcantidadreceta/varcontenido;
+            if varinventario<menor or menor=-255 then
+              set menor=varinventario;
+            end if;
+           end if;
+        end if;
+      else
+         set varcantidad=spdainventario(varidinventario,pidalmacen);
+         set varcontenido=(select contenido from tblinventario where idinventario=varidinventario);
+         if varcontenido<>0 then
+          set varinventario=varcantidad/varcantidadreceta/varcontenido;
+            if varinventario<menor or menor=-255 then
+              set menor=varinventario;
+            end if;
+
+         end if;
+      end if;
+  end if;
+  set varidmin2=varidmin2+1;
+end while;
+return menor;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdainventariovariante5` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdainventariovariante5`(pidvariante int,pidalmacen int) RETURNS double
+BEGIN
+declare varidmin2 int;
+declare varidmax2 int;
+declare varidinventario int;
+declare varidproducto int;
+declare varcantidadreceta double;
+declare varidtemp int;
+declare varcantidad double;
+declare varcontenido double;
+declare varinventariable tinyint;
+declare varidvariante int;
+declare checaalmacen tinyint;
+declare varinventario double;
+declare menor double;
+set menor=-255;
+set varidmin2=(select min(idreceta) from tblproductosrecetas where idvariante=pidvariante);
+set varidmax2=(select max(idreceta) from tblproductosrecetas where idvariante=pidvariante);
+
+while varidmin2<=varidmax2 do
+
+  if ifnull((select idreceta from tblproductosrecetas where idvariante=pidvariante and idreceta=varidmin2),-1)<>-1 then
+      set varidinventario=(select idinventario from tblproductosrecetas where idreceta=varidmin2);
+      set varidproducto=(select idproducto from tblproductosrecetas where idreceta=varidmin2);
+      set varcantidadreceta=(select cantidad from tblproductosrecetas where idreceta=varidmin2);
+      if varidproducto<>1 then
+        set varinventariable=(select inventariable from tblproductos where idproducto=varidproducto);
+        if varinventariable=0 then
+            #set varidvariante=(select idvariante from tblproductosvariantes where idproducto=varidproducto limit 1);
+            #set varinventario=spdainventariovariante5(varidvariante,pidalmacen)/varcantidadreceta/varcontenido;
+            #if varinventario<menor or menor=-255 then
+              set menor=0;
+            #end if;
+        else
+             set varcantidad=spdainventariop(varidproducto,pidalmacen);
+             set varcontenido=(select contenido from tblproductos where idproducto=varidproducto);
+           if varcontenido<>0 then
+            set varinventario=varcantidad/varcantidadreceta/varcontenido;
+            if varinventario<menor or menor=-255 then
+              set menor=varinventario;
+            end if;
+           end if;
+        end if;
+      else
+         set varcantidad=spdainventario(varidinventario,pidalmacen);
+         set varcontenido=(select contenido from tblinventario where idinventario=varidinventario);
+         if varcontenido<>0 then
+          set varinventario=varcantidad/varcantidadreceta/varcontenido;
+            if varinventario<menor or menor=-255 then
+              set menor=varinventario;
+            end if;
+
+         end if;
+      end if;
+  end if;
+  set varidmin2=varidmin2+1;
+end while;
+return menor;
+END $$
+
+DELIMITER ;

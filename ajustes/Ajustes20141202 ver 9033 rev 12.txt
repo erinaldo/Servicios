@@ -1,0 +1,4 @@
+ALTER TABLE `tbltrabajadores` ADD COLUMN `idcuenta` INTEGER UNSIGNED NOT NULL AFTER `clabe`;
+
+insert into tblactualizaciones(version) values('ver 9033 rev 12');
+

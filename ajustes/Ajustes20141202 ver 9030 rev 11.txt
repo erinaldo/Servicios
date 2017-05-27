@@ -1,0 +1,4 @@
+ALTER TABLE `tblpolizasdetalles` ADD COLUMN `referencia` VARCHAR(450) NOT NULL AFTER `valorActos`;
+
+
+insert into tblactualizaciones(version) values('ver 9030 rev 11');

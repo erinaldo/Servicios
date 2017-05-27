@@ -1,0 +1,8 @@
+delete from tblpolizas where tipo='I' and concepto like '%COBRANZA%';
+update tbldepostito set cantidad=if((select count(vp.iddeposito) from tblventaspagos vp where vp.iddeposito=tbldepostito.iddeposito)>0,(select sum(vpp.cantidad) from tblventaspagos vpp where vpp.iddeposito=tbldepostito.iddeposito),cantidad);
+update tbldepostito set fecha=if((select count(vp.iddeposito) from tblventaspagos vp where vp.iddeposito=tbldepostito.iddeposito)>0,(select fecha from tblventaspagos vpp where vpp.iddeposito=tbldepostito.iddeposito limit 1),fecha);
+update tbldepostito set fechaconta=fecha;
+
+insert into tbldepostito(iddeposito,fecha,referencia,banco,cantidad,ncuenta,banco2,comentario,idusuarioalta,fechaalta,horaalta,idusuariocambio,fechacambio,horacambio,idpagoprov,fechaconta) select iddeposito,fecha,tipo,40,sum(round(cantidad,2)),'',2,tipo,idusuarioalta,fechaalta,horaalta,idusuariocambio,fechacambio,horacambio,0,fecha from tblventaspagos where fecha<'2016/02/02' and iddeposito<>0 group by iddeposito;
+
+999,999,999,999.999999

@@ -1,0 +1,100 @@
+
+
+DROP TABLE IF EXISTS `tbldetallesequipos`;
+CREATE TABLE  `tbldetallesequipos` (
+  `idDetalles` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idEquipo` int(10) unsigned NOT NULL,
+  `Cantidad` varchar(5) NOT NULL,
+  `idInventario` int(10) unsigned NOT NULL,
+  `TiempoVida` varchar(6) NOT NULL,
+  `fecha` varchar(45) NOT NULL,
+  PRIMARY KEY (`idDetalles`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `tblserviciosinventario2`;
+CREATE TABLE  `tblserviciosinventario2` (
+  `idserviciosinventario` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idevento` int(10) unsigned NOT NULL,
+  `idinventario` int(10) unsigned NOT NULL,
+  `precio` double NOT NULL,
+  `cantidad` int(10) unsigned NOT NULL,
+  `Total` double NOT NULL,
+  `idEquipo` int(10) unsigned NOT NULL,
+  `fecha` varchar(11) NOT NULL,
+  PRIMARY KEY (`idserviciosinventario`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
+
+ALTER TABLE `tblservicios` ADD COLUMN `idequipo` INTEGER UNSIGNED NOT NULL AFTER `cerrado`;
+
+
+
+ALTER TABLE `db_services`.`tblservicioseventos` ADD COLUMN `idequipo` INTEGER UNSIGNED NOT NULL AFTER `idtecnico`;
+
+
+DROP TABLE IF EXISTS `tblserviciosequipos`;
+CREATE TABLE  `tblserviciosequipos` (
+  `idservicioequipo` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idequipo` int(10) unsigned NOT NULL,
+  `idservicio` int(10) unsigned NOT NULL,
+  `idcliente` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`idservicioequipo`),
+  KEY `FK_tblserviciosequipos_1` (`idequipo`),
+  KEY `FK_tblserviciosequipos_2` (`idservicio`),
+  CONSTRAINT `FK_tblserviciosequipos_1` FOREIGN KEY (`idequipo`) REFERENCES `tblclientesequipos` (`idequipo`) ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblserviciosequipos_2` FOREIGN KEY (`idservicio`) REFERENCES `tblservicios` (`idservicio`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tblservicioseventos`;
+CREATE TABLE  `tblservicioseventos` (
+  `idevento` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idservicio` int(10) unsigned NOT NULL,
+  `idclasificacion` int(10) unsigned NOT NULL,
+  `idclasificacion2` int(10) unsigned NOT NULL,
+  `comentario` varchar(100) NOT NULL,
+  `tiempo` double NOT NULL,
+  `precio` double NOT NULL,
+  `idtecnico` int(10) unsigned NOT NULL,
+  `idEquipo` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`idevento`),
+  KEY `FK_tblservicioseventos_1` (`idservicio`),
+  KEY `FK_tblservicioseventos_2` (`idclasificacion`),
+  KEY `FK_tblservicioseventos_3` (`idclasificacion2`),
+  KEY `FK_tblservicioseventos_4` (`idtecnico`),
+  CONSTRAINT `FK_tblservicioseventos_1` FOREIGN KEY (`idservicio`) REFERENCES `tblservicios` (`idservicio`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblservicioseventos_2` FOREIGN KEY (`idclasificacion`) REFERENCES `tblserviciosclasificaciones` (`idclasificacion`) ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblservicioseventos_3` FOREIGN KEY (`idclasificacion2`) REFERENCES `tblserviciosclasificaciones2` (`idclasificacion2`) ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblservicioseventos_4` FOREIGN KEY (`idtecnico`) REFERENCES `tbltecnicos` (`idtecnico`) ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tblserviciosinventario2`;
+CREATE TABLE  `tblserviciosinventario2` (
+  `idserviciosinventario` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idevento` int(10) unsigned NOT NULL,
+  `idinventario` int(10) unsigned NOT NULL,
+  `precio` double NOT NULL,
+  `cantidad` int(10) unsigned NOT NULL,
+  `Total` double NOT NULL,
+  `idEquipo` int(10) unsigned NOT NULL,
+  `fecha` varchar(11) NOT NULL,
+  PRIMARY KEY (`idserviciosinventario`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `tblserviciosinventario`;
+CREATE TABLE  `tblserviciosinventario` (
+  `idserviciosinventario` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idevento` int(10) unsigned NOT NULL,
+  `idinventario` int(10) unsigned NOT NULL,
+  `precio` double NOT NULL,
+  `cantidad` int(3) unsigned NOT NULL,
+  `Total` double NOT NULL,
+  PRIMARY KEY (`idserviciosinventario`),
+  KEY `FK_tblserviciosinventario_1` (`idevento`),
+  KEY `FK_tblserviciosinventario_2` (`idinventario`),
+  CONSTRAINT `FK_tblserviciosinventario_1` FOREIGN KEY (`idevento`) REFERENCES `tblservicioseventos` (`idevento`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblserviciosinventario_2` FOREIGN KEY (`idinventario`) REFERENCES `tblinventario` (`idinventario`) ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+
+
+

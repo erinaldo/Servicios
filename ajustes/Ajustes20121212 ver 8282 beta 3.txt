@@ -1,0 +1,6 @@
+ALTER TABLE `tblopciones` ADD COLUMN `serieconector` VARCHAR(20) NOT NULL AFTER `eliminarrefpv`,
+ ADD COLUMN `idsucursalconector` INTEGER UNSIGNED NOT NULL AFTER `serieconector`;
+update tblopciones set serieconector='',idsucursalconector=0;
+ALTER TABLE `tblopciones` ADD COLUMN `seriencconector` VARCHAR(20) NOT NULL AFTER `idsucursalconector`;
+update tblopciones set serieconector='',idsucursalconector=0,seriencconector='';
+

@@ -1,0 +1,40 @@
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(120,140,'Imp Locales: ','implocales',400,15,'Lucida Console',8,0,0,0,0,0,0,1,0,0,'Imp. Locales');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(120,140,'Imp Locales: ','implocales',400,15,'Lucida Console',8,0,0,0,0,0,16,1,0,0,'Imp. Locales');
+
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(312,409,'Importe s/desc','importesindesc',120,25,'Lucida Console',8,1,0,1,1,0,0,1,0,0,'Importe s/desc');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(312,409,'Importe s/desc','importesindesc',120,25,'Lucida Console',8,1,0,1,1,0,16,1,0,0,'Importe s/desc');
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdadetalleskit` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdadetalleskit`(pidocumento int,piddetalle int,pconseries tinyint,ptipo int) RETURNS varchar(2000) CHARSET utf8
+BEGIN
+declare varminid int;
+declare varmaxid int;
+declare varidinventario int;
+declare varidventa int;
+declare vardetalles varchar(2000);
+if ptipo=0 then
+set varminid=ifnull((select min(iddetallekit) from tblventaskits where iddetalle=piddetalle),0);
+set varmaxid=ifnull((select max(iddetallekit) from tblventaskits where iddetalle=piddetalle),0);
+set vardetalles='';
+
+while varminid<=varmaxid and varminid<>0 do
+set vardetalles=concat(vardetalles,'\n',convert(tblventaskits.cantidad using utf8),(select tblinventario.clave from tblinventario inner join tblventaskits on tblventaskits.idinventario=tblinventario.idinventario where iddetallekit=varminid limit 1),' ',(select tblinventario.nombre from tblinventario inner join tblventaskits on tblventaskits.idinventario=tblinventario.idinventario where iddetallekit=varminid limit 1));
+if pconseries=1 then
+set varidinventario=(select idinventario from tblventaskits where iddetallekit=varminid);
+set varidventa=(select idventa from tblventaskits where iddetallekit=varminid);
+set vardetalles=(select spdaseriesventa(varidinventario,varidventa));
+end if;
+set varminid=ifnull((select min(iddetallekit) from tblventaskits where iddetalle=piddetalle and iddetallekit>varminid),0);
+
+end while;
+end if;
+
+return varseries;
+END $$
+
+DELIMITER ;
+
+insert into tblactualizaciones values('ver 9014 rev 2');
+

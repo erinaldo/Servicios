@@ -1,0 +1,33 @@
+
+DROP TABLE IF EXISTS `tblclientesviejossaldosex`;
+CREATE TABLE  `tblclientesviejossaldosex` (
+  `fecha` varchar(10) NOT NULL,
+  `idcliente` int(10) unsigned NOT NULL,
+  `serie` varchar(45) NOT NULL,
+  `folio` int(10) unsigned NOT NULL,
+  `limite` varchar(10) NOT NULL,
+  `sietedias` double NOT NULL,
+  `quincedias` double NOT NULL,
+ `treintadias` double NOT NULL,
+  `tresmeses` double NOT NULL,
+  `seismeses` double NOT NULL,
+  `docemeses` double NOT NULL,
+  `dosyears` double NOT NULL,
+  `tresyears` double NOT NULL,
+  `cuatroyears` double NOT NULL,
+  `cincoyears` double NOT NULL,
+  `credito` double NOT NULL,
+  `tipo` tinyint(3) unsigned NOT NULL,
+  `tipodecambio` double NOT NULL,
+  `corriente` double NOT NULL,
+  `totalapagar` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(500,300,39,1,40,4,0,864);
+delete from tblimpresionesnodos where documento=39 and idsucursal=1;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(540,63,'Fecha:','fechaCheque',200,20,'Microsoft Sans Serif',7,0,0,0,0,1,39,1,0,0,'Fecha Cheque',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(43,122,'A nombre de:','nombreCheque',500,20,'Microsoft Sans Serif',7,0,0,0,0,1,39,1,0,0,'A nombre de',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(43,150,'SON:','cantidadLetra',400,20,'Microsoft Sans Serif',7,0,0,0,0,1,39,1,0,0,'Cantidad con letra',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(600,122,'Cantidad:','cantidad',200,20,'Microsoft Sans Serif',7,0,0,0,0,1,39,1,0,0,'Cantidad',0,0);
+
+insert into tblactualizaciones(version) values('ver 9020 rev 23');

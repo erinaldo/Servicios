@@ -1,0 +1,215 @@
+DROP TABLE IF EXISTS `tblsemillasconfiguracion`;
+DROP TABLE IF EXISTS `tblsemillascomprobantedetalle`;
+DROP TABLE IF EXISTS `tblsemillascomprobante`;
+DROP TABLE IF EXISTS `tblsemillasanticiposfacturas`;
+DROP TABLE IF EXISTS `tblsemillasanticipos`;
+DROP TABLE IF EXISTS `tblsemillasliquidaciondetalle`;
+DROP TABLE IF EXISTS `tblsemillasliquidacion`;
+DROP TABLE IF EXISTS `tblsemillasboletas`;
+
+
+CREATE TABLE  `tblsemillasboletas` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `folio` int(10) unsigned NOT NULL,
+  `fecha` varchar(10) DEFAULT NULL,
+  `productor` int(10) unsigned DEFAULT NULL,
+  `chofer` varchar(45) DEFAULT NULL,
+  `producto` int(10) unsigned DEFAULT NULL,
+  `peso` double NOT NULL,
+  `humedad` double NOT NULL,
+  `impurezas` double NOT NULL,
+  `granoquebrado` double NOT NULL,
+  `granodanado` double NOT NULL,
+  `castigoHumedad` double NOT NULL,
+  `castigoImpurezas` double NOT NULL,
+  `castigoGranoD` double NOT NULL,
+  `castigoGranoQ` double NOT NULL,
+  `castigoTotal` double NOT NULL,
+  `pesoanalizado` double NOT NULL,
+  `hora` varchar(45) DEFAULT NULL,
+  `camion` varchar(45) DEFAULT NULL,
+  `placas` varchar(45) DEFAULT NULL,
+  `analista` varchar(45) DEFAULT NULL,
+  `pesador` varchar(45) DEFAULT NULL,
+  `descargo` varchar(45) DEFAULT NULL,
+  `portero` varchar(45) DEFAULT NULL,
+  `tipoBoleta` varchar(45) DEFAULT NULL,
+  `bodega` int(10) unsigned NOT NULL,
+  `destino` varchar(45) DEFAULT NULL,
+  `variedad` varchar(45) DEFAULT NULL,
+  `porcentajeHumedad` double DEFAULT NULL,
+  `porcentajeImpurezas` double DEFAULT NULL,
+  `porcentajeGranoQ` double DEFAULT NULL,
+  `porcentajeGranoD` double DEFAULT NULL,
+  `liquidada` tinyint(1) DEFAULT NULL,
+  `importe` double DEFAULT '0',
+  `idventa` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `boletas_productors` (`productor`),
+  KEY `boletas_products` (`producto`),
+  KEY `boletas_vents` (`idventa`),
+  CONSTRAINT `boletas_productors` FOREIGN KEY (`productor`) REFERENCES `tblproveedores` (`idproveedor`),
+  CONSTRAINT `boletas_products` FOREIGN KEY (`producto`) REFERENCES `tblinventario` (`idinventario`),
+  CONSTRAINT `boletas_vents` FOREIGN KEY (`idventa`) REFERENCES `tblventasinventario` (`idventasinventario`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE  `tblsemillascomprobante` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idcliente` int(10) unsigned DEFAULT NULL,
+  `riego` int(10) unsigned DEFAULT NULL,
+  `superficie` double DEFAULT NULL,
+  `idcompra` int(10) unsigned DEFAULT NULL,
+  `numcomprobante` varchar(45) DEFAULT NULL,
+  `disponecontrato` tinyint(1) DEFAULT NULL,
+  `sociopersonamoral` varchar(45) DEFAULT NULL,
+  `volumen` double DEFAULT NULL,
+  `estado` int(10) unsigned DEFAULT NULL,
+  `sucursal` int(10) unsigned DEFAULT NULL,
+  `folio` varchar(45) DEFAULT NULL,
+  `serie` varchar(45) DEFAULT NULL,
+  `nombreRepresentante` varchar(45) DEFAULT NULL,
+  `apellidoP` varchar(45) DEFAULT NULL,
+  `apellidoM` varchar(45) DEFAULT NULL,
+  `fecha` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `comprobante_cliente` (`idcliente`),
+  KEY `comprobante_sucursal` (`sucursal`),
+  KEY `FK_tblsemillascomprobante_3` (`idcompra`),
+  CONSTRAINT `comprobante_cliente` FOREIGN KEY (`idcliente`) REFERENCES `tblclientes` (`idcliente`) ON UPDATE NO ACTION,
+  CONSTRAINT `comprobante_sucursal` FOREIGN KEY (`sucursal`) REFERENCES `tblsucursales` (`idsucursal`) ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblsemillascomprobante_3` FOREIGN KEY (`idcompra`) REFERENCES `tblcompras` (`idcompra`) ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE  `tblsemillascomprobantedetalle` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `superficie` double DEFAULT NULL,
+  `descripcion` varchar(100) DEFAULT NULL,
+  `volumen` double DEFAULT NULL,
+  `rendimiento` double DEFAULT NULL,
+  `idComprobante` int(10) unsigned DEFAULT NULL,
+  `estado` int(10) unsigned DEFAULT NULL,
+  `folio` varchar(45) DEFAULT NULL,
+  `serie` varchar(45) DEFAULT NULL,
+  `guardado` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_tblsemillascomprobantedetalle_1` (`idComprobante`),
+  CONSTRAINT `FK_tblsemillascomprobantedetalle_1` FOREIGN KEY (`idComprobante`) REFERENCES `tblsemillascomprobante` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE  `tblsemillasconfiguracion` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `humedad` double NOT NULL,
+  `impurezas` double NOT NULL,
+  `granoDanado` double NOT NULL,
+  `granoQuebrado` double NOT NULL,
+  `editar` tinyint(1) NOT NULL DEFAULT '0',
+  `idProducto` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_configuracion_producto` (`idProducto`),
+  CONSTRAINT `fk_configuracion_producto` FOREIGN KEY (`idProducto`) REFERENCES `tblinventario` (`idinventario`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE  `tblsemillasliquidacion` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `subtotal` double DEFAULT NULL,
+  `total` double DEFAULT NULL,
+  `idProveedor` int(10) unsigned DEFAULT NULL,
+  `folio` int(10) unsigned DEFAULT NULL,
+  `idventa` int(10) unsigned DEFAULT NULL,
+  `serie` varchar(45) DEFAULT NULL,
+  `estado` int(10) unsigned DEFAULT NULL,
+  `sucursal` int(10) unsigned DEFAULT NULL,
+  `fecha` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `liquidacion_proveedor` (`idProveedor`),
+  KEY `liquidacion_sucursal` (`sucursal`),
+  CONSTRAINT `liquidacion_proveedor` FOREIGN KEY (`idProveedor`) REFERENCES `tblproveedores` (`idproveedor`) ON UPDATE NO ACTION,
+  CONSTRAINT `liquidacion_sucursal` FOREIGN KEY (`sucursal`) REFERENCES `tblsucursales` (`idsucursal`) ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE  `tblsemillasliquidaciondetalle` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idboleta` int(10) unsigned DEFAULT NULL,
+  `idliquidacion` int(10) unsigned DEFAULT NULL,
+  `importe` double DEFAULT NULL,
+  `guardado` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_tblsemillasliquidaciondetalle_1` (`idboleta`),
+  KEY `FK_tblsemillasliquidaciondetalle_2` (`idliquidacion`),
+  CONSTRAINT `FK_tblsemillasliquidaciondetalle_1` FOREIGN KEY (`idboleta`) REFERENCES `tblsemillasboletas` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblsemillasliquidaciondetalle_2` FOREIGN KEY (`idliquidacion`) REFERENCES `tblsemillasliquidacion` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE  `tblsemillasanticipos` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `medio` varchar(45) DEFAULT NULL,
+  `importe` double DEFAULT NULL,
+  `idLiquidacion` int(10) unsigned DEFAULT NULL,
+  `guardado` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `anticipos_liquidacion` (`idLiquidacion`),
+  CONSTRAINT `anticipos_liquidacion` FOREIGN KEY (`idLiquidacion`) REFERENCES `tblsemillasliquidacion` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
+
+CREATE TABLE  `tblsemillasanticiposfacturas` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idliquidacion` int(10) unsigned NOT NULL,
+  `idfactura` int(10) unsigned NOT NULL,
+  `importe` double NOT NULL,
+  `guardado` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_tblsemillasanticiposfacturas_1` (`idliquidacion`),
+  KEY `FK_tblsemillasanticiposfacturas_2` (`idfactura`),
+  CONSTRAINT `FK_tblsemillasanticiposfacturas_1` FOREIGN KEY (`idliquidacion`) REFERENCES `tblsemillasliquidacion` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tblsemillasanticiposfacturas_2` FOREIGN KEY (`idfactura`) REFERENCES `tblventas` (`idventa`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(500,100,62,1,66,3,0,864);
+insert into tblimpresiones(y,yl,documento,idsucursal,rg,alt,modo,ancho) values(500,100,46,1,66,3,0,864);
+
+delete from tblimpresionesnodos where documento=46 and idsucursal=1;
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(8,288,'Fecha:','fecha',50,50,'Microsoft Sans Serif',7,0,0,1,0,1,46,1,0,1,'Liquidacion - fecha',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(87,288,'Boleta:','boleta',50,50,'Microsoft Sans Serif',7,0,0,1,0,1,46,1,0,1,'Liquidacion - boleta',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(146,288,'Peso Bruto:','pesoBruto',50,50,'Microsoft Sans Serif',7,0,0,1,0,1,46,1,0,1,'Liquidacion - peso bruto ',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(206,286,'Humedad:','humedad',50,50,'Microsoft Sans Serif',7,0,0,1,0,1,46,1,0,1,'Liquidacion - humedad',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(265,288,'Quebrado:','quebrado',50,50,'Microsoft Sans Serif',7,0,0,1,0,1,46,1,0,1,'Liquidacion - quebrado',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(321,288,'Impurezas:','impurezas',50,50,'Microsoft Sans Serif',7,0,0,1,0,1,46,1,0,1,'Liquidacion - impurezas',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(383,288,'Dañado:','danado',50,50,'Microsoft Sans Serif',7,0,0,1,0,1,46,1,0,1,'Liquidacion - danado',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(444,287,'Total deducciones:','danado',50,50,'Microsoft Sans Serif',7,0,0,1,0,1,46,1,0,1,'Liquidacion - deducciones',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(507,287,'Peso liquidar:','pesoanalizado',50,50,'Microsoft Sans Serif',7,0,0,1,0,1,46,1,0,1,'Liquidacion - pesoLiquidar',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(564,290,'Precio/Ton:','precio',50,50,'Microsoft Sans Serif',7,0,0,1,0,1,46,1,0,1,'Liquidacion - precio',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(623,290,'Importe:','importe',50,50,'Microsoft Sans Serif',7,0,0,1,0,1,46,1,0,1,'Liquidacion - importe',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(503,642,'subtotal Liquidacion:','subtotal',200,20,'Microsoft Sans Serif',7,0,0,0,0,1,46,1,0,1,'Liquidacion - subtotal',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(487,692,'Factura:','factura',100,100,'Microsoft Sans Serif',7,0,0,0,0,1,46,1,0,1,'Liquidacion - factura',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(495,961,'total liquidación:','total',200,20,'Microsoft Sans Serif',7,0,0,0,0,1,46,1,0,1,'Liquidacion - total',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(601,689,'importe factura:','importefactura',100,100,'Microsoft Sans Serif',7,0,0,0,0,1,46,1,0,1,'Liquidacion - importefactura',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(195,994,'con letra:','letra',500,20,'Microsoft Sans Serif',7,0,0,0,0,1,46,1,0,1,'Liquidacion - conLetra',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(20,125,'nombre productor:','nombreProductor',500,20,'Microsoft Sans Serif',7,0,0,0,0,1,46,1,0,1,'Liquidacion - Productor',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(16,160,'direccion productor:','direccionProductor',200,20,'Microsoft Sans Serif',7,0,0,0,0,1,46,1,0,1,'Liquidacion - direccionProductor',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(19,190,'rfc productor:','rfcProductor',100,20,'Microsoft Sans Serif',7,0,0,0,0,1,46,1,0,1,'Liquidacion - rfcProductor',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(26,43,'nombre empresa:','nombreEmpresa',500,20,'Microsoft Sans Serif',7,0,0,0,0,1,46,1,0,1,'Liquidacion - Empresa',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(29,72,'dirección empresa:','direccionEmpresa',200,20,'Microsoft Sans Serif',7,0,0,0,0,1,46,1,0,1,'Liquidacion - direccionEmpresa',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(33,102,'rfc empresa:','rfcEmpresa',100,20,'Microsoft Sans Serif',7,0,0,0,0,1,46,1,0,1,'Liquidacion - rfcEmpresa',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(491,821,'concepto anticipo:','conceptoAnticipo',100,100,'Microsoft Sans Serif',7,0,0,0,0,1,46,1,0,1,'Liquidacion - Anticipo',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(599,820,'importe anticipo:','importeAnticipo',100,100,'Microsoft Sans Serif',7,0,0,0,0,1,46,1,0,1,'Liquidacion - importeAnticipo',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(322,202,'cultivo:','cultivo',100,20,'Microsoft Sans Serif',7,0,0,0,0,1,46,1,0,1,'Liquidacion - Cultivo',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(609,7,'fecha liquidacion:','fechaLiquidacion',100,20,'Microsoft Sans Serif',7,0,0,0,0,1,46,1,0,1,'Liquidacion - fechaLiquidacion',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(494,930,'total anticipos:','totalAnticipos',200,20,'Microsoft Sans Serif',7,0,0,0,0,1,46,1,0,1,'Liquidacion - totalAnticipos',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(492,796,'total facturas:','totalFacturas',200,20,'Microsoft Sans Serif',7,0,0,0,0,1,46,1,0,1,'Liquidacion - totalFacturas',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(483,8,'folio liquidación:','folioLiquidacion',100,20,'Microsoft Sans Serif',7,0,0,0,0,1,46,1,0,1,'Liquidacion - folio',0,0);
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(3,1014,'bodega:','bodega',500,20,'Microsoft Sans Serif',7,0,0,0,0,0,46,1,0,1,'Liquidacion - bodega',0,0);
+
+insert into tblactualizaciones(version) values('ver 9032 rev 4');
+
+
+insert into tblactualizaciones(version) values('ver 9032 rev 4');
+

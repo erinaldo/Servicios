@@ -1,0 +1,16 @@
+el rfc es
+SUL010720JN8
+la API Key es
+CE03ED7B9B0141DA
+
+NoCertificado="20001000000300022779"
+
+RFC
+    SUL010720JN8
+Nombre
+    INDUSTRIAS CON CLASE SA DE CV
+SNCF
+    true
+Subcontratacion
+    false
+

@@ -1,0 +1,4 @@
+ALTER TABLE `tblventasremisiones` ADD COLUMN `comentariof` VARCHAR(500) NOT NULL AFTER `idvendedor`;
+update tblventasremisiones set comentariof='';
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(13,643,'Comentario','comentario',700,20,'Lucida Console',8,0,0,0,0,0,3,1,0,0,'Comentario');
+insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre) values(13,643,'Comentario','comentario',700,20,'Lucida Console',8,0,0,0,0,0,19,1,0,0,'Comentario');

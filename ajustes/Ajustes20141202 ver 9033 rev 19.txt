@@ -1,0 +1,17 @@
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA DESGLOSADO GLOBAL','TIVAXPRet',5,'DA EL TOTAL DE IVA POR CADA DOCUMENTO PAGADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA DESGLOSADO SIN LIGAR','TIVAXPRetSL',5,'DA EL TOTAL DE IVA POR CADA PAGO QUE NO ESTA LIGADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA DESGLOSADO CONTADO','TIVAXPRetCon',5,'DA EL TOTAL DE IVA POR CADA DOCUMENTO DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA DESGLOSADO CRÉDITO','TIVAXPRetCr',5,'DA EL TOTAL DE IVA POR CADA PAGO DE CRÉDITO.');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RET. DESGLOSADO GLOBAL','TIVARETXPRet',5,'DA EL TOTAL DE IVA RETENIDO POR CADA DOCUMENTO PAGADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RET. DESGLOSADO SIN LIGAR','TIVARETXPRetSL',5,'DA EL TOTAL DE IVA RETENIDO POR CADA PAGO QUE NO ESTA LIGADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RET. DESGLOSADO CONTADO','TIVARETXPRetCon',5,'DA EL TOTAL DE IVA RETENIDO POR CADA DOCUMENTO DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IVA RET. DESGLOSADO CRÉDITO','TIVARETXPRetCr',5,'DA EL TOTAL DE IVA RETENIDO POR CADA PAGO DE CRÉDITO.');
+
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS DESGLOSADO GLOBAL','TIEPSXPRet',5,'DA EL TOTAL DE IEPS POR CADA DOCUMENTO PAGADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS DESGLOSADO SIN LIGAR','TIEPSXPRetSL',5,'DA EL TOTAL DE IEPS POR CADA PAGO QUE NO ESTA LIGADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS DESGLOSADO CONTADO','TIEPSXPRetCon',5,'DA EL TOTAL DE IEPS POR CADA DOCUMENTO DE CONTADO.');
+insert into tblcontabilidadvariables(descripcion,codigo,modulo,quehace) values('TOTAL IEPS DESGLOSADO CRÉDITO','TIEPSXPRetCr',5,'DA EL TOTAL DE IEPS POR CADA PAGO DE CRÉDITO.');
+
+insert into tblactualizaciones(version) values('ver 9033 rev 19');
+

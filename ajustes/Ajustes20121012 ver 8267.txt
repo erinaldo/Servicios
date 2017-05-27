@@ -1,0 +1,2 @@
+ALTER TABLE `tblusuarios` ADD COLUMN `idvendedor` INTEGER UNSIGNED NOT NULL AFTER `permisos6`;
+update tblusuarios set idvendedor=0;

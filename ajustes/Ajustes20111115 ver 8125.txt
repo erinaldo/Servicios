@@ -1,0 +1,96 @@
+ALTER TABLE `db_services`.`tblcomprasdetalles` ADD COLUMN `costoindirecto` DOUBLE NOT NULL AFTER `surtido`;
+update tblcomprasdetalles set costoindirecto=0;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spsacacostoarticulo` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spsacacostoarticulo`(pidinventario int,ptipocosteo tinyint,pcantidadreceta double,ptipodecambio double) RETURNS double
+BEGIN
+declare vartotalcompras double;
+declare vartotalcomprasprecio double;
+declare varcantidadcontenido double;
+declare varultimafecha varchar(10);
+declare varidtemp int;
+declare varidtemp2 int;
+declare varidmoneda int;
+declare varcosto double;
+declare vartipodecambio double;
+if ptipocosteo=1 then
+            set vartotalcompras=(ifnull((select sum(cantidad) from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where idinventario=pidinventario and tblcompras.estado=3 and tblcomprasdetalles.precio>0),0));
+            set vartotalcomprasprecio=(ifnull((select sum(precio+tblcomprasdetalles.costoindirecto) from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where idinventario=pidinventario and tblcompras.estado=3 and tblcompras.idmoneda=2 and tblcomprasdetalles.precio>0),0));
+            set vartotalcomprasprecio=vartotalcomprasprecio+(ifnull((select sum((precio*tipodecambio)+tblcomprasdetalles.costoindirecto) from tblcomprasdetalles inner join tblcompras on tblcomprasdetalles.idcompra=tblcompras.idcompra where idinventario=pidinventario and tblcompras.estado=3 and tblcompras.idmoneda<>2 and tblcomprasdetalles.precio>0),0));
+
+            set vartotalcompras=vartotalcompras+(ifnull((select sum(cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblinventarioconceptos.idconcepto=tblmovimientos.idconcepto where idinventario=pidinventario and tblmovimientos.estado=3 and tblmovimientosdetalles.precio>0 and (tblinventarioconceptos.tipo=0 or tblinventarioconceptos.tipo=4)),0));
+            set vartotalcomprasprecio=vartotalcomprasprecio+(ifnull((select sum(precio) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblinventarioconceptos.idconcepto=tblmovimientos.idconcepto where idinventario=pidinventario and tblmovimientos.estado=3 and tblmovimientosdetalles.idmoneda=2 and tblmovimientosdetalles.precio>0 and (tblinventarioconceptos.tipo=0 or tblinventarioconceptos.tipo=4)),0));
+            set vartotalcomprasprecio=vartotalcomprasprecio+(ifnull((select sum(precio*tipodecambio) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento inner join tblinventarioconceptos on tblinventarioconceptos.idconcepto=tblmovimientos.idconcepto where idinventario=pidinventario and tblmovimientos.estado=3 and tblmovimientosdetalles.idmoneda<>2 and tblmovimientosdetalles.precio>0 and (tblinventarioconceptos.tipo=0 or tblinventarioconceptos.tipo=4)),0));
+
+            if vartotalcompras<>0 then
+              set varcantidadcontenido=(select contenido from tblinventario where idinventario=pidinventario);
+              if varcantidadcontenido<>0 then
+                  set varcosto=((vartotalcomprasprecio/vartotalcompras)/varcantidadcontenido)*pcantidadreceta;
+              else
+                  set varcosto=0;
+              end if;
+            else
+              set varcosto=0;
+            end if;
+        end if;
+        if ptipocosteo=2 then
+            set varultimafecha=(select ifnull((select max(fecha) from tblcompras inner join tblcomprasdetalles on tblcompras.idcompra=tblcomprasdetalles.idcompra where idinventario=pidinventario),''));
+            if varultimafecha<>'' then
+
+              set varidtemp=(select max(iddetalle) from tblcomprasdetalles inner join tblcompras on tblcompras.idcompra=tblcomprasdetalles.idcompra where idinventario=pidinventario and fecha=varultimafecha and tblcompras.estado=3);
+
+              set varidtemp2=(select ifnull((select idcompra from tblcomprasdetalles where iddetalle=varidtemp),0));
+              set vartipodecambio=(select ifnull((select tipodecambio from tblcompras where idcompra=varidtemp2),0));
+
+              set vartotalcompras=(ifnull((select cantidad from tblcomprasdetalles where iddetalle=varidtemp),0));
+              set vartotalcomprasprecio=(ifnull((select precio+costoindirecto from tblcomprasdetalles where iddetalle=varidtemp),0));
+              set varidmoneda=(ifnull((select idmoneda from tblcomprasdetalles where iddetalle=varidtemp),0));
+              set varcantidadcontenido=(select contenido from tblinventario where idinventario=pidinventario);
+              if varcantidadcontenido<>0 then
+                  if varidmoneda=2 then
+                  set varcosto=((vartotalcomprasprecio/vartotalcompras)/varcantidadcontenido)*pcantidadreceta;
+                  else
+                  set varcosto=((vartotalcomprasprecio*vartipodecambio/vartotalcompras)/varcantidadcontenido)*pcantidadreceta;
+                  end if;
+              else
+                  set varcosto=0;
+              end if;
+            else
+              set varcosto=0;
+            end if;
+        end if;
+        if ptipocosteo=3 then
+              set vartotalcomprasprecio=(select costobase from tblinventario where idinventario=pidinventario);
+              set varcantidadcontenido=(select contenido from tblinventario where idinventario=pidinventario);
+              if varcantidadcontenido<>0 then
+                  set varcosto=(vartotalcomprasprecio/varcantidadcontenido)*pcantidadreceta;
+              else
+                  set varcosto=0;
+              end if;
+        end if;
+return varcosto;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spdatotalcompra` $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `spdatotalcompra`(pidcompra int,pconiva int,pidmoneda int) RETURNS double
+BEGIN
+declare vtotal double;
+declare vtipodecambio double;
+declare vcostoindirecto double;
+set vtipodecambio=ifnull((select tipodecambio from tblcompras where idcompra=pidcompra),1);
+set vcostoindirecto=ifnull((select costoindirecto from tblcompras where idcompra=pidcompra),0);
+if pconiva=0 then
+set vtotal=ifnull((select if(pidmoneda=2,sum(precio),if(pidmoneda<>idmoneda,sum(precio*vtipodecambio),sum(precio))) from tblcomprasdetalles where idcompra=pidcompra),0);
+else
+set vtotal=ifnull((select if(pidmoneda=2,sum(precio*(1+(iva/100))),if(pidmoneda<>idmoneda,sum((precio*vtipodecambio)*(1+(iva/100))),sum(precio*(1+(iva/100))))) from tblcomprasdetalles where idcompra=pidcompra),0);
+end if;
+return vtotal;
+END $$
+
+DELIMITER ;

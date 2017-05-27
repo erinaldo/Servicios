@@ -1,0 +1,25 @@
+ Public Function BuscarIdCuenta(ByVal pnivel As Integer, ByVal pn1 As String, ByVal pn2 As String, ByVal pn3 As String, ByVal pn4 As String, ByVal pn5 As String) As Integer
+        Dim pID As Integer = 0
+        Comm.CommandText = "select ifnull((select idCContable from tblccontables where Cuenta='" + pn1.ToString + "'"
+        If pnivel >= 2 Then
+            Comm.CommandText += " and N2='" + pn2 + "'"
+        End If
+        If pnivel >= 3 Then
+            Comm.CommandText += " and N3='" + pn3 + "'"
+        End If
+        If pnivel >= 4 Then
+            Comm.CommandText += " and N4='" + pn4 + "'"
+        End If
+        If pnivel >= 5 Then
+            Comm.CommandText += " and N5='" + pn5 + "'"
+        End If
+        Comm.CommandText += "),0)"
+        pID = Comm.ExecuteScalar
+        Comm.CommandText = "select ifnull((select descripcion from tblccontables where idCContable=" + pID.ToString + "),'')"
+        descripcionCuenta = Comm.ExecuteScalar()
+        Return pID
+    End Function
+
+cuentaTrans
+bancoCheque
+CuentaCheque

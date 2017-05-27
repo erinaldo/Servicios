@@ -1,0 +1,9 @@
+ALTER TABLE `db_services`.`tblinventarioseries` ADD COLUMN `idremisionc` INTEGER UNSIGNED NOT NULL AFTER `idmovimiento`,
+ ADD COLUMN `idcotizacion` INTEGER UNSIGNED NOT NULL AFTER `idremisionc`;
+update tblinventarioseries set idremisionc=0,idcotizacion=0
+
+
+ALTER TABLE `db_services`.`tblinventario` ADD COLUMN `fabricante` VARCHAR(100) NOT NULL AFTER `clave2`;
+
+update tblinventario set fabricante=''
+
