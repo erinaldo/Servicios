@@ -677,7 +677,7 @@
             If MsgError = "" Then
                 If Button4.Text = "Agregar Concepto" Then
                     btnReferencia.Enabled = False
-                    CD.Guardar(idMovimiento, IdInventario, CDbl(txtCantidad.Text), CDbl(TextBox6.Text), IDsMonedas2.Valor(ComboBox2.SelectedIndex), Trim(TextBox4.Text), IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex), IdVariante, 1, InvAnt, If(cmbUbicacionOrigen.SelectedIndex = -1, "", cmbUbicacionOrigen.SelectedValue), If(cmbUbicacionDestino.SelectedIndex = -1, "", cmbUbicacionDestino.SelectedValue))
+                    CD.Guardar(idMovimiento, IdInventario, CDbl(txtCantidad.Text), CDbl(TextBox6.Text), IDsMonedas2.Valor(ComboBox2.SelectedIndex), Trim(TextBox4.Text), IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex), IdVariante, 1, InvAnt, If(cmbUbicacionOrigen.Visible, cmbUbicacionOrigen.SelectedValue, ""), If(cmbUbicacionDestino.Visible, cmbUbicacionDestino.SelectedValue, ""))
                     If ManejaSeries <> 0 Then
                         If Concep.Tipo <> dbInventarioConceptos.Tipos.Traspaso Then
                             If CD.NuevoConcepto Then
@@ -726,7 +726,7 @@
                     NuevoConcepto()
                     'PopUp("Artículo agregado", 90)
                 Else
-                    CD.Modificar(IdDetalle, CDbl(txtCantidad.Text), IDsMonedas2.Valor(ComboBox2.SelectedIndex), IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex), CDbl(TextBox6.Text), InvAnt, If(cmbUbicacionOrigen.SelectedIndex = -1, "", cmbUbicacionOrigen.SelectedValue))
+                    CD.Modificar(IdDetalle, CDbl(txtCantidad.Text), IDsMonedas2.Valor(ComboBox2.SelectedIndex), IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex), CDbl(TextBox6.Text), InvAnt, If(cmbUbicacionOrigen.Visible, cmbUbicacionOrigen.SelectedValue, ""))
 
                     If ManejaSeries <> 0 Then
                         'Dim Concep As New dbInventarioConceptos(IdsMovimientos.Valor(ComboBox6.SelectedIndex), MySqlcon)
