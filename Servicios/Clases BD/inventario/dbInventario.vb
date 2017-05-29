@@ -274,6 +274,17 @@ Public Class dbInventario
         Return DS.Tables("tblinventarioalmacenes").DefaultView
     End Function
 
+    Public Function ConsultaInventarioPorUbicacion(ByVal pidSucursal As Integer, ByVal pIdAlmacen As Integer, ByVal pidinventario As Integer, ubicacion As String) As DataView
+        Dim DS As New DataSet
+        Comm.CommandText = "select a.numero, a.nombre, aiu.ubicacion, i.clave, i.nombre descripcion, sum(aiu.cantidad) cantidad, spdaultimocostoinv(i.idinventario) ucosto from tblalmacenes a inner join tblsucursales s on a.idsucursal=s.idsucursal inner join tblalmacenesi ai on a.idalmacen=ai.idalmacen inner join tblinventario i on ai.idinventario=i.idinventario inner join tblalmacenesiubicaciones aiu on aiu.idalmacen=ai.idalmacen and aiu.idinventario=ai.idinventario where aiu.ubicacion like '%" + ubicacion + "%' and ai.idinventario = " + pidinventario.ToString() + " and a.idsucursal=" + pidSucursal.ToString
+        If pIdAlmacen > 0 Then Comm.CommandText += " and a.idalmacen=" + pIdAlmacen.ToString
+        Comm.CommandText += " group by aiu.ubicacion order by a.nombre, aiu.ubicacion;"
+        Dim DA As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
+        DA.Fill(DS, "tblrepinventarioxa")
+        'DS.WriteXmlSchema("tblrepinventarioxa.xml")
+        Return DS.Tables("tblrepinventarioxa").DefaultView
+    End Function
+
     Public Function ChecaClaveRepetida(ByVal pClave As String) As Boolean
         Dim Resultado As Integer = 0
         Comm.CommandText = "select count(clave) from tblinventario where clave='" + Replace(pClave, "'", "''") + "'"

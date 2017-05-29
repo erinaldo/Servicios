@@ -31,6 +31,7 @@
                     DataGridView3.DataSource = Nothing
                     DataGridView4.DataSource = Nothing
                     IdInventario = 0
+                    btnInventarioUbicacion.Visible = False
                     'Dim ps As New dbProductos(MySqlcon)
                     'If ps.BuscaProducto(TextBox3.Text) Then
                     '    LlenaDatosProducto(ps)
@@ -143,6 +144,7 @@
         Else
             Label12.Visible = False
         End If
+        btnInventarioUbicacion.Visible = True
         ConsultaPrecios()
         ConsultaAlmacenes()
         ConsultaLotes(Articulo.ID)
@@ -264,5 +266,12 @@
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Me.Close()
+    End Sub
+
+    Private Sub btnInventarioUbicacion_Click(sender As Object, e As EventArgs) Handles btnInventarioUbicacion.Click
+        If IdInventario <> 0 Then
+            Dim f As New frmConsultaUbicaciones(GlobalIdSucursalDefault, IdInventario)
+            f.ShowDialog()
+        End If
     End Sub
 End Class
