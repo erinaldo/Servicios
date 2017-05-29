@@ -800,7 +800,7 @@
         'TextBox3.Focus()
         'End If
     End Sub
-    Private Sub DGDetalles_CellClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub DGDetalles_CellClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DGDetalles.CellClick
         LlenaDatosDetallesA()
     End Sub
     Private Sub LlenaDatosDetallesA()
@@ -1297,7 +1297,7 @@
             End If
         End If
     End Sub
-    Private Sub DGDetalles_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub DGDetalles_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DGDetalles.CellContentClick
 
     End Sub
 
