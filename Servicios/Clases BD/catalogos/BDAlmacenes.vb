@@ -169,8 +169,11 @@ Public Class dbAlmacenes
     End Function
 
     Public Sub AgregarUbicacion(idalmacen As Integer, ubicacion As String)
-        Comm.CommandText = "insert into tblalmacenesubicaciones (idalmacen,ubicacion) values (" + idalmacen.ToString() + ",'" + Trim(Replace(ubicacion, "'", "''")) + "');"
-        Comm.ExecuteNonQuery()
+        Comm.CommandText = "select count(*) from tblalmacenesubicaciones where idalmacen=" + idalmacen.ToString() + " and ubicacion='" + Trim(Replace(ubicacion, "'", "''")) + "';"
+        If Comm.ExecuteScalar = 0 Then
+            Comm.CommandText = "insert into tblalmacenesubicaciones (idalmacen,ubicacion) values (" + idalmacen.ToString() + ",'" + Trim(Replace(ubicacion, "'", "''")) + "');"
+            Comm.ExecuteNonQuery()
+        End If
     End Sub
 
     Public Sub ModificarUbicacion(idubicacion As Integer, ubicacion As String)

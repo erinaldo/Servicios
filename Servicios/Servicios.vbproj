@@ -481,6 +481,12 @@
     <Compile Include="Formas\catalogos\frmTiposCP.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Formas\catalogos\frmUbicaciones.Designer.vb">
+      <DependentUpon>frmUbicaciones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formas\catalogos\frmUbicaciones.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Formas\contabilidad\frmContabilidadCuentas.Designer.vb">
       <DependentUpon>frmContabilidadCuentas.vb</DependentUpon>
     </Compile>
@@ -3539,6 +3545,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formas\catalogos\frmTiposCP.resx">
       <DependentUpon>frmTiposCP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formas\catalogos\frmUbicaciones.resx">
+      <DependentUpon>frmUbicaciones.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formas\contabilidad\frmContabilidadCuentas.resx">
       <DependentUpon>frmContabilidadCuentas.vb</DependentUpon>

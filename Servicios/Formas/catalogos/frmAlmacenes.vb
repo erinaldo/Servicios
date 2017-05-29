@@ -61,7 +61,7 @@
             cmbUbicaciones.Enabled = False
             btnEliminarU.Enabled = False
             btnGuardarU.Enabled = False
-
+            btnGenerarU.Enabled = False
             Consulta()
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, GlobalNombreApp)
@@ -230,7 +230,7 @@
             cmbUbicaciones.Enabled = True
             btnEliminarU.Enabled = True
             btnGuardarU.Enabled = True
-
+            btnGenerarU.Enabled = True
             ConsultaOn = True
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, GlobalNombreApp)
@@ -377,5 +377,14 @@
                 MsgBox("La ubicación tiene movimientos.")
             End If
         End If
+    End Sub
+
+    Private Sub btnGenerarU_Click(sender As Object, e As EventArgs) Handles btnGenerarU.Click
+        Dim f As New frmUbicaciones(IdAlmacen)
+        f.ShowDialog()
+        Dim db As New dbAlmacenes(MySqlcon)
+        cmbUbicaciones.DataSource = db.Ubicaciones(IdAlmacen)
+        cmbUbicaciones.Text = ""
+        cmbUbicaciones.Enabled = True
     End Sub
 End Class
