@@ -300,12 +300,11 @@
                 TextBox7.Text = OpenFileDialog1.FileName
                 PanelDoubleBuffer1.BackgroundImage = Fondo
                 Dim Index As Integer = cmbDocumento.SelectedIndex
-                If Index > 15 Then Index += 16
                 Dim SA As New dbSucursalesArchivos
                 If RadioButton1.Checked Then
                     SA.GuardaRuta(Index, IdsSucursales.Valor(ComboBox2.SelectedIndex), OpenFileDialog1.FileName, GlobalIdEmpresa)
                 Else
-                    SA.GuardaRuta(Index + 16, IdsSucursales.Valor(ComboBox2.SelectedIndex), OpenFileDialog1.FileName, GlobalIdEmpresa)
+                    SA.GuardaRuta(Index + 1000, IdsSucursales.Valor(ComboBox2.SelectedIndex), OpenFileDialog1.FileName, GlobalIdEmpresa)
                 End If
 
             End If
@@ -319,12 +318,11 @@
             Dim SA As New dbSucursalesArchivos
             'Dim Imagen As Bitmap
             Dim Index As Integer = cmbDocumento.SelectedIndex
-            If Index > 15 Then Index += 16
             Dim R As String
             If RadioButton1.Checked Then
                 R = SA.DaRuta(Index, IdsSucursales.Valor(ComboBox2.SelectedIndex), GlobalIdEmpresa, True)
             Else
-                R = SA.DaRuta(Index + 16, IdsSucursales.Valor(ComboBox2.SelectedIndex), GlobalIdEmpresa, True)
+                R = SA.DaRuta(Index + 1000, IdsSucursales.Valor(ComboBox2.SelectedIndex), GlobalIdEmpresa, True)
             End If
             If R <> "" Then
                 Fondo = Image.FromFile(R)
@@ -347,7 +345,7 @@
             CheckBox4.Visible = False
             CheckBox5.Visible = False
         Else
-            dbImp.DaZonaDetalles(cmbDocumento.SelectedItem.Value + 16, IdsSucursales.Valor(ComboBox2.SelectedIndex))
+            dbImp.DaZonaDetalles(cmbDocumento.SelectedItem.Value + 1000, IdsSucursales.Valor(ComboBox2.SelectedIndex))
             CheckBox4.Visible = True
             CheckBox5.Visible = True
         End If
@@ -378,11 +376,10 @@
             PoneDatosZona()
             Dim Index As Integer
             Index = cmbDocumento.SelectedIndex
-            If Index > 15 Then Index += 16
             If RadioButton1.Checked Then
                 LlenaNodos(IdsSucursales.Valor(ComboBox2.SelectedIndex), Index)
             Else
-                LlenaNodos(IdsSucursales.Valor(ComboBox2.SelectedIndex), Index + 16)
+                LlenaNodos(IdsSucursales.Valor(ComboBox2.SelectedIndex), Index + 1000)
             End If
         End If
     End Sub
@@ -393,11 +390,10 @@
             PoneDatosZona()
             Dim Index As Integer
             Index = cmbDocumento.SelectedIndex
-            If Index > 15 Then Index += 16
             If RadioButton1.Checked Then
                 LlenaNodos(IdsSucursales.Valor(ComboBox2.SelectedIndex), Index)
             Else
-                LlenaNodos(IdsSucursales.Valor(ComboBox2.SelectedIndex), Index + 16)
+                LlenaNodos(IdsSucursales.Valor(ComboBox2.SelectedIndex), Index + 1000)
             End If
         End If
     End Sub
@@ -410,7 +406,7 @@
         If RadioButton1.Checked Then
             SA.GuardaRuta(cmbDocumento.SelectedIndex, IdsSucursales.Valor(ComboBox2.SelectedIndex), "", GlobalIdEmpresa)
         Else
-            SA.GuardaRuta(cmbDocumento.SelectedIndex + 16, IdsSucursales.Valor(ComboBox2.SelectedIndex), "", GlobalIdEmpresa)
+            SA.GuardaRuta(cmbDocumento.SelectedIndex + 1000, IdsSucursales.Valor(ComboBox2.SelectedIndex), "", GlobalIdEmpresa)
         End If
     End Sub
 
@@ -424,11 +420,10 @@
         Dim no As New NodoImpresionN("", "", "", 0)
         Dim dbI As New dbImpresionesN(MySqlcon)
         Dim Index As Integer = cmbDocumento.SelectedIndex
-        If Index > 15 Then Index += 16
         If RadioButton1.Checked Then
             no = New NodoImpresionN(6, 1, 100, 864, 2, "Línea" + Format(Cuantas, "00"), "ln" + Format(Cuantas, "00"), New Font("Arial", 10, FontStyle.Regular), NodoImpresionN.Alineaciones.Izquierda, 0, 0, 1, Index, 1, IdsSucursales.Valor(ComboBox2.SelectedIndex), 0, "Línea" + Format(Cuantas, "00"), 0, 8)
         Else
-            no = New NodoImpresionN(6, 1, 100, 864, 2, "Línea" + Format(Cuantas, "00"), "ln" + Format(Cuantas, "00"), New Font("Arial", 10, FontStyle.Regular), NodoImpresionN.Alineaciones.Izquierda, 0, 0, 1, Index + 16, 1, IdsSucursales.Valor(ComboBox2.SelectedIndex), 0, "Línea" + Format(Cuantas, "00"), 0, 8)
+            no = New NodoImpresionN(6, 1, 100, 864, 2, "Línea" + Format(Cuantas, "00"), "ln" + Format(Cuantas, "00"), New Font("Arial", 10, FontStyle.Regular), NodoImpresionN.Alineaciones.Izquierda, 0, 0, 1, Index + 1000, 1, IdsSucursales.Valor(ComboBox2.SelectedIndex), 0, "Línea" + Format(Cuantas, "00"), 0, 8)
         End If
         dbI.GuardaNodo(no)
         no.id = dbI.ID
@@ -506,11 +501,10 @@
             If CheckBox4.Checked = False And CheckBox5.Checked = True Then M = 2
             If CheckBox4.Checked = True And CheckBox5.Checked = True Then M = 3
             Dim Index As Integer = cmbDocumento.SelectedIndex
-            If Index > 15 Then Index += 16
             If RadioButton1.Checked Then
                 I.ActualizaZonaDetalles(Index, IdsSucursales.Valor(ComboBox2.SelectedIndex), CInt(TextBox9.Text), CInt(TextBox8.Text), CInt(TextBox11.Text), CInt(TextBox10.Text), M, CInt(TextBox12.Text), GlobalPermisos.ChecaPermiso(PermisosN.Herramientas.DocumentosDesingModificar, PermisosN.Secciones.Herramientas))
             Else
-                I.ActualizaZonaDetalles(Index + 16, IdsSucursales.Valor(ComboBox2.SelectedIndex), CInt(TextBox9.Text), CInt(TextBox8.Text), CInt(TextBox11.Text), CInt(TextBox10.Text), M, CInt(TextBox12.Text), GlobalPermisos.ChecaPermiso(PermisosN.Herramientas.DocumentosDesingModificar, PermisosN.Secciones.Herramientas))
+                I.ActualizaZonaDetalles(Index + 1000, IdsSucursales.Valor(ComboBox2.SelectedIndex), CInt(TextBox9.Text), CInt(TextBox8.Text), CInt(TextBox11.Text), CInt(TextBox10.Text), M, CInt(TextBox12.Text), GlobalPermisos.ChecaPermiso(PermisosN.Herramientas.DocumentosDesingModificar, PermisosN.Secciones.Herramientas))
             End If
 
         End If
@@ -863,7 +857,7 @@
             If RadioButton1.Checked Then
                 LlenaNodos(IdsSucursales.Valor(ComboBox2.SelectedIndex), Index)
             Else
-                LlenaNodos(IdsSucursales.Valor(ComboBox2.SelectedIndex), Index + 16)
+                LlenaNodos(IdsSucursales.Valor(ComboBox2.SelectedIndex), Index + 1000)
             End If
             RadioButton1.BackgroundImage = Fijo02
             RadioButton2.BackgroundImage = Flujo01
@@ -890,11 +884,10 @@
             If CheckBox4.Checked = False And CheckBox5.Checked = True Then M = 2
             If CheckBox4.Checked = True And CheckBox5.Checked = True Then M = 3
             Dim Index As Integer = cmbDocumento.SelectedIndex
-            If Index > 15 Then Index += 16
             If RadioButton1.Checked Then
                 I.ActualizaZonaDetalles(Index, IdsSucursales.Valor(ComboBox2.SelectedIndex), CInt(TextBox9.Text), CInt(TextBox8.Text), CInt(TextBox11.Text), CInt(TextBox10.Text), M, CInt(TextBox12.Text), GlobalPermisos.ChecaPermiso(PermisosN.Herramientas.DocumentosDesingModificar, PermisosN.Secciones.Herramientas))
             Else
-                I.ActualizaZonaDetalles(Index + 16, IdsSucursales.Valor(ComboBox2.SelectedIndex), CInt(TextBox9.Text), CInt(TextBox8.Text), CInt(TextBox11.Text), CInt(TextBox10.Text), M, CInt(TextBox12.Text), GlobalPermisos.ChecaPermiso(PermisosN.Herramientas.DocumentosDesingModificar, PermisosN.Secciones.Herramientas))
+                I.ActualizaZonaDetalles(Index + 1000, IdsSucursales.Valor(ComboBox2.SelectedIndex), CInt(TextBox9.Text), CInt(TextBox8.Text), CInt(TextBox11.Text), CInt(TextBox10.Text), M, CInt(TextBox12.Text), GlobalPermisos.ChecaPermiso(PermisosN.Herramientas.DocumentosDesingModificar, PermisosN.Secciones.Herramientas))
             End If
 
         End If
@@ -1193,7 +1186,7 @@
             If RadioButton1.Checked Then
                 I.ActualizaZonaDetalles(cmbDocumento.SelectedIndex, IdsSucursales.Valor(ComboBox2.SelectedIndex), CInt(TextBox9.Text), CInt(TextBox8.Text), CInt(TextBox11.Text), CInt(TextBox10.Text), M, CInt(TextBox12.Text), GlobalPermisos.ChecaPermiso(PermisosN.Herramientas.DocumentosDesingModificar, PermisosN.Secciones.Herramientas))
             Else
-                I.ActualizaZonaDetalles(cmbDocumento.SelectedIndex + 16, IdsSucursales.Valor(ComboBox2.SelectedIndex), CInt(TextBox9.Text), CInt(TextBox8.Text), CInt(TextBox11.Text), CInt(TextBox10.Text), M, CInt(TextBox12.Text), GlobalPermisos.ChecaPermiso(PermisosN.Herramientas.DocumentosDesingModificar, PermisosN.Secciones.Herramientas))
+                I.ActualizaZonaDetalles(cmbDocumento.SelectedIndex + 1000, IdsSucursales.Valor(ComboBox2.SelectedIndex), CInt(TextBox9.Text), CInt(TextBox8.Text), CInt(TextBox11.Text), CInt(TextBox10.Text), M, CInt(TextBox12.Text), GlobalPermisos.ChecaPermiso(PermisosN.Herramientas.DocumentosDesingModificar, PermisosN.Secciones.Herramientas))
             End If
 
         End If
@@ -1209,7 +1202,7 @@
             If RadioButton1.Checked Then
                 I.ActualizaZonaDetalles(cmbDocumento.SelectedIndex, IdsSucursales.Valor(ComboBox2.SelectedIndex), CInt(TextBox9.Text), CInt(TextBox8.Text), CInt(TextBox11.Text), CInt(TextBox10.Text), M, CInt(TextBox12.Text), GlobalPermisos.ChecaPermiso(PermisosN.Herramientas.DocumentosDesingModificar, PermisosN.Secciones.Herramientas))
             Else
-                I.ActualizaZonaDetalles(cmbDocumento.SelectedIndex + 16, IdsSucursales.Valor(ComboBox2.SelectedIndex), CInt(TextBox9.Text), CInt(TextBox8.Text), CInt(TextBox11.Text), CInt(TextBox10.Text), M, CInt(TextBox12.Text), GlobalPermisos.ChecaPermiso(PermisosN.Herramientas.DocumentosDesingModificar, PermisosN.Secciones.Herramientas))
+                I.ActualizaZonaDetalles(cmbDocumento.SelectedIndex + 1000, IdsSucursales.Valor(ComboBox2.SelectedIndex), CInt(TextBox9.Text), CInt(TextBox8.Text), CInt(TextBox11.Text), CInt(TextBox10.Text), M, CInt(TextBox12.Text), GlobalPermisos.ChecaPermiso(PermisosN.Herramientas.DocumentosDesingModificar, PermisosN.Secciones.Herramientas))
             End If
 
         End If
@@ -1239,24 +1232,23 @@
                     Exit Sub
                 End If
                 Dim DocumentoI As Integer = cmbDocumento.SelectedIndex
-                If DocumentoI > 15 Then DocumentoI += 16
+                If DocumentoI > 15 Then DocumentoI += 1000
                 Dim ImpN As New dbImpresionesN(MySqlcon)
                 If RadioButton1.Checked Then
                     'SA.GuardaRuta(Index, IdsSucursales.Valor(ComboBox2.SelectedIndex), OpenFileDialog1.FileName, GlobalIdEmpresa)
                     ImpN.CopiaFormato(GlobalIdSucursalDefault, IdsSucursales.Valor(ComboBox2.SelectedIndex), DocumentoI)
                 Else
-                    ImpN.CopiaFormato(GlobalIdSucursalDefault, IdsSucursales.Valor(ComboBox2.SelectedIndex), DocumentoI + 16)
+                    ImpN.CopiaFormato(GlobalIdSucursalDefault, IdsSucursales.Valor(ComboBox2.SelectedIndex), DocumentoI + 1000)
                 End If
                 If ConsultaOn Then
                     PoneImagenDB()
                     PoneDatosZona()
                     Dim Index As Integer
                     Index = cmbDocumento.SelectedIndex
-                    If Index > 15 Then Index += 16
                     If RadioButton1.Checked Then
                         LlenaNodos(IdsSucursales.Valor(ComboBox2.SelectedIndex), Index)
                     Else
-                        LlenaNodos(IdsSucursales.Valor(ComboBox2.SelectedIndex), Index + 16)
+                        LlenaNodos(IdsSucursales.Valor(ComboBox2.SelectedIndex), Index + 1000)
                     End If
                 End If
                 PopUp("Listo", 90)
