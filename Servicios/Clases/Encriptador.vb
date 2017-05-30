@@ -247,8 +247,22 @@ Public Class Encriptador
                     Dim lhasher As New Security.Cryptography.SHA1CryptoServiceProvider()
                     bytesFirmados = lRSA.SignData(System.Text.Encoding.UTF8.GetBytes(pCadenaOriginal), lhasher)
                 Else
-                    Dim lhasher256 As New Security.Cryptography.SHA256CryptoServiceProvider
-                    bytesFirmados = lRSA.SignData(System.Text.Encoding.UTF8.GetBytes(pCadenaOriginal), lhasher256)
+                    'Dim lhasher256 As New Security.Cryptography.SHA256CryptoServiceProvider
+                    'Dim rsaClear = New Security.Cryptography.RSACryptoServiceProvider
+                    '// Export RSA parameters from 'rsa' and import them into 'rsaClear'
+                    'rsaClear.ImportParameters(lRSA.ExportParameters(True))
+                    'bytesFirmados = rsaClear.SignData(System.Text.Encoding.UTF8.GetBytes(pCadenaOriginal), System.Security.Cryptography.CryptoConfig.MapNameToOID("SHA256"))
+
+                    'Dim privateCert As New Security.Cryptography.X509Certificates.X509Certificate2(archivoPFX, clavePFX, X509KeyStorageFlags.Exportable)
+                    Dim privateCert As New Security.Cryptography.X509Certificates.X509Certificate2(pArchivoCer + ".pfx", "")
+                    Dim privateKey As Security.Cryptography.RSACryptoServiceProvider = DirectCast(privateCert.PrivateKey, Security.Cryptography.RSACryptoServiceProvider)
+                    Dim privateKey1 As New Security.Cryptography.RSACryptoServiceProvider()
+                    'privateKey1.ImportParameters(privateKey.ExportParameters(True))
+                    bytesFirmados = privateKey1.SignData(System.Text.Encoding.UTF8.GetBytes(pCadenaOriginal), "SHA256")
+
+                    'Dim sello256 As String = Convert.ToBase64String(signature)
+
+
                 End If
                 End If
             Return Convert.ToBase64String(bytesFirmados)
