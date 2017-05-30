@@ -1646,4 +1646,12 @@ Public Class dbInventario
         Dim i As Integer = Comm.ExecuteScalar
         Return i
     End Function
+
+    Public Function Ubicaciones(idalmacen As Integer, idinventario As Integer) As DataTable
+        Comm.CommandText = "select au.ubicacion, concat(au.ubicacion, ' (', ifnull(aiu.cantidad,0), ')') ubicacionc from tblalmacenesubicaciones au left outer join tblalmacenesiubicaciones aiu on au.idalmacen=aiu.idalmacen and au.ubicacion=aiu.ubicacion and aiu.idinventario=" + idinventario.ToString() + " where au.idalmacen=" + idalmacen.ToString() + " order by au.ubicacion;"
+        Dim da As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
+        Dim ds As New DataSet
+        da.Fill(ds, "tabla")
+        Return ds.Tables("tabla")
+    End Function
 End Class

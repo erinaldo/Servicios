@@ -194,16 +194,10 @@
         Comm.CommandText += "update tblcomprasaduana inner join tblcomprasdetalles on tblcomprasaduana.iddetalle=tblcomprasdetalles.iddetalle set tblcomprasaduana.surtido=0 where idcompra=" + pId.ToString + ";"
         Comm.ExecuteNonQuery()
 
-        'verifica si la compra se creó desde un pedido y le modifica los surtidos al pedido según los que se facturaron
-        
-
-        'Comm.CommandText += "update tblcompraslotes inner join tblcomprasdetalles on tblcompraslotes.iddetalle=tblcomprasdetalles.iddetalle set tblcompraslotes.surtido=tblcompraslotes.cantidad where idcompra=" + pId.ToString + ";"
-        'If pCosteoTiempoReal = 1 Then
-        'Comm.CommandText = "update tblinventario inner join tblcomprasdetalles on tblinventario.idinventario=tblcomprasdetalles.idinventario set tblinventario.costobase=ifnull(spsacacostoarticulo(tblinventario.idinventario,1,tblinventario.contenido," + pTipodeCambio.ToString + "," + pTipoCosteo.ToString + "),0) where tblcomprasdetalles.idcompra=" + pId.ToString + " and tblcomprasdetalles.idinventario>1"
-        'Comm.ExecuteNonQuery()
-        'End If
-        'Comm.CommandText = "update tblproductos inner join tblproductosvariantes on tblproductos.idproducto=tblproductosvariantes inner join tblcomprasdetalles on tblproductosvariantes.idvariante=tblcomprasdetalles.idvariante set tblproductos.costo=spsacacostoproducto(tblproductos.idproducto," + pTipoCosteo.ToString + ") where tblcomprasdetalles.idcompra=" + pId.ToString + " and tblcomprasdetalles.idvariante>1"
-        'Comm.ExecuteNonQuery()
+        'ubicaciones
+        Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.surtido, 0, 1, 1, u.ubicaciono) from tblcomprasdetalles d inner join tblcomprasubicaciones u on d.iddetalle=u.iddetalle where d.idcompra=" + pId.ToString + ";"
+        Comm.CommandText += "update tblcomprasubicaciones inner join tblcomprasdetalles on tblcomprasubicaciones.iddetalle = tblcomprasdetalles.iddetalle set tblcomprasubicaciones.surtido = tblcomprasubicaciones.cantidad where tblcomprasdetalles.idcompra=" + pId.ToString + ";"
+        Comm.ExecuteNonQuery()
     End Sub
 
     Public Function Consulta(ByVal pFecha As String, ByVal pFecha2 As String, Optional ByVal pNombreClave As String = "", Optional ByVal pReferencia As String = "", Optional ByVal pEstado As Byte = 0, Optional ByVal pIdSucursal As Integer = 0) As DataView
@@ -606,51 +600,22 @@
         Return Comm.ExecuteReader
     End Function
     Public Sub AgregarDetallesReferencia(ByVal PidCompra As Integer, ByVal pIdDocumento As Integer, ByVal Tipo As Byte, ByVal pidAlmacen As Integer)
-        '0 cotizacion
-        '1 pedido
-        '2 remision
-        '3 ventas
-
-        If Tipo = 0 Then
-            Comm.CommandText = "insert into tblcomprasdetalles(idcompra,idinventario,cantidad,precio,idmoneda,iva,extra,descuento,idalmacen,surtido,costoindirecto,IEPS,ivaRetenido) select " + PidCompra.ToString + ",idinventario,cantidad,precio,idmoneda,iva,extra,descuento," + pidAlmacen.ToString + ",0,0,IEPS,ivaRetenido from tblcomprascotizacionesdetalles where idcotizacion=" + pIdDocumento.ToString
-            Comm.ExecuteNonQuery()
-
-            'Comm.CommandText = "insert into tblventascotizacionesproductos(idcotizacion,idvariante,cantidad,precio,descripcion,idmoneda,iva,extra,descuento) select " + PidCotizacion.ToString + ",idvariante,cantidad,precio,descripcion,idmoneda,iva,extra,descuento from tblventascotizacionesproductos where idcotizacion=" + pIdDocumento.ToString
-            'Comm.ExecuteNonQuery()
-        End If
-
-        If Tipo = 1 Then
-            Comm.CommandText = "insert into tblcomprasdetalles(idcompra, idinventario, cantidad, precio, idmoneda, iva, extra, descuento, idalmacen, surtido, costoindirecto, IEPS, ivaRetenido) select " + PidCompra.ToString + ", idinventario, cantidad-surtido, precio, idmoneda, iva, extra, descuento, " + pidAlmacen.ToString + ", 0, 0, IEPS, ivaRetenido from tblcompraspedidosdetalles where cantidad>surtido and idpedido=" + pIdDocumento.ToString
-            Comm.ExecuteNonQuery()
-
-            'Comm.CommandText = "insert into tblventascotizacionesproductos(idcotizacion,idvariante,cantidad,precio,descripcion,idmoneda,iva,extra,descuento) select " + PidCotizacion.ToString + ",idvariante,cantidad,precio,descripcion,idmoneda,iva,extra,descuento from tblventaspedidosproductos where idpedido=" + pIdDocumento.ToString
-            'Comm.ExecuteNonQuery()
-        End If
-
-        If Tipo = 2 Then
-            Comm.CommandText = "insert into tblcomprasdetalles(idcompra,idinventario,cantidad,precio,idmoneda,iva,extra,descuento,idalmacen,surtido,costoindirecto,IEPS,ivaRetenido) select " + PidCompra.ToString + ",idinventario,cantidad,precio,idmoneda,iva,extra,descuento,idalmacen,surtido,0,IEPS,ivaRetenido from tblcomprasremisionesdetalles where idremision=" + pIdDocumento.ToString
-            Comm.ExecuteNonQuery()
-            Comm.CommandText = "update tblinventarioseries set idcompra=" + PidCompra.ToString + ",idremisionc=0 where idremisionc=" + pIdDocumento.ToString
-            Comm.ExecuteNonQuery()
-            'Comm.CommandText = "insert into tblventascotizacionesproductos(idcotizacion,idvariante,cantidad,precio,descripcion,idmoneda,iva,extra,descuento) select " + PidCotizacion.ToString + ",idvariante,cantidad,precio,descripcion,idmoneda,iva,extra,descuento from tblventasremisionesproductos where idremision=" + pIdDocumento.ToString
-            'Comm.ExecuteNonQuery()
-
-            'Comm.CommandText = "insert into tblventasservicios(idventa,idservicio,cantidad,precio,descripcion,idmoneda,iva,extra,descuento) select " + PidCotizacion.ToString + ",idservicio,cantidad,precio,descripcion,idmoneda,iva,extra,descuento from tblventasremisionesservicios where idremision=" + pIdDocumento.ToString
-            'Comm.ExecuteNonQuery()
-            'Comm.CommandText = "update tblinventarioseries set idventa=" + PidCotizacion.ToString + " where idremision=" + pIdDocumento.ToString
-            'Comm.ExecuteNonQuery()
-        End If
-
-        If Tipo = 3 Then
-            Comm.CommandText = "insert into tblcomprasdetalles(idcompra,idinventario,cantidad,precio,idmoneda,iva,extra,descuento,idalmacen,surtido,costoindirecto,IEPS,ivaRetenido) select " + PidCompra.ToString + ",idinventario,cantidad,precio,idmoneda,iva,extra,descuento,idalmacen,0,0,IEPS,ivaRetenido from tblcomprasdetalles where idcompra=" + pIdDocumento.ToString
-            Comm.ExecuteNonQuery()
-            
-            'Comm.CommandText = "insert into tblventascotizacionesproductos(idcotizacion,idvariante,cantidad,precio,descripcion,idmoneda,iva,extra,descuento) select " + PidCotizacion.ToString + ",idvariante,cantidad,precio,descripcion,idmoneda,iva,extra,descuento from tblventasproductos where idventa=" + pIdDocumento.ToString
-            'Comm.ExecuteNonQuery()
-
-            'Comm.CommandText = "insert into tblventasservicios(idventa,idservicio,cantidad,precio,descripcion,idmoneda,iva,extra,descuento) select " + PidCotizacion.ToString + ",idservicio,cantidad,precio,descripcion,idmoneda,iva,extra,descuento from tblventasservicios where idventa=" + pIdDocumento.ToString
-            'Comm.ExecuteNonQuery()
-        End If
+        Select Case Tipo
+            Case 0 'cotizacion
+                Comm.CommandText = "insert into tblcomprasdetalles(idcompra,idinventario,cantidad,precio,idmoneda,iva,extra,descuento,idalmacen,surtido,costoindirecto,IEPS,ivaRetenido) select " + PidCompra.ToString + ",idinventario,cantidad,precio,idmoneda,iva,extra,descuento," + pidAlmacen.ToString + ",0,0,IEPS,ivaRetenido from tblcomprascotizacionesdetalles where idcotizacion=" + pIdDocumento.ToString
+                Comm.ExecuteNonQuery()
+            Case 1 'pedido
+                Comm.CommandText = "insert into tblcomprasdetalles(idcompra, idinventario, cantidad, precio, idmoneda, iva, extra, descuento, idalmacen, surtido, costoindirecto, IEPS, ivaRetenido) select " + PidCompra.ToString + ", idinventario, cantidad-surtido, precio, idmoneda, iva, extra, descuento, " + pidAlmacen.ToString + ", 0, 0, IEPS, ivaRetenido from tblcompraspedidosdetalles where cantidad>surtido and idpedido=" + pIdDocumento.ToString
+                Comm.ExecuteNonQuery()
+            Case 2 'remision
+                Comm.CommandText = "insert into tblcomprasdetalles(idcompra,idinventario,cantidad,precio,idmoneda,iva,extra,descuento,idalmacen,surtido,costoindirecto,IEPS,ivaRetenido) select " + PidCompra.ToString + ",idinventario,cantidad,precio,idmoneda,iva,extra,descuento,idalmacen,surtido,0,IEPS,ivaRetenido from tblcomprasremisionesdetalles where idremision=" + pIdDocumento.ToString
+                Comm.ExecuteNonQuery()
+                Comm.CommandText = "update tblinventarioseries set idcompra=" + PidCompra.ToString + ",idremisionc=0 where idremisionc=" + pIdDocumento.ToString
+                Comm.ExecuteNonQuery()
+            Case 3 'venta
+                Comm.CommandText = "insert into tblcomprasdetalles(idcompra,idinventario,cantidad,precio,idmoneda,iva,extra,descuento,idalmacen,surtido,costoindirecto,IEPS,ivaRetenido) select " + PidCompra.ToString + ",idinventario,cantidad,precio,idmoneda,iva,extra,descuento,idalmacen,0,0,IEPS,ivaRetenido from tblcomprasdetalles where idcompra=" + pIdDocumento.ToString
+                Comm.ExecuteNonQuery()
+        End Select
     End Sub
     Public Sub ModificaInventario(ByVal pId As Integer, ByVal pTipoCosteo As Byte, ByVal pTipodeCambio As Double)
         Comm.CommandTimeout = 10000
@@ -673,6 +638,12 @@
         Comm.ExecuteNonQuery()
         Comm.CommandText += "update tblcomprasaduana inner join tblcomprasdetalles on tblcomprasaduana.iddetalle=tblcomprasdetalles.iddetalle set tblcomprasaduana.surtido=tblcomprasaduana.cantidad where idcompra=" + pId.ToString + ";"
         Comm.ExecuteNonQuery()
+
+        'ubicaciones
+        Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.cantidad-u.surtido, 0, 0, 1, u.ubicaciono) from tblcomprasdetalles d inner join tblcomprasubicaciones u on d.iddetalle=u.iddetalle where d.idcompra=" + pId.ToString + ";"
+        Comm.CommandText += "update tblcomprasubicaciones inner join tblcomprasdetalles on tblcomprasubicaciones.iddetalle = tblcomprasdetalles.iddetalle set tblcomprasubicaciones.surtido = tblcomprasubicaciones.cantidad where tblcomprasdetalles.idcompra=" + pId.ToString + ";"
+        Comm.ExecuteNonQuery()
+
         'verifica si la compra se creó desde un pedido y le modifica los surtidos al pedido según los que se facturaron
         
     End Sub

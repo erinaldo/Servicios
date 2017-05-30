@@ -85,6 +85,7 @@
         Catch ex As Exception
 
         End Try
+        DGDetalles.AutoGenerateColumns = False
         If GlobalChecarConexion() = False Then
             MsgBox("No se pudo establecer una conexion al servidor. Reinicie el sistema y si el problema persiste verifique su conexión a la red.", MsgBoxStyle.Critical, GlobalNombreApp)
             For Each c As Control In Me.Controls
@@ -103,15 +104,15 @@
             Almacen = New dbAlmacenes(MySqlcon)
             Almacen.AlmacenesSinPermiso(GlobalIdUsuario)
             CosteotiempoREal = Op.CostoTiempoReal
-            Tabla.Columns.Add("Id", I.GetType)
-            Tabla.Columns.Add("TipoR", S.GetType)
-            Tabla.Columns.Add("Extra", S.GetType)
-            Tabla.Columns.Add("Cantidad", D.GetType)
-            Tabla.Columns.Add("Código", S.GetType)
-            Tabla.Columns.Add("Descripción", S.GetType)
-            Tabla.Columns.Add("Costo U.", S.GetType)
-            Tabla.Columns.Add("Importe", S.GetType)
-            Tabla.Columns.Add("Moneda", S.GetType)
+            'Tabla.Columns.Add("Id", I.GetType)
+            'Tabla.Columns.Add("TipoR", S.GetType)
+            'Tabla.Columns.Add("Extra", S.GetType)
+            'Tabla.Columns.Add("Cantidad", D.GetType)
+            'Tabla.Columns.Add("Código", S.GetType)
+            'Tabla.Columns.Add("Descripción", S.GetType)
+            'Tabla.Columns.Add("Costo U.", S.GetType)
+            'Tabla.Columns.Add("Importe", S.GetType)
+            'Tabla.Columns.Add("Moneda", S.GetType)
             LlenaCombos("tblsucursales", ComboBox3, "nombre", "nombret", "idsucursal", IdsSucursales)
             LlenaCombos("tblmonedas", cmbMoneda, "nombre", "nombrem", "idmoneda", IDsMonedas, "idmoneda>1")
             LlenaCombos("tblmonedas", ComboBox2, "nombre", "nombrem", "idmoneda", IDsMonedas2, "idmoneda>1")
@@ -547,34 +548,34 @@
     Private Sub ConsultaDetalles()
         Try
 
-            Tabla.Rows.Clear()
-            Dim T As MySql.Data.MySqlClient.MySqlDataReader
+            'Tabla.Rows.Clear()
+            'Dim T As MySql.Data.MySqlClient.MySqlDataReader
             Dim CD As New dbComprasDetalles(MySqlcon)
-            T = CD.ConsultaReader(idCompra, 0)
-            While T.Read
-                If T("cantidad") <> 0 Then
-                    Tabla.Rows.Add(T("iddetalle"), "A", "", T("cantidad"), T("clave"), T("descripcion"), Format(T("precio") / T("cantidad"), "0.00"), Format(T("precio"), "0.00"), T("abreviatura"))
-                Else
-                    Tabla.Rows.Add(T("iddetalle"), "A", "", T("cantidad"), T("clave"), T("descripcion"), "0.00", Format(T("precio"), "0.00"), T("abreviatura"))
-                End If
-            End While
-            T.Close()
-            DGDetalles.DataSource = Tabla
-            DGDetalles.Columns(0).Visible = False
-            DGDetalles.Columns(1).Visible = False
-            DGDetalles.Columns(2).Visible = False
-            DGDetalles.Columns(5).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-            DGDetalles.Columns(4).Width = 80
-            DGDetalles.Columns(8).Width = 80
-            DGDetalles.Columns(0).SortMode = DataGridViewColumnSortMode.NotSortable
-            DGDetalles.Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
-            DGDetalles.Columns(2).SortMode = DataGridViewColumnSortMode.NotSortable
-            DGDetalles.Columns(3).SortMode = DataGridViewColumnSortMode.NotSortable
-            DGDetalles.Columns(4).SortMode = DataGridViewColumnSortMode.NotSortable
-            DGDetalles.Columns(5).SortMode = DataGridViewColumnSortMode.NotSortable
-            DGDetalles.Columns(6).SortMode = DataGridViewColumnSortMode.NotSortable
-            DGDetalles.Columns(7).SortMode = DataGridViewColumnSortMode.NotSortable
-            DGDetalles.Columns(8).SortMode = DataGridViewColumnSortMode.NotSortable
+            'T = CD.ConsultaReader(idCompra, 0)
+            'While T.Read
+            '    If T("cantidad") <> 0 Then
+            '        Tabla.Rows.Add(T("iddetalle"), "A", "", T("cantidad"), T("clave"), T("descripcion"), Format(T("precio") / T("cantidad"), "0.00"), Format(T("precio"), "0.00"), T("abreviatura"))
+            '    Else
+            '        Tabla.Rows.Add(T("iddetalle"), "A", "", T("cantidad"), T("clave"), T("descripcion"), "0.00", Format(T("precio"), "0.00"), T("abreviatura"))
+            '    End If
+            'End While
+            'T.Close()
+            DGDetalles.DataSource = CD.Consulta(idCompra)
+            'DGDetalles.Columns(0).Visible = False
+            'DGDetalles.Columns(1).Visible = False
+            'DGDetalles.Columns(2).Visible = False
+            'DGDetalles.Columns(5).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            'DGDetalles.Columns(4).Width = 80
+            'DGDetalles.Columns(8).Width = 80
+            'DGDetalles.Columns(0).SortMode = DataGridViewColumnSortMode.NotSortable
+            'DGDetalles.Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
+            'DGDetalles.Columns(2).SortMode = DataGridViewColumnSortMode.NotSortable
+            'DGDetalles.Columns(3).SortMode = DataGridViewColumnSortMode.NotSortable
+            'DGDetalles.Columns(4).SortMode = DataGridViewColumnSortMode.NotSortable
+            'DGDetalles.Columns(5).SortMode = DataGridViewColumnSortMode.NotSortable
+            'DGDetalles.Columns(6).SortMode = DataGridViewColumnSortMode.NotSortable
+            'DGDetalles.Columns(7).SortMode = DataGridViewColumnSortMode.NotSortable
+            'DGDetalles.Columns(8).SortMode = DataGridViewColumnSortMode.NotSortable
             If DGDetalles.RowCount > DGDetalles.DisplayedRowCount(False) Then DGDetalles.FirstDisplayedScrollingRowIndex = DGDetalles.RowCount - DGDetalles.DisplayedRowCount(False)
             SacaTotal(False)
         Catch ex As Exception
@@ -624,6 +625,9 @@
         PrecioU = 0
         PorLotes = 0
         Aduana = 0
+        lblUbicacion.Visible = False
+        cmbUbicacion.Visible = False
+
         Button9.Enabled = False
         Button12.Enabled = False
         If CheckBox2.Checked Then
@@ -697,7 +701,7 @@
                 IvaRetAnterior = CDbl(txtIVARetenido.Text)
                 If Button4.Text = "Agregar artículo" Then
 
-                    CD.Guardar(idCompra, IdInventario, CDbl(txtCantidad.Text), CDbl(txtImporte.Text), IDsMonedas.Valor(cmbMoneda.SelectedIndex), IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox11.Text), CDbl(TextBox9.Text), True, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text))
+                    CD.Guardar(idCompra, IdInventario, CDbl(txtCantidad.Text), CDbl(txtImporte.Text), IDsMonedas.Valor(cmbMoneda.SelectedIndex), IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox11.Text), CDbl(TextBox9.Text), True, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), If(cmbUbicacion.Visible, cmbUbicacion.SelectedValue, ""))
                     If ManejaSeries <> 0 Then
                         If CD.NuevoConcepto Then
                             Dim F As New frmInventarioSeries(IdInventario, idCompra, 0, CInt(txtCantidad.Text), DateTimePicker1.Value, 0, 0)
@@ -855,6 +859,13 @@
             Button6.Enabled = False
             txtCodigo.Enabled = False
             ComboBox8.Enabled = False
+
+            Dim articulo As New dbInventario(CD.Inventario.ID, MySqlcon)
+            lblUbicacion.Visible = articulo.UsaUbicacion
+            cmbUbicacion.Visible = articulo.UsaUbicacion
+            cmbUbicacion.DataSource = articulo.Ubicaciones(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario)
+            cmbUbicacion.SelectedValue = CD.UbicacionO
+
             If CheckScroll.Checked Then txtCantidad.Focus()
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, GlobalNombreApp)
@@ -993,6 +1004,9 @@
         IdInventario = Articulo.ID
         PorLotes = Articulo.PorLotes
         Aduana = Articulo.Aduana
+        lblUbicacion.Visible = Articulo.UsaUbicacion
+        cmbUbicacion.Visible = Articulo.UsaUbicacion
+        cmbUbicacion.DataSource = Articulo.Ubicaciones(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario)
         'IdVariante = 0
         'If ManejaSeries = 0 Then
         '    Button12.Visible = False

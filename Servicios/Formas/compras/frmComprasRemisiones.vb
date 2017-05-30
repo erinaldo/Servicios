@@ -577,6 +577,8 @@
         Button6.Enabled = True
         TextBox3.Enabled = True
         Button20.Enabled = False
+        lblUbicacion.Visible = False
+        cmbUbicacion.Visible = False
         ComboBox1.SelectedIndex = IDsMonedas.Busca(GlobalIdMoneda)
         Button4.Text = "Agregar Concepto"
         If GlobalPermisos.ChecaPermiso(PermisosN.Compras.CambiodeAlmacen, PermisosN.Secciones.Compras) = False Then
@@ -640,7 +642,7 @@
             If HayError = False Then
                 If Button4.Text = "Agregar Concepto" Then
 
-                    CD.Guardar(idRemision, IdInventario, CDbl(TextBox5.Text), CDbl(TextBox6.Text), IDsMonedas.Valor(ComboBox1.SelectedIndex), TextBox4.Text, CDbl(TextBox8.Text), CDbl(TextBox9.Text), IdsAlmacenes.Valor(ComboBox8.SelectedIndex), Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text))
+                    CD.Guardar(idRemision, IdInventario, CDbl(TextBox5.Text), CDbl(TextBox6.Text), IDsMonedas.Valor(ComboBox1.SelectedIndex), TextBox4.Text, CDbl(TextBox8.Text), CDbl(TextBox9.Text), IdsAlmacenes.Valor(ComboBox8.SelectedIndex), Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), If(cmbUbicacion.Visible, cmbUbicacion.SelectedValue, ""))
                     If ManejaSeries <> 0 Then
                         If CD.NuevoConcepto Then
                             Dim F As New frmInventarioSeries(IdInventario, 0, 0, CInt(TextBox5.Text), DateTimePicker1.Value, 0, idRemision)
@@ -793,6 +795,12 @@
             Button4.Text = "Modificar Concepto"
             TextBox4.Text = CD.Descripcion
 
+            Dim articulo As New dbInventario(CD.Inventario.ID, MySqlcon)
+            lblUbicacion.Visible = Articulo.UsaUbicacion
+            cmbUbicacion.Visible = Articulo.UsaUbicacion
+            cmbUbicacion.DataSource = Articulo.Ubicaciones(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario)
+            cmbUbicacion.SelectedValue = CD.UbicacionO
+
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, GlobalNombreApp)
         End Try
@@ -922,6 +930,10 @@
         Aduana = Articulo.Aduana
         txtIEPS.Text = Articulo.ieps.ToString
         txtIVARetenido.Text = Articulo.ivaRetenido.ToString
+        lblUbicacion.Visible = Articulo.UsaUbicacion
+        cmbUbicacion.Visible = Articulo.UsaUbicacion
+        cmbUbicacion.DataSource = Articulo.Ubicaciones(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario)
+
         'IdVariante = 0
         If ManejaSeries = 0 Then
             Button12.Visible = False

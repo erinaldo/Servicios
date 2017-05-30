@@ -323,6 +323,12 @@
         Comm.CommandText += "update tblcomprasremisioneslotes inner join tblcomprasremisionesdetalles on tblcomprasremisioneslotes.iddetalle=tblcomprasremisionesdetalles.iddetalle set tblcomprasremisioneslotes.surtido=tblcomprasremisioneslotes.cantidad where idremision=" + pId.ToString + ";"
         Comm.CommandText += "update tblcomprasremisionesaduana inner join tblcomprasremisionesdetalles on tblcomprasremisionesaduana.iddetalle=tblcomprasremisionesdetalles.iddetalle set tblcomprasremisionesaduana.surtido=tblcomprasremisionesaduana.cantidad where idremision=" + pId.ToString + ";"
         Comm.ExecuteNonQuery()
+
+        'ubicaciones
+        Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.cantidad-u.surtido, 0, 0, 1, u.ubicaciono) from tblcomprasremisionesdetalles d inner join tblcomprasremisionesubicaciones u on d.iddetalle=u.iddetalle where d.idremision=" + pId.ToString + ";"
+        Comm.CommandText += "update tblcomprasremisionesubicaciones inner join tblcomprasremisionesdetalles on tblcomprasremisionesubicaciones.iddetalle = tblcomprasremisionesdetalles.iddetalle set tblcomprasremisionesubicaciones.surtido = tblcomprasremisionesubicaciones.cantidad where tblcomprasremisionesdetalles.idremision=" + pId.ToString + ";"
+        Comm.ExecuteNonQuery()
+
         'verifica si la compra se creó desde un pedido y le modifica los surtidos al pedido según los que se remisionaron
         Comm.CommandText = "select idpedido from tblcomprasremisiones where idremision=" + pId.ToString
         Dim idpedido As Integer = Comm.ExecuteScalar
@@ -332,7 +338,6 @@
         End If
     End Sub
     Public Sub RegresaInventario(ByVal pId As Integer)
-        'If pidcomprar = 0 Then
         Comm.CommandText = "select spmodificainventarioi(idinventario,idalmacen,surtido,0,1,1) from tblcomprasremisionesdetalles where idremision=" + pId.ToString + ";"
         Comm.CommandText += "select spmodificainventariolotesf(tblcomprasremisionesdetalles.idinventario,tblcomprasremisionesdetalles.idalmacen,tblcomprasremisioneslotes.surtido,0,1,1,tblcomprasremisioneslotes.idlote) from tblcomprasremisioneslotes inner join tblcomprasremisionesdetalles on tblcomprasremisioneslotes.iddetalle=tblcomprasremisionesdetalles.iddetalle where tblcomprasremisionesdetalles.idremision=" + pId.ToString + ";"
         Comm.CommandText += "select spmodificainventarioaduanaf(tblcomprasremisionesdetalles.idinventario,tblcomprasremisionesdetalles.idalmacen,tblcomprasremisionesaduana.surtido,0,1,1,tblcomprasremisionesaduana.idaduana) from tblcomprasremisionesaduana inner join tblcomprasremisionesdetalles on tblcomprasremisionesaduana.iddetalle=tblcomprasremisionesdetalles.iddetalle where tblcomprasremisionesdetalles.idremision=" + pId.ToString + ";"
@@ -341,7 +346,11 @@
         Comm.CommandText += "update tblcomprasremisioneslotes inner join tblcomprasremisionesdetalles on tblcomprasremisioneslotes.iddetalle=tblcomprasremisionesdetalles.iddetalle set tblcomprasremisioneslotes.surtido=0 where idremision=" + pId.ToString + ";"
         Comm.CommandText += "update tblcomprasremisionesaduana inner join tblcomprasremisionesdetalles on tblcomprasremisionesaduana.iddetalle=tblcomprasremisionesdetalles.iddetalle set tblcomprasremisionesaduana.surtido=0 where idremision=" + pId.ToString + ";"
         Comm.ExecuteNonQuery()
-        'End If
+
+        'ubicaciones
+        Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.surtido, 0, 1, 1, u.ubicaciono) from tblcomprasremisionesdetalles d inner join tblcomprasremisionesubicaciones u on d.iddetalle=u.iddetalle where d.idremision=" + pId.ToString + ";"
+        Comm.CommandText += "update tblcomprasremisionesubicaciones inner join tblcomprasremisionesdetalles on tblcomprasremisionesubicaciones.iddetalle = tblcomprasremisionesdetalles.iddetalle set tblcomprasremisionesubicaciones.surtido = tblcomprasremisionesubicaciones.cantidad where tblcomprasremisionesdetalles.idremision=" + pId.ToString + ";"
+        Comm.ExecuteNonQuery()
     End Sub
     Public Function ReporteVentasSeries(ByVal pidRemision As Integer) As DataView
         Dim DS As New DataSet

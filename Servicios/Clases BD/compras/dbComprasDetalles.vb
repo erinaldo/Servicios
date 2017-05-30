@@ -16,7 +16,7 @@
     Public CostoIndirecto As Double
     Public IEPS As Double
     Public ivaRetenido As Double
-
+    Public UbicacionO As String
     'Public DeRemision As Byte
     Dim Comm As New MySql.Data.MySqlClient.MySqlCommand
     Public Sub New(ByVal Conexion As MySql.Data.MySqlClient.MySqlConnection)
@@ -45,7 +45,7 @@
     End Sub
     Public Sub LlenaDatos()
         Dim DReader As MySql.Data.MySqlClient.MySqlDataReader
-        Comm.CommandText = "select * from tblcomprasdetalles where iddetalle=" + ID.ToString
+        Comm.CommandText = "select cd.*,ifnull(cdu.ubicaciono,'') ubicacion from tblcomprasdetalles cd left outer join tblcomprasubicaciones cdu on cd.iddetalle=cdu.iddetalle where cd.iddetalle=" + ID.ToString
         DReader = Comm.ExecuteReader
         If DReader.Read() Then
             Precio = DReader("precio")
@@ -61,13 +61,14 @@
             IEPS = DReader("IEPS")
             ivaRetenido = DReader("ivaRetenido")
             CostoIndirecto = DReader("costoindirecto")
+            UbicacionO = DReader("ubicacion")
             'DeRemision = DReader("deremision")
         End If
         DReader.Close()
         Inventario = New dbInventario(Idinventario, Comm.Connection)
         Moneda = New dbMonedas(IdMoneda, Comm.Connection)
     End Sub
-    Public Sub Guardar(ByVal pIdCompra As Integer, ByVal pIdinventario As Integer, ByVal pCantidad As Double, ByVal pPrecio As Double, ByVal pIdMoneda As Integer, ByVal pIdAlmacen As Integer, ByVal pIva As Double, ByVal pDescuento As Double, ByVal pSiempreNuevo As Boolean, ByVal pIEPS As Double, ByVal pivaRetenido As Double)
+    Public Sub Guardar(ByVal pIdCompra As Integer, ByVal pIdinventario As Integer, ByVal pCantidad As Double, ByVal pPrecio As Double, ByVal pIdMoneda As Integer, ByVal pIdAlmacen As Integer, ByVal pIva As Double, ByVal pDescuento As Double, ByVal pSiempreNuevo As Boolean, ByVal pIEPS As Double, ByVal pivaRetenido As Double, pUbicacionO As String)
         Dim CTemp As Double
         Dim PTemp As Double
         Idinventario = pIdinventario
@@ -79,6 +80,8 @@
         ivaRetenido = pivaRetenido
         IEPS = pIEPS
         Iva = pIva
+        UbicacionO = pUbicacionO
+
         'Extra = pExtra
         Descuento = pDescuento
         Comm.CommandText = "select if(max(cantidad) is null,-1,cantidad) from tblcomprasdetalles where idcompra=" + IdCompra.ToString + " and idinventario=" + Idinventario.ToString
@@ -102,6 +105,12 @@
         Else
             Comm.CommandText = "insert into tblcomprasdetalles(idinventario,cantidad,precio,idmoneda,idcompra,idalmacen,iva,extra,descuento,surtido,costoindirecto, IEPS, ivaRetenido) values(" + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + "," + IdMoneda.ToString + "," + IdCompra.ToString + "," + IdAlmacen.ToString + "," + Iva.ToString + ",''," + Descuento.ToString + ",0,0 ," + IEPS.ToString + ", " + ivaRetenido.ToString + ")"
             Comm.ExecuteNonQuery()
+
+            If pUbicacionO <> "" Then
+                Comm.CommandText = "insert into tblcomprasubicaciones (iddetalle, cantidad, surtido, ubicaciono) select max(iddetalle), " + Cantidad.ToString() + ", 0, '" + Trim(Replace(UbicacionO, "'", "''")) + "' from tblcomprasdetalles;"
+                Comm.ExecuteNonQuery()
+            End If
+
             NuevoConcepto = True
             Comm.CommandText = "select if(max(iddetalle) is null,0,max(iddetalle)) from tblcomprasdetalles"
             ID = Comm.ExecuteScalar
@@ -126,7 +135,7 @@
     End Sub
     Public Function Consulta(ByVal pIdcompra As Integer) As DataView
         Dim DS As New DataSet
-        Comm.CommandText = "select tblcomprasdetalles.iddetalle,tblcomprasdetalles.cantidad,tblinventario.clave,tblinventario.nombre,tblcomprasdetalles.precio,tblmonedas.abreviatura from tblcomprasdetalles inner join tblinventario on tblcomprasdetalles.idinventario=tblinventario.idinventario inner join tblmonedas on tblcomprasdetalles.idmoneda=tblmonedas.idmoneda where tblcomprasdetalles.idcompra=" + pIdcompra.ToString
+        Comm.CommandText = "select cd.iddetalle, cd.cantidad, i.clave, i.nombre, case cd.cantidad when 0 then 0 else cd.precio/cd.cantidad end precio, cd.precio importe, m.abreviatura from tblcomprasdetalles cd inner join tblinventario i on cd.idinventario=i.idinventario inner join tblmonedas m on cd.idmoneda=m.idmoneda where cd.idcompra=" + pIdcompra.ToString
         Dim DA As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
         DA.Fill(DS, "tblcomprasdetalles")
         Return DS.Tables("tblcomprasdetalles").DefaultView

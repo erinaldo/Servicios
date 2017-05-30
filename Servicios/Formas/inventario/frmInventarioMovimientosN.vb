@@ -573,6 +573,8 @@
                 txtcliente.Enabled = True
                 btnBuscarCliente.Enabled = True
         End Select
+
+       
         LlenandoDatos = False
         If Concep.Tipo <> dbInventarioConceptos.Tipos.Traspaso Then
             'Button19.Visible = False
@@ -607,7 +609,9 @@
         cmbUbicacionDestino.Visible = False
         lblUbicacionOrigen.Visible = False
         lblUbicacionDestino.Visible = False
-
+        cmbUbicacionOrigen.Enabled = False
+        cmbUbicacionDestino.Enabled = False
+        
         TextBox6.Text = "0"
         PrecioBase = 0
         Button12.Visible = False
@@ -860,10 +864,25 @@
             End If
             If Estado <> Estados.Guardada And Estado <> Estados.Cancelada Then Button9.Enabled = True
             ComboBox2.SelectedIndex = IDsMonedas2.Busca(CD.IdMoneda)
+
             cmbAlmacenOrigen.SelectedIndex = IdsAlmacenes.Busca(CD.IdAlmacen)
             cmbAlmacenDestino.SelectedIndex = IdsAlmacenes2.Busca(CD.IdAlmacen2)
             cmbAlmacenDestino.Enabled = False
             cmbAlmacenOrigen.Enabled = False
+
+            Dim Mov As New dbInventarioConceptos(IdsMovimientos.Valor(ComboBox6.SelectedIndex), MySqlcon)
+            Dim articulo As New dbInventario(IdInventario, MySqlcon)
+            lblUbicacionOrigen.Visible = articulo.UsaUbicacion
+            cmbUbicacionOrigen.Visible = articulo.UsaUbicacion
+            lblUbicacionDestino.Visible = articulo.UsaUbicacion And Mov.Tipo = dbInventarioConceptos.Tipos.Traspaso
+            cmbUbicacionDestino.Visible = articulo.UsaUbicacion And Mov.Tipo = dbInventarioConceptos.Tipos.Traspaso
+            cmbUbicacionOrigen.DataSource = articulo.Ubicaciones(IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), IdInventario)
+            cmbUbicacionOrigen.SelectedValue = CD.UbicacionO
+            cmbUbicacionDestino.DataSource = articulo.Ubicaciones(IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex), IdInventario)
+            cmbUbicacionDestino.SelectedValue = CD.UbicacionD
+            cmbUbicacionDestino.Enabled = False
+            cmbUbicacionOrigen.Enabled = False
+
             'cmbtipoarticulo.Text = "A"
             'ComboBox1.SelectedIndex = IDsMonedas.Busca(CD.IdMoneda)
             If CheckScroll.Checked Then
@@ -1035,7 +1054,7 @@
         TextBox3.Select(TextBox3.Text.Length, 0)
         'ComboBox1.SelectedIndex = IDsMonedas.Busca(a.IdMoneda)
 
-        Dim dbmov As New dbMovimientosDetalles(MySqlcon)
+        Dim dbmov As New dbInventario(MySqlcon)
         cmbUbicacionDestino.DataSource = dbmov.Ubicaciones(IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex), IdInventario)
         cmbUbicacionOrigen.DataSource = dbmov.Ubicaciones(IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), IdInventario)
 
@@ -1301,7 +1320,7 @@
             End If
         End If
     End Sub
- 
+
 
 
 
@@ -1392,7 +1411,7 @@
                 cmbAlmacenDestino.SelectedIndex = IdsAlmacenes2.Busca(IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex))
             End If
         End If
-        Dim dbmov As New dbMovimientosDetalles(MySqlcon)
+        Dim dbmov As New dbInventario(MySqlcon)
         cmbUbicacionOrigen.DataSource = dbmov.Ubicaciones(IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), IdInventario)
         cmbUbicacionOrigen.Text = ""
     End Sub
@@ -1705,7 +1724,7 @@
     End Sub
 
     Private Sub cmbAlmacenDestino_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbAlmacenDestino.SelectedIndexChanged
-        Dim dbmov As New dbMovimientosDetalles(MySqlcon)
+        Dim dbmov As New dbInventario(MySqlcon)
         cmbUbicacionDestino.DataSource = dbmov.Ubicaciones(IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex), IdInventario)
         cmbUbicacionDestino.Text = ""
     End Sub

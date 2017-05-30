@@ -38,7 +38,7 @@
     End Sub
     Public Sub LlenaDatos()
         Dim DReader As MySql.Data.MySqlClient.MySqlDataReader
-        Comm.CommandText = "select precio, idinventario, d.cantidad, idmovimiento, descripcion, ifnull(idalmacen,-1) idalmacen, ifnull(idalmacen2,-1) idalmacen2, idvariante, d.surtido, inventarioanterior, idmoneda, ubicaciono, ubicaciond from tblmovimientosdetalles d left outer join tblmovimientosubicaciones u on d.iddetalle=u.iddetalle where d.iddetalle = " + ID.ToString
+        Comm.CommandText = "select precio, idinventario, d.cantidad, idmovimiento, descripcion, ifnull(idalmacen,-1) idalmacen, ifnull(idalmacen2,-1) idalmacen2, idvariante, d.surtido, inventarioanterior, idmoneda, ifnull(ubicaciono,'') ubicaciono, ifnull(ubicaciond,'') ubicaciond from tblmovimientosdetalles d left outer join tblmovimientosubicaciones u on d.iddetalle=u.iddetalle where d.iddetalle = " + ID.ToString
         DReader = Comm.ExecuteReader
         If DReader.Read() Then
             Precio = DReader("precio")
@@ -52,8 +52,8 @@
             Surtido = DReader("surtido")
             InventarioAnterior = DReader("inventarioanterior")
             IdMoneda = DReader("idmoneda")
-            UbicacionO = If(DReader("ubicaciono") Is DBNull.Value, "", DReader("ubicaciono"))
-            UbicacionD = If(DReader("ubicaciond") Is DBNull.Value, "", DReader("ubicaciond"))
+            UbicacionO = DReader("ubicaciono")
+            UbicacionD = DReader("ubicaciond")
         End If
         DReader.Close()
         If Idinventario > 1 Then Inventario = New dbInventario(Idinventario, Comm.Connection)
@@ -165,11 +165,5 @@
         Return Comm.ExecuteReader
     End Function
 
-    Public Function Ubicaciones(idalmacen As Integer, idinventario As Integer) As DataTable
-        Comm.CommandText = "select au.ubicacion, concat(au.ubicacion, ' (', ifnull(aiu.cantidad,0), ')') ubicacionc from tblalmacenesubicaciones au left outer join tblalmacenesiubicaciones aiu on au.idalmacen=aiu.idalmacen and au.ubicacion=aiu.ubicacion and aiu.idinventario=" + idinventario.ToString() + " where au.idalmacen=" + idalmacen.ToString() + " order by au.ubicacion;"
-        Dim da As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
-        Dim ds As New DataSet
-        da.Fill(ds, "tabla")
-        Return ds.Tables("tabla")
-    End Function
+    
 End Class
