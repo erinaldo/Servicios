@@ -1640,6 +1640,147 @@ Public Class dbContabilidadPolizas
         Return xmldoc
 
     End Function
+    Public Function generaXMLBalanza13(ByVal pMes As String, ByVal pTipoEnvio As String, ByVal pFechaModBal As String, ByVal pSello As String, ByVal pNoCertificado As String, ByVal pCertificado As String, pEs13 As Boolean)
+        Dim tablaBalanza As DataTable = reporteBalanzaXML2(pMes, pEs13)
+        Dim xml As String = ""
+        Dim xml3 As String = ""
+        Dim cuenta As String = ""
+        Dim cargo As Double = 0
+        Dim abono As Double = 0
+        Dim Na As String = ""
+        Dim SI As Double
+        Dim SF As Double
+        Dim s As New dbSucursales(GlobalIdSucursalDefault, MySqlcon)
+        Dim xmldoc As New System.Xml.XmlDocument
+        Dim cadena As String = ""
+        Dim cadenaAux As String = ""
+
+        For i As Integer = 0 To tablaBalanza.Rows.Count - 1
+            If i = 0 Then
+                'primero
+                cuenta = tablaBalanza.Rows(i)(0).ToString
+                cargo = tablaBalanza.Rows(i)(3).ToString
+                abono = tablaBalanza.Rows(i)(4).ToString
+                SI = tablaBalanza.Rows(i)(2).ToString
+                Na = tablaBalanza.Rows(i)(1).ToString
+            Else
+                If i = tablaBalanza.Rows.Count - 1 Then
+                    'ultimo registro
+                    If tablaBalanza.Rows(i)(0).ToString = cuenta Then
+                        cargo += tablaBalanza.Rows(i)(3).ToString
+                        abono += tablaBalanza.Rows(i)(4).ToString
+                    End If
+                    'agrupar lo que ya tenemos y volver a cargar los datos
+                    If Na = "D" Then
+                        SF = SI + cargo - abono
+                    Else
+                        SF = SI - cargo + abono
+                    End If
+                    xml += "<BCE:Ctas NumCta=""" + cuenta.Trim + """ SaldoIni=""" + SI.ToString("0.00") + """ Debe=""" + cargo.ToString("0.00") + """ Haber=""" + abono.ToString("0.00") + """ SaldoFin=""" + SF.ToString("0.00") + """/>" + vbCrLf
+                    cadenaAux += cuenta.Trim + "|" + SI.ToString("0.00") + "|" + cargo.ToString("0.00") + "|" + abono.ToString("0.00") + "|" + SF.ToString("0.00") + "|"
+
+                    If tablaBalanza.Rows(i)(0).ToString <> cuenta Then
+                        'cargo += tablaBalanza.Rows(i)(3).ToString
+                        'abono += tablaBalanza.Rows(i)(4).ToString
+                        cuenta = tablaBalanza.Rows(i)(0).ToString
+                        cargo = tablaBalanza.Rows(i)(3).ToString
+                        abono = tablaBalanza.Rows(i)(4).ToString
+                        SI = tablaBalanza.Rows(i)(2).ToString
+                        Na = tablaBalanza.Rows(i)(1).ToString
+                        If Na = "D" Then
+                            SF = SI + cargo - abono
+                        Else
+                            SF = SI - cargo + abono
+                        End If
+                        xml += "<BCE:Ctas NumCta=""" + cuenta.Trim + """ SaldoIni=""" + SI.ToString("0.00") + """ Debe=""" + cargo.ToString("0.00") + """ Haber=""" + abono.ToString("0.00") + """ SaldoFin=""" + SF.ToString("0.00") + """/>" + vbCrLf
+                        cadenaAux += cuenta.Trim + "|" + SI.ToString("0.00") + "|" + cargo.ToString("0.00") + "|" + abono.ToString("0.00") + "|" + SF.ToString("0.00") + "|"
+
+                    End If
+                    'If Na = "D" Then
+                    '    SF = SI + cargo - abono
+                    'Else
+                    '    SF = SI - cargo + abono
+                    'End If
+                    'xml += "<BCE:Ctas NumCta=""" + cuenta.Trim + """ SaldoIni=""" + SI.ToString("0.00") + """ Debe=""" + cargo.ToString("0.00") + """ Haber=""" + abono.ToString("0.00") + """ SaldoFin=""" + SF.ToString("0.00") + """/>" + vbCrLf
+                    'cadenaAux += cuenta.Trim + "|" + SI.ToString("0.00") + "|" + cargo.ToString("0.00") + "|" + abono.ToString("0.00") + "|" + SF.ToString("0.00") + "|"
+                    'Else
+                    '    'es la misma cuenta; sumar cargos y abonos
+                    '    cargo += tablaBalanza.Rows(i)(3).ToString
+                    '    abono += tablaBalanza.Rows(i)(4).ToString
+
+                    'End If
+
+                Else
+                    If tablaBalanza.Rows(i)(0).ToString <> cuenta Then
+                        'agrupar lo que ya tenemos y volver a cargar los datos
+                        If Na = "D" Then
+                            SF = SI + cargo - abono
+                        Else
+                            SF = SI - cargo + abono
+                        End If
+                        xml += "<BCE:Ctas NumCta=""" + cuenta.Trim + """ SaldoIni=""" + SI.ToString("0.00") + """ Debe=""" + cargo.ToString("0.00") + """ Haber=""" + abono.ToString("0.00") + """ SaldoFin=""" + SF.ToString("0.00") + """/>" + vbCrLf
+                        cadenaAux += cuenta.Trim + "|" + SI.ToString("0.00") + "|" + cargo.ToString("0.00") + "|" + abono.ToString("0.00") + "|" + SF.ToString("0.00") + "|"
+                        cuenta = tablaBalanza.Rows(i)(0).ToString
+                        cargo = tablaBalanza.Rows(i)(3).ToString
+                        abono = tablaBalanza.Rows(i)(4).ToString
+                        SI = tablaBalanza.Rows(i)(2).ToString
+                        Na = tablaBalanza.Rows(i)(1).ToString
+                    Else
+                        'es la misma cuenta; sumar cargos y abonos
+                        cargo += tablaBalanza.Rows(i)(3).ToString
+                        abono += tablaBalanza.Rows(i)(4).ToString
+                    End If
+                End If
+
+            End If
+
+        Next
+
+        If pEs13 = False Then
+            cadena = "||1.3|" + s.RFC + "|" + pMes + "|" + buscarPeriodo() + "|" + pTipoEnvio + "|"
+        Else
+            cadena = "||1.3|" + s.RFC + "|13|" + buscarPeriodo() + "|" + pTipoEnvio + "|"
+        End If
+        If pFechaModBal <> "" Then
+            cadena += pFechaModBal + "|"
+        End If
+        cadena += cadenaAux
+        cadena += "|"
+        While cadena.IndexOf("  ") <> -1
+            cadena = Replace(cadena, "  ", " ")
+        End While
+        Dim Archivos As New dbSucursalesArchivos
+        Dim en As New Encriptador
+        Dim Sello As String = ""
+
+        Archivos.DaRutaCER(GlobalIdSucursalDefault, GlobalIdEmpresa, False)
+        Sello = en.GeneraSello(cadena, Archivos.RutaCer, "2011", True)
+
+        Archivos.DaRutaCER(GlobalIdSucursalDefault, GlobalIdEmpresa, True)
+        en.Leex509(Archivos.RutaCer)
+
+        xml3 = "<?xml version=""1.0"" encoding=""UTF-8""?>"
+        xml3 += "<BCE:Balanza "
+        xml3 += "xsi:schemaLocation=""http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/BalanzaComprobacion http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/BalanzaComprobacion/BalanzaComprobacion_1_3.xsd"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:BCE=""http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/BalanzaComprobacion"""
+        If pEs13 = False Then
+            xml3 += " Version=""1.3"" RFC=""" + s.RFC + """ Mes=""" + pMes + """ Anio=""" + buscarPeriodo() + """ TipoEnvio=""" + pTipoEnvio + """"
+        Else
+            xml3 += " Version=""1.3"" RFC=""" + s.RFC + """ Mes=""13"" Anio=""" + buscarPeriodo() + """ TipoEnvio=""" + pTipoEnvio + """"
+        End If
+        If pFechaModBal <> "" Then
+            xml3 += " FechaModBal=""" + pFechaModBal + """"
+        End If
+        xml3 += " Sello=""" + Sello + """"
+        xml3 += " noCertificado=""" + en.Seriex509 + """"
+        xml3 += " Certificado=""" + en.Certificado64 + """"
+        xml3 += ">"
+        xml3 += xml
+        xml3 += "</BCE:Balanza>"
+        xmldoc.LoadXml(xml3)
+
+        Return xmldoc
+
+    End Function
     Public Function SumaCargo(ByVal pFechaI As String, ByVal pFechaF As String)
         Dim cargoD As Double = 0
         Dim cargoA As Double = 0

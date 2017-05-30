@@ -1201,6 +1201,74 @@ Public Class dbContabilidadClasificacion
         Return xmldoc
     End Function
 
+    Public Function generaXML13(ByVal pFechaI As String, ByVal pFechaF As String) As System.Xml.XmlDocument
+        Dim xml As String = ""
+        Dim xml2 As String = ""
+        Dim tabla As DataTable
+        Dim xmldoc As New System.Xml.XmlDocument
+        Dim s As New dbSucursales(GlobalIdSucursalDefault, MySqlcon)
+        Dim cadena As String = ""
+
+        cadena = "||1.3|" + s.RFC + "|" + Date.Parse(pFechaI).Month.ToString("00") + "|" + Date.Parse(pFechaI).Year.ToString
+        ' xml = "<Catalogo Version=""1.1"" RFC=""" + s.RFC + """ TotalCtas=""" + CuentasCount(pFechaI, pFechaF) + """ Mes=""" + Date.Parse(pFechaI).Month.ToString("00") + """ Ano=""" + Date.Parse(pFechaI).Year.ToString + """>" + vbCrLf
+        Dim DS As New DataSet
+        Comm.CommandText = "select tblagrupadorcuentas.codigo,IF(tblccontables.Nivel=1,LPAD(tblccontables.Cuenta," + p.NNiv1.ToString + ",'0'),IF(tblccontables.Nivel=2,concat(LPAD(tblccontables.Cuenta," + p.NNiv1.ToString + ",'0'),'',LPAD(tblccontables.N2," + p.NNiv2.ToString + ",'0')),IF(tblccontables.Nivel=3,concat(LPAD(tblccontables.Cuenta," + p.NNiv1.ToString + ",'0'),'',LPAD(tblccontables.N2," + p.NNiv2.ToString + ",'0'),'',LPAD(tblccontables.N3," + p.NNiv3.ToString + ",'0')),IF(tblccontables.Nivel=4,concat(LPAD(tblccontables.Cuenta," + p.NNiv1.ToString + ",'0'),'',LPAD(tblccontables.N2," + p.NNiv2.ToString + ",'0'),'',LPAD(tblccontables.N3," + p.NNiv3.ToString + ",'0'),'',LPAD(tblccontables.N4," + p.NNiv4.ToString + ",'0')),IF(tblccontables.Nivel=5,concat(LPAD(tblccontables.Cuenta," + p.NNiv1.ToString + ",'0'),'',LPAD(tblccontables.N2," + p.NNiv2.ToString + ",'0'),'',LPAD(tblccontables.N3," + p.NNiv3.ToString + ",'0'),'',LPAD(tblccontables.N4," + p.NNiv4.ToString + ",'0'),'',LPAD(tblccontables.N5," + p.NNiv5.ToString + ",'0')),''))))) as cpncat_cuenta,tblccontables.Descripcion,tblccontables.Nivel, case tblccontables.Naturaleza when 0 then 'D' when 1 then 'A' end  as tipo," + _
+        "IF(tblccontables.Nivel=1,'',IF(tblccontables.Nivel=2,LPAD(tblccontables.Cuenta," + p.NNiv1.ToString + ",'0'),IF(tblccontables.Nivel=3,concat(LPAD(tblccontables.Cuenta," + p.NNiv1.ToString + ",'0'),'',LPAD(tblccontables.N2," + p.NNiv2.ToString + ",'0')),IF(tblccontables.Nivel=4,concat(LPAD(tblccontables.Cuenta," + p.NNiv1.ToString + ",'0'),'',LPAD(tblccontables.N2," + p.NNiv2.ToString + ",'0'),'',LPAD(tblccontables.N3," + p.NNiv3.ToString + ",'0')),IF(tblccontables.Nivel=5,concat(LPAD(tblccontables.Cuenta," + p.NNiv1.ToString + ",'0'),'',LPAD(tblccontables.N2," + p.NNiv2.ToString + ",'0'),'',LPAD(tblccontables.N3," + p.NNiv3.ToString + ",'0'),'',LPAD(tblccontables.N4," + p.NNiv4.ToString + ",'0')),''))))) as subCuenta" + _
+        "  from tblccontables inner join tblagrupadorcuentas on tblccontables.IdContable=tblagrupadorcuentas.id where (tblccontables.descontinuada like '%" + p.anio + "%')=false  order by cpncat_cuenta"
+        Dim DA As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
+        DA.Fill(DS, "tblCuentas")
+        tabla = DS.Tables("tblCuentas")
+
+        For i As Integer = 0 To tabla.Rows.Count - 1
+            xml += "<catalogocuentas:Ctas CodAgrup=""" + tabla.Rows(i)(0).ToString.Trim + """ NumCta=""" + tabla.Rows(i)(1).ToString.Trim + """ Desc=""" + RC(tabla.Rows(i)(2).ToString.Trim) + """ "
+
+            If tabla.Rows(i)(5).ToString <> "" Then
+                xml += " SubCtaDe=""" + tabla.Rows(i)(5).ToString.Trim + """"
+            End If
+            xml += " Nivel=""" + tabla.Rows(i)(3).ToString.Trim + """ Natur=""" + tabla.Rows(i)(4).ToString.Trim + """/>" + vbCrLf
+            cadena += "|" + tabla.Rows(i)(0).ToString.Trim + "|" + tabla.Rows(i)(1).ToString.Trim + "|" + tabla.Rows(i)(2).ToString.Trim
+            If tabla.Rows(i)(5).ToString <> "" Then
+                cadena += "|" + tabla.Rows(i)(5).ToString.Trim
+            End If
+            cadena += "|" + tabla.Rows(i)(3).ToString.Trim + "|" + tabla.Rows(i)(4).ToString.Trim
+        Next
+        cadena += "||"
+        'aqui ya se tiene la cadena
+        Dim Archivos As New dbSucursalesArchivos
+        Dim en As New Encriptador
+        Dim Sello As String = ""
+
+        While cadena.IndexOf("  ") <> -1
+            cadena = Replace(cadena, "  ", " ")
+        End While
+
+        Archivos.DaRutaCER(GlobalIdSucursalDefault, GlobalIdEmpresa, False)
+        Sello = en.GeneraSello(cadena, Archivos.RutaCer, "2011", True)
+
+        Archivos.DaRutaCER(GlobalIdSucursalDefault, GlobalIdEmpresa, True)
+        en.Leex509(Archivos.RutaCer)
+
+        xml2 = "<?xml version=""1.0"" encoding=""UTF-8""?>" + vbCrLf
+        xml2 += "<catalogocuentas:Catalogo "
+        xml2 += "xsi:schemaLocation=""http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogoCuentas http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogoCuentas/CatalogoCuentas_1_3.xsd"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:catalogocuentas=""www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogoCuentas"""
+        xml2 += " Version=""1.3"" RFC=""" + s.RFC + """ Mes=""" + Date.Parse(pFechaI).Month.ToString("00") + """ Anio=""" + Date.Parse(pFechaI).Year.ToString + """"
+        ' If Sello <> "" Then
+        xml2 += " Sello=""" + Sello + """"
+        ' End If
+        ' If pNoCertificado <> "" Then
+        xml2 += " noCertificado=""" + en.Seriex509 + """"
+        ' End If
+        ' If pCertificado <> "" Then
+        xml2 += " Certificado=""" + en.Certificado64 + """"
+        ' End If
+        xml2 += ">"
+        xml2 += xml
+        xml2 += "</catalogocuentas:Catalogo>"
+        xmldoc.LoadXml(xml2)
+
+        Return xmldoc
+    End Function
+
     Public Sub separarCuenta(ByVal pCuentaCompleta As String)
         Nivel = 0
         Dim aux As String = ""
