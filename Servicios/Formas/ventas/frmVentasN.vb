@@ -2706,15 +2706,15 @@ Public Class frmVentasN
                     Dim sa As New dbSucursalesArchivos
                     sa.DaOpciones(GlobalIdEmpresa, True)
                     Timbre = V.Timbrar4(S.RFC, strXML, "", Op._ApiKey, True, V.Folio, V.Serie)
-                    If UCase(Timbre.Substring(0, 5)) <> "ERROR" Then
+                    If UCase(Timbre.Substring(0, 5).ToUpper) <> "ERROR" Then
                         Dim xmldoc As New Xml.XmlDocument
                         en.GuardaArchivoTexto(RutaXmlTimbrado, Timbre, System.Text.Encoding.UTF8)
                         xmldoc.Load(RutaXmlTimbrado)
                         V.uuid = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("UUID").Value
-                        V.SelloCFD = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("selloCFD").Value
-                        V.NoCertificadoSAT = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("noCertificadoSAT").Value
+                        V.SelloCFD = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("SelloCFD").Value
+                        V.NoCertificadoSAT = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("NoCertificadoSAT").Value
                         V.FechaTimbrado = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("FechaTimbrado").Value
-                        V.SelloSAT = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("selloSAT").Value
+                        V.SelloSAT = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("SelloSAT").Value
                         V.GuardaDatosTimbrado(idVenta, V.uuid, V.FechaTimbrado, V.SelloCFD, V.NoCertificadoSAT, V.SelloSAT)
                         If pXMLAdenda <> "" And pCadenaOriginalComp = "" Then
                             Timbre = Timbre.Insert(Timbre.LastIndexOf("</cfdi:Comprobante>"), pXMLAdenda)
@@ -5495,11 +5495,27 @@ Public Class frmVentasN
 
    
     Private Sub Button38_Click(sender As Object, e As EventArgs) Handles Button38.Click
-        If idVenta > 0 Then
-            Dim frmK As New FrmDocKardex(idVenta, 0, TextBox11.Text + TextBox2.Text, TextBox1.Text)
-            frmK.ShowDialog()
-            frmK.Dispose()
+        'If idVenta > 0 Then
+        '    Dim frmK As New FrmDocKardex(idVenta, 0, TextBox11.Text + TextBox2.Text, TextBox1.Text)
+        '    frmK.ShowDialog()
+        '    frmK.Dispose()
+        'End If
+        OpenFileDialog1.Filter = ""
+        If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+            Dim xmldoc As New Xml.XmlDocument
+            Dim str As String
+            Dim archivo = OpenFileDialog1.FileName
+            xmldoc.Load(archivo)
+            str = "UUID: " + xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("UUID").Value + vbCrLf
+            str += "SELLOCDF: " + xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("SelloCFD").Value + vbCrLf
+            str += "NoCER: " + xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("NoCertificadoSAT").Value + vbCrLf
+            str += "FECHA: " + xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("FechaTimbrado").Value + vbCrLf
+            str += "SAT: " + xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("SelloSAT").Value
+            MsgBox(str)
         End If
+
+
+        
     End Sub
 
     Private Sub Panel4_Paint(sender As Object, e As PaintEventArgs) Handles Panel4.Paint
@@ -5517,4 +5533,6 @@ Public Class frmVentasN
             Descontando = True
         End If
     End Sub
+
+  
 End Class
