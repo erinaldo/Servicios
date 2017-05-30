@@ -387,7 +387,7 @@ Public Class frmVentasN
         Label38.Visible = False
         Label39.Visible = False
         Label40.Visible = False
-        TextBox13.Text = False
+        TextBox13.Text = ""
         TotalVenta = 0
         TipoCreardesde = 0
         SaldoaFavor = 0
@@ -455,7 +455,7 @@ Public Class frmVentasN
         Sf.BuscaFolios(IdsSucursales.Valor(ComboBox3.SelectedIndex), dbSucursalesFolios.TipoDocumentos.Factura, iTipoFacturacion)
 
         TextBox11.Text = Sf.Serie
-        Eselectronica = Sf.EsElectronica
+        Eselectronica = iTipoFacturacion
         Dim V As New dbVentas(MySqlcon)
         TextBox2.Text = V.DaNuevoFolio(TextBox11.Text, IdsSucursales.Valor(ComboBox3.SelectedIndex), iTipoFacturacion, Op._ModoFoliosB).ToString
         If CInt(TextBox2.Text) < Sf.FolioInicial Then TextBox2.Text = Sf.FolioInicial.ToString
@@ -842,7 +842,7 @@ Public Class frmVentasN
                     End If
                 End If
                 AddError("Folio:" + TextBox11.Text + TextBox2.Text + " Cliente:" + idCliente.ToString + " Suc:" + ComboBox3.Text + " Fecha: " + DateTimePicker1.Value.ToString("yyyy/MM/dd") + " Estado:" + pEstado.ToString, "Facturacion antes de guardar", Date.Now.ToString("yyyy/MM/dd"), Date.Now.ToString("HH:mm:ss"), idVenta)
-                C.Modificar(idVenta, Format(DateTimePicker1.Value, "yyyy/MM/dd"), CInt(TextBox2.Text), Desglozar, 0, TextBox11.Text, Sf.NoAprobacion, Sc.NoSerie, Sf.YearAprobacion, Eselectronica, pEstado, iIdFormaPago, 0, CDbl(TextBox10.Text), IDsMonedas2.Valor(ComboBox2.SelectedIndex), C.Subtototal, C.TotalVenta, idCliente, IdsVendedores.Valor(ComboBox5.SelectedIndex), TextBox14.Text, ComboBox6.Text, CDbl(TextBox16.Text), 0, IdVentaOrigen, Parcialidad, Parcialidades, PorSutir, RefDocumento, Adicional, CDbl(TextBox19.Text), CDbl(TextBox18.Text), formaNa, Op.ChecaFolioFacturas, Op._ModoFoliosB, DateTimePicker2.Value.ToString("yyyy/MM/dd"), ComboBox9.Text.Substring(0, 3), TextBox13.Text)
+                C.Modificar(idVenta, Format(DateTimePicker1.Value, "yyyy/MM/dd"), CInt(TextBox2.Text), Desglozar, 0, TextBox11.Text, Sf.NoAprobacion, Sc.NoSerie, Sf.YearAprobacion, iTipoFacturacion, pEstado, iIdFormaPago, 0, CDbl(TextBox10.Text), IDsMonedas2.Valor(ComboBox2.SelectedIndex), C.Subtototal, C.TotalVenta, idCliente, IdsVendedores.Valor(ComboBox5.SelectedIndex), TextBox14.Text, ComboBox6.Text, CDbl(TextBox16.Text), 0, IdVentaOrigen, Parcialidad, Parcialidades, PorSutir, RefDocumento, Adicional, CDbl(TextBox19.Text), CDbl(TextBox18.Text), formaNa, Op.ChecaFolioFacturas, Op._ModoFoliosB, DateTimePicker2.Value.ToString("yyyy/MM/dd"), ComboBox9.Text.Substring(0, 3), TextBox13.Text)
 
                 Dim CM As New dbMonedasConversiones(MySqlcon)
                 CM.Modificar(1, CDbl(TextBox10.Text))
@@ -3003,7 +3003,7 @@ Public Class frmVentasN
                 Dim Sf As New dbSucursalesFolios(MySqlcon)
                 Sf.BuscaFolios(IdsSucursales.Valor(ComboBox3.SelectedIndex), dbSucursalesFolios.TipoDocumentos.Factura, iTipoFacturacion)
                 TextBox11.Text = Sf.Serie
-                Eselectronica = Sf.EsElectronica
+                Eselectronica = iTipoFacturacion
                 If Sf.EsElectronica >= 1 Then
                     CertificadoCaduco = ChecaCertificado(Sf.IdCertificado)
                 End If
@@ -4340,7 +4340,7 @@ Public Class frmVentasN
             Dim Sf As New dbSucursalesFolios(MySqlcon)
             Sf.BuscaFolios(IdsSucursales.Valor(ComboBox3.SelectedIndex), dbSucursalesFolios.TipoDocumentos.Factura, iTipoFacturacion)
             TextBox11.Text = Sf.Serie
-            Eselectronica = Sf.EsElectronica
+            Eselectronica = iTipoFacturacion
             If Sf.EsElectronica > 1 Then
                 CertificadoCaduco = ChecaCertificado(Sf.IdCertificado)
             End If
