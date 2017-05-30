@@ -924,13 +924,19 @@ Public Class dbVentas
     End Function
 
     Public Function DaNuevoFolio(ByVal pSerie As String, ByVal pidSucursal As Integer, ByVal pEsElectronica As Integer, pModoB As String) As Integer
+        Dim strele As String = ""
+        If pEsElectronica = 3 Then
+            strele = " and (eselectronica=2 or eselectronica=3)"
+        Else
+            strele = " and eselectronica=" + pEsElectronica.ToString
+        End If
         If pModoB = "0" Then
             'Comm.CommandText = "select ifnull((select max(folio) from tblventas where serie='" + Replace(Trim(pSerie), "'", "''") + "' and (estado=3 or estado=4) and eselectronica=" + pEsElectronica.ToString + " ),0)"
-            Comm.CommandText = "select ifnull((select folio from tblventas where serie='" + Replace(Trim(pSerie), "'", "''") + "' and (estado=3 or estado=4) and eselectronica=" + pEsElectronica.ToString + " order by folio desc limit 1),0)"
+            Comm.CommandText = "select ifnull((select folio from tblventas where serie='" + Replace(Trim(pSerie), "'", "''") + "' and (estado=3 or estado=4) " + strele + " order by folio desc limit 1),0)"
             Return Comm.ExecuteScalar + 1
         Else
             'Comm.CommandText = "select ifnull((select max(folio) from tblventas where serie='" + Replace(Trim(pSerie), "'", "''") + "' and eselectronica=" + pEsElectronica.ToString + " ),0)"
-            Comm.CommandText = "select ifnull((select folio from tblventas where serie='" + Replace(Trim(pSerie), "'", "''") + "' and eselectronica=" + pEsElectronica.ToString + " order by folio desc limit 1),0)"
+            Comm.CommandText = "select ifnull((select folio from tblventas where serie='" + Replace(Trim(pSerie), "'", "''") + "' " + Strele + " order by folio desc limit 1),0)"
             Return Comm.ExecuteScalar + 1
         End If
     End Function
@@ -3543,7 +3549,7 @@ Public Class dbVentas
         Dim MeP As New dbVentasAddMetodos(Comm.Connection)
         DR = MeP.ConsultaReader(0, ID)
         DR.Read()
-        If strMetodos <> "" Then strMetodos += ","
+        'If strMetodos <> "" Then strMetodos += ","
         If DR("clavesat") < 1000 Then
             strMetodos += Format(DR("clavesat"), "00")
         Else
@@ -3560,10 +3566,12 @@ Public Class dbVentas
         Else
             CO += Format(If(Subtototal + Descuento >= 0, Subtototal + Descuento, (Subtototal + Descuento) * -1), "#0.00####") + "|"
         End If
-        If pEsEgreso = 0 Then
-            CO += Format(Descuento + DescuentoG2, "#0.00####") + "|"
-        Else
-            CO += Format(If(Descuento + DescuentoG2 >= 0, Descuento + DescuentoG2, (Descuento + DescuentoG2) * -1), "#0.00####") + "|"
+        If Descuento + DescuentoG2 > 0 Then
+            If pEsEgreso = 0 Then
+                CO += Format(Descuento + DescuentoG2, "#0.00####") + "|"
+            Else
+                CO += Format(If(Descuento + DescuentoG2 >= 0, Descuento + DescuentoG2, (Descuento + DescuentoG2) * -1), "#0.00####") + "|"
+            End If
         End If
         'Tipo deCambio nuevo
         If IdConversion <> 2 Then
@@ -3658,24 +3666,24 @@ Public Class dbVentas
 
             If pEsEgreso = 0 Then
                 If DR("cantidad") <> 0 Then
-                    CO += Format((PrecioTemp + DR("descuentoc")) / DR("cantidad"), "#0.00####") + "|"
-                    CO += Format(PrecioTemp + DR("descuentoc"), "#0.00####") + "|"
+                    CO += Format((PrecioTemp + DR("cdescuento")) / DR("cantidad"), "#0.00####") + "|"
+                    CO += Format(PrecioTemp + DR("cdescuento"), "#0.00####") + "|"
                 Else
                     CO += "0.00|"
                     CO += "0.00|"
                 End If
             Else
                 If DR("cantidad") <> 0 Then
-                    CO += Format(If((PrecioTemp + DR("descuentoc")) / DR("cantidad") >= 0, (PrecioTemp + DR("descuentoc")) / DR("cantidad"), ((PrecioTemp + DR("descuentoc")) / DR("cantidad")) * -1), "#0.00####") + "|"
-                    CO += Format(If(PrecioTemp + DR("descuentoc") >= 0, PrecioTemp + DR("descuentoc"), (PrecioTemp + DR("descuentoc")) * -1), "#0.00####") + "|"
+                    CO += Format(If((PrecioTemp + DR("cdescuento")) / DR("cantidad") >= 0, (PrecioTemp + DR("cdescuento")) / DR("cantidad"), ((PrecioTemp + DR("cdescuento")) / DR("cantidad")) * -1), "#0.00####") + "|"
+                    CO += Format(If(PrecioTemp + DR("cdescuento") >= 0, PrecioTemp + DR("cdescuento"), (PrecioTemp + DR("cdescuento")) * -1), "#0.00####") + "|"
                 Else
                     CO += "0.00|"
                     CO += "0.00|"
                 End If
             End If
-            If DR("descuentoc") <> 0 Then CO += Format(DR("descuentoc"), "#0.00####") + "|"
+            If DR("cdescuento") <> 0 Then CO += Format(DR("cdescuento"), "#0.00####") + "|"
             ImpXML = ""
-            If DR("iva") <> 0 Or DR("ieps") <> 0 Or DR("ivaretenido") <> 0 Or DR("isr") <> 0 Or DR("ivaretenidof") <> 0 Then
+            If DR("iva") <> 0 Or DR("ieps") <> 0 Or DR("ivaretenido") <> 0 Or ISR <> 0 Or IvaRetenido <> 0 Then
                 If DR("iva") <> 0 Or DR("ieps") <> 0 Then
                     If DR("iva") <> 0 Then
                         ImpXML += Format(DR("precio"), "0.00####") + "|"
@@ -3692,20 +3700,20 @@ Public Class dbVentas
                         ImpXML += Format((DR("precio")) * DR("ieps") / 100, "0.00####") + "|"
                     End If
                 End If
-                If DR("isr") <> 0 Or DR("ivaretenido") <> 0 Or DR("ivaretenidof") <> 0 Then
-                    If DR("isr") <> 0 Then
+                If ISR <> 0 Or DR("ivaretenido") <> 0 Or IvaRetenido <> 0 Then
+                    If ISR <> 0 Then
                         ImpXML += Format(DR("precio"), "0.00####") + "|"
                         ImpXML += "001|"
                         ImpXML += "Tasa|"
-                        ImpXML += Format(DR("isr") / 100, "0.000000") + "|"
-                        ImpXML += Format(DR("precio") * DR("isr") / 100, "0.00####") + "|"
+                        ImpXML += Format(ISR / 100, "0.000000") + "|"
+                        ImpXML += Format(DR("precio") * ISR / 100, "0.00####") + "|"
                     End If
-                    If DR("ivaretenido") <> 0 Or DR("ivaretenidof") Then
+                    If DR("ivaretenido") <> 0 Or IvaRetenido <> 0 Then
                         ImpXML += Format(DR("precio"), "0.00####") + "|"
                         ImpXML += "002|"
                         ImpXML += "Tasa|"
-                        ImpXML += Format((DR("ivaretenido") + DR("ivaretenidof")) / 100, "0.000000") + "|"
-                        ImpXML += Format(DR("precio") * (DR("ivaretenido") + DR("ivaretenidof")) / 100, "0.00####") + "|"
+                        ImpXML += Format((DR("ivaretenido") + IvaRetenido) / 100, "0.000000") + "|"
+                        ImpXML += Format(DR("precio") * (DR("ivaretenido") + IvaRetenido) / 100, "0.00####") + "|"
                     End If
                 End If
             End If
@@ -3903,40 +3911,49 @@ Public Class dbVentas
         If Serie <> "" Then XMLDoc += "Serie=""" + Replace(Replace(Replace(Replace(Replace(Serie, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
         XMLDoc += "Folio=""" + Folio.ToString + """ "
         XMLDoc += "Fecha=""" + Replace(Fecha, "/", "-") + "T" + Hora + """ "
-        If pSelloDigital <> "" Then XMLDoc += "Sello=""" + pSelloDigital + """ "
-
-        Dim strMetodos As String = ""
-        Dim MeP As New dbVentasAddMetodos(Comm.Connection)
-        DR = MeP.ConsultaReader(0, ID)
-        DR.Read()
-        'While DR.Read()
-        If strMetodos <> "" Then strMetodos += ","
-        If DR("clavesat") < 1000 Then
-            strMetodos += Format(DR("clavesat"), "00")
+        If Sucursal.RFC <> "SUL010720JN8" Then
+            XMLDoc += "Sello=""" + pSelloDigital + """ "
         Else
-            strMetodos += "NA"
+            XMLDoc += "Sello="""" "
         End If
-        'End While
-        DR.Close()
 
-        XMLDoc += "FormaPago=""" + strMetodos + """ "
+            Dim strMetodos As String = ""
+            Dim MeP As New dbVentasAddMetodos(Comm.Connection)
+            DR = MeP.ConsultaReader(0, ID)
+            DR.Read()
+            'While DR.Read()
+            If strMetodos <> "" Then strMetodos += ","
+            If DR("clavesat") < 1000 Then
+                strMetodos += Format(DR("clavesat"), "00")
+            Else
+                strMetodos += "NA"
+            End If
+            'End While
+            DR.Close()
 
-        If NoCertificado <> "" Then XMLDoc += "NoCertificado=""" + NoCertificado + """ "
-        XMLDoc += "Certificado=""" + en.Certificado64 + """ "
+            XMLDoc += "FormaPago=""" + strMetodos + """ "
 
-        'xmldoc+="CondicionesDePago="""""
-        If pEsEgreso = 0 Then
+            If NoCertificado <> "" Then XMLDoc += "NoCertificado=""" + NoCertificado + """ "
+            If Sucursal.RFC <> "SUL010720JN8" Then
+                XMLDoc += "Certificado=""" + en.Certificado64 + """ "
+            Else
+                XMLDoc += "Certificado="""" "
+            End If
+            'xmldoc+="CondicionesDePago="""""
+            If pEsEgreso = 0 Then
                 XMLDoc += "SubTotal=""" + Format(Subtototal + Descuento, "#0.00####") + """ "
-        Else
+            Else
                 XMLDoc += "SubTotal=""" + Format(If(Subtototal + Descuento >= 0, Subtototal + Descuento, (Subtototal + Descuento) * -1), "#0.00####") + """ "
-        End If
+            End If
 
-        'If NoAprobacion <> "" Then XMLDoc += "noAprobacion=""" + NoAprobacion + """" + vbCrLf
+            'If NoAprobacion <> "" Then XMLDoc += "noAprobacion=""" + NoAprobacion + """" + vbCrLf
         'If YearAprobacion <> "" Then XMLDoc += "anoAprobacion=""" + YearAprobacion + """" + vbCrLf
-        If pEsEgreso = 0 Then
-            XMLDoc += "Descuento=""" + Format(Descuento + DescuentoG2, "#0.00####") + """ "
-        Else
-            XMLDoc += "Descuento=""" + Format(If(Descuento + DescuentoG2 >= 0, Descuento + DescuentoG2, (Descuento + DescuentoG2) * -1), "#0.00####") + """ "
+        If Descuento + DescuentoG2 > 0 Then
+            If pEsEgreso = 0 Then
+                XMLDoc += "Descuento=""" + Format(Descuento + DescuentoG2, "#0.00####") + """ "
+            Else
+                XMLDoc += "Descuento=""" + Format(If(Descuento + DescuentoG2 >= 0, Descuento + DescuentoG2, (Descuento + DescuentoG2) * -1), "#0.00####") + """ "
+            End If
         End If
 
         'Tipo deCambio nuevo
@@ -4132,7 +4149,7 @@ Public Class dbVentas
             'If DR("cantidad") <> 0 And PrecioTemp <> 0 Then
             XMLDoc += "<cfdi:Concepto "
             XMLDoc += "ClaveProdServ=""" + DR("cproductoserv") + """ "
-            XMLDoc += "NoIdentidicacion=""" + Replace(Replace(Replace(Replace(Replace(DR("clave"), "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
+            XMLDoc += "NoIdentificacion=""" + Replace(Replace(Replace(Replace(Replace(DR("clave"), "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
             XMLDoc += "Cantidad=""" + DR("cantidad").ToString + """ "
             XMLDoc += "ClaveUnidad=""" + DR("cunidad") + """ "
             XMLDoc += "Unidad=""" + Replace(Replace(Replace(Replace(Replace(DR("tipocantidad"), "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
@@ -4150,24 +4167,24 @@ Public Class dbVentas
             'Else
             If pEsEgreso = 0 Then
                 If DR("cantidad") <> 0 Then
-                    XMLDoc += "ValorUnitario=""" + Format((PrecioTemp + DR("descuentoc")) / DR("cantidad"), "#0.00####") + """ "
-                    XMLDoc += "Importe=""" + Format(PrecioTemp + DR("descuentoc"), "#0.00####") + """ "
+                    XMLDoc += "ValorUnitario=""" + Format((PrecioTemp + DR("cdescuento")) / DR("cantidad"), "#0.00####") + """ "
+                    XMLDoc += "Importe=""" + Format(PrecioTemp + DR("cdescuento"), "#0.00####") + """ "
                 Else
                     XMLDoc += "ValorUnitario=""0.00"" "
                     XMLDoc += "Importe=""0.00"" "
                 End If
             Else
                 If DR("cantidad") <> 0 Then
-                    XMLDoc += "ValorUnitario=""" + Format(If((PrecioTemp + DR("descuentoc")) / DR("cantidad") >= 0, (PrecioTemp + DR("descuentoc")) / DR("cantidad"), ((PrecioTemp + DR("descuentoc")) / DR("cantidad")) * -1), "#0.00####") + """ "
-                    XMLDoc += "Importe=""" + Format(If(PrecioTemp + DR("descuentoc") >= 0, PrecioTemp + DR("descuentoc"), (PrecioTemp + DR("descuentoc")) * -1), "#0.00####") + """ "
+                    XMLDoc += "ValorUnitario=""" + Format(If((PrecioTemp + DR("cdescuento")) / DR("cantidad") >= 0, (PrecioTemp + DR("cdescuento")) / DR("cantidad"), ((PrecioTemp + DR("cdescuento")) / DR("cantidad")) * -1), "#0.00####") + """ "
+                    XMLDoc += "Importe=""" + Format(If(PrecioTemp + DR("cdescuento") >= 0, PrecioTemp + DR("cdescuento"), (PrecioTemp + DR("cdescuento")) * -1), "#0.00####") + """ "
                 Else
                     XMLDoc += "ValorUnitario=""0.00"" "
                     XMLDoc += "Importe=""0.00"" "
                 End If
             End If
-            If DR("descuentoc") <> 0 Then XMLDoc += "Descuento=""" + Format(DR("descuentoc"), "#0.00####") + """ "
+            If DR("cdescuento") <> 0 Then XMLDoc += "Descuento=""" + Format(DR("cdescuento"), "#0.00####") + """ "
             ImpXML = ""
-            If DR("iva") <> 0 Or DR("ieps") <> 0 Or DR("ivaretenido") <> 0 Or DR("isr") <> 0 Or DR("ivaretenidof") <> 0 Then
+            If DR("iva") <> 0 Or DR("ieps") <> 0 Or DR("ivaretenido") <> 0 Or ISR <> 0 Or IvaRetenido <> 0 Then
                 ImpXML += "<cfdi:Impuestos>"
                 If DR("iva") <> 0 Or DR("ieps") <> 0 Then
                     ImpXML += "<cfdi:Traslados>"
@@ -4189,23 +4206,23 @@ Public Class dbVentas
                     End If
                     ImpXML += "</cfdi:Traslados>"
                 End If
-                If DR("isr") <> 0 Or DR("ivaretenido") <> 0 Or DR("ivaretenidof") <> 0 Then
+                If ISR <> 0 Or DR("ivaretenido") <> 0 Or IvaRetenido <> 0 Then
                     ImpXML += "<cfdi:Retenciones>"
                     If DR("isr") <> 0 Then
                         ImpXML += "<cdfi:Retencion "
                         ImpXML += "Base=""" + Format(DR("precio"), "0.00####") + """ "
                         ImpXML += "Impuesto=""001"" "
                         ImpXML += "TipoFactor=""Tasa"" "
-                        ImpXML += "TasaOCuota=""" + Format(DR("isr") / 100, "0.000000") + """ "
-                        ImpXML += "Importe=""" + Format(DR("precio") * DR("isr") / 100, "0.00####") + """/>"
+                        ImpXML += "TasaOCuota=""" + Format(ISR / 100, "0.000000") + """ "
+                        ImpXML += "Importe=""" + Format(DR("precio") * ISR / 100, "0.00####") + """/>"
                     End If
-                    If DR("ivaretenido") <> 0 Or DR("ivaretenidof") Then
+                    If DR("ivaretenido") <> 0 Or IvaRetenido Then
                         ImpXML += "<cdfi:Retencion "
                         ImpXML += "Base=""" + Format(DR("precio"), "0.00####") + """ "
                         ImpXML += "Impuesto=""002"" "
                         ImpXML += "TipoFactor=""Tasa"" "
-                        ImpXML += "TasaOCuota=""" + Format((DR("ivaretenido") + DR("ivaretenidof")) / 100, "0.000000") + """ "
-                        ImpXML += "Importe=""" + Format(DR("precio") * (DR("ivaretenido") + DR("ivaretenidof")) / 100, "0.00####") + """/>"
+                        ImpXML += "TasaOCuota=""" + Format((DR("ivaretenido") + IvaRetenido) / 100, "0.000000") + """ "
+                        ImpXML += "Importe=""" + Format(DR("precio") * (DR("ivaretenido") + IvaRetenido) / 100, "0.00####") + """/>"
                     End If
                     ImpXML += "</cfdi:Retenciones>"
                 End If
