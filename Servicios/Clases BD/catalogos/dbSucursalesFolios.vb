@@ -126,6 +126,7 @@
         Return DS.Tables("tblsucursalesfolios").DefaultView
     End Function
     Public Function BuscaFolios(ByVal pidSucursal As Integer, ByVal pTipoDocumento As Byte, ByVal pElectronico As Byte) As Boolean
+        If pElectronico = 3 Then pElectronico = 2
         Comm.CommandText = "select ifnull((select idfolio from tblsucursalesfolios where idsucursal=" + pidSucursal.ToString + " and tipodocumento=" + pTipoDocumento.ToString + " and activo=1 and eselectronica=" + pElectronico.ToString + " limit 1),0)"
         ID = Comm.ExecuteScalar
         If ID = 0 Then
