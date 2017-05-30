@@ -3624,7 +3624,9 @@ Public Class dbVentas
 
         CO += Replace(Replace(Replace(Replace(Replace(Cliente.RFC, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + "|"
         CO += Replace(Replace(Replace(Replace(Replace(Cliente.Nombre, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + "|"
-        CO += Cliente.cPais + "|"
+        If Cliente.RFC = "XEXX010101000" Then
+            CO += Cliente.cPais + "|"
+        End If
         If pXMLINE.Contains("cce11:ComercioExterior") = True Then
             CO += Cliente.RegIdTrib + "|"
         End If
@@ -3690,14 +3692,14 @@ Public Class dbVentas
                         ImpXML += "002|"
                         ImpXML += "Tasa|"
                         ImpXML += Format(DR("iva") / 100, "0.000000") + "|"
-                        ImpXML += Format((DR("precio")) * DR("iva") / 100, "0.00####") + "|"
+                        ImpXML += Format(DR("precio") * DR("iva") / 100, "0.00####") + "|"
                     End If
                     If DR("ieps") <> 0 Then
                         ImpXML += Format(DR("precio"), "0.00####") + "|"
                         ImpXML += "003|"
                         ImpXML += "Tasa|"
                         ImpXML += Format(DR("ieps") / 100, "0.000000") + "|"
-                        ImpXML += Format((DR("precio")) * DR("ieps") / 100, "0.00####") + "|"
+                        ImpXML += Format(DR("precio") * DR("ieps") / 100, "0.00####") + "|"
                     End If
                 End If
                 If ISR <> 0 Or DR("ivaretenido") <> 0 Or IvaRetenido <> 0 Then
@@ -3798,14 +3800,15 @@ Public Class dbVentas
                 End While
                 DR.Close()
                 For Each I As Double In Ivas
-
-                    CO += "002|"
-                    CO += "Tasa|"
-                    CO += Format(I, "0.000000") + "|"
-                    If pEsEgreso = 0 Then
-                        CO += Format(IvasImporte(I.ToString), "#0.00####") + "|"
-                    Else
-                        CO += Format(If(IvasImporte(I.ToString) >= 0, IvasImporte(I.ToString), IvasImporte(I.ToString) * -1), "#0.00####") + "|"
+                    If IvasImporte(I.ToString) > 0 Then
+                        CO += "002|"
+                        CO += "Tasa|"
+                        CO += Format(I / 100, "0.000000") + "|"
+                        If pEsEgreso = 0 Then
+                            CO += Format(IvasImporte(I.ToString), "#0.00####") + "|"
+                        Else
+                            CO += Format(If(IvasImporte(I.ToString) >= 0, IvasImporte(I.ToString), IvasImporte(I.ToString) * -1), "#0.00####") + "|"
+                        End If
                     End If
                 Next
 
@@ -3826,14 +3829,15 @@ Public Class dbVentas
                 End While
                 DR.Close()
                 For Each I As Double In Ivas
-
-                    CO += "003|"
-                    CO += "Tasa|"
-                    CO += Format(I, "0.000000") + "|"
-                    If pEsEgreso = 0 Then
-                        CO += Format(IvasImporte(I.ToString), "#0.00####") + "|"
-                    Else
-                        CO += Format(If(IvasImporte(I.ToString) >= 0, IvasImporte(I.ToString), IvasImporte(I.ToString) * -1), "#0.00####") + "|"
+                    If IvasImporte(I.ToString) > 0 Then
+                        CO += "003|"
+                        CO += "Tasa|"
+                        CO += Format(I / 100, "0.000000") + "|"
+                        If pEsEgreso = 0 Then
+                            CO += Format(IvasImporte(I.ToString), "#0.00####") + "|"
+                        Else
+                            CO += Format(If(IvasImporte(I.ToString) >= 0, IvasImporte(I.ToString), IvasImporte(I.ToString) * -1), "#0.00####") + "|"
+                        End If
                     End If
                 Next
 
@@ -4083,7 +4087,9 @@ Public Class dbVentas
 
 
         XMLDoc += "<cfdi:Receptor Rfc=""" + Replace(Replace(Replace(Replace(Replace(Cliente.RFC, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ Nombre=""" + Replace(Replace(Replace(Replace(Replace(Cliente.Nombre, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """"
-        XMLDoc += " ResidenciaFiscal=""" + Cliente.cPais + """"
+        If Cliente.RFC = "XEXX010101000" Then
+            XMLDoc += " ResidenciaFiscal=""" + Cliente.cPais + """"
+        End If
         If pXMLINE.Contains("cce11:ComercioExterior") = True Then
             XMLDoc += " NumRegIdTrib=""" + Cliente.RegIdTrib + """"
         End If
@@ -4189,7 +4195,7 @@ Public Class dbVentas
                 If DR("iva") <> 0 Or DR("ieps") <> 0 Then
                     ImpXML += "<cfdi:Traslados>"
                     If DR("iva") <> 0 Then
-                        ImpXML += "<cdfi:Traslado "
+                        ImpXML += "<cfdi:Traslado "
                         ImpXML += "Base=""" + Format(DR("precio"), "0.00####") + """ "
                         ImpXML += "Impuesto=""002"" "
                         ImpXML += "TipoFactor=""Tasa"" "
@@ -4197,7 +4203,7 @@ Public Class dbVentas
                         ImpXML += "Importe=""" + Format((DR("precio")) * DR("iva") / 100, "0.00####") + """/>"
                     End If
                     If DR("ieps") <> 0 Then
-                        ImpXML += "<cdfi:Traslado "
+                        ImpXML += "<cfdi:Traslado "
                         ImpXML += "Base=""" + Format(DR("precio"), "0.00####") + """ "
                         ImpXML += "Impuesto=""003"" "
                         ImpXML += "TipoFactor=""Tasa"" "
@@ -4208,8 +4214,8 @@ Public Class dbVentas
                 End If
                 If ISR <> 0 Or DR("ivaretenido") <> 0 Or IvaRetenido <> 0 Then
                     ImpXML += "<cfdi:Retenciones>"
-                    If DR("isr") <> 0 Then
-                        ImpXML += "<cdfi:Retencion "
+                    If ISR <> 0 Then
+                        ImpXML += "<cfdi:Retencion "
                         ImpXML += "Base=""" + Format(DR("precio"), "0.00####") + """ "
                         ImpXML += "Impuesto=""001"" "
                         ImpXML += "TipoFactor=""Tasa"" "
@@ -4217,7 +4223,7 @@ Public Class dbVentas
                         ImpXML += "Importe=""" + Format(DR("precio") * ISR / 100, "0.00####") + """/>"
                     End If
                     If DR("ivaretenido") <> 0 Or IvaRetenido Then
-                        ImpXML += "<cdfi:Retencion "
+                        ImpXML += "<cfdi:Retencion "
                         ImpXML += "Base=""" + Format(DR("precio"), "0.00####") + """ "
                         ImpXML += "Impuesto=""002"" "
                         ImpXML += "TipoFactor=""Tasa"" "
@@ -4350,14 +4356,15 @@ Public Class dbVentas
                 End While
                 DR.Close()
                 For Each I As Double In Ivas
-
-                    XMLDoc += "<cfdi:Traslado Impuesto=""002"" "
-                    XMLDoc += "TipoFactor=""Tasa"" "
-                    XMLDoc += "TasaOCuota=""" + Format(I, "0.000000") + """ "
-                    If pEsEgreso = 0 Then
-                        XMLDoc += "Importe=""" + Format(IvasImporte(I.ToString), "#0.00####") + """ />"
-                    Else
-                        XMLDoc += "Importe=""" + Format(If(IvasImporte(I.ToString) >= 0, IvasImporte(I.ToString), IvasImporte(I.ToString) * -1), "#0.00####") + """ />"
+                    If IvasImporte(I.ToString) > 0 Then
+                        XMLDoc += "<cfdi:Traslado Impuesto=""002"" "
+                        XMLDoc += "TipoFactor=""Tasa"" "
+                        XMLDoc += "TasaOCuota=""" + Format(I / 100, "0.000000") + """ "
+                        If pEsEgreso = 0 Then
+                            XMLDoc += "Importe=""" + Format(IvasImporte(I.ToString), "#0.00####") + """ />"
+                        Else
+                            XMLDoc += "Importe=""" + Format(If(IvasImporte(I.ToString) >= 0, IvasImporte(I.ToString), IvasImporte(I.ToString) * -1), "#0.00####") + """ />"
+                        End If
                     End If
                 Next
 
@@ -4387,14 +4394,15 @@ Public Class dbVentas
                 End While
                 DR.Close()
                 For Each I As Double In Ivas
-
-                    XMLDoc += "<cfdi:Traslado Impuesto=""003"" "
-                    XMLDoc += "TipoFactor=""Tasa"" "
-                    XMLDoc += "TasaOCuota=""" + Format(I, "0.000000") + """ "
-                    If pEsEgreso = 0 Then
-                        XMLDoc += "Importe=""" + Format(IvasImporte(I.ToString), "#0.00####") + """ />"
-                    Else
-                        XMLDoc += "Importe=""" + Format(If(IvasImporte(I.ToString) >= 0, IvasImporte(I.ToString), IvasImporte(I.ToString) * -1), "#0.00####") + """ />"
+                    If IvasImporte(I.ToString) > 0 Then
+                        XMLDoc += "<cfdi:Traslado Impuesto=""003"" "
+                        XMLDoc += "TipoFactor=""Tasa"" "
+                        XMLDoc += "TasaOCuota=""" + Format(I / 100, "0.000000") + """ "
+                        If pEsEgreso = 0 Then
+                            XMLDoc += "Importe=""" + Format(IvasImporte(I.ToString), "#0.00####") + """ />"
+                        Else
+                            XMLDoc += "Importe=""" + Format(If(IvasImporte(I.ToString) >= 0, IvasImporte(I.ToString), IvasImporte(I.ToString) * -1), "#0.00####") + """ />"
+                        End If
                     End If
                 Next
                 XMLDoc += "</cfdi:Traslados>"
