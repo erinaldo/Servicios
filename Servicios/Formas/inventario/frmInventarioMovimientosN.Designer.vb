@@ -23,9 +23,9 @@ Partial Class frmInventarioMovimientosN
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Button17 = New System.Windows.Forms.Button()
         Me.Label28 = New System.Windows.Forms.Label()
         Me.TextBox14 = New System.Windows.Forms.TextBox()
@@ -114,6 +114,7 @@ Partial Class frmInventarioMovimientosN
         Me.colMoneda = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colAlmacen = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colAlmacenDest = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.btnEntrega = New System.Windows.Forms.Button()
         Me.Panel2.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel3.SuspendLayout()
@@ -288,7 +289,7 @@ Partial Class frmInventarioMovimientosN
         'btnDocumento
         '
         Me.btnDocumento.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnDocumento.Location = New System.Drawing.Point(161, 448)
+        Me.btnDocumento.Location = New System.Drawing.Point(162, 429)
         Me.btnDocumento.Name = "btnDocumento"
         Me.btnDocumento.Size = New System.Drawing.Size(135, 24)
         Me.btnDocumento.TabIndex = 23
@@ -680,9 +681,9 @@ Partial Class frmInventarioMovimientosN
         Me.lblAlmacenDestino.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblAlmacenDestino.Location = New System.Drawing.Point(177, 0)
         Me.lblAlmacenDestino.Name = "lblAlmacenDestino"
-        Me.lblAlmacenDestino.Size = New System.Drawing.Size(119, 16)
+        Me.lblAlmacenDestino.Size = New System.Drawing.Size(118, 16)
         Me.lblAlmacenDestino.TabIndex = 213
-        Me.lblAlmacenDestino.Text = "Almacen Destino:"
+        Me.lblAlmacenDestino.Text = "Almacen destino:"
         '
         'cmbAlmacenDestino
         '
@@ -701,9 +702,9 @@ Partial Class frmInventarioMovimientosN
         Me.lblAlmacenOrigen.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblAlmacenOrigen.Location = New System.Drawing.Point(11, 0)
         Me.lblAlmacenOrigen.Name = "lblAlmacenOrigen"
-        Me.lblAlmacenOrigen.Size = New System.Drawing.Size(115, 16)
+        Me.lblAlmacenOrigen.Size = New System.Drawing.Size(113, 16)
         Me.lblAlmacenOrigen.TabIndex = 126
-        Me.lblAlmacenOrigen.Text = "Almacen Origen:"
+        Me.lblAlmacenOrigen.Text = "Almacen origen:"
         '
         'cmbAlmacenOrigen
         '
@@ -955,8 +956,8 @@ Partial Class frmInventarioMovimientosN
         Me.DGDetalles.AllowUserToAddRows = False
         Me.DGDetalles.AllowUserToDeleteRows = False
         Me.DGDetalles.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.DGDetalles.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.DGDetalles.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle10
         Me.DGDetalles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DGDetalles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGDetalles.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colId, Me.colCantidad, Me.colCodigo, Me.coDescripcion, Me.colPrecio, Me.colMoneda, Me.colAlmacen, Me.colAlmacenDest})
@@ -979,8 +980,8 @@ Partial Class frmInventarioMovimientosN
         'colCantidad
         '
         Me.colCantidad.DataPropertyName = "cantidad"
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.colCantidad.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.colCantidad.DefaultCellStyle = DataGridViewCellStyle11
         Me.colCantidad.FillWeight = 60.0!
         Me.colCantidad.HeaderText = "Cant."
         Me.colCantidad.Name = "colCantidad"
@@ -1004,9 +1005,9 @@ Partial Class frmInventarioMovimientosN
         'colPrecio
         '
         Me.colPrecio.DataPropertyName = "precio"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle3.Format = "C2"
-        Me.colPrecio.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle12.Format = "C2"
+        Me.colPrecio.DefaultCellStyle = DataGridViewCellStyle12
         Me.colPrecio.FillWeight = 80.0!
         Me.colPrecio.HeaderText = "Precio"
         Me.colPrecio.Name = "colPrecio"
@@ -1034,12 +1035,23 @@ Partial Class frmInventarioMovimientosN
         Me.colAlmacenDest.Name = "colAlmacenDest"
         Me.colAlmacenDest.ReadOnly = True
         '
+        'btnEntrega
+        '
+        Me.btnEntrega.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnEntrega.Location = New System.Drawing.Point(161, 455)
+        Me.btnEntrega.Name = "btnEntrega"
+        Me.btnEntrega.Size = New System.Drawing.Size(135, 24)
+        Me.btnEntrega.TabIndex = 312
+        Me.btnEntrega.Text = "Entrega"
+        Me.btnEntrega.UseVisualStyleBackColor = True
+        '
         'frmInventarioMovimientosN
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(230, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(230, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(928, 570)
+        Me.Controls.Add(Me.btnEntrega)
         Me.Controls.Add(Me.DGDetalles)
         Me.Controls.Add(Me.Label19)
         Me.Controls.Add(Me.Label23)
@@ -1189,4 +1201,5 @@ Partial Class frmInventarioMovimientosN
     Friend WithEvents colMoneda As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colAlmacen As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colAlmacenDest As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents btnEntrega As System.Windows.Forms.Button
 End Class

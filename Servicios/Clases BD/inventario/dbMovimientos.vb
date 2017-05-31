@@ -1,4 +1,6 @@
-﻿Public Class dbMovimientos
+﻿Imports MySql.Data.MySqlClient
+
+Public Class dbMovimientos
     Dim Comm As New MySql.Data.MySqlClient.MySqlCommand
     Public ID As Integer
     Public IdConcepto As Integer
@@ -50,8 +52,8 @@
         FechaCancelado = ""
         IdPedido = 0
         Transito = 0
-        idalmacenD = 0
-        idalmacenO = 0
+        IdAlmacenD = 0
+        IdAlmacenO = 0
         Comm.Connection = Conexion
         Concepto = New dbInventarioConceptos(Comm.Connection)
     End Sub
@@ -84,8 +86,8 @@
             idRemision = DReader("idremision")
             Transito = DReader("transito")
             IdPedido = DReader("idpedido")
-            idalmacenD = DReader("idalmacend")
-            idalmacenO = DReader("idalmaceno")
+            IdAlmacenD = DReader("idalmacend")
+            IdAlmacenO = DReader("idalmaceno")
             IdPedidoV = DReader("idpedidov")
             IdCliente = DReader("idcliente")
         End If
@@ -186,7 +188,7 @@
     End Sub
     Public Sub Eliminar(ByVal pID As Integer, ByVal pTipoCosteo As Byte, ByVal pTipodeCambio As Double, ByVal pCosteoTiempoReal As Byte)
         RegresaInventario(pID, pTipoCosteo, pTipodeCambio, pCosteoTiempoReal)
-        Comm.CommandText = "delete from tblmovimientos where idmovimiento=" + pID.ToString
+        Comm.CommandText = "delete from tblmovimientosentrega where idmovimiento=" + pID.ToString() + "; delete from tblmovimientos where idmovimiento=" + pID.ToString
         Comm.ExecuteNonQuery()
     End Sub
     Public Sub Recibir(pid As Integer)
@@ -818,4 +820,39 @@
         'ds.WriteXmlSchema("repInventarioEntregaMercancia1.xml")
         Return ds.Tables("entregas").DefaultView
     End Function
+
+    Public Function ConsultarEntrega(idmovimiento As Integer) As Entrega
+        Comm.CommandText = "select * from tblmovimientosentrega where idmovimiento=" + idmovimiento.ToString() + ";"
+        Dim dr As MySqlDataReader = Comm.ExecuteReader
+        Try
+            If dr.Read Then Return New Entrega(dr("idmovimiento"), dr("unidad"), dr("marca"), dr("modelo"), dr("color"), dr("placas"), dr("chofer"), dr("salida"), dr("lugar"), dr("paquetes"), dr("lote"), dr("numerosellos"), dr("kilos"))
+            Return New Entrega(0, "", "", "", "", "", "", Now, "", 0, "", "", 0)
+        Finally
+            dr.Close()
+        End Try
+    End Function
+
+    Public Sub GuardarEntrega(entrega As Entrega)
+        Comm.CommandText = "select count(*) from tblmovimientosentrega where idmovimiento=" + entrega.Id.ToString() + ";"
+        If Comm.ExecuteScalar() = 0 Then
+            Comm.CommandText = "insert into tblmovimientosentrega (idmovimiento, unidad, marca, modelo, color, placas, chofer, salida, lugar, paquetes, lote, numerosellos, kilos) values (@id, @unidad, @marca, @modelo, @color, @placas, @chofer, @salida, @lugar, @paquetes, @lote, @numerosellos, @kilos);"
+        Else
+            Comm.CommandText = "update tblmovimientosentrega set unidad=@unidad, marca=@marca, modelo=@modelo, color=@color, placas=@placas, chofer=@chofer, salida=@salida, lugar=@lugar, paquetes=@paquetes, lote=@lote, numerosellos=@numerosellos, kilos=@kilos where idmovimiento=@id;"
+        End If
+        Comm.Parameters.Add(New MySqlParameter("@id", entrega.Id))
+        Comm.Parameters.Add(New MySqlParameter("@unidad", entrega.Unidad))
+        Comm.Parameters.Add(New MySqlParameter("@marca", entrega.Marca))
+        Comm.Parameters.Add(New MySqlParameter("@modelo", entrega.Modelo))
+        Comm.Parameters.Add(New MySqlParameter("@color", entrega.Color))
+        Comm.Parameters.Add(New MySqlParameter("@placas", entrega.Placas))
+        Comm.Parameters.Add(New MySqlParameter("@chofer", entrega.Chofer))
+        Comm.Parameters.Add(New MySqlParameter("@salida", entrega.Salida))
+        Comm.Parameters.Add(New MySqlParameter("@lugar", entrega.Lugar))
+        Comm.Parameters.Add(New MySqlParameter("@paquetes", entrega.Paquetes))
+        Comm.Parameters.Add(New MySqlParameter("@lote", entrega.Lote))
+        Comm.Parameters.Add(New MySqlParameter("@numerosellos", entrega.NumeroSellos))
+        Comm.Parameters.Add(New MySqlParameter("@kilos", entrega.Kilos))
+        Comm.ExecuteNonQuery()
+        Comm.Parameters.Clear()
+    End Sub
 End Class

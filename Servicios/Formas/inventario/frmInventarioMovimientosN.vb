@@ -1738,4 +1738,11 @@
     Private Sub TextBox6_TextChanged(sender As Object, e As EventArgs) Handles TextBox6.TextChanged
 
     End Sub
+
+    Private Sub btnEntrega_Click(sender As Object, e As EventArgs) Handles btnEntrega.Click
+        If idMovimiento <> 0 Then
+            Dim f As New frmMovimientosEntrega(idMovimiento)
+            f.ShowDialog()
+        End If
+    End Sub
 End Class

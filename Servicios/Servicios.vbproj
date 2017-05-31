@@ -179,6 +179,7 @@
     <Compile Include="Clases BD\ventas\complementos\dbComplementoPropietarios.vb" />
     <Compile Include="Clases BD\produccion\dbProduccionProductos.vb" />
     <Compile Include="Clases BD\ventas\dbVentas.vb" />
+    <Compile Include="Clases\Entrega.vb" />
     <Compile Include="Formas\addendas\addendaoxxo\AddendaData.vb" />
     <Compile Include="Formas\addendas\addendaoxxo\AddendaOxxo.vb" />
     <Compile Include="Formas\addendas\addendaoxxo\AddendaService.vb" />
@@ -557,6 +558,12 @@
       <DependentUpon>frmInventarioPedidosConsulta.vb</DependentUpon>
     </Compile>
     <Compile Include="Formas\inventario\frmInventarioPedidosConsulta.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formas\inventario\frmMovimientosEntrega.Designer.vb">
+      <DependentUpon>frmMovimientosEntrega.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formas\inventario\frmMovimientosEntrega.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formas\nomina\frmGeneradorRFC.designer.vb">
@@ -3596,6 +3603,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formas\inventario\frmInventarioPedidosConsulta.resx">
       <DependentUpon>frmInventarioPedidosConsulta.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formas\inventario\frmMovimientosEntrega.resx">
+      <DependentUpon>frmMovimientosEntrega.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formas\nomina\frmGeneradorRFC.resx">
       <DependentUpon>frmGeneradorRFC.vb</DependentUpon>
