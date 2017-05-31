@@ -16,7 +16,7 @@
     Public CostoIndirecto As Double
     Public IEPS As Double
     Public ivaRetenido As Double
-    Public UbicacionO As String
+    Public Ubicacion As String
     'Public DeRemision As Byte
     Dim Comm As New MySql.Data.MySqlClient.MySqlCommand
     Public Sub New(ByVal Conexion As MySql.Data.MySqlClient.MySqlConnection)
@@ -45,7 +45,7 @@
     End Sub
     Public Sub LlenaDatos()
         Dim DReader As MySql.Data.MySqlClient.MySqlDataReader
-        Comm.CommandText = "select cd.*,ifnull(cdu.ubicaciono,'') ubicacion from tblcomprasdetalles cd left outer join tblcomprasubicaciones cdu on cd.iddetalle=cdu.iddetalle where cd.iddetalle=" + ID.ToString
+        Comm.CommandText = "select cd.*,ifnull(cdu.ubicacion,'') ubicacion from tblcomprasdetalles cd left outer join tblcomprasubicaciones cdu on cd.iddetalle=cdu.iddetalle where cd.iddetalle=" + ID.ToString
         DReader = Comm.ExecuteReader
         If DReader.Read() Then
             Precio = DReader("precio")
@@ -61,14 +61,14 @@
             IEPS = DReader("IEPS")
             ivaRetenido = DReader("ivaRetenido")
             CostoIndirecto = DReader("costoindirecto")
-            UbicacionO = DReader("ubicacion")
+            Ubicacion = DReader("ubicacion")
             'DeRemision = DReader("deremision")
         End If
         DReader.Close()
         Inventario = New dbInventario(Idinventario, Comm.Connection)
         Moneda = New dbMonedas(IdMoneda, Comm.Connection)
     End Sub
-    Public Sub Guardar(ByVal pIdCompra As Integer, ByVal pIdinventario As Integer, ByVal pCantidad As Double, ByVal pPrecio As Double, ByVal pIdMoneda As Integer, ByVal pIdAlmacen As Integer, ByVal pIva As Double, ByVal pDescuento As Double, ByVal pSiempreNuevo As Boolean, ByVal pIEPS As Double, ByVal pivaRetenido As Double, pUbicacionO As String)
+    Public Sub Guardar(ByVal pIdCompra As Integer, ByVal pIdinventario As Integer, ByVal pCantidad As Double, ByVal pPrecio As Double, ByVal pIdMoneda As Integer, ByVal pIdAlmacen As Integer, ByVal pIva As Double, ByVal pDescuento As Double, ByVal pSiempreNuevo As Boolean, ByVal pIEPS As Double, ByVal pivaRetenido As Double, pUbicacion As String)
         Dim CTemp As Double
         Dim PTemp As Double
         Idinventario = pIdinventario
@@ -80,7 +80,7 @@
         ivaRetenido = pivaRetenido
         IEPS = pIEPS
         Iva = pIva
-        UbicacionO = pUbicacionO
+        Ubicacion = pUbicacion
 
         'Extra = pExtra
         Descuento = pDescuento
@@ -106,8 +106,9 @@
             Comm.CommandText = "insert into tblcomprasdetalles(idinventario,cantidad,precio,idmoneda,idcompra,idalmacen,iva,extra,descuento,surtido,costoindirecto, IEPS, ivaRetenido) values(" + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + "," + IdMoneda.ToString + "," + IdCompra.ToString + "," + IdAlmacen.ToString + "," + Iva.ToString + ",''," + Descuento.ToString + ",0,0 ," + IEPS.ToString + ", " + ivaRetenido.ToString + ")"
             Comm.ExecuteNonQuery()
 
-            If pUbicacionO <> "" Then
-                Comm.CommandText = "insert into tblcomprasubicaciones (iddetalle, cantidad, surtido, ubicaciono) select max(iddetalle), " + Cantidad.ToString() + ", 0, '" + Trim(Replace(UbicacionO, "'", "''")) + "' from tblcomprasdetalles;"
+            'ubicaciones
+            If pUbicacion <> "" Then
+                Comm.CommandText = "insert into tblcomprasubicaciones (iddetalle, cantidad, surtido, ubicacion) select max(iddetalle), " + Cantidad.ToString() + ", 0, '" + Trim(Replace(Ubicacion, "'", "''")) + "' from tblcomprasdetalles;"
                 Comm.ExecuteNonQuery()
             End If
 

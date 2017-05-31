@@ -195,7 +195,7 @@
         Comm.ExecuteNonQuery()
 
         'ubicaciones
-        Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.surtido, 0, 1, 1, u.ubicaciono) from tblcomprasdetalles d inner join tblcomprasubicaciones u on d.iddetalle=u.iddetalle where d.idcompra=" + pId.ToString + ";"
+        Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.surtido, 0, 1, 1, u.ubicacion) from tblcomprasdetalles d inner join tblcomprasubicaciones u on d.iddetalle=u.iddetalle where d.idcompra=" + pId.ToString + ";"
         Comm.CommandText += "update tblcomprasubicaciones inner join tblcomprasdetalles on tblcomprasubicaciones.iddetalle = tblcomprasdetalles.iddetalle set tblcomprasubicaciones.surtido = tblcomprasubicaciones.cantidad where tblcomprasdetalles.idcompra=" + pId.ToString + ";"
         Comm.ExecuteNonQuery()
     End Sub
@@ -640,7 +640,7 @@
         Comm.ExecuteNonQuery()
 
         'ubicaciones
-        Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.cantidad-u.surtido, 0, 0, 1, u.ubicaciono) from tblcomprasdetalles d inner join tblcomprasubicaciones u on d.iddetalle=u.iddetalle where d.idcompra=" + pId.ToString + ";"
+        Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.cantidad-u.surtido, 0, 0, 1, u.ubicacion) from tblcomprasdetalles d inner join tblcomprasubicaciones u on d.iddetalle=u.iddetalle where d.idcompra=" + pId.ToString + ";"
         Comm.CommandText += "update tblcomprasubicaciones inner join tblcomprasdetalles on tblcomprasubicaciones.iddetalle = tblcomprasdetalles.iddetalle set tblcomprasubicaciones.surtido = tblcomprasubicaciones.cantidad where tblcomprasdetalles.idcompra=" + pId.ToString + ";"
         Comm.ExecuteNonQuery()
 

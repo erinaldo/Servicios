@@ -799,7 +799,7 @@
             lblUbicacion.Visible = Articulo.UsaUbicacion
             cmbUbicacion.Visible = Articulo.UsaUbicacion
             cmbUbicacion.DataSource = Articulo.Ubicaciones(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario)
-            cmbUbicacion.SelectedValue = CD.UbicacionO
+            cmbUbicacion.SelectedValue = CD.Ubicacion
 
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, GlobalNombreApp)

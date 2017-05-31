@@ -855,7 +855,7 @@
 
             TextBox6.Text = CD.Precio.ToString
             TextBox4.Text = CD.Descripcion
-            cmbUbicacionOrigen.Text = CD.UbicacionO
+            cmbUbicacionOrigen.Text = CD.Ubicacion
             cmbUbicacionDestino.Text = CD.UbicacionD
             Button4.Text = "Modificar Concepto"
             If IdVenta <> 0 Or IdRemision <> 0 Then
@@ -877,7 +877,7 @@
             lblUbicacionDestino.Visible = articulo.UsaUbicacion And Mov.Tipo = dbInventarioConceptos.Tipos.Traspaso
             cmbUbicacionDestino.Visible = articulo.UsaUbicacion And Mov.Tipo = dbInventarioConceptos.Tipos.Traspaso
             cmbUbicacionOrigen.DataSource = articulo.Ubicaciones(IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), IdInventario)
-            cmbUbicacionOrigen.SelectedValue = CD.UbicacionO
+            cmbUbicacionOrigen.SelectedValue = CD.Ubicacion
             cmbUbicacionDestino.DataSource = articulo.Ubicaciones(IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex), IdInventario)
             cmbUbicacionDestino.SelectedValue = CD.UbicacionD
             cmbUbicacionDestino.Enabled = False
@@ -1062,6 +1062,8 @@
         cmbUbicacionOrigen.Visible = False
         lblUbicacionDestino.Visible = False
         cmbUbicacionDestino.Visible = False
+        cmbUbicacionOrigen.Enabled = True
+        cmbUbicacionDestino.Enabled = True
         Dim inv As New dbInventario(IdInventario, MySqlcon)
         Select Case Concep.Tipo
             Case 0, 4

@@ -734,12 +734,12 @@
         For i As Integer = 0 To DGEventos.RowCount - 1
             inv.ID = inv.buscarNoInventariable()
             inv.LlenaDatos()
-            CD.Guardar(idRemision, inv.ID, 1, DGEventos.Item(4, i).Value, 2, DGEventos.Item(3, i).Value, 1, DGEventos.Item(7, i).Value, 0, 1, 0, 0, 0, 1, inv.TipoContenido.ID, 0)
+            CD.Guardar(idRemision, inv.ID, 1, DGEventos.Item(4, i).Value, 2, DGEventos.Item(3, i).Value, 1, DGEventos.Item(7, i).Value, 0, 1, 0, 0, 0, 1, inv.TipoContenido.ID, 0, "")
         Next
         For i As Integer = 0 To DGInventario.RowCount - 1
             inv.ID = DGInventario.Item(2, i).Value
             inv.LlenaDatos()
-            CD.Guardar(idRemision, DGInventario.Item(2, i).Value, 1, DGInventario.Item(5, i).Value, 2, DGInventario.Item(4, i).Value, 1, inv.Iva, 0, 1, 0, inv.ieps, inv.ivaRetenido, 1, inv.TipoContenido.ID, 0)
+            CD.Guardar(idRemision, DGInventario.Item(2, i).Value, 1, DGInventario.Item(5, i).Value, 2, DGInventario.Item(4, i).Value, 1, inv.Iva, 0, 1, 0, inv.ieps, inv.ivaRetenido, 1, inv.TipoContenido.ID, 0, "")
         Next
 
         Dim remi As New frmVentasRemisiones(idRemision)

@@ -38,6 +38,7 @@
     Public TotalOfertas As Double
     Public Usuario As String
     Public UltimoFolio As Integer
+
     Public Sub New(ByVal Conexion As MySql.Data.MySqlClient.MySqlConnection)
         ID = -1
         IdCliente = -1
@@ -106,12 +107,7 @@
         End If
         Cliente = New dbClientes(IdCliente, Comm.Connection)
     End Sub
-    'Public Function ExisteFolio(ByVal pfolio As Integer, Optional ByVal idventa As Integer = -1) As Boolean
-    '    Folio = pfolio
-    '    Comm.CommandText = "select count(folio) from tblventas where folio=" + Folio.ToString + If(idventa = -1, "", " and idventa<>" + CStr(idventa))
-    '    If Comm.ExecuteScalar = 0 Then Return False Else Return True
-    'End Function
-
+    
     Public Sub Guardar(ByVal pIdCliente As Integer, ByVal pFecha As String, ByVal pFolio As Integer, ByVal pDesglosar As Byte, ByVal pIva As Double, ByVal pidSucursal As Integer, ByVal pSerie As String, ByVal pTipodeCambio As Double, ByVal pIdMoneda As Integer, ByVal pIdCaja As Integer)
         IdCliente = pIdCliente
         Fecha = pFecha
@@ -123,7 +119,7 @@
         TipodeCambio = pTipodeCambio
         IdMoneda = pIdMoneda
         idCaja = pIdCaja
-        Comm.CommandText = "insert into tblventasremisiones(folio,idcliente,fecha,desglosar,credito,iva,totalapagar,total,hora,estado,idsucursal,serie,tipodecambio,idmoneda,usado,fechacancelado,horacancelado,idcaja,idforma,idvendedor,comentariof,porsurtir,idventar,idUsuarioAlta,fechaAlta,horaAlta,idUsuarioCambio,fechaCambio,horaCambio) values(" + Folio.ToString + "," + IdCliente.ToString + ",'" + Fecha + "'," + Desglosar.ToString + "," + Credito.ToString + "," + Iva.ToString + "," + TotalaPagar.ToString + "," + Total.ToString + ",'" + Format(TimeOfDay, "HH:mm:ss") + "'," + CStr(Estados.SinGuardar) + "," + IdSucursal.ToString + ",'" + Replace(Serie, "'", "''") + "'," + TipodeCambio.ToString + "," + IdMoneda.ToString + ",0,'',''," + idCaja.ToString + ",1,1,'',0,0," + GlobalIdUsuario.ToString() + ",'" + DateTime.Now.ToString("yyyy/MM/dd") + "','" + TimeOfDay.ToString("HH:mm:ss") + "'," + GlobalIdUsuario.ToString() + ",'" + DateTime.Now.ToString("yyyy/MM/dd") + "','" + TimeOfDay.ToString("HH:mm:ss") + "');"
+        Comm.CommandText = "insert into tblventasremisiones(folio, idcliente, fecha, desglosar, credito, iva, totalapagar, total, hora, estado, idsucursal, serie, tipodecambio, idmoneda, usado, fechacancelado, horacancelado, idcaja, idforma, idvendedor, comentariof, porsurtir, idventar, idUsuarioAlta, fechaAlta, horaAlta, idUsuarioCambio, fechaCambio, horaCambio) values (" + Folio.ToString + "," + IdCliente.ToString + ",'" + Fecha + "'," + Desglosar.ToString + "," + Credito.ToString + "," + Iva.ToString + "," + TotalaPagar.ToString + "," + Total.ToString + ",'" + Format(TimeOfDay, "HH:mm:ss") + "'," + CStr(Estados.SinGuardar) + "," + IdSucursal.ToString + ",'" + Replace(Serie, "'", "''") + "'," + TipodeCambio.ToString + "," + IdMoneda.ToString + ",0,'',''," + idCaja.ToString + ",1,1,'',0,0," + GlobalIdUsuario.ToString() + ",'" + DateTime.Now.ToString("yyyy/MM/dd") + "','" + TimeOfDay.ToString("HH:mm:ss") + "'," + GlobalIdUsuario.ToString() + ",'" + DateTime.Now.ToString("yyyy/MM/dd") + "','" + TimeOfDay.ToString("HH:mm:ss") + "');"
         'Comm.ExecuteNonQuery()
         Comm.CommandText += "select ifnull(last_insert_id(),0);"
         ID = Comm.ExecuteScalar
@@ -229,12 +225,6 @@
     Public Function ConsultaDeudas(ByVal pFecha As String, ByVal pFecha2 As String, ByVal pidCliente As Integer, ByVal pFolio As String, ByVal pidTipodePago As Integer, ByVal PorFechas As Boolean, ByVal Todas As Boolean, ByVal pTipodeOrden As Byte, ByVal pMostrarCanceladas As Boolean, ByVal pTipodeCambio As Double, ByVal pEnPesos As Boolean, ByVal pIdSucursal As Integer) As DataView
         Dim DS As New DataSet
 
-        'Comm.CommandText = "delete from tblclientesdeudas where idcliente=" + pidCliente.ToString
-        'Comm.ExecuteNonQuery()
-
-        'Remisiones
-        '"select iddocumento as idventa,0 as sel,cant,fecha,case tipo when 0 then 'Factura'  Par.' end as tipodoc,if(estado=3,'A','C') as estadof,serie,folio,credito,totalapagar,totalapagar-credito as restante,tipo,totalapagar-credito as restante2 from tblclientesdeudas where idcliente=" + pidCliente.ToString
-
         If pEnPesos Then
             Comm.CommandText = "select " + _
         "tblventasremisiones.idremision,0 as sel,tblventasremisiones.fecha,'Remisión' as tipodoc,if(tblventasremisiones.estado=3,'A','C') as estadof,tblventasremisiones.serie,tblventasremisiones.folio," + _
@@ -267,125 +257,6 @@
         End If
         Comm.ExecuteNonQuery()
 
-
-        'If pEnPesos Then
-        '    Comm.CommandText = "insert into tblclientesdeudas(idcliente,iddocumento,tipo,fecha,estado,serie,folio,credito,totalapagar,cant) select " + pidCliente.ToString + _
-        '",tblventas.idventa,4,tblventas.fecha,tblventas.estado,tblventas.serie,tblventas.folio,if(tblventas.idconversion=2,tblventas.credito,tblventas.credito*" + pTipodeCambio.ToString + "),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*" + pTipodeCambio.ToString + "),0 from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.idcliente=" + pidCliente.ToString + " and tblventas.idforma=98 and tblformasdepago.tipo=" + pidTipodePago.ToString
-        'Else
-        '    Comm.CommandText = "insert into tblclientesdeudas(idcliente,iddocumento,tipo,fecha,estado,serie,folio,credito,totalapagar,cant) select " + pidCliente.ToString + _
-        '",tblventas.idventa,4,tblventas.fecha,tblventas.estado,tblventas.serie,tblventas.folio,tblventas.credito,tblventas.totalapagar,0 from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.idcliente=" + pidCliente.ToString + " and tblventas.idforma=98 and tblformasdepago.tipo=" + pidTipodePago.ToString
-        'End If
-
-        ''select tblventas.idventa,0 as sel,tblventas.fecha,if(tblventas.estado=3,'A','C') as estadof,tblventas.serie,tblventas.folio,tblventas.credito,tblventas.totalapagar,tblventas.totalapagar-tblventas.credito as restante from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.idcliente=" + pidCliente.ToString + " and tblformasdepago.tipo=" + pidTipodePago.ToString
-        'If Todas = False Then
-        '    Comm.CommandText += " and round(tblventas.totalapagar-tblventas.credito,2)>0"
-        'End If
-        'If PorFechas Then
-        '    Comm.CommandText += " and fecha>='" + pFecha + "' and fecha<='" + pFecha2 + "'"
-        'End If
-        'If pFolio <> "" Then
-        '    Comm.CommandText += " and concat(tblventas.serie,convert(tblventas.folio using utf8)) like '%" + Replace(pFolio, "'", "''") + "%'"
-        'End If
-        'If pMostrarCanceladas Then
-        '    Comm.CommandText += " and (tblventas.estado=4 or tblventas.estado=3)"
-        'Else
-        '    Comm.CommandText += " and tblventas.estado=3"
-        'End If
-        'If pIdSucursal > 0 Then
-        '    Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        'End If
-        'Comm.ExecuteNonQuery()
-
-        ''Notas de Cargo
-        'If pEnPesos Then
-        '    Comm.CommandText = "insert into tblclientesdeudas(idcliente,iddocumento,tipo,fecha,estado,serie,folio,credito,totalapagar,cant) select " + pidCliente.ToString + _
-        '",tblnotasdecargo.idcargo,1,tblnotasdecargo.fecha,tblnotasdecargo.estado,tblnotasdecargo.serie,tblnotasdecargo.folio,if(tblnotasdecargo.idmoneda=2,tblnotasdecargo.aplicado,tblnotasdecargo.aplicado*" + pTipodeCambio.ToString + "),if(tblnotasdecargo.idmoneda=2,tblnotasdecargo.totalapagar,tblnotasdecargo.totalapagar*" + pTipodeCambio.ToString + "),0 from tblnotasdecargo inner join tblclientes on tblnotasdecargo.idcliente=tblclientes.idcliente where tblnotasdecargo.idcliente=" + pidCliente.ToString
-        'Else
-        '    Comm.CommandText = "insert into tblclientesdeudas(idcliente,iddocumento,tipo,fecha,estado,serie,folio,credito,totalapagar,cant) select " + pidCliente.ToString + _
-        '",tblnotasdecargo.idcargo,1,tblnotasdecargo.fecha,tblnotasdecargo.estado,tblnotasdecargo.serie,tblnotasdecargo.folio,tblnotasdecargo.aplicado,tblnotasdecargo.totalapagar,0 from tblnotasdecargo inner join tblclientes on tblnotasdecargo.idcliente=tblclientes.idcliente where tblnotasdecargo.idcliente=" + pidCliente.ToString
-        'End If
-
-
-        'If Todas = False Then
-        '    Comm.CommandText += " and round(tblnotasdecargo.totalapagar-tblnotasdecargo.aplicado,2)>0"
-        'End If
-        'If PorFechas Then
-        '    Comm.CommandText += " and fecha>='" + pFecha + "' and fecha<='" + pFecha2 + "'"
-        'End If
-        'If pFolio <> "" Then
-        '    Comm.CommandText += " and concat(tblnotasdecargo.serie,convert(tblnotasdecargo.folio using utf8)) like '%" + Replace(pFolio, "'", "''") + "%'"
-        'End If
-        'If pMostrarCanceladas Then
-        '    Comm.CommandText += " and (tblnotasdecargo.estado=4 or tblnotasdecargo.estado=3)"
-        'Else
-        '    Comm.CommandText += " and tblnotasdecargo.estado=3"
-        'End If
-        'If pIdSucursal > 0 Then
-        '    Comm.CommandText += " and tblnotasdecargo.idsucursal=" + pIdSucursal.ToString
-        'End If
-        'Comm.ExecuteNonQuery()
-
-        ''Documentos saldo inicial
-        'If pEnPesos Then
-        '    Comm.CommandText = "insert into tblclientesdeudas(idcliente,iddocumento,tipo,fecha,estado,serie,folio,credito,totalapagar,cant) select " + pidCliente.ToString + _
-        '",dc.iddocumento,2,dc.fecha,dc.estado,dc.serie,dc.folio,if(dc.idmoneda=2,dc.credito,dc.credito*" + pTipodeCambio.ToString + "),if(dc.idmoneda=2,dc.totalapagar,dc.totalapagar*" + pTipodeCambio.ToString + "),0 from tbldocumentosclientes as dc where dc.idcliente=" + pidCliente.ToString + " and dc.tiposaldo=0"
-        'Else
-        '    Comm.CommandText = "insert into tblclientesdeudas(idcliente,iddocumento,tipo,fecha,estado,serie,folio,credito,totalapagar,cant) select " + pidCliente.ToString + _
-        '    ",dc.iddocumento,2,dc.fecha,dc.estado,dc.serie,dc.folio,dc.credito,dc.totalapagar,0 from tbldocumentosclientes as dc where dc.idcliente=" + pidCliente.ToString + " and dc.tiposaldo=0"
-        'End If
-
-
-        'If Todas = False Then
-        '    Comm.CommandText += " and round(dc.totalapagar-dc.credito,2)>0"
-        'End If
-        'If PorFechas Then
-        '    Comm.CommandText += " and fecha>='" + pFecha + "' and fecha<='" + pFecha2 + "'"
-        'End If
-        'If pFolio <> "" Then
-        '    Comm.CommandText += " and concat(dc.serie,convert(dc.folio using utf8)) like '%" + Replace(pFolio, "'", "''") + "%'"
-        'End If
-        'If pMostrarCanceladas Then
-        '    Comm.CommandText += " and (dc.estado=4 or dc.estado=3)"
-        'Else
-        '    Comm.CommandText += " and dc.estado=3"
-        'End If
-        'If pIdSucursal > 0 Then
-        '    Comm.CommandText += " and dc.idsucursal=" + pIdSucursal.ToString
-        'End If
-        'Comm.ExecuteNonQuery()
-
-        ''Documentos documentos
-        'If pEnPesos Then
-        '    Comm.CommandText = "insert into tblclientesdeudas(idcliente,iddocumento,tipo,fecha,estado,serie,folio,credito,totalapagar,cant) select " + pidCliente.ToString + _
-        '",dc.iddocumento,3,dc.fecha,dc.estado,dc.seriereferencia,dc.folioreferencia,if(dc.idmoneda=2,dc.credito,dc.credito*" + pTipodeCambio.ToString + "),if(dc.idmoneda=2,dc.totalapagar,dc.totalapagar*" + pTipodeCambio.ToString + "),0 from tbldocumentosclientes as dc where dc.idcliente=" + pidCliente.ToString + " and dc.tiposaldo=1"
-        'Else
-        '    Comm.CommandText = "insert into tblclientesdeudas(idcliente,iddocumento,tipo,fecha,estado,serie,folio,credito,totalapagar,cant) select " + pidCliente.ToString + _
-        '    ",dc.iddocumento,3,dc.fecha,dc.estado,dc.seriereferencia,dc.folioreferencia,dc.credito,dc.totalapagar,0 from tbldocumentosclientes as dc where dc.idcliente=" + pidCliente.ToString + " and dc.tiposaldo=1"
-        'End If
-
-
-        'If Todas = False Then
-        '    Comm.CommandText += " and round(dc.totalapagar-dc.credito,2)>0"
-        'End If
-        'If PorFechas Then
-        '    Comm.CommandText += " and fecha>='" + pFecha + "' and fecha<='" + pFecha2 + "'"
-        'End If
-        'If pFolio <> "" Then
-        '    Comm.CommandText += " and concat(dc.seriereferencia,convert(dc.folioreferencia using utf8)) like '%" + Replace(pFolio, "'", "''") + "%'"
-        'End If
-        'If pMostrarCanceladas Then
-        '    Comm.CommandText += " and (dc.estado=4 or dc.estado=3)"
-        'Else
-        '    Comm.CommandText += " and dc.estado=3"
-        'End If
-        'If pIdSucursal > 0 Then
-        '    Comm.CommandText += " and dc.idsucursal=" + pIdSucursal.ToString
-        'End If
-        'Comm.ExecuteNonQuery()
-
-
-        'Comm.CommandText = "select iddocumento as idventa,0 as sel,cant,fecha,case tipo when 0 then 'Factura' when 1 then 'Nota de Cargo' when 2 then 'S. Inicial' when 3 then 'Documento' when 4 then 'Factura Par.' end as tipodoc,if(estado=3,'A','C') as estadof,serie,folio,credito,totalapagar,totalapagar-credito as restante,tipo,totalapagar-credito as restante2 from tblclientesdeudas where idcliente=" + pidCliente.ToString
-        'select tblventas.idventa,0 as sel,tblventas.fecha,if(tblventas.estado=3,'A','C') as estadof,tblventas.serie,tblventas.folio,tblventas.credito,tblventas.totalapagar,tblventas.totalapagar-tblventas.credito as restante from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.idcliente=" + pidCliente.ToString + " and tblformasdepago.tipo=" + pidTipodePago.ToString
         If pTipodeOrden = 0 Then
             Comm.CommandText += " order by fecha,serie,folio"
         Else
@@ -475,76 +346,7 @@
             ChecaFolioRepetido = True
         End If
     End Function
-    'Public Sub SetFacturado(ByVal pidVenta As Integer, ByVal pTipo As TiposFactura, ByVal pCredito As Byte, ByVal pTotal As Double)
-    '    Dim Tipo As Byte
-    '    Tipo = pTipo
-    '    Total = pTotal
-    '    If pCredito = 0 Then
-    '        Comm.CommandText = "update tblventas set facturado=" + Tipo.ToString + ",total=" + Total.ToString + ",hora='" + Format(Date.Today, "HH:mm:ss") + "' where idventa=" + pidVenta.ToString
-    '    Else
-    '        Comm.CommandText = "update tblventas set facturado=" + Tipo.ToString + ",totalapagar=" + Total.ToString + ",credito=1,total=" + Total.ToString + ",hora='" + Format(Date.Today, "HH:mm:ss") + "' where idventa=" + pidVenta.ToString
-    '    End If
-    '    Comm.ExecuteNonQuery()
-    'End Sub
-
     
-
-    'Public ReadOnly Property totalLetra(ByVal idmoneda As Integer) As String
-    '    Get
-    '        Dim f As New PaseLetras
-    '        Return f.PASELETRAS(DaTotal(ID, idmoneda), idmoneda) + " " + [Enum].GetName(GetType(MONEDAS), idmoneda)
-    '    End Get
-    'End Property
-
-
-    'Public Sub AgregarDetallesReferencia(ByVal PidRemision As Integer, ByVal pIdDocumento As Integer, ByVal Tipo As Byte, ByVal pidAlmacen As Integer)
-    '    '0 cotizacion
-    '    '1 pedido
-    '    '2 remision
-    '    '3 ventas
-
-    '    If Tipo = 0 Then
-    '        Comm.CommandText = "insert into tblventasremisionesinventario(idremision,idinventario,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento,idvariante,idservicio,surtido,preciooriginal) select " + PidRemision.ToString + ",idinventario,cantidad,precio,descripcion,idmoneda," + pidAlmacen.ToString + ",iva,extra,descuento,idvariante,0,0,precio from tblventascotizacionesinventario where idcotizacion=" + pIdDocumento.ToString
-    '        Comm.ExecuteNonQuery()
-    '        Comm.CommandText = "update tblinventarioseries set idremision=" + PidRemision.ToString + ",idcotizacion=0 where idcotizacion=" + pIdDocumento.ToString
-    '        Comm.ExecuteNonQuery()
-    '        'Comm.CommandText = "insert into tblventasremisionesproductos(idremision,idvariante,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento) select " + PidRemision.ToString + ",idvariante,cantidad,precio,descripcion,idmoneda," + pidAlmacen.ToString + ",iva,extra,descuento from tblventascotizacionesproductos where idcotizacion=" + pIdDocumento.ToString
-    '        'Comm.ExecuteNonQuery()
-    '    End If
-
-    '    If Tipo = 1 Then
-    '        Comm.CommandText = "insert into tblventasremisionesinventario(idremision,idinventario,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento,idvariante,idservicio,surtido,preciooriginal) select " + PidRemision.ToString + ",idinventario,cantidad,precio,descripcion,idmoneda," + pidAlmacen.ToString + ",iva,extra,descuento,idvariante,0,0,precio from tblventaspedidosinventario where idpedido=" + pIdDocumento.ToString
-    '        Comm.ExecuteNonQuery()
-
-    '        'Comm.CommandText = "insert into tblventasremisionesproductos(idremision,idvariante,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento) select " + PidRemision.ToString + ",idvariante,cantidad,precio,descripcion,idmoneda," + pidAlmacen.ToString + ",iva,extra,descuento from tblventaspedidosproductos where idpedido=" + pIdDocumento.ToString
-    '        'Comm.ExecuteNonQuery()
-    '    End If
-
-    '    If Tipo = 2 Then
-    '        Comm.CommandText = "insert into tblventasremisionesinventario(idremision,idinventario,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento,idvariante,idservicio,surtido,preciooriginal) select " + PidRemision.ToString + ",idinventario,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento,idvariante,idservicio,0,precio from tblventasremisionesinventario where idremision=" + pIdDocumento.ToString
-    '        Comm.ExecuteNonQuery()
-
-    '        'Comm.CommandText = "insert into tblventasremisionesproductos(idremision,idvariante,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento) select " + PidRemision.ToString + ",idvariante,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento from tblventasremisionesproductos where idremision=" + pIdDocumento.ToString
-    '        'Comm.ExecuteNonQuery()
-
-    '        'Comm.CommandText = "insert into tblventasremisionesservicios(idremision,idservicio,cantidad,precio,descripcion,idmoneda,iva,extra,descuento) select " + PidRemision.ToString + ",idservicio,cantidad,precio,descripcion,idmoneda,iva,extra,descuento from tblventasremisionesservicios where idremision=" + pIdDocumento.ToString
-    '        'Comm.ExecuteNonQuery()
-    '        'Comm.CommandText = "update tblinventarioseries set idventa=" + PidRemision.ToString + " where idremision=" + pIdDocumento.ToString
-    '        'Comm.ExecuteNonQuery()
-    '    End If
-
-    '    If Tipo = 3 Then
-    '        Comm.CommandText = "insert into tblventasremisionesinventario(idremision,idinventario,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento,idvariante,idservicio,surtido,preciooriginal) select " + PidRemision.ToString + ",idinventario,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento,idvariante,idservicio,0,precio from tblventasinventario where idventa=" + pIdDocumento.ToString
-    '        Comm.ExecuteNonQuery()
-
-    '        'Comm.CommandText = "insert into tblventasremisionesproductos(idremision,idvariante,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento) select " + PidRemision.ToString + ",idvariante,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento from tblventasproductos where idventa=" + pIdDocumento.ToString
-    '        'Comm.ExecuteNonQuery()
-
-    '        'Comm.CommandText = "insert into tblventasremisionesservicios(idremision,idservicio,cantidad,precio,descripcion,idmoneda,iva,extra,descuento) select " + PidRemision.ToString + ",idservicio,cantidad,precio,descripcion,idmoneda,iva,extra,descuento from tblventasservicios where idventa=" + pIdDocumento.ToString
-    '        'Comm.ExecuteNonQuery()
-    '    End If
-    'End Sub
-
     Public Sub AgregarDetallesReferencia(ByVal PidRemision As Integer, ByVal pIdDocumento As Integer, ByVal Tipo As Byte, ByVal pidAlmacen As Integer)
         '0 cotizacion
         '1 pedido
@@ -556,40 +358,21 @@
             Comm.ExecuteNonQuery()
             Comm.CommandText = "update tblinventarioseries set idremision=" + PidRemision.ToString + ",idcotizacion=0 where idcotizacion=" + pIdDocumento.ToString
             Comm.ExecuteNonQuery()
-            'Comm.CommandText = "insert into tblventasremisionesproductos(idremision,idvariante,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento) select " + PidRemision.ToString + ",idvariante,cantidad,precio,descripcion,idmoneda," + pidAlmacen.ToString + ",iva,extra,descuento from tblventascotizacionesproductos where idcotizacion=" + pIdDocumento.ToString
-            'Comm.ExecuteNonQuery()
         End If
 
         If Tipo = 1 Then
             Comm.CommandText = "insert into tblventasremisionesinventario(idremision,idinventario,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento,idvariante,idservicio,surtido,preciooriginal,IEPS,ivaRetenido,cantidadm,tipocantidadm,cdescuento) select " + PidRemision.ToString + ",idinventario,cantidad,precio,descripcion,idmoneda," + pidAlmacen.ToString + ",iva,extra,descuento,idvariante,0,0,precio,IEPS,ivaRetenido,cantidad,(select tipocontenido from tblinventario where idinventario=tblventaspedidosinventario.idinventario),0 from tblventaspedidosinventario where idpedido=" + pIdDocumento.ToString
             Comm.ExecuteNonQuery()
-
-            'Comm.CommandText = "insert into tblventasremisionesproductos(idremision,idvariante,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento) select " + PidRemision.ToString + ",idvariante,cantidad,precio,descripcion,idmoneda," + pidAlmacen.ToString + ",iva,extra,descuento from tblventaspedidosproductos where idpedido=" + pIdDocumento.ToString
-            'Comm.ExecuteNonQuery()
         End If
 
         If Tipo = 2 Then
             Comm.CommandText = "insert into tblventasremisionesinventario(idremision,idinventario,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento,idvariante,idservicio,surtido,preciooriginal,IEPS,ivaRetenido,cantidadm,tipocantidadm,cdescuento) select " + PidRemision.ToString + ",idinventario,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento,idvariante,idservicio,0,precio,IEPS,ivaRetenido,cantidadm,tipocantidadm,cdescuento from tblventasremisionesinventario where idremision=" + pIdDocumento.ToString
             Comm.ExecuteNonQuery()
-
-            'Comm.CommandText = "insert into tblventasremisionesproductos(idremision,idvariante,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento) select " + PidRemision.ToString + ",idvariante,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento from tblventasremisionesproductos where idremision=" + pIdDocumento.ToString
-            'Comm.ExecuteNonQuery()
-
-            'Comm.CommandText = "insert into tblventasremisionesservicios(idremision,idservicio,cantidad,precio,descripcion,idmoneda,iva,extra,descuento) select " + PidRemision.ToString + ",idservicio,cantidad,precio,descripcion,idmoneda,iva,extra,descuento from tblventasremisionesservicios where idremision=" + pIdDocumento.ToString
-            'Comm.ExecuteNonQuery()
-            'Comm.CommandText = "update tblinventarioseries set idventa=" + PidRemision.ToString + " where idremision=" + pIdDocumento.ToString
-            'Comm.ExecuteNonQuery()
         End If
 
         If Tipo = 3 Then
             Comm.CommandText = "insert into tblventasremisionesinventario(idremision,idinventario,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento,idvariante,idservicio,surtido,preciooriginal,IEPS,ivaRetenido,cantidadm,tipocantidadm,cdescuento) select " + PidRemision.ToString + ",idinventario,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento,idvariante,idservicio,0,precio,IEPS,ivaRetenido,cantidadm,tipocantidadm,cdescuento from tblventasinventario where idventa=" + pIdDocumento.ToString
             Comm.ExecuteNonQuery()
-
-            'Comm.CommandText = "insert into tblventasremisionesproductos(idremision,idvariante,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento) select " + PidRemision.ToString + ",idvariante,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento from tblventasproductos where idventa=" + pIdDocumento.ToString
-            'Comm.ExecuteNonQuery()
-
-            'Comm.CommandText = "insert into tblventasremisionesservicios(idremision,idservicio,cantidad,precio,descripcion,idmoneda,iva,extra,descuento) select " + PidRemision.ToString + ",idservicio,cantidad,precio,descripcion,idmoneda,iva,extra,descuento from tblventasservicios where idventa=" + pIdDocumento.ToString
-            'Comm.ExecuteNonQuery()
         End If
     End Sub
 
@@ -607,6 +390,10 @@
             Comm.CommandText += "update tblventasremisionesaduana inner join tblventasremisionesinventario on tblventasremisionesaduana.iddetalle=tblventasremisionesinventario.iddetalle set tblventasremisionesaduana.surtido=0 where idremision=" + pId.ToString + ";"
             Comm.ExecuteNonQuery()
 
+            'ubicaciones
+            Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.surtido, 0, 0, 1, u.ubicacion) from tblventasremisionesinventario d inner join tblventasremisionesubicaciones u on d.iddetalle=u.iddetalle where d.idremision=" + pId.ToString + ";"
+            Comm.CommandText += "update tblventasremisionesubicaciones inner join tblventasremisionesinventario on tblventasremisionesubicaciones.iddetalle = tblventasremisionesinventario.iddetalle set tblventasremisionesubicaciones.surtido = tblventasremisionesubicaciones.cantidad where tblventasremisionesinventario.idremision=" + pId.ToString + ";"
+            Comm.ExecuteNonQuery()
         End If
     End Sub
 
@@ -622,421 +409,7 @@
         'DS.WriteXmlSchema("tblventasseriesr.xml")
         Return DS.Tables("tblventasseriesr").DefaultView
     End Function
-    'Public Function CreaCadenaOriginal(ByVal pIdVenta As Integer, ByVal pIdMoneda As Integer) As String
-    '    Dim O As New dbOpciones(Comm.Connection)
-    '    Dim CO As String = "|2.0|"
-    '    ID = pIdVenta
-    '    LlenaDatos()
-    '    Dim TI As Double
-    '    Dim CI As Double
-    '    TI = DaTotal(ID, pIdMoneda)
-    '    CI = TI * (Iva / 100)
-    '    CO += Serie + "|"
-    '    CO += Folio.ToString + "|"
-    '    CO += Replace(Fecha, "/", "-") + "T" + Hora + "|"
-    '    CO += NoAprobacion + "|"
-    '    CO += YearAprobacion + "|"
-    '    CO += "ingreso|UNA SOLA EXHIBICION|"
-    '    'CO += Format(TI - (TI - (TI / (1 + (Iva / 100)))), "#0.00") + "|" 'Total sin Iva
-    '    CO += Format(TI, "#0.00") + "|"
-    '    CO += "0|" 'descuento
-
-    '    CO += Format(TI + CI, "#0.00") + "|" ' total factura con iva
-
-    '    CO += O._RFC + "|"
-    '    CO += O._NombreEmpresa + "|"
-    '    CO += O._Calle + "|"
-    '    CO += O._noExterior + "|"
-    '    CO += O._noInterior + "|"
-    '    CO += O._Colonia + "|"
-    '    CO += O._Localidad + "|"
-    '    CO += O._ReferenciaDomicilio + "|"
-    '    CO += O._Municipio + "|"
-    '    CO += O._Estado + "|"
-    '    CO += O._Pais + "|"
-    '    CO += O._CodigoPostal + "|"
-
-    '    CO += O._CalleLocal + "|"
-    '    CO += O._noExteriorLocal + "|"
-    '    CO += O._noInteriorLocal + "|"
-    '    CO += O._ColoniaLocal + "|"
-    '    CO += O._LocalidadLocal + "|"
-    '    CO += O._ReferenciaDomicilioLocal + "|"
-    '    CO += O._MunicipioLocal + "|"
-    '    CO += O._EstadoLocal + "|"
-    '    CO += O._PaisLocal + "|"
-    '    CO += O._CodigoPostalLocal + "|"
-
-    '    CO += Cliente.RFC + "|"
-    '    CO += Cliente.Nombre + "|"
-    '    CO += Cliente.Direccion + "|"
-    '    CO += Cliente.NoExterior + "|"
-    '    CO += Cliente.NoInterior + "|"
-    '    CO += Cliente.Colonia + "|"
-    '    CO += Cliente.Ciudad + "|"
-    '    CO += Cliente.ReferenciaDomicilio + "|"
-    '    CO += Cliente.Municipio + "|"
-    '    CO += Cliente.Estado + "|"
-    '    CO += Cliente.Pais + "|"
-    '    CO += Cliente.CP + "|"
-
-    '    Dim DR As MySql.Data.MySqlClient.MySqlDataReader
-    '    Dim VI As New dbVentasInventario(MySqlcon)
-    '    DR = VI.ConsultaReader(ID)
-
-    '    While DR.Read
-    '        CO += DR("cantidad").ToString + "|"
-    '        CO += DR("tipocantidad") + "|"
-    '        'CO += DR("clave") + "|"
-    '        CO += DR("descripcion") + "|"
-    '        CO += Format(DR("precio") / DR("cantidad"), "#0.00") + "|"
-    '        CO += Format(DR("precio"), "#0.00") + "|"
-    '    End While
-    '    DR.Close()
-
-    '    Dim VP As New dbVentasProductos(MySqlcon)
-    '    DR = VP.ConsultaReader(ID)
-
-    '    While DR.Read
-    '        CO += DR("cantidad").ToString + "|"
-    '        CO += DR("tipocantidad") + "|"
-    '        'CO += DR("clave") + "|"
-    '        CO += DR("descripcion") + "|"
-    '        CO += Format(DR("precio") / DR("cantidad"), "#0.00") + "|"
-    '        CO += Format(DR("precio"), "#0.00") + "|"
-    '    End While
-    '    DR.Close()
-
-    '    Dim VS As New dbVentasServicios(MySqlcon)
-    '    DR = VS.ConsultaReader(ID)
-
-    '    While DR.Read
-    '        CO += DR("cantidad").ToString + "|"
-    '        CO += "SERV|"
-    '        CO += DR("folio") + "|"
-    '        CO += DR("descripcion") + "|"
-    '        CO += Format(DR("precio") / DR("cantidad"), "#0.00") + "|"
-    '        CO += Format(DR("precio"), "#0.00") + "|"
-    '    End While
-    '    DR.Close()
-    '    'CO += "IVA|0|0|"
-    '    CO += "IVA|"
-    '    CO += Iva.ToString + "|"
-    '    'CO += Format(((TI - (TI / (1 + (Iva / 100))))), "#0.00") + "|"
-    '    'CO += Format((TI - (TI / (1 + (Iva / 100)))), "#0.00") + "|"
-
-    '    CO += Format(CI, "#0.00") + "|"
-    '    CO += Format(CI, "#0.00") + "|"
-
-    '    CO = Replace(CO, "||", "|")
-    '    CO = Replace(CO, "||", "|")
-    '    CO = Replace(CO, "||", "|")
-    '    CO = "|" + CO + "|"
-    '    Return CO
-
-    'End Function
-
-
-    'Public Function CreaCadenaOriginal(ByVal pIdVenta As Integer, ByVal pIdMoneda As Integer) As String
-    '    Dim O As New dbOpciones(Comm.Connection)
-    '    Dim CO As String = "|2.0|"
-    '    ID = pIdVenta
-    '    LlenaDatos()
-
-    '    Dim mf As New Gooru.Componentes.CFD.MotorCFD(My.Settings.rutacer, My.Settings.rutakey, My.Settings.passwordkey, Application.StartupPath + "\")
-
-    '    Dim Factura As New Gooru.Componentes.CFD.Comprobante(Fecha, Serie, Folio, NoAprobacion, YearAprobacion, Gooru.Componentes.CFD.ComprobanteTipoDeComprobante.ingreso, "UNA SOLA EXIBICIÓN", "CONTADO", 0, "")
-    '    Dim TI As Double
-    '    Dim CI As Double
-    '    TI = DaTotal(ID, pIdMoneda)
-    '    CI = TI * (Iva / 100)
-    '    CO += Serie + "|"
-    '    CO += Folio.ToString + "|"
-    '    CO += Replace(Fecha, "/", "-") + "T" + Hora + "|"
-    '    CO += NoAprobacion + "|"
-    '    CO += YearAprobacion + "|"
-    '    CO += "ingreso|UNA SOLA EXHIBICION|"
-    '    'CO += Format(TI - (TI - (TI / (1 + (Iva / 100)))), "#0.00") + "|" 'Total sin Iva
-    '    CO += Format(TI, "#0.00") + "|"
-    '    CO += "0|" 'descuento
-
-    '    CO += Format(TI + CI, "#0.00") + "|" ' total factura con iva
-
-    '    CO += O._RFC + "|"
-    '    CO += O._NombreEmpresa + "|"
-    '    CO += O._Calle + "|"
-    '    CO += O._noExterior + "|"
-    '    CO += O._noInterior + "|"
-    '    CO += O._Colonia + "|"
-    '    CO += O._Localidad + "|"
-    '    CO += O._ReferenciaDomicilio + "|"
-    '    CO += O._Municipio + "|"
-    '    CO += O._Estado + "|"
-    '    CO += O._Pais + "|"
-    '    CO += O._CodigoPostal + "|"
-
-    '    Factura.AgregaDatosEmisor("DEMO101010A1A", O._NombreEmpresa, O._Calle, O._noExterior, O._noInterior, O._Colonia, O._CodigoPostal, O._Municipio, O._Estado, O._Localidad, O._Pais, O._ReferenciaDomicilio)
-    '    Factura.AgregaDatosExpedicion(O._CalleLocal, O._noExteriorLocal, O._noInteriorLocal, O._ColoniaLocal, O._CodigoPostalLocal, O._MunicipioLocal, O._EstadoLocal, O._LocalidadLocal, O._PaisLocal, O._ReferenciaDomicilioLocal)
-    '    Factura.AgregaDatosReceptor(Cliente.RFC, Cliente.Nombre, Cliente.Direccion, Cliente.NoExterior, Cliente.NoInterior, Cliente.Colonia, Cliente.CP, Cliente.Municipio, Cliente.Estado, Cliente.Ciudad, Cliente.Pais, Cliente.ReferenciaDomicilio)
-    '    CO += O._CalleLocal + "|"
-    '    CO += O._noExteriorLocal + "|"
-    '    CO += O._noInteriorLocal + "|"
-    '    CO += O._ColoniaLocal + "|"
-    '    CO += O._LocalidadLocal + "|"
-    '    CO += O._ReferenciaDomicilioLocal + "|"
-    '    CO += O._MunicipioLocal + "|"
-    '    CO += O._EstadoLocal + "|"
-    '    CO += O._PaisLocal + "|"
-    '    CO += O._CodigoPostalLocal + "|"
-
-    '    CO += Cliente.RFC + "|"
-    '    CO += Cliente.Nombre + "|"
-    '    CO += Cliente.Direccion + "|"
-    '    CO += Cliente.NoExterior + "|"
-    '    CO += Cliente.NoInterior + "|"
-    '    CO += Cliente.Colonia + "|"
-    '    CO += Cliente.Ciudad + "|"
-    '    CO += Cliente.ReferenciaDomicilio + "|"
-    '    CO += Cliente.Municipio + "|"
-    '    CO += Cliente.Estado + "|"
-    '    CO += Cliente.Pais + "|"
-    '    CO += Cliente.CP + "|"
-
-    '    Dim DR As MySql.Data.MySqlClient.MySqlDataReader
-    '    Dim VI As New dbVentasInventario(MySqlcon)
-    '    DR = VI.ConsultaReader(ID)
-
-    '    While DR.Read
-    '        CO += DR("cantidad").ToString + "|"
-    '        CO += DR("tipocantidad") + "|"
-    '        'CO += DR("clave") + "|"
-    '        CO += DR("descripcion") + "|"
-    '        CO += Format(DR("precio") / DR("cantidad"), "#0.00") + "|"
-    '        CO += Format(DR("precio"), "#0.00") + "|"
-    '        Factura.AgregaConcepto(DR("cantidad").ToString, DR("tipocantidad").ToString, "", DR("descripcion"), DR("precio") / DR("cantidad"))
-    '    End While
-    '    DR.Close()
-
-    '    Dim VP As New dbVentasProductos(MySqlcon)
-    '    DR = VP.ConsultaReader(ID)
-
-    '    While DR.Read
-    '        CO += DR("cantidad").ToString + "|"
-    '        CO += DR("tipocantidad") + "|"
-    '        'CO += DR("clave") + "|"
-    '        CO += DR("descripcion") + "|"
-    '        CO += Format(DR("precio") / DR("cantidad"), "#0.00") + "|"
-    '        CO += Format(DR("precio"), "#0.00") + "|"
-    '    End While
-    '    DR.Close()
-
-    '    Dim VS As New dbVentasServicios(MySqlcon)
-    '    DR = VS.ConsultaReader(ID)
-
-    '    While DR.Read
-    '        CO += DR("cantidad").ToString + "|"
-    '        CO += "SERV|"
-    '        CO += DR("folio") + "|"
-    '        CO += DR("descripcion") + "|"
-    '        CO += Format(DR("precio") / DR("cantidad"), "#0.00") + "|"
-    '        CO += Format(DR("precio"), "#0.00") + "|"
-    '    End While
-    '    DR.Close()
-    '    'CO += "IVA|0|0|"
-    '    CO += "IVA|"
-    '    CO += Iva.ToString + "|"
-    '    'CO += Format(((TI - (TI / (1 + (Iva / 100))))), "#0.00") + "|"
-    '    'CO += Format((TI - (TI / (1 + (Iva / 100)))), "#0.00") + "|"
-    '    Factura.AgregaImpuesto(Gooru.Componentes.CFD.ComprobanteImpuestosTrasladoImpuesto.IVA, CDec(Iva), CDec(CI))
-    '    CO += Format(CI, "#0.00") + "|"
-    '    CO += Format(CI, "#0.00") + "|"
-
-    '    CO = Replace(CO, "||", "|")
-    '    CO = Replace(CO, "||", "|")
-    '    CO = Replace(CO, "||", "|")
-    '    CO = "|" + CO + "|"
-
-    '    mf.Comprobantes.Add(Factura)
-    '    Dim resultado As Gooru.Componentes.CFD.ResultadoProceso = Nothing
-    '    'dispara el proceso para la generacion de archivos
-    '    resultado = mf.ProcesarComprobantes(True, False)
-    '    If resultado.ArchivosXMLPDF.Length <> 0 Then
-    '        Dim en As New Encriptador
-    '        en.GuardaArchivoTexto("Pueba.xml", resultado.ArchivosXMLPDF(0), System.Text.Encoding.UTF8)
-    '    Else
-    '        For Each c As Gooru.Componentes.CFD.Comprobante In resultado.ComprobantesNoGenerados
-    '            MsgBox(c.ErrorGeneracion.Message)
-    '        Next
-    '    End If
-    '    Return CO
-
-    'End Function
-
-
-    'Public Function CreaXML(ByVal pIdVenta As Integer, ByVal pIdMoneda As Integer, ByVal pSelloDigital As String) As String
-    '    Dim O As New dbOpciones(Comm.Connection)
-    '    Dim en As New Encriptador
-    '    Dim XMLDoc As String
-
-    '    XMLDoc = "<?xml version=""1.0"" encoding=""UTF-8""?>" + vbCrLf
-
-    '    XMLDoc += "<Comprobante " + vbCrLf
-
-    '    en.Leex509(My.Settings.rutacer)
-
-
-
-    '    ID = pIdVenta
-    '    LlenaDatos()
-
-    '    Dim TI As Double
-    '    Dim CI As Double
-    '    TI = DaTotal(ID, pIdMoneda)
-    '    CI = TI * (Iva / 100)
-    '    If Serie <> "" Then XMLDoc += "serie=""" + Serie + """" + vbCrLf
-    '    XMLDoc += "version = ""2.0""" + vbCrLf
-    '    XMLDoc += "folio=""" + Folio.ToString + """" + vbCrLf
-    '    XMLDoc += "fecha=""" + Replace(Fecha, "/", "-") + "T" + Hora + """" + vbCrLf
-    '    If pSelloDigital <> "" Then XMLDoc += "sello=""" + pSelloDigital + """" + vbCrLf
-    '    If NoCertificado <> "" Then XMLDoc += "noCertificado=""" + NoCertificado + """" + vbCrLf
-    '    'XMLDoc += "subTotal=""" + Format(TI - (TI - (TI / (1 + (Iva / 100)))), "#0.00") + """" + vbCrLf
-    '    XMLDoc += "subTotal=""" + Format(TI, "#0.00") + """" + vbCrLf
-    '    'XMLDoc += "total=""" + Format(TI, "#0.00") + """" + vbCrLf
-    '    XMLDoc += "total=""" + Format(TI + CI, "#0.00") + """" + vbCrLf
-    '    If NoAprobacion <> "" Then XMLDoc += "noAprobacion=""" + NoAprobacion + """" + vbCrLf
-    '    If YearAprobacion <> "" Then XMLDoc += "anoAprobacion=""" + YearAprobacion + """" + vbCrLf
-    '    XMLDoc += "formaDePago=""UNA SOLA EXHIBICION""" + vbCrLf
-    '    XMLDoc += "descuento=""" + "0" + """" + vbCrLf
-    '    XMLDoc += "tipoDeComprobante=""ingreso""" + vbCrLf
-    '    XMLDoc += "certificado=""" + en.Certificado64 + """" + vbCrLf
-    '    XMLDoc += "xsi:schemaLocation = ""http://www.sat.gob.mx/cfd/2 http://www.sat.gob.mx/sitio_internet/cfd/2/cfdv2.xsd""" + vbCrLf
-    '    XMLDoc += "xmlns=""http://www.sat.gob.mx/cfd/2""" + vbCrLf
-    '    XMLDoc += "xmlns:xsi = ""http://www.w3.org/2001/XMLSchema-instance""" + vbCrLf
-
-    '    XMLDoc += ">"
-
-    '    XMLDoc += "<Emisor rfc=""" + O._RFC + """ nombre=""" + O._NombreEmpresa + """>" + vbCrLf
-
-    '    XMLDoc += "<DomicilioFiscal " + vbCrLf
-    '    If O._Calle <> "" Then XMLDoc += "calle = """ + O._Calle + """" + vbCrLf
-    '    If O._noExterior <> "" Then XMLDoc += "noExterior=""" + O._noExterior + """" + vbCrLf
-    '    If O._noInterior <> "" Then XMLDoc += "noInterior=""" + O._noInterior + """" + vbCrLf
-    '    If O._Colonia <> "" Then XMLDoc += "colonia=""" + O._Colonia + """" + vbCrLf
-    '    If O._Localidad <> "" Then XMLDoc += "localidad=""" + O._Localidad + """" + vbCrLf
-    '    If O._ReferenciaDomicilio <> "" Then XMLDoc += "referencia=""" + O._ReferenciaDomicilio + """" + vbCrLf
-    '    If O._Municipio <> "" Then XMLDoc += "municipio=""" + O._Municipio + """" + vbCrLf
-    '    If O._Estado <> "" Then XMLDoc += "estado=""" + O._Estado + """" + vbCrLf
-    '    If O._Pais <> "" Then XMLDoc += "pais=""" + O._Pais + """" + vbCrLf
-    '    If O._CodigoPostal <> "" Then XMLDoc += "codigoPostal=""" + O._CodigoPostal + """" + vbCrLf
-    '    XMLDoc += "/>" + vbCrLf
-
-    '    If O._CalleLocal <> "" Then XMLDoc += "<ExpedidoEn calle=""" + O._CalleLocal + """" + vbCrLf
-    '    If O._noExteriorLocal <> "" Then XMLDoc += "noExterior=""" + O._noExteriorLocal + """" + vbCrLf
-    '    If O._noInteriorLocal <> "" Then XMLDoc += "noInterior=""" + O._noInteriorLocal + """" + vbCrLf
-    '    If O._ColoniaLocal <> "" Then XMLDoc += "colonia=""" + O._ColoniaLocal + """" + vbCrLf
-    '    If O._LocalidadLocal <> "" Then XMLDoc += "localidad=""" + O._LocalidadLocal + """" + vbCrLf
-    '    If O._ReferenciaDomicilioLocal <> "" Then XMLDoc += "referencia=""" + O._ReferenciaDomicilioLocal + """" + vbCrLf
-    '    If O._MunicipioLocal <> "" Then XMLDoc += "municipio=""" + O._MunicipioLocal + """" + vbCrLf
-    '    If O._EstadoLocal <> "" Then XMLDoc += "estado=""" + O._EstadoLocal + """" + vbCrLf
-    '    If O._PaisLocal <> "" Then XMLDoc += "pais=""" + O._PaisLocal + """" + vbCrLf
-    '    If O._CodigoPostalLocal <> "" Then XMLDoc += "codigoPostal=""" + O._CodigoPostalLocal + """"
-    '    XMLDoc += "/>" + vbCrLf
-
-
-    '    XMLDoc += "</Emisor>" + vbCrLf
-
-
-    '    XMLDoc += "<Receptor rfc=""" + Cliente.RFC + """ nombre=""" + Cliente.Nombre + """>" + vbCrLf
-
-    '    If Cliente.Direccion <> "" Then XMLDoc += "<Domicilio calle=""" + Cliente.Direccion + """" + vbCrLf
-    '    If Cliente.NoExterior <> "" Then XMLDoc += "noExterior=""" + Cliente.NoExterior + """" + vbCrLf
-    '    If Cliente.NoInterior <> "" Then XMLDoc += "noInterior=""" + Cliente.NoInterior + """" + vbCrLf
-    '    If Cliente.Colonia <> "" Then XMLDoc += "colonia=""" + Cliente.Colonia + """" + vbCrLf
-    '    If Cliente.Ciudad <> "" Then XMLDoc += "localidad=""" + Cliente.Ciudad + """" + vbCrLf
-    '    If Cliente.ReferenciaDomicilio <> "" Then XMLDoc += "referencia=""" + Cliente.ReferenciaDomicilio + """" + vbCrLf
-    '    If Cliente.Municipio <> "" Then XMLDoc += "municipio=""" + Cliente.Municipio + """" + vbCrLf
-    '    If Cliente.Estado <> "" Then XMLDoc += "estado=""" + Cliente.Estado + """" + vbCrLf
-    '    If Cliente.Pais <> "" Then XMLDoc += "pais=""" + Cliente.Pais + """" + vbCrLf
-    '    If Cliente.CP <> "" Then XMLDoc += "codigoPostal=""" + Cliente.CP + """" + vbCrLf
-    '    XMLDoc += "/>" + vbCrLf
-
-    '    XMLDoc += "</Receptor>" + vbCrLf
-
-    '    XMLDoc += "<Conceptos>" + vbCrLf
-
-    '    Dim DR As MySql.Data.MySqlClient.MySqlDataReader
-    '    Dim VI As New dbVentasInventario(MySqlcon)
-    '    DR = VI.ConsultaReader(ID)
-
-    '    While DR.Read
-    '        XMLDoc += "<Concepto " + vbCrLf
-    '        XMLDoc += "cantidad=""" + DR("cantidad").ToString + """" + vbCrLf
-    '        XMLDoc += "unidad=""" + DR("tipocantidad") + """" + vbCrLf
-    '        XMLDoc += "descripcion=""" + DR("descripcion").ToString + """" + vbCrLf
-    '        XMLDoc += "valorUnitario=""" + Format(DR("precio") / DR("cantidad"), "#0.00") + """" + vbCrLf
-    '        XMLDoc += "importe=""" + Format(DR("precio"), "#0.00") + """" + vbCrLf
-    '        XMLDoc += "/> " + vbCrLf
-    '    End While
-    '    DR.Close()
-
-    '    Dim VP As New dbVentasProductos(MySqlcon)
-    '    DR = VP.ConsultaReader(ID)
-
-    '    While DR.Read
-
-    '        XMLDoc += "<Concepto " + vbCrLf
-    '        XMLDoc += "cantidad=""" + DR("cantidad").ToString + """" + vbCrLf
-    '        XMLDoc += "unidad=""" + DR("tipocantidad") + """" + vbCrLf
-    '        XMLDoc += "descripcion=""" + DR("descripcion").ToString + """" + vbCrLf
-    '        XMLDoc += "valorUnitario=""" + Format(DR("precio") / DR("cantidad"), "#0.00") + """" + vbCrLf
-    '        XMLDoc += "importe=""" + Format(DR("precio"), "#0.00") + """" + vbCrLf
-    '        XMLDoc += "/> " + vbCrLf
-
-    '        'CO += DR("cantidad").ToString + "|"
-    '        'CO += DR("tipocantidad") + "|"
-    '        'CO += DR("clave") + "|"
-    '        'CO += DR("descripcion") + "|"
-    '        'CO += CStr(DR("precio") / DR("cantidad")) + "|"
-    '        'CO += DR("precio").ToString + "|"
-    '    End While
-    '    DR.Close()
-
-    '    Dim VS As New dbVentasServicios(MySqlcon)
-    '    DR = VS.ConsultaReader(ID)
-
-    '    While DR.Read
-
-    '        XMLDoc += "<Concepto " + vbCrLf
-    '        XMLDoc += "cantidad=""" + DR("cantidad").ToString + """" + vbCrLf
-    '        XMLDoc += "unidad=""SERV""" + vbCrLf
-    '        XMLDoc += "descripcion=""" + DR("descripcion").ToString + """" + vbCrLf
-    '        XMLDoc += "valorUnitario=""" + Format(DR("precio") / DR("cantidad"), "#0.00") + """" + vbCrLf
-    '        XMLDoc += "importe=""" + Format(DR("precio"), "#0.00") + """" + vbCrLf
-    '        XMLDoc += "/> " + vbCrLf
-
-    '        'CO += DR("cantidad").ToString + "|"
-    '        'CO += "SERV|"
-    '        'CO += DR("folio") + "|"
-    '        'CO += DR("descripcion") + "|"
-    '        'CO += CStr(DR("precio") / DR("cantidad")) + "|"
-    '        'CO += DR("precio").ToString + "|"
-    '    End While
-    '    DR.Close()
-    '    XMLDoc += "</Conceptos>"
-    '    'XMLDoc += "<Impuestos totalImpuestosTrasladados=""" + Format(((TI - (TI / (1 + (Iva / 100))))), "#0.00") + """>" + vbCrLf
-    '    XMLDoc += "<Impuestos totalImpuestosTrasladados=""" + Format(CI, "#0.00") + """>" + vbCrLf
-    '    XMLDoc += "<Traslados>" + vbCrLf
-    '    XMLDoc += "<Traslado impuesto=""IVA""" + vbCrLf
-    '    XMLDoc += "tasa=""" + Iva.ToString + """" + vbCrLf
-    '    XMLDoc += "importe=""" + Format(CI, "#0.00") + """ />" + vbCrLf
-    '    XMLDoc += "</Traslados>" + vbCrLf
-    '    XMLDoc += "</Impuestos>" + vbCrLf
-    '    XMLDoc += "</Comprobante>"
-
-
-    '    Return XMLDoc
-
-    'End Function
+    
     Public Sub ModificaInventario(ByVal pId As Integer, ByVal pPorSurtir As Byte)
         If PorSurtir = 0 Then
             Comm.CommandText = "select if(idinventario>1,spmodificainventarioi(idinventario,idalmacen,cantidad-surtido,0,1,0),0),if(idvariante>1,spmodificainventariop(idvariante,idalmacen,cantidad-surtido,0,1),0) from tblventasremisionesinventario where idremision=" + pId.ToString + ";"
@@ -1050,106 +423,16 @@
             Comm.CommandText += "update tblventasremisioneslotes inner join tblventasremisionesinventario on tblventasremisioneslotes.iddetalle=tblventasremisionesinventario.iddetalle set tblventasremisioneslotes.surtido=tblventasremisioneslotes.cantidad where idremision=" + pId.ToString + ";"
             Comm.CommandText += "update tblventasremisionesaduana inner join tblventasremisionesinventario on tblventasremisionesaduana.iddetalle=tblventasremisionesinventario.iddetalle set tblventasremisionesaduana.surtido=tblventasremisionesaduana.cantidad where idremision=" + pId.ToString + ";"
             Comm.ExecuteNonQuery()
+
+            'ubicaciones
+            Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.cantidad-u.surtido, 0, 1, 0, u.ubicacion) from tblventasremisionesinventario d inner join tblventasremisionesubicaciones u on d.iddetalle=u.iddetalle where d.idremision=" + pId.ToString + ";"
+            Comm.CommandText += "update tblventasremisionesubicaciones inner join tblventasremisionesinventario on tblventasremisionesubicaciones.iddetalle = tblventasremisionesinventario.iddetalle set tblventasremisionesubicaciones.surtido = tblventasremisionesubicaciones.cantidad where tblventasremisionesinventario.idremision=" + pId.ToString + ";"
+            Comm.ExecuteNonQuery()
         End If
     End Sub
-    'Public Sub ModificaInventario(ByVal pId As Integer)
-
-
-    '    Dim Str As String = ""
-    '    Dim DReader As MySql.Data.MySqlClient.MySqlDataReader
-    '    Dim IDs As New Collection
-    '    Dim Cont As Integer = 1
-    '    Comm.CommandText = "select iddetalle from tblventasremisionesinventario where idremision=" + pId.ToString
-    '    DReader = Comm.ExecuteReader
-    '    While DReader.Read()
-    '        IDs.Add(DReader("iddetalle"))
-    '    End While
-    '    DReader.Close()
-    '    Dim I As New dbInventario(MySqlcon)
-    '    Dim PV As New dbProductosVariantes(MySqlcon)
-    '    Dim iIdInventario As Integer
-    '    Dim iIdVariante As Integer
-    '    Dim iCantidad As Double
-    '    Dim iIdAlmacen As Integer
-    '    While Cont <= IDs.Count
-    '        Comm.CommandText = "select idinventario,idvariante,cantidad,idalmacen from tblventasremisionesinventario where iddetalle=" + IDs(Cont).ToString
-    '        DReader = Comm.ExecuteReader
-    '        If DReader.Read() Then
-    '            iIdInventario = DReader("idinventario")
-    '            iIdVariante = DReader("idvariante")
-    '            iCantidad = DReader("cantidad")
-    '            iIdAlmacen = DReader("idalmacen")
-    '            DReader.Close()
-    '            If iIdInventario > 1 Then
-    '                I.MovimientoDeInventario(iIdInventario, iCantidad, 0, dbInventario.TipoMovimiento.Baja, iIdAlmacen)
-    '            End If
-    '            If iIdVariante > 1 Then
-    '                PV.ModificaInventario(iIdVariante, iCantidad, iIdAlmacen)
-    '            End If
-    '        Else
-    '            DReader.Close()
-    '        End If
-
-    '        Cont += 1
-    '    End While
-
-
-    'End Sub
+    
     Public Function VerificaExistencias(ByVal pId As Integer) As String
-        'Dim Str As String = ""
-        'Dim DReader As MySql.Data.MySqlClient.MySqlDataReader
-        'Dim IDs As New Collection
-        'Dim Cont As Integer = 1
-        ''If pIdInventario = 0 Then
-        'Comm.CommandText = "select distinct idinventario from tblventasremisionesinventario where idremision=" + pId.ToString
-        'DReader = Comm.ExecuteReader
-        'While DReader.Read()
-        '    IDs.Add(DReader("idinventario"))
-        'End While
-        'DReader.Close()
-        ''Else
-        ''IDs.Add(pIdInventario)
-        ''End If
-
-        'Dim I As New dbInventario(MySqlcon)
-        ''Dim P As New dbProductos(MySqlcon)
-        'Dim iIdInventario As Integer
-        ''Dim iIdVariante As Integer
-        'Dim iCantidad As Double
-        'Dim i
-        'Dim iIdAlmacen As Integer
-        'Dim iCantidad2 As Double
-        'Dim EsInventariable As Integer
-        'While Cont <= IDs.Count
-        '    'Comm.CommandText = "select idinventario,idvariante,cantidad,idalmacen," + _
-        '    '"(select inventariable from tblinventario where tblinventario.idinventario=tblventasremisionesinventario.idinventario) as esinventariable,ifnull((select sum(cantidad) from tblventasremisionesinventario where ),0) from tblventasremisionesinventario where iddetalle=" + IDs(Cont).ToString
-        '    Comm.CommandText = "select tblinventario.inventariable as esinventariable,ifnull((sum(tblventasremisionesinventario.cantidad)),0) as cantidad,tblventasremisionesinventario.idalmacen from tblventasremisionesinventario inner join tblinventario on tblinventario.idinventario=tblventasremisionesinventario.idinventario where tblventasremisionesinventario.idremision=" + pId.ToString + " and tblventasremisionesinventario.idinventario=" + IDs(Cont).ToString + " limit 1"
-        '    'Comm.CommandText = "select "
-        '    DReader = Comm.ExecuteReader
-        '    If DReader.Read() Then
-        '        iIdInventario = IDs(Cont)
-        '        iCantidad = DReader("cantidad")
-        '        'iIdVariante = DReader("idvariante")
-        '        iIdAlmacen = DReader("idalmacen")
-        '        EsInventariable = DReader("esinventariable")
-        '        DReader.Close()
-        '        If iIdInventario > 1 And EsInventariable = 1 Then
-        '            iCantidad2 = I.DaInventario(iIdAlmacen, iIdInventario)
-        '            'If pIdInventario <> 0 Then iCantidad += 1
-        '            If iCantidad > iCantidad2 Then
-        '                Str = " Hay artículos con insuficiente inventario."
-        '            End If
-        '        End If
-        '        'If iIdVariante > 1 Then
-        '        '    Comm.CommandText = "select spverificaexistenciarecetas(" + iIdVariante.ToString + "," + iIdAlmacen.ToString + "," + iCantidad.ToString + ")"
-        '        '    Str = Comm.ExecuteScalar
-        '        'End If
-        '    Else
-        '        DReader.Close()
-        '    End If
-        '    Cont += 1
-        'End While
-
+    
         Dim Str As String = ""
         Dim DReader As MySql.Data.MySqlClient.MySqlDataReader
         Dim IDs As New Collection
@@ -1169,7 +452,6 @@
         Dim EsInventariable As Integer
         Dim iContenido As Double
         While Cont <= IDs.Count
-            'Comm.CommandText = "select idinventario,idvariante,cantidad,idalmacen,if(idinventario>1,(select inventariable from tblinventario where tblinventario.idinventario=tblventasinventario.idinventario),0) as esinventariable,if(idvariante>1,(select inventariable from tblproductos inner join tblproductosvariantes on tblproductos.idproducto=tblproductosvariantes.idproducto where tblproductosvariantes.idvariante=tblventasinventario.idvariante),0) as esinventariablep,(select contenido from tblinventario where tblinventario.idinventario=tblventasinventario.idinventario) as contenido from tblventasinventario where idventasinventario=" + IDs(Cont).ToString
             Comm.CommandText = "select tblinventario.inventariable as esinventariable,tblinventario.contenido,ifnull((sum(tblventasremisionesinventario.cantidad)),0) as cantidad,tblventasremisionesinventario.idalmacen from tblventasremisionesinventario inner join tblinventario on tblinventario.idinventario=tblventasremisionesinventario.idinventario where tblventasremisionesinventario.idremision=" + pId.ToString + " and tblventasremisionesinventario.idinventario=" + IDs(Cont).ToString + " limit 1"
             DReader = Comm.ExecuteReader
             If DReader.Read() Then
@@ -1209,7 +491,6 @@
         End While
         DReader.Close()
         While Cont <= IDs.Count
-            'Comm.CommandText = "select idinventario,idvariante,cantidad,idalmacen,if(idinventario>1,(select inventariable from tblinventario where tblinventario.idinventario=tblventasinventario.idinventario),0) as esinventariable,if(idvariante>1,(select inventariable from tblproductos inner join tblproductosvariantes on tblproductos.idproducto=tblproductosvariantes.idproducto where tblproductosvariantes.idvariante=tblventasinventario.idvariante),0) as esinventariablep,(select contenido from tblinventario where tblinventario.idinventario=tblventasinventario.idinventario) as contenido from tblventasinventario where idventasinventario=" + IDs(Cont).ToString
             Comm.CommandText = "select tblinventario.inventariable as esinventariable,tblinventario.contenido,ifnull((sum(tblventaskitsr.cantidad)),0) as cantidad,tblventaskitsr.idalmacen from tblventaskitsr inner join tblinventario on tblinventario.idinventario=tblventaskitsr.idinventario where tblventaskitsr.idremision=" + pId.ToString + " and tblventaskitsr.idinventario=" + IDs(Cont).ToString + " limit 1"
             DReader = Comm.ExecuteReader
             If DReader.Read() Then
@@ -1241,38 +522,7 @@
 
         Return Str
     End Function
-    'Public Function Reporte(ByVal pFecha1 As String, ByVal pFecha2 As String, ByVal pIdSucursal As Integer, ByVal pIdCliente As Integer, ByVal pMostrarEnPesos As Byte, ByVal pSoloCanceladas As Boolean, ByVal pUsado As Boolean, ByVal pIdVendedor As Integer, ByVal pSerieOc As String, ByVal pMostrarOc As Byte, ByVal pSerie As String) As DataView
-    '    Dim DS As New DataSet
-    '    If pMostrarEnPesos = 0 Then
-    '        Comm.CommandText = "select v.idremision idventa,v.fecha,v.folio,v.serie,v.estado,if(v.idmoneda=2,round(v.total,2),round(v.total*v.tipodecambio,2)) as total,if(v.idmoneda=2,round(v.totalapagar,2),round(v.totalapagar*v.tipodecambio,2)) as totalapagar,v.fecha,v.tipodecambio,v.idmoneda,c.nombre as cnombre,v.usado,if(v.idventar=0,'',(select concat(serie,convert(folio using utf8)) from tblventas where idventa=v.idventar)) as ref,fp.tipo " + _
-    '        "from tblventasremisiones v inner join tblclientes c on v.idcliente=c.idcliente inner join tblformasdepagoremisiones as fp on v.idforma=fp.idforma where  v.fecha>='" + pFecha1 + "' and v.fecha<='" + pFecha2 + "'"
-    '    Else
-    '        Comm.CommandText = "select v.idremision idventa,v.fecha,v.folio,v.serie,v.estado,round(v.total,2) as total,round(v.totalapagar,2) as totalapagar,v.fecha,v.tipodecambio,v.idmoneda,c.nombre as cnombre,v.usado,if(v.idventar=0,'',(select concat(serie,convert(folio using utf8)) from tblventas where idventa=idventar)) as ref,fp.tipo " + _
-    '        "from tblventasremisiones v inner join tblclientes c on v.idcliente=c.idcliente inner join tblformasdepagoremisiones as fp on v.idforma=fp.idforma where  v.fecha>='" + pFecha1 + "' and v.fecha<='" + pFecha2 + "'"
-    '    End If
-    '    If pUsado Then
-    '        Comm.CommandText += " and v.usado=0"
-    '    End If
-    '    If pIdSucursal > 0 Then Comm.CommandText += " and v.idsucursal=" + pIdSucursal.ToString
-    '    If pIdCliente > 0 Then Comm.CommandText += " and v.idcliente=" + pIdCliente.ToString
-    '    If pIdVendedor > 0 Then Comm.CommandText += " and v.idvendedor=" + pIdVendedor.ToString
-    '    If pSoloCanceladas Then
-    '        Comm.CommandText += " and v.estado=4"
-    '    Else
-    '        Comm.CommandText += " and v.estado=3"
-    '    End If
-    '    If pMostrarOc = 1 Then
-    '        Comm.CommandText += " and v.serie<>'" + Replace(pSerieOc, "'", "''") + "'"
-    '    End If
-    '    If pSerie <> "" Then
-    '        Comm.CommandText += " and v.serie like '%" + Replace(pSerie, "'", "''") + "%'"
-    '    End If
-    '    Comm.CommandText += " order by v.fecha,v.serie,v.folio"
-    '    Dim DA As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
-    '    DA.Fill(DS, "tblremisiones")
-    '    'DS.WriteXmlSchema("tblremisiones.xml")
-    '    Return DS.Tables("tblremisiones").DefaultView
-    'End Function
+    
     Public Function Reporte(ByVal pFecha1 As String, ByVal pFecha2 As String, ByVal pIdSucursal As Integer, ByVal pIdCliente As Integer, ByVal pMostrarEnPesos As Byte, ByVal pSoloCanceladas As Boolean, ByVal pUsado As Boolean, ByVal pIdVendedor As Integer, ByVal pSerieOc As String, ByVal pMostrarOc As Byte, ByVal pSerie As String, ByVal pZona As Integer, ByVal pZona2 As Integer, ByVal pSoloActivas As Boolean, pIdCaja As Integer, pIdTipo As Integer, pOrderporCliente As Boolean, pidTipoSucursal As Integer, pFormadepago As Byte) As DataView
         Dim DS As New DataSet
         If pMostrarEnPesos = 0 Then
@@ -1637,58 +887,7 @@
         'DS.WriteXmlSchema("tblventasmas.xml")
         Return DS.Tables("tblventasmas").DefaultView
     End Function
-    'Public Function ReportePorTipodePago(ByVal pFecha1 As String, ByVal pFecha2 As String, ByVal pIdSucursal As Integer, ByVal pIdCliente As Integer, ByVal pIdVendedor As Integer, ByVal pidMoneda As Integer, ByVal pMostrarEnPesos As Byte, ByVal pSerie As String, ByVal pMostrarOc As Byte, ByVal pSerieOc As String, ByVal pUsado As Boolean, ByVal pIdForma As Integer) As DataView
-    '    Dim DS As New DataSet
-    '    If pMostrarEnPesos = 0 Then
-    '        Comm.CommandText = "select tblventas.idremision,tblventas.folio,tblventas.serie,tblventas.estado,if(tblventas.idmoneda=2,tblventas.total,tblventas.total*tblventas.tipodecambio) as total,if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio) as totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idmoneda,tblventasinventario.cantidad,tblventasinventario.descripcion,tblventasinventario.precio,0 as costoinv,0 as costopro,tblventasinventario.idinventario,tblformasdepago.nombre as formadepago,tblclientes.nombre as cnombre,tblventas.idforma,tblformasdepago.tipo,tblventas.usado,(select concat(v.serie,convert(v.folio using utf8)) from tblventas as v where v.idventa=tblventas.idventar) as ref,tblventasinventario.iva " + _
-    '        "from tblventasremisiones as tblventas inner join tblventasremisionesinventario as tblventasinventario on tblventas.idremision=tblventasinventario.idremision inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepagoremisiones as tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.estado=3 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "'"
-    '    Else
-    '        Comm.CommandText = "select tblventas.idremision,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idmoneda,tblventasinventario.cantidad,tblventasinventario.descripcion,tblventasinventario.precio,0 as costoinv,0 as costopro,tblventasinventario.idinventario,tblformasdepago.nombre as formadepago,tblclientes.nombre as cnombre,tblventas.idforma,tblformasdepago.tipo,tblventas.usado,(select concat(v.serie,convert(v.folio using utf8)) from tblventas as v where v.idventa=tblventas.idventar) as ref,tblventasinventario.iva " + _
-    '        "from tblventasremisiones as tblventas inner join tblventasremisionesinventario as tblventasinventario on tblventas.idremision=tblventasinventario.idremision inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepagoremisiones as tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.estado=3 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "'"
-    '    End If
-    '    If pIdSucursal > 0 Then
-    '        Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-    '    End If
-    '    If pIdCliente > 0 Then
-    '        Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-    '    End If
-    '    If pIdVendedor > 0 Then
-    '        Comm.CommandText += " and tblventas.idvendedor=" + pIdVendedor.ToString
-    '    End If
-    '    If pidMoneda > 0 Then
-    '        Comm.CommandText += " and tblventas.idmoneda=" + pidMoneda.ToString
-    '    End If
-    '    If pSerie <> "" Then
-    '        Comm.CommandText += " and tblventas.serie like '%" + Replace(pSerie, "'", "''") + "%'"
-    '    End If
-    '    If pMostrarOc = 1 Then
-    '        Comm.CommandText += " and tblventas.serie<>'" + Replace(pSerieOc, "'", "''") + "'"
-    '    End If
-    '    If pUsado Then
-    '        Comm.CommandText += " and tblventas.usado=0"
-    '    End If
-    '    If pIdForma > 0 Then
-    '        Comm.CommandText += " and tblventas.idforma=" + pIdForma.ToString
-    '    End If
-    '    'If pidInventario > 1 Then
-    '    '    Comm.CommandText += " and tblventasinventario.idinventario=" + pidInventario.ToString
-    '    'Else
-    '    '    If pidClasificacion > 0 Then
-    '    '        Comm.CommandText += " and tblinventario.idclasificacion=" + pidClasificacion.ToString
-    '    '    End If
-    '    '    If pidClasificacion2 > 0 Then
-    '    '        Comm.CommandText += " and tblinventario.idclasificacion2=" + pidClasificacion.ToString
-    '    '    End If
-    '    '    If pidClasificacion3 > 0 Then
-    '    '        Comm.CommandText += " and tblinventario.idclasificacion3=" + pidClasificacion.ToString
-    '    '    End If
-    '    'End If
-    '    Comm.CommandText += " order by tblventas.fecha,tblventas.serie,tblventas.folio"
-    '    Dim DA As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
-    '    DA.Fill(DS, "tblventas")
-    '    'DS.WriteXmlSchema("tblventastp.xml")
-    '    Return DS.Tables("tblventas").DefaultView
-    'End Function
+    
     Public Function ReportePorTipodePago(ByVal pFecha1 As String, ByVal pFecha2 As String, ByVal pIdSucursal As Integer, ByVal pIdCliente As Integer, ByVal pIdVendedor As Integer, ByVal pidMoneda As Integer, ByVal pMostrarEnPesos As Byte, ByVal pSerie As String, ByVal pMostrarOc As Byte, ByVal pSerieOc As String, ByVal pUsado As Boolean, ByVal pIdForma As Integer, ByVal pZona As Integer, ByVal pZona2 As Integer, ByVal PSoloCanceladas As Boolean, pIdAlmacen As Integer, pIdCaja As Integer, pIdTipo As Integer, pIdInventario As Integer, pIdClasificacion As Integer, pIdClasificacion2 As Integer, pIdClasificacion3 As Integer, pOrdenarPorClas As Boolean, pTipoB As Boolean, pSubRep As Boolean, pIdTipoSucursal As Integer) As DataView
         Dim DS As New DataSet
         If pMostrarEnPesos = 0 Then

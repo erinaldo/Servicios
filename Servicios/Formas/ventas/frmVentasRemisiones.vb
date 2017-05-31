@@ -964,6 +964,10 @@
         Label20.Text = "0"
         Button23.Enabled = False
         Button28.Enabled = False
+        lblUbicacion.Visible = False
+        cmbUbicacion.Visible = False
+        cmbUbicacion.Enabled = True
+
         ComboBox1.SelectedIndex = IDsMonedas.Busca(GlobalIdMoneda)
         Button4.Text = "Agregar Concepto"
         If GlobalPermisos.ChecaPermiso(PermisosN.Ventas.CambiodeAlmacen, PermisosN.Secciones.Ventas) = False Or Estado > 2 Then
@@ -1102,7 +1106,7 @@
                 If SinConcersion Then CantidadMostrar = CDbl(TextBox5.Text)
                 If Button4.Text = "Agregar Concepto" Then
                     If SepararKit = 0 Then
-                        CD.Guardar(idRemision, IdInventario, CDbl(TextBox5.Text), CDbl(TextBox6.Text), IDsMonedas.Valor(ComboBox1.SelectedIndex), TextBox4.Text, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), IdVariante, IdServicio, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), CantidadMostrar, TipoCantidadMostrar, CDbl(TextBox13.Text))
+                        CD.Guardar(idRemision, IdInventario, CDbl(TextBox5.Text), CDbl(TextBox6.Text), IDsMonedas.Valor(ComboBox1.SelectedIndex), TextBox4.Text, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), IdVariante, IdServicio, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), CantidadMostrar, TipoCantidadMostrar, CDbl(TextBox13.Text), If(cmbUbicacion.Visible, cmbUbicacion.SelectedValue, ""))
                         hayDescuento()
                     Else
                         If EsKit = 1 And SepararKit = 1 Then
@@ -1343,6 +1347,11 @@
                 Button16.Enabled = True
             End If
             'ConsultaOn = False
+            lblUbicacion.Visible = CD.Inventario.UsaUbicacion
+            cmbUbicacion.Visible = CD.Inventario.UsaUbicacion
+            cmbUbicacion.DataSource = CD.Inventario.Ubicaciones(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario)
+            cmbUbicacion.SelectedValue = CD.Ubicacion
+            cmbUbicacion.Enabled = False
 
             ConsultaOn = True
             If Estado <> Estados.Guardada And Estado <> Estados.Cancelada Then Button9.Enabled = True
@@ -1636,6 +1645,11 @@
         Else
             TextBox4.Enabled = True
         End If
+
+        lblUbicacion.Visible = Articulo.UsaUbicacion
+        cmbUbicacion.Visible = Articulo.UsaUbicacion
+        cmbUbicacion.DataSource = Articulo.Ubicaciones(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario)
+
         ConsultaOn = True
     End Sub
     
@@ -2503,7 +2517,7 @@
                     descripcion = "DESCUENTO: $" + TablaDesc.Rows(0)(2).ToString() + " P/U"
                 End If
 
-                CD.Guardar(idRemision, 1, CDbl(TextBox5.Text), des, IDsMonedas.Valor(ComboBox1.SelectedIndex), descripcion, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), 0, 0, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), CDbl(TextBox5.Text), TipoCantidad, 0)
+                CD.Guardar(idRemision, 1, CDbl(TextBox5.Text), des, IDsMonedas.Valor(ComboBox1.SelectedIndex), descripcion, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), 0, 0, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), CDbl(TextBox5.Text), TipoCantidad, 0, If(cmbUbicacion.Visible, cmbUbicacion.SelectedValue, ""))
                 'CD.Guardar(idVenta, 1, Double.Parse(TextBox5.Text), des, IDsMonedas.Valor(ComboBox1.SelectedIndex), descripcion, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), 0, 0, 1, 0, 0, Double.Parse(TextBox5.Text), 1)
                 P.GuardarDesc(CD.UltomoRegistro(), idDescuento, idRemision, "VentasRemisiones")
 
@@ -2552,7 +2566,7 @@
             des = (precio * cDesc) * (-1) 'lo que se le va a descontar a la oferta
             des = des * regDesc
 
-            CD.Guardar(idRemision, 1, regDesc, des, IDsMonedas.Valor(ComboBox1.SelectedIndex), descripcion, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), 1, 0, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), CDbl(TextBox5.Text), TipoCantidad, 0)
+            CD.Guardar(idRemision, 1, regDesc, des, IDsMonedas.Valor(ComboBox1.SelectedIndex), descripcion, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), 1, 0, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), CDbl(TextBox5.Text), TipoCantidad, 0, If(cmbUbicacion.Visible, cmbUbicacion.SelectedValue, ""))
             P.GuardarDesc(CD.UltomoRegistro(), idDescuento, idRemision, "VentasRemisiones")
 
             ConsultaDetalles()
@@ -2697,7 +2711,7 @@
                 des = (precio * cDesc) * (-1) 'lo que se le va a descontar a la oferta
                 des = des * regDesc
 
-                CD.Guardar(idRemision, 1, regDesc, des, IDsMonedas.Valor(ComboBox1.SelectedIndex), descripcion, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), 1, 0, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), regDesc, TipoCantidad, 0)
+                CD.Guardar(idRemision, 1, regDesc, des, IDsMonedas.Valor(ComboBox1.SelectedIndex), descripcion, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), 1, 0, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), regDesc, TipoCantidad, 0, If(cmbUbicacion.Visible, cmbUbicacion.SelectedValue, ""))
                 P.GuardarDesc(CD.UltomoRegistro(), idDescuento, idRemision, "VentasRemisiones")
 
                 ConsultaDetalles()
@@ -2740,7 +2754,7 @@
                 des = (precio * cDesc) * (-1) 'lo que se le va a descontar a la oferta
                 des = des * regDesc
 
-                CD.Guardar(idRemision, 1, regDesc, des, IDsMonedas.Valor(ComboBox1.SelectedIndex), descripcion, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), 1, 0, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), CDbl(TextBox5.Text), TipoCantidad, 0)
+                CD.Guardar(idRemision, 1, regDesc, des, IDsMonedas.Valor(ComboBox1.SelectedIndex), descripcion, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), 1, 0, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), CDbl(TextBox5.Text), TipoCantidad, 0, If(cmbUbicacion.Visible, cmbUbicacion.SelectedValue, ""))
                 P.GuardarDesc(CD.UltomoRegistro(), idDescuento, idRemision, "VentasRemisiones")
 
                 ConsultaDetalles()
@@ -2811,7 +2825,7 @@
             des = (precio * cDesc) * (-1) 'lo que se le va a descontar a la oferta
             des = des * regDesc
 
-            CD.Guardar(idRemision, 1, regDesc, des, IDsMonedas.Valor(ComboBox1.SelectedIndex), descripcion, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), 1, 0, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), regDesc, TipoCantidad, 0)
+            CD.Guardar(idRemision, 1, regDesc, des, IDsMonedas.Valor(ComboBox1.SelectedIndex), descripcion, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), 1, 0, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), regDesc, TipoCantidad, 0, If(cmbUbicacion.Visible, cmbUbicacion.SelectedValue, ""))
             P.GuardarDesc(CD.UltomoRegistro(), idDescuento, idRemision, "VentasRemisiones")
 
             ConsultaDetalles()

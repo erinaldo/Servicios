@@ -864,7 +864,7 @@
             lblUbicacion.Visible = articulo.UsaUbicacion
             cmbUbicacion.Visible = articulo.UsaUbicacion
             cmbUbicacion.DataSource = articulo.Ubicaciones(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario)
-            cmbUbicacion.SelectedValue = CD.UbicacionO
+            cmbUbicacion.SelectedValue = CD.Ubicacion
 
             If CheckScroll.Checked Then txtCantidad.Focus()
         Catch ex As Exception

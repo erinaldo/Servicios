@@ -23,6 +23,7 @@
     Public CantidadM As Double
     Public TipoCantidadM As Integer
     Public CDescuento As Integer
+    Public Ubicacion As String
     'Public Costo As Double
     Dim Comm As New MySql.Data.MySqlClient.MySqlCommand
 
@@ -56,7 +57,7 @@
     End Sub
     Public Sub LlenaDatos()
         Dim DReader As MySql.Data.MySqlClient.MySqlDataReader
-        Comm.CommandText = "select * from tblventasremisionesinventario where iddetalle=" + ID.ToString
+        Comm.CommandText = "select vri.*,ifnull(vru.ubicacion,'') ubicacion from tblventasremisionesinventario vri left outer join tblventasremisionesubicaciones vru on vri.iddetalle=vru.iddetalle where vri.iddetalle=" + ID.ToString
         DReader = Comm.ExecuteReader
         If DReader.Read() Then
             Precio = DReader("precio")
@@ -78,7 +79,7 @@
             TipoCantidadM = DReader("tipocantidadm")
             CantidadM = DReader("cantidadm")
             CDescuento = DReader("cdescuento")
-            ' Costo = DReader("costo")
+            Ubicacion = DReader("ubicacion")
         End If
         DReader.Close()
         Inventario = New dbInventario(Idinventario, Comm.Connection)
@@ -87,9 +88,9 @@
         Moneda = New dbMonedas(IdMoneda, Comm.Connection)
 
     End Sub
-    Public Sub Guardar(ByVal pIdVenta As Integer, ByVal pIdinventario As Integer, ByVal pCantidad As Double, ByVal pPrecio As Double, ByVal pIdMoneda As Integer, ByVal pDescripcion As String, ByVal pIdAlmacen As Integer, ByVal pIva As Double, ByVal pDescuento As Double, ByVal pIdVariante As Integer, ByVal pIdServicio As Integer, ByVal pIEPS As Double, ByVal pIVARetenido As Double, pCantidadM As Double, pTipoCantidadM As Integer, pCDescuento As Double)
+    Public Sub Guardar(ByVal pIdVenta As Integer, ByVal pIdinventario As Integer, ByVal pCantidad As Double, ByVal pPrecio As Double, ByVal pIdMoneda As Integer, ByVal pDescripcion As String, ByVal pIdAlmacen As Integer, ByVal pIva As Double, ByVal pDescuento As Double, ByVal pIdVariante As Integer, ByVal pIdServicio As Integer, ByVal pIEPS As Double, ByVal pIVARetenido As Double, pCantidadM As Double, pTipoCantidadM As Integer, pCDescuento As Double, pUbicacion As String)
 
-        
+
         Idinventario = pIdinventario
         Cantidad = pCantidad
         Precio = pPrecio
@@ -106,17 +107,25 @@
         CantidadM = pCantidadM
         CDescuento = pCDescuento
         TipoCantidadM = pTipoCantidadM
+        Ubicacion = pUbicacion
         If Cantidad = 1 Then
             PrecioOriginal = Precio
         Else
             PrecioOriginal = Precio / Cantidad
         End If
-        
+
         NuevoConcepto = True
-        Comm.CommandText = "insert into tblventasremisionesinventario(idremision,idinventario,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento,idvariante,idservicio,surtido,preciooriginal,IEPS,IVARetenido,cantidadm,tipocantidadm,cdescuento) values(" + IdRemision.ToString + "," + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + ",'" + Replace(Descripcion, "'", "''") + "'," + IdMoneda.ToString + "," + IdAlmacen.ToString + "," + Iva.ToString + ",''," + Descuento.ToString + ",1," + IdServicio.ToString + ",0," + Precio.ToString + " , " + IEPS.ToString() + " , " + IVARetenido.ToString() + "," + CantidadM.ToString + "," + TipoCantidadM.ToString + "," + CDescuento.ToString + ");"
-        Comm.CommandText += "select ifnull(last_insert_id(),0);"
+        Comm.CommandText = "insert into tblventasremisionesinventario(idremision, idinventario, cantidad, precio, descripcion, idmoneda, idalmacen, iva, extra, descuento, idvariante, idservicio, surtido, preciooriginal, IEPS, IVARetenido, cantidadm, tipocantidadm, cdescuento) values (" + IdRemision.ToString + "," + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + ",'" + Replace(Descripcion, "'", "''") + "'," + IdMoneda.ToString + "," + IdAlmacen.ToString + "," + Iva.ToString + ",''," + Descuento.ToString + ",1," + IdServicio.ToString + ",0," + Precio.ToString + " , " + IEPS.ToString() + " , " + IVARetenido.ToString() + "," + CantidadM.ToString + "," + TipoCantidadM.ToString + "," + CDescuento.ToString + ");"
+        Comm.ExecuteNonQuery()
+
+        If pUbicacion <> "" Then
+            Comm.CommandText = "insert into tblventasremisionesubicaciones (iddetalle, cantidad, surtido, ubicacion) select max(iddetalle), " + Cantidad.ToString() + ", 0, '" + Trim(Replace(Ubicacion, "'", "''")) + "' from tblventasremisionesinventario;"
+            Comm.ExecuteNonQuery()
+        End If
+
+        Comm.CommandText = "select ifnull(last_insert_id(),0);"
         ID = Comm.ExecuteScalar
-        
+
     End Sub
     Public Sub Modificar(ByVal pID As Integer, ByVal pCantidad As Double, ByVal pPrecio As Double, ByVal pIdMoneda As Integer, ByVal pDescripcion As String, ByVal pIva As Double, ByVal pDescuento As Double, ByVal pIEPS As Double, ByVal pIVARetenido As Double, pCantidadM As Double, pTipocantidadM As Integer, pcDescuento As Double)
         ID = pID
