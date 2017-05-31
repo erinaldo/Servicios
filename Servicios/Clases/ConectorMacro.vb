@@ -632,7 +632,7 @@
                         If FacturaDetalles.Descuento <> 0 Then
                             FacturaDetalles.Precio = FacturaDetalles.Precio - (FacturaDetalles.Precio * FacturaDetalles.Descuento / 100)
                         End If
-                        FacturaDetalles.Guardar(Factura.ID, Inventario.ID, FacturaDetalles.Cantidad, FacturaDetalles.Precio, idMoneda, Replace(FacturaDetalles.Descripcion, "|", ""), 1, FacturaDetalles.Iva, FacturaDetalles.Descuento, 1, 0, 0, FacturaDetalles.Cantidad, Medidas.ID, 0, FacturaDetalles.ivaRetencion, "", 0)
+                        FacturaDetalles.Guardar(Factura.ID, Inventario.ID, FacturaDetalles.Cantidad, FacturaDetalles.Precio, idMoneda, Replace(FacturaDetalles.Descripcion, "|", ""), 1, FacturaDetalles.Iva, FacturaDetalles.Descuento, 1, 0, 0, FacturaDetalles.Cantidad, Medidas.ID, 0, FacturaDetalles.ivaRetencion, "", 0, "")
                         FacturaDetalles.Extra = ""
                         FacturaDetalles.ivaRetencion = 0
                         If Aduana.Numero <> "" And Aduana.Fecha <> "" And Aduana.Aduana <> "" Then
@@ -650,7 +650,7 @@
                 If FacturaDetalles.Descuento <> 0 Then
                     FacturaDetalles.Precio = FacturaDetalles.Precio - (FacturaDetalles.Precio * FacturaDetalles.Descuento / 100)
                 End If
-                FacturaDetalles.Guardar(Factura.ID, Inventario.ID, FacturaDetalles.Cantidad, FacturaDetalles.Precio, idMoneda, Replace(FacturaDetalles.Descripcion, "|", ""), 1, FacturaDetalles.Iva, FacturaDetalles.Descuento, 1, 0, 0, FacturaDetalles.Cantidad, Medidas.ID, 0, FacturaDetalles.ivaRetencion, "", 0)
+                FacturaDetalles.Guardar(Factura.ID, Inventario.ID, FacturaDetalles.Cantidad, FacturaDetalles.Precio, idMoneda, Replace(FacturaDetalles.Descripcion, "|", ""), 1, FacturaDetalles.Iva, FacturaDetalles.Descuento, 1, 0, 0, FacturaDetalles.Cantidad, Medidas.ID, 0, FacturaDetalles.ivaRetencion, "", 0, "")
                 FacturaDetalles.Extra = ""
                 FacturaDetalles.ivaRetencion = 0
                 If Aduana.Numero <> "" And Aduana.Fecha <> "" And Aduana.Aduana <> "" Then

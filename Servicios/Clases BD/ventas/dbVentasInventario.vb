@@ -25,6 +25,7 @@
     Public Noimp As Byte
     Public NoImpImporte As Double
     Public CDescuento As Double
+    Public Ubicacion As String
     Dim Comm As New MySql.Data.MySqlClient.MySqlCommand
 
     Public Sub New(ByVal Conexion As MySql.Data.MySqlClient.MySqlConnection)
@@ -89,8 +90,8 @@
         Inventario = New dbInventario(Idinventario, Comm.Connection)
         Moneda = New dbMonedas(IdMoneda, Comm.Connection)
     End Sub
-    Public Sub Guardar(ByVal pIdVenta As Integer, ByVal pIdinventario As Integer, ByVal pCantidad As Double, ByVal pPrecio As Double, ByVal pIdMoneda As Integer, ByVal pDescripcion As String, ByVal pIdAlmacen As Integer, ByVal pIva As Double, ByVal pDescuento As Double, ByVal pidVariante As Integer, ByVal pidServicio As Integer, ByVal pSeparado As Integer, ByVal pCantidadM As Double, ByVal pTipoCantidadM As Integer, ByVal pIEPS As Double, ByVal pIvaRetenido As Double, ByVal pPredial As String, pcDescuento As Double)
-        
+    Public Sub Guardar(ByVal pIdVenta As Integer, ByVal pIdinventario As Integer, ByVal pCantidad As Double, ByVal pPrecio As Double, ByVal pIdMoneda As Integer, ByVal pDescripcion As String, ByVal pIdAlmacen As Integer, ByVal pIva As Double, ByVal pDescuento As Double, ByVal pidVariante As Integer, ByVal pidServicio As Integer, ByVal pSeparado As Integer, ByVal pCantidadM As Double, ByVal pTipoCantidadM As Integer, ByVal pIEPS As Double, ByVal pIvaRetenido As Double, ByVal pPredial As String, pcDescuento As Double, pUbicacion As String)
+
         Idinventario = pIdinventario
         Cantidad = pCantidad
         Precio = pPrecio
@@ -110,10 +111,18 @@
         TipoCantidadM = pTipoCantidadM
         Predial = pPredial
         CDescuento = pcDescuento
-        
+        Ubicacion = pUbicacion
+
         NuevoConcepto = True
         Comm.CommandText = "insert into tblventasinventario(idventa,idinventario,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento,idvariante,idservicio,surtido,cantidadm,tipocantidadm, ieps, ivaRetenido,predial,noimp,noimpimporte,cdescuento) values(" + IdVenta.ToString + "," + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + ",'" + Replace(Descripcion, "'", "''") + "'," + IdMoneda.ToString + "," + IdAlmacen.ToString + "," + Iva.ToString + ",'" + Replace(Extra, "'", "''") + "'," + Descuento.ToString + "," + idVariante.ToString + "," + idServicio.ToString + ",0," + CantidadM.ToString + "," + TipoCantidadM.ToString + "," + IEPS.ToString() + "," + ivaRetencion.ToString + ",'" + Replace(Predial, "'", "''") + "',0,0," + CDescuento.ToString + ");"
-        Comm.CommandText += "select ifnull(last_insert_id(),0);"
+        Comm.ExecuteNonQuery()
+
+        If pUbicacion <> "" Then
+            Comm.CommandText = "insert into tblventasubicaciones (iddetalle, cantidad, surtido, ubicacion) select max(idventasinventario), " + Cantidad.ToString() + ", 0, '" + Trim(Replace(Ubicacion, "'", "''")) + "' from tblventasinventario;"
+            Comm.ExecuteNonQuery()
+        End If
+
+        Comm.CommandText = "select ifnull(last_insert_id(),0);"
         'Comm.CommandText = "select if(max(idventasinventario) is null,0,max(idventasinventario)) from tblventasinventario"
         ID = Comm.ExecuteScalar
         'End If

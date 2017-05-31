@@ -1382,6 +1382,10 @@ Public Class frmVentasN
             TextBox5.Text = "1"
             TextBox3.Focus()
         End If
+
+        lblUbicacion.Visible = False
+        cmbUbicacion.Visible = False
+        cmbUbicacion.Enabled = True
     End Sub
     Private Sub AgregaArticulo()
         Try
@@ -1519,7 +1523,7 @@ Public Class frmVentasN
                     If SinConcersion Then CantidadMostrar = CDbl(TextBox5.Text)
                     If Button4.Text = "Agregar Concepto" Then
                         If SeparaKit = 0 Then
-                        CD.Guardar(idVenta, IdInventario, CDbl(TextBox5.Text), CDbl(TextBox6.Text), IDsMonedas.Valor(ComboBox1.SelectedIndex), Trim(TextBox4.Text), IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), IdVariante, IdServicio, I.Inventariable, CantidadMostrar, TipoCantidadMostrar, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), ComboBox7.Text, CDbl(TextBox17.Text))
+                        CD.Guardar(idVenta, IdInventario, CDbl(TextBox5.Text), CDbl(TextBox6.Text), IDsMonedas.Valor(ComboBox1.SelectedIndex), Trim(TextBox4.Text), IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), IdVariante, IdServicio, I.Inventariable, CantidadMostrar, TipoCantidadMostrar, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), ComboBox7.Text, CDbl(TextBox17.Text), If(cmbUbicacion.Visible, cmbUbicacion.SelectedValue, ""))
                             'agregar descuento
                             hayDescuento()
                             IdDetalle = CD.ID
@@ -1772,6 +1776,12 @@ Public Class frmVentasN
             Button4.Text = "Modificar Concepto"
             If Estado <> Estados.Guardada And Estado <> Estados.Cancelada Then Button9.Enabled = True
             'cmbtipoarticulo.Text = "A"
+
+            lblUbicacion.Visible = CD.Inventario.UsaUbicacion
+            cmbUbicacion.Visible = CD.Inventario.UsaUbicacion
+            cmbUbicacion.DataSource = CD.Inventario.Ubicaciones(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario)
+            cmbUbicacion.SelectedValue = CD.Ubicacion
+            cmbUbicacion.Enabled = False
 
             If CheckScroll.Checked Then TextBox5.Focus()
 
@@ -2070,6 +2080,12 @@ Public Class frmVentasN
         Else
             TextBox4.Enabled = True
         End If
+
+        lblUbicacion.Visible = Articulo.UsaUbicacion
+        cmbUbicacion.Visible = Articulo.UsaUbicacion
+        cmbUbicacion.DataSource = Articulo.Ubicaciones(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario)
+
+
         ConsultaOn = True
     End Sub
     
@@ -3374,7 +3390,7 @@ Public Class frmVentasN
             Dim VI As New dbVentasInventario(MySqlcon)
             DR = VI.ConsultaReader(idVenta, AgregaSeries, Op._DetalleKits, 1, Op._OrdenUbicacion, True)
             ImpDoc.ImpNDD.Clear()
-            
+
             ImpDoc.CuantosRenglones = 0
             Dim brinca As Boolean
             Dim Cont As Integer = 0
@@ -3953,8 +3969,8 @@ Public Class frmVentasN
         ImpDoc.ImpND.Add(New NodoImpresionN("", "curprepcliente", V.Cliente.RepresentanteRegistro, 0), "curprepcliente")
     End Sub
 
-    
-    
+
+
     Private Sub PrintDocument1_PrintPage(ByVal sender As System.Object, ByVal e As System.Drawing.Printing.PrintPageEventArgs) Handles PrintDocument1.PrintPage
         ImpDoc.DibujaPaginaN(e.Graphics)
         If ImpDoc.MasPaginas = True Or ImpDoc.NumeroPagina > 2 Then
@@ -3965,7 +3981,7 @@ Public Class frmVentasN
         End If
         e.HasMorePages = ImpDoc.MasPaginas
     End Sub
-    
+
 
     Private Sub Button15_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button15.Click
         If Op.NoImpSinGuardar = 1 And Estado < 3 Then
@@ -4124,7 +4140,7 @@ Public Class frmVentasN
 
 
     Private Sub TextBox9_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBox9.TextChanged
-        
+
         If Descontando Then
             Descontando = False
             If IsNumeric(TextBox9.Text) And IsNumeric(TextBox6.Text) Then
@@ -4167,7 +4183,7 @@ Public Class frmVentasN
     Private Sub Button18_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button18.Click
         ImprimirSeries()
     End Sub
-    
+
     Private Sub Imprimir(pIdVenta As Integer)
         Dim V As New dbVentas(pIdVenta, MySqlcon, Op._Sinnegativos)
         Dim S As New dbSucursales(V.IdSucursal, MySqlcon)
@@ -4501,7 +4517,7 @@ Public Class frmVentasN
                     descripcion = "DESCUENTO: $" + TablaDesc.Rows(0)(2).ToString() + " P/U"
                 End If
 
-                CD.Guardar(idVenta, 1, Double.Parse(TextBox5.Text), des, IDsMonedas.Valor(ComboBox1.SelectedIndex), descripcion, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), 1, 0, 0, Double.Parse(TextBox5.Text), 1, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), ComboBox7.Text, 0)
+                CD.Guardar(idVenta, 1, Double.Parse(TextBox5.Text), des, IDsMonedas.Valor(ComboBox1.SelectedIndex), descripcion, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), 1, 0, 0, Double.Parse(TextBox5.Text), 1, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), ComboBox7.Text, 0, If(cmbUbicacion.Visible, cmbUbicacion.SelectedValue, ""))
                 P.GuardarDesc(CD.UltomoRegistro(), idDescuento, idVenta, "VentasN")
 
                 ConsultaDetalles()
@@ -4546,7 +4562,7 @@ Public Class frmVentasN
             des = (precio * cDesc) * (-1) 'lo que se le va a descontar a la oferta
             des = des * regDesc
 
-            CD.Guardar(idVenta, 1, regDesc, des, IDsMonedas.Valor(ComboBox1.SelectedIndex), descripcion, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), 1, 0, 0, regDesc, 1, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), "", 0)
+            CD.Guardar(idVenta, 1, regDesc, des, IDsMonedas.Valor(ComboBox1.SelectedIndex), descripcion, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), 1, 0, 0, regDesc, 1, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), "", 0, If(cmbUbicacion.Visible, cmbUbicacion.SelectedValue, ""))
             P.GuardarDesc(CD.UltomoRegistro(), idDescuento, idVenta, "VentasN")
 
             ConsultaDetalles()
@@ -4584,7 +4600,7 @@ Public Class frmVentasN
                 des = (precio * cDesc) * (-1) 'lo que se le va a descontar a la oferta
                 des = des * regDesc
 
-                CD.Guardar(idVenta, 1, regDesc, des, IDsMonedas.Valor(ComboBox1.SelectedIndex), descripcion, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), 1, 0, 0, regDesc, 1, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), "", 0)
+                CD.Guardar(idVenta, 1, regDesc, des, IDsMonedas.Valor(ComboBox1.SelectedIndex), descripcion, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), 1, 0, 0, regDesc, 1, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), "", 0, If(cmbUbicacion.Visible, cmbUbicacion.SelectedValue, ""))
                 P.GuardarDesc(CD.UltomoRegistro(), idDescuento, idVenta, "VentasN")
 
                 ConsultaDetalles()
@@ -4627,7 +4643,7 @@ Public Class frmVentasN
                 des = (precio * cDesc) * (-1) 'lo que se le va a descontar a la oferta
                 des = des * regDesc
 
-                CD.Guardar(idVenta, 1, regDesc, des, IDsMonedas.Valor(ComboBox1.SelectedIndex), descripcion, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), 1, 0, 0, regDesc, 1, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), "", 0)
+                CD.Guardar(idVenta, 1, regDesc, des, IDsMonedas.Valor(ComboBox1.SelectedIndex), descripcion, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), 1, 0, 0, regDesc, 1, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), "", 0, If(cmbUbicacion.Visible, cmbUbicacion.SelectedValue, ""))
                 P.GuardarDesc(CD.UltomoRegistro(), idDescuento, idVenta, "VentasN")
 
                 ConsultaDetalles()
@@ -4695,7 +4711,7 @@ Public Class frmVentasN
             des = (precio * cDesc) * (-1) 'lo que se le va a descontar a la oferta
             des = des * regDesc
 
-            CD.Guardar(idVenta, 1, regDesc, des, IDsMonedas.Valor(ComboBox1.SelectedIndex), descripcion, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), 1, 0, 0, regDesc, 1, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), "", 0)
+            CD.Guardar(idVenta, 1, regDesc, des, IDsMonedas.Valor(ComboBox1.SelectedIndex), descripcion, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), 1, 0, 0, regDesc, 1, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), "", 0, If(cmbUbicacion.Visible, cmbUbicacion.SelectedValue, ""))
             P.GuardarDesc(CD.UltomoRegistro(), idDescuento, idVenta, "VentasN")
 
             ConsultaDetalles()
@@ -5042,7 +5058,7 @@ Public Class frmVentasN
                 V.ModificaEstado(idVenta, Estados.Guardada)
             End If
             CadenaCFDI = "||1.0|" + V.uuid + "|" + V.FechaTimbrado + "|" + V.SelloCFD + "|" + V.NoCertificadoSAT + "||"
-            Imprimir(idVenta)            
+            Imprimir(idVenta)
         Else
             MsgBox("Ha ocurrido un error en el timbrado del la factura, intente mas tarde." + vbCrLf + MsgError, MsgBoxStyle.Critical, GlobalNombreApp)
             AddErrorTimbrado(Replace(MsgError, "'", "''"), "Ventas Recuperando", Date.Now.ToString("yyyy/MM/dd"), Date.Now.ToString("HH:mm"), idVenta)
@@ -5248,7 +5264,7 @@ Public Class frmVentasN
     End Sub
 
     Private Sub Button33_Click(sender As Object, e As EventArgs) Handles Button33.Click
-        
+
         If idCliente <> 0 Then
             If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
                 Dim archivo = OpenFileDialog1.FileName
@@ -5434,7 +5450,7 @@ Public Class frmVentasN
             AddErrorTimbrado(Replace(ex.Message, "'", "''"), "Ventas - Acuse", Date.Now.ToString("yyyy/MM/dd"), Date.Now.ToString("HH:mm:ss"), idVenta)
             MsgBox(ex.Message, MsgBoxStyle.Critical, GlobalNombreApp)
         End Try
-        
+
     End Sub
 
     Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged
@@ -5490,10 +5506,10 @@ Public Class frmVentasN
             Button37.Visible = False
             PopUp("Métodos removidos", 60)
         End If
-        
+
     End Sub
 
-   
+
     Private Sub Button38_Click(sender As Object, e As EventArgs) Handles Button38.Click
         'If idVenta > 0 Then
         '    Dim frmK As New FrmDocKardex(idVenta, 0, TextBox11.Text + TextBox2.Text, TextBox1.Text)
@@ -5515,7 +5531,7 @@ Public Class frmVentasN
         End If
 
 
-        
+
     End Sub
 
     Private Sub Panel4_Paint(sender As Object, e As PaintEventArgs) Handles Panel4.Paint
@@ -5534,5 +5550,5 @@ Public Class frmVentasN
         End If
     End Sub
 
-  
+
 End Class
