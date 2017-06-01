@@ -855,4 +855,13 @@ Public Class dbMovimientos
         Comm.ExecuteNonQuery()
         Comm.Parameters.Clear()
     End Sub
+
+    Public Function ReporteEntregas(desde As String, hasta As String) As DataSet
+        Comm.CommandText = "select me.*,m.fecha,ifnull(c.nombre,'') cliente from tblmovimientosentrega me inner join tblmovimientos m on m.idmovimiento=me.idmovimiento left outer join tblclientes c on c.idcliente=m.idcliente where m.fecha>='" + desde + "' and m.fecha<='" + hasta + "' order by m.fecha;"
+        Dim ds As New DataSet
+        Dim da As New MySqlDataAdapter(Comm)
+        da.Fill(ds, "tabla")
+        'ds.WriteXmlSchema("tblEntregas.xml")
+        Return ds
+    End Function
 End Class

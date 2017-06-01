@@ -2277,6 +2277,12 @@
       <DependentUpon>repEmpeniosMovimientosN.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reportes\repEntregasPorCliente.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>repEntregasPorCliente.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reportes\repFacturasValidadas.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -4679,6 +4685,10 @@
     <EmbeddedResource Include="Reportes\repEmpeniosMovimientosN.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>repEmpeniosMovimientosN.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\repEntregasPorCliente.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>repEntregasPorCliente.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\repFacturasValidadas.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

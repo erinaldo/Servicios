@@ -31,7 +31,7 @@
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Dim bd As New dbMovimientos(idmovimiento, MySqlcon)
-        bd.GuardarEntrega(New Entrega(idmovimiento, txtUnidad.Text, txtPlacas.Text, txtModelo.Text, txtMarca.Text, txtColor.Text, txtChofer.Text, dtpSalida.Value, txtLugar.Text, nudPaquetes.Value, txtLote.Text, txtNumeroSellos.text, nudKilos.Value))
+        bd.GuardarEntrega(New Entrega(idmovimiento, txtUnidad.Text, txtMarca.Text, txtModelo.Text, txtColor.Text, txtPlacas.Text, txtChofer.Text, dtpSalida.Value, txtLugar.Text, nudPaquetes.Value, txtLote.Text, txtNumeroSellos.Text, nudKilos.Value))
         Close()
     End Sub
 End Class

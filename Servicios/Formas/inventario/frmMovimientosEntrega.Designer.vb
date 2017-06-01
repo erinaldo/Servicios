@@ -250,7 +250,7 @@ Partial Class frmMovimientosEntrega
         Me.nudPaquetes.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
         Me.nudPaquetes.Name = "nudPaquetes"
         Me.nudPaquetes.Size = New System.Drawing.Size(106, 21)
-        Me.nudPaquetes.TabIndex = 9
+        Me.nudPaquetes.TabIndex = 11
         '
         'txtLote
         '

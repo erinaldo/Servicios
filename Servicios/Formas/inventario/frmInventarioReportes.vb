@@ -48,6 +48,7 @@
         ListBox1.Items.Add("Pedidos.")
         ListBox1.Items.Add("Control de entrega de mercancia.")
         ListBox1.Items.Add("Control de inventario.")
+        ListBox1.Items.Add("Entregas por cliente.")
         'ListBox1.Items.Add("Facturas Entregas de mercancías.")
         ConsultaOn = False
         ComboBox4.Items.Add("Todos")
@@ -517,75 +518,21 @@
                     'rep.SetParameterValue("conFacturas", False)
                     Dim RV As New frmReportes(rep, False)
                     RV.Show()
-                    'Case "Facturas Entregas de mercancías."
-                    '    Dim m As New dbMovimientos(MySqlcon)
-                    '    Dim rep As CrystalDecisions.CrystalReports.Engine.ReportDocument
-                    '    rep = New repInventarioEntregas
-                    '    rep.SetDataSource(m.controlEntregas(DateTimePicker1.Value.ToString("yyyy/MM/dd"), DateTimePicker2.Value.ToString("yyyy/MM/dd"), IdsAlmacenes.Valor(ComboBox8.SelectedIndex)))
-                    '    rep.SetParameterValue("encabezado", GlobalNombreEmpresa)
-                    '    rep.SetParameterValue("titulo", "Control de entrega a agentes de ventas.")
-                    '    Dim filtros As String = ""
-                    '    filtros += "Fechas: " + DateTimePicker1.Value.ToString("yyyy/MM/dd") + " al " + DateTimePicker2.Value.ToString("yyyy/MM/dd")
-                    '    filtros += "  Sucursal: " + ComboBox1.Text
-                    '    filtros += "  Vendedor: " + ComboBox8.Text
-                    '    filtros += "  Tipo:  Facturas y Remisiones."
-                    '    rep.SetParameterValue("filtros", filtros)
-                    '    'rep.SetParameterValue("conFacturas", True)
-                    '    Dim RV As New frmReportes(rep, False)
-                    '    RV.Show()
+                   
+                Case "Entregas por cliente."
+                    Dim db As New dbMovimientos(MySqlcon)
+                    Dim r As New repEntregasPorCliente
+                    r.SetDataSource(db.ReporteEntregas(Format(DateTimePicker1.Value, "yyyy/MM/dd"), Format(DateTimePicker2.Value, "yyyy/MM/dd")))
+                    r.SetParameterValue("filtros", "Desde " + Format(DateTimePicker1.Value, "yyyy/MM/dd") + " hasta " + Format(DateTimePicker2.Value, "yyyy/MM/dd"))
+                    Dim f As New frmReportes(r, False)
+                    f.Show()
             End Select
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, GlobalNombreApp)
         End Try
     End Sub
 
-    'Private Sub CheckBox1_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBox1.CheckedChanged
-    '    If CheckBox1.Checked Then
-    '        CheckBox5.Checked = False
-    '        CheckBox2.Checked = False
-    '        CheckBox3.Checked = False
-    '        Label1.Visible = False
-    '        ComboBox2.Visible = False
-    '        Label2.Visible = False
-    '        ComboBox4.Visible = False
-    '        Label3.Visible = False
-    '        ComboBox5.Visible = False
-    '        CheckBox7.Checked = False
-    '    End If
-    'End Sub
-
-    'Private Sub CheckBox2_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBox2.CheckedChanged
-    '    If CheckBox2.Checked Then
-    '        CheckBox5.Checked = False
-    '        CheckBox1.Checked = False
-    '        CheckBox3.Checked = False
-    '        Label1.Visible = False
-    '        ComboBox2.Visible = False
-    '        Label2.Visible = False
-    '        ComboBox4.Visible = False
-    '        Label3.Visible = False
-    '        ComboBox5.Visible = False
-    '        CheckBox7.Checked = False
-    '    End If
-    'End Sub
-
-    'Private Sub CheckBox3_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBox3.CheckedChanged
-    '    If CheckBox3.Checked Then
-    '        CheckBox5.Checked = False
-    '        CheckBox1.Checked = False
-    '        CheckBox2.Checked = False
-    '        Label1.Visible = True
-    '        ComboBox2.Visible = True
-    '        Label2.Visible = True
-    '        ComboBox4.Visible = True
-    '        Label3.Visible = True
-    '        ComboBox5.Visible = True
-    '        CheckBox7.Checked = False
-    '    End If
-    'End Sub
-
-
-
+    
     Private Sub BuscaArticulo()
         Try
             If ConsultaOn Then
