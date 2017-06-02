@@ -126,7 +126,7 @@
         IdMoneda = pIdMoneda
         IEPS = pIEPS
         ivaRetenido = pivaRetenido
-        Comm.CommandText = "update tblcomprasdetalles set precio=" + Precio.ToString + ",idmoneda=" + IdMoneda.ToString + ",cantidad=" + Cantidad.ToString + ",iva=" + pIVa.ToString + ",descuento=" + pDescuento.ToString + " ,IEPS=" + IEPS.ToString + " ,ivaRetenido=" + ivaRetenido.ToString + " where iddetalle=" + ID.ToString
+        Comm.CommandText = "update tblcomprasdetalles set precio=" + Precio.ToString + ",idmoneda=" + IdMoneda.ToString + ",cantidad=" + Cantidad.ToString + ",iva=" + pIVa.ToString + ",descuento=" + pDescuento.ToString + " ,IEPS=" + IEPS.ToString + " ,ivaRetenido=" + ivaRetenido.ToString + " where iddetalle=" + ID.ToString + "; update tblcomprasubicaciones set cantidad=" + Cantidad.ToString() + " where iddetalle=" + pID.ToString() + ";"
         Comm.ExecuteNonQuery()
     End Sub
 

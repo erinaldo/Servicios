@@ -124,16 +124,16 @@
         Comm.CommandText = "select tipo from tblinventarioconceptos c inner join tblmovimientos m on m.idconcepto=c.idconcepto where idmovimiento=" + IdMovimiento.ToString()
         Select Case Comm.ExecuteScalar
             Case 0, 4
-                Comm.CommandText = "update tblmovimientosdetalles set cantidad=" + Cantidad.ToString + ", idalmacen=" + IdAlmacen.ToString + ", idmoneda=" + IdMoneda.ToString + ", precio=" + Precio.ToString + " where iddetalle=" + pID.ToString + "; update tblmovimientosubicaciones set ubicacion='" + Trim(Replace(Ubicacion, "'", "''")) + "' where iddetalle = " + pID.ToString() + ";"
+                Comm.CommandText = "update tblmovimientosdetalles set cantidad=" + Cantidad.ToString + ", idalmacen=" + IdAlmacen.ToString + ", idmoneda=" + IdMoneda.ToString + ", precio=" + Precio.ToString + " where iddetalle=" + pID.ToString + "; update tblmovimientosubicaciones set cantidad=" + Cantidad.ToString() + ", ubicacion='" + Trim(Replace(Ubicacion, "'", "''")) + "' where iddetalle = " + pID.ToString() + ";"
                 Comm.ExecuteNonQuery()
             Case 1
-                Comm.CommandText = "update tblmovimientosdetalles set cantidad=" + Cantidad.ToString + ", idalmacen=" + IdAlmacen.ToString + ", idmoneda=" + IdMoneda.ToString + ", precio=" + Precio.ToString + " where iddetalle=" + pID.ToString + "; update tblmovimientosubicaciones set ubicacion='" + Trim(Replace(Ubicacion, "'", "''")) + "' where iddetalle = " + pID.ToString() + ";"
+                Comm.CommandText = "update tblmovimientosdetalles set cantidad=" + Cantidad.ToString + ", idalmacen=" + IdAlmacen.ToString + ", idmoneda=" + IdMoneda.ToString + ", precio=" + Precio.ToString + " where iddetalle=" + pID.ToString + "; update tblmovimientosubicaciones set cantidad=" + Cantidad.ToString() + ", ubicacion='" + Trim(Replace(Ubicacion, "'", "''")) + "' where iddetalle = " + pID.ToString() + ";"
                 Comm.ExecuteNonQuery()
             Case 3
-                Comm.CommandText = "update tblmovimientosdetalles set cantidad=" + Cantidad.ToString + ", idalmacen=" + IdAlmacen.ToString + ", idalmacen2=" + IdAlmacen2.ToString + ", idmoneda=" + IdMoneda.ToString + ", precio=" + Precio.ToString + " where iddetalle=" + pID.ToString + "; update tblmovimientosubicaciones set ubicacion='" + Trim(Replace(Ubicacion, "'", "''")) + "', ubicaciond='" + Trim(Replace(UbicacionD, "'", "''")) + "' where iddetalle = " + pID.ToString() + ";"
+                Comm.CommandText = "update tblmovimientosdetalles set cantidad=" + Cantidad.ToString + ", idalmacen=" + IdAlmacen.ToString + ", idalmacen2=" + IdAlmacen2.ToString + ", idmoneda=" + IdMoneda.ToString + ", precio=" + Precio.ToString + " where iddetalle=" + pID.ToString + "; update tblmovimientosubicaciones set cantidad=" + Cantidad.ToString() + ", ubicacion='" + Trim(Replace(Ubicacion, "'", "''")) + "', ubicaciond='" + Trim(Replace(UbicacionD, "'", "''")) + "' where iddetalle = " + pID.ToString() + ";"
                 Comm.ExecuteNonQuery()
             Case Else
-                Comm.CommandText = "update tblmovimientosdetalles set cantidad=" + Cantidad.ToString + ", idalmacen=" + IdAlmacen.ToString + ", idmoneda=" + IdMoneda.ToString + ", precio=" + Precio.ToString + " where iddetalle=" + pID.ToString + "; update tblmovimientosubicaciones set ubicacion='" + Trim(Replace(Ubicacion, "'", "''")) + "', ubicaciond='" + Trim(Replace(UbicacionD, "'", "''")) + "' where iddetalle = " + pID.ToString() + ";"
+                Comm.CommandText = "update tblmovimientosdetalles set cantidad=" + Cantidad.ToString + ", idalmacen=" + IdAlmacen.ToString + ", idmoneda=" + IdMoneda.ToString + ", precio=" + Precio.ToString + " where iddetalle=" + pID.ToString + "; update tblmovimientosubicaciones set cantidad=" + Cantidad.ToString() + ", ubicacion='" + Trim(Replace(Ubicacion, "'", "''")) + "', ubicaciond='" + Trim(Replace(UbicacionD, "'", "''")) + "' where iddetalle = " + pID.ToString() + ";"
                 Comm.ExecuteNonQuery()
         End Select
     End Sub
