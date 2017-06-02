@@ -550,7 +550,7 @@
         If ChecaCertificado(Sf.IdCertificado) Then
             Return False
         End If
-        Factura.Guardar(Cliente.ID, Fecha, Folio, 0, 0, Serie, Sf.NoAprobacion, Sc.NoSerie, Sf.YearAprobacion, GlobalTipoFacturacion, IdSucursal, IdForma, TipodeCambio, idMoneda, Cliente.ISR, Cliente.IvaRetenido, idVendedor, Descuento, 0, 0, "G01", "")
+        Factura.Guardar(Cliente.ID, Fecha, Folio, 0, 0, Serie, Sf.NoAprobacion, Sc.NoSerie, Sf.YearAprobacion, GlobalTipoFacturacion, IdSucursal, IdForma, TipodeCambio, idMoneda, Cliente.ISR, Cliente.IvaRetenido, idVendedor, Descuento, 0, 0, "G01", "", "")
         If LugarExp <> "" And NumeroExp <> "" And CalleExp <> "" Then
             Comm.CommandText = "select count(id) from tblventasexpedicion"
             Dim HayExp As Integer
@@ -662,7 +662,7 @@
             Factura.Descuento = Descuento
             Factura.Alterno = "0"
             Factura.DaTotal(Factura.ID, idMoneda, "0", "0")
-            Factura.Modificar(Factura.ID, Factura.Fecha, Factura.Folio, 0, 0, Factura.Serie, Factura.NoAprobacion, Factura.NoCertificado, Factura.YearAprobacion, Factura.EsElectronica, Estados.Pendiente, IdForma, 0, Factura.TipodeCambio, idMoneda, Factura.Subtototal, Factura.TotalVenta, Factura.IdCliente, idVendedor, "", NoCuenta, Descuento, 0, 0, 1, 1, 0, RefDocumento, Adicional, 0, 0, 0, 0, "0", Factura.Fecha, "G01", "")
+            Factura.Modificar(Factura.ID, Factura.Fecha, Factura.Folio, 0, 0, Factura.Serie, Factura.NoAprobacion, Factura.NoCertificado, Factura.YearAprobacion, Factura.EsElectronica, Estados.Pendiente, IdForma, 0, Factura.TipodeCambio, idMoneda, Factura.Subtototal, Factura.TotalVenta, Factura.IdCliente, idVendedor, "", NoCuenta, Descuento, 0, 0, 1, 1, 0, RefDocumento, Adicional, 0, 0, 0, 0, "0", Factura.Fecha, "G01", "", "")
             Dim MetodosDePago As New dbVentasAddMetodos(MySqlcon)
             MetodosDePago.Guardar(0, IdForma, Factura.TotalVenta, Factura.ID)
             If Factura.EsElectronica > 1 Then

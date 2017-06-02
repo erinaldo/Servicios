@@ -2,13 +2,15 @@
     Dim Fecha1 As String
     Dim Fecha2 As String
     Dim IdCuenta As Integer
-    Public Sub New(pFecha1 As String, pFecha2 As String, pIdCuenta As Integer, pCuentastr As String, pSaldoInicial As String, pSaldoFinal As String, pTotalCargos As String, ptotalAbonos As String)
+    Dim Nivel As Byte
+    Public Sub New(pFecha1 As String, pFecha2 As String, pIdCuenta As Integer, pCuentastr As String, pSaldoInicial As String, pSaldoFinal As String, pTotalCargos As String, ptotalAbonos As String, pNivel As Byte)
 
         ' This call is required by the designer.
         InitializeComponent()
         Fecha1 = pFecha1
         Fecha2 = pFecha2
         IdCuenta = pIdCuenta
+        Nivel = pNivel
         lblDescripcion.Text = pCuentastr
         Label4.Text = pSaldoInicial
         Label7.Text = pSaldoFinal
@@ -28,7 +30,7 @@
     Private Sub Consulta()
         Try
             Dim P As New dbContabilidadPolizas(MySqlcon)
-            DGServicios.DataSource = P.auxiliarCuentasPantalla(Fecha1, Fecha2, IdCuenta)
+            DGServicios.DataSource = P.auxiliarCuentasPantalla(Fecha1, Fecha2, IdCuenta, Nivel)
             DGServicios.Columns(0).Visible = False
             DGServicios.Columns(1).HeaderText = "Fecha"
             DGServicios.Columns(2).HeaderText = "Tipo"

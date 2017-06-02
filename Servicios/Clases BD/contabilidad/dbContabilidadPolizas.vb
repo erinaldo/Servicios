@@ -2857,16 +2857,28 @@ Public Class dbContabilidadPolizas
         ' DS2.WriteXmlSchema("tblauxiliarCuentas.xml")
         Return DS2.Tables("tblauxiliarCuentas").DefaultView
     End Function
-    Public Function auxiliarCuentasPantalla(ByVal pFechaI As String, ByVal pFechaF As String, ByVal pidCuenta As Integer) As DataView
-        Dim strCuenta As String
-        Comm.CommandText = "select ifnull((select concat(LPAD(c.cuenta," + NNiv1.ToString + ",'0'),' ',if(c.n2='','',LPAD(c.n2," + NNiv2.ToString + ",'0')),' ',if(c.n3='','',LPAD(c.n3," + NNiv3.ToString + ",'0')),' ',if(c.n4='','',LPAD(c.n4," + NNiv4.ToString + ",'0')),' ',if(c.n5='','',LPAD(c.n5," + NNiv5.ToString + ",'0'))) as Cuenta from tblccontables as c where idccontable=" + pidCuenta.ToString + "),'')"
-        strCuenta = Comm.ExecuteScalar
+    Public Function auxiliarCuentasPantalla(ByVal pFechaI As String, ByVal pFechaF As String, ByVal pidCuenta As Integer, pNivel As Byte) As DataView
+        'Dim strCuenta As String
+        'Comm.CommandText = "select ifnull((select concat(LPAD(c.cuenta," + NNiv1.ToString + ",'0'),' ',if(c.n2='','',LPAD(c.n2," + NNiv2.ToString + ",'0')),' ',if(c.n3='','',LPAD(c.n3," + NNiv3.ToString + ",'0')),' ',if(c.n4='','',LPAD(c.n4," + NNiv4.ToString + ",'0')),' ',if(c.n5='','',LPAD(c.n5," + NNiv5.ToString + ",'0'))) as Cuenta from tblccontables as c where idccontable=" + pidCuenta.ToString + "),'')"
+        'strCuenta = Comm.ExecuteScalar
         Comm.CommandText = "Select tblpolizas.id, tblpolizas.fecha,tblpolizas.tipo,tblpolizas.numero," + _
             "concat(LPAD(c.cuenta," + NNiv1.ToString + ",'0'),' ',if(c.n2='','',LPAD(c.n2," + NNiv2.ToString + ",'0')),' ',if(c.n3='','',LPAD(c.n3," + NNiv3.ToString + ",'0')),' ',if(c.n4='','',LPAD(c.n4," + NNiv4.ToString + ",'0')),' ',if(c.n5='','',LPAD(c.n5," + NNiv5.ToString + ",'0'))) as Cuenta," + _
             "tblpolizasdetalles.descripcion,"
         Comm.CommandText += "if(tblpolizasdetalles.cargo=-999999999,0,tblpolizasdetalles.cargo) as cargo,if(tblpolizasdetalles.abono=-999999999,0,tblpolizasdetalles.abono) as abono"
         Comm.CommandText += " from tblpolizasdetalles inner join tblpolizas on tblpolizasdetalles.idPoliza=tblpolizas.id inner join tblccontables as c on tblpolizasdetalles.idCuenta=c.idCContable where tblPolizas.tipo<>'A' and tblPolizas.fecha>='" + pFechaI + "' and tblPolizas.fecha<='" + pFechaF + "'" ' and tblpolizasdetalles.idcuenta=" + pidCuenta.ToString
-        Comm.CommandText += " and tblpolizasdetalles.cuenta like '" + strCuenta.Trim + "%'"
+        Select Case pNivel
+            Case 1
+                Comm.CommandText += " and tblpolizasdetalles.idcuentan1=" + pidCuenta.ToString
+            Case 2
+                Comm.CommandText += " and tblpolizasdetalles.idcuentan2=" + pidCuenta.ToString
+            Case 3
+                Comm.CommandText += " and tblpolizasdetalles.idcuentan3=" + pidCuenta.ToString
+            Case 4
+                Comm.CommandText += " and tblpolizasdetalles.idcuentan4=" + pidCuenta.ToString
+            Case 5
+                Comm.CommandText += " and tblpolizasdetalles.idcuentan5=" + pidCuenta.ToString
+        End Select
+
         Comm.CommandText += " order by  tblpolizas.fecha,tblpolizas.tipo,tblpolizas.numero"
         Dim DS2 As New DataSet
         Dim DA2 As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)

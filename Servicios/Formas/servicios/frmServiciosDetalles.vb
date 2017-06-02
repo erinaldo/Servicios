@@ -621,7 +621,7 @@
         Folio = V.DaNuevoFolio(serie, GlobalIdSucursalDefault, GlobalTipoFacturacion, Op._ModoFoliosB).ToString
         Dim Sc As New dbSucursalesCertificados(Sf.IdCertificado, MySqlcon)
         'Guardar Remision
-        C.Guardar(S.IdCliente, Date.Now.ToString("yyyy/MM/dd"), Folio, 0, 0, serie, Sf.NoAprobacion, Sc.NoSerie, Sf.YearAprobacion, GlobalTipoFacturacion, GlobalIdSucursalDefault, 1, 1, 2, 0, 0, 1, 0, 0, 0, "G01", "")
+        C.Guardar(S.IdCliente, Date.Now.ToString("yyyy/MM/dd"), Folio, 0, 0, serie, Sf.NoAprobacion, Sc.NoSerie, Sf.YearAprobacion, GlobalTipoFacturacion, GlobalIdSucursalDefault, 1, 1, 2, 0, 0, 1, 0, 0, 0, "G01", "", "")
         idVenta = C.ID
         'Guardar detalles Remisión
         '  * Guardar Eventos *

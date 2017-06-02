@@ -462,7 +462,7 @@
     End Sub
 
     Public Function DaCuentatxt() As String
-        Return txtCuenta.Text + txtN2.Text + txtN3.Text + txtN4.Text + txtN5.Text
+        Return Trim(txtCuenta.Text + " " + txtN2.Text + " " + txtN3.Text + " " + txtN4.Text + " " + txtN5.Text)
     End Function
 
     Private Sub SelectorCuentas_Load(sender As Object, e As EventArgs) Handles MyBase.Load

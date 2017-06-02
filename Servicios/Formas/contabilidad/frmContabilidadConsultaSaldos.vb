@@ -154,7 +154,7 @@
                     Fecha1 = sc.P.anio + "/12/01"
                     Fecha2 = sc.P.anio + "/12/31"
             End Select
-            Dim Faux As New frmContabilidadAuxiliarCuentas(Fecha1, Fecha2, sc.IdCuenta, Label1.Text + " PERIODO: " + Mes + " " + sc.P.anio, Format(dgvCuenta.Item(2, dgvCuenta.CurrentCell.RowIndex).Value, "###,###,##0.00"), Format(dgvCuenta.Item(5, dgvCuenta.CurrentCell.RowIndex).Value, "###,###,##0.00"), Format(dgvCuenta.Item(3, dgvCuenta.CurrentCell.RowIndex).Value, "###,###,##0.00"), Format(dgvCuenta.Item(4, dgvCuenta.CurrentCell.RowIndex).Value, "###,###,##0.00"))
+            Dim Faux As New frmContabilidadAuxiliarCuentas(Fecha1, Fecha2, sc.IdCuenta, Label1.Text + " PERIODO: " + Mes + " " + sc.P.anio, Format(dgvCuenta.Item(2, dgvCuenta.CurrentCell.RowIndex).Value, "###,###,##0.00"), Format(dgvCuenta.Item(5, dgvCuenta.CurrentCell.RowIndex).Value, "###,###,##0.00"), Format(dgvCuenta.Item(3, dgvCuenta.CurrentCell.RowIndex).Value, "###,###,##0.00"), Format(dgvCuenta.Item(4, dgvCuenta.CurrentCell.RowIndex).Value, "###,###,##0.00"), sc.Nivel)
             Faux.ShowDialog()
             Faux.Dispose()
         End If

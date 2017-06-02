@@ -396,6 +396,7 @@ Public Class frmVentasN
         CheckBox2.Enabled = True
         CheckBox3.Checked = False
         Button34.Enabled = False
+        TextBox20.Enabled = True
         If Op.SiemprePorSurtirVentas = 0 Then
             CheckBox2.Checked = False
         Else
@@ -403,6 +404,7 @@ Public Class frmVentasN
         End If
         Label32.Text = "0.00Kg."
         Button30.Enabled = False
+        TextBox20.Text = ""
         Panel1.Enabled = True
         ComboBox8.Enabled = True
         Panel2.Enabled = True
@@ -525,17 +527,20 @@ Public Class frmVentasN
         If e.KeyCode = Keys.Enter Then
 
 
-
-            If Op._TipoSelAlmacen <> "0" Then
-                'If ComboBox8.SelectedIndex <= 0 Then
-                ComboBox8.Focus()
-                'End If
-            Else
-                If Op._CursorVentas = "0" Then
-                    TextBox5.Focus()
+            If TextBox20.Visible = False Then
+                If Op._TipoSelAlmacen <> "0" Then
+                    'If ComboBox8.SelectedIndex <= 0 Then
+                    ComboBox8.Focus()
+                    'End If
                 Else
-                    TextBox3.Focus()
+                    If Op._CursorVentas = "0" Then
+                        TextBox5.Focus()
+                    Else
+                        TextBox3.Focus()
+                    End If
                 End If
+            Else
+                TextBox20.Focus()
             End If
 
         End If
@@ -632,8 +637,21 @@ Public Class frmVentasN
                     If c.RFC.Length = 13 Then CSat.LlenaCombos("tblusoscfdi", ComboBox9, "concat(clave,' ',descripcion)", "nombrem", "clave", xSat, , , , True)
                     If c.RFC.Length = 12 Then CSat.LlenaCombos("tblusoscfdi", ComboBox9, "concat(clave,' ',descripcion)", "nombrem", "clave", xSat, "moral='Sí'", , , True)
                     ComboBox9.Text = CSat.DaUsoCFDI(c.UsoCFDI)
+                    If c.RFC = "XAXX010101000" Then
+                        TextBox20.Visible = True
+                        Label43.Visible = True
+                        TextBox7.Height = 28
+                    Else
+                        Label43.Visible = False
+                        TextBox7.Height = 57
+                        TextBox20.Visible = False
+                    End If
                 Else
                     TextBox7.Text = ""
+                    TextBox7.Height = 57
+                    TextBox20.Text = ""
+                    TextBox20.Visible = False
+                    Label43.Visible = False
                     'TextBox13.Text = ""
                     ActivarImpuestos = 0
                     ComboBox6.Items.Clear()
@@ -844,7 +862,7 @@ Public Class frmVentasN
                     End If
                 End If
                 AddError("Folio:" + TextBox11.Text + TextBox2.Text + " Cliente:" + idCliente.ToString + " Suc:" + ComboBox3.Text + " Fecha: " + DateTimePicker1.Value.ToString("yyyy/MM/dd") + " Estado:" + pEstado.ToString, "Facturacion antes de guardar", Date.Now.ToString("yyyy/MM/dd"), Date.Now.ToString("HH:mm:ss"), idVenta)
-                C.Modificar(idVenta, Format(DateTimePicker1.Value, "yyyy/MM/dd"), CInt(TextBox2.Text), Desglozar, 0, TextBox11.Text, Sf.NoAprobacion, Sc.NoSerie, Sf.YearAprobacion, iTipoFacturacion, pEstado, iIdFormaPago, 0, CDbl(TextBox10.Text), IDsMonedas2.Valor(ComboBox2.SelectedIndex), C.Subtototal, C.TotalVenta, idCliente, IdsVendedores.Valor(ComboBox5.SelectedIndex), TextBox14.Text, ComboBox6.Text, CDbl(TextBox16.Text), 0, IdVentaOrigen, Parcialidad, Parcialidades, PorSutir, RefDocumento, Adicional, CDbl(TextBox19.Text), CDbl(TextBox18.Text), formaNa, Op.ChecaFolioFacturas, Op._ModoFoliosB, DateTimePicker2.Value.ToString("yyyy/MM/dd"), ComboBox9.Text.Substring(0, 3), TextBox13.Text)
+                C.Modificar(idVenta, Format(DateTimePicker1.Value, "yyyy/MM/dd"), CInt(TextBox2.Text), Desglozar, 0, TextBox11.Text, Sf.NoAprobacion, Sc.NoSerie, Sf.YearAprobacion, iTipoFacturacion, pEstado, iIdFormaPago, 0, CDbl(TextBox10.Text), IDsMonedas2.Valor(ComboBox2.SelectedIndex), C.Subtototal, C.TotalVenta, idCliente, IdsVendedores.Valor(ComboBox5.SelectedIndex), TextBox14.Text, ComboBox6.Text, CDbl(TextBox16.Text), 0, IdVentaOrigen, Parcialidad, Parcialidades, PorSutir, RefDocumento, Adicional, CDbl(TextBox19.Text), CDbl(TextBox18.Text), formaNa, Op.ChecaFolioFacturas, Op._ModoFoliosB, DateTimePicker2.Value.ToString("yyyy/MM/dd"), ComboBox9.Text.Substring(0, 3), TextBox13.Text, TextBox20.Text)
 
                 Dim CM As New dbMonedasConversiones(MySqlcon)
                 CM.Modificar(1, CDbl(TextBox10.Text))
@@ -1001,7 +1019,7 @@ Public Class frmVentasN
                 CM.Modificar(1, CDbl(TextBox10.Text))
                 ComboBox2.SelectedIndex = IDsMonedas2.Busca(IDsMonedas.Valor(ComboBox1.SelectedIndex))
                 C.DaTotal(idVenta, IDsMonedas2.Valor(ComboBox2.SelectedIndex), Op._Sinnegativos, Op._CalculoAlterno)
-                C.Guardar(idCliente, Format(DateTimePicker1.Value, "yyyy/MM/dd"), CInt(TextBox2.Text), Desglozar, 0, TextBox11.Text, Sf.NoAprobacion, Sc.NoSerie, Sf.YearAprobacion, iTipoFacturacion, IdsSucursales.Valor(ComboBox3.SelectedIndex), idsFormasDePago.Valor(ComboBox4.SelectedIndex), CDbl(TextBox10.Text), IDsMonedas2.Valor(ComboBox2.SelectedIndex), Isr, IvaRetenido, IdsVendedores.Valor(ComboBox5.SelectedIndex), 0, CDbl(TextBox19.Text), CDbl(TextBox18.Text), ComboBox9.Text.Substring(0, 3), TextBox13.Text)
+                C.Guardar(idCliente, Format(DateTimePicker1.Value, "yyyy/MM/dd"), CInt(TextBox2.Text), Desglozar, 0, TextBox11.Text, Sf.NoAprobacion, Sc.NoSerie, Sf.YearAprobacion, iTipoFacturacion, IdsSucursales.Valor(ComboBox3.SelectedIndex), idsFormasDePago.Valor(ComboBox4.SelectedIndex), CDbl(TextBox10.Text), IDsMonedas2.Valor(ComboBox2.SelectedIndex), Isr, IvaRetenido, IdsVendedores.Valor(ComboBox5.SelectedIndex), 0, CDbl(TextBox19.Text), CDbl(TextBox18.Text), ComboBox9.Text.Substring(0, 3), TextBox13.Text, TextBox20.Text)
                 idVenta = C.ID
                 Button33.Enabled = False
                 If ActivarImpuestos = 1 Then
@@ -1132,6 +1150,7 @@ Public Class frmVentasN
         TextBox16.Text = C.Descuento.ToString
         TextBox19.Text = C.DescuentoG2.ToString
         ComboBox6.Text = C.NoCuenta
+        TextBox20.Text = C.ClientePG
         IvaRetenido = C.IvaRetenido
         TextBox18.Text = C.SobreEscribeImpLoc.ToString
         Isr = C.ISR
@@ -1197,6 +1216,7 @@ Public Class frmVentasN
                 Button13.Enabled = False
                 Panel1.Enabled = False
                 ComboBox8.Enabled = False
+                TextBox20.Enabled = False
                 Panel2.Enabled = False
                 Button2.Enabled = False
                 Button15.Enabled = True
@@ -1207,6 +1227,7 @@ Public Class frmVentasN
                 Label24.Visible = True
                 Label24.Text = "Guardada"
                 Button13.Enabled = True
+                TextBox20.Enabled = False
                 Button2.Enabled = False
                 Label24.ForeColor = Color.FromArgb(50, 255, 50)
                 Panel1.Enabled = False
@@ -1221,6 +1242,7 @@ Public Class frmVentasN
                 Button35.Enabled = False
                 Label24.Visible = False
                 Button13.Enabled = True
+                TextBox20.Enabled = True
                 Panel1.Enabled = True
                 ComboBox8.Enabled = True
                 Panel2.Enabled = True
@@ -1931,6 +1953,15 @@ Public Class frmVentasN
 
             If B.Cliente.RFC.Length = 13 Then CSat.LlenaCombos("tblusoscfdi", ComboBox9, "concat(clave,' ',descripcion)", "nombrem", "clave", xSat, , , , True)
             If B.Cliente.RFC.Length = 12 Then CSat.LlenaCombos("tblusoscfdi", ComboBox9, "concat(clave,' ',descripcion)", "nombrem", "clave", xSat, "moral='Sí'", , , True)
+            If B.Cliente.RFC = "XAXX010101000" Then
+                TextBox20.Visible = True
+                Label43.Visible = True
+                TextBox7.Height = 28
+            Else
+                Label43.Visible = False
+                TextBox7.Height = 57
+                TextBox20.Visible = False
+            End If
             ComboBox9.Text = CSat.DaUsoCFDI(B.Cliente.UsoCFDI)
             Isr = B.Cliente.ISR
             IdLista = B.Cliente.IdLista
@@ -5552,5 +5583,24 @@ Public Class frmVentasN
         End If
     End Sub
 
+    Private Sub TextBox20_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox20.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If Op._TipoSelAlmacen <> "0" Then
+                'If ComboBox8.SelectedIndex <= 0 Then
+                ComboBox8.Focus()
+                'End If
+            Else
+                If Op._CursorVentas = "0" Then
+                    TextBox5.Focus()
+                Else
+                    TextBox3.Focus()
+                End If
+            End If
+        End If
+    End Sub
 
+
+    Private Sub TextBox20_TextChanged(sender As Object, e As EventArgs) Handles TextBox20.TextChanged
+
+    End Sub
 End Class
