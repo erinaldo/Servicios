@@ -356,8 +356,8 @@ Public Class dbMovimientos
             Comm.CommandText += "select spmodificainventarioaduanaf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen, tblmovimientosaduana.surtido, 0, 0, 1, tblmovimientosaduana.idaduana) from tblmovimientosdetalles inner join tblmovimientosaduana on tblmovimientosdetalles.iddetalle=tblmovimientosaduana.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
 
             'ubicaciones
-            Comm.CommandText += "select spmodificainventarioubicacionesf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen, tblmovimientosubicaciones.surtido, 0, 0, 1, tblmovimientosubicaciones.ubicacion) from tblmovimientosdetalles inner join tblmovimientosubicaciones on tblmovimientosdetalles.iddetalle = tblmovimientosubicaciones.iddetalle  where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
-            Comm.CommandText += "select spmodificainventarioubicacionesf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen2, tblmovimientosubicaciones.surtido, 0, 1, 1, tblmovimientosubicaciones.ubicacion) from tblmovimientosdetalles inner join tblmovimientosubicaciones on tblmovimientosdetalles.iddetalle = tblmovimientosubicaciones.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+            Comm.CommandText += "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.surtido, 0, 0, 1, u.ubicacion) from tblmovimientosdetalles d inner join tblmovimientosubicaciones u on d.iddetalle = u.iddetalle  where d.idmovimiento=" + pId.ToString + ";"
+            Comm.CommandText += "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen2, u.surtido, 0, 1, 1, u.ubicaciond) from tblmovimientosdetalles d inner join tblmovimientosubicaciones u on d.iddetalle = u.iddetalle where d.idmovimiento=" + pId.ToString + ";"
 
             Comm.ExecuteNonQuery()
         ElseIf Tipo = dbInventarioConceptos.Tipos.Ajuste Then
