@@ -131,6 +131,17 @@
     End Sub
 
     Public Sub Eliminar(ByVal pID As Integer)
+        'checa si la compra estaba guardada
+        Comm.CommandText = "select estado from tblcompras c inner join tblcomprasdetalles where iddetalle=" + pID.ToString()
+        If Comm.ExecuteScalar = Estados.Guardada Then
+            'checa si el detalle tiene ubicacion
+            Comm.CommandText = "select ifnull(cu.ubicacion,'') from tblcomprasdetalles cd left outer join tblcomprasubicaciones cu on cd.iddetalle=cu.iddetalle where cd.iddetalle=" + pID.ToString()
+            If Comm.ExecuteScalar <> "" Then
+                'da de baja el inventario de la ubicacion
+                Comm.CommandText = "update tblalmacenesiubicaciones inner join tblcomprasdetalles on tblcomprasdetalles.idalmacen = tblalmacenesiubicaciones.idalmacen and tblcomprasdetalles.idinventario = tblalmacenesiubicaciones.idinventario inner join tblcomprasubicaciones on tblcomprasdetalles.iddetalle=tblcomprasubicaciones.iddetalle and tblcomprasubicaciones.ubicacion=tblalmacenesiubicaciones.ubicacion set tblalmacenesiubicaciones.cantidad = tblalmacenesiubicaciones.cantidad-tblcomprasubicaciones.surtido where tblcomprasubicaciones.iddetalle = " + pID.ToString() + ";"
+                Comm.ExecuteNonQuery()
+            End If
+        End If
         Comm.CommandText = "delete from tblcomprasdetalles where iddetalle=" + pID.ToString
         Comm.ExecuteNonQuery()
     End Sub
