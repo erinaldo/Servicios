@@ -187,9 +187,9 @@
             If Tipo >= 3 Then
                 Dim Nt As New dbNominaTRabajador(IdNomina, MySqlcon)
                 If Nt.HayHatos Then
-                    Nt.modificar(Nt.id, IdNomina, CDbl(txtPagado.Text), CInt(txtServicio.Text), CDbl(txtSueldo.Text), CDbl(txtAcumulable2.Text), CDbl(txtNoAcumulable2.Text), CDbl(txtExhibicion.Text), CDbl(txtParcialidad.Text), CDbl(txtDiario.Text), CDbl(txtAcumulable1.Text), CDbl(txtAcumulable1.Text))
+                    Nt.modificar(Nt.id, IdNomina, CDbl(txtPagado.Text), CInt(txtServicio.Text), CDbl(txtSueldo.Text), CDbl(txtAcumulable2.Text), CDbl(txtNoAcumulable2.Text), CDbl(txtExhibicion.Text), CDbl(txtParcialidad.Text), CDbl(txtDiario.Text), CDbl(txtAcumulable1.Text), CDbl(txtNoAcumulable1.Text))
                 Else
-                    Nt.agregar(IdNomina, CDbl(txtPagado.Text), CInt(txtServicio.Text), CDbl(txtSueldo.Text), CDbl(txtAcumulable2.Text), CDbl(txtNoAcumulable2.Text), CDbl(txtExhibicion.Text), CDbl(txtParcialidad.Text), CDbl(txtDiario.Text), CDbl(txtAcumulable1.Text), CDbl(txtAcumulable1.Text))
+                    Nt.agregar(IdNomina, CDbl(txtPagado.Text), CInt(txtServicio.Text), CDbl(txtSueldo.Text), CDbl(txtAcumulable2.Text), CDbl(txtNoAcumulable2.Text), CDbl(txtExhibicion.Text), CDbl(txtParcialidad.Text), CDbl(txtDiario.Text), CDbl(txtAcumulable1.Text), CDbl(txtNoAcumulable1.Text))
                 End If
             End If
             Me.DialogResult = Windows.Forms.DialogResult.OK

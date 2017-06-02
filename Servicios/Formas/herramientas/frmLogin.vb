@@ -50,37 +50,41 @@ Public Class frmLogIn
                 GlobalUsuario = U.NombreUsuario
                 Label3.Visible = True
                 My.Application.DoEvents()
-                Try
-                    Dim Btp As New banxico.DgieWS
-                    Dim doc As New System.Xml.XmlDocument()
-                    doc.LoadXml(Btp.tiposDeCambioBanxico)
-                    GlobaltpBanxico = ""
-                    For Each n As System.Xml.XmlNode In doc.GetElementsByTagName("bm:Series")
-                        If n.Attributes("IDSERIE").Value = "SF43718" Then
-                            GlobaltpBanxico = n.FirstChild.Attributes("OBS_VALUE").Value
-                        End If
-                    Next
-                    If GlobaltpBanxico = "" Then
+                If InicioRapido() = False Then
+                    Try
+                        Dim Btp As New banxico.DgieWS
+                        Dim doc As New System.Xml.XmlDocument()
+                        doc.LoadXml(Btp.tiposDeCambioBanxico)
+                        GlobaltpBanxico = ""
                         For Each n As System.Xml.XmlNode In doc.GetElementsByTagName("bm:Series")
-                            If n.Attributes("IDSERIE").Value = "SF60653" Then
+                            If n.Attributes("IDSERIE").Value = "SF43718" Then
                                 GlobaltpBanxico = n.FirstChild.Attributes("OBS_VALUE").Value
                             End If
                         Next
-                    End If
-                Catch ex As Exception
+                        If GlobaltpBanxico = "" Then
+                            For Each n As System.Xml.XmlNode In doc.GetElementsByTagName("bm:Series")
+                                If n.Attributes("IDSERIE").Value = "SF60653" Then
+                                    GlobaltpBanxico = n.FirstChild.Attributes("OBS_VALUE").Value
+                                End If
+                            Next
+                        End If
+                    Catch ex As Exception
+                        GlobaltpBanxico = "Error"
+                    End Try
+                    Try
+                        Dim HC As New dbClientes(MySqlcon)
+                        Dim r As New repCatalogoClientes
+                        r.SetDataSource(HC.Reporte("xxxzzzzyyy"))
+                        r.Load()
+                        Dim fr As New frmReportes(r, True)
+                        fr.Opacity = 0
+                        fr.Show()
+                    Catch ex As Exception
+                        MsgBox("A ocurrido un error inicializando Crystal Reports. " + ex.Message, MsgBoxStyle.Critical, GlobalNombreApp)
+                    End Try
+                Else
                     GlobaltpBanxico = "Error"
-                End Try
-                Try
-                    Dim HC As New dbClientes(MySqlcon)
-                    Dim r As New repCatalogoClientes
-                    r.SetDataSource(HC.Reporte("xxxzzzzyyy"))
-                    r.Load()
-                    Dim fr As New frmReportes(r, True)
-                    fr.Opacity = 0
-                    fr.Show()
-                Catch ex As Exception
-                    MsgBox("A ocurrido un error inicializando Crystal Reports. " + ex.Message, MsgBoxStyle.Critical, GlobalNombreApp)
-                End Try
+                End If
                 If GlobalLicenciaSTR = "RG1Q5LG1KH" Then
                     If MsgBox("¿Normal?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
                         Dim f As New frmPrincipal
@@ -96,7 +100,7 @@ Public Class frmLogIn
                     f.Show()
                     Me.Close()
                 End If
-                
+
             Else
                 Button1.Enabled = True
                 Button2.Enabled = True

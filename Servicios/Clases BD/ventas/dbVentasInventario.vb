@@ -50,6 +50,7 @@
         Noimp = 0
         NoImpImporte = 0
         CDescuento = 0
+        Ubicacion = ""
         NuevoConcepto = False
         Comm.Connection = Conexion
     End Sub
@@ -60,7 +61,7 @@
     End Sub
     Public Sub LlenaDatos()
         Dim DReader As MySql.Data.MySqlClient.MySqlDataReader
-        Comm.CommandText = "select * from tblventasinventario where idventasinventario=" + ID.ToString
+        Comm.CommandText = "select vri.*,ifnull(vru.ubicacion,'') ubicacion from tblventasinventario vri left outer join tblventasubicaciones vru on vru.iddetalle=vri.idventasinventario where idventasinventario=" + ID.ToString
         DReader = Comm.ExecuteReader
         If DReader.Read() Then
             Precio = DReader("precio")
@@ -85,6 +86,7 @@
             Noimp = DReader("noimp")
             NoImpImporte = DReader("noimpimporte")
             CDescuento = DReader("cdescuento")
+            Ubicacion = DReader("ubicacion")
         End If
         DReader.Close()
         Inventario = New dbInventario(Idinventario, Comm.Connection)

@@ -123,11 +123,13 @@ Public Class frmVentasN
                 P.limpiarVentasdesc()
                 AddError("Se eliminó factura con folio: " + TextBox11.Text + TextBox2.Text, "ventas eliminar cerrando ventana.", Date.Now.ToString("yyyy/MM/dd"), Date.Now.ToString("HH:mm"), idVenta)
                 e.Cancel = False
+                CSat.Con.Close()
             Else
                 GlobalEstadoVentanas = GlobalEstadoVentanas And Not 1
                 e.Cancel = True
             End If
         Else
+            CSat.Con.Close()
             GlobalEstadoVentanas = GlobalEstadoVentanas And Not 1
         End If
     End Sub
@@ -481,7 +483,7 @@ Public Class frmVentasN
         Button23.Visible = False
         NuevoConcepto()
 
-        If Sf.EsElectronica >= 1 Then
+        If Eselectronica >= 1 Then
             CertificadoCaduco = ChecaCertificado(Sf.IdCertificado)
         End If
         If CInt(TextBox2.Text) > Sf.FolioFinal Then

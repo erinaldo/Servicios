@@ -156,7 +156,7 @@
                 Dim En As New Encriptador()
                 ProgressBar1.Visible = True
                 Imp = New Importador(OpenFileDialog1.FileName, MySqlcon)
-                En.GuardaArchivoTexto("usos.txt", Imp.UsosScrip(), System.Text.Encoding.Default)
+                En.GuardaArchivoTexto("unidades.txt", Imp.UnidadesScrip(), System.Text.Encoding.Default)
                 Imp.CierraConexiones()
                 MsgBox("Listo")
                 ProgressBar1.Visible = False

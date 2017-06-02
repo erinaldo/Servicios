@@ -22,8 +22,10 @@ Partial Class frmNotasdeCargo
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.Label20 = New System.Windows.Forms.Label()
+        Me.TextBox15 = New System.Windows.Forms.TextBox()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
@@ -46,28 +48,27 @@ Partial Class frmNotasdeCargo
         Me.TextBox11 = New System.Windows.Forms.TextBox()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.Button11 = New System.Windows.Forms.Button()
-        Me.Button12 = New System.Windows.Forms.Button()
-        Me.Label6 = New System.Windows.Forms.Label()
         Me.Button10 = New System.Windows.Forms.Button()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.DGDetalles = New System.Windows.Forms.DataGridView()
         Me.Button13 = New System.Windows.Forms.Button()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.Button6 = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.TextBox16 = New System.Windows.Forms.TextBox()
+        Me.Button12 = New System.Windows.Forms.Button()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.Button6 = New System.Windows.Forms.Button()
         Me.Label27 = New System.Windows.Forms.Label()
         Me.TextBox12 = New System.Windows.Forms.TextBox()
         Me.Label23 = New System.Windows.Forms.Label()
         Me.TextBox9 = New System.Windows.Forms.TextBox()
-        Me.cmbVariante = New System.Windows.Forms.ComboBox()
         Me.Label19 = New System.Windows.Forms.Label()
-        Me.Label18 = New System.Windows.Forms.Label()
         Me.TextBox8 = New System.Windows.Forms.TextBox()
-        Me.ComboBox8 = New System.Windows.Forms.ComboBox()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
@@ -96,6 +97,8 @@ Partial Class frmNotasdeCargo
         Me.Label28 = New System.Windows.Forms.Label()
         Me.TextBox14 = New System.Windows.Forms.TextBox()
         Me.Button35 = New System.Windows.Forms.Button()
+        Me.Label42 = New System.Windows.Forms.Label()
+        Me.ComboBox9 = New System.Windows.Forms.ComboBox()
         Me.Panel2.SuspendLayout()
         CType(Me.DGDetalles, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
@@ -103,6 +106,8 @@ Partial Class frmNotasdeCargo
         '
         'Panel2
         '
+        Me.Panel2.Controls.Add(Me.Label20)
+        Me.Panel2.Controls.Add(Me.TextBox15)
         Me.Panel2.Controls.Add(Me.Label13)
         Me.Panel2.Controls.Add(Me.Label1)
         Me.Panel2.Controls.Add(Me.Label12)
@@ -114,13 +119,32 @@ Partial Class frmNotasdeCargo
         Me.Panel2.Controls.Add(Me.ComboBox2)
         Me.Panel2.Controls.Add(Me.Button14)
         Me.Panel2.Controls.Add(Me.Button1)
-        Me.Panel2.Controls.Add(Me.Button6)
-        Me.Panel2.Controls.Add(Me.TextBox3)
-        Me.Panel2.Controls.Add(Me.Label6)
         Me.Panel2.Location = New System.Drawing.Point(290, 382)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(614, 127)
         Me.Panel2.TabIndex = 29
+        '
+        'Label20
+        '
+        Me.Label20.AutoSize = True
+        Me.Label20.BackColor = System.Drawing.Color.Transparent
+        Me.Label20.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label20.Location = New System.Drawing.Point(472, 37)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(122, 16)
+        Me.Label20.TabIndex = 212
+        Me.Label20.Text = "No. Confirmacion:"
+        Me.Label20.Visible = False
+        '
+        'TextBox15
+        '
+        Me.TextBox15.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox15.Location = New System.Drawing.Point(500, 55)
+        Me.TextBox15.Name = "TextBox15"
+        Me.TextBox15.Size = New System.Drawing.Size(60, 22)
+        Me.TextBox15.TabIndex = 211
+        Me.TextBox15.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.TextBox15.Visible = False
         '
         'Label13
         '
@@ -158,9 +182,9 @@ Partial Class frmNotasdeCargo
         Me.Label26.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label26.Location = New System.Drawing.Point(437, 78)
         Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(97, 16)
+        Me.Label26.Size = New System.Drawing.Size(116, 16)
         Me.Label26.TabIndex = 208
-        Me.Label26.Text = "Tipo de Pago:"
+        Me.Label26.Text = "Método de Pago:"
         Me.Label26.Visible = False
         '
         'Label14
@@ -334,7 +358,7 @@ Partial Class frmNotasdeCargo
         Me.Label17.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.Label17.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label17.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label17.Location = New System.Drawing.Point(295, 521)
+        Me.Label17.Location = New System.Drawing.Point(324, 519)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(103, 18)
         Me.Label17.TabIndex = 268
@@ -352,28 +376,6 @@ Partial Class frmNotasdeCargo
         Me.Button11.UseVisualStyleBackColor = True
         Me.Button11.Visible = False
         '
-        'Button12
-        '
-        Me.Button12.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button12.Location = New System.Drawing.Point(154, 388)
-        Me.Button12.Name = "Button12"
-        Me.Button12.Size = New System.Drawing.Size(127, 25)
-        Me.Button12.TabIndex = 25
-        Me.Button12.Text = "Manejar Series"
-        Me.Button12.UseVisualStyleBackColor = True
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.BackColor = System.Drawing.Color.Transparent
-        Me.Label6.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(35, 34)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(61, 16)
-        Me.Label6.TabIndex = 246
-        Me.Label6.Text = "Artículo:"
-        Me.Label6.Visible = False
-        '
         'Button10
         '
         Me.Button10.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -383,15 +385,6 @@ Partial Class frmNotasdeCargo
         Me.Button10.TabIndex = 10
         Me.Button10.Text = "Buscar Nota de Cargo"
         Me.Button10.UseVisualStyleBackColor = True
-        '
-        'TextBox3
-        '
-        Me.TextBox3.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox3.Location = New System.Drawing.Point(0, 31)
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(118, 22)
-        Me.TextBox3.TabIndex = 49
-        Me.TextBox3.Visible = False
         '
         'Label5
         '
@@ -420,15 +413,15 @@ Partial Class frmNotasdeCargo
         Me.DGDetalles.AllowUserToAddRows = False
         Me.DGDetalles.AllowUserToDeleteRows = False
         Me.DGDetalles.AllowUserToResizeRows = False
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.DGDetalles.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.DGDetalles.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.DGDetalles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DGDetalles.Location = New System.Drawing.Point(14, 197)
+        Me.DGDetalles.Location = New System.Drawing.Point(12, 197)
         Me.DGDetalles.Name = "DGDetalles"
         Me.DGDetalles.ReadOnly = True
         Me.DGDetalles.RowHeadersVisible = False
         Me.DGDetalles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DGDetalles.Size = New System.Drawing.Size(888, 185)
+        Me.DGDetalles.Size = New System.Drawing.Size(858, 185)
         Me.DGDetalles.TabIndex = 13
         '
         'Button13
@@ -451,17 +444,6 @@ Partial Class frmNotasdeCargo
         Me.Label3.Size = New System.Drawing.Size(120, 16)
         Me.Label3.TabIndex = 264
         Me.Label3.Text = "Datos del Cliente:"
-        '
-        'Button6
-        '
-        Me.Button6.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button6.Location = New System.Drawing.Point(-22, 23)
-        Me.Button6.Name = "Button6"
-        Me.Button6.Size = New System.Drawing.Size(118, 21)
-        Me.Button6.TabIndex = 34
-        Me.Button6.Text = "&Buscar"
-        Me.Button6.UseVisualStyleBackColor = True
-        Me.Button6.Visible = False
         '
         'Label2
         '
@@ -488,15 +470,18 @@ Partial Class frmNotasdeCargo
         '
         'Panel1
         '
+        Me.Panel1.Controls.Add(Me.Label18)
+        Me.Panel1.Controls.Add(Me.TextBox16)
+        Me.Panel1.Controls.Add(Me.Button12)
+        Me.Panel1.Controls.Add(Me.Label6)
+        Me.Panel1.Controls.Add(Me.TextBox3)
+        Me.Panel1.Controls.Add(Me.Button6)
         Me.Panel1.Controls.Add(Me.Label27)
         Me.Panel1.Controls.Add(Me.TextBox12)
         Me.Panel1.Controls.Add(Me.Label23)
         Me.Panel1.Controls.Add(Me.TextBox9)
-        Me.Panel1.Controls.Add(Me.cmbVariante)
         Me.Panel1.Controls.Add(Me.Label19)
-        Me.Panel1.Controls.Add(Me.Label18)
         Me.Panel1.Controls.Add(Me.TextBox8)
-        Me.Panel1.Controls.Add(Me.ComboBox8)
         Me.Panel1.Controls.Add(Me.Label10)
         Me.Panel1.Controls.Add(Me.Label7)
         Me.Panel1.Controls.Add(Me.Label9)
@@ -511,6 +496,68 @@ Partial Class frmNotasdeCargo
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(918, 81)
         Me.Panel1.TabIndex = 12
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.BackColor = System.Drawing.Color.Transparent
+        Me.Label18.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label18.Location = New System.Drawing.Point(266, 51)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(85, 16)
+        Me.Label18.TabIndex = 216
+        Me.Label18.Text = "Unidad SAT:"
+        '
+        'TextBox16
+        '
+        Me.TextBox16.Enabled = False
+        Me.TextBox16.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox16.Location = New System.Drawing.Point(354, 48)
+        Me.TextBox16.Name = "TextBox16"
+        Me.TextBox16.Size = New System.Drawing.Size(54, 22)
+        Me.TextBox16.TabIndex = 214
+        Me.TextBox16.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Button12
+        '
+        Me.Button12.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button12.Location = New System.Drawing.Point(412, 47)
+        Me.Button12.Name = "Button12"
+        Me.Button12.Size = New System.Drawing.Size(45, 24)
+        Me.Button12.TabIndex = 215
+        Me.Button12.Text = "..."
+        Me.Button12.UseVisualStyleBackColor = True
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.BackColor = System.Drawing.Color.Transparent
+        Me.Label6.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Location = New System.Drawing.Point(34, 52)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(85, 16)
+        Me.Label6.TabIndex = 213
+        Me.Label6.Text = "Código SAT:"
+        '
+        'TextBox3
+        '
+        Me.TextBox3.Enabled = False
+        Me.TextBox3.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox3.Location = New System.Drawing.Point(125, 49)
+        Me.TextBox3.Name = "TextBox3"
+        Me.TextBox3.Size = New System.Drawing.Size(83, 22)
+        Me.TextBox3.TabIndex = 211
+        Me.TextBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Button6
+        '
+        Me.Button6.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button6.Location = New System.Drawing.Point(214, 48)
+        Me.Button6.Name = "Button6"
+        Me.Button6.Size = New System.Drawing.Size(45, 24)
+        Me.Button6.TabIndex = 212
+        Me.Button6.Text = "..."
+        Me.Button6.UseVisualStyleBackColor = True
         '
         'Label27
         '
@@ -553,19 +600,6 @@ Partial Class frmNotasdeCargo
         Me.TextBox9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.TextBox9.Visible = False
         '
-        'cmbVariante
-        '
-        Me.cmbVariante.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
-        Me.cmbVariante.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.cmbVariante.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbVariante.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmbVariante.FormattingEnabled = True
-        Me.cmbVariante.Location = New System.Drawing.Point(220, 46)
-        Me.cmbVariante.Name = "cmbVariante"
-        Me.cmbVariante.Size = New System.Drawing.Size(81, 24)
-        Me.cmbVariante.TabIndex = 18
-        Me.cmbVariante.TabStop = False
-        '
         'Label19
         '
         Me.Label19.AutoSize = True
@@ -577,17 +611,6 @@ Partial Class frmNotasdeCargo
         Me.Label19.TabIndex = 158
         Me.Label19.Text = "% IVA:"
         '
-        'Label18
-        '
-        Me.Label18.AutoSize = True
-        Me.Label18.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label18.Location = New System.Drawing.Point(305, 50)
-        Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(68, 16)
-        Me.Label18.TabIndex = 126
-        Me.Label18.Text = "Almacen:"
-        Me.Label18.Visible = False
-        '
         'TextBox8
         '
         Me.TextBox8.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -596,18 +619,6 @@ Partial Class frmNotasdeCargo
         Me.TextBox8.Size = New System.Drawing.Size(47, 22)
         Me.TextBox8.TabIndex = 21
         Me.TextBox8.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'ComboBox8
-        '
-        Me.ComboBox8.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBox8.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ComboBox8.FormattingEnabled = True
-        Me.ComboBox8.Location = New System.Drawing.Point(376, 47)
-        Me.ComboBox8.Name = "ComboBox8"
-        Me.ComboBox8.Size = New System.Drawing.Size(123, 24)
-        Me.ComboBox8.TabIndex = 19
-        Me.ComboBox8.TabStop = False
-        Me.ComboBox8.Visible = False
         '
         'Label10
         '
@@ -787,16 +798,15 @@ Partial Class frmNotasdeCargo
         Me.Button2.TabIndex = 36
         Me.Button2.Text = "Eliminar Nota de Cargo"
         Me.Button2.UseVisualStyleBackColor = True
-        Me.Button2.Visible = False
         '
         'Button9
         '
         Me.Button9.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button9.Location = New System.Drawing.Point(14, 388)
+        Me.Button9.Location = New System.Drawing.Point(872, 203)
         Me.Button9.Name = "Button9"
-        Me.Button9.Size = New System.Drawing.Size(138, 25)
+        Me.Button9.Size = New System.Drawing.Size(44, 25)
         Me.Button9.TabIndex = 24
-        Me.Button9.Text = "Eliminar concepto"
+        Me.Button9.Text = "Elim."
         Me.Button9.UseVisualStyleBackColor = True
         '
         'PrintDocument1
@@ -886,6 +896,30 @@ Partial Class frmNotasdeCargo
         Me.Button35.Text = "Acuse Canc."
         Me.Button35.UseVisualStyleBackColor = True
         '
+        'Label42
+        '
+        Me.Label42.AutoSize = True
+        Me.Label42.BackColor = System.Drawing.Color.Transparent
+        Me.Label42.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label42.Location = New System.Drawing.Point(12, 393)
+        Me.Label42.Name = "Label42"
+        Me.Label42.Size = New System.Drawing.Size(35, 16)
+        Me.Label42.TabIndex = 319
+        Me.Label42.Text = "Uso:"
+        '
+        'ComboBox9
+        '
+        Me.ComboBox9.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.ComboBox9.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.ComboBox9.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox9.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ComboBox9.FormattingEnabled = True
+        Me.ComboBox9.Location = New System.Drawing.Point(50, 389)
+        Me.ComboBox9.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.ComboBox9.Name = "ComboBox9"
+        Me.ComboBox9.Size = New System.Drawing.Size(337, 24)
+        Me.ComboBox9.TabIndex = 318
+        '
         'frmNotasdeCargo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -893,6 +927,8 @@ Partial Class frmNotasdeCargo
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(230, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(230, Byte), Integer))
         Me.CancelButton = Me.Button3
         Me.ClientSize = New System.Drawing.Size(920, 546)
+        Me.Controls.Add(Me.Label42)
+        Me.Controls.Add(Me.ComboBox9)
         Me.Controls.Add(Me.Button35)
         Me.Controls.Add(Me.Button21)
         Me.Controls.Add(Me.Button17)
@@ -913,7 +949,6 @@ Partial Class frmNotasdeCargo
         Me.Controls.Add(Me.TextBox11)
         Me.Controls.Add(Me.Label17)
         Me.Controls.Add(Me.Button11)
-        Me.Controls.Add(Me.Button12)
         Me.Controls.Add(Me.Button10)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.Label4)
@@ -971,16 +1006,12 @@ Partial Class frmNotasdeCargo
     Friend WithEvents TextBox11 As System.Windows.Forms.TextBox
     Friend WithEvents Label17 As System.Windows.Forms.Label
     Friend WithEvents Button11 As System.Windows.Forms.Button
-    Friend WithEvents Button12 As System.Windows.Forms.Button
-    Friend WithEvents Label6 As System.Windows.Forms.Label
     Friend WithEvents Button10 As System.Windows.Forms.Button
-    Friend WithEvents TextBox3 As System.Windows.Forms.TextBox
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents DGDetalles As System.Windows.Forms.DataGridView
     Friend WithEvents Button13 As System.Windows.Forms.Button
     Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents Button6 As System.Windows.Forms.Button
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
@@ -988,11 +1019,8 @@ Partial Class frmNotasdeCargo
     Friend WithEvents TextBox12 As System.Windows.Forms.TextBox
     Friend WithEvents Label23 As System.Windows.Forms.Label
     Friend WithEvents TextBox9 As System.Windows.Forms.TextBox
-    Friend WithEvents cmbVariante As System.Windows.Forms.ComboBox
     Friend WithEvents Label19 As System.Windows.Forms.Label
-    Friend WithEvents Label18 As System.Windows.Forms.Label
     Friend WithEvents TextBox8 As System.Windows.Forms.TextBox
-    Friend WithEvents ComboBox8 As System.Windows.Forms.ComboBox
     Friend WithEvents Label10 As System.Windows.Forms.Label
     Friend WithEvents Label7 As System.Windows.Forms.Label
     Friend WithEvents Label9 As System.Windows.Forms.Label
@@ -1021,4 +1049,14 @@ Partial Class frmNotasdeCargo
     Friend WithEvents Label28 As System.Windows.Forms.Label
     Friend WithEvents TextBox14 As System.Windows.Forms.TextBox
     Friend WithEvents Button35 As System.Windows.Forms.Button
+    Friend WithEvents Label20 As System.Windows.Forms.Label
+    Friend WithEvents TextBox15 As System.Windows.Forms.TextBox
+    Friend WithEvents Label42 As System.Windows.Forms.Label
+    Friend WithEvents ComboBox9 As System.Windows.Forms.ComboBox
+    Friend WithEvents Label18 As System.Windows.Forms.Label
+    Friend WithEvents TextBox16 As System.Windows.Forms.TextBox
+    Friend WithEvents Button12 As System.Windows.Forms.Button
+    Friend WithEvents Label6 As System.Windows.Forms.Label
+    Friend WithEvents TextBox3 As System.Windows.Forms.TextBox
+    Friend WithEvents Button6 As System.Windows.Forms.Button
 End Class

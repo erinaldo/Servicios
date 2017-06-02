@@ -170,7 +170,7 @@
             If O.PVConfirmarCobrar = 1 Then CheckBox72.Checked = True
             If O.NoImpSinGuardar = 1 Then CheckBox73.Checked = True
             If O.RemisionesSinDetalleCD = 1 Then CheckBox74.Checked = True
-
+            If O.InicioRapido = 1 Then CheckBox79.Checked = True
             If O.ActNom12 = 1 Then CheckBox11.Checked = True
             If GlobalIdUsuario <> 1000 Then
                 CheckBox11.Visible = False
@@ -1030,6 +1030,11 @@
                 O.VendedorUsuario = 1
             Else
                 O.VendedorUsuario = 0
+            End If
+            If CheckBox79.Checked Then
+                O.InicioRapido = 1
+            Else
+                O.InicioRapido = 0
             End If
             If CheckBox11.Checked Then
                 O.ActNom12 = 1

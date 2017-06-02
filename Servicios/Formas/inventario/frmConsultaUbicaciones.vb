@@ -11,6 +11,11 @@
         Me.idarticulo = idarticulo
     End Sub
     Private Sub frmConsultaUbicaciones_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Try
+            Me.Icon = GlobalIcono
+        Catch ex As Exception
+
+        End Try
         DataGridView1.AutoGenerateColumns = False
         Dim dba As New dbAlmacenes(MySqlcon)
         cmbAlmacen.DataSource = dba.Consulta()
@@ -57,5 +62,9 @@
         Else
             DataGridView1.DataSource = db.ConsultaInventarioPorUbicacion(idsucursal, cmbAlmacen.SelectedValue, idarticulo, txtUbicacion.Text)
         End If
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Me.Close()
     End Sub
 End Class

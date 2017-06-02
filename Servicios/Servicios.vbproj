@@ -542,7 +542,7 @@
     <Compile Include="Formas\herramientas\frmPrincipalN.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formas\inventario\frmConsultaUbicaciones.Designer.vb">
+    <Compile Include="Formas\inventario\frmConsultaUbicaciones.designer.vb">
       <DependentUpon>frmConsultaUbicaciones.vb</DependentUpon>
     </Compile>
     <Compile Include="Formas\inventario\frmConsultaUbicaciones.vb">
@@ -560,7 +560,7 @@
     <Compile Include="Formas\inventario\frmInventarioPedidosConsulta.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formas\inventario\frmMovimientosEntrega.Designer.vb">
+    <Compile Include="Formas\inventario\frmMovimientosEntrega.designer.vb">
       <DependentUpon>frmMovimientosEntrega.vb</DependentUpon>
     </Compile>
     <Compile Include="Formas\inventario\frmMovimientosEntrega.vb">
@@ -2343,16 +2343,16 @@
       <DependentUpon>repInventarioAduanas.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reportes\repInventarioAlmacenesUbicaciones.vb">
-      <DependentUpon>repInventarioAlmacenesUbicaciones.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Reportes\repInventarioAlmacenes.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>repInventarioAlmacenes.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\repInventarioAlmacenesUbicaciones.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>repInventarioAlmacenesUbicaciones.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reportes\repInventarioClasificacion.vb">
@@ -4730,13 +4730,13 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>repInventarioAduanas.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\repInventarioAlmacenesUbicaciones.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>repInventarioAlmacenesUbicaciones.vb</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\repInventarioAlmacenes.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>repInventarioAlmacenes.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\repInventarioAlmacenesUbicaciones.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>repInventarioAlmacenesUbicaciones.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\repInventarioClasificacion.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

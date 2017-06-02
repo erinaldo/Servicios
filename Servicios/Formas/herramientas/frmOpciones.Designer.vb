@@ -28,6 +28,7 @@ Partial Class frmOpciones
         Me.PrintDialog1 = New System.Windows.Forms.PrintDialog()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.Panel28 = New System.Windows.Forms.Panel()
+        Me.Button2 = New System.Windows.Forms.Button()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.TextBox63 = New System.Windows.Forms.TextBox()
@@ -549,7 +550,7 @@ Partial Class frmOpciones
         Me.RadioButton37 = New System.Windows.Forms.RadioButton()
         Me.RadioButton38 = New System.Windows.Forms.RadioButton()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.Button2 = New System.Windows.Forms.Button()
+        Me.CheckBox79 = New System.Windows.Forms.CheckBox()
         Me.TabPage1.SuspendLayout()
         Me.Panel28.SuspendLayout()
         Me.General.SuspendLayout()
@@ -658,6 +659,16 @@ Partial Class frmOpciones
         Me.Panel28.Name = "Panel28"
         Me.Panel28.Size = New System.Drawing.Size(437, 204)
         Me.Panel28.TabIndex = 319
+        '
+        'Button2
+        '
+        Me.Button2.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button2.Location = New System.Drawing.Point(312, 106)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(31, 22)
+        Me.Button2.TabIndex = 320
+        Me.Button2.Text = "+"
+        Me.Button2.UseVisualStyleBackColor = True
         '
         'Label24
         '
@@ -1464,6 +1475,7 @@ Partial Class frmOpciones
         'GroupBox1
         '
         Me.GroupBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.GroupBox1.Controls.Add(Me.CheckBox79)
         Me.GroupBox1.Controls.Add(Me.CheckBox11)
         Me.GroupBox1.Controls.Add(Me.CheckBox73)
         Me.GroupBox1.Controls.Add(Me.CheckBox60)
@@ -1484,7 +1496,7 @@ Partial Class frmOpciones
         Me.GroupBox1.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.Location = New System.Drawing.Point(15, 46)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(376, 440)
+        Me.GroupBox1.Size = New System.Drawing.Size(376, 450)
         Me.GroupBox1.TabIndex = 365
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "General"
@@ -1493,7 +1505,7 @@ Partial Class frmOpciones
         '
         Me.CheckBox11.AutoSize = True
         Me.CheckBox11.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CheckBox11.Location = New System.Drawing.Point(6, 409)
+        Me.CheckBox11.Location = New System.Drawing.Point(6, 430)
         Me.CheckBox11.Name = "CheckBox11"
         Me.CheckBox11.Size = New System.Drawing.Size(199, 20)
         Me.CheckBox11.TabIndex = 397
@@ -6558,15 +6570,19 @@ Partial Class frmOpciones
         Me.ToolTip1.InitialDelay = 500
         Me.ToolTip1.ReshowDelay = 100
         '
-        'Button2
+        'CheckBox79
         '
-        Me.Button2.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button2.Location = New System.Drawing.Point(312, 106)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(31, 22)
-        Me.Button2.TabIndex = 320
-        Me.Button2.Text = "+"
-        Me.Button2.UseVisualStyleBackColor = True
+        Me.CheckBox79.AutoSize = True
+        Me.CheckBox79.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CheckBox79.Location = New System.Drawing.Point(6, 406)
+        Me.CheckBox79.Name = "CheckBox79"
+        Me.CheckBox79.Size = New System.Drawing.Size(115, 20)
+        Me.CheckBox79.TabIndex = 399
+        Me.CheckBox79.Text = "Inicio Rápido."
+        Me.ToolTip1.SetToolTip(Me.CheckBox79, "Si se activa esta opción, el sistema entrará mas rápido, pero el primer reporte q" & _
+        "ue se genere tomará mas tiempo de lo normal. Y tampoco se tomará el tipo de camb" & _
+        "io actual.")
+        Me.CheckBox79.UseVisualStyleBackColor = True
         '
         'frmOpciones
         '
@@ -7204,4 +7220,5 @@ Partial Class frmOpciones
     Friend WithEvents Label24 As System.Windows.Forms.Label
     Friend WithEvents TextBox2 As System.Windows.Forms.TextBox
     Friend WithEvents Button2 As System.Windows.Forms.Button
+    Friend WithEvents CheckBox79 As System.Windows.Forms.CheckBox
 End Class

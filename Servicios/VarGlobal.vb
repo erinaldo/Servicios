@@ -710,6 +710,19 @@ Module VarGlobal
         MySqlcomInt.CommandText = "insert into tbllogdeerrorest(descripcion,dondefue,fecha,hora,idmovimiento) values('" + Replace(Replace(pDescripcion, "\", "\\"), "'", "''") + "','" + pDondeFue + "','" + pFecha + "','" + pHora + "'," + pIdMovimiento.ToString + ")"
         MySqlcomInt.ExecuteNonQuery()
     End Sub
+    Public Function InicioRapido() As Boolean
+        Try
+            MySqlcomInt.CommandText = "select folioinicial from tblopciones;"
+            If MySqlcomInt.ExecuteScalar = 1 Then
+                Return True
+            Else
+                Return False
+            End If
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+
     Public Function AcuseCancelacion(pUUID As String, pApikey As String, pRFC As String, pDoc As String, pIdMov As Integer) As String
         Dim Cadena As String
         Dim XmlTimbrado As String = ""
@@ -726,4 +739,34 @@ Module VarGlobal
         End Try
         Return True
     End Function
+    Public Function Timbrar33(ByVal pRFC As String, ByVal pXML As String, ByVal pRutaSalida As String, ByVal pAPIKEY As String, ByVal pConMsgbox As Boolean, ByVal pFolio As Integer, ByVal pSerie As String, pDocumento As String, pId As Integer) As String
+        Dim Cadena As String
+        Dim XmlTimbrado As String = ""
+        Try
+            Dim Pruebas As String = "NO"
+            MySqlcomInt.CommandText = "select codigopostal from tblopciones limit 1"
+            Pruebas = MySqlcomInt.ExecuteScalar
+            Cadena = pRFC + "~" + pAPIKEY + "~" + Pruebas + "~" + pDocumento + "~" + pXML
+            Dim FF As New facturafiel33.server
+            FF.Url = "https://www.facturafiel.com/websrv/servicio_timbrado_xml_33.php?wsdl"
+            XmlTimbrado = FF.servicio_timbrado_xml(Cadena)
+            FF.Dispose()
+            Dim Checa As String
+            Checa = XmlTimbrado
+            Checa = Checa.ToUpper
+        Catch ex As Exception
+            Dim en As New Encriptador
+            IO.Directory.CreateDirectory(Application.StartupPath + "\temp\")
+            If IO.File.Exists(Application.StartupPath + "\temp\ferror.txt") Then
+                IO.File.Delete(Application.StartupPath + "\temp\ferror.txt")
+            End If
+            en.GuardaArchivoTexto(Application.StartupPath + "\temp\ferror.txt", ex.Message, System.Text.Encoding.Default)
+            AddErrorTimbrado(Replace(ex.Message, "'", "''"), pDocumento, Date.Now.ToString("yyyy/MM/dd"), Date.Now.ToString("HH:mm:ss"), pId)
+            'XmlTimbrado = "Recuperar"
+            XmlTimbrado = "ERROR"
+            'End If
+        End Try
+        Return XmlTimbrado
+    End Function
+
 End Module

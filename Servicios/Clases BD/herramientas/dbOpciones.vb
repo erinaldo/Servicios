@@ -20,7 +20,7 @@
     Public _noCertificado As String
     Public _Conector As Byte
     Public _yearAprobacion As String
-    Public _FolioInicial As Integer
+    Public InicioRapido As Integer
     Public _FolioFinal As Integer
 
     Public _RFC As String
@@ -178,7 +178,7 @@
             _noCertificado = Dreader("nocertificado")
             _yearAprobacion = Dreader("yearaprobacion")
             _FolioFinal = Dreader("foliofinal")
-            _FolioInicial = Dreader("folioinicial")
+            InicioRapido = Dreader("folioinicial")
             _SerieElectronica = Dreader("serieelectronica")
             _RFC = Dreader("rfc")
             _NombreEmpresa = Dreader("nombreempresa")
@@ -352,7 +352,7 @@
         Str += ",nocertificado='" + Replace(_noCertificado, "'", "''") + "'"
         Str += ",yearaprobacion='" + Replace(_yearAprobacion, "'", "''") + "'"
         Str += ",foliofinal='" + Replace(_FolioFinal, "'", "''") + "'"
-        Str += ",folioinicial='" + Replace(_FolioInicial, "'", "''") + "'"
+        Str += ",folioinicial='" + Replace(InicioRapido, "'", "''") + "'"
         Str += ",serieelectronica='" + Replace(_SerieElectronica, "'", "''") + "'"
         Str += ",rfc='" + Replace(_RFC, "'", "''") + "'"
         Str += ",nombreempresa='" + Replace(_NombreEmpresa, "'", "''") + "'"

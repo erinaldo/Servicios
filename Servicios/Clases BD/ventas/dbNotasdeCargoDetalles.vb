@@ -13,6 +13,8 @@
     Public Iva As Double
     Public Extra As String
     Public Descuento As Double
+    Public cProdServ As String
+    Public cUnidad As String
     Dim Comm As New MySql.Data.MySqlClient.MySqlCommand
 
     Public Sub New(ByVal Conexion As MySql.Data.MySqlClient.MySqlConnection)
@@ -48,13 +50,15 @@
             Iva = DReader("iva")
             Extra = DReader("extra")
             Descuento = DReader("descuento")
+            cProdServ = DReader("cproductoserv")
+            cUnidad = DReader("cunidad")
         End If
         DReader.Close()
         'If Idinventario > 1 Then Inventario = New dbInventario(Idinventario, Comm.Connection)
         'If IdVariante > 1 Then Producto = New dbProductosVariantes(IdVariante, Comm.Connection)
         Moneda = New dbMonedas(IdMoneda, Comm.Connection)
     End Sub
-    Public Sub Guardar(ByVal pIdCargo As Integer, ByVal pIdinventario As Integer, ByVal pCantidad As Double, ByVal pPrecio As Double, ByVal pIdMoneda As Integer, ByVal pDescripcion As String, ByVal pIva As Double, ByVal pDescuento As Double)
+    Public Sub Guardar(ByVal pIdCargo As Integer, ByVal pIdinventario As Integer, ByVal pCantidad As Double, ByVal pPrecio As Double, ByVal pIdMoneda As Integer, ByVal pDescripcion As String, ByVal pIva As Double, ByVal pDescuento As Double, pCProdServ As String, pCUnidad As String)
         'Dim CTemp As Double
         'Dim PTemp As Double
         Idinventario = pIdinventario
@@ -102,14 +106,14 @@
         '    NuevoConcepto = False
         'Else
         NuevoConcepto = True
-        Comm.CommandText = "insert into tblnotasdecargodetalles(idcargo,idinventario,cantidad,precio,descripcion,idmoneda,iva,extra,descuento) values(" + IdCargo.ToString + "," + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + ",'" + Replace(Descripcion, "'", "''") + "'," + IdMoneda.ToString + "," + Iva.ToString + ",''," + Descuento.ToString + ")"
+        Comm.CommandText = "insert into tblnotasdecargodetalles(idcargo,idinventario,cantidad,precio,descripcion,idmoneda,iva,extra,descuento,cproductoserv,cunidad) values(" + IdCargo.ToString + "," + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + ",'" + Replace(Descripcion, "'", "''") + "'," + IdMoneda.ToString + "," + Iva.ToString + ",''," + Descuento.ToString + ",'" + Replace(pCProdServ, "'", "''") + "','" + Replace(pCUnidad, "'", "''") + "')"
         Comm.ExecuteNonQuery()
         Comm.CommandText = "select ifnull((select max(iddetalle) from tblnotasdecargodetalles),0)"
         ID = Comm.ExecuteScalar
         'End If
 
     End Sub
-    Public Sub Modificar(ByVal pID As Integer, ByVal pCantidad As Double, ByVal pPrecio As Double, ByVal pIdMoneda As Integer, ByVal pDescripcion As String, ByVal piva As Double, ByVal pDescuento As Double)
+    Public Sub Modificar(ByVal pID As Integer, ByVal pCantidad As Double, ByVal pPrecio As Double, ByVal pIdMoneda As Integer, ByVal pDescripcion As String, ByVal piva As Double, ByVal pDescuento As Double, pCProdServ As String, pCUnidad As String)
         ID = pID
         Cantidad = pCantidad
         Precio = pPrecio
@@ -117,7 +121,7 @@
         Descripcion = pDescripcion
         Iva = piva
         Descuento = pDescuento
-        Comm.CommandText = "update tblnotasdecargodetalles set precio=" + Precio.ToString + ",idmoneda=" + IdMoneda.ToString + ",cantidad=" + Cantidad.ToString + ",descripcion='" + Replace(Descripcion, "'", "''") + "',iva=" + Iva.ToString + ",descuento=" + Descuento.ToString + " where iddetalle=" + ID.ToString
+        Comm.CommandText = "update tblnotasdecargodetalles set precio=" + Precio.ToString + ",idmoneda=" + IdMoneda.ToString + ",cantidad=" + Cantidad.ToString + ",descripcion='" + Replace(Descripcion, "'", "''") + "',iva=" + Iva.ToString + ",descuento=" + Descuento.ToString + ",cproductoserv='" + Replace(pCProdServ, "'", "''") + "',cunidad='" + Replace(pCUnidad, "'", "''") + "' where iddetalle=" + ID.ToString
         Comm.ExecuteNonQuery()
     End Sub
 
@@ -133,7 +137,7 @@
         Return DS.Tables("tblnotasdecargodetalles").DefaultView
     End Function
     Public Function ConsultaReader(ByVal pIdVenta As Integer) As MySql.Data.MySqlClient.MySqlDataReader
-        Comm.CommandText = "select tvi.iddetalle,tvi.descripcion,tvi.cantidad,tvi.precio,tblmonedas.abreviatura,tvi.iva,tvi.idmoneda from tblnotasdecargodetalles tvi inner join tblmonedas on tvi.idmoneda=tblmonedas.idmoneda where tvi.idcargo=" + pIdVenta.ToString
+        Comm.CommandText = "select tvi.iddetalle,tvi.descripcion,tvi.cantidad,tvi.precio,tblmonedas.abreviatura,tvi.iva,tvi.idmoneda,tvi.cproductoserv,tvi.cunidad from tblnotasdecargodetalles tvi inner join tblmonedas on tvi.idmoneda=tblmonedas.idmoneda where tvi.idcargo=" + pIdVenta.ToString
         Return Comm.ExecuteReader
     End Function
 End Class
