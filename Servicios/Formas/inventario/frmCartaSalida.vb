@@ -60,6 +60,11 @@
     End Sub
 
     Private Sub frmCartaSalida_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Try
+            Me.Icon = GlobalIcono
+        Catch ex As Exception
+
+        End Try
         dgvDetalles.AutoGenerateColumns = False
         dgvSellos.AutoGenerateColumns = False
         Carta = New CartaSalida(0, Now.Date, "", "", "", "", "", "", "", "", "")
@@ -122,5 +127,9 @@
         dgvSellos.DataSource = Carta.Sellos
         dgvDetalles.Refresh()
         dgvSellos.Refresh()
+    End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        Me.Close()
     End Sub
 End Class

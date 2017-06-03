@@ -9,6 +9,11 @@
         Me.idmovimiento = idmovimiento
     End Sub
     Private Sub frmMovimientosEntrega_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Try
+            Me.Icon = GlobalIcono
+        Catch ex As Exception
+
+        End Try
         Dim bd As New dbMovimientos(MySqlcon)
         Dim entrega As Entrega = bd.ConsultarEntrega(idmovimiento)
         txtUnidad.Text = entrega.Unidad
@@ -21,7 +26,7 @@
         txtLugar.Text = entrega.Lugar
         nudPaquetes.Value = entrega.Paquetes
         txtLote.Text = entrega.Lote
-        txtNumeroSellos.text = entrega.NumeroSellos
+        txtNumeroSellos.Text = entrega.NumeroSellos
         nudKilos.Value = entrega.Kilos
     End Sub
 

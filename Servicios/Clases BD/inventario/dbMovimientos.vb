@@ -856,8 +856,11 @@ Public Class dbMovimientos
         Comm.Parameters.Clear()
     End Sub
 
-    Public Function ReporteEntregas(desde As String, hasta As String) As DataSet
-        Comm.CommandText = "select me.*,m.fecha,ifnull(c.nombre,'') cliente from tblmovimientosentrega me inner join tblmovimientos m on m.idmovimiento=me.idmovimiento left outer join tblclientes c on c.idcliente=m.idcliente where m.fecha>='" + desde + "' and m.fecha<='" + hasta + "' order by m.fecha;"
+    Public Function ReporteEntregas(desde As String, hasta As String, pIdCliente As Integer, pIdSucursal As Integer) As DataSet
+        Comm.CommandText = "select me.*,m.fecha,ifnull((select c.nombre from tblclientes c where c.idcliente=m.idcliente),'SIN CLIENTE ASIGNADO') cliente from tblmovimientosentrega me inner join tblmovimientos m on m.idmovimiento=me.idmovimiento where m.fecha>='" + desde + "' and m.fecha<='" + hasta + "'"
+        If pIdCliente > 0 Then Comm.CommandText += " and m.idcliente=" + pIdCliente.ToString
+        If pIdSucursal > 0 Then Comm.CommandText += " and m.idsucursal=" + pIdSucursal.ToString
+        Comm.CommandText += " order by m.fecha;"
         Dim ds As New DataSet
         Dim da As New MySqlDataAdapter(Comm)
         da.Fill(ds, "tabla")

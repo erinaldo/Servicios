@@ -522,8 +522,17 @@
                 Case "Entregas por cliente."
                     Dim db As New dbMovimientos(MySqlcon)
                     Dim r As New repEntregasPorCliente
-                    r.SetDataSource(db.ReporteEntregas(Format(DateTimePicker1.Value, "yyyy/MM/dd"), Format(DateTimePicker2.Value, "yyyy/MM/dd")))
-                    r.SetParameterValue("filtros", "Desde " + Format(DateTimePicker1.Value, "yyyy/MM/dd") + " hasta " + Format(DateTimePicker2.Value, "yyyy/MM/dd"))
+                    r.SetDataSource(db.ReporteEntregas(Format(DateTimePicker1.Value, "yyyy/MM/dd"), Format(DateTimePicker2.Value, "yyyy/MM/dd"), IdCliente, IdsSucursales.Valor(ComboBox1.SelectedIndex)))
+                    Dim filtros As String = ""
+                    filtros += "Fechas: " + DateTimePicker1.Value.ToString("yyyy/MM/dd") + " al " + DateTimePicker2.Value.ToString("yyyy/MM/dd")
+                    filtros += "  Sucursal: " + ComboBox1.Text
+                    If IdCliente <= 0 Then
+                        filtros += "  Cliente: Todos"
+                    Else
+                        filtros += "  Cliente: " + TextBox2.Text
+                    End If
+                    r.SetParameterValue("filtros", filtros)
+                    r.SetParameterValue("Encabezado", S.Nombre)
                     Dim f As New frmReportes(r, False)
                     f.Show()
             End Select

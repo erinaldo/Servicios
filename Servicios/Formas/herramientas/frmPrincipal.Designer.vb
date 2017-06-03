@@ -1118,7 +1118,7 @@ Partial Class frmPrincipal
         '
         Me.CartaDeSalidaToolStripMenuItem.Name = "CartaDeSalidaToolStripMenuItem"
         Me.CartaDeSalidaToolStripMenuItem.Size = New System.Drawing.Size(275, 22)
-        Me.CartaDeSalidaToolStripMenuItem.Text = "Carta de salida"
+        Me.CartaDeSalidaToolStripMenuItem.Text = "Carta de salida..."
         '
         'mnuServiciosMenu
         '
