@@ -172,6 +172,7 @@
     <Compile Include="Clases BD\contabilidad\dbContabilidadMascaras.vb" />
     <Compile Include="Clases BD\herramientas\dbCatalogosSat.vb" />
     <Compile Include="Clases BD\herramientas\dbOpciones.vb" />
+    <Compile Include="Clases BD\inventario\dbCartasSalida.vb" />
     <Compile Include="Clases BD\produccion\dbProduccionLineas.vb" />
     <Compile Include="Clases BD\produccion\dbProduccionProcesos.vb" />
     <Compile Include="Clases BD\produccion\dbProduccionProductosDetalles.vb" />
@@ -179,6 +180,7 @@
     <Compile Include="Clases BD\ventas\complementos\dbComplementoPropietarios.vb" />
     <Compile Include="Clases BD\produccion\dbProduccionProductos.vb" />
     <Compile Include="Clases BD\ventas\dbVentas.vb" />
+    <Compile Include="Clases\CartaSalida.vb" />
     <Compile Include="Clases\Entrega.vb" />
     <Compile Include="Formas\addendas\addendaoxxo\AddendaData.vb" />
     <Compile Include="Formas\addendas\addendaoxxo\AddendaOxxo.vb" />
@@ -542,7 +544,19 @@
     <Compile Include="Formas\herramientas\frmPrincipalN.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formas\inventario\frmConsultaUbicaciones.designer.vb">
+    <Compile Include="Formas\inventario\frmBuscarCartaSalida.Designer.vb">
+      <DependentUpon>frmBuscarCartaSalida.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formas\inventario\frmBuscarCartaSalida.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formas\inventario\frmCartaSalida.Designer.vb">
+      <DependentUpon>frmCartaSalida.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formas\inventario\frmCartaSalida.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formas\inventario\frmConsultaUbicaciones.Designer.vb">
       <DependentUpon>frmConsultaUbicaciones.vb</DependentUpon>
     </Compile>
     <Compile Include="Formas\inventario\frmConsultaUbicaciones.vb">
@@ -560,7 +574,7 @@
     <Compile Include="Formas\inventario\frmInventarioPedidosConsulta.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formas\inventario\frmMovimientosEntrega.designer.vb">
+    <Compile Include="Formas\inventario\frmMovimientosEntrega.Designer.vb">
       <DependentUpon>frmMovimientosEntrega.vb</DependentUpon>
     </Compile>
     <Compile Include="Formas\inventario\frmMovimientosEntrega.vb">
@@ -2343,16 +2357,16 @@
       <DependentUpon>repInventarioAduanas.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reportes\repInventarioAlmacenesUbicaciones.vb">
+      <DependentUpon>repInventarioAlmacenesUbicaciones.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Reportes\repInventarioAlmacenes.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>repInventarioAlmacenes.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reportes\repInventarioAlmacenesUbicaciones.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>repInventarioAlmacenesUbicaciones.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reportes\repInventarioClasificacion.vb">
@@ -3601,6 +3615,12 @@
     <EmbeddedResource Include="Formas\herramientas\frmPrincipalN.resx">
       <DependentUpon>frmPrincipalN.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Formas\inventario\frmBuscarCartaSalida.resx">
+      <DependentUpon>frmBuscarCartaSalida.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formas\inventario\frmCartaSalida.resx">
+      <DependentUpon>frmCartaSalida.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formas\inventario\frmConsultaUbicaciones.resx">
       <DependentUpon>frmConsultaUbicaciones.vb</DependentUpon>
     </EmbeddedResource>
@@ -4730,13 +4750,13 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>repInventarioAduanas.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\repInventarioAlmacenes.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>repInventarioAlmacenes.vb</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\repInventarioAlmacenesUbicaciones.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>repInventarioAlmacenesUbicaciones.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\repInventarioAlmacenes.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>repInventarioAlmacenes.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\repInventarioClasificacion.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

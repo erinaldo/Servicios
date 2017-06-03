@@ -58,7 +58,7 @@ Partial Class frmMovimientosEntrega
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(13, 13)
+        Me.Label1.Location = New System.Drawing.Point(13, 14)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(57, 15)
         Me.Label1.TabIndex = 0
@@ -66,25 +66,25 @@ Partial Class frmMovimientosEntrega
         '
         'txtUnidad
         '
-        Me.txtUnidad.Location = New System.Drawing.Point(114, 10)
+        Me.txtUnidad.Location = New System.Drawing.Point(114, 11)
         Me.txtUnidad.MaxLength = 45
         Me.txtUnidad.Name = "txtUnidad"
-        Me.txtUnidad.Size = New System.Drawing.Size(165, 21)
+        Me.txtUnidad.Size = New System.Drawing.Size(165, 23)
         Me.txtUnidad.TabIndex = 1
         '
         'txtMarca
         '
-        Me.txtMarca.Location = New System.Drawing.Point(114, 37)
+        Me.txtMarca.Location = New System.Drawing.Point(114, 39)
         Me.txtMarca.MaxLength = 45
         Me.txtMarca.Name = "txtMarca"
-        Me.txtMarca.Size = New System.Drawing.Size(165, 21)
+        Me.txtMarca.Size = New System.Drawing.Size(165, 23)
         Me.txtMarca.TabIndex = 2
         '
         'Label2
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(13, 40)
+        Me.Label2.Location = New System.Drawing.Point(13, 43)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(51, 15)
         Me.Label2.TabIndex = 2
@@ -92,17 +92,17 @@ Partial Class frmMovimientosEntrega
         '
         'txtModelo
         '
-        Me.txtModelo.Location = New System.Drawing.Point(114, 64)
+        Me.txtModelo.Location = New System.Drawing.Point(114, 68)
         Me.txtModelo.MaxLength = 4
         Me.txtModelo.Name = "txtModelo"
-        Me.txtModelo.Size = New System.Drawing.Size(165, 21)
+        Me.txtModelo.Size = New System.Drawing.Size(165, 23)
         Me.txtModelo.TabIndex = 3
         '
         'Label3
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(13, 67)
+        Me.Label3.Location = New System.Drawing.Point(13, 71)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(59, 15)
         Me.Label3.TabIndex = 4
@@ -110,17 +110,17 @@ Partial Class frmMovimientosEntrega
         '
         'txtColor
         '
-        Me.txtColor.Location = New System.Drawing.Point(114, 91)
+        Me.txtColor.Location = New System.Drawing.Point(114, 97)
         Me.txtColor.MaxLength = 15
         Me.txtColor.Name = "txtColor"
-        Me.txtColor.Size = New System.Drawing.Size(165, 21)
+        Me.txtColor.Size = New System.Drawing.Size(165, 23)
         Me.txtColor.TabIndex = 4
         '
         'Label4
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(13, 94)
+        Me.Label4.Location = New System.Drawing.Point(13, 100)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(45, 15)
         Me.Label4.TabIndex = 6
@@ -128,17 +128,17 @@ Partial Class frmMovimientosEntrega
         '
         'txtPlacas
         '
-        Me.txtPlacas.Location = New System.Drawing.Point(114, 118)
+        Me.txtPlacas.Location = New System.Drawing.Point(114, 126)
         Me.txtPlacas.MaxLength = 15
         Me.txtPlacas.Name = "txtPlacas"
-        Me.txtPlacas.Size = New System.Drawing.Size(165, 21)
+        Me.txtPlacas.Size = New System.Drawing.Size(165, 23)
         Me.txtPlacas.TabIndex = 5
         '
         'Label5
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(13, 121)
+        Me.Label5.Location = New System.Drawing.Point(13, 129)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(54, 15)
         Me.Label5.TabIndex = 8
@@ -146,17 +146,17 @@ Partial Class frmMovimientosEntrega
         '
         'txtChofer
         '
-        Me.txtChofer.Location = New System.Drawing.Point(114, 145)
+        Me.txtChofer.Location = New System.Drawing.Point(114, 155)
         Me.txtChofer.MaxLength = 65
         Me.txtChofer.Name = "txtChofer"
-        Me.txtChofer.Size = New System.Drawing.Size(165, 21)
+        Me.txtChofer.Size = New System.Drawing.Size(165, 23)
         Me.txtChofer.TabIndex = 6
         '
         'Label6
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(13, 148)
+        Me.Label6.Location = New System.Drawing.Point(13, 158)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(53, 15)
         Me.Label6.TabIndex = 10
@@ -166,7 +166,7 @@ Partial Class frmMovimientosEntrega
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(302, 13)
+        Me.Label7.Location = New System.Drawing.Point(302, 14)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(52, 15)
         Me.Label7.TabIndex = 12
@@ -180,11 +180,11 @@ Partial Class frmMovimientosEntrega
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.Button1, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Button2, 1, 0)
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(401, 184)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(365, 194)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(168, 32)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(204, 36)
         Me.TableLayoutPanel1.TabIndex = 13
         '
         'Button1
@@ -192,7 +192,7 @@ Partial Class frmMovimientosEntrega
         Me.Button1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button1.Location = New System.Drawing.Point(3, 3)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(78, 26)
+        Me.Button1.Size = New System.Drawing.Size(96, 30)
         Me.Button1.TabIndex = 0
         Me.Button1.Text = "Aceptar"
         Me.Button1.UseVisualStyleBackColor = True
@@ -200,9 +200,9 @@ Partial Class frmMovimientosEntrega
         'Button2
         '
         Me.Button2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button2.Location = New System.Drawing.Point(87, 3)
+        Me.Button2.Location = New System.Drawing.Point(105, 3)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(78, 26)
+        Me.Button2.Size = New System.Drawing.Size(96, 30)
         Me.Button2.TabIndex = 1
         Me.Button2.Text = "Cancelar"
         Me.Button2.UseVisualStyleBackColor = True
@@ -211,24 +211,24 @@ Partial Class frmMovimientosEntrega
         '
         Me.dtpSalida.CustomFormat = "dd/MM/yyyy HH:mm"
         Me.dtpSalida.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtpSalida.Location = New System.Drawing.Point(403, 10)
+        Me.dtpSalida.Location = New System.Drawing.Point(403, 11)
         Me.dtpSalida.Name = "dtpSalida"
-        Me.dtpSalida.Size = New System.Drawing.Size(165, 21)
+        Me.dtpSalida.Size = New System.Drawing.Size(165, 23)
         Me.dtpSalida.TabIndex = 7
         '
         'txtLugar
         '
-        Me.txtLugar.Location = New System.Drawing.Point(403, 91)
+        Me.txtLugar.Location = New System.Drawing.Point(403, 97)
         Me.txtLugar.MaxLength = 45
         Me.txtLugar.Name = "txtLugar"
-        Me.txtLugar.Size = New System.Drawing.Size(165, 21)
+        Me.txtLugar.Size = New System.Drawing.Size(165, 23)
         Me.txtLugar.TabIndex = 10
         '
         'Label8
         '
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(302, 94)
+        Me.Label8.Location = New System.Drawing.Point(302, 100)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(48, 15)
         Me.Label8.TabIndex = 15
@@ -238,7 +238,7 @@ Partial Class frmMovimientosEntrega
         '
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(302, 120)
+        Me.Label9.Location = New System.Drawing.Point(302, 128)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(71, 15)
         Me.Label9.TabIndex = 17
@@ -246,25 +246,25 @@ Partial Class frmMovimientosEntrega
         '
         'nudPaquetes
         '
-        Me.nudPaquetes.Location = New System.Drawing.Point(403, 118)
+        Me.nudPaquetes.Location = New System.Drawing.Point(403, 126)
         Me.nudPaquetes.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
         Me.nudPaquetes.Name = "nudPaquetes"
-        Me.nudPaquetes.Size = New System.Drawing.Size(106, 21)
+        Me.nudPaquetes.Size = New System.Drawing.Size(106, 23)
         Me.nudPaquetes.TabIndex = 11
         '
         'txtLote
         '
-        Me.txtLote.Location = New System.Drawing.Point(403, 37)
+        Me.txtLote.Location = New System.Drawing.Point(403, 39)
         Me.txtLote.MaxLength = 25
         Me.txtLote.Name = "txtLote"
-        Me.txtLote.Size = New System.Drawing.Size(165, 21)
+        Me.txtLote.Size = New System.Drawing.Size(165, 23)
         Me.txtLote.TabIndex = 8
         '
         'Label10
         '
         Me.Label10.AutoSize = True
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(302, 40)
+        Me.Label10.Location = New System.Drawing.Point(302, 43)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(39, 15)
         Me.Label10.TabIndex = 19
@@ -272,17 +272,17 @@ Partial Class frmMovimientosEntrega
         '
         'txtNumeroSellos
         '
-        Me.txtNumeroSellos.Location = New System.Drawing.Point(403, 64)
+        Me.txtNumeroSellos.Location = New System.Drawing.Point(403, 68)
         Me.txtNumeroSellos.MaxLength = 15
         Me.txtNumeroSellos.Name = "txtNumeroSellos"
-        Me.txtNumeroSellos.Size = New System.Drawing.Size(165, 21)
+        Me.txtNumeroSellos.Size = New System.Drawing.Size(165, 23)
         Me.txtNumeroSellos.TabIndex = 9
         '
         'Label11
         '
         Me.Label11.AutoSize = True
         Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label11.Location = New System.Drawing.Point(302, 67)
+        Me.Label11.Location = New System.Drawing.Point(302, 71)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(95, 15)
         Me.Label11.TabIndex = 21
@@ -291,17 +291,17 @@ Partial Class frmMovimientosEntrega
         'nudKilos
         '
         Me.nudKilos.DecimalPlaces = 2
-        Me.nudKilos.Location = New System.Drawing.Point(403, 145)
+        Me.nudKilos.Location = New System.Drawing.Point(403, 155)
         Me.nudKilos.Maximum = New Decimal(New Integer() {9999999, 0, 0, 131072})
         Me.nudKilos.Name = "nudKilos"
-        Me.nudKilos.Size = New System.Drawing.Size(106, 21)
+        Me.nudKilos.Size = New System.Drawing.Size(106, 23)
         Me.nudKilos.TabIndex = 12
         '
         'Label12
         '
         Me.Label12.AutoSize = True
         Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(302, 147)
+        Me.Label12.Location = New System.Drawing.Point(302, 157)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(43, 15)
         Me.Label12.TabIndex = 23
@@ -309,9 +309,9 @@ Partial Class frmMovimientosEntrega
         '
         'frmMovimientosEntrega
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(581, 228)
+        Me.ClientSize = New System.Drawing.Size(581, 243)
         Me.Controls.Add(Me.nudKilos)
         Me.Controls.Add(Me.Label12)
         Me.Controls.Add(Me.txtNumeroSellos)
@@ -337,7 +337,7 @@ Partial Class frmMovimientosEntrega
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.txtUnidad)
         Me.Controls.Add(Me.Label1)
-        Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Name = "frmMovimientosEntrega"
         Me.Text = "Datos de entrega"
         Me.TableLayoutPanel1.ResumeLayout(False)

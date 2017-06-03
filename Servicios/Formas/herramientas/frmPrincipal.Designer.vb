@@ -159,6 +159,7 @@ Partial Class frmPrincipal
         Me.mnuBoletasInventario = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuInventarioReportes = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuReportesBoletasInv = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CartaDeSalidaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuServiciosMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuServicios = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuBuscarServicio = New System.Windows.Forms.ToolStripMenuItem()
@@ -1001,7 +1002,7 @@ Partial Class frmPrincipal
         '
         'mnuInventarioTop
         '
-        Me.mnuInventarioTop.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuAjusteDeInventario, Me.mnuAjusteDeInventarioProductos, Me.mnuInventarioMovimientos, Me.mnuInventarioPedidos, Me.mnuConsultarPedidos, Me.mnuKardex, Me.mnuInventarioRevision, Me.mnuInventarioHerramientas, Me.LotesToolStripMenuItem, Me.mnuBoletasInventario, Me.mnuInventarioReportes, Me.mnuReportesBoletasInv})
+        Me.mnuInventarioTop.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuAjusteDeInventario, Me.mnuAjusteDeInventarioProductos, Me.mnuInventarioMovimientos, Me.mnuInventarioPedidos, Me.mnuConsultarPedidos, Me.mnuKardex, Me.mnuInventarioRevision, Me.mnuInventarioHerramientas, Me.LotesToolStripMenuItem, Me.mnuBoletasInventario, Me.mnuInventarioReportes, Me.mnuReportesBoletasInv, Me.CartaDeSalidaToolStripMenuItem})
         Me.mnuInventarioTop.Name = "mnuInventarioTop"
         Me.mnuInventarioTop.Size = New System.Drawing.Size(161, 22)
         Me.mnuInventarioTop.Text = "Inventario"
@@ -1112,6 +1113,12 @@ Partial Class frmPrincipal
         Me.mnuReportesBoletasInv.Name = "mnuReportesBoletasInv"
         Me.mnuReportesBoletasInv.Size = New System.Drawing.Size(275, 22)
         Me.mnuReportesBoletasInv.Text = "Reportes Boletas..."
+        '
+        'CartaDeSalidaToolStripMenuItem
+        '
+        Me.CartaDeSalidaToolStripMenuItem.Name = "CartaDeSalidaToolStripMenuItem"
+        Me.CartaDeSalidaToolStripMenuItem.Size = New System.Drawing.Size(275, 22)
+        Me.CartaDeSalidaToolStripMenuItem.Text = "Carta de salida"
         '
         'mnuServiciosMenu
         '
@@ -2257,5 +2264,6 @@ Partial Class frmPrincipal
     Friend WithEvents mnuRestConfig As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents mnuRestPrincipal As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents mnuGastosVerAlertas As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents CartaDeSalidaToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class
