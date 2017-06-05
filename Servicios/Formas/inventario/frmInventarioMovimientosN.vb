@@ -1356,8 +1356,8 @@
         cmbUbicacionOrigen.Visible = False
         lblUbicacionDestino.Visible = False
         cmbUbicacionDestino.Visible = False
-        btnEntrega.Visible = Concep.Tipo = dbInventarioConceptos.Tipos.Entrada
-        btnCartaSalida.Visible = Concep.Tipo = dbInventarioConceptos.Tipos.Salida Or Concep.Tipo = dbInventarioConceptos.Tipos.Traspaso
+        btnEntrega.Enabled = Concep.Tipo = dbInventarioConceptos.Tipos.Entrada
+        btnCartaSalida.Enabled = Concep.Tipo = dbInventarioConceptos.Tipos.Entrada
         Dim inv As New dbInventario(IdInventario, MySqlcon)
         Select Case Concep.Tipo
             Case dbInventarioConceptos.Tipos.Traspaso

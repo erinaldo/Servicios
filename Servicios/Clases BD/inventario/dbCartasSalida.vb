@@ -83,14 +83,16 @@ Public Class dbCartasSalida
             If Not dr.IsClosed Then dr.Close()
         End Try
     End Function
-    'Public Function Consultar(desde As DateTime, hasta As DateTime) As DataTable
-    '    comm.CommandText = "select * from tblcartassalida where date(fecha)>=@desde and date(fecha)<=@hasta order by fecha;"
-    '    comm.Parameters.Add(New MySqlParameter("@desde", desde))
-    '    comm.Parameters.Add(New MySqlParameter("@hasta", hasta))
-    '    Dim ds As New DataSet
-    '    Dim da As New MySqlDataAdapter(comm)
-    '    da.Fill(ds, "tabla")
-    '    comm.Parameters.Clear()
-    '    Return ds.Tables("tabla")
-    'End Function
+    Public Function Impimir(idcarta As Integer) As DataSet
+        Dim ds As New DataSet
+        Dim da As New MySqlDataAdapter(comm)
+        comm.CommandText = "select * from tblcartassalida where id=" + idcarta.ToString() + ";"
+        da.Fill(ds, "Carta")
+        comm.CommandText = "select * from tblcartassalidadetalles where idcarta=" + idcarta.ToString() + ";"
+        da.Fill(ds, "Detalles")
+        comm.CommandText = "select * from tblcartassalidasellos where idcarta=" + idcarta.ToString() + ";"
+        da.Fill(ds, "Sellos")
+        ds.WriteXmlSchema("repCartaSalida.xml")
+        Return ds
+    End Function
 End Class

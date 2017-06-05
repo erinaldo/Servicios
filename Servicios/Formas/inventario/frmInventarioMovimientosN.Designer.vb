@@ -23,9 +23,9 @@ Partial Class frmInventarioMovimientosN
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Button17 = New System.Windows.Forms.Button()
         Me.Label28 = New System.Windows.Forms.Label()
         Me.TextBox14 = New System.Windows.Forms.TextBox()
@@ -957,8 +957,8 @@ Partial Class frmInventarioMovimientosN
         Me.DGDetalles.AllowUserToAddRows = False
         Me.DGDetalles.AllowUserToDeleteRows = False
         Me.DGDetalles.AllowUserToResizeRows = False
-        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.DGDetalles.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.DGDetalles.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.DGDetalles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DGDetalles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGDetalles.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colId, Me.colCantidad, Me.colCodigo, Me.coDescripcion, Me.colPrecio, Me.colMoneda, Me.colAlmacen, Me.colAlmacenDest})
@@ -981,8 +981,8 @@ Partial Class frmInventarioMovimientosN
         'colCantidad
         '
         Me.colCantidad.DataPropertyName = "cantidad"
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.colCantidad.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.colCantidad.DefaultCellStyle = DataGridViewCellStyle2
         Me.colCantidad.FillWeight = 60.0!
         Me.colCantidad.HeaderText = "Cant."
         Me.colCantidad.Name = "colCantidad"
@@ -1006,9 +1006,9 @@ Partial Class frmInventarioMovimientosN
         'colPrecio
         '
         Me.colPrecio.DataPropertyName = "precio"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle6.Format = "C2"
-        Me.colPrecio.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle3.Format = "C2"
+        Me.colPrecio.DefaultCellStyle = DataGridViewCellStyle3
         Me.colPrecio.FillWeight = 80.0!
         Me.colPrecio.HeaderText = "Precio"
         Me.colPrecio.Name = "colPrecio"
@@ -1049,7 +1049,7 @@ Partial Class frmInventarioMovimientosN
         'btnCartaSalida
         '
         Me.btnCartaSalida.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnCartaSalida.Location = New System.Drawing.Point(193, 481)
+        Me.btnCartaSalida.Location = New System.Drawing.Point(192, 481)
         Me.btnCartaSalida.Name = "btnCartaSalida"
         Me.btnCartaSalida.Size = New System.Drawing.Size(104, 24)
         Me.btnCartaSalida.TabIndex = 313

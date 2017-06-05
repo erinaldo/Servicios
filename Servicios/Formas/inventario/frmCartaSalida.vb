@@ -38,7 +38,6 @@
             Carta.Observaciones = txtObservaciones.Text
             db.Guardar(Carta)
             PopUp("Guardado", 90)
-            Close()
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
@@ -117,5 +116,16 @@
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles btnCancelar.Click
         Me.Close()
+    End Sub
+
+    Private Sub btnImprimir_Click(sender As Object, e As EventArgs) Handles btnImprimir.Click
+        Dim db As New dbCartasSalida(MySqlcon)
+        Dim r As New repCartaSalida
+        Dim dbo As New dbSucursales(GlobalIdSucursalDefault, MySqlcon)
+        r.SetDataSource(db.Impimir(Carta.Id))
+        r.SetParameterValue("empresa", dbo.NombreFiscal)
+        r.SetParameterValue("datos", dbo.CalleExp + " " + dbo.NumExp + " " + dbo.Colonia + vbNewLine + "C.P." + dbo.CP + " " + dbo.Ciudad + ", " + dbo.Estado + vbNewLine + "TEL. " + dbo.Telefono + "R.F.C. " + dbo.RFC)
+        Dim f As New frmReportes(r, False)
+        f.Show()
     End Sub
 End Class
