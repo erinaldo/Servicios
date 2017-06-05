@@ -12,10 +12,10 @@
         consultar()
     End Sub
 
-    Private Sub consultar()
-        Dim db As New dbCartasSalida(MySqlcon)
-        dgvResultados.DataSource = db.Consultar(dtpDesde.Value.Date, dtpHasta.Value.Date)
-    End Sub
+    'Private Sub consultar()
+    '    Dim db As New dbCartasSalida(MySqlcon)
+    '    dgvResultados.DataSource = db.Consultar(dtpDesde.Value.Date, dtpHasta.Value.Date)
+    'End Sub
 
     Private Sub btnAceptar_Click(sender As Object, e As EventArgs) Handles btnAceptar.Click
         If dgvResultados.SelectedRows.Count > 0 Then

@@ -23,9 +23,9 @@ Partial Class frmInventarioMovimientosN
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Button17 = New System.Windows.Forms.Button()
         Me.Label28 = New System.Windows.Forms.Label()
         Me.TextBox14 = New System.Windows.Forms.TextBox()
@@ -115,6 +115,7 @@ Partial Class frmInventarioMovimientosN
         Me.colAlmacen = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colAlmacenDest = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.btnEntrega = New System.Windows.Forms.Button()
+        Me.btnCartaSalida = New System.Windows.Forms.Button()
         Me.Panel2.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel3.SuspendLayout()
@@ -956,8 +957,8 @@ Partial Class frmInventarioMovimientosN
         Me.DGDetalles.AllowUserToAddRows = False
         Me.DGDetalles.AllowUserToDeleteRows = False
         Me.DGDetalles.AllowUserToResizeRows = False
-        DataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.DGDetalles.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.DGDetalles.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
         Me.DGDetalles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DGDetalles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGDetalles.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colId, Me.colCantidad, Me.colCodigo, Me.coDescripcion, Me.colPrecio, Me.colMoneda, Me.colAlmacen, Me.colAlmacenDest})
@@ -980,8 +981,8 @@ Partial Class frmInventarioMovimientosN
         'colCantidad
         '
         Me.colCantidad.DataPropertyName = "cantidad"
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.colCantidad.DefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.colCantidad.DefaultCellStyle = DataGridViewCellStyle5
         Me.colCantidad.FillWeight = 60.0!
         Me.colCantidad.HeaderText = "Cant."
         Me.colCantidad.Name = "colCantidad"
@@ -1005,9 +1006,9 @@ Partial Class frmInventarioMovimientosN
         'colPrecio
         '
         Me.colPrecio.DataPropertyName = "precio"
-        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle12.Format = "C2"
-        Me.colPrecio.DefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle6.Format = "C2"
+        Me.colPrecio.DefaultCellStyle = DataGridViewCellStyle6
         Me.colPrecio.FillWeight = 80.0!
         Me.colPrecio.HeaderText = "Precio"
         Me.colPrecio.Name = "colPrecio"
@@ -1038,12 +1039,22 @@ Partial Class frmInventarioMovimientosN
         'btnEntrega
         '
         Me.btnEntrega.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnEntrega.Location = New System.Drawing.Point(161, 455)
+        Me.btnEntrega.Location = New System.Drawing.Point(192, 455)
         Me.btnEntrega.Name = "btnEntrega"
-        Me.btnEntrega.Size = New System.Drawing.Size(135, 24)
+        Me.btnEntrega.Size = New System.Drawing.Size(104, 24)
         Me.btnEntrega.TabIndex = 312
         Me.btnEntrega.Text = "Entrega"
         Me.btnEntrega.UseVisualStyleBackColor = True
+        '
+        'btnCartaSalida
+        '
+        Me.btnCartaSalida.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCartaSalida.Location = New System.Drawing.Point(193, 481)
+        Me.btnCartaSalida.Name = "btnCartaSalida"
+        Me.btnCartaSalida.Size = New System.Drawing.Size(104, 24)
+        Me.btnCartaSalida.TabIndex = 313
+        Me.btnCartaSalida.Text = "Carta salida"
+        Me.btnCartaSalida.UseVisualStyleBackColor = True
         '
         'frmInventarioMovimientosN
         '
@@ -1051,6 +1062,7 @@ Partial Class frmInventarioMovimientosN
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(230, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(230, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(928, 570)
+        Me.Controls.Add(Me.btnCartaSalida)
         Me.Controls.Add(Me.btnEntrega)
         Me.Controls.Add(Me.DGDetalles)
         Me.Controls.Add(Me.Label19)
@@ -1202,4 +1214,5 @@ Partial Class frmInventarioMovimientosN
     Friend WithEvents colAlmacen As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colAlmacenDest As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents btnEntrega As System.Windows.Forms.Button
+    Friend WithEvents btnCartaSalida As System.Windows.Forms.Button
 End Class

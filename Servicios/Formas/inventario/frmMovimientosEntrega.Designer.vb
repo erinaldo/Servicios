@@ -49,6 +49,10 @@ Partial Class frmMovimientosEntrega
         Me.Label11 = New System.Windows.Forms.Label()
         Me.nudKilos = New System.Windows.Forms.NumericUpDown()
         Me.Label12 = New System.Windows.Forms.Label()
+        Me.dtpLlegada = New System.Windows.Forms.DateTimePicker()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.txtTransportista = New System.Windows.Forms.TextBox()
+        Me.Label14 = New System.Windows.Forms.Label()
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.nudPaquetes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudKilos, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -158,17 +162,17 @@ Partial Class frmMovimientosEntrega
         '
         Me.txtChofer.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtChofer.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtChofer.Location = New System.Drawing.Point(114, 145)
+        Me.txtChofer.Location = New System.Drawing.Point(114, 174)
         Me.txtChofer.MaxLength = 65
         Me.txtChofer.Name = "txtChofer"
         Me.txtChofer.Size = New System.Drawing.Size(165, 22)
-        Me.txtChofer.TabIndex = 6
+        Me.txtChofer.TabIndex = 8
         '
         'Label6
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(13, 148)
+        Me.Label6.Location = New System.Drawing.Point(13, 177)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(54, 16)
         Me.Label6.TabIndex = 10
@@ -178,7 +182,7 @@ Partial Class frmMovimientosEntrega
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(302, 13)
+        Me.Label7.Location = New System.Drawing.Point(303, 70)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(53, 16)
         Me.Label7.TabIndex = 12
@@ -192,12 +196,12 @@ Partial Class frmMovimientosEntrega
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.Button1, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Button2, 1, 0)
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(401, 184)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(401, 204)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(168, 32)
-        Me.TableLayoutPanel1.TabIndex = 13
+        Me.TableLayoutPanel1.TabIndex = 99
         '
         'Button1
         '
@@ -227,36 +231,36 @@ Partial Class frmMovimientosEntrega
         Me.dtpSalida.CustomFormat = "yyyy/MM/dd HH:mm"
         Me.dtpSalida.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtpSalida.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtpSalida.Location = New System.Drawing.Point(403, 10)
+        Me.dtpSalida.Location = New System.Drawing.Point(404, 66)
         Me.dtpSalida.Name = "dtpSalida"
-        Me.dtpSalida.Size = New System.Drawing.Size(148, 22)
-        Me.dtpSalida.TabIndex = 7
+        Me.dtpSalida.Size = New System.Drawing.Size(165, 22)
+        Me.dtpSalida.TabIndex = 11
         '
         'txtLugar
         '
         Me.txtLugar.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtLugar.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtLugar.Location = New System.Drawing.Point(403, 91)
+        Me.txtLugar.Location = New System.Drawing.Point(404, 10)
         Me.txtLugar.MaxLength = 45
         Me.txtLugar.Name = "txtLugar"
         Me.txtLugar.Size = New System.Drawing.Size(165, 22)
-        Me.txtLugar.TabIndex = 10
+        Me.txtLugar.TabIndex = 9
         '
         'Label8
         '
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(302, 94)
+        Me.Label8.Location = New System.Drawing.Point(303, 13)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(49, 16)
+        Me.Label8.Size = New System.Drawing.Size(59, 16)
         Me.Label8.TabIndex = 15
-        Me.Label8.Text = "Lugar:"
+        Me.Label8.Text = "Destino:"
         '
         'Label9
         '
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(302, 120)
+        Me.Label9.Location = New System.Drawing.Point(303, 151)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(71, 16)
         Me.Label9.TabIndex = 17
@@ -265,27 +269,28 @@ Partial Class frmMovimientosEntrega
         'nudPaquetes
         '
         Me.nudPaquetes.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.nudPaquetes.Location = New System.Drawing.Point(403, 118)
+        Me.nudPaquetes.Location = New System.Drawing.Point(404, 149)
         Me.nudPaquetes.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
         Me.nudPaquetes.Name = "nudPaquetes"
         Me.nudPaquetes.Size = New System.Drawing.Size(106, 22)
-        Me.nudPaquetes.TabIndex = 11
+        Me.nudPaquetes.TabIndex = 14
+        Me.nudPaquetes.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'txtLote
         '
         Me.txtLote.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtLote.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtLote.Location = New System.Drawing.Point(403, 37)
+        Me.txtLote.Location = New System.Drawing.Point(404, 94)
         Me.txtLote.MaxLength = 25
         Me.txtLote.Name = "txtLote"
         Me.txtLote.Size = New System.Drawing.Size(165, 22)
-        Me.txtLote.TabIndex = 8
+        Me.txtLote.TabIndex = 12
         '
         'Label10
         '
         Me.Label10.AutoSize = True
         Me.Label10.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(302, 40)
+        Me.Label10.Location = New System.Drawing.Point(303, 97)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(40, 16)
         Me.Label10.TabIndex = 19
@@ -295,17 +300,17 @@ Partial Class frmMovimientosEntrega
         '
         Me.txtNumeroSellos.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtNumeroSellos.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtNumeroSellos.Location = New System.Drawing.Point(403, 64)
+        Me.txtNumeroSellos.Location = New System.Drawing.Point(404, 122)
         Me.txtNumeroSellos.MaxLength = 15
         Me.txtNumeroSellos.Name = "txtNumeroSellos"
         Me.txtNumeroSellos.Size = New System.Drawing.Size(165, 22)
-        Me.txtNumeroSellos.TabIndex = 9
+        Me.txtNumeroSellos.TabIndex = 13
         '
         'Label11
         '
         Me.Label11.AutoSize = True
         Me.Label11.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label11.Location = New System.Drawing.Point(302, 67)
+        Me.Label11.Location = New System.Drawing.Point(303, 124)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(93, 16)
         Me.Label11.TabIndex = 21
@@ -315,28 +320,73 @@ Partial Class frmMovimientosEntrega
         '
         Me.nudKilos.DecimalPlaces = 2
         Me.nudKilos.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.nudKilos.Location = New System.Drawing.Point(403, 145)
+        Me.nudKilos.Location = New System.Drawing.Point(404, 176)
         Me.nudKilos.Maximum = New Decimal(New Integer() {9999999, 0, 0, 131072})
         Me.nudKilos.Name = "nudKilos"
         Me.nudKilos.Size = New System.Drawing.Size(106, 22)
-        Me.nudKilos.TabIndex = 12
+        Me.nudKilos.TabIndex = 15
+        Me.nudKilos.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label12
         '
         Me.Label12.AutoSize = True
         Me.Label12.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(302, 147)
+        Me.Label12.Location = New System.Drawing.Point(303, 178)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(43, 16)
         Me.Label12.TabIndex = 23
         Me.Label12.Text = "Kilos:"
+        '
+        'dtpLlegada
+        '
+        Me.dtpLlegada.CustomFormat = "yyyy/MM/dd HH:mm"
+        Me.dtpLlegada.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtpLlegada.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dtpLlegada.Location = New System.Drawing.Point(404, 38)
+        Me.dtpLlegada.Name = "dtpLlegada"
+        Me.dtpLlegada.Size = New System.Drawing.Size(165, 22)
+        Me.dtpLlegada.TabIndex = 10
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label13.Location = New System.Drawing.Point(303, 43)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(64, 16)
+        Me.Label13.TabIndex = 25
+        Me.Label13.Text = "Llegada:"
+        '
+        'txtTransportista
+        '
+        Me.txtTransportista.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtTransportista.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTransportista.Location = New System.Drawing.Point(114, 146)
+        Me.txtTransportista.MaxLength = 65
+        Me.txtTransportista.Name = "txtTransportista"
+        Me.txtTransportista.Size = New System.Drawing.Size(165, 22)
+        Me.txtTransportista.TabIndex = 7
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label14.Location = New System.Drawing.Point(13, 149)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(93, 16)
+        Me.Label14.TabIndex = 27
+        Me.Label14.Text = "Transportista:"
         '
         'frmMovimientosEntrega
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(230, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(230, Byte), Integer))
         Me.CancelButton = Me.Button2
-        Me.ClientSize = New System.Drawing.Size(581, 228)
+        Me.ClientSize = New System.Drawing.Size(581, 248)
+        Me.Controls.Add(Me.txtTransportista)
+        Me.Controls.Add(Me.Label14)
+        Me.Controls.Add(Me.dtpLlegada)
+        Me.Controls.Add(Me.Label13)
         Me.Controls.Add(Me.nudKilos)
         Me.Controls.Add(Me.Label12)
         Me.Controls.Add(Me.txtNumeroSellos)
@@ -403,4 +453,8 @@ Partial Class frmMovimientosEntrega
     Friend WithEvents Label11 As System.Windows.Forms.Label
     Friend WithEvents nudKilos As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label12 As System.Windows.Forms.Label
+    Friend WithEvents dtpLlegada As System.Windows.Forms.DateTimePicker
+    Friend WithEvents Label13 As System.Windows.Forms.Label
+    Friend WithEvents txtTransportista As System.Windows.Forms.TextBox
+    Friend WithEvents Label14 As System.Windows.Forms.Label
 End Class

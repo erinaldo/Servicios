@@ -48,7 +48,7 @@
         ListBox1.Items.Add("Pedidos.")
         ListBox1.Items.Add("Control de entrega de mercancia.")
         ListBox1.Items.Add("Control de inventario.")
-        ListBox1.Items.Add("Entregas por cliente.")
+        ListBox1.Items.Add("Entregas.")
         'ListBox1.Items.Add("Facturas Entregas de mercancías.")
         ConsultaOn = False
         ComboBox4.Items.Add("Todos")
@@ -519,7 +519,7 @@
                     Dim RV As New frmReportes(rep, False)
                     RV.Show()
                    
-                Case "Entregas por cliente."
+                Case "Entrgas."
                     Dim db As New dbMovimientos(MySqlcon)
                     Dim r As New repEntregasPorCliente
                     r.SetDataSource(db.ReporteEntregas(Format(DateTimePicker1.Value, "yyyy/MM/dd"), Format(DateTimePicker2.Value, "yyyy/MM/dd"), IdCliente, IdsSucursales.Valor(ComboBox1.SelectedIndex)))

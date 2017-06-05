@@ -19,7 +19,10 @@
         End Set
     End Property
 
-
+    Public Sub New(idcarta As Integer)
+        InitializeComponent()
+        Carta = New CartaSalida(idcarta, Now, "", "", "", "", "", "", "", "", "")
+    End Sub
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Try
             Dim db As New dbCartasSalida(MySqlcon)
@@ -35,28 +38,10 @@
             Carta.Observaciones = txtObservaciones.Text
             db.Guardar(Carta)
             PopUp("Guardado", 90)
-            Carta = New CartaSalida(0, Now.Date, "", "", "", "", "", "", "", "", "")
-            Carta.Detalles.Add(New CartaSalidaDetalle(0, 0, "", 0))
-            Carta.Sellos.Add(New CartaSalidaSello(0, ""))
-            dgvDetalles.DataSource = Carta.Detalles
-            dgvSellos.DataSource = Carta.Sellos
-            dgvDetalles.Refresh()
-            dgvSellos.Refresh()
+            Close()
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
-    End Sub
-
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        Dim f As New frmBuscarCartaSalida()
-        If f.ShowDialog() = Windows.Forms.DialogResult.OK Then
-            Dim db As New dbCartasSalida(MySqlcon)
-            Carta = db.Buscar(f.IdCarta)
-            dgvDetalles.DataSource = Carta.Detalles
-            dgvSellos.DataSource = Carta.Sellos
-            dgvDetalles.Refresh()
-            dgvSellos.Refresh()
-        End If
     End Sub
 
     Private Sub frmCartaSalida_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -67,9 +52,10 @@
         End Try
         dgvDetalles.AutoGenerateColumns = False
         dgvSellos.AutoGenerateColumns = False
-        Carta = New CartaSalida(0, Now.Date, "", "", "", "", "", "", "", "", "")
-        Carta.Detalles.Add(New CartaSalidaDetalle(0, 0, "", 0))
-        Carta.Sellos.Add(New CartaSalidaSello(0, ""))
+        Dim db As New dbCartasSalida(MySqlcon)
+        Carta = db.Buscar(Carta.Id)
+        If Carta.Detalles.Count = 0 Then Carta.Detalles.Add(New CartaSalidaDetalle(0, 0, "", 0))
+        If Carta.Sellos.Count = 0 Then Carta.Sellos.Add(New CartaSalidaSello(0, ""))
         dgvDetalles.DataSource = Carta.Detalles
         dgvSellos.DataSource = Carta.Sellos
         dgvDetalles.Refresh()
@@ -119,7 +105,7 @@
         End If
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs)
         Carta = New CartaSalida(0, Now, "", "", "", "", "", "", "", "", "")
         Carta.Detalles.Add(New CartaSalidaDetalle(0, 0, "", 0))
         Carta.Sellos.Add(New CartaSalidaSello(0, ""))

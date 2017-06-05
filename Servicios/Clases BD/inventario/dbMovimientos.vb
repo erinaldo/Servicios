@@ -825,8 +825,8 @@ Public Class dbMovimientos
         Comm.CommandText = "select * from tblmovimientosentrega where idmovimiento=" + idmovimiento.ToString() + ";"
         Dim dr As MySqlDataReader = Comm.ExecuteReader
         Try
-            If dr.Read Then Return New Entrega(dr("idmovimiento"), dr("unidad"), dr("marca"), dr("modelo"), dr("color"), dr("placas"), dr("chofer"), dr("salida"), dr("lugar"), dr("paquetes"), dr("lote"), dr("numerosellos"), dr("kilos"))
-            Return New Entrega(0, "", "", "", "", "", "", Now, "", 0, "", "", 0)
+            If dr.Read Then Return New Entrega(dr("idmovimiento"), dr("unidad"), dr("marca"), dr("modelo"), dr("color"), dr("placas"), dr("chofer"), dr("salida"), dr("lugar"), dr("paquetes"), dr("lote"), dr("numerosellos"), dr("kilos"), dr("transportista"), dr("llegada"))
+            Return New Entrega(0, "", "", "", "", "", "", Now, "", 0, "", "", 0, "", Now)
         Finally
             dr.Close()
         End Try
@@ -835,9 +835,9 @@ Public Class dbMovimientos
     Public Sub GuardarEntrega(entrega As Entrega)
         Comm.CommandText = "select count(*) from tblmovimientosentrega where idmovimiento=" + entrega.Id.ToString() + ";"
         If Comm.ExecuteScalar() = 0 Then
-            Comm.CommandText = "insert into tblmovimientosentrega (idmovimiento, unidad, marca, modelo, color, placas, chofer, salida, lugar, paquetes, lote, numerosellos, kilos) values (@id, @unidad, @marca, @modelo, @color, @placas, @chofer, @salida, @lugar, @paquetes, @lote, @numerosellos, @kilos);"
+            Comm.CommandText = "insert into tblmovimientosentrega (idmovimiento, unidad, marca, modelo, color, placas, chofer, salida, lugar, paquetes, lote, numerosellos, kilos, llegada, transportista) values (@id, @unidad, @marca, @modelo, @color, @placas, @chofer, @salida, @lugar, @paquetes, @lote, @numerosellos, @kilos, @llegada, @transportista);"
         Else
-            Comm.CommandText = "update tblmovimientosentrega set unidad=@unidad, marca=@marca, modelo=@modelo, color=@color, placas=@placas, chofer=@chofer, salida=@salida, lugar=@lugar, paquetes=@paquetes, lote=@lote, numerosellos=@numerosellos, kilos=@kilos where idmovimiento=@id;"
+            Comm.CommandText = "update tblmovimientosentrega set unidad=@unidad, marca=@marca, modelo=@modelo, color=@color, placas=@placas, chofer=@chofer, salida=@salida, lugar=@lugar, paquetes=@paquetes, lote=@lote, numerosellos=@numerosellos, kilos=@kilos, llegada=@llegada, transportista=@transportista where idmovimiento=@id;"
         End If
         Comm.Parameters.Add(New MySqlParameter("@id", entrega.Id))
         Comm.Parameters.Add(New MySqlParameter("@unidad", entrega.Unidad))
@@ -852,6 +852,8 @@ Public Class dbMovimientos
         Comm.Parameters.Add(New MySqlParameter("@lote", entrega.Lote))
         Comm.Parameters.Add(New MySqlParameter("@numerosellos", entrega.NumeroSellos))
         Comm.Parameters.Add(New MySqlParameter("@kilos", entrega.Kilos))
+        Comm.Parameters.Add(New MySqlParameter("@llegada", entrega.Llegada))
+        Comm.Parameters.Add(New MySqlParameter("@transportista", entrega.Transportista))
         Comm.ExecuteNonQuery()
         Comm.Parameters.Clear()
     End Sub

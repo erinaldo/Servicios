@@ -7,38 +7,26 @@ Public Class dbCartasSalida
     Public Sub Guardar(carta As CartaSalida)
         comm.Transaction = comm.Connection.BeginTransaction()
         Try
-            If carta.Id = 0 Then
-                comm.CommandText = "insert into tblcartassalida (fecha, unidad, marca, modelo, color, placas, transportista, chofer, lote, observaciones) values (@fecha, @unidad, @marca, @modelo, @color, @placas, @transportista, @chofer, @lote, @observaciones);"
-                comm.Parameters.Add(New MySqlParameter("@fecha", carta.Fecha))
-                comm.Parameters.Add(New MySqlParameter("@unidad", carta.Unidad))
-                comm.Parameters.Add(New MySqlParameter("@marca", carta.Marca))
-                comm.Parameters.Add(New MySqlParameter("@modelo", carta.Modelo))
-                comm.Parameters.Add(New MySqlParameter("@color", carta.Color))
-                comm.Parameters.Add(New MySqlParameter("@placas", carta.Placas))
-                comm.Parameters.Add(New MySqlParameter("@transportista", carta.Transportista))
-                comm.Parameters.Add(New MySqlParameter("@chofer", carta.Chofer))
-                comm.Parameters.Add(New MySqlParameter("@lote", carta.Lote))
-                comm.Parameters.Add(New MySqlParameter("@observaciones", carta.Observaciones))
-                comm.ExecuteNonQuery()
-                comm.CommandText = "select max(id) from tblcartassalida;"
-                carta.Id = comm.ExecuteScalar
-                comm.Parameters.Clear()
+            comm.CommandText = "select count(*) from tblcartassalida where id=" + carta.Id.ToString()
+            If comm.ExecuteScalar = 0 Then
+                comm.CommandText = "insert into tblcartassalida (id, fecha, unidad, marca, modelo, color, placas, transportista, chofer, lote, observaciones) values (@id, @fecha, @unidad, @marca, @modelo, @color, @placas, @transportista, @chofer, @lote, @observaciones);"
             Else
                 comm.CommandText = "update tblcartassalida set fecha=@fecha, unidad=@unidad, marca=@marca, modelo=@modelo, color=@color, placas=@placas, transportista=@transportista, chofer=@chofer, lote=@lote, observaciones=@observaciones where id=@id;"
-                comm.Parameters.Add(New MySqlParameter("@id", carta.Id))
-                comm.Parameters.Add(New MySqlParameter("@fecha", carta.Fecha))
-                comm.Parameters.Add(New MySqlParameter("@unidad", carta.Unidad))
-                comm.Parameters.Add(New MySqlParameter("@marca", carta.Marca))
-                comm.Parameters.Add(New MySqlParameter("@modelo", carta.Modelo))
-                comm.Parameters.Add(New MySqlParameter("@color", carta.Color))
-                comm.Parameters.Add(New MySqlParameter("@placas", carta.Placas))
-                comm.Parameters.Add(New MySqlParameter("@transportista", carta.Transportista))
-                comm.Parameters.Add(New MySqlParameter("@chofer", carta.Chofer))
-                comm.Parameters.Add(New MySqlParameter("@lote", carta.Lote))
-                comm.Parameters.Add(New MySqlParameter("@observaciones", carta.Observaciones))
-                comm.ExecuteNonQuery()
-                comm.Parameters.Clear()
             End If
+            comm.Parameters.Add(New MySqlParameter("@id", carta.Id))
+            comm.Parameters.Add(New MySqlParameter("@fecha", carta.Fecha))
+            comm.Parameters.Add(New MySqlParameter("@unidad", carta.Unidad))
+            comm.Parameters.Add(New MySqlParameter("@marca", carta.Marca))
+            comm.Parameters.Add(New MySqlParameter("@modelo", carta.Modelo))
+            comm.Parameters.Add(New MySqlParameter("@color", carta.Color))
+            comm.Parameters.Add(New MySqlParameter("@placas", carta.Placas))
+            comm.Parameters.Add(New MySqlParameter("@transportista", carta.Transportista))
+            comm.Parameters.Add(New MySqlParameter("@chofer", carta.Chofer))
+            comm.Parameters.Add(New MySqlParameter("@lote", carta.Lote))
+            comm.Parameters.Add(New MySqlParameter("@observaciones", carta.Observaciones))
+            comm.ExecuteNonQuery()
+            comm.Parameters.Clear()
+
             comm.CommandText = "delete from tblcartassalidadetalles where idcarta=" + carta.Id.ToString()
             comm.ExecuteNonQuery()
             For Each d As CartaSalidaDetalle In carta.Detalles
@@ -68,41 +56,41 @@ Public Class dbCartasSalida
             End If
         End Try
     End Sub
-    Public Function Buscar(idcarta As Integer) As CartaSalida
-        comm.CommandText = "select * from tblcartassalida where id=" + idcarta.ToString() + ";"
+    Public Function Buscar(idmovimiento As Integer) As CartaSalida
+        comm.CommandText = "select * from tblcartassalida where id=" + idmovimiento.ToString() + ";"
         Dim dr As MySqlDataReader = comm.ExecuteReader
         Try
-            Dim carta As New CartaSalida(0, Now, "", "", "", "", "", "", "", "", "")
+            Dim carta As New CartaSalida(idmovimiento, Now, "", "", "", "", "", "", "", "", "")
             If dr.Read Then
                 carta = New CartaSalida(dr("id"), dr("fecha"), dr("unidad"), dr("marca"), dr("modelo"), dr("color"), dr("placas"), dr("transportista"), dr("chofer"), dr("lote"), dr("observaciones"))
             End If
             dr.Close()
-            comm.CommandText = "select * from tblcartassalidadetalles where idcarta=" + idcarta.ToString() + ";"
+            comm.CommandText = "select * from tblcartassalidadetalles where idcarta=" + idmovimiento.ToString() + ";"
             dr = comm.ExecuteReader
             While dr.Read
                 carta.Detalles.Add(New CartaSalidaDetalle(dr("idcarta"), dr("cantidad"), dr("descripcion"), dr("kilosunidad")))
             End While
             dr.Close()
-            If carta.Detalles.Count = 0 Then carta.Detalles.Add(New CartaSalidaDetalle(idcarta, 0, "", 0))
-            comm.CommandText = "select * from tblcartassalidasellos where idcarta=" + idcarta.ToString() + ";"
+            If carta.Detalles.Count = 0 Then carta.Detalles.Add(New CartaSalidaDetalle(idmovimiento, 0, "", 0))
+            comm.CommandText = "select * from tblcartassalidasellos where idcarta=" + idmovimiento.ToString() + ";"
             dr = comm.ExecuteReader
             While dr.Read
                 carta.Sellos.Add(New CartaSalidaSello(dr("idcarta"), dr("numero")))
             End While
-            If carta.Sellos.Count = 0 Then carta.Sellos.Add(New CartaSalidaSello(idcarta, ""))
+            If carta.Sellos.Count = 0 Then carta.Sellos.Add(New CartaSalidaSello(idmovimiento, ""))
             Return carta
         Finally
             If Not dr.IsClosed Then dr.Close()
         End Try
     End Function
-    Public Function Consultar(desde As DateTime, hasta As DateTime) As DataTable
-        comm.CommandText = "select * from tblcartassalida where date(fecha)>=@desde and date(fecha)<=@hasta order by fecha;"
-        comm.Parameters.Add(New MySqlParameter("@desde", desde))
-        comm.Parameters.Add(New MySqlParameter("@hasta", hasta))
-        Dim ds As New DataSet
-        Dim da As New MySqlDataAdapter(comm)
-        da.Fill(ds, "tabla")
-        comm.Parameters.Clear()
-        Return ds.Tables("tabla")
-    End Function
+    'Public Function Consultar(desde As DateTime, hasta As DateTime) As DataTable
+    '    comm.CommandText = "select * from tblcartassalida where date(fecha)>=@desde and date(fecha)<=@hasta order by fecha;"
+    '    comm.Parameters.Add(New MySqlParameter("@desde", desde))
+    '    comm.Parameters.Add(New MySqlParameter("@hasta", hasta))
+    '    Dim ds As New DataSet
+    '    Dim da As New MySqlDataAdapter(comm)
+    '    da.Fill(ds, "tabla")
+    '    comm.Parameters.Clear()
+    '    Return ds.Tables("tabla")
+    'End Function
 End Class

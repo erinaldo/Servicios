@@ -12,7 +12,9 @@
     Public Property Lote As String
     Public Property NumeroSellos As String
     Public Property Kilos As Double
-    Public Sub New(id As Integer, unidad As String, marca As String, modelo As String, color As String, placas As String, chofer As String, salida As DateTime, lugar As String, paquetes As Integer, lote As String, numerosellos As String, kilos As Double)
+    Public Property Transportista As String
+    Public Property Llegada As DateTime
+    Public Sub New(id As Integer, unidad As String, marca As String, modelo As String, color As String, placas As String, chofer As String, salida As DateTime, lugar As String, paquetes As Integer, lote As String, numerosellos As String, kilos As Double, transportista As String, llegada As DateTime)
         Me.Id = id
         Me.Unidad = unidad
         Me.Marca = marca
@@ -26,6 +28,8 @@
         Me.Lote = lote
         Me.NumeroSellos = numerosellos
         Me.Kilos = kilos
+        Me.Transportista = transportista
+        Me.Llegada = llegada
     End Sub
 
 End Class

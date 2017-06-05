@@ -1356,6 +1356,8 @@
         cmbUbicacionOrigen.Visible = False
         lblUbicacionDestino.Visible = False
         cmbUbicacionDestino.Visible = False
+        btnEntrega.Visible = Concep.Tipo = dbInventarioConceptos.Tipos.Entrada
+        btnCartaSalida.Visible = Concep.Tipo = dbInventarioConceptos.Tipos.Salida Or Concep.Tipo = dbInventarioConceptos.Tipos.Traspaso
         Dim inv As New dbInventario(IdInventario, MySqlcon)
         Select Case Concep.Tipo
             Case dbInventarioConceptos.Tipos.Traspaso
@@ -1742,6 +1744,13 @@
     Private Sub btnEntrega_Click(sender As Object, e As EventArgs) Handles btnEntrega.Click
         If idMovimiento <> 0 Then
             Dim f As New frmMovimientosEntrega(idMovimiento)
+            f.ShowDialog()
+        End If
+    End Sub
+
+    Private Sub btnCartaSalida_Click(sender As Object, e As EventArgs) Handles btnCartaSalida.Click
+        If idMovimiento <> 0 Then
+            Dim f As New frmCartaSalida(idMovimiento)
             f.ShowDialog()
         End If
     End Sub

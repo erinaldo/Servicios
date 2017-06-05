@@ -1,12 +1,34 @@
 ﻿Public Class frmMovimientosEntrega
-    Private idmovimiento As Integer
-    Public Sub New(idmovimiento As Integer)
+    Private identrega As Integer
+    Private Property Entrega As Entrega
+        Get
+            Return New Entrega(identrega, txtUnidad.Text, txtMarca.Text, txtModelo.Text, txtColor.Text, txtPlacas.Text, txtChofer.Text, dtpSalida.Value, txtLugar.Text, nudPaquetes.Value, txtLote.Text, txtNumeroSellos.Text, nudKilos.Value, txtTransportista.Text, dtpLlegada.Value)
+        End Get
+        Set(value As Entrega)
+            identrega = value.Id
+            txtUnidad.Text = value.Unidad
+            txtPlacas.Text = value.Placas
+            txtModelo.Text = value.Modelo
+            txtMarca.Text = value.Marca
+            txtColor.Text = value.Color
+            txtChofer.Text = value.Chofer
+            dtpSalida.Value = value.Salida
+            txtLugar.Text = value.Lugar
+            nudPaquetes.Value = value.Paquetes
+            txtLote.Text = value.Lote
+            txtNumeroSellos.Text = value.NumeroSellos
+            nudKilos.Value = value.Kilos
+            txtTransportista.Text = value.Transportista
+            dtpLlegada.Value = value.Llegada
+        End Set
+    End Property
+    Public Sub New(identrega As Integer)
 
         ' This call is required by the designer.
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
-        Me.idmovimiento = idmovimiento
+        Me.identrega = identrega
     End Sub
     Private Sub frmMovimientosEntrega_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
@@ -15,19 +37,7 @@
 
         End Try
         Dim bd As New dbMovimientos(MySqlcon)
-        Dim entrega As Entrega = bd.ConsultarEntrega(idmovimiento)
-        txtUnidad.Text = entrega.Unidad
-        txtPlacas.Text = entrega.Placas
-        txtModelo.Text = entrega.Modelo
-        txtMarca.Text = entrega.Marca
-        txtColor.Text = entrega.Color
-        txtChofer.Text = entrega.Chofer
-        dtpSalida.Value = entrega.Salida
-        txtLugar.Text = entrega.Lugar
-        nudPaquetes.Value = entrega.Paquetes
-        txtLote.Text = entrega.Lote
-        txtNumeroSellos.Text = entrega.NumeroSellos
-        nudKilos.Value = entrega.Kilos
+        Entrega = bd.ConsultarEntrega(identrega)
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
@@ -35,8 +45,8 @@
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Dim bd As New dbMovimientos(idmovimiento, MySqlcon)
-        bd.GuardarEntrega(New Entrega(idmovimiento, txtUnidad.Text, txtMarca.Text, txtModelo.Text, txtColor.Text, txtPlacas.Text, txtChofer.Text, dtpSalida.Value, txtLugar.Text, nudPaquetes.Value, txtLote.Text, txtNumeroSellos.Text, nudKilos.Value))
+        Dim bd As New dbMovimientos(MySqlcon)
+        bd.GuardarEntrega(Entrega)
         Close()
     End Sub
 End Class

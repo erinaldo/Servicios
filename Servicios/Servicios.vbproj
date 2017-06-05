@@ -544,12 +544,6 @@
     <Compile Include="Formas\herramientas\frmPrincipalN.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formas\inventario\frmBuscarCartaSalida.Designer.vb">
-      <DependentUpon>frmBuscarCartaSalida.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Formas\inventario\frmBuscarCartaSalida.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Formas\inventario\frmCartaSalida.Designer.vb">
       <DependentUpon>frmCartaSalida.vb</DependentUpon>
     </Compile>
@@ -3614,9 +3608,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formas\herramientas\frmPrincipalN.resx">
       <DependentUpon>frmPrincipalN.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Formas\inventario\frmBuscarCartaSalida.resx">
-      <DependentUpon>frmBuscarCartaSalida.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formas\inventario\frmCartaSalida.resx">
       <DependentUpon>frmCartaSalida.vb</DependentUpon>
