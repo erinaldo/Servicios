@@ -519,7 +519,7 @@
                     Dim RV As New frmReportes(rep, False)
                     RV.Show()
                    
-                Case "Entrgas."
+                Case "Entregas."
                     Dim db As New dbMovimientos(MySqlcon)
                     Dim r As New repEntregasPorCliente
                     r.SetDataSource(db.ReporteEntregas(Format(DateTimePicker1.Value, "yyyy/MM/dd"), Format(DateTimePicker2.Value, "yyyy/MM/dd"), IdCliente, IdsSucursales.Valor(ComboBox1.SelectedIndex)))

@@ -23,7 +23,7 @@
         InitializeComponent()
         Carta = New CartaSalida(idcarta, Now, "", "", "", "", "", "", "", "", "")
     End Sub
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
         Try
             Dim db As New dbCartasSalida(MySqlcon)
             Carta.Fecha = dtpFecha.Value
@@ -115,7 +115,7 @@
         dgvSellos.Refresh()
     End Sub
 
-    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles btnCancelar.Click
         Me.Close()
     End Sub
 End Class

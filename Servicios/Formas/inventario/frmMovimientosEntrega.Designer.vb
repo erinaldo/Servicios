@@ -36,8 +36,8 @@ Partial Class frmMovimientosEntrega
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
+        Me.btnGuardar = New System.Windows.Forms.Button()
+        Me.btnCancelar = New System.Windows.Forms.Button()
         Me.dtpSalida = New System.Windows.Forms.DateTimePicker()
         Me.txtLugar = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
@@ -194,37 +194,37 @@ Partial Class frmMovimientosEntrega
         Me.TableLayoutPanel1.ColumnCount = 2
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel1.Controls.Add(Me.Button1, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.Button2, 1, 0)
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(401, 204)
+        Me.TableLayoutPanel1.Controls.Add(Me.btnGuardar, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.btnCancelar, 1, 0)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(383, 216)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(168, 32)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(198, 38)
         Me.TableLayoutPanel1.TabIndex = 99
         '
-        'Button1
+        'btnGuardar
         '
-        Me.Button1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button1.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.Location = New System.Drawing.Point(3, 3)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(78, 26)
-        Me.Button1.TabIndex = 0
-        Me.Button1.Text = "Aceptar"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btnGuardar.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.btnGuardar.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnGuardar.Location = New System.Drawing.Point(3, 3)
+        Me.btnGuardar.Name = "btnGuardar"
+        Me.btnGuardar.Size = New System.Drawing.Size(93, 32)
+        Me.btnGuardar.TabIndex = 0
+        Me.btnGuardar.Text = "Guardar"
+        Me.btnGuardar.UseVisualStyleBackColor = True
         '
-        'Button2
+        'btnCancelar
         '
-        Me.Button2.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.Button2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button2.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button2.Location = New System.Drawing.Point(87, 3)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(78, 26)
-        Me.Button2.TabIndex = 1
-        Me.Button2.Text = "Cancelar"
-        Me.Button2.UseVisualStyleBackColor = True
+        Me.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.btnCancelar.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.btnCancelar.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCancelar.Location = New System.Drawing.Point(102, 3)
+        Me.btnCancelar.Name = "btnCancelar"
+        Me.btnCancelar.Size = New System.Drawing.Size(93, 32)
+        Me.btnCancelar.TabIndex = 1
+        Me.btnCancelar.Text = "Cancelar"
+        Me.btnCancelar.UseVisualStyleBackColor = True
         '
         'dtpSalida
         '
@@ -381,8 +381,7 @@ Partial Class frmMovimientosEntrega
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(230, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(230, Byte), Integer))
-        Me.CancelButton = Me.Button2
-        Me.ClientSize = New System.Drawing.Size(581, 248)
+        Me.ClientSize = New System.Drawing.Size(593, 266)
         Me.Controls.Add(Me.txtTransportista)
         Me.Controls.Add(Me.Label14)
         Me.Controls.Add(Me.dtpLlegada)
@@ -440,8 +439,8 @@ Partial Class frmMovimientosEntrega
     Friend WithEvents Label6 As System.Windows.Forms.Label
     Friend WithEvents Label7 As System.Windows.Forms.Label
     Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
-    Friend WithEvents Button1 As System.Windows.Forms.Button
-    Friend WithEvents Button2 As System.Windows.Forms.Button
+    Friend WithEvents btnGuardar As System.Windows.Forms.Button
+    Friend WithEvents btnCancelar As System.Windows.Forms.Button
     Friend WithEvents dtpSalida As System.Windows.Forms.DateTimePicker
     Friend WithEvents txtLugar As System.Windows.Forms.TextBox
     Friend WithEvents Label8 As System.Windows.Forms.Label

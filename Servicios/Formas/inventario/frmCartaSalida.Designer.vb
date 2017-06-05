@@ -22,9 +22,9 @@ Partial Class frmCartaSalida
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtObservaciones = New System.Windows.Forms.TextBox()
@@ -47,7 +47,8 @@ Partial Class frmCartaSalida
         Me.Label9 = New System.Windows.Forms.Label()
         Me.txtColor = New System.Windows.Forms.TextBox()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.btnCancelar = New System.Windows.Forms.Button()
+        Me.btnGuardar = New System.Windows.Forms.Button()
         Me.dgvSellos = New System.Windows.Forms.DataGridView()
         Me.colNumero = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dgvDetalles = New System.Windows.Forms.DataGridView()
@@ -55,7 +56,6 @@ Partial Class frmCartaSalida
         Me.colDescripcion = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colKilogramos = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colTotal = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Button4 = New System.Windows.Forms.Button()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
         CType(Me.dgvSellos, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -321,8 +321,8 @@ Partial Class frmCartaSalida
         Me.TableLayoutPanel2.ColumnCount = 2
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel2.Controls.Add(Me.Button4, 1, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.Button1, 0, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.btnCancelar, 1, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.btnGuardar, 0, 0)
         Me.TableLayoutPanel2.Location = New System.Drawing.Point(522, 437)
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         Me.TableLayoutPanel2.RowCount = 1
@@ -331,15 +331,26 @@ Partial Class frmCartaSalida
         Me.TableLayoutPanel2.Size = New System.Drawing.Size(231, 43)
         Me.TableLayoutPanel2.TabIndex = 14
         '
-        'Button1
+        'btnCancelar
         '
-        Me.Button1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button1.Location = New System.Drawing.Point(3, 3)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(109, 37)
-        Me.Button1.TabIndex = 0
-        Me.Button1.Text = "Guardar"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.btnCancelar.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.btnCancelar.Location = New System.Drawing.Point(118, 3)
+        Me.btnCancelar.Name = "btnCancelar"
+        Me.btnCancelar.Size = New System.Drawing.Size(110, 37)
+        Me.btnCancelar.TabIndex = 15
+        Me.btnCancelar.Text = "Cancelar"
+        Me.btnCancelar.UseVisualStyleBackColor = True
+        '
+        'btnGuardar
+        '
+        Me.btnGuardar.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.btnGuardar.Location = New System.Drawing.Point(3, 3)
+        Me.btnGuardar.Name = "btnGuardar"
+        Me.btnGuardar.Size = New System.Drawing.Size(109, 37)
+        Me.btnGuardar.TabIndex = 0
+        Me.btnGuardar.Text = "Guardar"
+        Me.btnGuardar.UseVisualStyleBackColor = True
         '
         'dgvSellos
         '
@@ -377,9 +388,9 @@ Partial Class frmCartaSalida
         'colCantidad
         '
         Me.colCantidad.DataPropertyName = "Cantidad"
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle4.Format = "N0"
-        Me.colCantidad.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle1.Format = "N0"
+        Me.colCantidad.DefaultCellStyle = DataGridViewCellStyle1
         Me.colCantidad.HeaderText = "Cantidad"
         Me.colCantidad.Name = "colCantidad"
         '
@@ -393,39 +404,27 @@ Partial Class frmCartaSalida
         'colKilogramos
         '
         Me.colKilogramos.DataPropertyName = "KilosUnidad"
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle5.Format = "N2"
-        Me.colKilogramos.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle2.Format = "N2"
+        Me.colKilogramos.DefaultCellStyle = DataGridViewCellStyle2
         Me.colKilogramos.HeaderText = "Kg./Unidad"
         Me.colKilogramos.Name = "colKilogramos"
         '
         'colTotal
         '
         Me.colTotal.DataPropertyName = "Total"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle6.Format = "N2"
-        Me.colTotal.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle3.Format = "N2"
+        Me.colTotal.DefaultCellStyle = DataGridViewCellStyle3
         Me.colTotal.HeaderText = "Peso total"
         Me.colTotal.Name = "colTotal"
         Me.colTotal.ReadOnly = True
-        '
-        'Button4
-        '
-        Me.Button4.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.Button4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button4.Location = New System.Drawing.Point(118, 3)
-        Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(110, 37)
-        Me.Button4.TabIndex = 15
-        Me.Button4.Text = "Cancelar"
-        Me.Button4.UseVisualStyleBackColor = True
         '
         'frmCartaSalida
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(230, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(230, Byte), Integer))
-        Me.CancelButton = Me.Button4
         Me.ClientSize = New System.Drawing.Size(764, 492)
         Me.Controls.Add(Me.TableLayoutPanel2)
         Me.Controls.Add(Me.dgvSellos)
@@ -468,7 +467,7 @@ Partial Class frmCartaSalida
     Friend WithEvents txtObservaciones As System.Windows.Forms.TextBox
     Friend WithEvents Label10 As System.Windows.Forms.Label
     Friend WithEvents TableLayoutPanel2 As System.Windows.Forms.TableLayoutPanel
-    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents btnGuardar As System.Windows.Forms.Button
     Friend WithEvents dgvSellos As System.Windows.Forms.DataGridView
     Friend WithEvents dgvDetalles As System.Windows.Forms.DataGridView
     Friend WithEvents colNumero As System.Windows.Forms.DataGridViewTextBoxColumn
@@ -476,5 +475,5 @@ Partial Class frmCartaSalida
     Friend WithEvents colDescripcion As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colKilogramos As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colTotal As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Button4 As System.Windows.Forms.Button
+    Friend WithEvents btnCancelar As System.Windows.Forms.Button
 End Class

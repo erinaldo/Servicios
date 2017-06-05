@@ -40,11 +40,11 @@
         Entrega = bd.ConsultarEntrega(identrega)
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles btnCancelar.Click
         Close()
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
         Dim bd As New dbMovimientos(MySqlcon)
         bd.GuardarEntrega(Entrega)
         Close()
