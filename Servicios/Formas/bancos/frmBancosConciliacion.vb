@@ -250,55 +250,59 @@
     End Sub
 
     Private Sub btnImportar_Click(sender As Object, e As EventArgs) Handles btnImportar.Click
-        Dim frm As New OpenFileDialog
-        frm.Filter = "Archivo XML (*.xml)|*.xml"
-        If frm.ShowDialog() = Windows.Forms.DialogResult.OK Then
-            Dim doc As New System.Xml.XmlDocument
-            doc.Load(frm.FileName)
-            Dim arr As New ArrayList
-            For Each n As Xml.XmlElement In doc.ChildNodes(2).ChildNodes(4).ChildNodes(0)
-                If n.Name = "Row" Then
-                    If DateTime.TryParse(n.ChildNodes(0).InnerText, New DateTime) Then
-                        arr.Add(New With {.Fecha = CDate(n.ChildNodes(0).InnerText),
-                                          .Concepto = n.ChildNodes(1).InnerText,
-                                          .Referencia = n.ChildNodes(2).InnerText,
-                                          .ReferenciaAmpliada = n.ChildNodes(3).InnerText,
-                                          .Cargo = If(IsNumeric(n.ChildNodes(4).InnerText), CDbl(n.ChildNodes(4).InnerText), DBNull.Value),
-                                          .Abono = If(IsNumeric(n.ChildNodes(5).InnerText), CDbl(n.ChildNodes(5).InnerText), DBNull.Value)})
-                    End If
-                End If
-            Next
-            dgvXML.DataSource = arr
-            Dim continuefor As Boolean
-            For Each r1 As DataGridViewRow In dgvSistema.Rows
-                continuefor = False
-                r1.Cells(0).Value = False
-                For Each r2 As DataGridViewRow In dgvXML.Rows
-                    If r1.Cells(colCargo.Index).Value Is DBNull.Value And r2.Cells(5).Value Is DBNull.Value Then
-                        If Not r1.Cells(0).Value And Not r2.Cells(0).Value And
-                            r1.Cells(colFecha.Index).Value = r2.Cells(1).Value And
-                            r1.Cells(colAbono.Index).Value = r2.Cells(6).Value Then
-                            r1.Cells(0).Value = True
-                            r2.Cells(0).Value = True
-                            continuefor = True
-                            Continue For
-                        End If
-                    ElseIf r1.Cells(colAbono.Index).Value Is DBNull.Value And r2.Cells(6).Value Is DBNull.Value Then
-                        If Not r1.Cells(0).Value And Not r2.Cells(0).Value And
-                            r1.Cells(colFecha.Index).Value = r2.Cells(1).Value And
-                            r1.Cells(colCargo.Index).Value = r2.Cells(5).Value Then
-                            r1.Cells(0).Value = True
-                            r2.Cells(0).Value = True
-                            continuefor = True
-                            Continue For
+        Try
+            Dim frm As New OpenFileDialog
+            frm.Filter = "Archivo XML (*.xml)|*.xml"
+            If frm.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                Dim doc As New System.Xml.XmlDocument
+                doc.Load(frm.FileName)
+                Dim arr As New ArrayList
+                For Each n As Xml.XmlElement In doc.ChildNodes(2).ChildNodes(4).ChildNodes(0)
+                    If n.Name = "Row" Then
+                        If DateTime.TryParse(n.ChildNodes(0).InnerText, New DateTime) Then
+                            arr.Add(New With {.Fecha = CDate(n.ChildNodes(0).InnerText),
+                                              .Concepto = n.ChildNodes(1).InnerText,
+                                              .Referencia = n.ChildNodes(2).InnerText,
+                                              .ReferenciaAmpliada = n.ChildNodes(3).InnerText,
+                                              .Cargo = If(IsNumeric(n.ChildNodes(4).InnerText), CDbl(n.ChildNodes(4).InnerText), DBNull.Value),
+                                              .Abono = If(IsNumeric(n.ChildNodes(5).InnerText), CDbl(n.ChildNodes(5).InnerText), DBNull.Value)})
                         End If
                     End If
                 Next
-                If continuefor Then Continue For
-            Next
+                dgvXML.DataSource = arr
+                Dim continuefor As Boolean
+                For Each r1 As DataGridViewRow In dgvSistema.Rows
+                    continuefor = False
+                    r1.Cells(0).Value = False
+                    For Each r2 As DataGridViewRow In dgvXML.Rows
+                        If r1.Cells(colCargo.Index).Value Is DBNull.Value And r2.Cells(5).Value Is DBNull.Value Then
+                            If Not r1.Cells(0).Value And Not r2.Cells(0).Value And
+                                r1.Cells(colFecha.Index).Value = r2.Cells(1).Value And
+                                r1.Cells(colAbono.Index).Value = r2.Cells(6).Value Then
+                                r1.Cells(0).Value = True
+                                r2.Cells(0).Value = True
+                                continuefor = True
+                                Continue For
+                            End If
+                        ElseIf r1.Cells(colAbono.Index).Value Is DBNull.Value And r2.Cells(6).Value Is DBNull.Value Then
+                            If Not r1.Cells(0).Value And Not r2.Cells(0).Value And
+                                r1.Cells(colFecha.Index).Value = r2.Cells(1).Value And
+                                r1.Cells(colCargo.Index).Value = r2.Cells(5).Value Then
+                                r1.Cells(0).Value = True
+                                r2.Cells(0).Value = True
+                                continuefor = True
+                                Continue For
+                            End If
+                        End If
+                    Next
+                    If continuefor Then Continue For
+                Next
 
-            Cuentas()
-        End If
+                Cuentas()
+            End If
+        Catch ex As Exception
+            MsgBox("El documento no es un archivo de estado de cuenta válido.")
+        End Try
     End Sub
 
     Private Sub btnReporte_Click(sender As Object, e As EventArgs) Handles btnReporte.Click
