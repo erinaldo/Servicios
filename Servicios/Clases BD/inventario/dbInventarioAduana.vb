@@ -344,6 +344,10 @@
         Comm.CommandText = "select tblventasaduanan.idaduana,tblinventarioaduana.numero,tblinventarioaduana.fecha,tblinventarioaduana.aduana,tblventasaduanan.iddetalle,tblinventarioaduana.yvalidacion,tblinventarioaduana.claveaduana,tblinventarioaduana.patente from tblventasaduanan inner join tblventasinventario on tblventasaduanan.iddetalle=tblventasinventario.idventasinventario inner join tblinventarioaduana on tblventasaduanan.idaduana=tblinventarioaduana.idaduana where tblventasinventario.idventa=" + pidVenta.ToString
         Return Comm.ExecuteReader
     End Function
+    Public Function ConsultaAduanaDevReader(ByVal pidDev As Integer) As MySql.Data.MySqlClient.MySqlDataReader
+        Comm.CommandText = "select tbldevolucionesaduana.idaduana,tblinventarioaduana.numero,tblinventarioaduana.fecha,tblinventarioaduana.aduana,tblventasaduanan.iddetalle,tblinventarioaduana.yvalidacion,tblinventarioaduana.claveaduana,tblinventarioaduana.patente from tbldevolucionesaduana inner join tbldevolucionesdetalles on tbldevolucionesaduana.iddetalle=tbldevolucionesdetalles.idventasinventario inner join tblinventarioaduana on tblventasaduanan.idaduana=tblinventarioaduana.idaduana where tbldevolucionesdetalles.iddevolucion=" + pidDev.ToString
+        Return Comm.ExecuteReader
+    End Function
 
     Public Sub reporteComprasAduanas(ByVal idSucursal As Integer, ByVal desde As String, ByVal hasta As String, ByVal idProveedor As Integer, ByVal idInventario As Integer, ByVal idClasificacion As Integer, ByVal idClas2 As Integer, ByVal idClas3 As Integer, pIdTipoSucursal As Integer, pIdTipoProv As Integer, pTipoProv As String)
         Dim ds As New DataSet

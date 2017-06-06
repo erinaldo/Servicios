@@ -243,7 +243,7 @@ Public Class dbContabilidadPolizas
     Public Function folioRepetido(ByVal pMes As String, ByVal pAnio As String, ByVal ptipo As String, ByVal pNumero As Integer, pIdClasificacion As Integer) As Integer
         Dim contador As Integer = 0
         Dim numero As Integer = 0
-        Comm.CommandText = "select count(id) from tblpolizas where tipo='" + ptipo + "' and numero=" + pNumero.ToString + " and  fecha>='" + pAnio + "/" + pMes + "/01' and fecha<='" + pAnio + "/" + pMes + "/31' and clasificacion=" + pIdClasificacion.ToString
+        Comm.CommandText = "select count(id) from tblpolizas where estado=3 and tipo='" + ptipo + "' and numero=" + pNumero.ToString + " and  fecha>='" + pAnio + "/" + pMes + "/01' and fecha<='" + pAnio + "/" + pMes + "/31' and clasificacion=" + pIdClasificacion.ToString
         contador = Comm.ExecuteScalar
         Return contador
     End Function
@@ -262,7 +262,6 @@ Public Class dbContabilidadPolizas
             Return True
         Else
             Return False
-
         End If
     End Function
     Public Function BuscarIdCuenta(ByVal pnivel As Integer, ByVal pn1 As String, ByVal pn2 As String, ByVal pn3 As String, ByVal pn4 As String, ByVal pn5 As String) As Integer

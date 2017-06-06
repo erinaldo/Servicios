@@ -2,20 +2,6 @@ ALTER TABLE `tblinventarioaduana` ADD COLUMN `yvalidacion` VARCHAR(3) NOT NULL A
  ADD COLUMN `claveaduana` VARCHAR(4) NOT NULL AFTER `yvalidacion`,
  ADD COLUMN `patente` VARCHAR(5) NOT NULL AFTER `claveaduana`;
 
-DROP TABLE IF EXISTS `db_catalogossat`.`tblunidadesmedidab`;
-CREATE TABLE  `db_catalogossat`.`tblunidadesmedidab` (
-  `clave` varchar(5) NOT NULL,
-  `nombre` varchar(450) NOT NULL,
-  `descripcion` varchar(450) NOT NULL,
-  `simbolo` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-insert into db_catalogossat.tblunidadesmedidab(clave,nombre,descripcion,simbolo) select clave,nombre,descripcion,simbolo from db_catalogossat.tblunidadesmedida;
-delete from db_catalogossat.tblunidadesmedida;
-insert into db_catalogossat.tblunidadesmedida(clave,nombre,descripcion,simbolo) select distinct clave,nombre,descripcion,simbolo from db_catalogossat.tblunidadesmedidab;
-
-DROP TABLE IF EXISTS `db_catalogossat`.`tblunidadesmedidab`;
-
 update tblopciones set paccfdi=2;
 
 ALTER TABLE `tblinventario` ADD COLUMN `usaubicacion` BOOLEAN NOT NULL AFTER `cunidad`;
@@ -58,59 +44,6 @@ CREATE TABLE  `tblmovimientosubicaciones` (
   KEY `FK_tblmovimientosubicaciones_1` (`iddetalle`),
   CONSTRAINT `FK_tblmovimientosubicaciones_1` FOREIGN KEY (`iddetalle`) REFERENCES `tblmovimientosdetalles` (`iddetalle`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-DELIMITER $$
-
-DROP FUNCTION IF EXISTS `spmodificainventarioubicacionesf` $$
-CREATE DEFINER=`root`@`localhost` FUNCTION `spmodificainventarioubicacionesf`(pidinventario int,pidalmacen int,pcantidad double,pcantidadant double,pmodo tinyint,pmedida tinyint, pubicacion varchar(15)) RETURNS int(11)
-BEGIN
-
-declare vcontenido double;
-declare vcantidad double;
-declare vesinventariable tinyint;
-if (select inventariable from tblinventario where idinventario=pidinventario)=1 then
-  set vcantidad=ifnull((select ifnull(u.cantidad,0) from tblalmacenesi a left outer join tblalmacenesiubicaciones u on a.id=u.idalmaceni where idinventario=pidinventario and idalmacen=pidalmacen and ubicacion=pubicacion),0);
-  if pmedida=0 then
-    set vcontenido=(select contenido from tblinventario where idinventario=pidinventario);
-    if vcontenido<>0 then
-      if pmodo=0 then
-        set vcantidad=vcantidad+pcantidad/vcontenido;
-      end if;
-      if pmodo=1 then
-        set vcantidad=vcantidad-pcantidad/vcontenido;
-      end if;
-      if pmodo=2 then
-        set vcantidad=vcantidad-pcantidadant/vcontenido+pcantidad/vcontenido;
-      end if;
-      if pmodo=3 then
-        set vcantidad=vcantidad+pcantidadant/vcontenido-pcantidad/vcontenido;
-      end if;
-    end if;
-  else
-    if pmodo=0 then
-      set vcantidad=vcantidad+pcantidad;
-    end if;
-    if pmodo=1 then
-      set vcantidad=vcantidad-pcantidad;
-    end if;
-    if pmodo=2 then
-      set vcantidad=vcantidad-pcantidadant+pcantidad;
-    end if;
-    if pmodo=3 then
-      set vcantidad=vcantidad+pcantidadant-pcantidad;
-    end if;
-  end if;
-  if (select count(*) from tblalmacenesiubicaciones u inner join tblalmacenesi a on u.idalmaceni=a.id where a.idinventario=pidinventario and a.idalmacen=pidalmacen and u.ubicacion=pubicacion)=0 then
-    insert into tblalmacenesiubicaciones (idalmaceni, cantidad, ubicacion) select id, vcantidad, pubicacion from tblalmacenesi where idinventario=pidinventario and idalmacen=pidalmacen;
-  else
-    update tblalmacenesiubicaciones inner join tblalmacenesi on tblalmacenesiubicaciones.idalmaceni=tblalmacenesi.id set tblalmacenesiubicaciones.cantidad=vcantidad where tblalmacenesi.idinventario=pidinventario and idalmacen=pidalmacen and ubicacion=pubicacion;
-  end if;
-end if;
-return 1;
-
-END $$
-
-DELIMITER ;
 
 update tblimpresiones set documento = documento+1000-16 where documento >= 16 and documento <= 31;
 update tblimpresiones set documento = documento+1000-16 where documento >= 48 and documento <= 63;
@@ -156,5 +89,187 @@ insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesi
 insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(84,80,'www.bgalmacenes.com','et14',140,20,'Lucida Console',8,0,0,0,0,1,48,1,2,0,'Etiqueta14',0,7);
 insert into tblimpresionesnodos(x,y,texto,datapropertyname,xl,yl,fuente,fuentesize,fuentestilo,alineacion,tipo,tipodato,visible,documento,idsucursal,tiponodo,conetiqueta,nombre,renglon,clasificacion) values(95,27,'S.A. DE C.V.','et10',120,25,'Microsoft Sans Serif',12,1,0,0,0,1,48,1,2,0,'Etiqueta10',0,7);
 
+ALTER TABLE `tblnotasdecargo` ADD COLUMN `usocfdi` VARCHAR(5) NOT NULL AFTER `horaCambio`,
+ ADD COLUMN `noconfirmacion` VARCHAR(6) NOT NULL AFTER `usocfdi`;
+ALTER TABLE `tblnotasdecargodetalles` ADD COLUMN `cproductoserv` VARCHAR(10) NOT NULL AFTER `descuento`,
+ ADD COLUMN `cunidad` VARCHAR(5) NOT NULL AFTER `cproductoserv`;
+
+DROP TABLE IF EXISTS `tblcomprasubicaciones`;
+CREATE TABLE  `tblcomprasubicaciones` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `ubicaciono` varchar(15) DEFAULT NULL,
+  `iddetalle` int(10) unsigned NOT NULL,
+  `cantidad` double NOT NULL,
+  `surtido` double NOT NULL,
+  `ubicaciond` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_tblcomprasubicaciones_1` (`iddetalle`),
+  CONSTRAINT `FK_tblcomprasubicaciones_1` FOREIGN KEY (`iddetalle`) REFERENCES `tblcomprasdetalles` (`iddetalle`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `tblcomprasremisionesubicaciones`;
+CREATE TABLE  `tblcomprasremisionesubicaciones` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `ubicaciono` varchar(15) DEFAULT NULL,
+  `iddetalle` int(10) unsigned NOT NULL,
+  `cantidad` double NOT NULL,
+  `surtido` double NOT NULL,
+  `ubicaciond` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_tblcomprasremisionesubicaciones_1` (`iddetalle`),
+  CONSTRAINT `FK_tblcomprasremisionesubicaciones_1` FOREIGN KEY (`iddetalle`) REFERENCES `tblcomprasremisionesdetalles` (`iddetalle`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE  `tblventasubicaciones` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `ubicaciono` varchar(15) DEFAULT NULL,
+  `iddetalle` int(10) unsigned NOT NULL,
+  `cantidad` double NOT NULL,
+  `surtido` double NOT NULL,
+  `ubicaciond` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_tblventasubicaciones_1` (`iddetalle`),
+  CONSTRAINT `FK_tblventasubicaciones_1` FOREIGN KEY (`iddetalle`) REFERENCES `tblventasinventario` (`idventasinventario`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE  `tblventasremisionesubicaciones` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `ubicaciono` varchar(15) DEFAULT NULL,
+  `iddetalle` int(10) unsigned NOT NULL,
+  `cantidad` double NOT NULL,
+  `surtido` double NOT NULL,
+  `ubicaciond` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_tblventasremisionesubicaciones_1` (`iddetalle`),
+  CONSTRAINT `FK_tblventasremisionesubicaciones_1` FOREIGN KEY (`iddetalle`) REFERENCES `tblventasremisionesinventario` (`iddetalle`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `tblventasubicaciones` CHANGE COLUMN `ubicaciono` `ubicacion` VARCHAR(15) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+ DROP COLUMN `ubicaciond`;
+ALTER TABLE `tblventasremisionesubicaciones` CHANGE COLUMN `ubicaciono` `ubicacion` VARCHAR(15) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+ DROP COLUMN `ubicaciond`;
+
+
+ALTER TABLE `tblcomprasubicaciones` CHANGE COLUMN `ubicaciono` `ubicacion` VARCHAR(15) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+ DROP COLUMN `ubicaciond`;
+ALTER TABLE `tblcomprasremisionesubicaciones` CHANGE COLUMN `ubicaciono` `ubicacion` VARCHAR(15) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+ DROP COLUMN `ubicaciond`;
+ALTER TABLE `tblventasubicaciones` MODIFY COLUMN `ubicacion` VARCHAR(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `tblventasremisionesubicaciones` MODIFY COLUMN `ubicacion` VARCHAR(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `tblcomprasubicaciones` MODIFY COLUMN `ubicacion` VARCHAR(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `tblcomprasremisionesubicaciones` MODIFY COLUMN `ubicacion` VARCHAR(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `tblmovimientosubicaciones` CHANGE COLUMN `ubicaciono` `ubicacion` VARCHAR(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `spmodificainventarioubicacionesf`$$
+CREATE DEFINER=`root`@`localhost` FUNCTION  `spmodificainventarioubicacionesf`(pidinventario int,pidalmacen int,pcantidad double,pcantidadant double,pmodo tinyint,pmedida tinyint, pubicacion varchar(15)) RETURNS int(11)
+BEGIN
+
+declare vcontenido double;
+declare vcantidad double;
+declare vesinventariable tinyint;
+if (select inventariable from tblinventario where idinventario=pidinventario)=1 then
+  set vcantidad=ifnull((select ifnull(aiu.cantidad,0) from tblalmacenesi ai left outer join tblalmacenesiubicaciones aiu on ai.idalmacen=aiu.idalmacen and ai.idinventario=aiu.idinventario where ai.idinventario=pidinventario and ai.idalmacen=pidalmacen and aiu.ubicacion=pubicacion),0);
+  if pmedida=0 then
+    set vcontenido=(select contenido from tblinventario where idinventario=pidinventario);
+    if vcontenido<>0 then
+      if pmodo=0 then
+        set vcantidad=vcantidad+pcantidad/vcontenido;
+      end if;
+      if pmodo=1 then
+        set vcantidad=vcantidad-pcantidad/vcontenido;
+      end if;
+      if pmodo=2 then
+        set vcantidad=vcantidad-pcantidadant/vcontenido+pcantidad/vcontenido;
+      end if;
+      if pmodo=3 then
+        set vcantidad=vcantidad+pcantidadant/vcontenido-pcantidad/vcontenido;
+      end if;
+    end if;
+  else
+    if pmodo=0 then
+      set vcantidad=vcantidad+pcantidad;
+    end if;
+    if pmodo=1 then
+      set vcantidad=vcantidad-pcantidad;
+    end if;
+    if pmodo=2 then
+      set vcantidad=vcantidad-pcantidadant+pcantidad;
+    end if;
+    if pmodo=3 then
+      set vcantidad=vcantidad+pcantidadant-pcantidad;
+    end if;
+  end if;
+  if (select count(*) from tblalmacenesiubicaciones aiu inner join tblalmacenesi ai on aiu.idalmacen=ai.idalmacen and aiu.idinventario=ai.idinventario where ai.idinventario=pidinventario and ai.idalmacen=pidalmacen and aiu.ubicacion=pubicacion)=0 then
+    insert into tblalmacenesiubicaciones (idalmacen, idinventario, cantidad, ubicacion) select idalmacen, idinventario, vcantidad, pubicacion from tblalmacenesi where idinventario=pidinventario and idalmacen=pidalmacen;
+  else
+    update tblalmacenesiubicaciones inner join tblalmacenesi on tblalmacenesiubicaciones.idalmacen=tblalmacenesi.idalmacen and tblalmacenesiubicaciones.idinventario=tblalmacenesi.idinventario set tblalmacenesiubicaciones.cantidad=vcantidad where tblalmacenesi.idinventario=pidinventario and tblalmacenesi.idalmacen=pidalmacen and tblalmacenesiubicaciones.ubicacion=pubicacion;
+  end if;
+end if;
+return 1;
+
+END;
+
+ $$
+
+DELIMITER ;
+
+ALTER TABLE `tblventas` ADD COLUMN `clientepg` VARCHAR(150) NOT NULL AFTER `noconfirmacion`;
+
+CREATE TABLE  `tblmovimientosentrega` (
+  `idmovimiento` int(10) unsigned NOT NULL,
+  `unidad` varchar(45) NOT NULL,
+  `marca` varchar(45) NOT NULL,
+  `modelo` varchar(4) NOT NULL,
+  `color` varchar(15) NOT NULL,
+  `placas` varchar(15) NOT NULL,
+  `chofer` varchar(65) NOT NULL,
+  `salida` datetime NOT NULL,
+  `lugar` varchar(45) NOT NULL,
+  `paquetes` smallint(5) unsigned NOT NULL,
+  `lote` varchar(25) NOT NULL,
+  `numerosellos` varchar(15) NOT NULL,
+  `kilos` float NOT NULL,
+  PRIMARY KEY (`idmovimiento`),
+  CONSTRAINT `FK_tblmovimientosentrega_1` FOREIGN KEY (`idmovimiento`) REFERENCES `tblmovimientos` (`idmovimiento`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `tblcartassalida`;
+CREATE TABLE  `tblcartassalida` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fecha` datetime NOT NULL,
+  `unidad` varchar(45) NOT NULL,
+  `marca` varchar(45) NOT NULL,
+  `modelo` varchar(4) NOT NULL,
+  `color` varchar(15) NOT NULL,
+  `placas` varchar(15) NOT NULL,
+  `chofer` varchar(65) NOT NULL,
+  `lote` varchar(25) NOT NULL,
+  `transportista` varchar(65) NOT NULL,
+  `observaciones` varchar(500) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `tblcartassalidadetalles`;
+CREATE TABLE  `tblcartassalidadetalles` (
+  `idcarta` int(10) unsigned NOT NULL,
+  `cantidad` int(10) unsigned NOT NULL,
+  `descripcion` varchar(145) NOT NULL,
+  `kilosunidad` float NOT NULL,
+  PRIMARY KEY (`idcarta`,`descripcion`) USING BTREE,
+  CONSTRAINT `FK_tblcartassalidadetalles_1` FOREIGN KEY (`idcarta`) REFERENCES `tblcartassalida` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+DROP TABLE IF EXISTS `tblcartassalidasellos`;
+CREATE TABLE  `tblcartassalidasellos` (
+  `idcarta` int(10) unsigned NOT NULL,
+  `numero` varchar(15) NOT NULL,
+  PRIMARY KEY (`idcarta`,`numero`),
+  CONSTRAINT `FK_tblcartassalidasellos_1` FOREIGN KEY (`idcarta`) REFERENCES `tblcartassalida` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 insert into tblactualizaciones(version,versionchk) values('ver 9037 rev 25','00903725');

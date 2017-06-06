@@ -73,17 +73,14 @@ Partial Class frmPrincipalN
         Me.btnAcerca = New System.Windows.Forms.RibbonOrbOptionButton()
         Me.tabVentas = New System.Windows.Forms.RibbonTab()
         Me.pnlVentasExpedir = New System.Windows.Forms.RibbonPanel()
-        Me.btnVenCapFacturas = New System.Windows.Forms.RibbonButton()
+        Me.btnVentasFac = New System.Windows.Forms.RibbonButton()
         Me.btnVenCapRemisiones = New System.Windows.Forms.RibbonButton()
         Me.btnVenCapNotasCredito = New System.Windows.Forms.RibbonButton()
         Me.btnVenCapCotizaciones = New System.Windows.Forms.RibbonButton()
         Me.btnVenCapDevoluciones = New System.Windows.Forms.RibbonButton()
         Me.mnuVentasApartados = New System.Windows.Forms.RibbonButton()
-        Me.btnVenCapPedidos = New System.Windows.Forms.RibbonButton()
-        Me.mnuVPedidos = New System.Windows.Forms.RibbonButton()
-        Me.mnuVNotasdeCargo = New System.Windows.Forms.RibbonButton()
-        Me.mnuVDocumentos = New System.Windows.Forms.RibbonButton()
-        Me.mnuVPagare = New System.Windows.Forms.RibbonButton()
+        Me.mnuVentasNotasCargo = New System.Windows.Forms.RibbonButton()
+        Me.mnuPedidos = New System.Windows.Forms.RibbonButton()
         Me.pnlVentasPagos = New System.Windows.Forms.RibbonPanel()
         Me.btnVenPagFacturas = New System.Windows.Forms.RibbonButton()
         Me.btnVenPagRemisiones = New System.Windows.Forms.RibbonButton()
@@ -93,11 +90,6 @@ Partial Class frmPrincipalN
         Me.btnVenConMovimientos = New System.Windows.Forms.RibbonButton()
         Me.btnVenConHistorial = New System.Windows.Forms.RibbonButton()
         Me.btnVenConCorte = New System.Windows.Forms.RibbonButton()
-        Me.btnVenConOfertas = New System.Windows.Forms.RibbonButton()
-        Me.btnVenConDevoluciones = New System.Windows.Forms.RibbonButton()
-        Me.pnlVentasFertilizantes = New System.Windows.Forms.RibbonPanel()
-        Me.btnVenFerPedidos = New System.Windows.Forms.RibbonButton()
-        Me.btnVenFerReportes = New System.Windows.Forms.RibbonButton()
         Me.tabCompras = New System.Windows.Forms.RibbonTab()
         Me.pnlComCapturar = New System.Windows.Forms.RibbonPanel()
         Me.btnComCapFacturas = New System.Windows.Forms.RibbonButton()
@@ -238,6 +230,10 @@ Partial Class frmPrincipalN
         Me.RibbonButton44 = New System.Windows.Forms.RibbonButton()
         Me.RibbonButton25 = New System.Windows.Forms.RibbonButton()
         Me.btnInvConBoletas = New System.Windows.Forms.RibbonButton()
+        Me.RibbonPanel1 = New System.Windows.Forms.RibbonPanel()
+        Me.mnuVentasPagare = New System.Windows.Forms.RibbonButton()
+        Me.mnuVentasDocumentos = New System.Windows.Forms.RibbonButton()
+        Me.mnuVentasConOfertas = New System.Windows.Forms.RibbonButton()
         Me.SuspendLayout()
         '
         'Timer1
@@ -284,7 +280,7 @@ Partial Class frmPrincipalN
         Me.Ribbon1.OrbStyle = System.Windows.Forms.RibbonOrbStyle.Office_2013
         Me.Ribbon1.OrbText = "Archivo"
         Me.Ribbon1.RibbonTabFont = New System.Drawing.Font("Trebuchet MS", 9.0!)
-        Me.Ribbon1.Size = New System.Drawing.Size(1030, 99)
+        Me.Ribbon1.Size = New System.Drawing.Size(1030, 78)
         Me.Ribbon1.TabIndex = 0
         Me.Ribbon1.Tabs.Add(Me.tabVentas)
         Me.Ribbon1.Tabs.Add(Me.tabCompras)
@@ -689,31 +685,32 @@ Partial Class frmPrincipalN
         Me.tabVentas.Panels.Add(Me.pnlVentasExpedir)
         Me.tabVentas.Panels.Add(Me.pnlVentasPagos)
         Me.tabVentas.Panels.Add(Me.pnlVentasConsultas)
-        Me.tabVentas.Panels.Add(Me.pnlVentasFertilizantes)
+        Me.tabVentas.Panels.Add(Me.RibbonPanel1)
         Me.tabVentas.Text = "Ventas"
         '
         'pnlVentasExpedir
         '
         Me.pnlVentasExpedir.ButtonMoreVisible = False
-        Me.pnlVentasExpedir.Items.Add(Me.btnVenCapFacturas)
+        Me.pnlVentasExpedir.Items.Add(Me.btnVentasFac)
         Me.pnlVentasExpedir.Items.Add(Me.btnVenCapRemisiones)
         Me.pnlVentasExpedir.Items.Add(Me.btnVenCapNotasCredito)
         Me.pnlVentasExpedir.Items.Add(Me.btnVenCapCotizaciones)
         Me.pnlVentasExpedir.Items.Add(Me.btnVenCapDevoluciones)
         Me.pnlVentasExpedir.Items.Add(Me.mnuVentasApartados)
-        Me.pnlVentasExpedir.Items.Add(Me.btnVenCapPedidos)
+        Me.pnlVentasExpedir.Items.Add(Me.mnuVentasNotasCargo)
+        Me.pnlVentasExpedir.Items.Add(Me.mnuPedidos)
         Me.pnlVentasExpedir.Name = "pnlVentasExpedir"
-        Me.pnlVentasExpedir.Text = "Operación"
+        Me.pnlVentasExpedir.Text = ""
         '
-        'btnVenCapFacturas
+        'btnVentasFac
         '
-        Me.btnVenCapFacturas.Image = CType(resources.GetObject("btnVenCapFacturas.Image"), System.Drawing.Image)
-        Me.btnVenCapFacturas.LargeImage = CType(resources.GetObject("btnVenCapFacturas.LargeImage"), System.Drawing.Image)
-        Me.btnVenCapFacturas.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
-        Me.btnVenCapFacturas.Name = "btnVenCapFacturas"
-        Me.btnVenCapFacturas.SmallImage = CType(resources.GetObject("btnVenCapFacturas.SmallImage"), System.Drawing.Image)
-        Me.btnVenCapFacturas.Text = ""
-        Me.btnVenCapFacturas.ToolTip = "Facturas"
+        Me.btnVentasFac.Image = CType(resources.GetObject("btnVentasFac.Image"), System.Drawing.Image)
+        Me.btnVentasFac.LargeImage = CType(resources.GetObject("btnVentasFac.LargeImage"), System.Drawing.Image)
+        Me.btnVentasFac.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnVentasFac.Name = "btnVentasFac"
+        Me.btnVentasFac.SmallImage = CType(resources.GetObject("btnVentasFac.SmallImage"), System.Drawing.Image)
+        Me.btnVentasFac.Text = ""
+        Me.btnVentasFac.ToolTip = "Facturas"
         '
         'btnVenCapRemisiones
         '
@@ -762,55 +759,20 @@ Partial Class frmPrincipalN
         Me.mnuVentasApartados.Name = "mnuVentasApartados"
         Me.mnuVentasApartados.SmallImage = CType(resources.GetObject("mnuVentasApartados.SmallImage"), System.Drawing.Image)
         '
-        'btnVenCapPedidos
+        'mnuVentasNotasCargo
         '
-        Me.btnVenCapPedidos.DropDownItems.Add(Me.mnuVPedidos)
-        Me.btnVenCapPedidos.DropDownItems.Add(Me.mnuVNotasdeCargo)
-        Me.btnVenCapPedidos.DropDownItems.Add(Me.mnuVDocumentos)
-        Me.btnVenCapPedidos.DropDownItems.Add(Me.mnuVPagare)
-        Me.btnVenCapPedidos.Image = CType(resources.GetObject("btnVenCapPedidos.Image"), System.Drawing.Image)
-        Me.btnVenCapPedidos.LargeImage = CType(resources.GetObject("btnVenCapPedidos.LargeImage"), System.Drawing.Image)
-        Me.btnVenCapPedidos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnVenCapPedidos.Name = "btnVenCapPedidos"
-        Me.btnVenCapPedidos.SmallImage = CType(resources.GetObject("btnVenCapPedidos.SmallImage"), System.Drawing.Image)
-        Me.btnVenCapPedidos.Style = System.Windows.Forms.RibbonButtonStyle.DropDown
-        Me.btnVenCapPedidos.Text = "Otros"
+        Me.mnuVentasNotasCargo.Image = CType(resources.GetObject("mnuVentasNotasCargo.Image"), System.Drawing.Image)
+        Me.mnuVentasNotasCargo.LargeImage = CType(resources.GetObject("mnuVentasNotasCargo.LargeImage"), System.Drawing.Image)
+        Me.mnuVentasNotasCargo.Name = "mnuVentasNotasCargo"
+        Me.mnuVentasNotasCargo.SmallImage = CType(resources.GetObject("mnuVentasNotasCargo.SmallImage"), System.Drawing.Image)
+        Me.mnuVentasNotasCargo.ToolTip = "Notas de Cargo"
         '
-        'mnuVPedidos
+        'mnuPedidos
         '
-        Me.mnuVPedidos.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Left
-        Me.mnuVPedidos.Image = CType(resources.GetObject("mnuVPedidos.Image"), System.Drawing.Image)
-        Me.mnuVPedidos.LargeImage = CType(resources.GetObject("mnuVPedidos.LargeImage"), System.Drawing.Image)
-        Me.mnuVPedidos.Name = "mnuVPedidos"
-        Me.mnuVPedidos.SmallImage = CType(resources.GetObject("mnuVPedidos.SmallImage"), System.Drawing.Image)
-        Me.mnuVPedidos.Text = "Pedidos"
-        '
-        'mnuVNotasdeCargo
-        '
-        Me.mnuVNotasdeCargo.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Left
-        Me.mnuVNotasdeCargo.Image = CType(resources.GetObject("mnuVNotasdeCargo.Image"), System.Drawing.Image)
-        Me.mnuVNotasdeCargo.LargeImage = CType(resources.GetObject("mnuVNotasdeCargo.LargeImage"), System.Drawing.Image)
-        Me.mnuVNotasdeCargo.Name = "mnuVNotasdeCargo"
-        Me.mnuVNotasdeCargo.SmallImage = CType(resources.GetObject("mnuVNotasdeCargo.SmallImage"), System.Drawing.Image)
-        Me.mnuVNotasdeCargo.Text = "Notas de cargo"
-        '
-        'mnuVDocumentos
-        '
-        Me.mnuVDocumentos.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Left
-        Me.mnuVDocumentos.Image = CType(resources.GetObject("mnuVDocumentos.Image"), System.Drawing.Image)
-        Me.mnuVDocumentos.LargeImage = CType(resources.GetObject("mnuVDocumentos.LargeImage"), System.Drawing.Image)
-        Me.mnuVDocumentos.Name = "mnuVDocumentos"
-        Me.mnuVDocumentos.SmallImage = CType(resources.GetObject("mnuVDocumentos.SmallImage"), System.Drawing.Image)
-        Me.mnuVDocumentos.Text = "Documentos"
-        '
-        'mnuVPagare
-        '
-        Me.mnuVPagare.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Left
-        Me.mnuVPagare.Image = CType(resources.GetObject("mnuVPagare.Image"), System.Drawing.Image)
-        Me.mnuVPagare.LargeImage = CType(resources.GetObject("mnuVPagare.LargeImage"), System.Drawing.Image)
-        Me.mnuVPagare.Name = "mnuVPagare"
-        Me.mnuVPagare.SmallImage = CType(resources.GetObject("mnuVPagare.SmallImage"), System.Drawing.Image)
-        Me.mnuVPagare.Text = "Pagaré"
+        Me.mnuPedidos.Image = CType(resources.GetObject("mnuPedidos.Image"), System.Drawing.Image)
+        Me.mnuPedidos.LargeImage = CType(resources.GetObject("mnuPedidos.LargeImage"), System.Drawing.Image)
+        Me.mnuPedidos.Name = "mnuPedidos"
+        Me.mnuPedidos.SmallImage = CType(resources.GetObject("mnuPedidos.SmallImage"), System.Drawing.Image)
         '
         'pnlVentasPagos
         '
@@ -818,7 +780,7 @@ Partial Class frmPrincipalN
         Me.pnlVentasPagos.Items.Add(Me.btnVenPagRemisiones)
         Me.pnlVentasPagos.Items.Add(Me.RibbonButton2)
         Me.pnlVentasPagos.Name = "pnlVentasPagos"
-        Me.pnlVentasPagos.Text = "Pagos"
+        Me.pnlVentasPagos.Text = ""
         '
         'btnVenPagFacturas
         '
@@ -827,6 +789,7 @@ Partial Class frmPrincipalN
         Me.btnVenPagFacturas.Name = "btnVenPagFacturas"
         Me.btnVenPagFacturas.SmallImage = CType(resources.GetObject("btnVenPagFacturas.SmallImage"), System.Drawing.Image)
         Me.btnVenPagFacturas.Text = ""
+        Me.btnVenPagFacturas.ToolTip = "Pagos Facturas"
         '
         'btnVenPagRemisiones
         '
@@ -850,10 +813,9 @@ Partial Class frmPrincipalN
         Me.pnlVentasConsultas.Items.Add(Me.btnVenConMovimientos)
         Me.pnlVentasConsultas.Items.Add(Me.btnVenConHistorial)
         Me.pnlVentasConsultas.Items.Add(Me.btnVenConCorte)
-        Me.pnlVentasConsultas.Items.Add(Me.btnVenConOfertas)
-        Me.pnlVentasConsultas.Items.Add(Me.btnVenConDevoluciones)
+        Me.pnlVentasConsultas.Items.Add(Me.mnuVentasConOfertas)
         Me.pnlVentasConsultas.Name = "pnlVentasConsultas"
-        Me.pnlVentasConsultas.Text = "Consultas"
+        Me.pnlVentasConsultas.Text = ""
         '
         'btnVenConReportes
         '
@@ -861,22 +823,23 @@ Partial Class frmPrincipalN
         Me.btnVenConReportes.LargeImage = CType(resources.GetObject("btnVenConReportes.LargeImage"), System.Drawing.Image)
         Me.btnVenConReportes.Name = "btnVenConReportes"
         Me.btnVenConReportes.SmallImage = CType(resources.GetObject("btnVenConReportes.SmallImage"), System.Drawing.Image)
-        Me.btnVenConReportes.Text = "Reportes"
+        Me.btnVenConReportes.Text = ""
+        Me.btnVenConReportes.ToolTip = "Reportes"
         '
         'btnVenConMovimientos
         '
         Me.btnVenConMovimientos.Image = CType(resources.GetObject("btnVenConMovimientos.Image"), System.Drawing.Image)
         Me.btnVenConMovimientos.LargeImage = CType(resources.GetObject("btnVenConMovimientos.LargeImage"), System.Drawing.Image)
-        Me.btnVenConMovimientos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
+        Me.btnVenConMovimientos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
         Me.btnVenConMovimientos.Name = "btnVenConMovimientos"
         Me.btnVenConMovimientos.SmallImage = CType(resources.GetObject("btnVenConMovimientos.SmallImage"), System.Drawing.Image)
-        Me.btnVenConMovimientos.Text = "Movimientos"
+        Me.btnVenConMovimientos.Text = ""
         '
         'btnVenConHistorial
         '
         Me.btnVenConHistorial.Image = CType(resources.GetObject("btnVenConHistorial.Image"), System.Drawing.Image)
         Me.btnVenConHistorial.LargeImage = CType(resources.GetObject("btnVenConHistorial.LargeImage"), System.Drawing.Image)
-        Me.btnVenConHistorial.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
+        Me.btnVenConHistorial.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
         Me.btnVenConHistorial.Name = "btnVenConHistorial"
         Me.btnVenConHistorial.SmallImage = CType(resources.GetObject("btnVenConHistorial.SmallImage"), System.Drawing.Image)
         Me.btnVenConHistorial.Text = "Historial"
@@ -885,51 +848,10 @@ Partial Class frmPrincipalN
         '
         Me.btnVenConCorte.Image = CType(resources.GetObject("btnVenConCorte.Image"), System.Drawing.Image)
         Me.btnVenConCorte.LargeImage = CType(resources.GetObject("btnVenConCorte.LargeImage"), System.Drawing.Image)
-        Me.btnVenConCorte.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
+        Me.btnVenConCorte.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
         Me.btnVenConCorte.Name = "btnVenConCorte"
         Me.btnVenConCorte.SmallImage = CType(resources.GetObject("btnVenConCorte.SmallImage"), System.Drawing.Image)
         Me.btnVenConCorte.Text = "Corte global"
-        '
-        'btnVenConOfertas
-        '
-        Me.btnVenConOfertas.Image = CType(resources.GetObject("btnVenConOfertas.Image"), System.Drawing.Image)
-        Me.btnVenConOfertas.LargeImage = CType(resources.GetObject("btnVenConOfertas.LargeImage"), System.Drawing.Image)
-        Me.btnVenConOfertas.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnVenConOfertas.Name = "btnVenConOfertas"
-        Me.btnVenConOfertas.SmallImage = CType(resources.GetObject("btnVenConOfertas.SmallImage"), System.Drawing.Image)
-        Me.btnVenConOfertas.Text = "Ofertas"
-        '
-        'btnVenConDevoluciones
-        '
-        Me.btnVenConDevoluciones.Image = CType(resources.GetObject("btnVenConDevoluciones.Image"), System.Drawing.Image)
-        Me.btnVenConDevoluciones.LargeImage = CType(resources.GetObject("btnVenConDevoluciones.LargeImage"), System.Drawing.Image)
-        Me.btnVenConDevoluciones.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnVenConDevoluciones.Name = "btnVenConDevoluciones"
-        Me.btnVenConDevoluciones.SmallImage = CType(resources.GetObject("btnVenConDevoluciones.SmallImage"), System.Drawing.Image)
-        Me.btnVenConDevoluciones.Text = "Devoluciones"
-        '
-        'pnlVentasFertilizantes
-        '
-        Me.pnlVentasFertilizantes.Items.Add(Me.btnVenFerPedidos)
-        Me.pnlVentasFertilizantes.Items.Add(Me.btnVenFerReportes)
-        Me.pnlVentasFertilizantes.Name = "pnlVentasFertilizantes"
-        Me.pnlVentasFertilizantes.Text = "Fertilizantes"
-        '
-        'btnVenFerPedidos
-        '
-        Me.btnVenFerPedidos.Image = CType(resources.GetObject("btnVenFerPedidos.Image"), System.Drawing.Image)
-        Me.btnVenFerPedidos.LargeImage = CType(resources.GetObject("btnVenFerPedidos.LargeImage"), System.Drawing.Image)
-        Me.btnVenFerPedidos.Name = "btnVenFerPedidos"
-        Me.btnVenFerPedidos.SmallImage = CType(resources.GetObject("btnVenFerPedidos.SmallImage"), System.Drawing.Image)
-        Me.btnVenFerPedidos.Text = "Pedidos"
-        '
-        'btnVenFerReportes
-        '
-        Me.btnVenFerReportes.Image = CType(resources.GetObject("btnVenFerReportes.Image"), System.Drawing.Image)
-        Me.btnVenFerReportes.LargeImage = CType(resources.GetObject("btnVenFerReportes.LargeImage"), System.Drawing.Image)
-        Me.btnVenFerReportes.Name = "btnVenFerReportes"
-        Me.btnVenFerReportes.SmallImage = CType(resources.GetObject("btnVenFerReportes.SmallImage"), System.Drawing.Image)
-        Me.btnVenFerReportes.Text = "Reportes"
         '
         'tabCompras
         '
@@ -2132,6 +2054,34 @@ Partial Class frmPrincipalN
         Me.btnInvConBoletas.SmallImage = CType(resources.GetObject("btnInvConBoletas.SmallImage"), System.Drawing.Image)
         Me.btnInvConBoletas.Text = "Boletas"
         '
+        'RibbonPanel1
+        '
+        Me.RibbonPanel1.Items.Add(Me.mnuVentasPagare)
+        Me.RibbonPanel1.Items.Add(Me.mnuVentasDocumentos)
+        Me.RibbonPanel1.Name = "RibbonPanel1"
+        Me.RibbonPanel1.Text = ""
+        '
+        'mnuVentasPagare
+        '
+        Me.mnuVentasPagare.Image = CType(resources.GetObject("mnuVentasPagare.Image"), System.Drawing.Image)
+        Me.mnuVentasPagare.LargeImage = CType(resources.GetObject("mnuVentasPagare.LargeImage"), System.Drawing.Image)
+        Me.mnuVentasPagare.Name = "mnuVentasPagare"
+        Me.mnuVentasPagare.SmallImage = CType(resources.GetObject("mnuVentasPagare.SmallImage"), System.Drawing.Image)
+        '
+        'mnuVentasDocumentos
+        '
+        Me.mnuVentasDocumentos.Image = CType(resources.GetObject("mnuVentasDocumentos.Image"), System.Drawing.Image)
+        Me.mnuVentasDocumentos.LargeImage = CType(resources.GetObject("mnuVentasDocumentos.LargeImage"), System.Drawing.Image)
+        Me.mnuVentasDocumentos.Name = "mnuVentasDocumentos"
+        Me.mnuVentasDocumentos.SmallImage = CType(resources.GetObject("mnuVentasDocumentos.SmallImage"), System.Drawing.Image)
+        '
+        'mnuVentasConOfertas
+        '
+        Me.mnuVentasConOfertas.Image = CType(resources.GetObject("mnuVentasConOfertas.Image"), System.Drawing.Image)
+        Me.mnuVentasConOfertas.LargeImage = CType(resources.GetObject("mnuVentasConOfertas.LargeImage"), System.Drawing.Image)
+        Me.mnuVentasConOfertas.Name = "mnuVentasConOfertas"
+        Me.mnuVentasConOfertas.SmallImage = CType(resources.GetObject("mnuVentasConOfertas.SmallImage"), System.Drawing.Image)
+        '
         'frmPrincipalN
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -2161,7 +2111,7 @@ Partial Class frmPrincipalN
     Friend WithEvents mnuArcInventario As System.Windows.Forms.RibbonOrbMenuItem
     Friend WithEvents mnuArcServicios As System.Windows.Forms.RibbonOrbMenuItem
     Friend WithEvents pnlVentasExpedir As System.Windows.Forms.RibbonPanel
-    Friend WithEvents btnVenCapFacturas As System.Windows.Forms.RibbonButton
+    Friend WithEvents btnVentasFac As System.Windows.Forms.RibbonButton
     Friend WithEvents btnVenCapRemisiones As System.Windows.Forms.RibbonButton
     Friend WithEvents pnlVentasPagos As System.Windows.Forms.RibbonPanel
     Friend WithEvents btnVenPagFacturas As System.Windows.Forms.RibbonButton
@@ -2169,7 +2119,6 @@ Partial Class frmPrincipalN
     Friend WithEvents btnVenConReportes As System.Windows.Forms.RibbonButton
     Friend WithEvents btnVenConMovimientos As System.Windows.Forms.RibbonButton
     Friend WithEvents btnVenConHistorial As System.Windows.Forms.RibbonButton
-    Friend WithEvents btnVenCapPedidos As System.Windows.Forms.RibbonButton
     Friend WithEvents btnVenCapCotizaciones As System.Windows.Forms.RibbonButton
     Friend WithEvents btnVenCapNotasCredito As System.Windows.Forms.RibbonButton
     Friend WithEvents RibbonButton49 As System.Windows.Forms.RibbonButton
@@ -2181,7 +2130,6 @@ Partial Class frmPrincipalN
     Friend WithEvents RibbonButton25 As System.Windows.Forms.RibbonButton
     Friend WithEvents btnVenPagRemisiones As System.Windows.Forms.RibbonButton
     Friend WithEvents btnVenConCorte As System.Windows.Forms.RibbonButton
-    Friend WithEvents btnVenConOfertas As System.Windows.Forms.RibbonButton
     Friend WithEvents pnlVentasApartados As System.Windows.Forms.RibbonPanel
     Friend WithEvents tabCompras As System.Windows.Forms.RibbonTab
     Friend WithEvents pnlComCapturar As System.Windows.Forms.RibbonPanel
@@ -2212,7 +2160,6 @@ Partial Class frmPrincipalN
     Friend WithEvents btnInvHerConfigConceptos As System.Windows.Forms.RibbonButton
     Friend WithEvents btnInvOpeBoletas As System.Windows.Forms.RibbonButton
     Friend WithEvents btnInvConReportes As System.Windows.Forms.RibbonButton
-    Friend WithEvents btnVenConDevoluciones As System.Windows.Forms.RibbonButton
     Friend WithEvents btnComCapPagos As System.Windows.Forms.RibbonButton
     Friend WithEvents btnComConDevoluciones As System.Windows.Forms.RibbonButton
     Friend WithEvents tabServicios As System.Windows.Forms.RibbonTab
@@ -2266,8 +2213,6 @@ Partial Class frmPrincipalN
     Friend WithEvents btnConCatMascaras As System.Windows.Forms.RibbonButton
     Friend WithEvents btnConOpeGenerarPolizas As System.Windows.Forms.RibbonButton
     Friend WithEvents pnlVentasFertilizantes As System.Windows.Forms.RibbonPanel
-    Friend WithEvents btnVenFerPedidos As System.Windows.Forms.RibbonButton
-    Friend WithEvents btnVenFerReportes As System.Windows.Forms.RibbonButton
     Friend WithEvents pnlComGranos As System.Windows.Forms.RibbonPanel
     Friend WithEvents btnComGraBoletas As System.Windows.Forms.RibbonButton
     Friend WithEvents btnComGraLiquidaciones As System.Windows.Forms.RibbonButton
@@ -2356,10 +2301,12 @@ Partial Class frmPrincipalN
     Friend WithEvents btnCambiarEmpresa As System.Windows.Forms.RibbonOrbOptionButton
     Friend WithEvents btnCambiarUsuario As System.Windows.Forms.RibbonOrbOptionButton
     Friend WithEvents btnAcerca As System.Windows.Forms.RibbonOrbOptionButton
-    Friend WithEvents mnuVPedidos As System.Windows.Forms.RibbonButton
-    Friend WithEvents mnuVNotasdeCargo As System.Windows.Forms.RibbonButton
-    Friend WithEvents mnuVDocumentos As System.Windows.Forms.RibbonButton
-    Friend WithEvents mnuVPagare As System.Windows.Forms.RibbonButton
     Friend WithEvents mnuVentasApartados As System.Windows.Forms.RibbonButton
     Friend WithEvents RibbonButton2 As System.Windows.Forms.RibbonButton
+    Friend WithEvents mnuVentasNotasCargo As System.Windows.Forms.RibbonButton
+    Friend WithEvents mnuPedidos As System.Windows.Forms.RibbonButton
+    Friend WithEvents mnuVentasConOfertas As System.Windows.Forms.RibbonButton
+    Friend WithEvents RibbonPanel1 As System.Windows.Forms.RibbonPanel
+    Friend WithEvents mnuVentasPagare As System.Windows.Forms.RibbonButton
+    Friend WithEvents mnuVentasDocumentos As System.Windows.Forms.RibbonButton
 End Class

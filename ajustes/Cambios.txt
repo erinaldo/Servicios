@@ -1,3 +1,15 @@
+****Cambios en la versión 0.9.037 rev 26
+*Se agregó manejo de ubicaciones.
+*Cambio en el manejo de códigos de barras.
+*Mas ajustes para CFDI 3.3.
+*Se agregó filtro en reportes de compras para tipo de proveedor.
+*Se ajustaron reportes de compras por artículos.
+*Se agregó captura para entrada para VG.
+*Se agregó referencia para cliente público general en facturas.
+*Corrección en consulta de saldos de contabilidad al ver el auxiliar de
+ una cuenta no se mostraban las pólizas hechas manualmente.
+*Se agregó captura de salida.
+
 ****Cambios en la versión 0.9.037 rev 25
 *Conciliacion Diot ahora es más rápida.
 *Cambio en la pantalla de consulta de saldos contabilidad.

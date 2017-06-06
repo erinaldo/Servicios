@@ -79,14 +79,14 @@
         Comm.CommandText = "select tipo from tblinventarioconceptos c inner join tblmovimientos m on m.idconcepto=c.idconcepto where idmovimiento=" + IdMovimiento.ToString()
         Select Case Comm.ExecuteScalar
             Case 0, 4
-                Comm.CommandText = "insert into tblmovimientosdetalles(idinventario, cantidad, precio, idmovimiento, descripcion, idalmacen, idvariante, surtido, inventarioanterior, idmoneda) values(" + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + "," + IdMovimiento.ToString + ",'" + Trim(Replace(Descripcion, "'", "''")) + "'," + IdAlmacen.ToString + "," + idVariante.ToString + ",0," + InventarioAnterior.ToString + "," + IdMoneda.ToString + ");"
+                Comm.CommandText = "insert into tblmovimientosdetalles(idinventario, cantidad, precio, idmovimiento, descripcion, idalmacen, idvariante, surtido, inventarioanterior, idmoneda,idalmacen2) values(" + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + "," + IdMovimiento.ToString + ",'" + Trim(Replace(Descripcion, "'", "''")) + "'," + IdAlmacen.ToString + "," + idVariante.ToString + ",0," + InventarioAnterior.ToString + "," + IdMoneda.ToString + "," + pIdAlmacen2.ToString + ");"
                 Comm.ExecuteNonQuery()
                 If pUbicacion <> "" Then
                     Comm.CommandText = "insert into tblmovimientosubicaciones (iddetalle, cantidad, surtido, ubicacion) select max(iddetalle), " + Cantidad.ToString() + ", 0, '" + Trim(Replace(Ubicacion, "'", "''")) + "' from tblmovimientosdetalles;"
                     Comm.ExecuteNonQuery()
                 End If
             Case 1
-                Comm.CommandText = "insert into tblmovimientosdetalles(idinventario, cantidad, precio, idmovimiento, descripcion, idalmacen, idvariante, surtido, inventarioanterior, idmoneda) values(" + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + "," + IdMovimiento.ToString + ",'" + Trim(Replace(Descripcion, "'", "''")) + "'," + IdAlmacen.ToString + "," + idVariante.ToString + ",0," + InventarioAnterior.ToString + "," + IdMoneda.ToString + ");"
+                Comm.CommandText = "insert into tblmovimientosdetalles(idinventario, cantidad, precio, idmovimiento, descripcion, idalmacen, idvariante, surtido, inventarioanterior, idmoneda,idalmacen2) values(" + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + "," + IdMovimiento.ToString + ",'" + Trim(Replace(Descripcion, "'", "''")) + "'," + IdAlmacen.ToString + "," + idVariante.ToString + ",0," + InventarioAnterior.ToString + "," + IdMoneda.ToString + "," + pIdAlmacen2.ToString + ");"
                 Comm.ExecuteNonQuery()
                 If pUbicacion <> "" Then
                     Comm.CommandText = "insert into tblmovimientosubicaciones (ubicacion, iddetalle, cantidad, surtido) select '" + Trim(Replace(Ubicacion, "'", "''")) + "', max(iddetalle), " + Cantidad.ToString() + ", 0 from tblmovimientosdetalles;"
@@ -100,7 +100,7 @@
                     Comm.ExecuteNonQuery()
                 End If
             Case Else
-                Comm.CommandText = "insert into tblmovimientosdetalles(idinventario, cantidad, precio, idmovimiento, descripcion, idalmacen, idvariante, surtido, inventarioanterior, idmoneda) values(" + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + "," + IdMovimiento.ToString + ",'" + Trim(Replace(Descripcion, "'", "''")) + "'," + IdAlmacen.ToString + "," + idVariante.ToString + ",0," + InventarioAnterior.ToString + "," + IdMoneda.ToString + ");"
+                Comm.CommandText = "insert into tblmovimientosdetalles(idinventario, cantidad, precio, idmovimiento, descripcion, idalmacen, idvariante, surtido, inventarioanterior, idmoneda,idalmacen2) values(" + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + "," + IdMovimiento.ToString + ",'" + Trim(Replace(Descripcion, "'", "''")) + "'," + IdAlmacen.ToString + "," + idVariante.ToString + ",0," + InventarioAnterior.ToString + "," + IdMoneda.ToString + "," + pIdAlmacen2.ToString + ");"
                 Comm.ExecuteNonQuery()
         End Select
 
@@ -161,7 +161,7 @@
         Return DS.Tables("tblmovimientosdetalles").DefaultView
     End Function
     Public Function ConsultaReader(ByVal pIdMovimiento As Integer, ByVal pConSeries As Byte, ByVal pAduana As Byte) As MySql.Data.MySqlClient.MySqlDataReader
-        Comm.CommandText = "select tvi.iddetalle,tblinventario.clave,concat(tvi.descripcion,spdaseriesmovimiento(tvi.idinventario,tvi.idmovimiento," + pConSeries.ToString + "),spdadetallesaduanaotros(tvi.idmovimiento,tvi.iddetalle,3," + pAduana.ToString + "),spdadetalleslotes(tvi.idmovimiento,tvi.iddetalle,4," + pAduana.ToString + ")) as descripcion,tvi.cantidad,tvi.precio,tblmonedas.abreviatura,tbltiposcantidades.abreviatura as tipocantidad,tvi.idmoneda,tvi.idvariante,tblproductos.clave as pclave,tvi.idinventario,concat((select nombre from tblalmacenes where tblalmacenes.idalmacen=tvi.idalmacen), ' ', u.ubicacion) as almacen1,concat((select nombre from tblalmacenes where tblalmacenes.idalmacen=tvi.idalmacen2), ' ', u.ubicaciond) as almacen2 from tblmovimientosdetalles tvi inner join tblinventario on tvi.idinventario=tblinventario.idinventario inner join tblmonedas on tvi.idmoneda=tblmonedas.idmoneda inner join tbltiposcantidades on tblinventario.tipocontenido = tbltiposcantidades.idtipocantidad inner join tblproductosvariantes on tvi.idvariante=tblproductosvariantes.idvariante inner join tblproductos on tblproductosvariantes.idproducto = tblproductos.idproducto left outer join tblmovimientosubicaciones u on tvi.iddetalle=u.iddetalle where tvi.idmovimiento=" + pIdMovimiento.ToString
+        Comm.CommandText = "select tvi.iddetalle,tblinventario.clave,concat(tvi.descripcion,spdaseriesmovimiento(tvi.idinventario,tvi.idmovimiento," + pConSeries.ToString + "),spdadetallesaduanaotros(tvi.idmovimiento,tvi.iddetalle,3," + pAduana.ToString + "),spdadetalleslotes(tvi.idmovimiento,tvi.iddetalle,4," + pAduana.ToString + ")) as descripcion,tvi.cantidad,tvi.precio,tblmonedas.abreviatura,tbltiposcantidades.abreviatura as tipocantidad,tvi.idmoneda,tvi.idinventario,concat((select nombre from tblalmacenes where tblalmacenes.idalmacen=tvi.idalmacen), ' ', ifnull((select u.ubicacion from tblmovimientosubicaciones u where u.iddetalle=tvi.iddetalle),'')) as almacen1,concat((select nombre from tblalmacenes where tblalmacenes.idalmacen=tvi.idalmacen2), ' ',ifnull((select u.ubicaciond from tblmovimientosubicaciones u where u.iddetalle=tvi.iddetalle),'')) as almacen2 from tblmovimientosdetalles tvi inner join tblinventario on tvi.idinventario=tblinventario.idinventario inner join tblmonedas on tvi.idmoneda=tblmonedas.idmoneda inner join tbltiposcantidades on tblinventario.tipocontenido = tbltiposcantidades.idtipocantidad where tvi.idmovimiento=" + pIdMovimiento.ToString
         Return Comm.ExecuteReader
     End Function
 

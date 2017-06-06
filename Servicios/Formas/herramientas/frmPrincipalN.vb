@@ -471,7 +471,7 @@
         End If
     End Sub
 
-    Private Sub mnuVentas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnVenCapFacturas.Click
+    Private Sub mnuVentas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnVentasFac.Click
         'If mnuVentas.Visible Then
         If GlobalChecarConexion() = False Then
             MsgBox("No se pudo establecer una conexion al servidor. Reinicie el sistema y si el problema persiste verifique su conexión a la red.", MsgBoxStyle.Critical, GlobalNombreApp)
@@ -602,7 +602,7 @@
         btnVenCapCotizaciones.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Ventas.CotizacionesVer, PermisosN.Secciones.Ventas)
         btnVenCapPedidos.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Ventas.PedidosVer, PermisosN.Secciones.Ventas)
         btnVenCapRemisiones.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Ventas.RemisionesVer, PermisosN.Secciones.Ventas)
-        btnVenCapFacturas.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Ventas.VentasVer, PermisosN.Secciones.Ventas)
+        btnVentasFac.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Ventas.VentasVer, PermisosN.Secciones.Ventas)
         'btnVenCapDevoluciones.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Ventas.DevolucionesVer, PermisosN.Secciones.Ventas)
         btnVenConDevoluciones.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Ventas.DevolucionesVer, PermisosN.Secciones.Ventas)
         btnVenCapNotasCredito.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Ventas.NotasdeCreditoVer, PermisosN.Secciones.Ventas)
@@ -779,7 +779,7 @@
     '    End If
     'End Sub
 
-    Private Sub ToolStripButton3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnVenCapFacturas.Click
+    Private Sub ToolStripButton3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnVentasFac.Click
         CierraVentanas()
         If GlobalChecarConexion() = False Then
             MsgBox("No se pudo establecer una conexion al servidor. Reinicie el sistema y si el problema persiste verifique su conexión a la red.", MsgBoxStyle.Critical, GlobalNombreApp)
@@ -842,14 +842,7 @@
     '    End If
     'End Sub
 
-    Private Sub BuscarDevoluciónToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnVenConDevoluciones.Click
-        CierraVentanas()
-        If BuscaVentanas("frmDevolucionesConsulta") = False Then
-            Dim f As New frmDevolucionesConsulta(ModosDeBusqueda.Principal)
-            f.MdiParent = Me
-            f.Show()
-        End If
-    End Sub
+    
 
 
     Private Sub ClientesMovimientosToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnVenConMovimientos.Click
@@ -5397,24 +5390,6 @@
         End If
     End Sub
 
-    Private Sub mnuFertilizantesPedidos_Click(sender As Object, e As EventArgs) Handles btnVenFerPedidos.Click
-        CierraVentanas()
-        If BuscaVentanas("frmFertilizantesPedido") = False Then
-            Dim f As New frmFertilizantesPedido
-            f.MdiParent = Me
-            f.Show()
-        End If
-    End Sub
-
-    Private Sub mnuFertilizantesReportes_Click(sender As Object, e As EventArgs) Handles btnVenFerReportes.Click
-        CierraVentanas()
-        If BuscaVentanas("frmFertilizantesReportes") = False Then
-            Dim f As New frmFertilizantesReportes
-            f.MdiParent = Me
-            f.Show()
-        End If
-    End Sub
-
     Private Sub mnuContaConsultaSaldos_Click(sender As Object, e As EventArgs) Handles btnConOpeSaldos.Click
         CierraVentanas()
         If BuscaVentanas("frmContabilidadConsultaSaldos") = False Then
@@ -5520,18 +5495,6 @@
             f.Show()
         End If
     End Sub
-
-   
-
-    Private Sub ConsultaDeOfertasToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles btnVenConOfertas.Click
-        CierraVentanas()
-        If BuscaVentanas("frmDescuentosConsulta") = False Then
-            Dim f As New frmDescuentosConsulta()
-            f.MdiParent = Me
-            f.Show()
-        End If
-    End Sub
-
 
     Private Sub mnuContabilidadConceptosNomina_Click(sender As Object, e As EventArgs) Handles btnConCatConceptos.Click
         CierraVentanas()
