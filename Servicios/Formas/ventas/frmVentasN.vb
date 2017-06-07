@@ -179,7 +179,9 @@ Public Class frmVentasN
         If e.KeyCode = Keys.F6 And IdInventario <> 0 And Estado <= 2 Then
             If GlobalPermisos.ChecaPermiso(PermisosN.Ventas.Consultas, PermisosN.Secciones.Ventas) = True Then
                 Dim f As New frmInventarioConsulta(IdInventario)
-                f.ShowDialog()
+                If f.ShowDialog() = Windows.Forms.DialogResult.OK And f.Almacen <> "" Then
+                    ComboBox8.Text = f.Almacen
+                End If
                 f.Dispose()
             End If
         End If
@@ -1801,11 +1803,11 @@ Public Class frmVentasN
             If Estado <> Estados.Guardada And Estado <> Estados.Cancelada Then Button9.Enabled = True
             'cmbtipoarticulo.Text = "A"
 
-            lblUbicacion.Visible = CD.Inventario.UsaUbicacion
-            cmbUbicacion.Visible = CD.Inventario.UsaUbicacion
+            lblUbicacion.Visible = CD.Inventario.UsaUbicacion And Not CheckBox2.Checked
+            cmbUbicacion.Visible = CD.Inventario.UsaUbicacion And Not CheckBox2.Checked
             cmbUbicacion.DataSource = CD.Inventario.Ubicaciones(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario)
             cmbUbicacion.SelectedValue = CD.Ubicacion
-            cmbUbicacion.Enabled = False
+            cmbUbicacion.Enabled = Estado = Estados.Inicio Or Estado = Estados.Pendiente Or Estado = Estados.SinGuardar
 
             If CheckScroll.Checked Then TextBox5.Focus()
 
@@ -2114,8 +2116,8 @@ Public Class frmVentasN
             TextBox4.Enabled = True
         End If
 
-        lblUbicacion.Visible = Articulo.UsaUbicacion
-        cmbUbicacion.Visible = Articulo.UsaUbicacion
+        lblUbicacion.Visible = Articulo.UsaUbicacion And Not CheckBox2.Checked
+        cmbUbicacion.Visible = Articulo.UsaUbicacion And Not CheckBox2.Checked
         cmbUbicacion.DataSource = Articulo.Ubicaciones(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario)
 
 
@@ -5208,7 +5210,10 @@ Public Class frmVentasN
     End Sub
 
     Private Sub ComboBox8_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox8.SelectedIndexChanged
-
+        If IdInventario <> 0 Then
+            Dim db As New dbInventario(IdInventario, MySqlcon)
+            cmbUbicacion.DataSource = db.Ubicaciones(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario)
+        End If
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
@@ -5602,5 +5607,13 @@ Public Class frmVentasN
 
     Private Sub TextBox20_TextChanged(sender As Object, e As EventArgs) Handles TextBox20.TextChanged
 
+    End Sub
+
+    Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox2.CheckedChanged
+        If IdInventario <> 0 Then
+            Dim inv As New dbInventario(IdInventario, MySqlcon)
+            lblUbicacion.Visible = inv.UsaUbicacion And Not CheckBox2.Checked
+            cmbUbicacion.Visible = inv.UsaUbicacion And Not CheckBox2.Checked
+        End If
     End Sub
 End Class

@@ -274,4 +274,16 @@
             f.ShowDialog()
         End If
     End Sub
+
+    Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
+        Me.DialogResult = Windows.Forms.DialogResult.OK
+        Close()
+    End Sub
+
+    Public ReadOnly Property Almacen As String
+        Get
+            If DataGridView1.ColumnCount > 0 And DataGridView1.SelectedRows.Count > 0 Then Return DataGridView1.SelectedRows(0).Cells(1).Value
+            Return ""
+        End Get
+    End Property
 End Class

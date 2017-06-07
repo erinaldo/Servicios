@@ -627,6 +627,7 @@
         Aduana = 0
         lblUbicacion.Visible = False
         cmbUbicacion.Visible = False
+        cmbUbicacion.Enabled = True
 
         Button9.Enabled = False
         Button12.Enabled = False
@@ -865,6 +866,7 @@
             cmbUbicacion.Visible = articulo.UsaUbicacion
             cmbUbicacion.DataSource = articulo.Ubicaciones(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario)
             cmbUbicacion.SelectedValue = CD.Ubicacion
+            cmbUbicacion.Enabled = Estado = Estados.Inicio Or Estado = Estados.Pendiente Or Estado = Estados.SinGuardar
 
             If CheckScroll.Checked Then txtCantidad.Focus()
         Catch ex As Exception
@@ -1463,7 +1465,10 @@
     End Sub
 
     Private Sub ComboBox8_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ComboBox8.SelectedIndexChanged
-
+        If IdInventario <> 0 Then
+            Dim db As New dbInventario(IdInventario, MySqlcon)
+            cmbUbicacion.DataSource = db.Ubicaciones(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario)
+        End If
     End Sub
 
     Private Sub txtSerie_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles txtSerie.KeyDown

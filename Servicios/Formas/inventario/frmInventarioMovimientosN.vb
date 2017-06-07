@@ -375,14 +375,7 @@
                 ConPermiso = GlobalPermisos.ChecaPermiso(PermisosN.Inventario.MovimientosAltaTraspaso, PermisosN.Secciones.Inventario)
             End If
             If ConPermiso Then
-                'If idCliente <> 0 Then
                 Dim C As New dbMovimientos(MySqlcon)
-                'Dim Desglozar As Byte
-                'If CheckBox1.Checked Then
-                '    Desglozar = 1
-                'Else
-                '    Desglozar = 0
-                'End If
                 If IsNumeric(TextBox2.Text) = False Then
                     MsgBox("El folio debe ser un valor numérico", MsgBoxStyle.Critical, GlobalNombreApp)
                     Exit Sub
@@ -398,28 +391,16 @@
                 Else
                     FolioAnt = TextBox2.Text
                 End If
-                'Dim O As New dbOpciones(MySqlcon)
-                'Dim CM As New dbMonedasConversiones(MySqlcon)
-                'Dim Sf As New dbSucursalesFolios(MySqlcon)
-                'Sf.BuscaFolios(IdsSucursales.Valor(ComboBox3.SelectedIndex), dbSucursalesFolios.TipoDocumentos.Factura, iTipoFacturacion)
-                ''Dim Sc As New dbSucursalesCertificados(Sf.IdCertificado, MySqlcon)
-                'CM.Modificar(1, CDbl(TextBox10.Text))
-                'ComboBox2.SelectedIndex = IDsMonedas2.Busca(IDsMonedas.Valor(ComboBox1.SelectedIndex))
-                'C.DaTotal(idVenta, IDsMonedas2.Valor(ComboBox2.SelectedIndex))
                 C.Guardar(CInt(TextBox2.Text), Format(DateTimePicker1.Value, "yyyy/MM/dd"), IdsMovimientos.Valor(ComboBox6.SelectedIndex), TextBox11.Text, IdsSucursales.Valor(ComboBox3.SelectedIndex), CDbl(TextBox1.Text), IDsMonedas.Valor(ComboBox4.SelectedIndex), IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex), IdPedido, idCliente)
                 idMovimiento = C.ID
                 Estado = 1
-                'Button1.Text = "Modificar"
+
                 Button2.Enabled = True
                 Button1.Enabled = True
                 Button14.Enabled = True
                 Button15.Enabled = True
                 ComboBox6.Enabled = False
                 ComboBox3.Enabled = False
-                'LlenaDatosDetalles()
-                'Else
-                '   MsgBox("Debe indicar un cliente", MsgBoxStyle.Critical, GlobalNombreApp)
-                'End If
                 If GlobalconIntegracion Then
                     Panel3.Enabled = False
                 End If
@@ -880,8 +861,8 @@
             cmbUbicacionOrigen.SelectedValue = CD.Ubicacion
             cmbUbicacionDestino.DataSource = articulo.Ubicaciones(IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex), IdInventario)
             cmbUbicacionDestino.SelectedValue = CD.UbicacionD
-            cmbUbicacionDestino.Enabled = False
-            cmbUbicacionOrigen.Enabled = False
+            cmbUbicacionDestino.Enabled = Estado = Estados.Inicio Or Estado = Estados.Pendiente Or Estado = Estados.SinGuardar Or (Transito = 0 And Mov.Tipo = dbInventarioConceptos.Tipos.Traspaso)
+            cmbUbicacionOrigen.Enabled = Estado = Estados.Inicio Or Estado = Estados.Pendiente Or Estado = Estados.SinGuardar
 
             'cmbtipoarticulo.Text = "A"
             'ComboBox1.SelectedIndex = IDsMonedas.Busca(CD.IdMoneda)

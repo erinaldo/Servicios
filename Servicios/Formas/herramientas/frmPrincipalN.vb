@@ -208,7 +208,7 @@
             pnlVentasPagos.Visible = False
             pnlVentasFertilizantes.Visible = False
 
-            btnVenConOfertas.Visible = False
+            'btnVenConOfertas.Visible = False
             btnHerHerCambioPrecios.Visible = False
             btnHerHerModifiarInv.Visible = False
             btnHerHerActivarconector.Visible = True
@@ -600,11 +600,11 @@
 
 
         btnVenCapCotizaciones.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Ventas.CotizacionesVer, PermisosN.Secciones.Ventas)
-        btnVenCapPedidos.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Ventas.PedidosVer, PermisosN.Secciones.Ventas)
+        'btnVenCapPedidos.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Ventas.PedidosVer, PermisosN.Secciones.Ventas)
         btnVenCapRemisiones.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Ventas.RemisionesVer, PermisosN.Secciones.Ventas)
         btnVentasFac.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Ventas.VentasVer, PermisosN.Secciones.Ventas)
         'btnVenCapDevoluciones.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Ventas.DevolucionesVer, PermisosN.Secciones.Ventas)
-        btnVenConDevoluciones.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Ventas.DevolucionesVer, PermisosN.Secciones.Ventas)
+        'btnVenConDevoluciones.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Ventas.DevolucionesVer, PermisosN.Secciones.Ventas)
         btnVenCapNotasCredito.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Ventas.NotasdeCreditoVer, PermisosN.Secciones.Ventas)
         btnVenPagFacturas.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Ventas.PagosVer, PermisosN.Secciones.Ventas)
         btnVenPagRemisiones.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Ventas.PagosRemVer, PermisosN.Secciones.Ventas)
@@ -680,8 +680,8 @@
         btnEmpOpeCompras.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Empenios.EmpeniosComprasVer, PermisosN.Secciones.Empenios)
         btnEmpOpeCortes.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Empenios.VerCorte, PermisosN.Secciones.Empenios)
 
-        btnVenFerPedidos.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Fertilizantes.PedidosVer, PermisosN.Secciones.Fertilizantes)
-        btnVenFerReportes.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Fertilizantes.PedidosVer, PermisosN.Secciones.Fertilizantes)
+        'btnVenFerPedidos.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Fertilizantes.PedidosVer, PermisosN.Secciones.Fertilizantes)
+        'btnVenFerReportes.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Fertilizantes.PedidosVer, PermisosN.Secciones.Fertilizantes)
 
         btnConConReportes.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Contabilidad.ConfiguracionVer, PermisosN.Secciones.Contabilidad)
         btnConCatClasifPolizas.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Contabilidad.ClasificacionesPolizasVer, PermisosN.Secciones.Contabilidad)

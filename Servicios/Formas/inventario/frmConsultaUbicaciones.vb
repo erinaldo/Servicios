@@ -19,6 +19,7 @@
         DataGridView1.AutoGenerateColumns = False
         Dim dba As New dbAlmacenes(MySqlcon)
         cmbAlmacen.DataSource = dba.Consulta()
+        cmbAlmacen.SelectedIndex = -1
         Dim db As New dbInventario(idarticulo, MySqlcon)
         txtArticulo.Text = db.Nombre
         'If cmbAlmacen.SelectedIndex = -1 Then
