@@ -37,6 +37,7 @@
     Public ComentarioNC As String
     Public IvaRetenido As Double
     Public ISR As Double
+    Public TotalIeps As Double
     Public Enum TiposFactura As Byte
         Enproceso = 0
         Facturado = 1
@@ -2562,5 +2563,692 @@
             NoCertificadoSAT = "Error"
         End Try
         Return XMLTimbrado
+    End Function
+
+    Public Function CreaCadenaOriginali33(ByVal pIdVenta As Integer, ByVal pIdMoneda As Integer, ByVal pSelloDigital As String, ByVal pIdEmpresa As Integer, pXMLINE As String, pEsEgreso As Byte, pCadenaOriginalComp As String) As String
+        Dim CO As String = "|3.3|"
+
+        Dim en As New Encriptador
+        Dim Ivas As New Collection
+        Dim IvasImporte As New Collection
+        Dim IAnt As Double
+        Dim DR As MySql.Data.MySqlClient.MySqlDataReader
+        Dim Archivos As New dbSucursalesArchivos
+        Archivos.DaRutaCER(IdSucursal, pIdEmpresa, True)
+        en.Leex509(Archivos.RutaCer)
+        ID = pIdVenta
+        LlenaDatos()
+        'Dim FP As New dbFormasdePago(IdFormadePago, Comm.Connection)
+        'Dim IDNotaP As Integer
+        'Dim NotaP As New dbNotariosPublicos(MySqlcon)
+        'IDNotaP = NotaP.HayDatosNotarios(pIdVenta)
+        If TipodeCambio = 0 Then TipodeCambio = 1
+        DaTotal(ID, IdMoneda)
+        Dim Sucursal As New dbSucursales(IdSucursal, MySqlcon)
+        If Serie <> "" Then CO += Replace(Replace(Replace(Replace(Replace(Serie, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + "|"
+        CO += Folio.ToString + "|"
+        CO += Replace(Fecha, "/", "-") + "T" + Hora + "|"
+
+        'If pSelloDigital <> "" Then CO += "Sello=""" + pSelloDigital + """ "
+
+        'Dim strMetodos As String = ""
+        'Dim MeP As New dbVentasAddMetodos(Comm.Connection)
+        'DR = MeP.ConsultaReader(0, ID)
+        'DR.Read()
+        'If strMetodos <> "" Then strMetodos += ","
+        'If DR("clavesat") < 1000 Then
+        'strMetodos += Format(DR("clavesat"), "00")
+        'Else
+        'strMetodos += "NA"
+        'End If
+        'DR.Close()
+        'CO += strMetodos + "|"
+        CO += "99|"
+        If NoCertificado <> "" Then CO += NoCertificado + "|"
+        'CO += "Certificado=""" + en.Certificado64 + """ "
+
+        'CO+="CondicionesDePago="""""
+
+        CO += Format(Subtotal, "#0.00####") + "|"
+
+        'Descuento CO+="0|"
+        'Tipo deCambio nuevo
+        If IdMoneda <> 2 Then
+            Dim Moneda As New dbMonedas(IdMoneda, Comm.Connection)
+            CO += Moneda.Abreviatura + "|"
+            CO += Format(TipodeCambio, "#0.00####") + "|"
+        Else
+            CO += "MXN|"
+        End If
+
+
+        CO += Format(TotalNota, "#0.00####") + "|"
+
+
+        'Dim CP As New dbVentasCartaPorte(ID, MySqlcon)
+
+        CO += "E|"
+
+
+        'If IdFormadePago <> 98 Then
+        CO += "PUE|"
+        'End If
+
+        If Sucursal.CP2 <> "" Then
+            CO += Sucursal.CP2 + "|"
+        Else
+            CO += Sucursal.CP + "|"
+        End If
+        'Confirmacion
+        'If NoConfirmacion <> "" Then CO += NoConfirmacion + "|"
+
+        'CFDIS relacionados aqui'
+        CO += "01|"
+        DR = DaIvasUUIDS(ID)
+        While DR.Read
+            CO += DR("uuid") + "|"
+        End While
+        DR.Close()
+
+        CO += Replace(Replace(Replace(Replace(Replace(Sucursal.RFC, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + "|"
+        CO += Replace(Replace(Replace(Replace(Replace(Sucursal.NombreFiscal, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + "|"
+        CO += Sucursal.ClaveRegimen.ToString + "|"
+
+
+        CO += Replace(Replace(Replace(Replace(Replace(Cliente.RFC, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + "|"
+        CO += Replace(Replace(Replace(Replace(Replace(Cliente.Nombre, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + "|"
+        If Cliente.RFC = "XEXX010101000" Then
+            CO += Cliente.cPais + "|"
+        End If
+        'If pXMLINE.Contains("cce11:ComercioExterior") = True Then
+        '    CO += Cliente.RegIdTrib + "|"
+        'End If
+        CO += "G02|"
+
+        'Dim AduanaCol As New Collection
+        'Dim AduanaCont As Integer
+        'Dim AduanaXML As String
+        'Dim IA As New dbInventarioAduana(Comm.Connection)
+        'DR = IA.ConsultaAduanaDevReader(ID)
+        'While DR.Read
+        '    AduanaCol.Add(New InfoAduana(DR("numero"), DR("fecha"), DR("aduana"), DR("iddetalle"), DR("yvalidacion"), DR("claveaduana"), DR("patente")))
+        'End While
+        'DR.Close()
+
+        Dim VI As New dbNotasDeCreditoDetalles(MySqlcon)
+        DR = VI.ConsultaReader(ID)
+        Dim PrecioTemp As Double = 0
+        Dim ImpXML As String = ""
+        While DR.Read
+            'If DR("noimpimporte") <> 0 Then
+            'PrecioTemp = DR("noimpimporte")
+            'Else
+            PrecioTemp = DR("precio")
+            'End If
+            CO += DR("cproductoserv") + "|"
+            CO += Replace(Replace(Replace(Replace(Replace(DR("clave"), "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + "|"
+            CO += DR("cantidad").ToString + "|"
+            CO += DR("cunidad") + "|"
+            CO += Replace(Replace(Replace(Replace(Replace(DR("tipocantidad"), "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + "|"
+            Dim Des As String
+            Des = Trim(Replace(DR("descripcion"), vbCrLf, ""))
+            While Des.IndexOf("  ") <> -1
+                Des = Replace(Des, "  ", " ")
+            End While
+            Des = Replace(Des, vbTab, "")
+            CO += Replace(Replace(Replace(Replace(Replace(Replace(Des, vbCrLf, ""), "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + "|"
+
+            If DR("cantidad") <> 0 Then
+                CO += Format((PrecioTemp + DR("cdescuento")) / DR("cantidad"), "#0.00####") + "|"
+                CO += Format(PrecioTemp + DR("cdescuento"), "#0.00####") + "|"
+            Else
+                CO += "0.00|"
+                CO += "0.00|"
+            End If
+
+            'If DR("cdescuento") <> 0 Then CO += Format(DR("cdescuento"), "#0.00####") + "|"
+            ImpXML = ""
+            If DR("iva") <> 0 Or DR("ieps") <> 0 Or DR("ivaretenido") <> 0 Or ISR <> 0 Or IvaRetenido <> 0 Then
+                If DR("iva") <> 0 Or DR("ieps") <> 0 Then
+                    If DR("iva") <> 0 Then
+                        ImpXML += Format(DR("precio"), "0.00####") + "|"
+                        ImpXML += "002|"
+                        ImpXML += "Tasa|"
+                        ImpXML += Format(DR("iva") / 100, "0.000000") + "|"
+                        ImpXML += Format(DR("precio") * DR("iva") / 100, "0.00####") + "|"
+                    End If
+                    If DR("ieps") <> 0 Then
+                        ImpXML += Format(DR("precio"), "0.00####") + "|"
+                        ImpXML += "003|"
+                        ImpXML += "Tasa|"
+                        ImpXML += Format(DR("ieps") / 100, "0.000000") + "|"
+                        ImpXML += Format(DR("precio") * DR("ieps") / 100, "0.00####") + "|"
+                    End If
+                End If
+                If ISR <> 0 Or DR("ivaretenido") <> 0 Or IvaRetenido <> 0 Then
+                    If ISR <> 0 Then
+                        ImpXML += Format(DR("precio"), "0.00####") + "|"
+                        ImpXML += "001|"
+                        ImpXML += "Tasa|"
+                        ImpXML += Format(ISR / 100, "0.000000") + "|"
+                        ImpXML += Format(DR("precio") * ISR / 100, "0.00####") + "|"
+                    End If
+                    If DR("ivaretenido") <> 0 Or IvaRetenido <> 0 Then
+                        ImpXML += Format(DR("precio"), "0.00####") + "|"
+                        ImpXML += "002|"
+                        ImpXML += "Tasa|"
+                        ImpXML += Format((DR("ivaretenido") + IvaRetenido) / 100, "0.000000") + "|"
+                        ImpXML += Format(DR("precio") * (DR("ivaretenido") + IvaRetenido) / 100, "0.00####") + "|"
+                    End If
+                End If
+            End If
+
+            'AduanaCont = 0
+            'AduanaXML = ""
+            'For Each ad As InfoAduana In AduanaCol
+            '    If ad.IdDetalle = DR("iddetalle") Then
+            '        AduanaXML += ad.YValidacion + "----" + ad.ClaveAduana + "----" + ad.Patente + "----" + ad.Numero + "|"
+            '        AduanaCont += 1
+            '    End If
+            'Next
+
+            CO += ImpXML '+ AduanaXML
+        End While
+        DR.Close()
+
+        If TotalIva <> 0 Or TotalIeps <> 0 Or TotalIvaRetenida <> 0 Then
+
+            If ISR <> 0 Or IvaRetenido <> 0 Then
+                If ISR <> 0 Then
+                    CO += "001|"
+                    If pEsEgreso = 0 Then
+                        CO += Format(TotalISR, "#0.00####") + "|"
+                    Else
+                        CO += Format(If(TotalISR >= 0, TotalISR, TotalISR * -1), "#0.00####") + "|"
+                    End If
+                End If
+                If IvaRetenido <> 0 Then
+                    CO += "002|"
+                    CO += Format(TotalIvaRetenida, "#0.00####") + "|"
+                End If
+
+                If ISR <> 0 Or IvaRetenido <> 0 Then
+                    CO += Format(TotalISR + TotalIvaRetenida, "#0.00####") + "|"
+                End If
+            End If
+            If TotalIva <> 0 Or TotalIeps <> 0 Then
+                Ivas.Clear()
+                IvasImporte.Clear()
+                Dim Diodescuento As Boolean = False
+
+                DR = DaIvas(ID)
+
+                While DR.Read
+                    If Ivas.Contains(DR("iva").ToString) = False Then
+                        Ivas.Add(DR("iva"), DR("iva").ToString)
+                    End If
+                    If IvasImporte.Contains(DR("iva").ToString) = False Then
+                        If DR("precio") > 0 And Diodescuento = False Then
+                            IvasImporte.Add((DR("precio")) * (DR("iva") / 100), DR("iva").ToString)
+                            Diodescuento = True
+                        Else
+                            IvasImporte.Add(DR("precio") * (DR("iva") / 100), DR("iva").ToString)
+                        End If
+                    Else
+                        IAnt = IvasImporte(DR("iva").ToString)
+                        IvasImporte.Remove(DR("iva").ToString)
+                        If DR("precio") > 0 And Diodescuento = False Then
+                            IvasImporte.Add(IAnt + (DR("precio")) * (DR("iva") / 100), DR("iva").ToString)
+                            Diodescuento = True
+                        Else
+                            IvasImporte.Add(IAnt + DR("precio") * (DR("iva") / 100), DR("iva").ToString)
+                        End If
+                    End If
+                End While
+                DR.Close()
+                For Each I As Double In Ivas
+                    If IvasImporte(I.ToString) > 0 Then
+                        CO += "002|"
+                        CO += "Tasa|"
+                        CO += Format(I / 100, "0.000000") + "|"
+                        If pEsEgreso = 0 Then
+                            CO += Format(IvasImporte(I.ToString), "#0.00####") + "|"
+                        Else
+                            CO += Format(If(IvasImporte(I.ToString) >= 0, IvasImporte(I.ToString), IvasImporte(I.ToString) * -1), "#0.00####") + "|"
+                        End If
+                    End If
+                Next
+
+                Ivas.Clear()
+                IvasImporte.Clear()
+                DR = DaIvasIEPS(ID)
+                While DR.Read
+                    If Ivas.Contains(DR("ieps").ToString) = False Then
+                        Ivas.Add(DR("ieps"), DR("ieps").ToString)
+                    End If
+                    If IvasImporte.Contains(DR("ieps").ToString) = False Then
+                        IvasImporte.Add(DR("precio") * (DR("ieps") / 100), DR("ieps").ToString)
+                    Else
+                        IAnt = IvasImporte(DR("ieps").ToString)
+                        IvasImporte.Remove(DR("ieps").ToString)
+                        IvasImporte.Add(IAnt + (DR("precio") * (DR("ieps") / 100)), DR("ieps").ToString)
+                    End If
+                End While
+                DR.Close()
+                For Each I As Double In Ivas
+                    If IvasImporte(I.ToString) > 0 Then
+                        CO += "003|"
+                        CO += "Tasa|"
+                        CO += Format(I / 100, "0.000000") + "|"
+                        If pEsEgreso = 0 Then
+                            CO += Format(IvasImporte(I.ToString), "#0.00####") + "|"
+                        Else
+                            CO += Format(If(IvasImporte(I.ToString) >= 0, IvasImporte(I.ToString), IvasImporte(I.ToString) * -1), "#0.00####") + "|"
+                        End If
+                    End If
+                Next
+
+
+                If TotalIva <> 0 Or TotalIeps <> 0 Then
+                    CO += Format(TotalIva + TotalIeps, "#0.00####") + "|"
+                End If
+
+
+
+            End If
+        End If
+
+        'If ImpLocales.Count > 0 Then
+        '    If pEsEgreso = 0 Then
+        '        CO += "1.0|" + Format(TotalRetLocal, "#0.00####") + "|" + Format(TotalTrasLocal, "#0.00####") + "|"
+        '    Else
+        '        CO += "1.0|" + Format(If(TotalRetLocal >= 0, TotalRetLocal, TotalRetLocal * -1), "#0.00####") + "|" + Format(If(TotalTrasLocal >= 0, TotalTrasLocal, TotalTrasLocal * -1), "#0.00####") + "|"
+        '    End If
+        '    For Each Im As Implocal In ImpLocales
+        '        If Im.Tipo = 1 Then
+        '            CO += Im.Nombre + "|" + Format(Im.Tasa, "#0.00####") + "|" + Format(Im.Importe, "#0.00####") + "|"
+        '        Else
+        '            If pEsEgreso = 0 Then
+        '                CO += Im.Nombre + "|" + Format(Im.Tasa, "#0.00####") + "|" + Format(Im.Importe, "#0.00####") + "|"
+        '            Else
+        '                CO += Im.Nombre + "|" + Format(Im.Tasa, "#0.00####") + "|" + Format(If(Im.Importe >= 0, Im.Importe, Im.Importe * -1), "#0.00####") + "|"
+        '            End If
+        '        End If
+        '    Next
+        'End If
+
+        'If IDNotaP <> 0 Then
+        '    CO += NotaP.CreaCadenaOriginal(IDNotaP)
+        'End If
+        'If pCadenaOriginalComp <> "" Then
+        '    CO += pCadenaOriginalComp
+        'End If
+        CO = Replace(CO, vbCrLf, "")
+        While CO.IndexOf("||") <> -1
+            CO = Replace(CO, "||", "|")
+        End While
+        While CO.IndexOf("  ") <> -1
+            CO = Replace(CO, "  ", " ")
+        End While
+        Replace(CO, "----", "  ")
+        CO = Replace(CO, vbTab, "")
+        CO = "|" + CO + "|"
+        en.GuardaArchivoTexto("co.txt", CO, System.Text.Encoding.Default)
+        Return CO
+    End Function
+    Public Function CreaXMLi33(ByVal pIdVenta As Integer, ByVal pIdMoneda As Integer, ByVal pSelloDigital As String, ByVal pIdEmpresa As Integer, pXMLINE As String, pEsEgreso As Byte) As String
+        Dim en As New Encriptador
+        Dim XMLDoc As String
+        Dim Ivas As New Collection
+        Dim IvasImporte As New Collection
+        Dim IAnt As Double
+        XMLDoc = "<?xml version=""1.0"" encoding=""UTF-8""?>"
+        Dim DR As MySql.Data.MySqlClient.MySqlDataReader
+        XMLDoc += "<cfdi:Comprobante "
+        Dim Archivos As New dbSucursalesArchivos
+        Archivos.DaRutaCER(IdSucursal, pIdEmpresa, True)
+        en.Leex509(Archivos.RutaCer)
+        ID = pIdVenta
+        LlenaDatos()
+        'Dim FP As New dbFormasdePago(IdFormadePago, Comm.Connection)
+        If TipodeCambio = 0 Then TipodeCambio = 1
+        DaTotal(ID, IdMoneda)
+        Dim Sucursal As New dbSucursales(IdSucursal, MySqlcon)
+        XMLDoc += "Version=""3.3"" "
+        If Serie <> "" Then XMLDoc += "Serie=""" + Replace(Replace(Replace(Replace(Replace(Serie, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
+        XMLDoc += "Folio=""" + Folio.ToString + """ "
+        XMLDoc += "Fecha=""" + Replace(Fecha, "/", "-") + "T" + Hora + """ "
+        If Sucursal.RFC <> "SUL010720JN8" Then
+            XMLDoc += "Sello=""" + pSelloDigital + """ "
+        Else
+            XMLDoc += "Sello="""" "
+        End If
+
+        'Dim strMetodos As String = ""
+        'Dim MeP As New dbVentasAddMetodos(Comm.Connection)
+        'DR = MeP.ConsultaReader(0, ID)
+        'DR.Read()
+        'While DR.Read()
+        '    If strMetodos <> "" Then strMetodos += ","
+        '    If DR("clavesat") < 1000 Then
+        '        strMetodos += Format(DR("clavesat"), "00")
+        '    Else
+        '        strMetodos += "NA"
+        '    End If
+        'End While
+        'DR.Close()
+
+        XMLDoc += "FormaPago=""99"" "
+
+        If NoCertificado <> "" Then XMLDoc += "NoCertificado=""" + NoCertificado + """ "
+        If Sucursal.RFC <> "SUL010720JN8" Then
+            XMLDoc += "Certificado=""" + en.Certificado64 + """ "
+        Else
+            XMLDoc += "Certificado="""" "
+        End If
+        'xmldoc+="CondicionesDePago="""""
+
+        XMLDoc += "SubTotal=""" + Format(Subtotal, "#0.00####") + """ "
+
+
+        'If NoAprobacion <> "" Then XMLDoc += "noAprobacion=""" + NoAprobacion + """" + vbCrLf
+        'If YearAprobacion <> "" Then XMLDoc += "anoAprobacion=""" + YearAprobacion + """" + vbCrLf
+        'If Descuento + DescuentoG2 > 0 Then
+        '    If pEsEgreso = 0 Then
+        '        XMLDoc += "Descuento=""" + Format(Descuento + DescuentoG2, "#0.00####") + """ "
+        '    Else
+        '        XMLDoc += "Descuento=""" + Format(If(Descuento + DescuentoG2 >= 0, Descuento + DescuentoG2, (Descuento + DescuentoG2) * -1), "#0.00####") + """ "
+        '    End If
+        'End If
+
+        'Tipo deCambio nuevo
+        If IdMoneda <> 2 Then
+            Dim Moneda As New dbMonedas(IdMoneda, Comm.Connection)
+            XMLDoc += "Moneda=""" + Moneda.Abreviatura + """ "
+            XMLDoc += "TipoCambio=""" + Format(TipodeCambio, "#0.00####") + """ "
+        Else
+            XMLDoc += "Moneda=""MXN"" "
+        End If
+
+        XMLDoc += "Total=""" + Format(TotalNota, "#0.00####") + """ "
+        XMLDoc += "TipoDeComprobante=""E"" "
+        XMLDoc += "MetodoPago=""PUE"" "
+
+        If Sucursal.CP2 <> "" Then
+            XMLDoc += "LugarExpedicion=""" + Sucursal.CP2 + """ "
+        Else
+            XMLDoc += "LugarExpedicion=""" + Sucursal.CP + """ "
+        End If
+        'Confirmacion
+        'If NoConfirmacion <> "" Then XMLDoc += " Confirmacion=""" + NoConfirmacion + """"
+
+
+        XMLDoc += "xmlns:cfdi=""http://www.sat.gob.mx/cfd/3"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" "
+        XMLDoc += "xsi:schemaLocation=""http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd"
+
+        XMLDoc += """ "
+
+        '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        XMLDoc += ">"
+
+        'CFDIS relacionados aqui'
+        XMLDoc += "<cfdi:CfdiRelacionados TipoRelacion=""01"">"
+        DR = DaIvasUUIDS(ID)
+        While DR.Read
+            XMLDoc += "<cfdi:CfdiRelacionado UUID=""" + DR("uuid") + """/>"
+        End While
+        DR.Close()
+        XMLDoc += "</cfdi:CfdiRelacionados>"
+
+        XMLDoc += "<cfdi:Emisor Rfc=""" + Replace(Replace(Replace(Replace(Replace(Sucursal.RFC, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ Nombre=""" + Replace(Replace(Replace(Replace(Replace(Sucursal.NombreFiscal, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """"
+        XMLDoc += " RegimenFiscal=""" + Sucursal.ClaveRegimen.ToString + """"
+        XMLDoc += "/>"
+
+
+        XMLDoc += "<cfdi:Receptor Rfc=""" + Replace(Replace(Replace(Replace(Replace(Cliente.RFC, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ Nombre=""" + Replace(Replace(Replace(Replace(Replace(Cliente.Nombre, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """"
+        If Cliente.RFC = "XEXX010101000" Then
+            XMLDoc += " ResidenciaFiscal=""" + Cliente.cPais + """"
+        End If
+        If pXMLINE.Contains("cce11:ComercioExterior") = True Then
+            XMLDoc += " NumRegIdTrib=""" + Cliente.RegIdTrib + """"
+        End If
+        XMLDoc += " UsoCFDI=""G02"""
+        XMLDoc += "/>"
+
+
+        XMLDoc += "<cfdi:Conceptos>"
+
+
+
+        'Dim AduanaCol As New Collection
+        'Dim AduanaCont As Integer
+        'Dim AduanaXML As String
+        'Dim PredialXML As String
+        'Dim IA As New dbInventarioAduana(Comm.Connection)
+        ''Dim VA As New dbventasaduana(Comm.Connection)
+        ''If IA.HayViejaAduanaGlobal(ID) Then
+        'DR = IA.ConsultaAduanaDevReader(ID)
+        'While DR.Read
+        '    AduanaCol.Add(New InfoAduana(DR("numero"), DR("fecha"), DR("aduana"), DR("iddetalle"), DR("yvalidacion"), DR("claveaduana"), DR("patente")))
+        'End While
+        'DR.Close()
+        ''End If
+
+
+        Dim VI As New dbNotasDeCreditoDetalles(MySqlcon)
+        DR = VI.ConsultaReader(ID)
+        Dim PrecioTemp As Double = 0
+        Dim ImpXML As String = ""
+        While DR.Read
+            If DR("noimpimporte") <> 0 Then
+                PrecioTemp = DR("noimpimporte")
+            Else
+                PrecioTemp = DR("precio")
+            End If
+            'If DR("cantidad") <> 0 And PrecioTemp <> 0 Then
+            XMLDoc += "<cfdi:Concepto "
+            XMLDoc += "ClaveProdServ=""" + DR("cproductoserv") + """ "
+            XMLDoc += "NoIdentificacion=""" + Replace(Replace(Replace(Replace(Replace(DR("clave"), "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
+            XMLDoc += "Cantidad=""" + DR("cantidad").ToString + """ "
+            XMLDoc += "ClaveUnidad=""" + DR("cunidad") + """ "
+            XMLDoc += "Unidad=""" + Replace(Replace(Replace(Replace(Replace(DR("tipocantidad"), "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
+            Dim Des As String
+            Des = Trim(Replace(DR("descripcion"), vbCrLf, ""))
+            While Des.IndexOf("  ") <> -1
+                Des = Replace(Des, "  ", " ")
+            End While
+            Des = Replace(Des, vbTab, "")
+            XMLDoc += "Descripcion=""" + Replace(Replace(Replace(Replace(Replace(Replace(Des, vbCrLf, ""), "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
+            'If DR("idmoneda") <> 2 Then
+            '    XMLDoc += "valorUnitario=""" + Format((DR("precio") * TipodeCambio) / DR("cantidad"), "#0.00") + """" + vbCrLf
+            '    XMLDoc += "importe=""" + Format(DR("precio") * TipodeCambio, "#0.00") + """" + vbCrLf
+            '    XMLDoc += "/> " + vbCrLf
+            'Else
+
+            If DR("cantidad") <> 0 Then
+                XMLDoc += "ValorUnitario=""" + Format((PrecioTemp + DR("cdescuento")) / DR("cantidad"), "#0.00####") + """ "
+                XMLDoc += "Importe=""" + Format(PrecioTemp + DR("cdescuento"), "#0.00####") + """ "
+            Else
+                XMLDoc += "ValorUnitario=""0.00"" "
+                XMLDoc += "Importe=""0.00"" "
+            End If
+            
+            'If DR("cdescuento") <> 0 Then XMLDoc += "Descuento=""" + Format(DR("cdescuento"), "#0.00####") + """ "
+            ImpXML = ""
+            If DR("iva") <> 0 Or DR("ieps") <> 0 Or DR("ivaretenido") <> 0 Or ISR <> 0 Or IvaRetenido <> 0 Then
+                ImpXML += "<cfdi:Impuestos>"
+                If DR("iva") <> 0 Or DR("ieps") <> 0 Then
+                    ImpXML += "<cfdi:Traslados>"
+                    If DR("iva") <> 0 Then
+                        ImpXML += "<cfdi:Traslado "
+                        ImpXML += "Base=""" + Format(DR("precio"), "0.00####") + """ "
+                        ImpXML += "Impuesto=""002"" "
+                        ImpXML += "TipoFactor=""Tasa"" "
+                        ImpXML += "TasaOCuota=""" + Format(DR("iva") / 100, "0.000000") + """ "
+                        ImpXML += "Importe=""" + Format((DR("precio")) * DR("iva") / 100, "0.00####") + """/>"
+                    End If
+                    If DR("ieps") <> 0 Then
+                        ImpXML += "<cfdi:Traslado "
+                        ImpXML += "Base=""" + Format(DR("precio"), "0.00####") + """ "
+                        ImpXML += "Impuesto=""003"" "
+                        ImpXML += "TipoFactor=""Tasa"" "
+                        ImpXML += "TasaOCuota=""" + Format(DR("ieps") / 100, "0.000000") + """ "
+                        ImpXML += "Importe=""" + Format((DR("precio")) * DR("ieps") / 100, "0.00####") + """/>"
+                    End If
+                    ImpXML += "</cfdi:Traslados>"
+                End If
+                If ISR <> 0 Or DR("ivaretenido") <> 0 Or IvaRetenido <> 0 Then
+                    ImpXML += "<cfdi:Retenciones>"
+                    If ISR <> 0 Then
+                        ImpXML += "<cfdi:Retencion "
+                        ImpXML += "Base=""" + Format(DR("precio"), "0.00####") + """ "
+                        ImpXML += "Impuesto=""001"" "
+                        ImpXML += "TipoFactor=""Tasa"" "
+                        ImpXML += "TasaOCuota=""" + Format(ISR / 100, "0.000000") + """ "
+                        ImpXML += "Importe=""" + Format(DR("precio") * ISR / 100, "0.00####") + """/>"
+                    End If
+                    If DR("ivaretenido") <> 0 Or IvaRetenido Then
+                        ImpXML += "<cfdi:Retencion "
+                        ImpXML += "Base=""" + Format(DR("precio"), "0.00####") + """ "
+                        ImpXML += "Impuesto=""002"" "
+                        ImpXML += "TipoFactor=""Tasa"" "
+                        ImpXML += "TasaOCuota=""" + Format((DR("ivaretenido") + IvaRetenido) / 100, "0.000000") + """ "
+                        ImpXML += "Importe=""" + Format(DR("precio") * (DR("ivaretenido") + IvaRetenido) / 100, "0.00####") + """/>"
+                    End If
+                    ImpXML += "</cfdi:Retenciones>"
+                End If
+                ImpXML += "</cfdi:Impuestos>"
+            End If
+
+            
+            'If AduanaCont = 0 And ImpXML = "" Then
+            XMLDoc += "/> "
+            'Else
+            'XMLDoc += ">" + ImpXML + AduanaXML + PredialXML + "</cfdi:Concepto>"
+            'End If
+            'End If
+
+
+            'End If
+        End While
+        DR.Close()
+
+        XMLDoc += "</cfdi:Conceptos>"
+
+
+        If TotalIva <> 0 Or TotalIeps <> 0 Or TotalIvaRetenida <> 0 Then
+
+
+            XMLDoc += "<cfdi:Impuestos "
+            If ISR <> 0 Or IvaRetenido <> 0 Then
+                XMLDoc += "TotalImpuestosRetenidos=""" + Format(TotalISR + TotalIvaRetenida, "#0.00####") + """ "
+            End If
+            If TotalIva <> 0 Or TotalIeps <> 0 Then
+                XMLDoc += "TotalImpuestosTrasladados=""" + Format(TotalIva + TotalIeps, "#0.00####") + """ "
+            End If
+
+            XMLDoc += ">"
+            If ISR <> 0 Or IvaRetenido <> 0 Then
+                XMLDoc += "<cfdi:Retenciones>"
+                If ISR <> 0 Then
+                    XMLDoc += "<cfdi:Retencion Impuesto=""001"" "
+                    If pEsEgreso = 0 Then
+                        XMLDoc += "Importe=""" + Format(TotalISR, "#0.00####") + """/>"
+                    Else
+                        XMLDoc += "Importe=""" + Format(If(TotalISR >= 0, TotalISR, TotalISR * -1), "#0.00####") + """/>"
+                    End If
+                End If
+
+                If IvaRetenido <> 0 Then
+                    XMLDoc += "<cfdi:Retencion Impuesto=""002"" "
+
+                    XMLDoc += "Importe=""" + Format(TotalIvaRetenida, "#0.00####") + """/>"
+                End If
+
+                XMLDoc += "</cfdi:Retenciones>"
+
+            End If
+            If TotalIva <> 0 Or TotalIeps <> 0 Then
+                XMLDoc += "<cfdi:Traslados>"
+                Ivas.Clear()
+                IvasImporte.Clear()
+                Dim Diodescuento As Boolean = False
+
+                DR = DaIvas(ID)
+
+                While DR.Read
+                    If Ivas.Contains(DR("iva").ToString) = False Then
+                        Ivas.Add(DR("iva"), DR("iva").ToString)
+                    End If
+                    If IvasImporte.Contains(DR("iva").ToString) = False Then
+                        IvasImporte.Add(DR("precio") * (DR("iva") / 100), DR("iva").ToString)
+                    Else
+                        IAnt = IvasImporte(DR("iva").ToString)
+                        IvasImporte.Remove(DR("iva").ToString)
+                        IvasImporte.Add(IAnt + DR("precio") * (DR("iva") / 100), DR("iva").ToString)
+                    End If
+                End While
+                DR.Close()
+                For Each I As Double In Ivas
+                    If IvasImporte(I.ToString) > 0 Then
+                        XMLDoc += "<cfdi:Traslado Impuesto=""002"" "
+                        XMLDoc += "TipoFactor=""Tasa"" "
+                        XMLDoc += "TasaOCuota=""" + Format(I / 100, "0.000000") + """ "
+                        If pEsEgreso = 0 Then
+                            XMLDoc += "Importe=""" + Format(IvasImporte(I.ToString), "#0.00####") + """ />"
+                        Else
+                            XMLDoc += "Importe=""" + Format(If(IvasImporte(I.ToString) >= 0, IvasImporte(I.ToString), IvasImporte(I.ToString) * -1), "#0.00####") + """ />"
+                        End If
+                    End If
+                Next
+
+                Ivas.Clear()
+                IvasImporte.Clear()
+                DR = DaIvasIEPS(ID)
+                While DR.Read
+                    If Ivas.Contains(DR("ieps").ToString) = False Then
+                        Ivas.Add(DR("ieps"), DR("ieps").ToString)
+                    End If
+                    If IvasImporte.Contains(DR("ieps").ToString) = False Then
+
+                        IvasImporte.Add(DR("precio") * (DR("ieps") / 100), DR("ieps").ToString)
+
+                    Else
+                        IAnt = IvasImporte(DR("ieps").ToString)
+                        IvasImporte.Remove(DR("ieps").ToString)
+
+                        IvasImporte.Add(IAnt + (DR("precio") * (DR("ieps") / 100)), DR("ieps").ToString)
+
+
+                    End If
+                End While
+                DR.Close()
+                For Each I As Double In Ivas
+                    If IvasImporte(I.ToString) > 0 Then
+                        XMLDoc += "<cfdi:Traslado Impuesto=""003"" "
+                        XMLDoc += "TipoFactor=""Tasa"" "
+                        XMLDoc += "TasaOCuota=""" + Format(I / 100, "0.000000") + """ "
+                        If pEsEgreso = 0 Then
+                            XMLDoc += "Importe=""" + Format(IvasImporte(I.ToString), "#0.00####") + """ />"
+                        Else
+                            XMLDoc += "Importe=""" + Format(If(IvasImporte(I.ToString) >= 0, IvasImporte(I.ToString), IvasImporte(I.ToString) * -1), "#0.00####") + """ />"
+                        End If
+                    End If
+                Next
+                XMLDoc += "</cfdi:Traslados>"
+            End If
+            XMLDoc += "</cfdi:Impuestos>"
+        End If
+        XMLDoc += "</cfdi:Comprobante>"
+        Return XMLDoc
+
+    End Function
+    Public Function DaIvasIEPS(ByVal pId As Integer) As MySql.Data.MySqlClient.MySqlDataReader
+        Comm.CommandText = "select ieps,precio,idmoneda from tblnotasdecreditodetalles where idnota=" + pId.ToString
+        Return Comm.ExecuteReader
+    End Function
+    Public Function DaIvasUUIDS(ByVal pId As Integer) As MySql.Data.MySqlClient.MySqlDataReader
+        Comm.CommandText = "select vt.uuid from tblnotasdecreditodetalles nd inner join tblventastimbrado vt where nd.idventa=vt.idventa where vt.idnota=" + pId.ToString
+        Return Comm.ExecuteReader
     End Function
 End Class

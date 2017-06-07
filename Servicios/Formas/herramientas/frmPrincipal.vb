@@ -1401,7 +1401,7 @@ Public Class frmPrincipal
     Private Sub ToolStripButton8_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles toolInvConsulta.Click
         CierraVentanas()
         If BuscaVentanas("frmInventarioConsulta") = False Then
-            Dim f As New frmInventarioConsulta(0)
+            Dim f As New frmInventarioConsulta(0, 0, 0)
             f.MdiParent = Me
             f.Show()
         End If

@@ -161,8 +161,8 @@
                 Dim rangodesde As String
                 Dim rangohasta As String
                 Dim filtros As String = ""
-                Dim C1 As String = SelectorCuentas1.DaCuentatxt
-                Dim c2 As String = SelectorCuentas2.DaCuentatxt
+                Dim C1 As String = SelectorCuentas1.DaCuentatxt.Replace(" ", "")
+                Dim c2 As String = SelectorCuentas2.DaCuentatxt.Replace(" ", "")
                 If C1 <> "" Then
                     rangodesde = C1
                     filtros += "DE POLIZA: " + C1
@@ -299,8 +299,8 @@
                 Dim Rep As CrystalDecisions.CrystalReports.Engine.ReportDocument
                 Dim s As New dbSucursales(GlobalIdSucursalDefault, MySqlcon)
                 Rep = New repContabilidadAuxiliarCuentas
-                Dim C1 As String = SelectorCuentas1.DaCuentatxt()
-                Dim C2 As String = SelectorCuentas2.DaCuentatxt()
+                Dim C1 As String = SelectorCuentas1.DaCuentatxt().Replace(" ", "")
+                Dim C2 As String = SelectorCuentas2.DaCuentatxt().Replace(" ", "")
                 If C2 = "" Then C2 = C1
                 C2 = C2.PadRight(p.NNiv1 + p.NNiv2 + p.NNiv3 + p.NNiv4 + p.NNiv5, "9")
                 p.todosLosSaldos(dtpdesde.Value.ToString("yyyy/MM/dd"), dtpHasta.Value.ToString("yyyy/MM/dd"), C1, C2)

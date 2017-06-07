@@ -115,8 +115,9 @@
             BotonNuevo()
         End If
         If e.KeyCode = Keys.F6 And IdInventario <> 0 Then
-            Dim f As New frmInventarioConsulta(IdInventario)
+            Dim f As New frmInventarioConsulta(IdInventario, 0, 0)
             f.ShowDialog()
+            f.Dispose()
         End If
         If e.KeyCode = Keys.F7 And IdInventario <> 0 And EsKit <> 0 And IdDetalle <> 0 Then
             Dim IDe As New frmInventarioDetalles(IdInventario, 4, IdDetalle, idPedido)

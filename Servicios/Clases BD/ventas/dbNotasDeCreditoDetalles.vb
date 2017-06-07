@@ -14,6 +14,12 @@
     Public Extra As String
     Public Descuento As Double
     Public IdVariante As Integer
+    Public IvaRetenido As Double
+    Public Ieps As Double
+    Public CproductoServ As String
+    Public Cunidad As String
+    Public BaseRet As Double
+    Public BaseIeps As Double
     Dim Comm As New MySql.Data.MySqlClient.MySqlCommand
 
     Public Sub New(ByVal Conexion As MySql.Data.MySqlClient.MySqlConnection)
@@ -51,13 +57,17 @@
             Extra = DReader("extra")
             Descuento = DReader("descuento")
             IdVariante = DReader("idventa")
+            IvaRetenido = DReader("ivaretenido")
+            Ieps = DReader("ieps")
+            CproductoServ = DReader("cproductoserv")
+            Cunidad = DReader("cunidad")
         End If
         DReader.Close()
         'If Idinventario > 1 Then Inventario = New dbInventario(Idinventario, Comm.Connection)
         'If IdVariante > 1 Then Producto = New dbProductosVariantes(IdVariante, Comm.Connection)
         Moneda = New dbMonedas(IdMoneda, Comm.Connection)
     End Sub
-    Public Sub Guardar(ByVal pIdVenta As Integer, ByVal pIdinventario As Integer, ByVal pCantidad As Double, ByVal pPrecio As Double, ByVal pIdMoneda As Integer, ByVal pDescripcion As String, ByVal pIva As Double, ByVal pDescuento As Double, ByVal pIdVariante As Integer)
+    Public Sub Guardar(ByVal pIdVenta As Integer, ByVal pIdinventario As Integer, ByVal pCantidad As Double, ByVal pPrecio As Double, ByVal pIdMoneda As Integer, ByVal pDescripcion As String, ByVal pIva As Double, ByVal pDescuento As Double, ByVal pIdVariante As Integer, pIvaRet As Double, pIEPS As Double, pCPS As String, pCU As String)
         'Dim CTemp As Double
         'Dim PTemp As Double
         Idinventario = pIdinventario
@@ -71,48 +81,16 @@
         Descuento = pDescuento
         IdVariante = pIdVariante
 
-        'Dim IdTemp As Integer
-        'If Idinventario <> 0 Then
-        '    Comm.CommandText = "select ifnull((select iddetalle from tblnotasdecreditodetalles where idnota=" + IdVenta.ToString + " and idinventario=" + Idinventario.ToString + "),0)"
-        '    IdTemp = Comm.ExecuteScalar
-        'Else
-        '    Idinventario = 1
-        'End If
-        'If IdVariante <> 0 Then
-        '    Comm.CommandText = "select ifnull((select iddetalle from tblventascotizacionesinventario where idcotizacion=" + IdVenta.ToString + " and idvariante=" + IdVariante.ToString + "),0)"
-        '    IdTemp = Comm.ExecuteScalar
-        'Else
-        '    IdVariante = 1
-        'End If
-
-
-        'If IdTemp <> 0 Then
-        '    Comm.CommandText = "select cantidad from tblventascotizacionesinventario where iddetalle=" + IdTemp.ToString
-        '    CTemp = Comm.ExecuteScalar
-        '    Comm.CommandText = "select precio from tblventascotizacionesinventario where iddetalle=" + IdTemp.ToString
-        '    PTemp = Comm.ExecuteScalar
-        '    If PTemp <> 0 Then
-        '        Precio = PTemp / CTemp
-        '    Else
-        '        Precio = 0
-        '    End If
-        '    Cantidad += CTemp
-        '    Precio = Precio * Cantidad
-        '    Comm.CommandText = "update tblventascotizacionesinventario set cantidad=" + Cantidad.ToString + ",precio=" + Precio.ToString + " where iddetalle=" + IdTemp.ToString
-        '    Comm.ExecuteNonQuery()
-        '    ID = IdTemp
-        '    LlenaDatos()
-        '    NuevoConcepto = False
-        'Else
+        
         NuevoConcepto = True
-        Comm.CommandText = "insert into tblnotasdecreditodetalles(idnota,idinventario,cantidad,precio,descripcion,idmoneda,iva,extra,descuento,idventa) values(" + IdVenta.ToString + "," + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + ",'" + Replace(Descripcion, "'", "''") + "'," + IdMoneda.ToString + "," + Iva.ToString + ",''," + Descuento.ToString + "," + IdVariante.ToString + ")"
+        Comm.CommandText = "insert into tblnotasdecreditodetalles(idnota,idinventario,cantidad,precio,descripcion,idmoneda,iva,extra,descuento,idventa,cproductoserv,cunidad,ivaretenido,ieps) values(" + IdVenta.ToString + "," + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + ",'" + Replace(Descripcion, "'", "''") + "'," + IdMoneda.ToString + "," + Iva.ToString + ",''," + Descuento.ToString + "," + IdVariante.ToString + ",'" + pCPS + "','" + pCU + "'," + pIvaRet.ToString + "," + pIEPS.ToString + ")"
         Comm.ExecuteNonQuery()
         Comm.CommandText = "select ifnull((select max(iddetalle) from tblnotasdecreditodetalles),0)"
         ID = Comm.ExecuteScalar
         'End If
 
     End Sub
-    Public Sub Modificar(ByVal pID As Integer, ByVal pCantidad As Double, ByVal pPrecio As Double, ByVal pIdMoneda As Integer, ByVal pDescripcion As String, ByVal piva As Double, ByVal pDescuento As Double)
+    Public Sub Modificar(ByVal pID As Integer, ByVal pCantidad As Double, ByVal pPrecio As Double, ByVal pIdMoneda As Integer, ByVal pDescripcion As String, ByVal piva As Double, ByVal pDescuento As Double, pIvaRet As Double, pIEPS As Double, pCPS As String, pCU As String)
         ID = pID
         Cantidad = pCantidad
         Precio = pPrecio
@@ -120,7 +98,7 @@
         Descripcion = pDescripcion
         Iva = piva
         Descuento = pDescuento
-        Comm.CommandText = "update tblnotasdecreditodetalles set precio=" + Precio.ToString + ",idmoneda=" + IdMoneda.ToString + ",cantidad=" + Cantidad.ToString + ",descripcion='" + Replace(Descripcion, "'", "''") + "',iva=" + Iva.ToString + ",descuento=" + Descuento.ToString + " where iddetalle=" + ID.ToString
+        Comm.CommandText = "update tblnotasdecreditodetalles set precio=" + Precio.ToString + ",idmoneda=" + IdMoneda.ToString + ",cantidad=" + Cantidad.ToString + ",descripcion='" + Replace(Descripcion, "'", "''") + "',iva=" + Iva.ToString + ",descuento=" + Descuento.ToString + ",cproductoserv='" + pCPS + "',cunidad='" + pCU + "',ivaretenido=" + pIvaRet.ToString + ",ieps=" + pIEPS.ToString + " where iddetalle=" + ID.ToString
         Comm.ExecuteNonQuery()
     End Sub
 
@@ -136,7 +114,7 @@
         Return DS.Tables("tblnotasdecreditodetalles").DefaultView
     End Function
     Public Function ConsultaReader(ByVal pIdVenta As Integer) As MySql.Data.MySqlClient.MySqlDataReader
-        Comm.CommandText = "select tvi.iddetalle,tvi.descripcion,tvi.cantidad,tvi.precio,tblmonedas.abreviatura,tvi.iva,tvi.idmoneda,tvi.idventa,tvi.idinventario," + _
+        Comm.CommandText = "select tvi.iddetalle,tvi.descripcion,tvi.cantidad,tvi.precio,tblmonedas.abreviatura,tvi.iva,tvi.idmoneda,tvi.idventa,tvi.idinventario,tvi.cproductoserv,tvi.cunidad,tvi.ieps,tvi.ivaretenido," + _
         "case tvi.idinventario when 0 then ifnull((select serie from tblventas where idventa=tvi.idventa limit 1),'') when 1 then ifnull((select serie from tblnotasdecargo where idcargo=tvi.idventa limit 1),'') when 2 then ifnull((select serie from tbldocumentosclientes where iddocumento=tvi.idventa limit 1),'') when 3 then ifnull((select seriereferencia from tbldocumentosclientes where iddocumento=tvi.idventa limit 1),'') end as serieventa," + _
         "case tvi.idinventario when 0 then ifnull((select folio from tblventas where idventa=tvi.idventa limit 1),0) when 1 then ifnull((select folio from tblnotasdecargo where idcargo=tvi.idventa limit 1),0) when 2 then ifnull((select folio from tbldocumentosclientes where iddocumento=tvi.idventa limit 1),0) when 3 then ifnull((select folioreferencia from tbldocumentosclientes where iddocumento=tvi.idventa limit 1),0) end as folioventa" + _
         " from tblnotasdecreditodetalles tvi inner join tblmonedas on tvi.idmoneda=tblmonedas.idmoneda where tvi.idnota=" + pIdVenta.ToString

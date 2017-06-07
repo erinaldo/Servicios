@@ -178,9 +178,9 @@ Public Class frmVentasN
         End If
         If e.KeyCode = Keys.F6 And IdInventario <> 0 And Estado <= 2 Then
             If GlobalPermisos.ChecaPermiso(PermisosN.Ventas.Consultas, PermisosN.Secciones.Ventas) = True Then
-                Dim f As New frmInventarioConsulta(IdInventario)
-                If f.ShowDialog() = Windows.Forms.DialogResult.OK And f.Almacen <> "" Then
-                    ComboBox8.Text = f.Almacen
+                Dim f As New frmInventarioConsulta(IdInventario, 1, IdsSucursales.Valor(ComboBox3.SelectedIndex))
+                If f.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                    ComboBox8.SelectedIndex = IdsAlmacenes.Busca(f.IdAlmacen)
                 End If
                 f.Dispose()
             End If
@@ -226,7 +226,7 @@ Public Class frmVentasN
             Next
             Button3.Enabled = True
         Else
-            Try  
+            Try
                 P = New dbDescuentos(MySqlcon)
                 CD = New dbVentasInventario(MySqlcon)
                 Op = New dbOpciones(MySqlcon)
@@ -293,7 +293,7 @@ Public Class frmVentasN
             LlenaCombos("tblsucursales", ComboBox3, "nombre", "nombret", "idsucursal", IdsSucursales)
             ComboBox3.SelectedIndex = IdsSucursales.Busca(GlobalIdSucursalDefault)
             'ConsultaOn = False
-            
+
             LlenaCombos("tblmonedas", ComboBox1, "nombre", "nombrem", "idmoneda", IDsMonedas, "idmoneda>1")
             LlenaCombos("tblmonedas", ComboBox2, "nombre", "nombrem", "idmoneda", IDsMonedas2, "idmoneda>1")
             LlenaCombos("tblvendedores", ComboBox5, "nombre", "nombret", "idvendedor", IdsVendedores)
@@ -360,8 +360,8 @@ Public Class frmVentasN
                 Nuevo()
                 CrearDesdePago(IdClienteOrigen)
             End If
-            End If
-            Panel4.Left = (Me.Size.Width / 2) - (Me.MinimumSize.Width / 2 - 1)
+        End If
+        Panel4.Left = (Me.Size.Width / 2) - (Me.MinimumSize.Width / 2 - 1)
     End Sub
 
     Private Sub SacaTotal()
@@ -833,7 +833,7 @@ Public Class frmVentasN
             If pEstado = Estados.Guardada And Math.Round(TotalAgregado, 2) <> Math.Round(TotalVenta, 2) And TotalAgregado > 0 Then
                 MensajeError += " Los métodos de pago no estan agregados correctamente."
             End If
-            
+
             If MensajeError = "" Then
                 Dim PorSutir As Byte
                 Desglozar = 0
@@ -1156,7 +1156,7 @@ Public Class frmVentasN
         IvaRetenido = C.IvaRetenido
         TextBox18.Text = C.SobreEscribeImpLoc.ToString
         Isr = C.ISR
-        
+
         If C.PorSurtir = 1 Then
             CheckBox2.Checked = True
         Else
@@ -1451,14 +1451,14 @@ Public Class frmVentasN
                             MsgError += "No se puede agregar mas conceptos en una factura que se generó de ""Crear desde""."
                             HayError = True
                         End If
-                End If
-            Else
-                If idRemisiones.Length <> 0 Then
-                    If idRemisiones(0) <> 0 Then
-                        EsCrearDesde = True
+                    End If
+                Else
+                    If idRemisiones.Length <> 0 Then
+                        If idRemisiones(0) <> 0 Then
+                            EsCrearDesde = True
+                        End If
                     End If
                 End If
-            End If
             End If
             If Almacen.TienePermiso(IdsAlmacenes.Valor(ComboBox8.SelectedIndex)) = False Then
                 HayError = True
@@ -1517,132 +1517,132 @@ Public Class frmVentasN
                     MsgError += " El precio debe ser un valor mayor a 0."
                     HayError = True
                 End If
+            End If
+
+
+            If IdInventario <> 0 And GlobalSoloExistencia = True And I.Inventariable = 1 And CheckBox2.Checked = False And EsCrearDesde = False Then
+                Dim Cant As Double
+                Cant = I.DaInventario(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario)
+                If I.Contenido <> 1 Then
+                    Cant = Cant * I.Contenido
                 End If
-
-
-                If IdInventario <> 0 And GlobalSoloExistencia = True And I.Inventariable = 1 And CheckBox2.Checked = False And EsCrearDesde = False Then
-                    Dim Cant As Double
-                    Cant = I.DaInventario(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario)
-                    If I.Contenido <> 1 Then
-                        Cant = Cant * I.Contenido
-                    End If
-                    If Cant < CDbl(TextBox5.Text) And I.Inventariable = 1 Then
-                        MsgError += " Artículo sin existencia suficiente." + vbCrLf + "Cantidad disponible: " + Cant.ToString + vbCrLf + "Cantidad solicitada: " + TextBox5.Text + vbCrLf + "Diferencia: " + CStr(Cant - CDbl(TextBox5.Text))
-                        HayError = True
-                    End If
-                    If EsKit = 1 Then
-                        Dim Str As String
-                        Str = I.ChecaInventarioKits(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario, CDbl(TextBox5.Text))
-                        MsgError += Str
-                        If Str <> "" Then HayError = True
-                    End If
+                If Cant < CDbl(TextBox5.Text) And I.Inventariable = 1 Then
+                    MsgError += " Artículo sin existencia suficiente." + vbCrLf + "Cantidad disponible: " + Cant.ToString + vbCrLf + "Cantidad solicitada: " + TextBox5.Text + vbCrLf + "Diferencia: " + CStr(Cant - CDbl(TextBox5.Text))
+                    HayError = True
                 End If
-                If HayError = False Then
+                If EsKit = 1 Then
+                    Dim Str As String
+                    Str = I.ChecaInventarioKits(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario, CDbl(TextBox5.Text))
+                    MsgError += Str
+                    If Str <> "" Then HayError = True
+                End If
+            End If
+            If HayError = False Then
 
-                    If PrecioNeto = 1 Then
-                        Dim Temp As Double
-                        Temp = CStr(CDbl(TextBox6.Text) / (1 + (CDbl(TextBox8.Text) - Isr - IvaRetenido + CDbl(txtIEPS.Text) - CDbl(txtIVARetenido.Text)) / 100) / CDbl(TextBox5.Text))
-                        TextBox12.Text = Temp.ToString
-                    End If
-                    If CantidadMostrar = 0 Then TipoCantidadMostrar = TipoCantidad
-                    If CantidadMostrar = 0 Then CantidadMostrar = CDbl(TextBox5.Text)
-                    If SinConcersion Then CantidadMostrar = CDbl(TextBox5.Text)
-                    If Button4.Text = "Agregar Concepto" Then
-                        If SeparaKit = 0 Then
+                If PrecioNeto = 1 Then
+                    Dim Temp As Double
+                    Temp = CStr(CDbl(TextBox6.Text) / (1 + (CDbl(TextBox8.Text) - Isr - IvaRetenido + CDbl(txtIEPS.Text) - CDbl(txtIVARetenido.Text)) / 100) / CDbl(TextBox5.Text))
+                    TextBox12.Text = Temp.ToString
+                End If
+                If CantidadMostrar = 0 Then TipoCantidadMostrar = TipoCantidad
+                If CantidadMostrar = 0 Then CantidadMostrar = CDbl(TextBox5.Text)
+                If SinConcersion Then CantidadMostrar = CDbl(TextBox5.Text)
+                If Button4.Text = "Agregar Concepto" Then
+                    If SeparaKit = 0 Then
                         CD.Guardar(idVenta, IdInventario, CDbl(TextBox5.Text), CDbl(TextBox6.Text), IDsMonedas.Valor(ComboBox1.SelectedIndex), Trim(TextBox4.Text), IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), IdVariante, IdServicio, I.Inventariable, CantidadMostrar, TipoCantidadMostrar, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), ComboBox7.Text, CDbl(TextBox17.Text), If(cmbUbicacion.Visible, cmbUbicacion.SelectedValue, ""))
-                            'agregar descuento
-                            hayDescuento()
-                            IdDetalle = CD.ID
-                        Else
-                            If EsKit = 1 And SeparaKit = 1 Then
-                            CD.SeparaKit(idVenta, IdInventario, CDbl(TextBox5.Text), CDbl(TextBox6.Text), IDsMonedas.Valor(ComboBox1.SelectedIndex), Trim(TextBox4.Text), IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), IdVariante, IdServicio, I.Inventariable, CantidadMostrar, TipoCantidadMostrar, CDbl(txtIEPS.Text), CDbl(txtIVARetenido.Text), CDbl(TextBox17.Text))
-                                IdDetalle = 0
-                            End If
-                        End If
-                        If EsKit = 1 And SeparaKit = 0 Then
-                            Dim IKits As New dbVentasKits(MySqlcon)
-                            IKits.InsertarArticulos(IdInventario, idVenta, CD.ID, CDbl(TextBox5.Text), IdsAlmacenes.Valor(ComboBox8.SelectedIndex))
-                        End If
-                        If CheckBox2.Checked Then CheckBox2.Enabled = False
-                        If IdInventario <> 0 Then
-                            If ManejaSeries <> 0 Then
-                                If CD.NuevoConcepto Then
-                                    Dim F As New frmVentasAsignaSeries(IdInventario, idVenta, 0, CInt(TextBox5.Text))
-                                    F.ShowDialog()
-                                    F.Dispose()
-                                Else
-                                    Dim F As New frmVentasAsignaSeries(IdInventario, idVenta, 0, CD.Cantidad)
-                                    F.ShowDialog()
-                                    F.Dispose()
-                                End If
-                            End If
-                            If I.KitconSerie(IdInventario) > 0 Then
-                                Dim IDe As New frmInventarioDetalles(IdInventario, 1, IdDetalle, idVenta)
-                                IDe.ShowDialog()
-                                IDe.Dispose()
-                            End If
-                            If PorLotes = 1 Then
-                                Dim F As New frmInventarioLotes(IdDetalle, 0, 0, 0, CDbl(TextBox5.Text), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
-                                F.ShowDialog()
-                                F.Dispose()
-                            End If
-                            If Aduana = 1 Then
-                                Dim F As New frmInventarioAduana(IdDetalle, 0, 0, 0, CDbl(TextBox5.Text), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
-                                F.ShowDialog()
-                                F.Dispose()
-                            End If
-                            'Dim I As New dbInventario(MySqlcon)
-                            'I.MovimientoDeInventario(IdInventario, CDbl(TextBox5.Text), 0, dbInventario.TipoMovimiento.Baja, IdsAlmacenes.Valor(ComboBox8.SelectedIndex))
-                        End If
-                        ConsultaDetalles()
-                        NuevoConcepto()
-                        'PopUp("Artículo agregado", 90)
+                        'agregar descuento
+                        hayDescuento()
+                        IdDetalle = CD.ID
                     Else
-                        tipoElimianr = P.BuscarTipo(P.HayDescuento(CD.BuscaridInventario(IdDetalle), fechaFormato() + " " + horaFormato(), IdsSucursales.Valor(ComboBox3.SelectedIndex)))
-                    CD.Modificar(IdDetalle, CDbl(TextBox5.Text), CDbl(TextBox6.Text), IDsMonedas.Valor(ComboBox1.SelectedIndex), TextBox4.Text, CDbl(TextBox8.Text), CDbl(TextBox9.Text), CantidadMostrar, TipoCantidadMostrar, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), ComboBox7.Text, CDbl(TextBox17.Text))
-                        If tipoElimianr = "Promocion" Then
-                            modificarDescuento(P.descModificar(IdDetalle, "VentasN"))
-                        Else
-                            If P.descModificar(IdDetalle, "VentasN") <> 0 Then
-                                modificarDescuento(P.descModificar(IdDetalle, "VentasN"))
-                            End If
+                        If EsKit = 1 And SeparaKit = 1 Then
+                            CD.SeparaKit(idVenta, IdInventario, CDbl(TextBox5.Text), CDbl(TextBox6.Text), IDsMonedas.Valor(ComboBox1.SelectedIndex), Trim(TextBox4.Text), IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox8.Text), CDbl(TextBox9.Text), IdVariante, IdServicio, I.Inventariable, CantidadMostrar, TipoCantidadMostrar, CDbl(txtIEPS.Text), CDbl(txtIVARetenido.Text), CDbl(TextBox17.Text))
+                            IdDetalle = 0
                         End If
-
-                        If EsKit = 1 Then
-                            Dim IKits As New dbVentasKits(MySqlcon)
-                            IKits.ModificaArtículos(IdDetalle, CDbl(TextBox5.Text), IdInventario)
-                        End If
-                        If IdInventario <> 0 Then
-                            If ManejaSeries <> 0 Then
-                                Dim F As New frmVentasAsignaSeries(IdInventario, idVenta, 0, CDbl(TextBox5.Text))
-                                F.ShowDialog()
-                                F.Dispose()
-                            End If
-                            If I.KitconSerie(IdInventario) > 0 Then
-                                Dim IDe As New frmInventarioDetalles(IdInventario, 1, IdDetalle, idVenta)
-                                IDe.ShowDialog()
-                                IDe.Dispose()
-                            End If
-                            If PorLotes = 1 Then
-                                Dim F As New frmInventarioLotes(IdDetalle, 0, 0, 0, CDbl(TextBox5.Text), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
-                                F.ShowDialog()
-                                F.Dispose()
-                            End If
-                            If Aduana = 1 Then
-                                Dim F As New frmInventarioAduana(IdDetalle, 0, 0, 0, CDbl(TextBox5.Text), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
-                                F.ShowDialog()
-                                F.Dispose()
-                            End If
-                            'Dim I As New dbInventario(MySqlcon)
-                            'I.MovimientoDeInventario(IdInventario, CDbl(TextBox5.Text), CantAnt, dbInventario.TipoMovimiento.CambioBaja, IdAlmacen)
-                        End If
-                        ConsultaDetalles()
-                        NuevoConcepto()
-                        'PopUp("Artículo modificado", 90)
                     End If
+                    If EsKit = 1 And SeparaKit = 0 Then
+                        Dim IKits As New dbVentasKits(MySqlcon)
+                        IKits.InsertarArticulos(IdInventario, idVenta, CD.ID, CDbl(TextBox5.Text), IdsAlmacenes.Valor(ComboBox8.SelectedIndex))
+                    End If
+                    If CheckBox2.Checked Then CheckBox2.Enabled = False
+                    If IdInventario <> 0 Then
+                        If ManejaSeries <> 0 Then
+                            If CD.NuevoConcepto Then
+                                Dim F As New frmVentasAsignaSeries(IdInventario, idVenta, 0, CInt(TextBox5.Text))
+                                F.ShowDialog()
+                                F.Dispose()
+                            Else
+                                Dim F As New frmVentasAsignaSeries(IdInventario, idVenta, 0, CD.Cantidad)
+                                F.ShowDialog()
+                                F.Dispose()
+                            End If
+                        End If
+                        If I.KitconSerie(IdInventario) > 0 Then
+                            Dim IDe As New frmInventarioDetalles(IdInventario, 1, IdDetalle, idVenta)
+                            IDe.ShowDialog()
+                            IDe.Dispose()
+                        End If
+                        If PorLotes = 1 Then
+                            Dim F As New frmInventarioLotes(IdDetalle, 0, 0, 0, CDbl(TextBox5.Text), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
+                            F.ShowDialog()
+                            F.Dispose()
+                        End If
+                        If Aduana = 1 Then
+                            Dim F As New frmInventarioAduana(IdDetalle, 0, 0, 0, CDbl(TextBox5.Text), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
+                            F.ShowDialog()
+                            F.Dispose()
+                        End If
+                        'Dim I As New dbInventario(MySqlcon)
+                        'I.MovimientoDeInventario(IdInventario, CDbl(TextBox5.Text), 0, dbInventario.TipoMovimiento.Baja, IdsAlmacenes.Valor(ComboBox8.SelectedIndex))
+                    End If
+                    ConsultaDetalles()
+                    NuevoConcepto()
+                    'PopUp("Artículo agregado", 90)
                 Else
-                    MsgBox(MsgError, MsgBoxStyle.Critical, GlobalNombreApp)
+                    tipoElimianr = P.BuscarTipo(P.HayDescuento(CD.BuscaridInventario(IdDetalle), fechaFormato() + " " + horaFormato(), IdsSucursales.Valor(ComboBox3.SelectedIndex)))
+                    CD.Modificar(IdDetalle, CDbl(TextBox5.Text), CDbl(TextBox6.Text), IDsMonedas.Valor(ComboBox1.SelectedIndex), TextBox4.Text, CDbl(TextBox8.Text), CDbl(TextBox9.Text), CantidadMostrar, TipoCantidadMostrar, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), ComboBox7.Text, CDbl(TextBox17.Text))
+                    If tipoElimianr = "Promocion" Then
+                        modificarDescuento(P.descModificar(IdDetalle, "VentasN"))
+                    Else
+                        If P.descModificar(IdDetalle, "VentasN") <> 0 Then
+                            modificarDescuento(P.descModificar(IdDetalle, "VentasN"))
+                        End If
+                    End If
+
+                    If EsKit = 1 Then
+                        Dim IKits As New dbVentasKits(MySqlcon)
+                        IKits.ModificaArtículos(IdDetalle, CDbl(TextBox5.Text), IdInventario)
+                    End If
+                    If IdInventario <> 0 Then
+                        If ManejaSeries <> 0 Then
+                            Dim F As New frmVentasAsignaSeries(IdInventario, idVenta, 0, CDbl(TextBox5.Text))
+                            F.ShowDialog()
+                            F.Dispose()
+                        End If
+                        If I.KitconSerie(IdInventario) > 0 Then
+                            Dim IDe As New frmInventarioDetalles(IdInventario, 1, IdDetalle, idVenta)
+                            IDe.ShowDialog()
+                            IDe.Dispose()
+                        End If
+                        If PorLotes = 1 Then
+                            Dim F As New frmInventarioLotes(IdDetalle, 0, 0, 0, CDbl(TextBox5.Text), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
+                            F.ShowDialog()
+                            F.Dispose()
+                        End If
+                        If Aduana = 1 Then
+                            Dim F As New frmInventarioAduana(IdDetalle, 0, 0, 0, CDbl(TextBox5.Text), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
+                            F.ShowDialog()
+                            F.Dispose()
+                        End If
+                        'Dim I As New dbInventario(MySqlcon)
+                        'I.MovimientoDeInventario(IdInventario, CDbl(TextBox5.Text), CantAnt, dbInventario.TipoMovimiento.CambioBaja, IdAlmacen)
+                    End If
+                    ConsultaDetalles()
+                    NuevoConcepto()
+                    'PopUp("Artículo modificado", 90)
                 End If
+            Else
+                MsgBox(MsgError, MsgBoxStyle.Critical, GlobalNombreApp)
+            End If
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, GlobalNombreApp)
         End Try
@@ -2020,7 +2020,7 @@ Public Class frmVentasN
                 Select Case B.Tipo
                     Case "I"
                         LlenaDatosArticulo(B.Inventario)
-                    
+
                 End Select
                 If UsaFormula = 1 Then
                     Dim Fo As New frmInventarioFormula01(ArtArticulo)
@@ -2123,7 +2123,7 @@ Public Class frmVentasN
 
         ConsultaOn = True
     End Sub
-    
+
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
         Me.Close()
     End Sub
@@ -2696,13 +2696,13 @@ Public Class frmVentasN
             Dim strXML As String
             V.NoCertificadoSAT = ""
             V.DaDatosTimbrado(idVenta)
-            
+
             If pCadenaOriginalComp <> "" Then
                 strXML = V.CreaXMLi33(idVenta, GlobalIdMoneda, Sello, GlobalIdEmpresa, pXMLAdenda, Op.FacturaComoegreso)
             Else
                 strXML = V.CreaXMLi33(idVenta, GlobalIdMoneda, Sello, GlobalIdEmpresa, "", Op.FacturaComoegreso)
             End If
-            
+
 
             Dim S As New dbSucursales(V.IdSucursal, MySqlcon)
             If (V.uuid = "**No Timbrado**" Or V.uuid = "") And pEstado = Estados.Guardada Then
@@ -2749,7 +2749,7 @@ Public Class frmVentasN
                         HuboError = True
                     End If
                 End If
-                
+
 
                 If GlobalPacCFDI = 2 Then
                     en.GuardaArchivoTexto("temp.xml", strXML, System.Text.Encoding.UTF8)

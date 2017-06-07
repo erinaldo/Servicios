@@ -35,6 +35,8 @@ Partial Class frmNotasdeCredito
         Me.ComboBox2 = New System.Windows.Forms.ComboBox()
         Me.Button14 = New System.Windows.Forms.Button()
         Me.Button1 = New System.Windows.Forms.Button()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.TextBox3 = New System.Windows.Forms.TextBox()
         Me.TextBox13 = New System.Windows.Forms.TextBox()
         Me.Button15 = New System.Windows.Forms.Button()
         Me.Label25 = New System.Windows.Forms.Label()
@@ -60,7 +62,6 @@ Partial Class frmNotasdeCredito
         Me.TextBox12 = New System.Windows.Forms.TextBox()
         Me.Label23 = New System.Windows.Forms.Label()
         Me.TextBox9 = New System.Windows.Forms.TextBox()
-        Me.cmbVariante = New System.Windows.Forms.ComboBox()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.TextBox8 = New System.Windows.Forms.TextBox()
@@ -75,8 +76,6 @@ Partial Class frmNotasdeCredito
         Me.Button8 = New System.Windows.Forms.Button()
         Me.TextBox6 = New System.Windows.Forms.TextBox()
         Me.TextBox5 = New System.Windows.Forms.TextBox()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
         Me.Button6 = New System.Windows.Forms.Button()
         Me.TextBox7 = New System.Windows.Forms.TextBox()
         Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
@@ -96,6 +95,10 @@ Partial Class frmNotasdeCredito
         Me.TextBox14 = New System.Windows.Forms.TextBox()
         Me.Button20 = New System.Windows.Forms.Button()
         Me.Button35 = New System.Windows.Forms.Button()
+        Me.Label20 = New System.Windows.Forms.Label()
+        Me.TextBox15 = New System.Windows.Forms.TextBox()
+        Me.Label29 = New System.Windows.Forms.Label()
+        Me.TextBox16 = New System.Windows.Forms.TextBox()
         Me.Panel2.SuspendLayout()
         CType(Me.DGDetalles, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
@@ -235,6 +238,27 @@ Partial Class frmNotasdeCredito
         Me.Button1.TabIndex = 22
         Me.Button1.Text = "Dejar pendiente"
         Me.Button1.UseVisualStyleBackColor = True
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.BackColor = System.Drawing.Color.Transparent
+        Me.Label6.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Location = New System.Drawing.Point(-14, 50)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(61, 16)
+        Me.Label6.TabIndex = 25
+        Me.Label6.Text = "Artículo:"
+        Me.Label6.Visible = False
+        '
+        'TextBox3
+        '
+        Me.TextBox3.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox3.Location = New System.Drawing.Point(-14, 37)
+        Me.TextBox3.Name = "TextBox3"
+        Me.TextBox3.Size = New System.Drawing.Size(118, 22)
+        Me.TextBox3.TabIndex = 16
+        Me.TextBox3.Visible = False
         '
         'TextBox13
         '
@@ -455,11 +479,14 @@ Partial Class frmNotasdeCredito
         '
         'Panel1
         '
+        Me.Panel1.Controls.Add(Me.Label29)
+        Me.Panel1.Controls.Add(Me.TextBox16)
+        Me.Panel1.Controls.Add(Me.Label20)
+        Me.Panel1.Controls.Add(Me.TextBox15)
         Me.Panel1.Controls.Add(Me.Label27)
         Me.Panel1.Controls.Add(Me.TextBox12)
         Me.Panel1.Controls.Add(Me.Label23)
         Me.Panel1.Controls.Add(Me.TextBox9)
-        Me.Panel1.Controls.Add(Me.cmbVariante)
         Me.Panel1.Controls.Add(Me.Label19)
         Me.Panel1.Controls.Add(Me.Label18)
         Me.Panel1.Controls.Add(Me.TextBox8)
@@ -503,7 +530,7 @@ Partial Class frmNotasdeCredito
         Me.Label23.AutoSize = True
         Me.Label23.BackColor = System.Drawing.Color.Transparent
         Me.Label23.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label23.Location = New System.Drawing.Point(505, 52)
+        Me.Label23.Location = New System.Drawing.Point(221, 49)
         Me.Label23.Name = "Label23"
         Me.Label23.Size = New System.Drawing.Size(92, 16)
         Me.Label23.TabIndex = 208
@@ -513,32 +540,19 @@ Partial Class frmNotasdeCredito
         'TextBox9
         '
         Me.TextBox9.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox9.Location = New System.Drawing.Point(598, 49)
+        Me.TextBox9.Location = New System.Drawing.Point(314, 46)
         Me.TextBox9.Name = "TextBox9"
         Me.TextBox9.Size = New System.Drawing.Size(47, 22)
         Me.TextBox9.TabIndex = 7
         Me.TextBox9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.TextBox9.Visible = False
         '
-        'cmbVariante
-        '
-        Me.cmbVariante.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
-        Me.cmbVariante.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.cmbVariante.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbVariante.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmbVariante.FormattingEnabled = True
-        Me.cmbVariante.Location = New System.Drawing.Point(220, 46)
-        Me.cmbVariante.Name = "cmbVariante"
-        Me.cmbVariante.Size = New System.Drawing.Size(81, 24)
-        Me.cmbVariante.TabIndex = 5
-        Me.cmbVariante.TabStop = False
-        '
         'Label19
         '
         Me.Label19.AutoSize = True
         Me.Label19.BackColor = System.Drawing.Color.Transparent
         Me.Label19.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label19.Location = New System.Drawing.Point(648, 52)
+        Me.Label19.Location = New System.Drawing.Point(391, 56)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(47, 16)
         Me.Label19.TabIndex = 158
@@ -548,7 +562,7 @@ Partial Class frmNotasdeCredito
         '
         Me.Label18.AutoSize = True
         Me.Label18.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label18.Location = New System.Drawing.Point(305, 50)
+        Me.Label18.Location = New System.Drawing.Point(21, 47)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(68, 16)
         Me.Label18.TabIndex = 126
@@ -558,7 +572,7 @@ Partial Class frmNotasdeCredito
         'TextBox8
         '
         Me.TextBox8.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox8.Location = New System.Drawing.Point(697, 50)
+        Me.TextBox8.Location = New System.Drawing.Point(440, 53)
         Me.TextBox8.Name = "TextBox8"
         Me.TextBox8.Size = New System.Drawing.Size(47, 22)
         Me.TextBox8.TabIndex = 8
@@ -569,7 +583,7 @@ Partial Class frmNotasdeCredito
         Me.ComboBox8.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBox8.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ComboBox8.FormattingEnabled = True
-        Me.ComboBox8.Location = New System.Drawing.Point(376, 47)
+        Me.ComboBox8.Location = New System.Drawing.Point(92, 44)
         Me.ComboBox8.Name = "ComboBox8"
         Me.ComboBox8.Size = New System.Drawing.Size(123, 24)
         Me.ComboBox8.TabIndex = 6
@@ -677,27 +691,6 @@ Partial Class frmNotasdeCredito
         Me.TextBox5.Name = "TextBox5"
         Me.TextBox5.Size = New System.Drawing.Size(69, 22)
         Me.TextBox5.TabIndex = 0
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.BackColor = System.Drawing.Color.Transparent
-        Me.Label6.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(-14, 50)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(61, 16)
-        Me.Label6.TabIndex = 25
-        Me.Label6.Text = "Artículo:"
-        Me.Label6.Visible = False
-        '
-        'TextBox3
-        '
-        Me.TextBox3.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox3.Location = New System.Drawing.Point(-14, 37)
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(118, 22)
-        Me.TextBox3.TabIndex = 16
-        Me.TextBox3.Visible = False
         '
         'Button6
         '
@@ -887,6 +880,46 @@ Partial Class frmNotasdeCredito
         Me.Button35.Text = "Acuse Canc."
         Me.Button35.UseVisualStyleBackColor = True
         '
+        'Label20
+        '
+        Me.Label20.AutoSize = True
+        Me.Label20.BackColor = System.Drawing.Color.Transparent
+        Me.Label20.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label20.Location = New System.Drawing.Point(495, 56)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(56, 16)
+        Me.Label20.TabIndex = 212
+        Me.Label20.Text = "% IEPS:"
+        '
+        'TextBox15
+        '
+        Me.TextBox15.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox15.Location = New System.Drawing.Point(554, 53)
+        Me.TextBox15.Name = "TextBox15"
+        Me.TextBox15.Size = New System.Drawing.Size(47, 22)
+        Me.TextBox15.TabIndex = 211
+        Me.TextBox15.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label29
+        '
+        Me.Label29.AutoSize = True
+        Me.Label29.BackColor = System.Drawing.Color.Transparent
+        Me.Label29.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label29.Location = New System.Drawing.Point(613, 56)
+        Me.Label29.Name = "Label29"
+        Me.Label29.Size = New System.Drawing.Size(72, 16)
+        Me.Label29.TabIndex = 214
+        Me.Label29.Text = "% IVA Ret:"
+        '
+        'TextBox16
+        '
+        Me.TextBox16.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox16.Location = New System.Drawing.Point(688, 53)
+        Me.TextBox16.Name = "TextBox16"
+        Me.TextBox16.Size = New System.Drawing.Size(47, 22)
+        Me.TextBox16.TabIndex = 213
+        Me.TextBox16.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
         'frmNotasdeCredito
         '
         Me.AcceptButton = Me.Button4
@@ -987,7 +1020,6 @@ Partial Class frmNotasdeCredito
     Friend WithEvents TextBox12 As System.Windows.Forms.TextBox
     Friend WithEvents Label23 As System.Windows.Forms.Label
     Friend WithEvents TextBox9 As System.Windows.Forms.TextBox
-    Friend WithEvents cmbVariante As System.Windows.Forms.ComboBox
     Friend WithEvents Label19 As System.Windows.Forms.Label
     Friend WithEvents Label18 As System.Windows.Forms.Label
     Friend WithEvents TextBox8 As System.Windows.Forms.TextBox
@@ -1023,4 +1055,8 @@ Partial Class frmNotasdeCredito
     Friend WithEvents TextBox14 As System.Windows.Forms.TextBox
     Friend WithEvents Button20 As System.Windows.Forms.Button
     Friend WithEvents Button35 As System.Windows.Forms.Button
+    Friend WithEvents Label29 As System.Windows.Forms.Label
+    Friend WithEvents TextBox16 As System.Windows.Forms.TextBox
+    Friend WithEvents Label20 As System.Windows.Forms.Label
+    Friend WithEvents TextBox15 As System.Windows.Forms.TextBox
 End Class

@@ -1085,7 +1085,7 @@ Partial Class frmVentasN
         Me.ComboBox7.BackColor = System.Drawing.SystemColors.Window
         Me.ComboBox7.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ComboBox7.FormattingEnabled = True
-        Me.ComboBox7.Location = New System.Drawing.Point(140, 65)
+        Me.ComboBox7.Location = New System.Drawing.Point(140, 66)
         Me.ComboBox7.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.ComboBox7.Name = "ComboBox7"
         Me.ComboBox7.Size = New System.Drawing.Size(202, 24)

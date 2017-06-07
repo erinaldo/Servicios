@@ -555,7 +555,7 @@
                 btnBuscarCliente.Enabled = True
         End Select
 
-       
+
         LlenandoDatos = False
         If Concep.Tipo <> dbInventarioConceptos.Tipos.Traspaso Then
             'Button19.Visible = False
@@ -592,7 +592,7 @@
         lblUbicacionDestino.Visible = False
         cmbUbicacionOrigen.Enabled = False
         cmbUbicacionDestino.Enabled = False
-        
+
         TextBox6.Text = "0"
         PrecioBase = 0
         Button12.Visible = False

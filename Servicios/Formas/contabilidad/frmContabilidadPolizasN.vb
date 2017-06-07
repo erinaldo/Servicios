@@ -330,6 +330,7 @@
         dgvCuentas.Columns(4).Width = 130
         dgvCuentas.Columns(5).Width = 130
         dgvCuentas.ClearSelection()
+        If dgvCuentas.RowCount > 12 Then dgvCuentas.FirstDisplayedScrollingRowIndex = dgvCuentas.RowCount - 12
         Dim Cargo As Double = Poliza.DaTotalAbono(Poliza.IDPoliza)
         Dim Abono As Double = Poliza.DaTotalCargo(Poliza.IDPoliza)
         Dim Dif As Double = Cargo - Abono

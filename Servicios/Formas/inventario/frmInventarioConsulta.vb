@@ -1,13 +1,17 @@
 ﻿Public Class frmInventarioConsulta
     Dim IdInventario As Integer
     Dim ConsultaOn As Boolean = True
-    Public Sub New(ByVal pIdInventario As Integer)
+    Dim Modo As Byte
+    Public IdAlmacen As Integer
+    Public IdSucursal As Integer
+    Public Sub New(ByVal pIdInventario As Integer, pModo As Byte, pIdSucursal As Integer)
 
         ' This call is required by the Windows Form Designer.
         InitializeComponent()
         IdInventario = pIdInventario
+        IdSucursal = pIdSucursal
         ' Add any initialization after the InitializeComponent() call.
-
+        Modo = pModo
     End Sub
     Private Sub BuscaArticulo()
         Try
@@ -183,12 +187,13 @@
 
                 If DataGridView1.RowCount > 0 Then PrimerCeldaRow = DataGridView1.FirstDisplayedCell.RowIndex
                 Dim I As New dbInventario(MySqlcon)
-                DataGridView1.DataSource = I.ConsultaInventarioPorAlmacen(0, 0, IdInventario)
+                DataGridView1.DataSource = I.ConsultaInventarioPorAlmacen(IdSucursal, 0, IdInventario)
                 'DataGridView1.Columns(0).Visible = False
                 DataGridView1.Columns(0).HeaderText = "Sucursal"
                 DataGridView1.Columns(1).HeaderText = "Almacen"
                 DataGridView1.Columns(2).HeaderText = "Existencia"
                 DataGridView1.Columns(3).HeaderText = "Tránsito"
+                DataGridView1.Columns(4).Visible = False
                 DataGridView1.Columns(2).DefaultCellStyle.Format = "0.####"
                 'DataGridView2.Columns(2).Width = 20
                 DataGridView1.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
@@ -276,8 +281,12 @@
     End Sub
 
     Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
-        Me.DialogResult = Windows.Forms.DialogResult.OK
-        Close()
+        If Modo = 1 Then
+            If e.RowIndex >= 0 Then
+                IdAlmacen = DataGridView1.Item(4, e.RowIndex).Value
+                Me.DialogResult = Windows.Forms.DialogResult.OK
+            End If
+        End If
     End Sub
 
     Public ReadOnly Property Almacen As String
@@ -286,4 +295,8 @@
             Return ""
         End Get
     End Property
+
+    Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
+
+    End Sub
 End Class

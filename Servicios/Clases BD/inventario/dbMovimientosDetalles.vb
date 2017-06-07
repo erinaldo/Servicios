@@ -105,11 +105,9 @@
         End Select
 
         'si el detalle tiene ubicación se agrega el registro de tblmovimientosubicaciones 
-        Comm.CommandText = "select ifnull((select max(iddetalle) from tblmovimientosdetalles),0)"
+        Comm.CommandText = "select ifnull((select iddetalle from tblmovimientosdetalles order by iddetalle desc limit 1),0)"
         ID = Comm.ExecuteScalar
         'End If
-
-
     End Sub
     Public Sub Modificar(ByVal pID As Integer, ByVal pCantidad As Double, ByVal pIdMoneda As Integer, ByVal pidAlmacen As Integer, ByVal pIdAlmacen2 As Integer, ByVal pPrecio As Double, pUbicacion As String, pUbicacionD As String)
         ID = pID

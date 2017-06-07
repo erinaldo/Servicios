@@ -88,7 +88,7 @@
         End If
         If e.KeyCode = Keys.F6 And IdInventario <> 0 Then
             If GlobalPermisos.ChecaPermiso(PermisosN.Ventas.Consultas, PermisosN.Secciones.Ventas) = True Then
-                Dim f As New frmInventarioConsulta(IdInventario)
+                Dim f As New frmInventarioConsulta(IdInventario, 0, 0)
                 f.ShowDialog()
                 f.Dispose()
             End If

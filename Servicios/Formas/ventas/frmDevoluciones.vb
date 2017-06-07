@@ -2006,18 +2006,17 @@
     End Sub
     Private Sub ImprimirNota(pIdNota As Integer, pEsPDF As Boolean, pMostrarPDF As String)
         Try
-            Dim Cot As New dbNotasdeCargo(pIdNota, MySqlcon)
+            Dim Cot As New dbDevoluciones(pIdNota, MySqlcon)
             Dim S As New dbSucursales(Cot.IdSucursal, MySqlcon)
             ImpDoc.IdSucursal = Cot.IdSucursal
-            ImpDoc.TipoDocumento = TiposDocumentos.VentaNotadeCargo
-            ImpDoc.TipoDocumentoT = TiposDocumentos.VentaNotadeCargo + 1000
+            ImpDoc.TipoDocumento = TiposDocumentos.VentaDevolucion
+            ImpDoc.TipoDocumentoT = TiposDocumentos.VentaDevolucion + 1000
             If pEsPDF = False Then
-                ImpDoc.TipoDocumentoImp = TiposDocumentos.VentaNotadeCargo
+                ImpDoc.TipoDocumentoImp = TiposDocumentos.VentaDevolucion
             Else
                 ImpDoc.TipoDocumentoImp = TiposDocumentos.PDF
             End If
-            ImpDoc.TipoRuta = dbSucursalesArchivos.TipoRutas.NotasdeCargoPDF
-
+            ImpDoc.TipoRuta = dbSucursalesArchivos.TipoRutas.DevolucionesPDF
             ImpDoc.Inicializar()
             LlenaNodosImpresion()
             IO.Directory.CreateDirectory(ImpDoc.RutaPDF + "\" + Format(DateTimePicker1.Value, "yyyy") + "\")
@@ -2027,7 +2026,7 @@
             End If
             ImpDoc.GuardaSettingsBullzip(ImpDoc.RutaPDF, pMostrarPDF)
             PrintDocument1.PrinterSettings.PrinterName = ImpDoc.Impresora
-            PrintDocument1.DocumentName = "PSSNOTADECARGO " + Cot.Serie + Cot.Folio.ToString
+            PrintDocument1.DocumentName = "PSSDEVOLUCION-" + Cot.Serie + Cot.Folio.ToString
             PrintDocument1.Print()
         Catch ex As Exception
             MsgBox("Error al imprimir: " + ex.Message, MsgBoxStyle.Critical, GlobalNombreApp)

@@ -130,8 +130,10 @@
         End If
         If e.KeyCode = Keys.F6 And IdInventario <> 0 And Estado <= 2 Then
             If GlobalPermisos.ChecaPermiso(PermisosN.Ventas.Consultas, PermisosN.Secciones.Ventas) = True Then
-                Dim f As New frmInventarioConsulta(IdInventario)
-                f.ShowDialog()
+                Dim f As New frmInventarioConsulta(IdInventario, 1, IdsSucursales.Valor(ComboBox3.SelectedIndex))
+                If f.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                    ComboBox8.SelectedIndex = IdsAlmacenes.Busca(f.IdAlmacen)
+                End If
                 f.Dispose()
             End If
         End If

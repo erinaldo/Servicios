@@ -260,7 +260,7 @@ Public Class dbInventario
     Public Function ConsultaInventarioPorAlmacen(ByVal pidSucursal As Integer, ByVal pIdAlmacen As Integer, ByVal pidinventario As Integer) As DataView
         Dim DS As New DataSet
         Comm.CommandText = "select tblsucursales.nombre as snombre,tblalmacenes.nombre as anombre,tblalmacenesi.cantidad,"
-        Comm.CommandText += "ifnull((select sum(md.cantidad) from tblmovimientosdetalles md inner join tblmovimientos m on md.idmovimiento=m.idmovimiento inner join tblinventarioconceptos ic on m.idconcepto=ic.idconcepto where ic.tipo=3 and m.transito=0 and md.idinventario=tblalmacenesi.idinventario and md.idalmacen2=tblalmacenesi.idalmacen and m.estado=3),0)"
+        Comm.CommandText += "ifnull((select sum(md.cantidad) from tblmovimientosdetalles md inner join tblmovimientos m on md.idmovimiento=m.idmovimiento inner join tblinventarioconceptos ic on m.idconcepto=ic.idconcepto where ic.tipo=3 and m.transito=0 and md.idinventario=tblalmacenesi.idinventario and md.idalmacen2=tblalmacenesi.idalmacen and m.estado=3),0),tblalmacenes.idalmacen"
         Comm.CommandText += " from tblalmacenes inner join tblsucursales on tblalmacenes.idsucursal=tblsucursales.idsucursal inner join tblalmacenesi on tblalmacenes.idalmacen=tblalmacenesi.idalmacen where tblalmacenesi.idinventario=" + pidinventario.ToString
         If pidSucursal > 0 Then
             Comm.CommandText += " and tblalmacenes.idsucursal=" + pidSucursal.ToString

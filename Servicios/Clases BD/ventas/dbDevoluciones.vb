@@ -2405,11 +2405,11 @@
 
     End Function
     Public Function DaIvas(ByVal piddevolucion As Integer) As MySql.Data.MySqlClient.MySqlDataReader
-        Comm.CommandText = "select iva,precio,idmoneda from tbldevolucionesdetalles where iddevolucion=" + ID.ToString
+        Comm.CommandText = "select iva,precio,idmoneda from tbldevolucionesdetalles where iddevolucion=" + piddevolucion.ToString
         Return Comm.ExecuteReader
     End Function
     Public Function DaIvasIEPS(ByVal piddevolucion As Integer) As MySql.Data.MySqlClient.MySqlDataReader
-        Comm.CommandText = "select ieps,precio,idmoneda from tbldevolucionesdetalles where iddevolucion=" + ID.ToString
+        Comm.CommandText = "select ieps,precio,idmoneda from tbldevolucionesdetalles where iddevolucion=" + piddevolucion.ToString
         Return Comm.ExecuteReader
     End Function
 

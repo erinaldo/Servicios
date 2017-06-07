@@ -168,7 +168,7 @@ Partial Class frmAlmacenesPermisos
         Me.MinimizeBox = False
         Me.Name = "frmAlmacenesPermisos"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Denegar permiso a almacén"
+        Me.Text = "Denegar permiso a un almacén"
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()

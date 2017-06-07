@@ -408,6 +408,8 @@ Public Class dbContabilidadPolizas
         Comm.CommandText = "insert into tblpolizasdetalles (idpoliza,cuenta,descripcion,cargo,abono,idCuenta,factura,idproveedor,iva,concepto,esDIOT,DIOTHabilitado,fechaDiot,valorActos,referencia,ivaret,ieps,orden,idcuentan1,idcuentan2,idcuentan3,idcuentan4,idcuentan5) values(" + IDPoliza.ToString + ",'" + pCuenta + "','" + Replace(pConcepto, "'", "''") + "'," + cargo.ToString + "," + abono.ToString + "," + pIDCuenta.ToString + ",'" + Replace(pFolioFact, "'", "''") + "'," + pIdProv.ToString + ",'" + piva.ToString + "','" + pconFac.ToString + "'," + pesDIOT.ToString + ",0,'" + pFechaDIOT + "'," + pValorActos.ToString + ",'" + Replace(pRefdiot.Trim, "'", "''") + "'," + pIvaret.ToString + "," + pIeps.ToString + "," + pOrden.ToString + "," + pIdNivel1.ToString + "," + pIdNivel2.ToString + "," + pIdNivel3.ToString + "," + pIdNivel4.ToString + "," + pIdNivel5.ToString + ");"
         Comm.CommandText += "select ifnull(last_insert_id(),0);"
         IDRenglon = Comm.ExecuteScalar
+        Comm.CommandText = "select ifnull((select orden from tblpolizasdetalles where idpoliza=" + IDPoliza.ToString + " order by orden desc limit 1),0)"
+        UltimoOrden = Comm.ExecuteScalar + 1
         DetalleId = IDRenglon
         DetallesOrden += 1
     End Sub
@@ -4038,7 +4040,7 @@ Public Class dbContabilidadPolizas
         UltimoOrden = Comm.ExecuteScalar + 1
     End Sub
     Public Sub CambiaOrden(pidPoliza As Integer, pOrden As Integer)
-        Comm.CommandText = "update tblpolizasdetalles set orden=orden+1 where idpoliza=" + pidPoliza.ToString + " and orden>" + pOrden.ToString
+        Comm.CommandText = "update tblpolizasdetalles set orden=orden+1 where idpoliza=" + pidPoliza.ToString + " and orden>" + pOrden.ToString + ";"
         Comm.ExecuteNonQuery()
     End Sub
     Public Function ConsultaDetalles(ByVal pIdPoliza As Integer) As DataView

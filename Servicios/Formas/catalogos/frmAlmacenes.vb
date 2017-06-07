@@ -25,6 +25,7 @@
                 Button2.Enabled = False
                 Button3.Enabled = False
             End If
+            If GlobalTipoUsuario = 0 Then Button5.Visible = True
             Nuevo()
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, GlobalNombreApp)
@@ -54,7 +55,7 @@
             Button10.BackColor = ColorRojo
             Button11.BackColor = ColorRojo
             Button12.BackColor = ColorRojo
-
+            Button5.Enabled = False
             Dim p As New dbAlmacenes(MySqlcon)
             cmbUbicaciones.DataSource = p.Ubicaciones(0)
             cmbUbicaciones.Text = ""
@@ -231,6 +232,7 @@
             btnEliminarU.Enabled = True
             btnGuardarU.Enabled = True
             btnGenerarU.Enabled = True
+            Button5.Enabled = True
             ConsultaOn = True
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, GlobalNombreApp)
@@ -386,5 +388,13 @@
         cmbUbicaciones.DataSource = db.Ubicaciones(IdAlmacen)
         cmbUbicaciones.Text = ""
         cmbUbicaciones.Enabled = True
+    End Sub
+
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+        If IdAlmacen <> 0 Then
+            Dim fap As New frmAlmacenesPermisos(IdAlmacen, TextBox1.Text, ComboBox1.Text)
+            fap.ShowDialog()
+            fap.Dispose()
+        End If
     End Sub
 End Class

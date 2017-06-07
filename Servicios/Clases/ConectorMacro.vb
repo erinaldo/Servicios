@@ -946,7 +946,7 @@
                         If Version <> "0" Then
                             FacturaDetalles.Precio = FacturaDetalles.Precio * (1 + (IVAGeneral / 100))
                         End If
-                        FacturaDetalles.Guardar(Factura.ID, 0, FacturaDetalles.Cantidad, FacturaDetalles.Precio, idMoneda, Replace(FacturaDetalles.Descripcion, "|", ""), IVAGeneral, 0, 0)
+                        FacturaDetalles.Guardar(Factura.ID, 0, FacturaDetalles.Cantidad, FacturaDetalles.Precio, idMoneda, Replace(FacturaDetalles.Descripcion, "|", ""), IVAGeneral, 0, 0, 0, 0, "", "")
                         FacturaDetalles.Extra = ""
                         Estado1 = 0
                     End If
@@ -959,7 +959,7 @@
                 If Version <> "0" Then
                     FacturaDetalles.Precio = FacturaDetalles.Precio * (1 + (IVAGeneral / 100))
                 End If
-                FacturaDetalles.Guardar(Factura.ID, 0, FacturaDetalles.Cantidad, FacturaDetalles.Precio, idMoneda, Replace(FacturaDetalles.Descripcion, "|", ""), IVAGeneral, 0, 0)
+                FacturaDetalles.Guardar(Factura.ID, 0, FacturaDetalles.Cantidad, FacturaDetalles.Precio, idMoneda, Replace(FacturaDetalles.Descripcion, "|", ""), IVAGeneral, 0, 0, 0, 0, "", "")
                 FacturaDetalles.Extra = ""
                 Estado1 = 0
             End If
