@@ -81,8 +81,8 @@
     End Sub
 
     Private Sub dgvDetalles_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dgvDetalles.CellEndEdit
-        dgvDetalles.Item(e.ColumnIndex + 1, e.RowIndex).Selected = True
-        dgvDetalles.Refresh()
+        'dgvDetalles.Item(e.ColumnIndex + 1, e.RowIndex).Selected = True
+        'dgvDetalles.Refresh()
     End Sub
 
     Private Sub dgvSellos_KeyDown(sender As Object, e As KeyEventArgs) Handles dgvSellos.KeyDown

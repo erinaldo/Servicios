@@ -22,9 +22,9 @@ Partial Class frmCartaSalida
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtObservaciones = New System.Windows.Forms.TextBox()
@@ -55,8 +55,8 @@ Partial Class frmCartaSalida
         Me.colTotal = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.btnGuardar = New System.Windows.Forms.Button()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
-        Me.btnCancelar = New System.Windows.Forms.Button()
         Me.btnImprimir = New System.Windows.Forms.Button()
+        Me.btnCancelar = New System.Windows.Forms.Button()
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.dgvSellos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvDetalles, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -318,6 +318,7 @@ Partial Class frmCartaSalida
         '
         'dgvSellos
         '
+        Me.dgvSellos.AllowUserToResizeRows = False
         Me.dgvSellos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvSellos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvSellos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colNumero})
@@ -338,6 +339,7 @@ Partial Class frmCartaSalida
         '
         'dgvDetalles
         '
+        Me.dgvDetalles.AllowUserToResizeRows = False
         Me.dgvDetalles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvDetalles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvDetalles.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colCantidad, Me.colDescripcion, Me.colKilogramos, Me.colTotal})
@@ -352,9 +354,9 @@ Partial Class frmCartaSalida
         'colCantidad
         '
         Me.colCantidad.DataPropertyName = "Cantidad"
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle4.Format = "N0"
-        Me.colCantidad.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle1.Format = "N0"
+        Me.colCantidad.DefaultCellStyle = DataGridViewCellStyle1
         Me.colCantidad.HeaderText = "Cantidad"
         Me.colCantidad.Name = "colCantidad"
         '
@@ -368,18 +370,18 @@ Partial Class frmCartaSalida
         'colKilogramos
         '
         Me.colKilogramos.DataPropertyName = "KilosUnidad"
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle5.Format = "N2"
-        Me.colKilogramos.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle2.Format = "N2"
+        Me.colKilogramos.DefaultCellStyle = DataGridViewCellStyle2
         Me.colKilogramos.HeaderText = "Kg./Unidad"
         Me.colKilogramos.Name = "colKilogramos"
         '
         'colTotal
         '
         Me.colTotal.DataPropertyName = "Total"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle6.Format = "N2"
-        Me.colTotal.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle3.Format = "N2"
+        Me.colTotal.DefaultCellStyle = DataGridViewCellStyle3
         Me.colTotal.HeaderText = "Peso total"
         Me.colTotal.Name = "colTotal"
         Me.colTotal.ReadOnly = True
@@ -411,6 +413,16 @@ Partial Class frmCartaSalida
         Me.TableLayoutPanel2.Size = New System.Drawing.Size(340, 43)
         Me.TableLayoutPanel2.TabIndex = 14
         '
+        'btnImprimir
+        '
+        Me.btnImprimir.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.btnImprimir.Location = New System.Drawing.Point(116, 3)
+        Me.btnImprimir.Name = "btnImprimir"
+        Me.btnImprimir.Size = New System.Drawing.Size(107, 37)
+        Me.btnImprimir.TabIndex = 17
+        Me.btnImprimir.Text = "Imprimir"
+        Me.btnImprimir.UseVisualStyleBackColor = True
+        '
         'btnCancelar
         '
         Me.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel
@@ -421,16 +433,6 @@ Partial Class frmCartaSalida
         Me.btnCancelar.TabIndex = 15
         Me.btnCancelar.Text = "Cancelar"
         Me.btnCancelar.UseVisualStyleBackColor = True
-        '
-        'btnImprimir
-        '
-        Me.btnImprimir.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.btnImprimir.Location = New System.Drawing.Point(116, 3)
-        Me.btnImprimir.Name = "btnImprimir"
-        Me.btnImprimir.Size = New System.Drawing.Size(107, 37)
-        Me.btnImprimir.TabIndex = 17
-        Me.btnImprimir.Text = "Imprimir"
-        Me.btnImprimir.UseVisualStyleBackColor = True
         '
         'frmCartaSalida
         '
