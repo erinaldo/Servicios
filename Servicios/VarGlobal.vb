@@ -21,8 +21,8 @@ Module VarGlobal
     Public GlobalIdMoneda As Integer
     Public GlobalTipoCosteo As Byte
     Public GlobalNombreApp As String = "Pull Admin - Pull System Soft"
-    Public Version As String = "0.9.037 rev 26"
-    Public VersionDB As String = "00903725"
+    Public Version As String = "0.9.037 rev 27"
+    Public VersionDB As String = "00903726"
     Public GlobalTipoFacturacion As Byte
     Public GlobalDireccionTimbrado As String
     Public GlobalPacCFDI As Byte

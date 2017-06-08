@@ -76,37 +76,49 @@
         UbicacionD = pUbicacionD
 
         NuevoConcepto = True
-        Comm.CommandText = "select tipo from tblinventarioconceptos c inner join tblmovimientos m on m.idconcepto=c.idconcepto where idmovimiento=" + IdMovimiento.ToString()
-        Select Case Comm.ExecuteScalar
-            Case 0, 4
-                Comm.CommandText = "insert into tblmovimientosdetalles(idinventario, cantidad, precio, idmovimiento, descripcion, idalmacen, idvariante, surtido, inventarioanterior, idmoneda,idalmacen2) values(" + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + "," + IdMovimiento.ToString + ",'" + Trim(Replace(Descripcion, "'", "''")) + "'," + IdAlmacen.ToString + "," + idVariante.ToString + ",0," + InventarioAnterior.ToString + "," + IdMoneda.ToString + "," + pIdAlmacen2.ToString + ");"
-                Comm.ExecuteNonQuery()
-                If pUbicacion <> "" Then
-                    Comm.CommandText = "insert into tblmovimientosubicaciones (iddetalle, cantidad, surtido, ubicacion) select max(iddetalle), " + Cantidad.ToString() + ", 0, '" + Trim(Replace(Ubicacion, "'", "''")) + "' from tblmovimientosdetalles;"
-                    Comm.ExecuteNonQuery()
-                End If
-            Case 1
-                Comm.CommandText = "insert into tblmovimientosdetalles(idinventario, cantidad, precio, idmovimiento, descripcion, idalmacen, idvariante, surtido, inventarioanterior, idmoneda,idalmacen2) values(" + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + "," + IdMovimiento.ToString + ",'" + Trim(Replace(Descripcion, "'", "''")) + "'," + IdAlmacen.ToString + "," + idVariante.ToString + ",0," + InventarioAnterior.ToString + "," + IdMoneda.ToString + "," + pIdAlmacen2.ToString + ");"
-                Comm.ExecuteNonQuery()
-                If pUbicacion <> "" Then
-                    Comm.CommandText = "insert into tblmovimientosubicaciones (ubicacion, iddetalle, cantidad, surtido) select '" + Trim(Replace(Ubicacion, "'", "''")) + "', max(iddetalle), " + Cantidad.ToString() + ", 0 from tblmovimientosdetalles;"
-                    Comm.ExecuteNonQuery()
-                End If
-            Case 3
-                Comm.CommandText = "insert into tblmovimientosdetalles(idinventario, cantidad, precio, idmovimiento, descripcion, idalmacen, idalmacen2, idvariante, surtido, inventarioanterior, idmoneda) values(" + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + "," + IdMovimiento.ToString + ",'" + Trim(Replace(Descripcion, "'", "''")) + "'," + IdAlmacen.ToString + "," + IdAlmacen2.ToString + "," + idVariante.ToString + ",0," + InventarioAnterior.ToString + "," + IdMoneda.ToString + ");"
-                Comm.ExecuteNonQuery()
-                If pUbicacion <> "" And pUbicacionD <> "" Then
-                    Comm.CommandText = "insert into tblmovimientosubicaciones (ubicacion, iddetalle, cantidad, surtido, ubicaciond) select '" + Trim(Replace(Ubicacion, "'", "''")) + "', max(iddetalle), " + Cantidad.ToString() + ", 0, '" + Trim(Replace(UbicacionD, "'", "''")) + "' from tblmovimientosdetalles;"
-                    Comm.ExecuteNonQuery()
-                End If
-            Case Else
-                Comm.CommandText = "insert into tblmovimientosdetalles(idinventario, cantidad, precio, idmovimiento, descripcion, idalmacen, idvariante, surtido, inventarioanterior, idmoneda,idalmacen2) values(" + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + "," + IdMovimiento.ToString + ",'" + Trim(Replace(Descripcion, "'", "''")) + "'," + IdAlmacen.ToString + "," + idVariante.ToString + ",0," + InventarioAnterior.ToString + "," + IdMoneda.ToString + "," + pIdAlmacen2.ToString + ");"
-                Comm.ExecuteNonQuery()
-        End Select
+        Comm.CommandText = "insert into tblmovimientosdetalles(idinventario, cantidad, precio, idmovimiento, descripcion, idalmacen, idvariante, surtido, inventarioanterior, idmoneda,idalmacen2) values(" + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + "," + IdMovimiento.ToString + ",'" + Trim(Replace(Descripcion, "'", "''")) + "'," + IdAlmacen.ToString + "," + idVariante.ToString + ",0," + InventarioAnterior.ToString + "," + IdMoneda.ToString + "," + pIdAlmacen2.ToString + ");"
+        Comm.CommandText += "select ifnull(last_insert_id(),0);"
+        ID = Comm.ExecuteScalar
+
+        If pUbicacion <> "" And pUbicacionD = "" Then
+            Comm.CommandText = "insert into tblmovimientosubicaciones (iddetalle, cantidad, surtido, ubicacion,ubicaciond) values(" + ID.ToString + ", " + Cantidad.ToString() + ", 0, '" + Trim(Replace(Ubicacion, "'", "''")) + "','')"
+            Comm.ExecuteNonQuery()
+        End If
+        If pUbicacion <> "" And pUbicacionD <> "" Then
+            Comm.CommandText = "insert into tblmovimientosubicaciones (iddetalle, cantidad, surtido, ubicacion,ubicaciond) values(" + ID.ToString + ", " + Cantidad.ToString() + ", 0, '" + Trim(Replace(Ubicacion, "'", "''")) + "','" + Trim(Replace(UbicacionD, "'", "''")) + "')"
+            Comm.ExecuteNonQuery()
+        End If
+
+        'Comm.CommandText = "select tipo from tblinventarioconceptos c inner join tblmovimientos m on m.idconcepto=c.idconcepto where idmovimiento=" + IdMovimiento.ToString()
+        'Select Case Comm.ExecuteScalar
+        '    Case 0, 4
+        '        Comm.CommandText = "insert into tblmovimientosdetalles(idinventario, cantidad, precio, idmovimiento, descripcion, idalmacen, idvariante, surtido, inventarioanterior, idmoneda,idalmacen2) values(" + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + "," + IdMovimiento.ToString + ",'" + Trim(Replace(Descripcion, "'", "''")) + "'," + IdAlmacen.ToString + "," + idVariante.ToString + ",0," + InventarioAnterior.ToString + "," + IdMoneda.ToString + "," + pIdAlmacen2.ToString + ");"
+        '        Comm.ExecuteNonQuery()
+        '        If pUbicacion <> "" Then
+        '            Comm.CommandText = "insert into tblmovimientosubicaciones (iddetalle, cantidad, surtido, ubicacion) select max(iddetalle), " + Cantidad.ToString() + ", 0, '" + Trim(Replace(Ubicacion, "'", "''")) + "' from tblmovimientosdetalles;"
+        '            Comm.ExecuteNonQuery()
+        '        End If
+        '    Case 1
+        '        Comm.CommandText = "insert into tblmovimientosdetalles(idinventario, cantidad, precio, idmovimiento, descripcion, idalmacen, idvariante, surtido, inventarioanterior, idmoneda,idalmacen2) values(" + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + "," + IdMovimiento.ToString + ",'" + Trim(Replace(Descripcion, "'", "''")) + "'," + IdAlmacen.ToString + "," + idVariante.ToString + ",0," + InventarioAnterior.ToString + "," + IdMoneda.ToString + "," + pIdAlmacen2.ToString + ");"
+        '        Comm.ExecuteNonQuery()
+        '        If pUbicacion <> "" Then
+        '            Comm.CommandText = "insert into tblmovimientosubicaciones (ubicacion, iddetalle, cantidad, surtido) select '" + Trim(Replace(Ubicacion, "'", "''")) + "', max(iddetalle), " + Cantidad.ToString() + ", 0 from tblmovimientosdetalles;"
+        '            Comm.ExecuteNonQuery()
+        '        End If
+        '    Case 3
+        '        Comm.CommandText = "insert into tblmovimientosdetalles(idinventario, cantidad, precio, idmovimiento, descripcion, idalmacen, idalmacen2, idvariante, surtido, inventarioanterior, idmoneda) values(" + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + "," + IdMovimiento.ToString + ",'" + Trim(Replace(Descripcion, "'", "''")) + "'," + IdAlmacen.ToString + "," + IdAlmacen2.ToString + "," + idVariante.ToString + ",0," + InventarioAnterior.ToString + "," + IdMoneda.ToString + ");"
+        '        Comm.ExecuteNonQuery()
+        '        If pUbicacion <> "" And pUbicacionD <> "" Then
+        '            Comm.CommandText = "insert into tblmovimientosubicaciones (ubicacion, iddetalle, cantidad, surtido, ubicaciond) select '" + Trim(Replace(Ubicacion, "'", "''")) + "', max(iddetalle), " + Cantidad.ToString() + ", 0, '" + Trim(Replace(UbicacionD, "'", "''")) + "' from tblmovimientosdetalles;"
+        '            Comm.ExecuteNonQuery()
+        '        End If
+        '    Case Else
+        '        Comm.CommandText = "insert into tblmovimientosdetalles(idinventario, cantidad, precio, idmovimiento, descripcion, idalmacen, idvariante, surtido, inventarioanterior, idmoneda,idalmacen2) values(" + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + "," + IdMovimiento.ToString + ",'" + Trim(Replace(Descripcion, "'", "''")) + "'," + IdAlmacen.ToString + "," + idVariante.ToString + ",0," + InventarioAnterior.ToString + "," + IdMoneda.ToString + "," + pIdAlmacen2.ToString + ");"
+        '        Comm.ExecuteNonQuery()
+        'End Select
 
         'si el detalle tiene ubicación se agrega el registro de tblmovimientosubicaciones 
-        Comm.CommandText = "select ifnull((select iddetalle from tblmovimientosdetalles order by iddetalle desc limit 1),0)"
-        ID = Comm.ExecuteScalar
+        
         'End If
     End Sub
     Public Sub Modificar(ByVal pID As Integer, ByVal pCantidad As Double, ByVal pIdMoneda As Integer, ByVal pidAlmacen As Integer, ByVal pIdAlmacen2 As Integer, ByVal pPrecio As Double, pUbicacion As String, pUbicacionD As String)
@@ -119,32 +131,43 @@
         Ubicacion = pUbicacion
         UbicacionD = pUbicacionD
 
-        Comm.CommandText = "select tipo from tblinventarioconceptos c inner join tblmovimientos m on m.idconcepto=c.idconcepto where idmovimiento=" + IdMovimiento.ToString()
-        Select Case Comm.ExecuteScalar
-            Case 0, 4
-                Comm.CommandText = "update tblmovimientosdetalles set cantidad=" + Cantidad.ToString + ", idalmacen=" + IdAlmacen.ToString + ", idmoneda=" + IdMoneda.ToString + ", precio=" + Precio.ToString + " where iddetalle=" + pID.ToString + ";"
-                'modifica la ubicación
-                If pUbicacionD <> "" Then
-                    'le resta la existencia a la ubicacion original
-                    Comm.CommandText += "update tblmovimientosdetalles inner join tblmovimientosubicaciones on tblmovimientosdetalles.iddetalle=tblmovimientosubicaciones.iddetalle inner join tblalmacenesiubicaciones on tblmovimientosubicaciones.ubicaciond=tblalmacenesiubicaciones.ubicacion and tblmovimientosdetalles.idalmacen2=tblalmacenesiubicaciones.idalmacen and tblmovimientosdetalles.idinventario=tblalmacenesiubicaciones.idinventario set tblalmacenesiubicaciones.cantidad=tblalmacenesiubicaciones.cantidad-" + Cantidad.ToString() + " where tblmovimientosdetalles.iddetalle=" + pID.ToString() + "; "
-                    'actualiza la ubicacion en los detalles del movimiento
-                    Comm.CommandText += "update tblmovimientosubicaciones set cantidad=" + Cantidad.ToString() + ", ubicaciond='" + Trim(Replace(UbicacionD, "'", "''")) + "'  where iddetalle=" + pID.ToString() + "; "
-                    'inserta la ubicacion si hace falta
-                    Comm.CommandText += "insert into tblalmacenesiubicaciones (ubicacion,cantidad,idalmacen,idinventario) select mu.ubicaciond, 0, md.idalmacen2, md.idinventario from tblmovimientosdetalles md inner join tblmovimientosubicaciones mu on md.iddetalle=mu.iddetalle left outer join tblalmacenesiubicaciones aiu on mu.ubicaciond=aiu.ubicacion and md.idalmacen=aiu.idalmacen and md.idinventario=aiu.idinventario and mu.ubicaciond='" + Trim(Replace(UbicacionD, "'", "''")) + "' where md.iddetalle=" + pID.ToString() + " and isnull(aiu.ubicacion); "
-                    'le suma la existencia a la ubicacion nueva
-                    Comm.CommandText += "update tblmovimientosdetalles inner join tblmovimientosubicaciones on tblmovimientosdetalles.iddetalle=tblmovimientosubicaciones.iddetalle inner join tblalmacenesiubicaciones on tblmovimientosubicaciones.ubicaciond=tblalmacenesiubicaciones.ubicacion and tblmovimientosdetalles.idalmacen2=tblalmacenesiubicaciones.idalmacen and tblmovimientosdetalles.idinventario=tblalmacenesiubicaciones.idinventario set tblalmacenesiubicaciones.cantidad=tblalmacenesiubicaciones.cantidad+" + Cantidad.ToString() + " where tblmovimientosdetalles.iddetalle=" + pID.ToString() + "; "
-                End If
-                Comm.ExecuteNonQuery()
-            Case 1
-                Comm.CommandText = "update tblmovimientosdetalles set cantidad=" + Cantidad.ToString + ", idalmacen=" + IdAlmacen.ToString + ", idmoneda=" + IdMoneda.ToString + ", precio=" + Precio.ToString + " where iddetalle=" + pID.ToString + ";"
-                Comm.ExecuteNonQuery()
-            Case 3
-                Comm.CommandText = "update tblmovimientosdetalles set cantidad=" + Cantidad.ToString + ", idalmacen=" + IdAlmacen.ToString + ", idalmacen2=" + IdAlmacen2.ToString + ", idmoneda=" + IdMoneda.ToString + ", precio=" + Precio.ToString + " where iddetalle=" + pID.ToString + ";"
-                Comm.ExecuteNonQuery()
-            Case Else
-                Comm.CommandText = "update tblmovimientosdetalles set cantidad=" + Cantidad.ToString + ", idalmacen=" + IdAlmacen.ToString + ", idmoneda=" + IdMoneda.ToString + ", precio=" + Precio.ToString + " where iddetalle=" + pID.ToString + ";"
-                Comm.ExecuteNonQuery()
-        End Select
+        Comm.CommandText = "update tblmovimientosdetalles set cantidad=" + Cantidad.ToString + ", idalmacen=" + IdAlmacen.ToString + ", idalmacen2=" + IdAlmacen2.ToString + ", idmoneda=" + IdMoneda.ToString + ", precio=" + Precio.ToString + " where iddetalle=" + pID.ToString + ";"
+        Comm.ExecuteNonQuery()
+        If pUbicacion <> "" And pUbicacionD = "" Then
+            Comm.CommandText = "update tblmovimientosubicaciones set cantidad=" + Cantidad.ToString + ",ubicacion='" + Trim(Replace(Ubicacion, "'", "''")) + "' where iddetalle=" + ID.ToString
+            Comm.ExecuteNonQuery()
+        End If
+        If pUbicacion <> "" And pUbicacionD <> "" Then
+            Comm.CommandText = "update tblmovimientosubicaciones set cantidad=" + Cantidad.ToString + ",ubicacion='" + Trim(Replace(Ubicacion, "'", "''")) + "',ubicaciond='" + Trim(Replace(UbicacionD, "'", "''")) + "' where iddetalle=" + ID.ToString
+            Comm.ExecuteNonQuery()
+        End If
+
+        'Comm.CommandText = "select tipo from tblinventarioconceptos c inner join tblmovimientos m on m.idconcepto=c.idconcepto where idmovimiento=" + IdMovimiento.ToString()
+        'Select Case Comm.ExecuteScalar
+        '    Case 0, 4
+        '        Comm.CommandText = "update tblmovimientosdetalles set cantidad=" + Cantidad.ToString + ", idalmacen=" + IdAlmacen.ToString + ", idmoneda=" + IdMoneda.ToString + ", precio=" + Precio.ToString + " where iddetalle=" + pID.ToString + ";"
+        '        'modifica la ubicación
+        '        If pUbicacionD <> "" Then
+        '            'le resta la existencia a la ubicacion original
+        '            Comm.CommandText += "update tblmovimientosdetalles inner join tblmovimientosubicaciones on tblmovimientosdetalles.iddetalle=tblmovimientosubicaciones.iddetalle inner join tblalmacenesiubicaciones on tblmovimientosubicaciones.ubicaciond=tblalmacenesiubicaciones.ubicacion and tblmovimientosdetalles.idalmacen2=tblalmacenesiubicaciones.idalmacen and tblmovimientosdetalles.idinventario=tblalmacenesiubicaciones.idinventario set tblalmacenesiubicaciones.cantidad=tblalmacenesiubicaciones.cantidad-" + Cantidad.ToString() + " where tblmovimientosdetalles.iddetalle=" + pID.ToString() + "; "
+        '            'actualiza la ubicacion en los detalles del movimiento
+        '            Comm.CommandText += "update tblmovimientosubicaciones set cantidad=" + Cantidad.ToString() + ", ubicaciond='" + Trim(Replace(UbicacionD, "'", "''")) + "'  where iddetalle=" + pID.ToString() + "; "
+        '            'inserta la ubicacion si hace falta
+        '            Comm.CommandText += "insert into tblalmacenesiubicaciones (ubicacion,cantidad,idalmacen,idinventario) select mu.ubicaciond, 0, md.idalmacen2, md.idinventario from tblmovimientosdetalles md inner join tblmovimientosubicaciones mu on md.iddetalle=mu.iddetalle left outer join tblalmacenesiubicaciones aiu on mu.ubicaciond=aiu.ubicacion and md.idalmacen=aiu.idalmacen and md.idinventario=aiu.idinventario and mu.ubicaciond='" + Trim(Replace(UbicacionD, "'", "''")) + "' where md.iddetalle=" + pID.ToString() + " and isnull(aiu.ubicacion); "
+        '            'le suma la existencia a la ubicacion nueva
+        '            Comm.CommandText += "update tblmovimientosdetalles inner join tblmovimientosubicaciones on tblmovimientosdetalles.iddetalle=tblmovimientosubicaciones.iddetalle inner join tblalmacenesiubicaciones on tblmovimientosubicaciones.ubicaciond=tblalmacenesiubicaciones.ubicacion and tblmovimientosdetalles.idalmacen2=tblalmacenesiubicaciones.idalmacen and tblmovimientosdetalles.idinventario=tblalmacenesiubicaciones.idinventario set tblalmacenesiubicaciones.cantidad=tblalmacenesiubicaciones.cantidad+" + Cantidad.ToString() + " where tblmovimientosdetalles.iddetalle=" + pID.ToString() + "; "
+        '        End If
+        '        Comm.ExecuteNonQuery()
+        '    Case 1
+        '        Comm.CommandText = "update tblmovimientosdetalles set cantidad=" + Cantidad.ToString + ", idalmacen=" + IdAlmacen.ToString + ", idmoneda=" + IdMoneda.ToString + ", precio=" + Precio.ToString + " where iddetalle=" + pID.ToString + ";"
+        '        Comm.ExecuteNonQuery()
+        '    Case 3
+        '        Comm.CommandText = "update tblmovimientosdetalles set cantidad=" + Cantidad.ToString + ", idalmacen=" + IdAlmacen.ToString + ", idalmacen2=" + IdAlmacen2.ToString + ", idmoneda=" + IdMoneda.ToString + ", precio=" + Precio.ToString + " where iddetalle=" + pID.ToString + ";"
+        '        Comm.ExecuteNonQuery()
+        '    Case Else
+        '        Comm.CommandText = "update tblmovimientosdetalles set cantidad=" + Cantidad.ToString + ", idalmacen=" + IdAlmacen.ToString + ", idmoneda=" + IdMoneda.ToString + ", precio=" + Precio.ToString + " where iddetalle=" + pID.ToString + ";"
+        '        Comm.ExecuteNonQuery()
+        'End Select
 
     End Sub
     Public Sub ModificarCantidad(pId As Integer, pCantidad As Double, pPrecio As Double)

@@ -1599,7 +1599,7 @@ Public Class frmVentasN
                     'PopUp("Artículo agregado", 90)
                 Else
                     tipoElimianr = P.BuscarTipo(P.HayDescuento(CD.BuscaridInventario(IdDetalle), fechaFormato() + " " + horaFormato(), IdsSucursales.Valor(ComboBox3.SelectedIndex)))
-                    CD.Modificar(IdDetalle, CDbl(TextBox5.Text), CDbl(TextBox6.Text), IDsMonedas.Valor(ComboBox1.SelectedIndex), TextBox4.Text, CDbl(TextBox8.Text), CDbl(TextBox9.Text), CantidadMostrar, TipoCantidadMostrar, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), ComboBox7.Text, CDbl(TextBox17.Text))
+                    CD.Modificar(IdDetalle, CDbl(TextBox5.Text), CDbl(TextBox6.Text), IDsMonedas.Valor(ComboBox1.SelectedIndex), TextBox4.Text, CDbl(TextBox8.Text), CDbl(TextBox9.Text), CantidadMostrar, TipoCantidadMostrar, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), ComboBox7.Text, CDbl(TextBox17.Text), If(cmbUbicacion.Visible, cmbUbicacion.SelectedValue, ""))
                     If tipoElimianr = "Promocion" Then
                         modificarDescuento(P.descModificar(IdDetalle, "VentasN"))
                     Else
@@ -1803,11 +1803,11 @@ Public Class frmVentasN
             If Estado <> Estados.Guardada And Estado <> Estados.Cancelada Then Button9.Enabled = True
             'cmbtipoarticulo.Text = "A"
 
-            lblUbicacion.Visible = CD.Inventario.UsaUbicacion And Not CheckBox2.Checked
-            cmbUbicacion.Visible = CD.Inventario.UsaUbicacion And Not CheckBox2.Checked
+            lblUbicacion.Visible = CD.Inventario.UsaUbicacion
+            cmbUbicacion.Visible = CD.Inventario.UsaUbicacion
             cmbUbicacion.DataSource = CD.Inventario.Ubicaciones(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario)
             cmbUbicacion.SelectedValue = CD.Ubicacion
-            cmbUbicacion.Enabled = Estado = Estados.Inicio Or Estado = Estados.Pendiente Or Estado = Estados.SinGuardar
+            'cmbUbicacion.Enabled = Estado = Estados.Inicio Or Estado = Estados.Pendiente Or Estado = Estados.SinGuardar
 
             If CheckScroll.Checked Then TextBox5.Focus()
 
@@ -2116,8 +2116,8 @@ Public Class frmVentasN
             TextBox4.Enabled = True
         End If
 
-        lblUbicacion.Visible = Articulo.UsaUbicacion And Not CheckBox2.Checked
-        cmbUbicacion.Visible = Articulo.UsaUbicacion And Not CheckBox2.Checked
+        lblUbicacion.Visible = Articulo.UsaUbicacion
+        cmbUbicacion.Visible = Articulo.UsaUbicacion
         cmbUbicacion.DataSource = Articulo.Ubicaciones(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario)
 
 
@@ -4784,7 +4784,7 @@ Public Class frmVentasN
                     des = des - (2 * des)
                     descripcion = "DESCUENTO: $" + TablaDesc.Rows(0)(2).ToString() + " P/U"
                 End If
-                CD.Modificar(idMod, Double.Parse(TextBox5.Text), des, IDsMonedas.Valor(ComboBox1.SelectedIndex), descripcion, CDbl(TextBox8.Text), CDbl(TextBox9.Text), Double.Parse(TextBox5.Text), 1, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), "", 0)
+                CD.Modificar(idMod, Double.Parse(TextBox5.Text), des, IDsMonedas.Valor(ComboBox1.SelectedIndex), descripcion, CDbl(TextBox8.Text), CDbl(TextBox9.Text), Double.Parse(TextBox5.Text), 1, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), "", 0, "")
                 ' CD.Guardar(idVenta, 1, Double.Parse(TextBox5.Text), des, IDsMonedas.Valor(ComboBox1.SelectedIndex), descripcion, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), 0, 0, 1, 0, 0, Double.Parse(TextBox5.Text), 1)
                 'P.GuardarDesc(CD.UltomoRegistro(), idDescuento, idVenta)
                 P.ModificarDescuento(idMod, idDescuento, idVenta, "VentasN")
@@ -5605,15 +5605,5 @@ Public Class frmVentasN
     End Sub
 
 
-    Private Sub TextBox20_TextChanged(sender As Object, e As EventArgs) Handles TextBox20.TextChanged
 
-    End Sub
-
-    Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox2.CheckedChanged
-        If IdInventario <> 0 Then
-            Dim inv As New dbInventario(IdInventario, MySqlcon)
-            lblUbicacion.Visible = inv.UsaUbicacion And Not CheckBox2.Checked
-            cmbUbicacion.Visible = inv.UsaUbicacion And Not CheckBox2.Checked
-        End If
-    End Sub
 End Class

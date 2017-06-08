@@ -344,7 +344,7 @@
                         End If
                     End If
                 End If
-                GeneraPoliza(idMovimiento)
+                If pEstado = Estados.Guardada Or pEstado = Estados.Cancelada Then GeneraPoliza(idMovimiento)
                 Nuevo(0)
             Else
                 MsgBox(MensajeError, MsgBoxStyle.Information, GlobalNombreApp)
@@ -786,7 +786,7 @@
         'End If
     End Sub
     Private Sub DGDetalles_CellClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DGDetalles.CellClick
-        LlenaDatosDetallesA()
+        If e.RowIndex >= 0 Then LlenaDatosDetallesA()
     End Sub
     Private Sub LlenaDatosDetallesA()
         Try

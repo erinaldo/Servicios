@@ -36,6 +36,11 @@ Public Class dbMovimientos
     Public IdAlmacenD As Integer
     Public IdCliente As Integer
     Public IdPedidoV As Integer
+    Private Structure CrearDesdeRem
+        Dim Idinventario As Integer
+        Dim Precio As Double
+        Dim IdDetalle As Integer
+    End Structure
     Public Sub New(ByVal Conexion As MySql.Data.MySqlClient.MySqlConnection)
         ID = -1
         IdConcepto = -1
@@ -300,11 +305,67 @@ Public Class dbMovimientos
              PidMovimiento.ToString + "," + _
              "tblventasremisionesinventario.descripcion,tblventasremisionesinventario.idalmacen,tblventasremisionesinventario.idalmacen,tblventasremisionesinventario.idvariante,0,0,tblventasremisionesinventario.idmoneda from tblventasremisionesinventario inner join tblinventario on tblventasremisionesinventario.idinventario=tblinventario.idinventario where tblinventario.inventariable=1 and idremision=" + pIdDocumento.ToString + " and (ifnull((select sum(vi.cantidad) from tblventasremisionesinventario vi where vi.idremision=" + pIdDocumento.ToString + " and vi.idinventario=tblventasremisionesinventario.idinventario),0)-(ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento where tblmovimientos.idremision=tblventasremisionesinventario.idremision and tblmovimientosdetalles.idinventario=tblventasremisionesinventario.idinventario and tblmovimientos.estado=3),0)))>0 group by tblventasremisionesinventario.idinventario"
             Comm.ExecuteNonQuery()
+
+            Dim DR As MySql.Data.MySqlClient.MySqlDataReader
+            Dim Detalles As New Collection
+            Dim Detalle As CrearDesdeRem
+            Comm.CommandText = "select idinventario,precio,iddetalle from tblmovimientosdetalles where idmovimiento=" + PidMovimiento.ToString
+            DR = Comm.ExecuteReader
+            While DR.Read
+                Detalle.IdDetalle = DR("iddetalle")
+                Detalle.Idinventario = DR("idinventario")
+                Detalle.Precio = DR("precio")
+                Detalles.Add(Detalle)
+            End While
+            DR.Close()
+            For Each Det As CrearDesdeRem In Detalles
+                Comm.CommandText = "insert into tblmovimientoslotes(idlote,iddetalle,cantidad,surtido) select tblventasremisioneslotes.idlote," + Det.IdDetalle.ToString + ",tblventasremisioneslotes.cantidad,0 from tblventasremisioneslotes inner join tblventasremisionesinventario ri on tblventasremisioneslotes.iddetalle=ri.iddetalle where " +
+                    " round(ri.precio*(1+(ri.iva+ri.ieps-ri.ivaretenido)/100),2)=" + Det.Precio.ToString + " and ri.idinventario=" + Det.Idinventario.ToString + " and ri.idremision=" + pIdDocumento.ToString
+                Comm.ExecuteNonQuery()
+            Next
+            For Each Det As CrearDesdeRem In Detalles
+                Comm.CommandText = "insert into tblmovimientosaduana(idaduana,iddetalle,cantidad,surtido) select tblventasremisionesaduana.idaduana," + Det.IdDetalle.ToString + ",tblventasremisionesaduana.cantidad,0 from tblventasremisionesaduana inner join tblventasremisionesinventario ri on tblventasremisionesaduana.iddetalle=ri.iddetalle where " +
+                    " round(ri.precio*(1+(ri.iva+ri.ieps-ri.ivaretenido)/100),2)=" + Det.Precio.ToString + " and ri.idinventario=" + Det.Idinventario.ToString + " and ri.idremision=" + pIdDocumento.ToString
+                Comm.ExecuteNonQuery()
+            Next
+            For Each Det As CrearDesdeRem In Detalles
+                Comm.CommandText = "insert into tblmovimientosubicaciones(ubicacion,iddetalle,cantidad,surtido,ubicaciond) select tblventasremisionesubicaciones.ubicacion," + Det.IdDetalle.ToString + ",tblventasremisionesubicaciones.cantidad,0,'' from tblventasremisionesubicaciones inner join tblventasremisionesinventario ri on tblventasremisionesubicaciones.iddetalle=ri.iddetalle where " +
+                    " round(ri.precio*(1+(ri.iva+ri.ieps-ri.ivaretenido)/100),2)=" + Det.Precio.ToString + " and ri.idinventario=" + Det.Idinventario.ToString + " and ri.idremision=" + pIdDocumento.ToString
+                Comm.ExecuteNonQuery()
+            Next
         End If
         If Tipo = 3 Then
             '(CDbl(TextBox5.Text) * Equivalenciab) / Equivalencia
             Comm.CommandText = "insert into tblmovimientosdetalles(idinventario, cantidad, precio, idmovimiento, descripcion, idalmacen, idalmacen2, idvariante, surtido, inventarioanterior, idmoneda) select tblventasinventario.idinventario, sum(tblventasinventario.cantidad)-(ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento where tblmovimientos.idventa=tblventasinventario.idventa and tblmovimientosdetalles.idinventario=tblventasinventario.idinventario and tblmovimientos.estado=3),0)), round(tblventasinventario.precio/tblventasinventario.cantidad*((1+(tblventasinventario.iva-tblventasinventario.ivaretenido-tblventasinventario.ieps)/100))*(tblventasinventario.cantidad-(ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento where tblmovimientos.idventa=tblventasinventario.idventa and tblmovimientosdetalles.idinventario=tblventasinventario.idinventario and tblmovimientos.estado=3),0))),2)," + PidMovimiento.ToString + "," + "tblventasinventario.descripcion,tblventasinventario.idalmacen,tblventasinventario.idalmacen,tblventasinventario.idvariante,0,0,tblventasinventario.idmoneda from tblventasinventario inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario where tblinventario.inventariable=1 and idventa=" + pIdDocumento.ToString + " and (ifnull((select sum(vi.cantidad) from tblventasinventario vi where vi.idventa=tblventasinventario.idventa and vi.idinventario=tblventasinventario.idinventario),0)-(ifnull((select sum(tblmovimientosdetalles.cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento where tblmovimientos.idventa=" + pIdDocumento.ToString + " and tblmovimientosdetalles.idinventario=tblventasinventario.idinventario and tblmovimientos.estado=3),0)))>0 group by tblventasinventario.idinventario;"
             Comm.ExecuteNonQuery()
+
+            Dim DR As MySql.Data.MySqlClient.MySqlDataReader
+            Dim Detalles As New Collection
+            Dim Detalle As CrearDesdeRem
+            Comm.CommandText = "select idinventario,precio,iddetalle from tblmovimientosdetalles where idmovimiento=" + PidMovimiento.ToString
+            DR = Comm.ExecuteReader
+            While DR.Read
+                Detalle.IdDetalle = DR("iddetalle")
+                Detalle.Idinventario = DR("idinventario")
+                Detalle.Precio = DR("precio")
+                Detalles.Add(Detalle)
+            End While
+            DR.Close()
+            For Each Det As CrearDesdeRem In Detalles
+                Comm.CommandText = "insert into tblmovimientoslotes(idlote,iddetalle,cantidad,surtido) select tblventaslotes.idlote," + Det.IdDetalle.ToString + ",tblventaslotes.cantidad,0 from tblventaslotes inner join tblventasinventario ri on tblventaslotes.iddetalle=ri.idventasinventario where " +
+                    " round(ri.precio*(1+(ri.iva+ri.ieps-ri.ivaretenido)/100),2)=" + Det.Precio.ToString + " and ri.idinventario=" + Det.Idinventario.ToString + " and ri.idventa=" + pIdDocumento.ToString
+                Comm.ExecuteNonQuery()
+            Next
+            For Each Det As CrearDesdeRem In Detalles
+                Comm.CommandText = "insert into tblmovimientosaduana(idaduana,iddetalle,cantidad,surtido) select tblventasaduanan.idaduana," + Det.IdDetalle.ToString + ",tblventasaduanan.cantidad,0 from tblventasaduanan inner join tblventasinventario ri on tblventasaduanan.iddetalle=ri.idventasinventario where " +
+                    " round(ri.precio*(1+(ri.iva+ri.ieps-ri.ivaretenido)/100),2)=" + Det.Precio.ToString + " and ri.idinventario=" + Det.Idinventario.ToString + " and ri.idventa=" + pIdDocumento.ToString
+                Comm.ExecuteNonQuery()
+            Next
+            For Each Det As CrearDesdeRem In Detalles
+                Comm.CommandText = "insert into tblmovimientosubicaciones(ubicacion,iddetalle,cantidad,surtido,ubicaciond) select tblventasubicaciones.ubicacion," + Det.IdDetalle.ToString + ",tblventasubicaciones.cantidad,0,'' from tblventasubicaciones inner join tblventasinventario ri on tblventasubicaciones.iddetalle=ri.idventasinventario where " +
+                    " round(ri.precio*(1+(ri.iva+ri.ieps-ri.ivaretenido)/100),2)=" + Det.Precio.ToString + " and ri.idinventario=" + Det.Idinventario.ToString + " and ri.idventa=" + pIdDocumento.ToString
+                Comm.ExecuteNonQuery()
+            Next
 
         End If
     End Sub

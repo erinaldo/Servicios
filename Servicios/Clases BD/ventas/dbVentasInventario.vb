@@ -117,20 +117,14 @@
 
         NuevoConcepto = True
         Comm.CommandText = "insert into tblventasinventario(idventa,idinventario,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento,idvariante,idservicio,surtido,cantidadm,tipocantidadm, ieps, ivaRetenido,predial,noimp,noimpimporte,cdescuento) values(" + IdVenta.ToString + "," + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + ",'" + Replace(Descripcion, "'", "''") + "'," + IdMoneda.ToString + "," + IdAlmacen.ToString + "," + Iva.ToString + ",'" + Replace(Extra, "'", "''") + "'," + Descuento.ToString + "," + idVariante.ToString + "," + idServicio.ToString + ",0," + CantidadM.ToString + "," + TipoCantidadM.ToString + "," + IEPS.ToString() + "," + ivaRetencion.ToString + ",'" + Replace(Predial, "'", "''") + "',0,0," + CDescuento.ToString + ");"
-        Comm.ExecuteNonQuery()
-
+        Comm.CommandText += "select ifnull(last_insert_id(),0);"
+        ID = Comm.ExecuteScalar
         If pUbicacion <> "" Then
-            Comm.CommandText = "insert into tblventasubicaciones (iddetalle, cantidad, surtido, ubicacion) select max(idventasinventario), " + Cantidad.ToString() + ", 0, '" + Trim(Replace(Ubicacion, "'", "''")) + "' from tblventasinventario;"
+            Comm.CommandText = "insert into tblventasubicaciones (iddetalle, cantidad, surtido, ubicacion) values( " + ID.ToString + ", " + Cantidad.ToString() + ", 0, '" + Trim(Replace(Ubicacion, "'", "''")) + "');"
             Comm.ExecuteNonQuery()
         End If
-
-        Comm.CommandText = "select ifnull(last_insert_id(),0);"
-        'Comm.CommandText = "select if(max(idventasinventario) is null,0,max(idventasinventario)) from tblventasinventario"
-        ID = Comm.ExecuteScalar
-        'End If
-
     End Sub
-    Public Sub Modificar(ByVal pID As Integer, ByVal pCantidad As Double, ByVal pPrecio As Double, ByVal pIdMoneda As Integer, ByVal pDescripcion As String, ByVal pIva As Double, ByVal pDescuento As Double, ByVal pCantidadM As Double, ByVal pTipoCantidadM As Integer, ByVal pIEPS As Double, ByVal pIVARetenido As Double, ByVal pPredial As String, pcDescuento As Double)
+    Public Sub Modificar(ByVal pID As Integer, ByVal pCantidad As Double, ByVal pPrecio As Double, ByVal pIdMoneda As Integer, ByVal pDescripcion As String, ByVal pIva As Double, ByVal pDescuento As Double, ByVal pCantidadM As Double, ByVal pTipoCantidadM As Integer, ByVal pIEPS As Double, ByVal pIVARetenido As Double, ByVal pPredial As String, pcDescuento As Double, pUbicacion As String)
         ID = pID
         Cantidad = pCantidad
         Precio = pPrecio
@@ -146,6 +140,10 @@
         CDescuento = pcDescuento
         Comm.CommandText = "update tblventasinventario set precio=" + Precio.ToString + ",idmoneda=" + IdMoneda.ToString + ",cantidad=" + Cantidad.ToString + ",descripcion='" + Replace(Descripcion, "'", "''") + "',iva=" + Iva.ToString + ",descuento=" + Descuento.ToString + ",cantidadm=" + CantidadM.ToString + ",tipocantidadm=" + TipoCantidadM.ToString + " , ieps=" + IEPS.ToString() + ", ivaRetenido=" + ivaRetencion.ToString() + ",predial='" + Replace(Predial, "'", "''") + "',cdescuento=" + CDescuento.ToString + " where idventasinventario=" + ID.ToString
         Comm.ExecuteNonQuery()
+        If pUbicacion <> "" Then
+            Comm.CommandText = "update tblventasubicaciones set cantidad=" + pCantidad.ToString + ",ubicacion='" + Trim(Replace(pUbicacion, "'", "''")) + "' where iddetalle=" + ID.ToString
+            Comm.ExecuteNonQuery()
+        End If
     End Sub
     Public Sub Eliminar(ByVal pID As Integer)
         Comm.CommandText = "delete from tblventasinventario where idventasinventario=" + pID.ToString

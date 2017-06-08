@@ -84,20 +84,16 @@
         Ubicacion = pUbicacion
 
         NuevoConcepto = True
-        Comm.CommandText = "insert into tblcomprasremisionesdetalles(idremision, idinventario, cantidad, precio, descripcion, idmoneda, iva, extra, descuento, idalmacen, surtido, IEPS, ivaRetenido) values (" + IdPedido.ToString + "," + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + ",'" + Replace(Descripcion, "'", "''") + "'," + IdMoneda.ToString + "," + Iva.ToString + ",''," + Descuento.ToString + "," + IdAlmacen.ToString + ", 0" + "," + pIEPS.ToString() + " , " + pivaRetenido.ToString() + ")"
-        Comm.ExecuteNonQuery()
-
+        Comm.CommandText = "insert into tblcomprasremisionesdetalles(idremision, idinventario, cantidad, precio, descripcion, idmoneda, iva, extra, descuento, idalmacen, surtido, IEPS, ivaRetenido) values (" + IdPedido.ToString + "," + Idinventario.ToString + "," + Cantidad.ToString + "," + Precio.ToString + ",'" + Replace(Descripcion, "'", "''") + "'," + IdMoneda.ToString + "," + Iva.ToString + ",''," + Descuento.ToString + "," + IdAlmacen.ToString + ", 0" + "," + pIEPS.ToString() + " , " + pivaRetenido.ToString() + ");"
+        Comm.CommandText += "select ifnull(last_insert_id(),0);"
+        ID = Comm.ExecuteScalar
         If pUbicacion <> "" Then
-            Comm.CommandText = "insert into tblcomprasremisionesubicaciones (iddetalle, cantidad, surtido, ubicacion) select max(iddetalle), " + Cantidad.ToString() + ", 0, '" + Trim(Replace(Ubicacion, "'", "''")) + "' from tblcomprasremisionesdetalles;"
+            Comm.CommandText = "insert into tblcomprasremisionesubicaciones (iddetalle, cantidad, surtido, ubicacion) values(" + ID.ToString + ", " + Cantidad.ToString() + ", 0, '" + Trim(Replace(Ubicacion, "'", "''")) + "');"
             Comm.ExecuteNonQuery()
         End If
 
-        Comm.CommandText = "select ifnull((select max(iddetalle) from tblcomprasremisionesdetalles),0)"
-        ID = Comm.ExecuteScalar
-        'End If
-
     End Sub
-    Public Sub Modificar(ByVal pID As Integer, ByVal pCantidad As Double, ByVal pPrecio As Double, ByVal pIdMoneda As Integer, ByVal pDescripcion As String, ByVal piva As Double, ByVal pDescuento As Double, ByVal pIEPS As Double, ByVal pivaRetenido As Double)
+    Public Sub Modificar(ByVal pID As Integer, ByVal pCantidad As Double, ByVal pPrecio As Double, ByVal pIdMoneda As Integer, ByVal pDescripcion As String, ByVal piva As Double, ByVal pDescuento As Double, ByVal pIEPS As Double, ByVal pivaRetenido As Double, pUbicacion As String)
         ID = pID
         Cantidad = pCantidad
         Precio = pPrecio
@@ -109,6 +105,10 @@
         Descuento = pDescuento
         Comm.CommandText = "update tblcomprasremisionesdetalles set precio=" + Precio.ToString + ",idmoneda=" + IdMoneda.ToString + ",cantidad=" + Cantidad.ToString + ",descripcion='" + Replace(Descripcion, "'", "''") + "',iva=" + Iva.ToString + ",descuento=" + Descuento.ToString + " ,IEPS=" + IEPS.ToString() + " ,ivaRetenido=" + ivaRetenido.ToString() + " where iddetalle=" + ID.ToString
         Comm.ExecuteNonQuery()
+        If pUbicacion <> "" Then
+            Comm.CommandText = "update tblcomprasremisionesubicaciones set ubicacion='" + Replace(pubicacion, "'", "''") + "',cantidad=" + pCantidad.ToString + " where iddetalle=" + pID.ToString
+            Comm.ExecuteNonQuery()
+        End If
     End Sub
 
     Public Sub Eliminar(ByVal pID As Integer)

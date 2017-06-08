@@ -270,7 +270,7 @@
 
     Private Sub DataGridView1_CellClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DataGridView1.CellClick
         'If Modo < 2 Then
-        LlenaDatos()
+        If e.RowIndex >= 0 Then LlenaDatos()
         'End If
     End Sub
 
@@ -323,18 +323,19 @@
     End Sub
 
     Private Sub DataGridView2_CellClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DataGridView2.CellClick
-        LoteSeleccionado = DataGridView2.Item(0, DataGridView2.CurrentCell.RowIndex).Value
-        'If Lote.IdDetalleVenta <> 0 Or Lote.IdDetalleRemisionV <> 0 Then
-        'Dim Lote As New dblotes(LoteSeleccionado, MySqlcon)
-        Lote.ID = LoteSeleccionado
-        Lote.LlenaDatos()
-        ClaveAnterior = Lote.Lote
-        TextBox6.Text = Lote.Lote
-        Existencia = Lote.Cantidad
-        'TextBox1.Text = P.Nombre
-        DateTimePicker1.Value = CDate(Lote.FechaCaducidad)
-        TextBox2.Focus()
-        'End If
+        If e.RowIndex >= 0 Then
+            LoteSeleccionado = DataGridView2.Item(0, DataGridView2.CurrentCell.RowIndex).Value
+            'If Lote.IdDetalleVenta <> 0 Or Lote.IdDetalleRemisionV <> 0 Then
+            'Dim Lote As New dblotes(LoteSeleccionado, MySqlcon)
+            Lote.ID = LoteSeleccionado
+            Lote.LlenaDatos()
+            ClaveAnterior = Lote.Lote
+            TextBox6.Text = Lote.Lote
+            Existencia = Lote.Cantidad
+            'TextBox1.Text = P.Nombre
+            DateTimePicker1.Value = CDate(Lote.FechaCaducidad)
+            TextBox2.Focus()
+        End If
     End Sub
 
     Private Sub DataGridView2_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DataGridView2.CellContentClick

@@ -734,7 +734,7 @@
                     NuevoArticulo()
                     'PopUp("Artículo agregado", 90)
                 Else
-                    CD.Modificar(IdDetalle, CDbl(txtCantidad.Text), CDbl(txtImporte.Text), IDsMonedas.Valor(cmbMoneda.SelectedIndex), CDbl(TextBox11.Text), CDbl(TextBox9.Text), Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text))
+                    CD.Modificar(IdDetalle, CDbl(txtCantidad.Text), CDbl(txtImporte.Text), IDsMonedas.Valor(cmbMoneda.SelectedIndex), CDbl(TextBox11.Text), CDbl(TextBox9.Text), Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), If(cmbUbicacion.Visible, cmbUbicacion.SelectedValue, ""))
                     If ManejaSeries <> 0 Then
                         Dim F As New frmInventarioSeries(IdInventario, idCompra, 0, CDbl(txtCantidad.Text), DateTimePicker1.Value, 0, 0)
                         F.ShowDialog()
@@ -861,10 +861,9 @@
             txtCodigo.Enabled = False
             ComboBox8.Enabled = False
 
-            Dim articulo As New dbInventario(CD.Inventario.ID, MySqlcon)
-            lblUbicacion.Visible = articulo.UsaUbicacion
-            cmbUbicacion.Visible = articulo.UsaUbicacion
-            cmbUbicacion.DataSource = articulo.Ubicaciones(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario)
+            lblUbicacion.Visible = CD.Inventario.UsaUbicacion
+            cmbUbicacion.Visible = CD.Inventario.UsaUbicacion
+            cmbUbicacion.DataSource = CD.Inventario.Ubicaciones(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario)
             cmbUbicacion.SelectedValue = CD.Ubicacion
             cmbUbicacion.Enabled = Estado = Estados.Inicio Or Estado = Estados.Pendiente Or Estado = Estados.SinGuardar
 
