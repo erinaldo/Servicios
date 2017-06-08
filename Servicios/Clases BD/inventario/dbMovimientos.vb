@@ -883,7 +883,7 @@ Public Class dbMovimientos
         Dim dr As MySqlDataReader = Comm.ExecuteReader
         Try
             If dr.Read Then Return New Entrega(dr("idmovimiento"), dr("unidad"), dr("marca"), dr("modelo"), dr("color"), dr("placas"), dr("chofer"), dr("salida"), dr("lugar"), dr("paquetes"), dr("lote"), dr("numerosellos"), dr("kilos"), dr("transportista"), dr("llegada"))
-            Return New Entrega(0, "", "", "", "", "", "", Now, "", 0, "", "", 0, "", Now)
+            Return New Entrega(idmovimiento, "", "", "", "", "", "", Now, "", 0, "", "", 0, "", Now)
         Finally
             dr.Close()
         End Try
