@@ -147,7 +147,7 @@
         Iva = pIva
         Descuento = pDescuento
         CantidadM = pCantidadM
-        Comm.CommandText = "update tbldevolucionesdetalles set precio=" + Precio.ToString + ",idmoneda=" + IdMoneda.ToString + ",cantidad=" + Cantidad.ToString + ",descripcion='" + Replace(Descripcion, "'", "''") + "',iva=" + Iva.ToString + ",descuento=" + Descuento.ToString + ",cantidadm=" + CantidadM.ToString + " where iddetalle=" + ID.ToString
+        Comm.CommandText = "update tbldevolucionesdetalles set precio=" + Precio.ToString + ",idmoneda=" + IdMoneda.ToString + ",cantidad=" + Cantidad.ToString + ",descripcion='" + Replace(Descripcion, "'", "''") + "',iva=" + Iva.ToString + ",descuento=" + Descuento.ToString + ",cantidadm=" + CantidadM.ToString + " where iddetalle=" + ID.ToString + ";update tbldevolucionesubicaciones set cantidad=" + Cantidad.ToString + " where iddetalle =" + ID.ToString() + ";"
         Comm.ExecuteNonQuery()
     End Sub
     Public Sub Eliminar(ByVal pID As Integer)

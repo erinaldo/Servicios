@@ -174,7 +174,7 @@
         Comm.ExecuteNonQuery()
     End Sub
     Public Sub Eliminar(ByVal pID As Integer)
-        Comm.CommandText = "delete from tbldevoluciones where iddevolucion=" + pID.ToString
+        Comm.CommandText = "delete dcu from tbldevolucionesubicaciones dcu inner join tbldevolucionesdetalles ddc on dcu.iddetalle=ddc.iddetalle where ddc.iddevolucion=" + pID.ToString() + ";delete from tbldevolucionesdetalles where iddevolucion=" + pID.ToString + ";delete from tbldevoluciones where iddevolucion=" + pID.ToString
         Comm.ExecuteNonQuery()
     End Sub
     Public Function Consulta(ByVal pFecha As String, ByVal pFecha2 As String, Optional ByVal pNombreClave As String = "", Optional ByVal pFolio As String = "", Optional ByVal pEstado As Byte = 0, Optional ByVal pCredido As Byte = 200) As DataView
@@ -300,233 +300,62 @@
             ChecaFolioRepetido = True
         End If
     End Function
-    'Public Sub SetnFacturado(ByVal piddevolucion As Integer, ByVal pTipo As TiposFactura, ByVal pCredito As Byte, ByVal pTotal As Double)
-    '    Dim Tipo As Byte
-    '    Tipo = pTipo
-    '    Total = pTotal
-    '    If pCredito = 0 Then
-    '        Comm.CommandText = "update tbldevoluciones set facturado=" + Tipo.ToString + ",total=" + Total.ToString + ",hora='" + Format(Date.Today, "HH:mm:ss") + "' where iddevolucion=" + piddevolucion.ToString
-    '    Else
-    '        Comm.CommandText = "update tbldevoluciones set facturado=" + Tipo.ToString + ",totalapagar=" + Total.ToString + ",credito=1,total=" + Total.ToString + ",hora='" + Format(Date.Today, "HH:mm:ss") + "' where iddevolucion=" + piddevolucion.ToString
-    '    End If
-    '    Comm.ExecuteNonQuery()
-    'End Sub
-
-    'Public Function print(ByVal idmoneda As Integer) As ArrayList
-    '    Dim nodos As New ArrayList
-    '    Dim abd As New BDImpresiones
-    '    Dim n As NodoImpresionTexto
-
-    '    Dim dr As MySql.Data.MySqlClient.MySqlDataReader
-    '    Dim CD As New dbVentasInventario(MySqlcon)
-    '    dr = CD.ConsultaReader(ID)
-    '    Dim articulos As New ArrayList
-
-    '    While dr.Read
-    '        articulos.Add(New ArticuloFactura(dr("iddevolucionsinventario"), "A", "", dr("cantidad"), dr("clave"), dr("descripcion"), dr("precio"))) ', dr("abreviatura")))
-    '    End While
-    '    dr.Close()
-    '    Dim VP As New dbVentasProductos(MySqlcon)
-    '    dr = VP.ConsultaReader(ID)
-    '    While dr.Read
-    '        articulos.Add(New ArticuloFactura(dr("iddevolucionsproducto"), "P", "", dr("cantidad"), dr("clave"), dr("descripcion"), dr("precio"))) ', dr("abreviatura")))
-    '    End While
-    '    dr.Close()
-    '    Dim VS As New dbVentasServicios(MySqlcon)
-    '    dr = VS.ConsultaReader(ID)
-    '    While dr.Read
-    '        articulos.Add(New ArticuloFactura(dr("iddevolucionsservicio"), "S", "", dr("cantidad"), dr("folio"), dr("descripcion"), dr("precio"))) ', dr("abreviatura")))
-    '    End While
-    '    dr.Close()
-
-    '    Cliente.BuscaCliente(IdCliente)
-
-    '    Dim descripcion = "", cantidad = "", codigo = "", importe = "", preciounitario As String = ""
-    '    Dim af As ArticuloFactura
-    '    Const descmaxlength As Integer = 50
-    '    For Each af In articulos
-    '        Dim start = 0, length As Integer = 0
-    '        'If af.idarticulo <> 0 Then
-    '        cantidad += CStr(af.cantidad).PadLeft(6)
-    '        codigo += af.codigo
-    '        'importe += Format(af.importe, "C2").PadLeft(10)
-    '        preciounitario += Format(af.preciounitario, "C2").PadLeft(10)
-    '        'End If
-
-    '        Do
-    '            length = If(Format(af.descripcion).Substring(start, Format(af.descripcion).Length - start).Length <= descmaxlength, Format(af.descripcion).Length - start, If(Format(af.descripcion).Substring(start, descmaxlength).LastIndexOf(" ") = -1, descmaxlength, Format(af.descripcion).Substring(start, descmaxlength).LastIndexOf(" ")))
-    '            descripcion += Format(af.descripcion).Substring(start, length) + vbNewLine
-    '            cantidad += vbNewLine
-    '            codigo += vbNewLine
-    '            importe += vbNewLine
-    '            preciounitario += vbNewLine
-    '            start += length + 1
-    '        Loop While start < Format(af.descripcion).Length
-
-    '    Next
-
-    '    For Each n In abd.find(7).campos
-    '        If n.visible Then
-    '            If n.texto = "titulo" Then nodos.Add(New NodoImpresionTexto("FACTURA", n.x, n.y, n.visible))
-    '            If n.texto = "nombreempresa" Then nodos.Add(New NodoImpresionTexto(My.Settings.empresa, n.x, n.y, n.visible))
-    '            If n.texto = "rfcempresa" Then nodos.Add(New NodoImpresionTexto(My.Settings.rfc, n.x, n.y, n.visible))
-
-    '            If n.texto = "nombre" Then nodos.Add(New NodoImpresionTexto(Cliente.Nombre, n.x, n.y, n.visible))
-    '            If n.texto = "nocliente" Then nodos.Add(New NodoImpresionTexto(Cliente.Clave, n.x, n.y, n.visible))
-    '            If n.texto = "direccion" Then nodos.Add(New NodoImpresionTexto(Cliente.Direccion, n.x, n.y, n.visible))
-    '            'If n.texto = "direccioncol" Then nodos.Add(New NodoImpresionTexto(Cliente.Direccion + " " + Cliente.colonia, n.x, n.y, n.visible))
-    '            If n.texto = "ciudad" Then nodos.Add(New NodoImpresionTexto(Cliente.Ciudad + ", " + Cliente.Estado + " " + Cliente.CP, n.x, n.y, n.visible))
-    '            'If n.texto = "colonia" Then nodos.Add(New NodoImpresionTexto(Cliente.colonia, n.x, n.y, n.visible))
-    '            If n.texto = "telefono" Then nodos.Add(New NodoImpresionTexto(Cliente.Telefono, n.x, n.y, n.visible))
-    '            'If n.texto = "curp" Then nodos.Add(New NodoImpresionTexto(Cliente.curp, n.x, n.y, n.visible))
-    '            'If n.texto = "ruc" Then nodos.Add(New NodoImpresionTexto(Cliente.ruc, n.x, n.y, n.visible))
-    '            'If n.texto = "cnpj" Then nodos.Add(New NodoImpresionTexto(Cliente.cnpj, n.x, n.y, n.visible))
-
-    '            'If n.texto = "adicional1" Then nodos.Add(New NodoImpresionTexto(_adicional1, n.x, n.y, n.visible))
-    '            'If n.texto = "adicional2" Then nodos.Add(New NodoImpresionTexto(_adicional2, n.x, n.y, n.visible))
-    '            'If n.texto = "adicionalc" Then If _tipoventa = TIPOSVENTAS.CREDITO Then nodos.Add(New NodoImpresionTexto(_adicionalc, n.x, n.y, n.visible))
-    '            'If n.texto = "comentario" Then nodos.Add(New NodoImpresionTexto(_comentario, n.x, n.y, n.visible))
-    '            'If n.texto = "condiciones" Then nodos.Add(New NodoImpresionTexto(condiciones, n.x, n.y, n.visible))
-    '            'If n.texto = "exhibiciones1" Then If exhibiciones = 0 Then nodos.Add(New NodoImpresionTexto("X", n.x, n.y, n.visible))
-    '            'If n.texto = "exhibiciones2" Then If exhibiciones = 1 Then nodos.Add(New NodoImpresionTexto("X", n.x, n.y, n.visible))
-
-    '            'If n.texto = "tasaiva" Then nodos.Add(New NodoImpresionTexto(CStr(Cliente.iva.tasa) + "%", n.x, n.y, n.visible))
-    '            If n.texto = "fecha" Then nodos.Add(New NodoImpresionTexto(Format(Fecha, "dd MM yyyy"), n.x, n.y, n.visible))
-    '            If n.texto = "nofactura" Then nodos.Add(New NodoImpresionTexto(Format(CInt(Folio), "0000"), n.x, n.y, n.visible))
-    '            If n.texto = "rfc" Then nodos.Add(New NodoImpresionTexto(Cliente.RFC, n.x, n.y, n.visible))
-
-    '            ''''''
-    '            Dim T As Double = DaTotal(ID, idmoneda)
-    '            Dim Iva As Double
-    '            If Desglosar Then
-    '                Iva = T - (T / (1 + (Iva / 100)))
-    '                If n.texto = "subtotal" Then nodos.Add(New NodoImpresionTexto(Format(System.Math.Round(T - Iva, 2), "C2").PadLeft(10), n.x, n.y, n.visible))
-    '                If n.texto = "iva" Then nodos.Add(New NodoImpresionTexto(Format(System.Math.Round(Iva, 2), "C2").PadLeft(10), n.x, n.y, n.visible))
-    '                If n.texto = "total" Then nodos.Add(New NodoImpresionTexto(Format(System.Math.Round(T, 2), "C2").PadLeft(10), n.x, n.y, n.visible))
-    '            Else
-    '                Iva = T * (Iva / 100)
-    '                If n.texto = "subtotal" Then nodos.Add(New NodoImpresionTexto(Format(System.Math.Round(T, 2), "C2").PadLeft(10), n.x, n.y, n.visible))
-    '                If n.texto = "iva" Then nodos.Add(New NodoImpresionTexto(Format(System.Math.Round(Iva, 2), "C2").PadLeft(10), n.x, n.y, n.visible))
-    '                If n.texto = "total" Then nodos.Add(New NodoImpresionTexto(Format(System.Math.Round(T + Iva, 2), "C2").PadLeft(10), n.x, n.y, n.visible))
-    '            End If
-
-    '            ''''''
-
-    '            If n.texto = "totalletra" Then nodos.Add(New NodoImpresionTexto(totalLetra(idmoneda), n.x, n.y, n.visible))
-
-    '            If n.texto = "descripcion" Then nodos.Add(New NodoImpresionTexto(descripcion, n.x, n.y, n.visible))
-    '            If n.texto = "cantidad" Then nodos.Add(New NodoImpresionTexto(cantidad, n.x, n.y, n.visible))
-    '            If n.texto = "codigo" Then nodos.Add(New NodoImpresionTexto(codigo, n.x, n.y, n.visible))
-    '            If n.texto = "importe" Then nodos.Add(New NodoImpresionTexto(importe, n.x, n.y, n.visible))
-    '            If n.texto = "preciounitario" Then nodos.Add(New NodoImpresionTexto(preciounitario, n.x, n.y, n.visible))
-
-    '            'If n.texto = "pagfecha1" Then nodos.Add(New NodoImpresionTexto(Format(CDate(Fecha), "dd MM yyyy"), n.x, n.y, n.visible))
-    '            'If n.texto = "pagfecha2" Then nodos.Add(New NodoImpresionTexto(Format(CDate(Fecha), "dd MM yyyy"), n.x, n.y, n.visible))
-    '            'If n.texto = "pagtotal" Then nodos.Add(New NodoImpresionTexto(Format(total, "C2").PadLeft(10), n.x, n.y, n.visible))
-    '            'If n.texto = "pagtotalletra" Then nodos.Add(New NodoImpresionTexto(totalLetra, n.x, n.y, n.visible))
-    '            'If n.texto = "pagnombre" Then nodos.Add(New NodoImpresionTexto(Cliente.Nombre, n.x, n.y, n.visible))
-    '            'If n.texto = "pagdireccion" Then nodos.Add(New NodoImpresionTexto(Cliente.Direccion, n.x, n.y, n.visible))
-    '            'If n.texto = "pagciudad" Then nodos.Add(New NodoImpresionTexto(Cliente.Ciudad + ", " + Cliente.Estado + " " + Cliente.CP, n.x, n.y, n.visible))
-    '            'If n.texto = "pagcondiciones" Then nodos.Add(New NodoImpresionTexto(condiciones, n.x, n.y, n.visible))
-    '        End If
-    '    Next
-
-    '    Return nodos
-    'End Function
-
-    'Public ReadOnly Property totalLetra(ByVal idmoneda As Integer) As String
-    '    Get
-    '        Dim f As New StringFunctions
-    '        Return f.PASELETRAS(DaTotal(ID, idmoneda), idmoneda)
-    '    End Get
-    'End Property
-
-
+    
     Public Sub AgregarDetallesReferencia(ByVal Piddevolucion As Integer, ByVal pIdDocumento As Integer, ByVal Tipo As Byte, ByVal pidAlmacen As Integer)
         '0 cotizacion
         '1 pedido
         '2 remision
         '3 ventas
-
-        'If Tipo = 0 Then
-        '    Comm.CommandText = "insert into tbldevolucionesinventario(iddevolucion,idinventario,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento,idvariante,idservicio) select " + Piddevolucion.ToString + ",idinventario,cantidad,precio,descripcion,idmoneda," + pidAlmacen.ToString + ",iva,extra,descuento,idvariante,0 from tbldevolucionescotizacionesinventario where idcotizacion=" + pIdDocumento.ToString
-        '    Comm.ExecuteNonQuery()
-
-        '    'Comm.CommandText = "insert into tbldevolucionesproductos(iddevolucion,idvariante,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento) select " + Piddevolucion.ToString + ",idvariante,cantidad,precio,descripcion,idmoneda," + pidAlmacen.ToString + ",iva,extra,descuento from tbldevolucionescotizacionesproductos where idcotizacion=" + pIdDocumento.ToString
-        '    'Comm.ExecuteNonQuery()
-        'End If
-
-        'If Tipo = 1 Then
-        '    Comm.CommandText = "insert into tbldevolucionesinventario(iddevolucion,idinventario,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento,idvariante,idservicio) select " + Piddevolucion.ToString + ",idinventario,cantidad,precio,descripcion,idmoneda," + pidAlmacen.ToString + ",iva,extra,descuento,idvariante,0 from tbldevolucionespedidosinventario where idpedido=" + pIdDocumento.ToString
-        '    Comm.ExecuteNonQuery()
-
-        '    'Comm.CommandText = "insert into tbldevolucionesproductos(iddevolucion,idvariante,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento) select " + Piddevolucion.ToString + ",idvariante,cantidad,precio,descripcion,idmoneda," + pidAlmacen.ToString + ",iva,extra,descuento from tbldevolucionespedidosproductos where idpedido=" + pIdDocumento.ToString
-        '    'Comm.ExecuteNonQuery()
-        'End If
-
         If Tipo = 2 Then
-            Comm.CommandText = "insert into tbldevolucionesdetalles(iddevolucion,idinventario,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento,idvariante,idservicio,cantidadm,tipocantidadm,equivalencia,equivalenciab,ieps,ivaretenido) select " + Piddevolucion.ToString + ",tblventasremisionesinventario.idinventario,tblventasremisionesinventario.cantidad-(ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevoluciones.idremision=tblventasremisionesinventario.idremision and tbldevolucionesdetalles.idinventario=tblventasremisionesinventario.idinventario and tbldevoluciones.estado=3),0)),tblventasremisionesinventario.precio/tblventasremisionesinventario.cantidad*(tblventasremisionesinventario.cantidad-(ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevoluciones.idremision=tblventasremisionesinventario.idremision and tbldevolucionesdetalles.idinventario=tblventasremisionesinventario.idinventario and tbldevoluciones.estado=3),0))),tblventasremisionesinventario.descripcion,tblventasremisionesinventario.idmoneda,tblventasremisionesinventario.idalmacen,tblventasremisionesinventario.iva,tblventasremisionesinventario.extra,tblventasremisionesinventario.descuento,tblventasremisionesinventario.idvariante,tblventasremisionesinventario.idservicio," +
-                "(tblventasremisionesinventario.cantidad-(ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevoluciones.idremision=tblventasremisionesinventario.idremision and tbldevolucionesdetalles.idinventario=tblventasremisionesinventario.idinventario and tbldevoluciones.estado=3),0)))*tblventasremisionesinventario.cantidadm/tblventasremisionesinventario.cantidad," + _
-                "tblventasremisionesinventario.tipocantidadm,1,1,tblventasremisionesinventario.ieps,tblventasremisionesinventario.ivaretenido from tblventasremisionesinventario inner join tblinventario on tblventasremisionesinventario.idinventario=tblinventario.idinventario where tblinventario.inventariable=1 and idremision=" + pIdDocumento.ToString + " and (tblventasremisionesinventario.cantidad-(ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevoluciones.idremision=tblventasremisionesinventario.idremision and tbldevolucionesdetalles.idinventario=tblventasremisionesinventario.idinventario and tbldevoluciones.estado=3),0)))>0"
+            Comm.CommandText = "insert into tbldevolucionesdetalles(iddevolucion, idinventario, cantidad, precio, descripcion, idmoneda, idalmacen, iva, extra, descuento, idvariante, idservicio, cantidadm, tipocantidadm, equivalencia, equivalenciab, ieps, ivaretenido) select " + Piddevolucion.ToString + ",tblventasremisionesinventario.idinventario, tblventasremisionesinventario.cantidad-(ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevoluciones.idremision=tblventasremisionesinventario.idremision and tbldevolucionesdetalles.idinventario=tblventasremisionesinventario.idinventario and tbldevoluciones.estado=3),0)),tblventasremisionesinventario.precio/tblventasremisionesinventario.cantidad*(tblventasremisionesinventario.cantidad-(ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevoluciones.idremision=tblventasremisionesinventario.idremision and tbldevolucionesdetalles.idinventario=tblventasremisionesinventario.idinventario and  tbldevoluciones.estado=3),0))), tblventasremisionesinventario.descripcion, tblventasremisionesinventario.idmoneda, tblventasremisionesinventario.idalmacen, tblventasremisionesinventario.iva,tblventasremisionesinventario.extra,tblventasremisionesinventario.descuento,tblventasremisionesinventario.idvariante,tblventasremisionesinventario.idservicio, (tblventasremisionesinventario.cantidad-(ifnull((select sum(tbldevolucionesdetalles.cantidad)" + _
+            "from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevoluciones.idremision=tblventasremisionesinventario.idremision and tbldevolucionesdetalles.idinventario=tblventasremisionesinventario.idinventario and tbldevoluciones.estado=3),0)))*tblventasremisionesinventario.cantidadm/tblventasremisionesinventario.cantidad, tblventasremisionesinventario.tipocantidadm, 1, 1, tblventasremisionesinventario.ieps,tblventasremisionesinventario.ivaretenido from tblventasremisionesinventario inner join tblinventario on tblventasremisionesinventario.idinventario=tblinventario.idinventario where tblinventario.inventariable=1 and idremision=" + pIdDocumento.ToString + " and (tblventasremisionesinventario.cantidad-(ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevoluciones.idremision=tblventasremisionesinventario.idremision and tbldevolucionesdetalles.idinventario=tblventasremisionesinventario.idinventario and tbldevoluciones.estado=3),0)))>0;" + _
+            "insert into tbldevolucionesubicaciones (iddetalle, ubicacion, cantidad, surtido) select ddc.iddetalle, ubicacion, tcu.cantidad, 0 from tblventasremisionesubicaciones tcu inner join tblventasremisionesinventario cd on cd.iddetalle=tcu.iddetalle inner join tbldevolucionesdetalles ddc on ddc.idinventario=cd.idinventario and ddc.cantidad=cd.cantidad and ddc.precio=cd.precio where cd.idremision=" + pIdDocumento.ToString() + " and ddc.iddevolucion=" + Piddevolucion.ToString()
             Comm.ExecuteNonQuery()
 
-            'Comm.CommandText = "insert into tbldevolucionesproductos(iddevolucion,idvariante,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento) select " + Piddevolucion.ToString + ",idvariante,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento from tbldevolucionesremisionesproductos where idremision=" + pIdDocumento.ToString
-            'Comm.ExecuteNonQuery()
-
-            'Comm.CommandText = "insert into tbldevolucionesservicios(iddevolucion,idservicio,cantidad,precio,descripcion,idmoneda,iva,extra,descuento) select " + Piddevolucion.ToString + ",idservicio,cantidad,precio,descripcion,idmoneda,iva,extra,descuento from tbldevolucionesremisionesservicios where idremision=" + pIdDocumento.ToString
-            'Comm.ExecuteNonQuery()
-            'Comm.CommandText = "update tblinventarioseries set iddevolucion=" + Piddevolucion.ToString + " where idremision=" + pIdDocumento.ToString
-            'Comm.ExecuteNonQuery()
-        End If
-
-        If Tipo = 3 Then
+        ElseIf Tipo = 3 Then
             '(CDbl(TextBox5.Text) * Equivalenciab) / Equivalencia
-            Comm.CommandText = "insert into tbldevolucionesdetalles(iddevolucion,idinventario,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento,idvariante,idservicio,cantidadm,tipocantidadm,equivalencia,equivalenciab,ieps,ivaretenido) select " + Piddevolucion.ToString + ",tblventasinventario.idinventario,tblventasinventario.cantidad-(ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevoluciones.idventa=tblventasinventario.idventa and tbldevolucionesdetalles.idinventario=tblventasinventario.idinventario and tbldevoluciones.estado=3),0)),tblventasinventario.precio/tblventasinventario.cantidad*(tblventasinventario.cantidad-(ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevoluciones.idventa=tblventasinventario.idventa and tbldevolucionesdetalles.idinventario=tblventasinventario.idinventario and tbldevoluciones.estado=3),0))),tblventasinventario.descripcion,tblventasinventario.idmoneda,tblventasinventario.idalmacen,tblventasinventario.iva,tblventasinventario.extra,tblventasinventario.descuento,tblventasinventario.idvariante,tblventasinventario.idservicio," + _
-"(tblventasinventario.cantidad-(ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevoluciones.idventa=tblventasinventario.idventa and tbldevolucionesdetalles.idinventario=tblventasinventario.idinventario and tbldevoluciones.estado=3),0)))*tblventasinventario.cantidadm/tblventasinventario.cantidad," + _
-"tblventasinventario.tipocantidadm,tblventasinventario.cantidad,tblventasinventario.cantidadm,tblventasinventario.ieps,tblventasinventario.ivaretenido from tblventasinventario inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario where tblinventario.inventariable=1 and idventa=" + pIdDocumento.ToString + " and (tblventasinventario.cantidad-(ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevoluciones.idventa=tblventasinventario.idventa and tbldevolucionesdetalles.idinventario=tblventasinventario.idinventario and tbldevoluciones.estado=3),0)))>0"
+            Comm.CommandText = "insert into tbldevolucionesdetalles(iddevolucion, idinventario, cantidad, precio, descripcion, idmoneda, idalmacen, iva, extra, descuento, idvariante, idservicio, cantidadm, tipocantidadm, equivalencia, equivalenciab, ieps, ivaretenido) select " + Piddevolucion.ToString + ", tblventasinventario.idinventario, tblventasinventario.cantidad-(ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevoluciones.idventa=tblventasinventario.idventa and tbldevolucionesdetalles.idinventario = tblventasinventario.idinventario and tbldevoluciones.estado=3),0)),tblventasinventario.precio/tblventasinventario.cantidad*(tblventasinventario.cantidad-(ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion = tbldevoluciones.iddevolucion where tbldevoluciones.idventa=tblventasinventario.idventa and tbldevolucionesdetalles.idinventario = tblventasinventario.idinventario and tbldevoluciones.estado=3),0))), tblventasinventario.descripcion, tblventasinventario.idmoneda, tblventasinventario.idalmacen, tblventasinventario.iva, tblventasinventario.extra, tblventasinventario.descuento, tblventasinventario.idvariante, tblventasinventario.idservicio, (tblventasinventario.cantidad-(ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevoluciones.idventa = tblventasinventario.idventa and tbldevolucionesdetalles.idinventario = tblventasinventario.idinventario and tbldevoluciones.estado=3),0)))*tblventasinventario.cantidadm/tblventasinventario.cantidad, tblventasinventario.tipocantidadm, tblventasinventario.cantidad, tblventasinventario.cantidadm, tblventasinventario.ieps, tblventasinventario.ivaretenido " + _
+            "from tblventasinventario inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario where tblinventario.inventariable=1 and idventa=" + pIdDocumento.ToString + " and (tblventasinventario.cantidad-(ifnull((select sum(tbldevolucionesdetalles.cantidad) from tbldevolucionesdetalles inner join tbldevoluciones on tbldevolucionesdetalles.iddevolucion=tbldevoluciones.iddevolucion where tbldevoluciones.idventa=tblventasinventario.idventa and tbldevolucionesdetalles.idinventario = tblventasinventario.idinventario and tbldevoluciones.estado=3),0)))>0;" + _
+            "insert into tbldevolucionesubicaciones (iddetalle, ubicacion, cantidad, surtido) select ddc.iddetalle, ubicacion, tcu.cantidad, 0 from tblventasubicaciones tcu inner join tblventasinventario cd on cd.idventasinventario=tcu.iddetalle inner join tbldevolucionesdetalles ddc on ddc.idinventario=cd.idinventario and ddc.cantidad=cd.cantidad and ddc.precio=cd.precio where cd.idventa=" + pIdDocumento.ToString() + " and ddc.iddevolucion=" + Piddevolucion.ToString()
             Comm.ExecuteNonQuery()
 
-            'Comm.CommandText = "insert into tbldevolucionesproductos(iddevolucion,idvariante,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento) select " + Piddevolucion.ToString + ",idvariante,cantidad,precio,descripcion,idmoneda,idalmacen,iva,extra,descuento from tbldevolucionesproductos where iddevolucion=" + pIdDocumento.ToString
-            'Comm.ExecuteNonQuery()
-
-            'Comm.CommandText = "insert into tbldevolucionesservicios(iddevolucion,idservicio,cantidad,precio,descripcion,idmoneda,iva,extra,descuento) select " + Piddevolucion.ToString + ",idservicio,cantidad,precio,descripcion,idmoneda,iva,extra,descuento from tbldevolucionesservicios where iddevolucion=" + pIdDocumento.ToString
-            'Comm.ExecuteNonQuery()
         End If
     End Sub
 
     Public Sub RegresaInventario(ByVal pId As Integer)
-        'Dim Str As String = ""
-        'Dim DReader As MySql.Data.MySqlClient.MySqlDataReader
-        'Comm.CommandText = "select idalmacen,cantidad,idinventario from tbldevoluciones inner join tbldevolucionesdetalles on tbldevoluciones.iddevolucion=tbldevolucionesdetalles.iddevolucion where tbldevoluciones.iddevolucion=" + pId.ToString
-        'DReader = Comm.ExecuteReader
-        'While DReader.Read()
-        '    Str += "update tblalmacenesi set cantidad=cantidad-" + DReader("cantidad").ToString + " where idinventario=" + DReader("idinventario").ToString + " and idalmacen=" + DReader("idalmacen").ToString + "; "
-        'End While
-        'DReader.Close()
-        'Comm.CommandText = Str
-        'If Str <> "" Then
-        '    Comm.ExecuteNonQuery()
-        'End If
-        Comm.CommandText = "select spmodificainventarioi(idinventario,idalmacen,cantidad,0,1,1) from tbldevolucionesdetalles where iddevolucion=" + pId.ToString + ";"
-        Comm.CommandText += "select spmodificainventariolotesf(tbldevolucionesdetalles.idinventario,tbldevolucionesdetalles.idalmacen,tbldevolucioneslotes.surtido,0,1,1,tbldevolucioneslotes.idlote) from tbldevolucioneslotes inner join tbldevolucionesdetalles on tbldevolucioneslotes.iddetalle=tbldevolucionesdetalles.iddetalle where tbldevolucionesdetalles.iddevolucion=" + pId.ToString + ";"
-        Comm.CommandText += "select spmodificainventarioaduanaf(tbldevolucionesdetalles.idinventario,tbldevolucionesdetalles.idalmacen,tbldevolucionesaduana.surtido,0,1,1,tbldevolucionesaduana.idaduana) from tbldevolucionesaduana inner join tbldevolucionesdetalles on tbldevolucionesaduana.iddetalle=tbldevolucionesdetalles.iddetalle where tbldevolucionesdetalles.iddevolucion=" + pId.ToString + ";"
-        Comm.ExecuteNonQuery()
-        'Comm.CommandText = "update tbldevolucionesdetallesc set surtido=0 where iddevolucion=" + pId.ToString + ";"
-        Comm.CommandText = "update tbldevolucioneslotes inner join tbldevolucionesdetalles on tbldevolucioneslotes.iddetalle=tbldevolucionesdetalles.iddetalle set tbldevolucioneslotes.surtido=0 where tbldevolucionesdetalles.iddevolucion=" + pId.ToString + ";"
-        Comm.CommandText += "update tbldevolucionesaduana inner join tbldevolucionesdetalles on tbldevolucionesaduana.iddetalle=tbldevolucionesdetalles.iddetalle set tbldevolucionesaduana.surtido=0 where tbldevolucionesdetalles.iddevolucion=" + pId.ToString + ";"
-        Comm.ExecuteNonQuery()
+        Comm.Transaction = Comm.Connection.BeginTransaction
+        Try
+            Comm.CommandText = "select spmodificainventarioi(idinventario,idalmacen,cantidad,0,1,1) from tbldevolucionesdetalles where iddevolucion=" + pId.ToString + ";"
+            Comm.CommandText += "select spmodificainventariolotesf(tbldevolucionesdetalles.idinventario, tbldevolucionesdetalles.idalmacen, tbldevolucioneslotes.surtido, 0, 1, 1, tbldevolucioneslotes.idlote) from tbldevolucioneslotes inner join tbldevolucionesdetalles on tbldevolucioneslotes.iddetalle=tbldevolucionesdetalles.iddetalle where tbldevolucionesdetalles.iddevolucion=" + pId.ToString + ";"
+            Comm.CommandText += "select spmodificainventarioaduanaf(tbldevolucionesdetalles.idinventario, tbldevolucionesdetalles.idalmacen, tbldevolucionesaduana.surtido, 0, 1, 1, tbldevolucionesaduana.idaduana) from tbldevolucionesaduana inner join tbldevolucionesdetalles on tbldevolucionesaduana.iddetalle=tbldevolucionesdetalles.iddetalle where tbldevolucionesdetalles.iddevolucion=" + pId.ToString + ";"
+            Comm.CommandText += "select spmodificainventarioubicacionesf(tbldevolucionesdetalles.idinventario, tbldevolucionesdetalles.idalmacen, tbldevolucionesubicaciones.surtido, 0, 1, 1, tbldevolucionesubicaciones.ubicacion) from tbldevolucionesubicaciones inner join tbldevolucionesdetalles on tbldevolucionesubicaciones.iddetalle = tbldevolucionesdetalles.iddetalle where tbldevolucionesdetalles.iddevolucion=" + pId.ToString + ";"
+            Comm.CommandText += "update tbldevolucioneslotes inner join tbldevolucionesdetalles on tbldevolucioneslotes.iddetalle=tbldevolucionesdetalles.iddetalle set tbldevolucioneslotes.surtido=0 where tbldevolucionesdetalles.iddevolucion=" + pId.ToString + ";"
+            Comm.CommandText += "update tbldevolucionesaduana inner join tbldevolucionesdetalles on tbldevolucionesaduana.iddetalle=tbldevolucionesdetalles.iddetalle set tbldevolucionesaduana.surtido=0 where tbldevolucionesdetalles.iddevolucion=" + pId.ToString + ";"
+            Comm.CommandText += "update tbldevolucionesubicaciones inner join tbldevolucionesdetalles on tbldevolucionesubicaciones.iddetalle=tbldevolucionesdetalles.iddetalle set tbldevolucionesubicaciones.surtido=0 where tbldevolucionesdetalles.iddevolucion=" + pId.ToString + ";"
+            Comm.ExecuteNonQuery()
+            Comm.Transaction.Commit()
+        Catch ex As MySql.Data.MySqlClient.MySqlException
+            Comm.Transaction.Rollback()
+            Throw ex
+        End Try
     End Sub
 
     Public Sub ModificaInventario(ByVal pId As Integer)
-        
-        Comm.CommandText = "select spmodificainventarioi(idinventario,idalmacen,cantidad,0,0,1) from tbldevolucionesdetalles where iddevolucion=" + pId.ToString + ";"
-        'Comm.CommandText += "update tbldevolucionesdetallesc set surtido=cantidad where iddevolucion=" + pId.ToString + "; "
-        Comm.CommandText += "select spmodificainventariolotesf(tbldevolucionesdetalles.idinventario,tbldevolucionesdetalles.idalmacen,tbldevolucioneslotes.cantidad-tbldevolucioneslotes.surtido,0,0,1,tbldevolucioneslotes.idlote) from tbldevolucioneslotes inner join tbldevolucionesdetalles on tbldevolucioneslotes.iddetalle = tbldevolucionesdetalles.iddetalle where tbldevolucionesdetalles.iddevolucion=" + pId.ToString + "; "
-        Comm.CommandText += "select spmodificainventarioaduanaf(tbldevolucionesdetalles.idinventario,tbldevolucionesdetalles.idalmacen,tbldevolucionesaduana.cantidad-tbldevolucionesaduana.surtido,0,0,1,tbldevolucionesaduana.idaduana) from tbldevolucionesaduana inner join tbldevolucionesdetalles on tbldevolucionesaduana.iddetalle = tbldevolucionesdetalles.iddetalle where tbldevolucionesdetalles.iddevolucion=" + pId.ToString + "; "
-        Comm.CommandText += "update tbldevolucioneslotes inner join tbldevolucionesdetalles on tbldevolucioneslotes.iddetalle=tbldevolucionesdetalles.iddetalle set tbldevolucioneslotes.surtido=tbldevolucioneslotes.cantidad where tbldevolucionesdetalles.iddevolucion=" + pId.ToString + ";"
-        Comm.CommandText += "update tbldevolucionesaduana inner join tbldevolucionesdetalles on tbldevolucionesaduana.iddetalle=tbldevolucionesdetalles.iddetalle set tbldevolucionesaduana.surtido=tbldevolucionesaduana.cantidad where tbldevolucionesdetalles.iddevolucion=" + pId.ToString + ";"
-        Comm.ExecuteNonQuery()
-        
+        Comm.Transaction = Comm.Connection.BeginTransaction
+        Try
+            Comm.CommandText = "select spmodificainventarioi(idinventario,idalmacen,cantidad,0,0,1) from tbldevolucionesdetalles where iddevolucion=" + pId.ToString + ";"
+            Comm.CommandText += "select spmodificainventariolotesf(tbldevolucionesdetalles.idinventario,tbldevolucionesdetalles.idalmacen,tbldevolucioneslotes.cantidad-tbldevolucioneslotes.surtido,0,0,1,tbldevolucioneslotes.idlote) from tbldevolucioneslotes inner join tbldevolucionesdetalles on tbldevolucioneslotes.iddetalle = tbldevolucionesdetalles.iddetalle where tbldevolucionesdetalles.iddevolucion=" + pId.ToString + "; "
+            Comm.CommandText += "select spmodificainventarioaduanaf(tbldevolucionesdetalles.idinventario,tbldevolucionesdetalles.idalmacen,tbldevolucionesaduana.cantidad-tbldevolucionesaduana.surtido,0,0,1,tbldevolucionesaduana.idaduana) from tbldevolucionesaduana inner join tbldevolucionesdetalles on tbldevolucionesaduana.iddetalle = tbldevolucionesdetalles.iddetalle where tbldevolucionesdetalles.iddevolucion=" + pId.ToString + "; "
+            Comm.CommandText += "select spmodificainventarioubicacionesf(tbldevolucionesdetalles.idinventario, tbldevolucionesdetalles.idalmacen, tbldevolucionesubicaciones.cantidad-tbldevolucionesubicaciones.surtido, 0, 0, 1, tbldevolucionesubicaciones.ubicacion) from tbldevolucionesubicaciones inner join tbldevolucionesdetalles on tbldevolucionesubicaciones.iddetalle = tbldevolucionesdetalles.iddetalle where tbldevolucionesdetalles.iddevolucion=" + pId.ToString + "; "
+            Comm.CommandText += "update tbldevolucioneslotes inner join tbldevolucionesdetalles on tbldevolucioneslotes.iddetalle=tbldevolucionesdetalles.iddetalle set tbldevolucioneslotes.surtido=tbldevolucioneslotes.cantidad where tbldevolucionesdetalles.iddevolucion=" + pId.ToString + ";"
+            Comm.CommandText += "update tbldevolucionesaduana inner join tbldevolucionesdetalles on tbldevolucionesaduana.iddetalle=tbldevolucionesdetalles.iddetalle set tbldevolucionesaduana.surtido=tbldevolucionesaduana.cantidad where tbldevolucionesdetalles.iddevolucion=" + pId.ToString + ";"
+            Comm.CommandText += "update tbldevolucionesubicaciones inner join tbldevolucionesdetalles on tbldevolucionesubicaciones.iddetalle=tbldevolucionesdetalles.iddetalle set tbldevolucionesubicaciones.surtido=tbldevolucionesubicaciones.cantidad where tbldevolucionesdetalles.iddevolucion=" + pId.ToString + ";"
+            Comm.ExecuteNonQuery()
+            Comm.Transaction.Commit()
+        Catch ex As MySql.Data.MySqlClient.MySqlException
+            Comm.Transaction.Rollback()
+            Throw ex
+        End Try
     End Sub
     
 
@@ -1294,8 +1123,6 @@
         Return CO
 
     End Function
-
-
 
     Public Function CreaXML(ByVal piddevolucion As Integer, ByVal pIdMoneda As Integer, ByVal pSelloDigital As String, ByVal pidEmpresa As Integer) As String
         'Dim O As New dbOpciones(Comm.Connection)
@@ -2814,43 +2641,6 @@
             Return 0
         End If
     End Function
-    'Public Function Timbrar(ByVal RFCEmisor As String, ByVal RFCCliente As String, ByVal ArchivoCer As String, ByVal CerPassword As String, ByVal strXml As String, ByVal pDireccionTimbrado As String) As TimbreFiscal.TimbreFiscalDigital
-    '    Dim en As New Encriptador
-    '    Dim T As TimbreFiscal.TimbreFiscalDigital
-    '    Try
-    '        Dim Tcfdi As New TimbreFiscal.TimbradoCFDI
-    '        Dim x509 As New Security.Cryptography.X509Certificates.X509Certificate(en.LeeArchivo(ArchivoCer), CerPassword)
-    '        Tcfdi.ClientCertificates.Add(x509)
-    '        Tcfdi.Url = pDireccionTimbrado '"https://demotf.buzonfiscal.com/timbrado?wsdl"
-    '        Dim Req As New TimbreFiscal.RequestTimbradoCFDType
-    '        Req.InfoBasica = New TimbreFiscal.InfoBasicaType
-    '        Req.InfoBasica.RfcEmisor = RFCEmisor
-    '        Req.InfoBasica.RfcReceptor = Cliente.RFC
-    '        Req.InfoBasica.Serie = Serie
-    '        Req.RefID = Serie + Folio.ToString
-    '        'Req.Documento = New TimbreFiscal.DocumentoType
-    '        'Dim Encoder As New System.Text.UTF8Encoding
-    '        'Dim Bytes() As Byte = Encoder.GetBytes(strXml)
-    '        'Req.Documento.Archivo = Bytes
-    '        Dim s As New Xml.Serialization.XmlSerializer(GetType(TimbreFiscal.Comprobante), "http://www.sat.gob.mx/cfd/3")
-    '        Dim xml As String = strXml
-    '        Dim c As TimbreFiscal.Comprobante = s.Deserialize(New IO.StringReader(xml))
-    '        Req.Comprobante = c
-
-    '        Dim x As New System.Net.Security.RemoteCertificateValidationCallback(AddressOf ValidarCertificadoRemoto)
-    '        System.Net.ServicePointManager.ServerCertificateValidationCallback = x
-    '        System.Net.ServicePointManager.Expect100Continue = True
-    '        System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Ssl3
-    '        T = Tcfdi.timbradoCFD(Req)
-    '        Return T
-    '    Catch ex As Exception
-    '        T = New TimbreFiscal.TimbreFiscalDigital
-    '        T.noCertificadoSAT = "Error"
-    '        MsgBox(ex.Message, MsgBoxStyle.Critical, GlobalNombreApp)
-    '        Return T
-    '    End Try
-
-    'End Function
     Public Function Timbrar(ByVal RFCEmisor As String, ByVal RFCCliente As String, ByVal ArchivoCer As String, ByVal CerPassword As String, ByVal strXml As String, ByVal pDireccionTimbrado As String, ByVal pConMsgBox As Boolean) As TimbreFiscal.TimbreFiscalDigital
         Dim en As New Encriptador
         Dim T As TimbreFiscal.TimbreFiscalDigital
