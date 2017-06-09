@@ -1194,6 +1194,7 @@ Public Class dbInventario
         Comm.CommandText += "update tblalmacenesi inner join tblalmacenes on tblalmacenesi.idalmacen=tblalmacenes.idalmacen set cantidad=spdainventarioafecha(idinventario,'2100/01/01',idsucursal,tblalmacenesi.idalmacen) where idinventario=" + pIdinventario.ToString + ";"
         Comm.CommandText += "update tblalmacenesilotes inner join tblalmacenes on tblalmacenesilotes.idalmacen=tblalmacenes.idalmacen set cantidad=spdainventarioafechalotes(idlote,idinventario,'2100/01/01',idsucursal,tblalmacenesilotes.idalmacen) where idinventario=" + pIdinventario.ToString + ";"
         Comm.CommandText += "update tblalmacenesiaduanas inner join tblalmacenes on tblalmacenesiaduanas.idalmacen=tblalmacenes.idalmacen set cantidad=spdainventarioafechaaduana(idaduana,idinventario,'2100/01/01',idsucursal,tblalmacenesiaduanas.idalmacen) where idinventario=" + pIdinventario.ToString + ";"
+        Comm.CommandText += "update tblalmacenesiubicaciones inner join tblalmacenes on tblalmacenesiubicaciones.idalmacen=tblalmacenes.idalmacen set cantidad=spdainventarioafechaubicacion(ubicacion,idinventario,'2100/01/01',idsucursal,tblalmacenesiubicaciones.idalmacen) where idinventario=" + pIdinventario.ToString + ";"
         Comm.ExecuteNonQuery()
 
     End Sub
