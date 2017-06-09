@@ -57,6 +57,7 @@ Partial Class frmCartaSalida
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.btnImprimir = New System.Windows.Forms.Button()
         Me.btnCancelar = New System.Windows.Forms.Button()
+        Me.btnConsultar = New System.Windows.Forms.Button()
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.dgvSellos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvDetalles, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -434,12 +435,22 @@ Partial Class frmCartaSalida
         Me.btnCancelar.Text = "Cancelar"
         Me.btnCancelar.UseVisualStyleBackColor = True
         '
+        'btnConsultar
+        '
+        Me.btnConsultar.Location = New System.Drawing.Point(12, 440)
+        Me.btnConsultar.Name = "btnConsultar"
+        Me.btnConsultar.Size = New System.Drawing.Size(152, 37)
+        Me.btnConsultar.TabIndex = 15
+        Me.btnConsultar.Text = "Consultar"
+        Me.btnConsultar.UseVisualStyleBackColor = True
+        '
         'frmCartaSalida
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(230, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(230, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(764, 492)
+        Me.Controls.Add(Me.btnConsultar)
         Me.Controls.Add(Me.TableLayoutPanel2)
         Me.Controls.Add(Me.dgvSellos)
         Me.Controls.Add(Me.dgvDetalles)
@@ -491,4 +502,5 @@ Partial Class frmCartaSalida
     Friend WithEvents TableLayoutPanel2 As System.Windows.Forms.TableLayoutPanel
     Friend WithEvents btnImprimir As System.Windows.Forms.Button
     Friend WithEvents btnCancelar As System.Windows.Forms.Button
+    Friend WithEvents btnConsultar As System.Windows.Forms.Button
 End Class

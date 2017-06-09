@@ -7,8 +7,7 @@ Public Class dbCartasSalida
     Public Sub Guardar(carta As CartaSalida)
         comm.Transaction = comm.Connection.BeginTransaction()
         Try
-            comm.CommandText = "select count(*) from tblcartassalida where id=" + carta.Id.ToString()
-            If comm.ExecuteScalar = 0 Then
+            If carta.Id = 0 Then
                 comm.CommandText = "insert into tblcartassalida (id, fecha, unidad, marca, modelo, color, placas, transportista, chofer, lote, observaciones) values (@id, @fecha, @unidad, @marca, @modelo, @color, @placas, @transportista, @chofer, @lote, @observaciones);"
             Else
                 comm.CommandText = "update tblcartassalida set fecha=@fecha, unidad=@unidad, marca=@marca, modelo=@modelo, color=@color, placas=@placas, transportista=@transportista, chofer=@chofer, lote=@lote, observaciones=@observaciones where id=@id;"
@@ -27,6 +26,10 @@ Public Class dbCartasSalida
             comm.ExecuteNonQuery()
             comm.Parameters.Clear()
 
+            If carta.Id = 0 Then
+                comm.CommandText = "select max(id) from tblcartassalida;"
+                carta.Id = comm.ExecuteScalar
+            End If
             comm.CommandText = "delete from tblcartassalidadetalles where idcarta=" + carta.Id.ToString()
             comm.ExecuteNonQuery()
             For Each d As CartaSalidaDetalle In carta.Detalles
@@ -60,7 +63,7 @@ Public Class dbCartasSalida
         comm.CommandText = "select * from tblcartassalida where id=" + idmovimiento.ToString() + ";"
         Dim dr As MySqlDataReader = comm.ExecuteReader
         Try
-            Dim carta As New CartaSalida(idmovimiento, Now, "", "", "", "", "", "", "", "", "")
+            Dim carta As New CartaSalida(0, Now, "", "", "", "", "", "", "", "", "")
             If dr.Read Then
                 carta = New CartaSalida(dr("id"), dr("fecha"), dr("unidad"), dr("marca"), dr("modelo"), dr("color"), dr("placas"), dr("transportista"), dr("chofer"), dr("lote"), dr("observaciones"))
             End If
@@ -94,5 +97,15 @@ Public Class dbCartasSalida
         da.Fill(ds, "Sellos")
         ds.WriteXmlSchema("repCartaSalida.xml")
         Return ds
+    End Function
+    Public Function Consultar(desde As DateTime, hasta As DateTime) As DataTable
+        comm.CommandText = "select * from tblcartassalida where date(fecha)>=@desde and date(fecha)<=@hasta order by fecha;"
+        comm.Parameters.Add(New MySqlParameter("@desde", desde))
+        comm.Parameters.Add(New MySqlParameter("@hasta", hasta))
+        Dim ds As New DataSet
+        Dim da As New MySqlDataAdapter(comm)
+        da.Fill(ds, "tabla")
+        comm.Parameters.Clear()
+        Return ds.Tables("tabla")
     End Function
 End Class

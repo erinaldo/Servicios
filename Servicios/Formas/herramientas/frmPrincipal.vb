@@ -6296,4 +6296,13 @@ Public Class frmPrincipal
             f.Show()
         End If
     End Sub
+
+    Private Sub CartaDeSalidaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CartaDeSalidaToolStripMenuItem.Click
+        CierraVentanas()
+        If BuscaVentanas("frmCartaSalida") = False Then
+            Dim f As New frmCartaSalida()
+            f.MdiParent = Me
+            f.Show()
+        End If
+    End Sub
 End Class

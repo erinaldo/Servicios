@@ -287,6 +287,7 @@ Partial Class frmPrincipal
         Me.SalirToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
         Me.BackgroundWorker2 = New System.ComponentModel.BackgroundWorker()
+        Me.CartaDeSalidaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.toolstrip1.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
@@ -1001,7 +1002,7 @@ Partial Class frmPrincipal
         '
         'mnuInventarioTop
         '
-        Me.mnuInventarioTop.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuAjusteDeInventario, Me.mnuAjusteDeInventarioProductos, Me.mnuInventarioMovimientos, Me.mnuInventarioPedidos, Me.mnuConsultarPedidos, Me.mnuKardex, Me.mnuInventarioRevision, Me.mnuInventarioHerramientas, Me.LotesToolStripMenuItem, Me.mnuBoletasInventario, Me.mnuInventarioReportes, Me.mnuReportesBoletasInv})
+        Me.mnuInventarioTop.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuAjusteDeInventario, Me.mnuAjusteDeInventarioProductos, Me.mnuInventarioMovimientos, Me.mnuInventarioPedidos, Me.mnuConsultarPedidos, Me.mnuKardex, Me.mnuInventarioRevision, Me.mnuInventarioHerramientas, Me.LotesToolStripMenuItem, Me.mnuBoletasInventario, Me.mnuInventarioReportes, Me.mnuReportesBoletasInv, Me.CartaDeSalidaToolStripMenuItem})
         Me.mnuInventarioTop.Name = "mnuInventarioTop"
         Me.mnuInventarioTop.Size = New System.Drawing.Size(161, 22)
         Me.mnuInventarioTop.Text = "Inventario"
@@ -1971,6 +1972,12 @@ Partial Class frmPrincipal
         'BackgroundWorker2
         '
         '
+        'CartaDeSalidaToolStripMenuItem
+        '
+        Me.CartaDeSalidaToolStripMenuItem.Name = "CartaDeSalidaToolStripMenuItem"
+        Me.CartaDeSalidaToolStripMenuItem.Size = New System.Drawing.Size(275, 22)
+        Me.CartaDeSalidaToolStripMenuItem.Text = "Carta de salida..."
+        '
         'frmPrincipal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -2257,5 +2264,6 @@ Partial Class frmPrincipal
     Friend WithEvents mnuRestConfig As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents mnuRestPrincipal As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents mnuGastosVerAlertas As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents CartaDeSalidaToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

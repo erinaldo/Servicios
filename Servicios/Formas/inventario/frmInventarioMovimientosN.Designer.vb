@@ -115,7 +115,6 @@ Partial Class frmInventarioMovimientosN
         Me.colAlmacen = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colAlmacenDest = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.btnEntrega = New System.Windows.Forms.Button()
-        Me.btnCartaSalida = New System.Windows.Forms.Button()
         Me.Panel2.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel3.SuspendLayout()
@@ -1046,23 +1045,12 @@ Partial Class frmInventarioMovimientosN
         Me.btnEntrega.Text = "Entrega"
         Me.btnEntrega.UseVisualStyleBackColor = True
         '
-        'btnCartaSalida
-        '
-        Me.btnCartaSalida.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnCartaSalida.Location = New System.Drawing.Point(192, 481)
-        Me.btnCartaSalida.Name = "btnCartaSalida"
-        Me.btnCartaSalida.Size = New System.Drawing.Size(104, 24)
-        Me.btnCartaSalida.TabIndex = 313
-        Me.btnCartaSalida.Text = "Carta salida"
-        Me.btnCartaSalida.UseVisualStyleBackColor = True
-        '
         'frmInventarioMovimientosN
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(230, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(230, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(928, 570)
-        Me.Controls.Add(Me.btnCartaSalida)
         Me.Controls.Add(Me.btnEntrega)
         Me.Controls.Add(Me.DGDetalles)
         Me.Controls.Add(Me.Label19)
@@ -1214,5 +1202,4 @@ Partial Class frmInventarioMovimientosN
     Friend WithEvents colAlmacen As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colAlmacenDest As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents btnEntrega As System.Windows.Forms.Button
-    Friend WithEvents btnCartaSalida As System.Windows.Forms.Button
 End Class
