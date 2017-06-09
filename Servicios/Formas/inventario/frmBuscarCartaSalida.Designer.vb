@@ -22,7 +22,7 @@ Partial Class frmBuscarCartaSalida
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.btnAceptar = New System.Windows.Forms.Button()
         Me.btnCancelar = New System.Windows.Forms.Button()
@@ -34,7 +34,6 @@ Partial Class frmBuscarCartaSalida
         Me.colChofer = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.dtpDesde = New System.Windows.Forms.DateTimePicker()
-        Me.Label2 = New System.Windows.Forms.Label()
         Me.dtpHasta = New System.Windows.Forms.DateTimePicker()
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.dgvResultados, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -101,8 +100,8 @@ Partial Class frmBuscarCartaSalida
         'colFecha
         '
         Me.colFecha.DataPropertyName = "fecha"
-        DataGridViewCellStyle3.Format = "dd/MM/yyyy"
-        Me.colFecha.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle2.Format = "dd/MM/yyyy"
+        Me.colFecha.DefaultCellStyle = DataGridViewCellStyle2
         Me.colFecha.FillWeight = 50.0!
         Me.colFecha.HeaderText = "Fecha"
         Me.colFecha.Name = "colFecha"
@@ -132,37 +131,29 @@ Partial Class frmBuscarCartaSalida
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(13, 18)
+        Me.Label1.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(33, 16)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(52, 15)
+        Me.Label1.Size = New System.Drawing.Size(57, 16)
         Me.Label1.TabIndex = 2
-        Me.Label1.Text = "Desde:"
+        Me.Label1.Text = "Fechas:"
         '
         'dtpDesde
         '
-        Me.dtpDesde.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtpDesde.CustomFormat = "yyyy/MM/dd"
+        Me.dtpDesde.Format = System.Windows.Forms.DateTimePickerFormat.Custom
         Me.dtpDesde.Location = New System.Drawing.Point(94, 13)
         Me.dtpDesde.Name = "dtpDesde"
-        Me.dtpDesde.Size = New System.Drawing.Size(126, 23)
+        Me.dtpDesde.Size = New System.Drawing.Size(87, 23)
         Me.dtpDesde.TabIndex = 3
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(288, 18)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(48, 15)
-        Me.Label2.TabIndex = 4
-        Me.Label2.Text = "Hasta:"
         '
         'dtpHasta
         '
-        Me.dtpHasta.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtpHasta.Location = New System.Drawing.Point(369, 13)
+        Me.dtpHasta.CustomFormat = "yyyy/MM/dd"
+        Me.dtpHasta.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dtpHasta.Location = New System.Drawing.Point(187, 13)
         Me.dtpHasta.Name = "dtpHasta"
-        Me.dtpHasta.Size = New System.Drawing.Size(126, 23)
+        Me.dtpHasta.Size = New System.Drawing.Size(87, 23)
         Me.dtpHasta.TabIndex = 5
         '
         'frmBuscarCartaSalida
@@ -170,10 +161,10 @@ Partial Class frmBuscarCartaSalida
         Me.AcceptButton = Me.btnAceptar
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(230, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(230, Byte), Integer))
         Me.CancelButton = Me.btnCancelar
         Me.ClientSize = New System.Drawing.Size(676, 370)
         Me.Controls.Add(Me.dtpHasta)
-        Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.dtpDesde)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.dgvResultados)
@@ -183,6 +174,7 @@ Partial Class frmBuscarCartaSalida
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "frmBuscarCartaSalida"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Buscar carta de salida"
         Me.TableLayoutPanel1.ResumeLayout(False)
         CType(Me.dgvResultados, System.ComponentModel.ISupportInitialize).EndInit()
@@ -196,7 +188,6 @@ Partial Class frmBuscarCartaSalida
     Friend WithEvents dgvResultados As System.Windows.Forms.DataGridView
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents dtpDesde As System.Windows.Forms.DateTimePicker
-    Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents dtpHasta As System.Windows.Forms.DateTimePicker
     Friend WithEvents colId As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colFecha As System.Windows.Forms.DataGridViewTextBoxColumn

@@ -403,7 +403,7 @@
         PedidosCancelar = 21
         PedidosAutorizar = 22
         MovimientosSinInventario = 23
-
+        CartaSalidaVer = 24
     End Enum
 
     Public Enum Ventas

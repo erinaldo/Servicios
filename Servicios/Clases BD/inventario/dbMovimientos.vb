@@ -196,10 +196,16 @@ Public Class dbMovimientos
         Comm.CommandText = "delete from tblmovimientosentrega where idmovimiento=" + pID.ToString() + "; delete from tblmovimientos where idmovimiento=" + pID.ToString
         Comm.ExecuteNonQuery()
     End Sub
-    Public Sub Recibir(pid As Integer)
+    Public Sub Recibir(pid As Integer, pMueveInv As Boolean)
         'Comm.CommandText = "update tblalmacenesiubicaciones inner join tblmovimientosdetalles on tblmovimientosubicaciones.iddetalle=tblmovimientosdetalles.iddetalle set  where idmovimiento=" + pid.ToString
         Comm.CommandText = "update tblmovimientos set transito=1 where idmovimiento=" + pid.ToString
         Comm.ExecuteNonQuery()
+        If pMueveInv Then
+            Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario,d.idalmacen2, u.surtido, 0, 1, 1, u.ubicaciond2) from tblmovimientosdetalles d inner join tblmovimientosubicaciones u on d.iddetalle = u.iddetalle where d.idmovimiento=" + pid.ToString + ";"
+            Comm.CommandText += "select spmodificainventarioubicacionesf(d.idinventario,d.idalmacen2, u.surtido, 0, 0, 1, u.ubicaciond) from tblmovimientosdetalles d inner join tblmovimientosubicaciones u on d.iddetalle = u.iddetalle where d.idmovimiento=" + pid.ToString + ";"
+            'Comm.CommandText += "update tblmovimientosdetalles inner join tblmovimientosubicaciones on tblmovimientosdetalles.iddetalle=tblmovimientosubicaciones.iddetalle set tblmovimientosubicaciones.surtido=tblmovimientosubicaciones.cantidad where tblmovimientosdetalles.idmovimiento=" + pid.ToString + ";"
+            Comm.ExecuteNonQuery()
+        End If
     End Sub
     Public Sub QuitarBoletas(ByVal pidMovimiento As Integer)
         Dim Ids As New Collection

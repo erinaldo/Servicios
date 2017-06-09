@@ -274,7 +274,7 @@
                     Precio = Precio / iTipoCambio
                 End If
             End If
-            
+
             Subtototal += Precio
             TotalIva += (Precio * (iIva / 100))
             TotalIeps += (Precio * (iIeps / 100))
@@ -300,7 +300,7 @@
             ChecaFolioRepetido = True
         End If
     End Function
-    
+
     Public Sub AgregarDetallesReferencia(ByVal Piddevolucion As Integer, ByVal pIdDocumento As Integer, ByVal Tipo As Byte, ByVal pidAlmacen As Integer)
         '0 cotizacion
         '1 pedido
@@ -357,7 +357,7 @@
             Throw ex
         End Try
     End Sub
-    
+
 
     Public Function CreaCadenaOriginal(ByVal piddevolucion As Integer, ByVal pIdMoneda As Integer) As String
         'Dim O As New dbOpciones(Comm.Connection)

@@ -98,6 +98,7 @@ Partial Class frmOpciones
         Me.CheckBox14 = New System.Windows.Forms.CheckBox()
         Me.CheckBox15 = New System.Windows.Forms.CheckBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.CheckBox79 = New System.Windows.Forms.CheckBox()
         Me.CheckBox11 = New System.Windows.Forms.CheckBox()
         Me.CheckBox73 = New System.Windows.Forms.CheckBox()
         Me.CheckBox60 = New System.Windows.Forms.CheckBox()
@@ -550,7 +551,6 @@ Partial Class frmOpciones
         Me.RadioButton37 = New System.Windows.Forms.RadioButton()
         Me.RadioButton38 = New System.Windows.Forms.RadioButton()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.CheckBox79 = New System.Windows.Forms.CheckBox()
         Me.TabPage1.SuspendLayout()
         Me.Panel28.SuspendLayout()
         Me.General.SuspendLayout()
@@ -708,6 +708,7 @@ Partial Class frmOpciones
         Me.CheckBox78.TabIndex = 318
         Me.CheckBox78.Text = "CFDI 3.3"
         Me.CheckBox78.UseVisualStyleBackColor = True
+        Me.CheckBox78.Visible = False
         '
         'CheckBox7
         '
@@ -1500,6 +1501,20 @@ Partial Class frmOpciones
         Me.GroupBox1.TabIndex = 365
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "General"
+        '
+        'CheckBox79
+        '
+        Me.CheckBox79.AutoSize = True
+        Me.CheckBox79.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CheckBox79.Location = New System.Drawing.Point(6, 406)
+        Me.CheckBox79.Name = "CheckBox79"
+        Me.CheckBox79.Size = New System.Drawing.Size(115, 20)
+        Me.CheckBox79.TabIndex = 399
+        Me.CheckBox79.Text = "Inicio Rápido."
+        Me.ToolTip1.SetToolTip(Me.CheckBox79, "Si se activa esta opción, el sistema entrará mas rápido, pero el primer reporte q" & _
+        "ue se genere tomará mas tiempo de lo normal. Y tampoco se tomará el tipo de camb" & _
+        "io actual.")
+        Me.CheckBox79.UseVisualStyleBackColor = True
         '
         'CheckBox11
         '
@@ -6569,20 +6584,6 @@ Partial Class frmOpciones
         Me.ToolTip1.AutoPopDelay = 10000
         Me.ToolTip1.InitialDelay = 500
         Me.ToolTip1.ReshowDelay = 100
-        '
-        'CheckBox79
-        '
-        Me.CheckBox79.AutoSize = True
-        Me.CheckBox79.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CheckBox79.Location = New System.Drawing.Point(6, 406)
-        Me.CheckBox79.Name = "CheckBox79"
-        Me.CheckBox79.Size = New System.Drawing.Size(115, 20)
-        Me.CheckBox79.TabIndex = 399
-        Me.CheckBox79.Text = "Inicio Rápido."
-        Me.ToolTip1.SetToolTip(Me.CheckBox79, "Si se activa esta opción, el sistema entrará mas rápido, pero el primer reporte q" & _
-        "ue se genere tomará mas tiempo de lo normal. Y tampoco se tomará el tipo de camb" & _
-        "io actual.")
-        Me.CheckBox79.UseVisualStyleBackColor = True
         '
         'frmOpciones
         '

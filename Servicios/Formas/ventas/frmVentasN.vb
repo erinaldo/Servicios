@@ -5549,24 +5549,24 @@ Public Class frmVentasN
 
 
     Private Sub Button38_Click(sender As Object, e As EventArgs) Handles Button38.Click
-        'If idVenta > 0 Then
-        '    Dim frmK As New FrmDocKardex(idVenta, 0, TextBox11.Text + TextBox2.Text, TextBox1.Text)
-        '    frmK.ShowDialog()
-        '    frmK.Dispose()
-        'End If
-        OpenFileDialog1.Filter = ""
-        If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
-            Dim xmldoc As New Xml.XmlDocument
-            Dim str As String
-            Dim archivo = OpenFileDialog1.FileName
-            xmldoc.Load(archivo)
-            str = "UUID: " + xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("UUID").Value + vbCrLf
-            str += "SELLOCDF: " + xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("SelloCFD").Value + vbCrLf
-            str += "NoCER: " + xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("NoCertificadoSAT").Value + vbCrLf
-            str += "FECHA: " + xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("FechaTimbrado").Value + vbCrLf
-            str += "SAT: " + xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("SelloSAT").Value
-            MsgBox(str)
+        If idVenta > 0 Then
+            Dim frmK As New FrmDocKardex(idVenta, 0, TextBox11.Text + TextBox2.Text, TextBox1.Text)
+            frmK.ShowDialog()
+            frmK.Dispose()
         End If
+        'OpenFileDialog1.Filter = ""
+        'If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+        '    Dim xmldoc As New Xml.XmlDocument
+        '    Dim str As String
+        '    Dim archivo = OpenFileDialog1.FileName
+        '    xmldoc.Load(archivo)
+        '    str = "UUID: " + xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("UUID").Value + vbCrLf
+        '    str += "SELLOCDF: " + xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("SelloCFD").Value + vbCrLf
+        '    str += "NoCER: " + xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("NoCertificadoSAT").Value + vbCrLf
+        '    str += "FECHA: " + xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("FechaTimbrado").Value + vbCrLf
+        '    str += "SAT: " + xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("SelloSAT").Value
+        '    MsgBox(str)
+        'End If
 
 
 

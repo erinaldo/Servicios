@@ -2291,7 +2291,7 @@
                     Rep.SetDataSource(VR.Reporte(Format(DateTimePicker1.Value, "yyyy/MM/dd"), Format(DateTimePicker2.Value, "yyyy/MM/dd"), IdsSucursales.Valor(ComboBox1.SelectedIndex), IdCliente, ComboBox5.SelectedIndex, CheckBox14.Checked, IdsVendedores.Valor(ComboBox2.SelectedIndex), TextBox5.Text, IdsCajas.Valor(ComboBox14.SelectedIndex), IdsTiposSuc.Valor(ComboBox15.SelectedIndex)))
                     Rep.SetParameterValue("Encabezado", S.NombreFiscal)
                     Rep.SetParameterValue("TipoRep", "Reporte de Cotizaciones")
-                    Rep.SetParameterValue("columnanombre", "Cliente")
+                    'Rep.SetParameterValue("columnanombre", "Cliente")
                     Dim Filtros As String
                     Filtros = "Período del: " + Format(DateTimePicker1.Value, "yyyy/MM/dd") + " al " + Format(DateTimePicker2.Value, "yyyy/MM/dd") + " Sucursal: " + ComboBox1.Text + vbCr
                     If IdCliente = 0 Then

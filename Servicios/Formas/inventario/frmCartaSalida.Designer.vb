@@ -22,9 +22,9 @@ Partial Class frmCartaSalida
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtObservaciones = New System.Windows.Forms.TextBox()
@@ -58,6 +58,7 @@ Partial Class frmCartaSalida
         Me.btnImprimir = New System.Windows.Forms.Button()
         Me.btnCancelar = New System.Windows.Forms.Button()
         Me.btnConsultar = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.dgvSellos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvDetalles, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -355,9 +356,9 @@ Partial Class frmCartaSalida
         'colCantidad
         '
         Me.colCantidad.DataPropertyName = "Cantidad"
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle1.Format = "N0"
-        Me.colCantidad.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle7.Format = "N0"
+        Me.colCantidad.DefaultCellStyle = DataGridViewCellStyle7
         Me.colCantidad.HeaderText = "Cantidad"
         Me.colCantidad.Name = "colCantidad"
         '
@@ -371,18 +372,18 @@ Partial Class frmCartaSalida
         'colKilogramos
         '
         Me.colKilogramos.DataPropertyName = "KilosUnidad"
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle2.Format = "N2"
-        Me.colKilogramos.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle8.Format = "N2"
+        Me.colKilogramos.DefaultCellStyle = DataGridViewCellStyle8
         Me.colKilogramos.HeaderText = "Kg./Unidad"
         Me.colKilogramos.Name = "colKilogramos"
         '
         'colTotal
         '
         Me.colTotal.DataPropertyName = "Total"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle3.Format = "N2"
-        Me.colTotal.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle9.Format = "N2"
+        Me.colTotal.DefaultCellStyle = DataGridViewCellStyle9
         Me.colTotal.HeaderText = "Peso total"
         Me.colTotal.Name = "colTotal"
         Me.colTotal.ReadOnly = True
@@ -392,7 +393,7 @@ Partial Class frmCartaSalida
         Me.btnGuardar.Dock = System.Windows.Forms.DockStyle.Fill
         Me.btnGuardar.Location = New System.Drawing.Point(3, 3)
         Me.btnGuardar.Name = "btnGuardar"
-        Me.btnGuardar.Size = New System.Drawing.Size(107, 37)
+        Me.btnGuardar.Size = New System.Drawing.Size(83, 37)
         Me.btnGuardar.TabIndex = 0
         Me.btnGuardar.Text = "Guardar"
         Me.btnGuardar.UseVisualStyleBackColor = True
@@ -400,26 +401,28 @@ Partial Class frmCartaSalida
         'TableLayoutPanel2
         '
         Me.TableLayoutPanel2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TableLayoutPanel2.ColumnCount = 3
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel2.ColumnCount = 4
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.TableLayoutPanel2.Controls.Add(Me.Button1, 0, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.btnGuardar, 0, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.btnImprimir, 1, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.btnCancelar, 2, 0)
-        Me.TableLayoutPanel2.Location = New System.Drawing.Point(413, 437)
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(397, 437)
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         Me.TableLayoutPanel2.RowCount = 1
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(340, 43)
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(356, 43)
         Me.TableLayoutPanel2.TabIndex = 14
         '
         'btnImprimir
         '
         Me.btnImprimir.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.btnImprimir.Location = New System.Drawing.Point(116, 3)
+        Me.btnImprimir.Location = New System.Drawing.Point(181, 3)
         Me.btnImprimir.Name = "btnImprimir"
-        Me.btnImprimir.Size = New System.Drawing.Size(107, 37)
+        Me.btnImprimir.Size = New System.Drawing.Size(83, 37)
         Me.btnImprimir.TabIndex = 17
         Me.btnImprimir.Text = "Imprimir"
         Me.btnImprimir.UseVisualStyleBackColor = True
@@ -428,9 +431,9 @@ Partial Class frmCartaSalida
         '
         Me.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.btnCancelar.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.btnCancelar.Location = New System.Drawing.Point(229, 3)
+        Me.btnCancelar.Location = New System.Drawing.Point(270, 3)
         Me.btnCancelar.Name = "btnCancelar"
-        Me.btnCancelar.Size = New System.Drawing.Size(108, 37)
+        Me.btnCancelar.Size = New System.Drawing.Size(83, 37)
         Me.btnCancelar.TabIndex = 15
         Me.btnCancelar.Text = "Cancelar"
         Me.btnCancelar.UseVisualStyleBackColor = True
@@ -444,11 +447,23 @@ Partial Class frmCartaSalida
         Me.btnConsultar.Text = "Consultar"
         Me.btnConsultar.UseVisualStyleBackColor = True
         '
+        'Button1
+        '
+        Me.Button1.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.Button1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Button1.Location = New System.Drawing.Point(92, 3)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(83, 37)
+        Me.Button1.TabIndex = 18
+        Me.Button1.Text = "Nuevo"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'frmCartaSalida
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(230, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(230, Byte), Integer))
+        Me.CancelButton = Me.btnCancelar
         Me.ClientSize = New System.Drawing.Size(764, 492)
         Me.Controls.Add(Me.btnConsultar)
         Me.Controls.Add(Me.TableLayoutPanel2)
@@ -503,4 +518,5 @@ Partial Class frmCartaSalida
     Friend WithEvents btnImprimir As System.Windows.Forms.Button
     Friend WithEvents btnCancelar As System.Windows.Forms.Button
     Friend WithEvents btnConsultar As System.Windows.Forms.Button
+    Friend WithEvents Button1 As System.Windows.Forms.Button
 End Class

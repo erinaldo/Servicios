@@ -81,11 +81,11 @@
         ID = Comm.ExecuteScalar
 
         If pUbicacion <> "" And pUbicacionD = "" Then
-            Comm.CommandText = "insert into tblmovimientosubicaciones (iddetalle, cantidad, surtido, ubicacion,ubicaciond) values(" + ID.ToString + ", " + Cantidad.ToString() + ", 0, '" + Trim(Replace(Ubicacion, "'", "''")) + "','')"
+            Comm.CommandText = "insert into tblmovimientosubicaciones (iddetalle, cantidad, surtido, ubicacion,ubicaciond,ubicaciond2) values(" + ID.ToString + ", " + Cantidad.ToString() + ", 0, '" + Trim(Replace(Ubicacion, "'", "''")) + "','','')"
             Comm.ExecuteNonQuery()
         End If
         If pUbicacion <> "" And pUbicacionD <> "" Then
-            Comm.CommandText = "insert into tblmovimientosubicaciones (iddetalle, cantidad, surtido, ubicacion,ubicaciond) values(" + ID.ToString + ", " + Cantidad.ToString() + ", 0, '" + Trim(Replace(Ubicacion, "'", "''")) + "','" + Trim(Replace(UbicacionD, "'", "''")) + "')"
+            Comm.CommandText = "insert into tblmovimientosubicaciones (iddetalle, cantidad, surtido, ubicacion,ubicaciond,ubicaciond2) values(" + ID.ToString + ", " + Cantidad.ToString() + ", 0, '" + Trim(Replace(Ubicacion, "'", "''")) + "','" + Trim(Replace(UbicacionD, "'", "''")) + "','" + Trim(Replace(UbicacionD, "'", "''")) + "')"
             Comm.ExecuteNonQuery()
         End If
 

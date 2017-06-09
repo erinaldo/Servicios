@@ -49,6 +49,8 @@
     Dim IdPedidoV As Integer
     Dim O As dbOpciones
     Dim Almacen As dbAlmacenes
+    Dim UbicacionAnt As String
+
     'Dim SerieAnt As String
     'Dim FolioAnt As Integer
     Public Sub New(Optional ByVal pidVenta As Integer = 0)
@@ -126,7 +128,6 @@
         LlenaCombos("tblmonedas", ComboBox4, "nombre", "nombrem", "idmoneda", IDsMonedas, "idmoneda>1")
         LlenaCombos("tblmonedas", ComboBox2, "nombre", "nombrem", "idmoneda", IDsMonedas2, "idmoneda>1")
         'LlenaCombos("tblvendedores", ComboBox5, "nombre", "nombret", "idvendedor", IdsVendedores)
-
         LlenaCombos("tblalmacenes", cmbAlmacenDestino, "nombre", "nombret", "idalmacen", IdsAlmacenes2, "idalmacen<>1")
         LlenaCombos("tblinventarioconceptos", ComboBox6, "nombre", "nombret", "idconcepto", IdsMovimientos, "idsucursal=" + IdsSucursales.Valor(ComboBox3.SelectedIndex).ToString)
         ConsultaOn = True
@@ -329,8 +330,8 @@
                 End If
                 If pEstado = Estados.Guardada Then
                     Estado = Estados.Guardada
-                    If Op.RecibidoDefault = 1 Then
-                        C.Recibir(idMovimiento)
+                    If Op.RecibidoDefault = 1 Or IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex) = IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex) Then
+                        C.Recibir(idMovimiento, False)
                     End If
                     C.ModificaInventario(idMovimiento, GlobalTipoCosteo, CDbl(TextBox1.Text))
                     C.ReCalculaCostos(idMovimiento, GlobalTipoCosteo, CosteoTiempoREal, CDbl(TextBox1.Text))
@@ -601,6 +602,11 @@
         Button6.Enabled = True
         EsSemillas = False
         Button4.Text = "Agregar Concepto"
+        If IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex) = IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex) Then
+            cmbUbicacionDestino.Enabled = True
+        Else
+            cmbUbicacionDestino.Enabled = False
+        End If
         If GlobalPermisos.ChecaPermiso(PermisosN.Inventario.CambiodeAlamcen, PermisosN.Secciones.Inventario) = False Then
             cmbAlmacenOrigen.Enabled = False
             cmbAlmacenDestino.Enabled = False
@@ -1044,7 +1050,17 @@
         lblUbicacionDestino.Visible = False
         cmbUbicacionDestino.Visible = False
         cmbUbicacionOrigen.Enabled = True
-        cmbUbicacionDestino.Enabled = True
+
+        If cmbAlmacenOrigen.Items.Count > 0 And cmbAlmacenDestino.Items.Count > 0 Then
+            If IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex) = IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex) Then
+                cmbUbicacionDestino.Enabled = True
+            Else
+                cmbUbicacionDestino.Enabled = False
+            End If
+        Else
+            cmbUbicacionDestino.Enabled = False
+        End If
+
         Dim inv As New dbInventario(IdInventario, MySqlcon)
         Select Case Concep.Tipo
             Case 0, 4
@@ -1059,8 +1075,8 @@
                 lblUbicacionDestino.Visible = inv.UsaUbicacion
                 cmbUbicacionDestino.Visible = inv.UsaUbicacion
         End Select
-        cmbUbicacionDestino.Text = ""
-        cmbUbicacionOrigen.Text = ""
+        'cmbUbicacionDestino.Text = ""
+        'cmbUbicacionOrigen.Text = ""
 
         ConsultaOn = True
     End Sub
@@ -1613,7 +1629,9 @@
     Private Sub Button19_Click(sender As Object, e As EventArgs) Handles btnRecibir.Click
         If MsgBox("¿Recibir la mercancia?", MsgBoxStyle.YesNo, GlobalNombreApp) = MsgBoxResult.Yes Then
             Dim mov As New dbMovimientos(MySqlcon)
-            mov.Recibir(idMovimiento)
+            mov.Recibir(idMovimiento, True)
+            Transito = 1
+            cmbUbicacionDestino.Enabled = False
             btnRecibir.Enabled = False
             Label11.Text = "Recibido"
         End If
@@ -1710,15 +1728,15 @@
     Private Sub cmbAlmacenDestino_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbAlmacenDestino.SelectedIndexChanged
         Dim dbmov As New dbInventario(MySqlcon)
         cmbUbicacionDestino.DataSource = dbmov.Ubicaciones(IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex), IdInventario)
-        cmbUbicacionDestino.Text = ""
-    End Sub
-
-    Private Sub DGDetalles_CellContentClick_1(sender As Object, e As DataGridViewCellEventArgs) Handles DGDetalles.CellContentClick
-
-    End Sub
-
-    Private Sub TextBox6_TextChanged(sender As Object, e As EventArgs) Handles TextBox6.TextChanged
-
+        If cmbAlmacenOrigen.Items.Count > 0 And cmbAlmacenDestino.Items.Count > 0 Then
+            If IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex) = IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex) Then
+                cmbUbicacionDestino.Enabled = True
+            Else
+                cmbUbicacionDestino.Enabled = False
+            End If
+        Else
+            cmbUbicacionDestino.Enabled = False
+        End If
     End Sub
 
     Private Sub btnEntrega_Click(sender As Object, e As EventArgs) Handles btnEntrega.Click

@@ -159,6 +159,7 @@ Partial Class frmPrincipal
         Me.mnuBoletasInventario = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuInventarioReportes = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuReportesBoletasInv = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuInvCartaSalida = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuServiciosMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuServicios = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuBuscarServicio = New System.Windows.Forms.ToolStripMenuItem()
@@ -287,7 +288,6 @@ Partial Class frmPrincipal
         Me.SalirToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
         Me.BackgroundWorker2 = New System.ComponentModel.BackgroundWorker()
-        Me.CartaDeSalidaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.toolstrip1.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
@@ -1002,7 +1002,7 @@ Partial Class frmPrincipal
         '
         'mnuInventarioTop
         '
-        Me.mnuInventarioTop.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuAjusteDeInventario, Me.mnuAjusteDeInventarioProductos, Me.mnuInventarioMovimientos, Me.mnuInventarioPedidos, Me.mnuConsultarPedidos, Me.mnuKardex, Me.mnuInventarioRevision, Me.mnuInventarioHerramientas, Me.LotesToolStripMenuItem, Me.mnuBoletasInventario, Me.mnuInventarioReportes, Me.mnuReportesBoletasInv, Me.CartaDeSalidaToolStripMenuItem})
+        Me.mnuInventarioTop.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuAjusteDeInventario, Me.mnuAjusteDeInventarioProductos, Me.mnuInventarioMovimientos, Me.mnuInventarioPedidos, Me.mnuConsultarPedidos, Me.mnuKardex, Me.mnuInventarioRevision, Me.mnuInventarioHerramientas, Me.LotesToolStripMenuItem, Me.mnuBoletasInventario, Me.mnuInventarioReportes, Me.mnuReportesBoletasInv, Me.mnuInvCartaSalida})
         Me.mnuInventarioTop.Name = "mnuInventarioTop"
         Me.mnuInventarioTop.Size = New System.Drawing.Size(161, 22)
         Me.mnuInventarioTop.Text = "Inventario"
@@ -1113,6 +1113,12 @@ Partial Class frmPrincipal
         Me.mnuReportesBoletasInv.Name = "mnuReportesBoletasInv"
         Me.mnuReportesBoletasInv.Size = New System.Drawing.Size(275, 22)
         Me.mnuReportesBoletasInv.Text = "Reportes Boletas..."
+        '
+        'mnuInvCartaSalida
+        '
+        Me.mnuInvCartaSalida.Name = "mnuInvCartaSalida"
+        Me.mnuInvCartaSalida.Size = New System.Drawing.Size(275, 22)
+        Me.mnuInvCartaSalida.Text = "Carta de salida..."
         '
         'mnuServiciosMenu
         '
@@ -1972,12 +1978,6 @@ Partial Class frmPrincipal
         'BackgroundWorker2
         '
         '
-        'CartaDeSalidaToolStripMenuItem
-        '
-        Me.CartaDeSalidaToolStripMenuItem.Name = "CartaDeSalidaToolStripMenuItem"
-        Me.CartaDeSalidaToolStripMenuItem.Size = New System.Drawing.Size(275, 22)
-        Me.CartaDeSalidaToolStripMenuItem.Text = "Carta de salida..."
-        '
         'frmPrincipal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -2264,6 +2264,6 @@ Partial Class frmPrincipal
     Friend WithEvents mnuRestConfig As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents mnuRestPrincipal As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents mnuGastosVerAlertas As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents CartaDeSalidaToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents mnuInvCartaSalida As System.Windows.Forms.ToolStripMenuItem
 
 End Class

@@ -1095,6 +1095,14 @@
         DGInventarioN.Item(3, R).ReadOnly = True
         DGInventarioN.Item(4, R).ReadOnly = True
         DGInventarioN.Item(5, R).ReadOnly = True
+
+        DGInventarioN.Rows.Add("Carta Salida", 0, 0, 0, 0, 0, 0)
+        R += 1
+        DGInventarioN.Item(2, R).ReadOnly = True
+        DGInventarioN.Item(3, R).ReadOnly = True
+        DGInventarioN.Item(4, R).ReadOnly = True
+        DGInventarioN.Item(5, R).ReadOnly = True
+        DGInventarioN.Item(6, R).ReadOnly = True
         'DGInventarioN.Rows.Add("Permitir salidas y traspasos sin inventario", 0, 0, 0, 0, 0, 0)
         'R += 1
         'DGInventarioN.Item(1, R).ReadOnly = True
@@ -2086,6 +2094,8 @@
 
         R += 1
         DGInventarioN.Item(6, R).Value = Per.ChecaPermiso(PermisosN.Inventario.PedidosAutorizar, PermisosN.Secciones.Inventario)
+        R += 1
+        DGInventarioN.Item(1, R).Value = Per.ChecaPermiso(PermisosN.Inventario.CartaSalidaVer, PermisosN.Secciones.Inventario)
         'R += 1
         'DGInventarioN.Item(6, R).Value = Per.ChecaPermiso(PermisosN.Inventario.MovimientosSinInventario, PermisosN.Secciones.Inventario)
 
@@ -2979,6 +2989,9 @@
 
         R += 1
         If DGInventarioN.Item(6, R).Value = True Then Per.AsignaPermiso(PermisosN.Inventario.PedidosAutorizar, PermisosN.Secciones.Inventario)
+
+        R += 1
+        If DGInventarioN.Item(1, R).Value = True Then Per.AsignaPermiso(PermisosN.Inventario.CartaSalidaVer, PermisosN.Secciones.Inventario)
         'Movs sin inventario
         'R += 1
         'If DGInventarioN.Item(6, R).Value = True Then Per.AsignaPermiso(PermisosN.Inventario.MovimientosSinInventario, PermisosN.Secciones.Inventario)

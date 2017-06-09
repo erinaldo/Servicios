@@ -896,6 +896,7 @@ Public Class frmPrincipal
         If GlobalPermisos.ChecaPermiso(PermisosN.Inventario.RecalcularInventarios, PermisosN.Secciones.Inventario) = False Then mnuInventarioAjusteCero.Visible = False Else mnuInventarioAjusteCero.Visible = True
         If GlobalPermisos.ChecaPermiso(PermisosN.Inventario.PedidosVer, PermisosN.Secciones.Inventario) = False Then mnuInventarioPedidos.Visible = False Else mnuInventarioPedidos.Visible = True
         If GlobalPermisos.ChecaPermiso(PermisosN.Inventario.PedidosVer, PermisosN.Secciones.Inventario) = False Then mnuConsultarPedidos.Visible = False Else mnuConsultarPedidos.Visible = True
+        If GlobalPermisos.ChecaPermiso(PermisosN.Inventario.CartaSalidaVer, PermisosN.Secciones.Inventario) = False Then mnuInvCartaSalida.Visible = False Else mnuInvCartaSalida.Visible = True
         'If mnuInventarioRecalcular.Visible = False And mnuRecalcularInventario.Visible = False And mnuBuscarNegativos.Visible = False Then mnuInventarioHerramientas.Visible = False Else mnuInventarioHerramientas.Visible = True
 
 
@@ -6297,7 +6298,7 @@ Public Class frmPrincipal
         End If
     End Sub
 
-    Private Sub CartaDeSalidaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CartaDeSalidaToolStripMenuItem.Click
+    Private Sub CartaDeSalidaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles mnuInvCartaSalida.Click
         CierraVentanas()
         If BuscaVentanas("frmCartaSalida") = False Then
             Dim f As New frmCartaSalida()

@@ -198,7 +198,12 @@
                 'DataGridView2.Columns(2).Width = 20
                 DataGridView1.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
                 If DataGridView1.RowCount > PrimerCeldaRow And PrimerCeldaRow > -1 Then DataGridView1.FirstDisplayedScrollingRowIndex = PrimerCeldaRow
-
+                Dim R As Integer = DataGridView1.RowCount
+                Dim C As Integer = 0
+                While C < R
+                    DataGridView1.Item(2, C).Value = DataGridView1.Item(2, C).Value - DataGridView1.Item(3, C).Value
+                    C += 1
+                End While
             End If
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, GlobalNombreApp)

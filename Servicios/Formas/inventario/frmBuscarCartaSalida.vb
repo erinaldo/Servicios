@@ -7,6 +7,11 @@
     End Property
 
     Private Sub frmBuscarCartaSalida_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Try
+            Me.Icon = GlobalIcono
+        Catch ex As Exception
+
+        End Try
         dgvResultados.AutoGenerateColumns = False
         dtpDesde.Value = Now.Date.AddDays(1 - Now.Day)
         consultar()
@@ -31,5 +36,9 @@
     Private Sub dgvResultados_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvResultados.CellDoubleClick
         DialogResult = Windows.Forms.DialogResult.OK
         Close()
+    End Sub
+
+    Private Sub btnCancelar_Click(sender As Object, e As EventArgs) Handles btnCancelar.Click
+        Me.Close()
     End Sub
 End Class
