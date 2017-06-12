@@ -1941,32 +1941,7 @@ Public Class dbVentas
             Dim IvasImporte As New Collection
             'DR = DaIvasRetenido(ID)
             Dim IAnt As Double
-            'While DR.Read
-            '    If Ivas.Contains(DR("iva").ToString) = False Then
-            '        Ivas.Add(DR("ivaretenido"), DR("ivaretenido").ToString)
-            '    End If
-            '    If IvasImporte.Contains(DR("ivaretenido").ToString) = False Then
-            '        'If DR("idmoneda") <> 2 Then
-            '        '    IvasImporte.Add((DR("precio") * TipodeCambio) * (DR("iva") / 100), DR("iva").ToString)
-            '        'Else
-            '        IvasImporte.Add(DR("precio") * (DR("ivaretenido") / 100), DR("ivaretenido").ToString)
-            '        ' End If
-            '    Else
-            '        IAnt = IvasImporte(DR("ivaretenido").ToString)
-            '        IvasImporte.Remove(DR("ivaretenido").ToString)
-            '        'If DR("idmoneda") <> 2 Then
-            '        '    IvasImporte.Add(IAnt + ((DR("precio") * TipodeCambio) * (DR("iva") / 100)), DR("iva").ToString)
-            '        'Else
-            '        IvasImporte.Add(IAnt + (DR("precio") * (DR("ivaretenido") / 100)), DR("ivaretenido").ToString)
-            '        'End If
-            '    End If
-            'End While
-            'DR.Close()
-            'For Each I As Double In Ivas
-            '    CO += "IVA|"
-            '    CO += Format(I, "#0.00") + "|"
-            '    CO += Format(IvasImporte(I.ToString), "#0.00") + "|"
-            'Next
+
             'total retenidos
             If ISR <> 0 Or IvaRetenido <> 0 Or TotalIvaRetenidoConceptos <> 0 Then
                 If pEgreso = 0 Then
@@ -3323,32 +3298,6 @@ Public Class dbVentas
             End If
             XMLDoc += ">"
 
-            'Ivas.Clear()
-            'IvasImporte.Clear()
-            'DR = DaIvas(ID)
-            'While DR.Read
-            '    If Ivas.Contains(DR("iva").ToString) = False Then
-            '        Ivas.Add(DR("iva"), DR("iva").ToString)
-            '    End If
-            '    If IvasImporte.Contains(DR("iva").ToString) = False Then
-            '        'If DR("idmoneda") <> 2 Then
-            '        '    IvasImporte.Add((DR("precio") * TipodeCambio) * (DR("iva") / 100), DR("iva").ToString)
-            '        'Else
-            '        IvasImporte.Add(DR("precio") * (DR("iva") / 100), DR("iva").ToString)
-            '        'End If
-            '    Else
-            '        IAnt = IvasImporte(DR("iva").ToString)
-            '        IvasImporte.Remove(DR("iva").ToString)
-            '        'If DR("idmoneda") <> 2 Then
-            '        '    IvasImporte.Add(IAnt + ((DR("precio") * TipodeCambio) * (DR("iva") / 100)), DR("iva").ToString)
-            '        'Else
-            '        IvasImporte.Add(IAnt + (DR("precio") * (DR("iva") / 100)), DR("iva").ToString)
-            '        'End If
-
-            '    End If
-            'End While
-            'DR.Close()
-
 
             If ISR <> 0 Or IvaRetenido <> 0 Or TotalIvaRetenidoConceptos <> 0 Then
                 XMLDoc += "<cfdi:Retenciones>"
@@ -4022,19 +3971,6 @@ Public Class dbVentas
         End If
         'Confirmacion
         If NoConfirmacion <> "" Then XMLDoc += " Confirmacion=""" + NoConfirmacion + """"
-        'If FP.Tipo = 2 Then
-        '    ObtenerFacturaOriginal(IdVentaOrigen)
-        '    If FolioUUIDOrigen = "" Then
-        '        XMLDoc += "FolioFiscalOrig=""" + FolioOrigen.ToString + """ "
-        '    Else
-        '        XMLDoc += "FolioFiscalOrig=""" + FolioUUIDOrigen + """ "
-        '    End If
-        '    If SerieOrigen <> "" Then
-        '        XMLDoc += "SerieFolioFiscalOrig=""" + SerieOrigen + """ "
-        '    End If
-        '    XMLDoc += "FechaFolioFiscalOrig=""" + FechaOrigen + """ "
-        '    XMLDoc += "MontoFolioFiscalOrig=""" + Format(MontoOrigen, "0.00####") + """ "
-        'End If
 
         XMLDoc += "xmlns:cfdi=""http://www.sat.gob.mx/cfd/3"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" "
         If ImpLocales.Count > 0 Then
@@ -4103,33 +4039,6 @@ Public Class dbVentas
         End If
         XMLDoc += " UsoCFDI=""" + cUsoCFDI + """"
         XMLDoc += "/>"
-        'XMLDoc += "<cfdi:Domicilio "
-        'If Cliente.DireccionFiscal = 0 Then
-        '    If Cliente.Direccion <> "" Then XMLDoc += "calle=""" + Replace(Replace(Replace(Replace(Replace(Cliente.Direccion, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
-        '    If Cliente.NoExterior <> "" Then XMLDoc += "noExterior=""" + Replace(Replace(Replace(Replace(Replace(Cliente.NoExterior, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
-        '    If Cliente.NoInterior <> "" Then XMLDoc += "noInterior=""" + Replace(Replace(Replace(Replace(Replace(Cliente.NoInterior, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
-        '    If Cliente.Colonia <> "" Then XMLDoc += "colonia=""" + Replace(Replace(Replace(Replace(Replace(Cliente.Colonia, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
-        '    If Cliente.Ciudad <> "" Then XMLDoc += "localidad=""" + Replace(Replace(Replace(Replace(Replace(Cliente.Ciudad, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
-        '    If Cliente.ReferenciaDomicilio <> "" Then XMLDoc += "referencia=""" + Replace(Replace(Replace(Replace(Replace(Cliente.ReferenciaDomicilio, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
-        '    If Cliente.Municipio <> "" Then XMLDoc += "municipio=""" + Replace(Replace(Replace(Replace(Replace(Cliente.Municipio, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
-        '    If Cliente.Estado <> "" Then XMLDoc += "estado=""" + Replace(Replace(Replace(Replace(Replace(Cliente.Estado, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
-        '    If Cliente.Pais <> "" Then XMLDoc += "pais=""" + Replace(Replace(Replace(Replace(Replace(Cliente.Pais, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
-        '    If Cliente.CP <> "" Then XMLDoc += "codigoPostal=""" + Replace(Replace(Replace(Replace(Replace(Cliente.CP, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
-        'Else
-        '    If Cliente.Direccion2 <> "" Then XMLDoc += "calle=""" + Replace(Replace(Replace(Replace(Replace(Cliente.Direccion2, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
-        '    If Cliente.NoExterior2 <> "" Then XMLDoc += "noExterior=""" + Replace(Replace(Replace(Replace(Replace(Cliente.NoExterior2, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
-        '    If Cliente.NoInterior2 <> "" Then XMLDoc += "noInterior=""" + Replace(Replace(Replace(Replace(Replace(Cliente.NoInterior2, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
-        '    If Cliente.Colonia2 <> "" Then XMLDoc += "colonia=""" + Replace(Replace(Replace(Replace(Replace(Cliente.Colonia2, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
-        '    If Cliente.Ciudad2 <> "" Then XMLDoc += "localidad=""" + Replace(Replace(Replace(Replace(Replace(Cliente.Ciudad2, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
-        '    If Cliente.ReferenciaDomicilio2 <> "" Then XMLDoc += "referencia=""" + Replace(Replace(Replace(Replace(Replace(Cliente.ReferenciaDomicilio2, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
-        '    If Cliente.Municipio2 <> "" Then XMLDoc += "municipio=""" + Replace(Replace(Replace(Replace(Replace(Cliente.Municipio2, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
-        '    If Cliente.Estado2 <> "" Then XMLDoc += "estado=""" + Replace(Replace(Replace(Replace(Replace(Cliente.Estado2, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
-        '    If Cliente.Pais2 <> "" Then XMLDoc += "pais=""" + Replace(Replace(Replace(Replace(Replace(Cliente.Pais2, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
-        '    If Cliente.CP2 <> "" Then XMLDoc += "codigoPostal=""" + Replace(Replace(Replace(Replace(Replace(Cliente.CP2, "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
-        'End If
-        'XMLDoc += "/>"
-
-        'XMLDoc += "</cfdi:Receptor>"
 
         XMLDoc += "<cfdi:Conceptos>"
 
@@ -4476,55 +4385,7 @@ Public Class dbVentas
         Comm.CommandText = "select tblventasinventario.ivaretenido,tblventasinventario.precio,tblventasinventario.idmoneda,tblventas.tipodecambio from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventasinventario.idventa=" + pIdVenta.ToString
         Return Comm.ExecuteReader
     End Function
-    'Public Function Reporte(ByVal pFecha1 As String, ByVal pFecha2 As String, ByVal pIdSucursal As Integer, ByVal pIdCliente As Integer, ByVal pidVendedor As Integer, ByVal pidMoneda As Integer, ByVal pMostrarEnPesos As Byte, ByVal pidinventario As Integer, ByVal pidclasificacion1 As Integer, ByVal pidclasificacion2 As Integer, ByVal pidclasificacion3 As Integer, ByVal pSoloCanceladas As Boolean, ByVal pSerie As String) As DataView
-    '    Dim DS As New DataSet
-    '    If pMostrarEnPesos = 0 Then
-    '        Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,if(tblventas.idconversion=2,round(tblventas.total,2),round(tblventas.total*tblventas.tipodecambio,2)) as total,if(tblventas.idconversion=2,round(tblventas.totalapagar,2),round(tblventas.totalapagar*tblventas.tipodecambio,2)) as totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,round(tblventasinventario.cantidad,2) as cantidad,tblventasinventario.descripcion,round(tblventasinventario.precio,2) as precio,0 as costoinv,0 as costopro,tblventasinventario.idinventario,tblventasinventario.idvariante,tblformasdepago.tipo as formadepago,tblclientes.nombre as cnombre,tblventas.isr,tblventas.ivaretenido " + _
-    '        "from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblproductosvariantes on tblproductosvariantes.idvariante=tblventasinventario.idvariante inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblformasdepago.tipo<>2 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "'"
-    '    Else
-    '        Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,round(tblventas.total,2) as total,round(tblventas.totalapagar,2) as totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,round(tblventasinventario.cantidad,2),tblventasinventario.descripcion,round(tblventasinventario.precio,2),0 as costoinv,0 as costopro,tblventasinventario.idinventario,tblventasinventario.idvariante,tblformasdepago.tipo as formadepago,tblclientes.nombre as cnombre,tblventas.isr,tblventas.ivaretenido  " + _
-    '        "from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblproductosvariantes on tblproductosvariantes.idvariante=tblventasinventario.idvariante inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblformasdepago.tipo<>2 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "'"
-    '    End If
-    '    If pSoloCanceladas Then
-    '        Comm.CommandText += " and tblventas.estado=4"
-    '    Else
-    '        Comm.CommandText += " and tblventas.estado=3"
-    '    End If
-    '    'Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,tblventasinventario.cantidad,tblventasinventario.descripcion,tblventasinventario.precio,if(tblventasinventario.idinventario>1,spsacacostoarticulo(tblventasinventario.idinventario," + pTipoCosteo.ToString + ",tblinventario.contenido),0) as costoinv,if(tblventasinventario.idvariante>1,spsacacostoproducto(tblproductosvariantes.idproducto," + pTipoCosteo.ToString + "),0) as costopro,tblventasinventario.idinventario,tblventasinventario.idvariante,tblformasdepago.nombre as formadepago,tblclientes.nombre as cnombre from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblproductosvariantes on tblproductosvariantes.idvariante=tblventasinventario.idvariante inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.estado=3 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "'"
-    '    If pIdSucursal > 0 Then
-    '        Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-    '    End If
-    '    If pIdCliente > 0 Then
-    '        Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-    '    End If
-    '    If pidVendedor > 0 Then
-    '        Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-    '    End If
-    '    If pidMoneda > 0 Then
-    '        Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-    '    End If
-    '    If pidinventario > 1 Then
-    '        Comm.CommandText += " and tblventasinventario.idinventario=" + pidinventario.ToString
-    '    Else
-    '        If pidclasificacion1 > 0 Then
-    '            Comm.CommandText += " and tblinventario.idclasificacion=" + pidclasificacion1.ToString
-    '        End If
-    '        If pidclasificacion2 > 0 Then
-    '            Comm.CommandText += " and tblinventario.idclasificacion2=" + pidclasificacion2.ToString
-    '        End If
-    '        If pidclasificacion3 > 0 Then
-    '            Comm.CommandText += " and tblinventario.idclasificacion3=" + pidclasificacion3.ToString
-    '        End If
-    '    End If
-    '    If pSerie <> "" Then
-    '        Comm.CommandText += " and tblventas.serie like '%" + Replace(pSerie, "'", "''") + "%'"
-    '    End If
-    '    Comm.CommandText += " order by tblventas.fecha,tblventas.serie,tblventas.folio"
-    '    Dim DA As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
-    '    DA.Fill(DS, "tblventas")
-    '    'DS.WriteXmlSchema("tblventas.xml")
-    '    Return DS.Tables("tblventas").DefaultView
-    'End Function
+   
     Public Function Reporte(ByVal pFecha1 As String, ByVal pFecha2 As String, ByVal pIdSucursal As Integer, ByVal pIdCliente As Integer, ByVal pidVendedor As Integer, ByVal pidMoneda As Integer, ByVal pMostrarEnPesos As Byte, ByVal pidinventario As Integer, ByVal pidclasificacion1 As Integer, ByVal pidclasificacion2 As Integer, ByVal pidclasificacion3 As Integer, ByVal pSoloCanceladas As Boolean, ByVal pSerie As String, ByVal pZona As Integer, ByVal pZona2 As Integer, ByVal pSoloActivas As Boolean, pIdAlmacen As Integer, pIdTipo As Integer, pOrdenPorCliente As Boolean, pIdTipoSucursal As Integer, pConIL As Boolean, pFormadePago As Byte) As DataView
         Dim DS As New DataSet
         Dim strIL As String = ""
@@ -4551,7 +4412,7 @@ Public Class dbVentas
             End If
         End If
 
-        'Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,tblventasinventario.cantidad,tblventasinventario.descripcion,tblventasinventario.precio,if(tblventasinventario.idinventario>1,spsacacostoarticulo(tblventasinventario.idinventario," + pTipoCosteo.ToString + ",tblinventario.contenido),0) as costoinv,if(tblventasinventario.idvariante>1,spsacacostoproducto(tblproductosvariantes.idproducto," + pTipoCosteo.ToString + "),0) as costopro,tblventasinventario.idinventario,tblventasinventario.idvariante,tblformasdepago.nombre as formadepago,tblclientes.nombre as cnombre from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblproductosvariantes on tblproductosvariantes.idvariante=tblventasinventario.idvariante inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.estado=3 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "'"
+
         If pIdSucursal > 0 Then
             Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
         End If
@@ -5222,99 +5083,29 @@ Public Class dbVentas
         'DS.WriteXmlSchema("tblventasdeudas.xml")
         Return DS.Tables("tblventas").DefaultView
     End Function
-    'Public Function ReporteVentasArticulos(ByVal pFecha1 As String, ByVal pFecha2 As String, ByVal pIdSucursal As Integer, ByVal pIdCliente As Integer, ByVal pIdInventario As Integer, ByVal pidClasificacion As Integer, ByVal pidClasificacion2 As Integer, ByVal pidClasificacion3 As Integer, ByVal pidVendedor As Integer, ByVal pidMoneda As Integer, ByVal pMostrarEnPesos As Byte, ByVal pConcendaso As Boolean, ByVal pSerie As String, ByVal pOrdenxVendedor As Boolean) As DataView
-    '    Dim DS As New DataSet
-    '    If pMostrarEnPesos = 0 Then
-    '        Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,tblventasinventario.cantidad,if(tblventasinventario.idinventario>1,tblinventario.nombre,if(tblventasinventario.idvariante>1,tblproductos.nombre,'SERVICIO')) as descripcion,round(if(tblventasinventario.idmoneda=2,tblventasinventario.precio,tblventasinventario.precio*tblventas.tipodecambio),2) as precio,0 as costoinv,0 as costopro,tblventasinventario.idinventario,tblventasinventario.idvariante,tblformasdepago.tipo as formadepago,tblclientes.nombre as cnombre,tblventasinventario.iva,tblventas.isr,tblventas.ivaretenido,round(if(tblventasinventario.idmoneda=2,tblventasinventario.precio/tblventasinventario.cantidad,tblventasinventario.precio*tblventas.tipodecambio/tblventasinventario.cantidad),2) as preciou,tblinventario.clave,(select nombre from tblvendedores where idvendedor=tblventas.idvendedor) as vnombre,tblventas.idvendedor,tblventas.porsurtir,tblformasdepago.tipo as tipoforma " + _
-    '        "from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblproductosvariantes on tblproductosvariantes.idvariante=tblventasinventario.idvariante inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma inner join tblproductos on tblproductosvariantes.idproducto=tblproductos.idproducto where tblventas.estado=3 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "' and tblformasdepago.tipo<>2 and tblventasinventario.cantidad<>0"
-    '    Else
-    '        Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,tblventasinventario.cantidad,if(tblventasinventario.idinventario>1,tblinventario.nombre,if(tblventasinventario.idvariante>1,tblproductos.nombre,'SERVICIO')) as descripcion,round(tblventasinventario.precio,2),0 as costoinv,0 as costopro,tblventasinventario.idinventario,tblventasinventario.idvariante,tblformasdepago.tipo as formadepago,tblclientes.nombre as cnombre,tblventasinventario.iva,tblventas.isr,tblventas.ivaretenido,round(tblventasinventario.precio/tblventasinventario.cantidad,2) as preciou,tblinventario.clave,(select nombre from tblvendedores where idvendedor=tblventas.idvendedor) as vnombre,tblventas.idvendedor,tblventas.porsurtir,tblformasdepago.tipo as tipoforma " + _
-    '        "from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblproductosvariantes on tblproductosvariantes.idvariante=tblventasinventario.idvariante inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma inner join tblproductos on tblproductosvariantes.idproducto=tblproductos.idproducto where tblventas.estado=3 and tblformasdepago.tipo<>2 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "' and tblventasinventario.cantidad<>0 "
-    '    End If
-    '    'Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,tblventasinventario.cantidad,tblventasinventario.descripcion,tblventasinventario.precio,if(tblventasinventario.idinventario>1,spsacacostoarticulo(tblventasinventario.idinventario," + pTipoCosteo.ToString + ",tblinventario.contenido),0) as costoinv,if(tblventasinventario.idvariante>1,spsacacostoproducto(tblproductosvariantes.idproducto," + pTipoCosteo.ToString + "),0) as costopro,tblventasinventario.idinventario,tblventasinventario.idvariante,tblformasdepago.nombre as formadepago,tblclientes.nombre as cnombre from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblproductosvariantes on tblproductosvariantes.idvariante=tblventasinventario.idvariante inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.estado=3 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "'"
-    '    If pIdSucursal > 0 Then
-    '        Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-    '    End If
-    '    If pIdCliente > 0 Then
-    '        Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-    '    End If
-    '    If pidVendedor > 0 Then
-    '        Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-    '    End If
-    '    If pidMoneda > 0 Then
-    '        Comm.CommandText += " and tblventasinventario.idmoneda=" + pidMoneda.ToString
-    '    End If
-    '    If pIdInventario > 1 Then
-    '        Comm.CommandText += " and tblventasinventario.idinventario=" + pIdInventario.ToString
-    '    Else
-    '        If pidClasificacion > 0 Then
-    '            Comm.CommandText += " and tblinventario.idclasificacion=" + pidClasificacion.ToString
-    '        End If
-    '        If pidClasificacion2 > 0 Then
-    '            Comm.CommandText += " and tblinventario.idclasificacion2=" + pidClasificacion2.ToString
-    '        End If
-    '        If pidClasificacion3 > 0 Then
-    '            Comm.CommandText += " and tblinventario.idclasificacion3=" + pidClasificacion3.ToString
-    '        End If
-    '    End If
 
-    '    If pSerie <> "" Then
-    '        Comm.CommandText += " and tblventas.serie like '%" + Replace(pSerie, "'", "''") + "%'"
-    '    End If
-
-    '    If pConcendaso = False Then
-    '        Comm.CommandText += " order by tblventas.fecha,tblventas.serie,tblventas.folio"
-    '    Else
-    '        If pOrdenxVendedor Then
-    '            Comm.CommandText += " order by tblventas.idvendedor,tblventasinventario.idinventario,preciou"
-    '        Else
-    '            Comm.CommandText += " order by tblventasinventario.idinventario,preciou"
-    '        End If
-
-    '    End If
-    '    Dim DA As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
-    '    DA.Fill(DS, "tblventas")
-    '    'DS.WriteXmlSchema("tblventasa.xml")
-    '    Return DS.Tables("tblventas").DefaultView
-    'End Function
 
     Public Function ReporteVentasArticulos(ByVal pFecha1 As String, ByVal pFecha2 As String, ByVal pIdSucursal As Integer, ByVal pIdCliente As Integer, ByVal pIdInventario As Integer, ByVal pidClasificacion As Integer, ByVal pidClasificacion2 As Integer, ByVal pidClasificacion3 As Integer, ByVal pidVendedor As Integer, ByVal pidMoneda As Integer, ByVal pMostrarEnPesos As Byte, ByVal pConcendaso As Boolean, ByVal pSerie As String, ByVal pOrdenxVendedor As Boolean, ByVal pZona As Integer, ByVal pZona2 As Integer, ByVal PsoloCanceladas As Boolean, ByVal pSoloActivas As Boolean, pidAlmacen As Integer, pPredialporDesc As Boolean, pIdTipo As Integer, pIdTipoSucursal As Integer, pSoloIEPS As Boolean, pFormadepago As Byte) As DataView
         Dim DS As New DataSet
         Dim CampoDesc As String = "tblinventario.nombre"
         If pPredialporDesc Then CampoDesc = "tblventasinventario.predial"
         If pMostrarEnPesos = 0 Then
-            Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,s.nombre as tipodecambio,tblventas.idconversion,tblventasinventario.cantidad," + CampoDesc + " as descripcion,round(if(tblventasinventario.idmoneda=2,tblventasinventario.precio,tblventasinventario.precio*tblventas.tipodecambio),2) as precio,0 as costoinv,0 as costopro,tblventasinventario.idinventario,0 idvariante,tblformasdepago.tipo as formadepago,if(tblventas.clientepg='',tblclientes.nombre,tblventas.clientepg) as cnombre,tblventasinventario.iva,tblventas.isr,tblventas.ivaretenido,round(if(tblventasinventario.idmoneda=2,tblventasinventario.precio/tblventasinventario.cantidad,tblventasinventario.precio*tblventas.tipodecambio/tblventasinventario.cantidad),2) as preciou,tblinventario.clave,(select nombre from tblvendedores where idvendedor=tblventas.idvendedor) as vnombre,tblventas.idvendedor,tblventas.porsurtir,tblformasdepago.tipo as tipoforma,tblventasinventario.ieps,tblventasinventario.ivaretenido ivar " + _
+            Comm.CommandText = "select tblventas.idventa, tblventas.folio, tblventas.serie, tblventas.estado, tblventas.total, tblventas.totalapagar, tblventas.fecha, s.nombre as tipodecambio, tblventas.idconversion, tblventasinventario.cantidad, " + CampoDesc + " as descripcion, round(if(tblventasinventario.idmoneda=2, tblventasinventario.precio, tblventasinventario.precio * tblventas.tipodecambio),2) as precio, 0 as costoinv, 0 as costopro, tblventasinventario.idinventario, 0 idvariante, tblformasdepago.tipo as formadepago, if(tblventas.clientepg='', tblclientes.nombre,tblventas.clientepg) as cnombre, tblventasinventario.iva, tblventas.isr, tblventas.ivaretenido, round(if(tblventasinventario.idmoneda=2, tblventasinventario.precio/tblventasinventario.cantidad, tblventasinventario.precio*tblventas.tipodecambio/tblventasinventario.cantidad),2) as preciou, tblinventario.clave,(select nombre from tblvendedores where idvendedor=tblventas.idvendedor) as vnombre, tblventas.idvendedor, tblventas.porsurtir, tblformasdepago.tipo as tipoforma, tblventasinventario.ieps, tblventasinventario.ivaretenido ivar " + _
             "from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma inner join tblvendedores on tblventas.idvendedor=tblvendedores.idvendedor inner join tblsucursales as s on tblventas.idsucursal=s.idsucursal where tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "' and tblformasdepago.tipo<>2 and tblventasinventario.cantidad<>0 and tblventasinventario.noimpimporte=0"
         Else
-            Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,s.nombre as tipodecambio,tblventas.idconversion,tblventasinventario.cantidad," + CampoDesc + " as descripcion,round(tblventasinventario.precio,2) precio,0 as costoinv,0 as costopro,tblventasinventario.idinventario,0 idvariante,tblformasdepago.tipo as formadepago,if(tblventas.clientepg='',tblclientes.nombre,tblventas.clientepg) as cnombre,tblventasinventario.iva,tblventas.isr,tblventas.ivaretenido,round(tblventasinventario.precio/tblventasinventario.cantidad,2) as preciou,tblinventario.clave,(select nombre from tblvendedores where idvendedor=tblventas.idvendedor) as vnombre,tblventas.idvendedor,tblventas.porsurtir,tblformasdepago.tipo as tipoforma,tblventasinventario.ieps,tblventasinventario.ivaretenido ivar " + _
+            Comm.CommandText = "select tblventas.idventa, tblventas.folio, tblventas.serie, tblventas.estado, tblventas.total, tblventas.totalapagar, tblventas.fecha, s.nombre as tipodecambio, tblventas.idconversion, tblventasinventario.cantidad, " + CampoDesc + " as descripcion, round(tblventasinventario.precio,2) precio, 0 as costoinv, 0 as costopro, tblventasinventario.idinventario, 0 idvariante, tblformasdepago.tipo as formadepago, if(tblventas.clientepg='', tblclientes.nombre,tblventas.clientepg) as cnombre, tblventasinventario.iva,tblventas.isr, tblventas.ivaretenido, round(tblventasinventario.precio/tblventasinventario.cantidad,2) as preciou, tblinventario.clave,(select nombre from tblvendedores where idvendedor=tblventas.idvendedor) as vnombre, tblventas.idvendedor, tblventas.porsurtir, tblformasdepago.tipo as tipoforma, tblventasinventario.ieps, tblventasinventario.ivaretenido ivar " + _
             "from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma inner join tblvendedores on tblventas.idvendedor=tblvendedores.idvendedor inner join tblsucursales as s on tblventas.idsucursal=s.idsucursal where tblformasdepago.tipo<>2 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "' and tblventasinventario.cantidad<>0 and tblventasinventario.noimpimporte=0"
         End If
-        'Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,tblventasinventario.cantidad,tblventasinventario.descripcion,tblventasinventario.precio,if(tblventasinventario.idinventario>1,spsacacostoarticulo(tblventasinventario.idinventario," + pTipoCosteo.ToString + ",tblinventario.contenido),0) as costoinv,if(tblventasinventario.idvariante>1,spsacacostoproducto(tblproductosvariantes.idproducto," + pTipoCosteo.ToString + "),0) as costopro,tblventasinventario.idinventario,tblventasinventario.idvariante,tblformasdepago.nombre as formadepago,tblclientes.nombre as cnombre from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblproductosvariantes on tblproductosvariantes.idvariante=tblventasinventario.idvariante inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.estado=3 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "'"
-        If pIdSucursal > 0 Then
-            Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        End If
-        If pIdTipoSucursal > 0 Then
-            Comm.CommandText += " and s.idtipo=" + pIdTipoSucursal.ToString
-        End If
-        If pIdCliente > 0 Then
-            Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-        End If
-        If pidVendedor > 0 Then
-            Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-        End If
-        If pidMoneda > 0 Then
-            Comm.CommandText += " and tblventasinventario.idmoneda=" + pidMoneda.ToString
-        End If
+        If pIdSucursal > 0 Then Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
+        If pIdTipoSucursal > 0 Then Comm.CommandText += " and s.idtipo=" + pIdTipoSucursal.ToString
+        If pIdCliente > 0 Then Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
+        If pidVendedor > 0 Then Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
+        If pidMoneda > 0 Then  Comm.CommandText += " and tblventasinventario.idmoneda=" + pidMoneda.ToString
         If pFormadepago = 1 Then Comm.CommandText += " and tblformasdepago.tipo=0"
         If pFormadepago = 2 Then Comm.CommandText += " and tblformasdepago.tipo=1"
         If pSoloIEPS Then Comm.CommandText += " and tblventasinventario.ieps<>0"
-        If pZona > 0 Then
-            'Comm.CommandText += " INNER JOIN tblvendedores t2 ON ( tblventas.idvendedor=t2.id)"
-            Comm.CommandText += " and tblvendedores.zona='" + pZona.ToString() + "'"
-        End If
-        If pZona2 > 0 Then
-            Comm.CommandText += " and tblclientes.zona='" + pZona2.ToString() + "' or tblclientes.zona2='" + pZona2.ToString() + "'"
-        End If
+        If pZona > 0 Then Comm.CommandText += " and tblvendedores.zona='" + pZona.ToString() + "'"
+        If pZona2 > 0 Then Comm.CommandText += " and tblclientes.zona='" + pZona2.ToString() + "' or tblclientes.zona2='" + pZona2.ToString() + "'"
         If pSoloActivas Then
             Comm.CommandText += " and tblventas.estado=3"
         Else
@@ -5338,16 +5129,9 @@ Public Class dbVentas
             End If
         End If
 
-        If pSerie <> "" Then
-            Comm.CommandText += " and tblventas.serie like '%" + Replace(pSerie, "'", "''") + "%'"
-        End If
-
-        If pidAlmacen > 0 Then
-            Comm.CommandText += " and tblventasinventario.idalmacen=" + pidAlmacen.ToString
-        End If
-        If pIdTipo > 0 Then
-            Comm.CommandText += " and tblclientes.idtipo=" + pIdTipo.ToString
-        End If
+        If pSerie <> "" Then Comm.CommandText += " and tblventas.serie like '%" + Replace(pSerie, "'", "''") + "%'"
+        If pidAlmacen > 0 Then Comm.CommandText += " and tblventasinventario.idalmacen=" + pidAlmacen.ToString
+        If pIdTipo > 0 Then Comm.CommandText += " and tblclientes.idtipo=" + pIdTipo.ToString
         If pConcendaso = False Then
             Comm.CommandText += " order by tblventas.fecha,tblventas.serie,tblventas.folio"
         Else
@@ -5361,6 +5145,45 @@ Public Class dbVentas
         Dim DA As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
         DA.Fill(DS, "tblventas")
         'DS.WriteXmlSchema("tblventasa.xml")
+        Return DS.Tables("tblventas").DefaultView
+    End Function
+
+    Public Function ReporteCobranzaDetallado(ByVal pFecha1 As String, ByVal pFecha2 As String, ByVal pIdSucursal As Integer, ByVal pIdCliente As Integer, ByVal pIdInventario As Integer, ByVal pidClasificacion As Integer, ByVal pidClasificacion2 As Integer, ByVal pidClasificacion3 As Integer, ByVal pidVendedor As Integer, ByVal pidMoneda As Integer, ByVal pMostrarEnPesos As Byte, ByVal pConcendaso As Boolean, ByVal pSerie As String, ByVal pOrdenxVendedor As Boolean, ByVal pZona As Integer, ByVal pZona2 As Integer, ByVal PsoloCanceladas As Boolean, ByVal pSoloActivas As Boolean, pidAlmacen As Integer, pPredialporDesc As Boolean, pIdTipo As Integer, pIdTipoSucursal As Integer, pSoloIEPS As Boolean, pFormadepago As Byte) As DataView
+        Dim DS As New DataSet
+        Dim CampoDesc As String = "i.nombre"
+        If pPredialporDesc Then CampoDesc = "vi.predial"
+        If pMostrarEnPesos = 0 Then
+            Comm.CommandText = "select v.idventa, v.folio, v.serie, v.estado, v.total, v.totalapagar, v.fecha, s.nombre as tipodecambio, v.idconversion, vi.cantidad, " + CampoDesc + " as descripcion, round(if(vi.idmoneda=2, vi.precio, vi.precio * v.tipodecambio),2) as precio, 0 as costoinv, 0 as costopro, vi.idinventario, 0 idvariante, fp.tipo as formadepago, if(v.clientepg='', c.nombre,v.clientepg) as cnombre, vi.iva, v.isr, v.ivaretenido, round(if(vi.idmoneda=2, vi.precio/vi.cantidad, vi.precio*v.tipodecambio/vi.cantidad), 2) as preciou, i.clave,(select nombre from tblvendedores where idvendedor=v.idvendedor) as vnombre, v.idvendedor, v.porsurtir, fp.tipo as tipoforma, vi.ieps, vi.ivaretenido ivar, vp.cantidad pagado from tblventas v inner join tblventasinventario vi on v.idventa=vi.idventa inner join tblinventario i on vi.idinventario=i.idinventario inner join tblclientes c on v.idcliente=c.idcliente inner join tblformasdepago fp on fp.idforma=v.idforma inner join tblvendedores vn on v.idvendedor=vn.idvendedor inner join tblsucursales as s on v.idsucursal=s.idsucursal inner join tblventaspagos vp on v.idventa=vp.idventa where vp.fecha>='" + pFecha1 + "' and vp.fecha<='" + pFecha2 + "' and fp.tipo<>2 and vi.cantidad<>0 and vi.noimpimporte=0"
+        Else
+            Comm.CommandText = "select v.idventa, v.folio, v.serie, v.estado, v.total, v.totalapagar, v.fecha, s.nombre as tipodecambio, v.idconversion, vi.cantidad, " + CampoDesc + " as descripcion, round(vi.precio,2) precio, 0 as costoinv, 0 as costopro, vi.idinventario, 0 idvariante, fp.tipo as formadepago, if(v.clientepg='', c.nombre, v.clientepg) as cnombre, vi.iva,v.isr, v.ivaretenido, round(vi.precio/vi.cantidad,2) as preciou, i.clave,(select nombre from tblvendedores where idvendedor=v.idvendedor) as vnombre, v.idvendedor, v.porsurtir, fp.tipo as tipoforma, vi.ieps, vi.ivaretenido ivar, vp.cantidad pagado from tblventas v inner join tblventasinventario vi on v.idventa=vi.idventa inner join tblinventario i on vi.idinventario=i.idinventario inner join tblclientes c on v.idcliente=tblclicentes.idcliente inner join tblformasdepago on fp.idforma=v.idforma inner join tblvendedores vn on v.idvendedor=vn.idvendedor inner join tblsucursales as s on v.idsucursal=s.idsucursal inner join tblventspagos vp on v.idventa=vp.idventa where vp.fecha>='" + pFecha1 + "' and vp.fecha<='" + pFecha2 + "' and fp.tipo<>2 and vi.cantidad<>0 and vi.noimpimporte=0"
+        End If
+        If pIdSucursal > 0 Then Comm.CommandText += " and v.idsucursal=" + pIdSucursal.ToString
+        If pIdTipoSucursal > 0 Then Comm.CommandText += " and s.idtipo=" + pIdTipoSucursal.ToString
+        If pIdCliente > 0 Then Comm.CommandText += " and v.idcliente=" + pIdCliente.ToString
+        If pidVendedor > 0 Then Comm.CommandText += " and v.idvendedor=" + pidVendedor.ToString
+        If pidMoneda > 0 Then Comm.CommandText += " and vi.idmoneda=" + pidMoneda.ToString
+        If pFormadepago = 1 Then Comm.CommandText += " and fp.tipo=0"
+        If pFormadepago = 2 Then Comm.CommandText += " and fp.tipo=1"
+        If pSoloIEPS Then Comm.CommandText += " and vi.ieps<>0"
+        If pZona > 0 Then Comm.CommandText += " and vn.zona='" + pZona.ToString() + "'"
+        If pZona2 > 0 Then Comm.CommandText += " and c.zona='" + pZona2.ToString() + "' or c.zona2='" + pZona2.ToString() + "'"
+        If pSoloActivas Then Comm.CommandText += " and v.estado=3"
+        If Not pSoloActivas And Not PsoloCanceladas Then Comm.CommandText += " and (v.estado=3 or v.estado=4)"
+        If Not pSoloActivas And PsoloCanceladas Then Comm.CommandText += " and v.estado=4"
+        If pIdInventario > 1 Then Comm.CommandText += " and vi.idinventario=" + pIdInventario.ToString
+        If Not pIdInventario > 1 And pidClasificacion > 0 Then Comm.CommandText += " and i.idclasificacion=" + pidClasificacion.ToString
+        If Not pIdInventario > 1 And pidClasificacion2 > 0 Then Comm.CommandText += " and i.idclasificacion2=" + pidClasificacion2.ToString
+        If Not pIdInventario > 1 And pidClasificacion3 > 0 Then Comm.CommandText += " and i.idclasificacion3=" + pidClasificacion3.ToString
+        If pSerie <> "" Then Comm.CommandText += " and v.serie like '%" + Replace(pSerie, "'", "''") + "%'"
+        If pidAlmacen > 0 Then Comm.CommandText += " and vi.idalmacen=" + pidAlmacen.ToString
+        If pIdTipo > 0 Then Comm.CommandText += " and c.idtipo=" + pIdTipo.ToString
+        If Not pConcendaso Then Comm.CommandText += " order by v.fecha, v.serie, v.folio"
+        If pConcendaso And pOrdenxVendedor Then Comm.CommandText += " order by v.idvendedor, vi.idinventario, preciou"
+        If pConcendaso And Not pOrdenxVendedor Then Comm.CommandText += " order by vi.idinventario, preciou"
+            
+        Dim DA As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
+        DA.Fill(DS, "tblventas")
+        DS.WriteXmlSchema("tblventasa.xml")
         Return DS.Tables("tblventas").DefaultView
     End Function
 
@@ -5517,147 +5340,7 @@ Public Class dbVentas
         Return DS.Tables("tblventasmas").DefaultView
     End Function
     Public Function ReporteViejosSaldos(ByVal pIdSucursal As Integer, ByVal pIdCliente As Integer, ByVal pidVendedor As Integer, ByVal pidMoneda As Integer, ByVal pMostrarEnPesos As Byte, ByVal pTipodeCambio As Double, ByVal pZona As Integer, pidTipo As Integer, pIdZonaCliente As Integer) As DataView
-        'Dim DS As New DataSet
-        'Dim F As String
-        'F = Format(Date.Now, "yyyy/MM/dd")
-        'If pIdCliente > 0 Then
-        '    Comm.CommandText = "delete from tblclientesviejossaldos where idcliente=" + pIdCliente.ToString
-        'Else
-        '    Comm.CommandText = "delete from tblclientesviejossaldos"
-        'End If
-        'Comm.ExecuteNonQuery()
-        'If pMostrarEnPesos = 0 Then
-        '    Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio),0) as sietedias," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio),0) as quincedias," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio),0) as treintadias," + _
-        '    "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio),0) as sesentadias," + _
-        '    "if(tblventas.idconversion=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio) as credito,0 from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and round(tblventas.totalapagar-tblventas.credito,2)>0 and tblventas.estado=3"
-        'Else
-        '    Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '   "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar-tblventas.credito,0) as sietedias," + _
-        '   "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar-tblventas.credito,0) as quincedias," + _
-        '   "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar-tblventas.credito,0) as treintadias," + _
-        '   "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar-tblventas.credito,0) as sesentadias," + _
-        '   "(tblventas.totalapagar-tblventas.credito) as credito,0 from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and round(tblventas.totalapagar-tblventas.credito,2)>0 and tblventas.estado=3"
-        'End If
-
-        'If pIdSucursal > 0 Then
-        '    Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        'End If
-        'If pIdCliente > 0 Then
-        '    Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-        'End If
-        'If pidVendedor > 0 Then
-        '    Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-        'End If
-        'If pidMoneda > 0 Then
-        '    Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-        'End If
-        'Comm.ExecuteNonQuery()
-        ''---------Notas de Cargo
-
-        'If pMostrarEnPesos = 0 Then
-        '    Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.aplicado,(tblventas.totalapagar-tblventas.aplicado)*tblventas.tipodecambio),0) as sietedias," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.aplicado,(tblventas.totalapagar-tblventas.aplicado)*tblventas.tipodecambio),0) as quincedias," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.aplicado,(tblventas.totalapagar-tblventas.aplicado)*tblventas.tipodecambio),0) as treintadias," + _
-        '    "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.aplicado,(tblventas.totalapagar-tblventas.aplicado)*tblventas.tipodecambio),0) as sesentadias," + _
-        '    "if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.aplicado,(tblventas.totalapagar-tblventas.aplicado)*tblventas.tipodecambio) as credito,1 from tblnotasdecargo as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where round(tblventas.totalapagar-tblventas.aplicado,2)>0 and tblventas.estado=3"
-        'Else
-        '    Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar-tblventas.aplicado,0) as sietedias," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar-tblventas.aplicado,0) as quincedias," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar-tblventas.aplicado,0) as treintadias," + _
-        '    "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar-tblventas.aplicado,0) as sesentadias," + _
-        '    "(tblventas.totalapagar-tblventas.aplicado)*tblventas.tipodecambio as credito,1 from tblnotasdecargo as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where round(tblventas.totalapagar-tblventas.aplicado,2)>0 and tblventas.estado=3"
-        'End If
-
-        'If pIdSucursal > 0 Then
-        '    Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        'End If
-        'If pIdCliente > 0 Then
-        '    Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-        'End If
-        'If pidVendedor > 0 Then
-        '    Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-        'End If
-        'If pidMoneda > 0 Then
-        '    Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-        'End If
-        'Comm.ExecuteNonQuery()
-        ''-------------Documentos Saldo Inicial
-
-        'If pMostrarEnPesos = 0 Then
-        '    Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio),0) as sietedias," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio),0) as quincedias," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio),0) as treintadias," + _
-        '    "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio),0) as sesentadias," + _
-        '    "if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio) as credito,2 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=0 and round(tblventas.totalapagar-tblventas.credito,2)>0 and tblventas.estado=3"
-        'Else
-        '    Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '   "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar-tblventas.credito,0) as sietedias," + _
-        '   "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar-tblventas.credito,0) as quincedias," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar-tblventas.credito,0) as treintadias," + _
-        '    "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar-tblventas.credito,0) as sesentadias," + _
-        '    "(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio as credito,2 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=0 and round(tblventas.totalapagar-tblventas.credito,2)>0 and tblventas.estado=3"
-        'End If
-
-        'If pIdSucursal > 0 Then
-        '    Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        'End If
-        'If pIdCliente > 0 Then
-        '    Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-        'End If
-        'If pidVendedor > 0 Then
-        '    Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-        'End If
-        'If pidMoneda > 0 Then
-        '    Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-        'End If
-        'Comm.ExecuteNonQuery()
-        ''Documentos documentos
-
-        'If pMostrarEnPesos = 0 Then
-        '    Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.seriereferencia,tblventas.folioreferencia,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio),0) as sietedias," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio),0) as quincedias," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio),0) as treintadias," + _
-        '    "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio),0) as sesentadias," + _
-        '    "if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio) as credito,3 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=1 and round(tblventas.totalapagar-tblventas.credito,2)>0 and tblventas.estado=3"
-        'Else
-        '    Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.seriereferencia,tblventas.folioreferencia,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '   "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar-tblventas.credito,0) as sietedias," + _
-        '   "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar-tblventas.credito,0) as quincedias," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar-tblventas.credito,0) as treintadias," + _
-        '    "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar-tblventas.credito,0) as sesentadias," + _
-        '    "(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio as credito,3 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=1 and round(tblventas.totalapagar-tblventas.credito,2)>0 and tblventas.estado=3"
-        'End If
-
-        'If pIdSucursal > 0 Then
-        '    Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        'End If
-        'If pIdCliente > 0 Then
-        '    Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-        'End If
-        'If pidVendedor > 0 Then
-        '    Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-        'End If
-        'If pidMoneda > 0 Then
-        '    Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-        'End If
-        'Comm.ExecuteNonQuery()
-        'If pIdCliente <= 0 Then
-        '    Comm.CommandText = "select fecha,tblclientes.clave,tblclientes.nombre,tblclientes.idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,tipo,tblclientesviejossaldos.credito,0 as saldoant from tblclientesviejossaldos inner join tblclientes on tblclientesviejossaldos.idcliente=tblclientes.idcliente  order by tblclientes.nombre,fecha,serie,folio"
-        'Else
-        '    Comm.CommandText = "select fecha,tblclientes.clave,tblclientes.nombre,tblclientes.idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,tipo,tblclientesviejossaldos.credito,0 as saldoant from tblclientesviejossaldos inner join tblclientes on tblclientesviejossaldos.idcliente=tblclientes.idcliente where tblclientesviejossaldos.idcliente=" + pIdCliente.ToString + " order by tblclientes.nombre,fecha,serie,folio"
-        'End If
-
-        'Dim DA As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
-        'DA.Fill(DS, "tblventasviejo")
-        ''DS.WriteXmlSchema("tblventasviejo.xml")
-        'Return DS.Tables("tblventasviejo").DefaultView
+        
         Dim DS As New DataSet
         Dim F As String
         F = Format(Date.Now, "yyyy/MM/dd")
@@ -6015,16 +5698,7 @@ Public Class dbVentas
             Comm.CommandText = "delete from tblclientesviejossaldos"
         End If
         Comm.ExecuteNonQuery()
-        'If pMostrarEnPesos = 0 Then
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,concat(tblventas.referencia,' - ',tblventas.serie),tblventas.folioi,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,(tblventas.totalapagar)*tblventas.tipodecambio),0) as quincedias," + _
-        '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,(tblventas.totalapagar)*tblventas.tipodecambio),0) as treintadias," + _
-        '"if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,(tblventas.totalapagar)*tblventas.tipodecambio),0) as sesentadias," + _
-        '"if(tblventas.idmoneda=2," + _
-        '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + Pfecha + "' and tblventaspagos.idventa=tblventas.idventa),0)," + _
-        '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + Pfecha + "' and tblventaspagos.idventa=tblventas.idventa),0)*tblventas.tipodecambio) as credito," + _
-        '"0 from tblcompras as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0  and tblventas.fecha<='" + Pfecha + "' and tblventas.estado=3"
+      
         Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo,tipodecambio,corriente,totalapagar,idsucursal) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
         "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
         "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
@@ -6319,1017 +5993,8 @@ Public Class dbVentas
         DA.Fill(DS, "tblclientesviejo")
         'DS.WriteXmlSchema("tblcomprasviejo.xml")
         Return DS.Tables("tblclientesviejo").DefaultView
-        '        Dim DS As New DataSet
-        '        Dim F As String
-        '        F = pFecha
-        '        Comm.CommandTimeout = 10000
-        '        If pIdCliente > 0 Then
-        '            Comm.CommandText = "delete from tblclientesviejossaldos where idcliente=" + pIdCliente.ToString
-        '        Else
-        '            Comm.CommandText = "delete from tblclientesviejossaldos"
-        '        End If
-        '        Comm.ExecuteNonQuery()
-        '        If pMostrarEnPesos = 0 Then
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-        '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-        '"if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-        '"if(tblventas.idconversion=2," + _
-        '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0)," + _
-        '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0)*tblventas.tipodecambio) as credito,0 from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and tblventas.estado=3 and tblventas.fecha<='" + pFecha + "'"
-        '        Else
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-        '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-        '"if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-        '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0) as credito,0 from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and tblventas.estado=3 and tblventas.estado=3 and tblventas.fecha<='" + pFecha + "'"
-        '        End If
-
-        '        If pIdSucursal > 0 Then
-        '            Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        '        End If
-        '        If pIdCliente > 0 Then
-        '            Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-        '        End If
-        '        If pidVendedor > 0 Then
-        '            Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-        '        End If
-        '        If pidMoneda > 0 Then
-        '            Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-        '        End If
-        '        Comm.ExecuteNonQuery()
-        '        '---------Notas de Cargo
-
-        '        If pMostrarEnPesos = 0 Then
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-        '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-        '            "if(tblventas.idmoneda=2," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0)," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0)*tblventas.tipodecambio) as credito,1 from tblnotasdecargo as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.fecha<='" + pFecha + "' and tblventas.estado=3"
-        '        Else
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-        '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0) as credito,1 from tblnotasdecargo as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.fecha<='" + pFecha + "' and tblventas.estado=3"
-        '        End If
-
-        '        If pIdSucursal > 0 Then
-        '            Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        '        End If
-        '        If pIdCliente > 0 Then
-        '            Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-        '        End If
-        '        If pidVendedor > 0 Then
-        '            Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-        '        End If
-        '        If pidMoneda > 0 Then
-        '            Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-        '        End If
-        '        Comm.ExecuteNonQuery()
-        '        '-------------Documentos Saldo Inicial
-
-        '        If pMostrarEnPesos = 0 Then
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-        '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-        '            "if(tblventas.idmoneda=2," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)*tblventas.tipodecambio) as credito,2 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=0 and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3"
-        '        Else
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-        '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)) as credito,2 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=0 and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3"
-        '        End If
-
-        '        If pIdSucursal > 0 Then
-        '            Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        '        End If
-        '        If pIdCliente > 0 Then
-        '            Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-        '        End If
-        '        If pidVendedor > 0 Then
-        '            Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-        '        End If
-        '        If pidMoneda > 0 Then
-        '            Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-        '        End If
-        '        Comm.ExecuteNonQuery()
-        '        'Documentos documentos
-
-        '        If pMostrarEnPesos = 0 Then
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.seriereferencia,tblventas.folioreferencia,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-        '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-        '            "if(tblventas.idmoneda=2," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)*tblventas.tipodecambio) as credito,3 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=1 and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3"
-        '        Else
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.seriereferencia,tblventas.folioreferencia,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-        '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0) as credito,3 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=1 and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3"
-        '        End If
-
-        '        If pIdSucursal > 0 Then
-        '            Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        '        End If
-        '        If pIdCliente > 0 Then
-        '            Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-        '        End If
-        '        If pidVendedor > 0 Then
-        '            Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-        '        End If
-        '        If pidMoneda > 0 Then
-        '            Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-        '        End If
-        '        Comm.ExecuteNonQuery()
-
-        '        'Saca saldos
-        '        Comm.CommandText = "delete from tblclientesmovimientossaldos"
-        '        Comm.ExecuteNonQuery()
-        '        'Comm.CommandText = "insert into tblclientesmovimientossaldos(idcliente,saldoant) select idcliente,spdasaldoafechaclientes(idcliente,'" + Format(DateAdd(DateInterval.Day, 1, CDate(pFecha)), "yyyy/MM/dd") + "') from tblclientesviejossaldos group by idcliente"
-        '        Comm.CommandText = "insert into tblclientesmovimientossaldos(idcliente,saldoant) select c.idcliente, " + _
-        '        "ifnull((select if(idconversion=2,sum(totalapagar),sum(totalapagar*tipodecambio)) from tblventas inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and idcliente=c.idcliente and estado=3 and tblventas.fecha<='" + pFecha + "'),0)+" + _
-        '"ifnull((select if(idmoneda=2,sum(totalapagar),sum(totalapagar*tipodecambio)) from tblnotasdecargo where idcliente=c.idcliente and estado=3 and tblnotasdecargo.fecha<='" + pFecha + "'),0)+" + _
-        '"ifnull((select if(idmoneda=2,sum(totalapagar),sum(totalapagar*tipodecambio)) from tbldocumentosclientes where idcliente=c.idcliente and estado=3 and tbldocumentosclientes.fecha<='" + pFecha + "'),0)-" + _
-        '"ifnull((select if(idmoneda=2,sum(cantidad),sum(cantidad*ptipodecambio)) from tblventaspagos where idcliente=c.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "'),0) AS saldo " + _
-        '"from tblclientesviejossaldos as c group by c.idcliente"
-        '        Comm.ExecuteNonQuery()
-        '        If pIdCliente <= 0 Then
-        '            Comm.CommandText = "select fecha,tblclientes.clave,tblclientes.nombre,tblclientes.idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,tipo,tblclientesviejossaldos.credito,saldoant from tblclientesviejossaldos inner join tblclientes on tblclientesviejossaldos.idcliente=tblclientes.idcliente inner join tblclientesmovimientossaldos on tblclientesviejossaldos.idcliente=tblclientesmovimientossaldos.idcliente where round(sietedias+quincedias+treintadias+sesentadias-tblclientesviejossaldos.credito,2)>0 order by tblclientes.nombre,fecha,serie,folio"
-        '        Else
-        '            Comm.CommandText = "select fecha,tblclientes.clave,tblclientes.nombre,tblclientes.idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,tipo,tblclientesviejossaldos.credito,saldoant from tblclientesviejossaldos inner join tblclientes on tblclientesviejossaldos.idcliente=tblclientes.idcliente inner join tblclientesmovimientossaldos on tblclientesviejossaldos.idcliente=tblclientesmovimientossaldos.idcliente where tblclientesviejossaldos.idcliente=" + pIdCliente.ToString + " and round(sietedias+quincedias+treintadias+sesentadias-tblclientesviejossaldos.credito,2)>0 order by tblclientes.nombre,fecha,serie,folio"
-        '        End If
-
-        '        Dim DA As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
-        '        DA.Fill(DS, "tblventasviejo")
-        '        'DS.WriteXmlSchema("tblventasviejo.xml")
-        '        Return DS.Tables("tblventasviejo").DefaultView
-        '    End Function
-
-        '    Public Function ReporteViejosSaldosHN(ByVal pIdSucursal As Integer, ByVal pIdCliente As Integer, ByVal pidVendedor As Integer, ByVal pidMoneda As Integer, ByVal pMostrarEnPesos As Byte, ByVal pFecha As String) As DataView
-        '        Dim DS As New DataSet
-        '        Dim F As String
-        '        F = pFecha
-        '        Comm.CommandTimeout = 10000
-        '        If pIdCliente > 0 Then
-        '            Comm.CommandText = "delete from tblclientesviejossaldos where idcliente=" + pIdCliente.ToString
-        '        Else
-        '            Comm.CommandText = "delete from tblclientesviejossaldos"
-        '        End If
-        '        Comm.ExecuteNonQuery()
-        '        If pMostrarEnPesos = 0 Then
-
-        '            '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '            '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-        '            '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-        '            '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-        '            '"if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-        '            '"if(tblventas.idconversion=2," + _
-        '            '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0)," + _
-        '            '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0)*tblventas.tipodecambio) as credito,0 from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and tblventas.estado=3 and tblventas.fecha<='" + pFecha + "' and round(tblventas.totalapagar-tblventas.credito,2)>0;"
-
-
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(tblventas.fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '            "if('" + F + "'>=date_format(adddate(tblventas.fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-        '            "if('" + F + "'>=date_format(adddate(tblventas.fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(tblventas.fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-        '"if('" + F + "'>=date_format(adddate(tblventas.fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(tblventas.fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-        '"if('" + F + "'<date_format(adddate(tblventas.fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-        '"if(tblventas.idconversion=2," + _
-        '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0)," + _
-        '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0)*tblventas.tipodecambio) as credito,0 from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and tblventas.estado=3 and tblventas.fecha<='" + pFecha + "' and round(tblventas.totalapagar-ifnull((select sum(cantidad) from tblventaspagos where tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0),2)>0"
-
-
-        '        Else
-        '            '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '            '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-        '            '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-        '            '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-        '            '"if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-        '            '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0) as credito,0 from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and tblventas.estado=3 and tblventas.estado=3 and tblventas.fecha<='" + pFecha + "' and round(tblventas.totalapagar-tblventas.credito,2)>0"
-
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-        '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-        '"if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-        '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0) as credito,0 from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and tblventas.estado=3 and tblventas.estado=3 and tblventas.fecha<='" + pFecha + "' and round(tblventas.totalapagar-ifnull((select sum(cantidad) from tblventaspagos where tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0),2)>0"
-        '        End If
-
-        '        If pIdSucursal > 0 Then
-        '            Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        '        End If
-        '        If pIdCliente > 0 Then
-        '            Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-        '        End If
-        '        If pidVendedor > 0 Then
-        '            Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-        '        End If
-        '        If pidMoneda > 0 Then
-        '            Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-        '        End If
-        '        Comm.ExecuteNonQuery()
-        '        '---------Notas de Cargo
-
-        '        If pMostrarEnPesos = 0 Then
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-        '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-        '            "if(tblventas.idmoneda=2," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0)," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0)*tblventas.tipodecambio) as credito,1 from tblnotasdecargo as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and round(tblventas.totalapagar-ifnull((select sum(cantidad) from tblventaspagos where tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0),2)>0"
-
-        '            'Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '            '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-        '            '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-        '            '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-        '            '"if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-        '            '"if(tblventas.idmoneda=2," + _
-        '            '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0)," + _
-        '            '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0)*tblventas.tipodecambio) as credito,1 from tblnotasdecargo as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.fecha<='" + pFecha + "' and tblventas.estado=3"
-
-        '        Else
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-        '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0) as credito,1 from tblnotasdecargo as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and round(tblventas.totalapagar-ifnull((select sum(cantidad) from tblventaspagos where tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0),2)>0"
-        '        End If
-
-        '        If pIdSucursal > 0 Then
-        '            Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        '        End If
-        '        If pIdCliente > 0 Then
-        '            Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-        '        End If
-        '        If pidVendedor > 0 Then
-        '            Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-        '        End If
-        '        If pidMoneda > 0 Then
-        '            Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-        '        End If
-        '        Comm.ExecuteNonQuery()
-        '        '-------------Documentos Saldo Inicial
-
-        '        If pMostrarEnPesos = 0 Then
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-        '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-        '            "if(tblventas.idmoneda=2," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)*tblventas.tipodecambio) as credito,2 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=0 and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and round(tblventas.totalapagar-ifnull((select sum(cantidad) from tblventaspagos where tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0),2)>0"
-        '        Else
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-        '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)) as credito,2 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=0 and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and round(tblventas.totalapagar-ifnull((select sum(cantidad) from tblventaspagos where tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0),2)>0"
-        '        End If
-
-        '        If pIdSucursal > 0 Then
-        '            Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        '        End If
-        '        If pIdCliente > 0 Then
-        '            Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-        '        End If
-        '        If pidVendedor > 0 Then
-        '            Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-        '        End If
-        '        If pidMoneda > 0 Then
-        '            Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-        '        End If
-        '        Comm.ExecuteNonQuery()
-        '        'Documentos documentos
-
-        '        If pMostrarEnPesos = 0 Then
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.seriereferencia,tblventas.folioreferencia,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-        '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-        '            "if(tblventas.idmoneda=2," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)*tblventas.tipodecambio) as credito,3 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=1 and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and round(tblventas.totalapagar-ifnull((select sum(cantidad) from tblventaspagos where tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0),2)>0"
-        '        Else
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.seriereferencia,tblventas.folioreferencia,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-        '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0) as credito,3 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=1 and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and round(tblventas.totalapagar-ifnull((select sum(cantidad) from tblventaspagos where tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0),2)>0"
-        '        End If
-
-        '        If pIdSucursal > 0 Then
-        '            Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        '        End If
-        '        If pIdCliente > 0 Then
-        '            Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-        '        End If
-        '        If pidVendedor > 0 Then
-        '            Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-        '        End If
-        '        If pidMoneda > 0 Then
-        '            Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-        '        End If
-        '        Comm.ExecuteNonQuery()
-
-        '        'Saca saldos
-        '        Comm.CommandText = "delete from tblclientesmovimientossaldos"
-        '        Comm.ExecuteNonQuery()
-        '        'Comm.CommandText = "insert into tblclientesmovimientossaldos(idcliente,saldoant) select idcliente,spdasaldoafechaclientes(idcliente,'" + Format(DateAdd(DateInterval.Day, 1, CDate(pFecha)), "yyyy/MM/dd") + "') from tblclientesviejossaldos group by idcliente"
-        '        Comm.CommandText = "insert into tblclientesmovimientossaldos(idcliente,saldoant) select c.idcliente, " + _
-        '        "ifnull((select if(idconversion=2,sum(totalapagar),sum(totalapagar*tipodecambio)) from tblventas inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and idcliente=c.idcliente and estado=3 and tblventas.fecha<='" + pFecha + "'),0)+" + _
-        '"ifnull((select if(idmoneda=2,sum(totalapagar),sum(totalapagar*tipodecambio)) from tblnotasdecargo where idcliente=c.idcliente and estado=3 and tblnotasdecargo.fecha<='" + pFecha + "'),0)+" + _
-        '"ifnull((select if(idmoneda=2,sum(totalapagar),sum(totalapagar*tipodecambio)) from tbldocumentosclientes where idcliente=c.idcliente and estado=3 and tbldocumentosclientes.fecha<='" + pFecha + "'),0)-" + _
-        '"ifnull((select if(idmoneda=2,sum(cantidad),sum(cantidad*ptipodecambio)) from tblventaspagos where idcliente=c.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "'),0) AS saldo " + _
-        '"from tblclientesviejossaldos as c group by c.idcliente"
-        '        Comm.ExecuteNonQuery()
-        '        If pIdCliente <= 0 Then
-        '            Comm.CommandText = "select fecha,tblclientes.clave,tblclientes.nombre,tblclientes.idcliente,serie,folio,limite,round(sietedias,2) as sietedias,quincedias,treintadias,sesentadias,tipo,round(tblclientesviejossaldos.credito,2) as credito,round(saldoant,2) as saldoant from tblclientesviejossaldos inner join tblclientes on tblclientesviejossaldos.idcliente=tblclientes.idcliente inner join tblclientesmovimientossaldos on tblclientesviejossaldos.idcliente=tblclientesmovimientossaldos.idcliente where round(sietedias+quincedias+treintadias+sesentadias-tblclientesviejossaldos.credito,2)>0 order by tblclientes.nombre,fecha,serie,folio"
-        '        Else
-        '            Comm.CommandText = "select fecha,tblclientes.clave,tblclientes.nombre,tblclientes.idcliente,serie,folio,limite,round(sietedias,2) as sietedias,quincedias,treintadias,sesentadias,tipo,round(tblclientesviejossaldos.credito,2) as credito,round(saldoant,2) as saldoant from tblclientesviejossaldos inner join tblclientes on tblclientesviejossaldos.idcliente=tblclientes.idcliente inner join tblclientesmovimientossaldos on tblclientesviejossaldos.idcliente=tblclientesmovimientossaldos.idcliente where tblclientesviejossaldos.idcliente=" + pIdCliente.ToString + " and round(sietedias+quincedias+treintadias+sesentadias-tblclientesviejossaldos.credito,2)>0 order by tblclientes.nombre,fecha,serie,folio"
-        '        End If
-
-        '        Dim DA As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
-        '        DA.Fill(DS, "tblventasviejo")
-        '        'DS.WriteXmlSchema("tblventasviejo.xml")
-        '       '        Return DS.Tables("tblventasviejo").DefaultView
+      
     End Function
-
-    '' ''Public Function ReporteViejosSaldosH(ByVal pIdSucursal As Integer, ByVal pIdCliente As Integer, ByVal pidVendedor As Integer, ByVal pidMoneda As Integer, ByVal pMostrarEnPesos As Byte, ByVal pFecha1 As String, ByVal pFecha As String, ByVal pTipodeCambio As Double, pIdTipo As Integer) As DataView
-    '' ''    Dim DS As New DataSet
-    '' ''    Dim F As String
-    '' ''    'F = Format(Date.Now, "yyyy/MM/dd")
-    '' ''    F = pFecha
-    '' ''    Comm.CommandTimeout = 10000
-    '' ''    Comm.CommandText = "select ifnull((select tipodecambio from tblventas where fecha>='" + F + "' and idconversion<>2 order by fecha desc limit 1),1)"
-    '' ''    pTipodeCambio = Comm.ExecuteScalar
-    '' ''    If IdCliente > 0 Then
-    '' ''        Comm.CommandText = "delete from tblclientesviejossaldos where idcliente=" + IdCliente.ToString
-    '' ''    Else
-    '' ''        Comm.CommandText = "delete from tblclientesviejossaldos"
-    '' ''    End If
-    '' ''    Comm.ExecuteNonQuery()
-    '' ''    'If pMostrarEnPesos = 0 Then
-    '' ''    '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,concat(tblventas.referencia,' - ',tblventas.serie),tblventas.folioi,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,(tblventas.totalapagar)*tblventas.tipodecambio),0) as quincedias," + _
-    '' ''    '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,(tblventas.totalapagar)*tblventas.tipodecambio),0) as treintadias," + _
-    '' ''    '"if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,(tblventas.totalapagar)*tblventas.tipodecambio),0) as sesentadias," + _
-    '' ''    '"if(tblventas.idmoneda=2," + _
-    '' ''    '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + Pfecha + "' and tblventaspagos.idventa=tblventas.idventa),0)," + _
-    '' ''    '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + Pfecha + "' and tblventaspagos.idventa=tblventas.idventa),0)*tblventas.tipodecambio) as credito," + _
-    '' ''    '"0 from tblcompras as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0  and tblventas.fecha<='" + Pfecha + "' and tblventas.estado=3"
-    '' ''    Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo,tipodecambio,corriente,totalapagar,idsucursal) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''    "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-    '' ''    "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-    '' ''    "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+30),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-    '' ''    "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-    '' ''    "ifnull((select sum(if(tblventaspagos.idmoneda=2,cantidad,cantidad*ptipodecambio)) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0) as credito," + _
-    '' ''    "0,0," + _
-    '' ''    "if('" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d'),tblventas.totalapagar,0) as corriente" + _
-    '' ''    ",totalapagar,idsucursal from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0  and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and tblventas.idconversion=2"
-
-    '' ''    If pIdSucursal > 0 Then
-    '' ''        Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-    '' ''    End If
-    '' ''    If pIdCliente > 0 Then
-    '' ''        Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-    '' ''    End If
-    '' ''    If pidMoneda > 0 Then
-    '' ''        Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-    '' ''    End If
-    '' ''    If pIdTipo > 0 Then
-    '' ''        Comm.CommandText += " and tblclientes.idtipo=" + pIdTipo.ToString
-    '' ''    End If
-    '' ''    'If pidMoneda > 0 Then
-    '' ''    'Comm.CommandText += " and tblventas.idmoneda=" + pidMoneda.ToString
-    '' ''    'End If
-    '' ''    Comm.ExecuteNonQuery()
-    '' ''    If pMostrarEnPesos = 0 Then
-    '' ''        Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo,tipodecambio,corriente,totalapagar,idsucursal) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,(tblventas.totalapagar)*tblventas.tipodecambio),0) as sietedias," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,(tblventas.totalapagar)*tblventas.tipodecambio),0) as quincedias," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+30),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,(tblventas.totalapagar)*tblventas.tipodecambio),0) as treintadias," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+30),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,(tblventas.totalapagar)*tblventas.tipodecambio),0) as sesentadias," + _
-    '' ''        "ifnull((select sum(if(tblventaspagos.idmoneda=tblventas.idconversion,cantidad,cantidad/ptipodecambio)) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0)*tblventas.tipodecambio as credito," + _
-    '' ''        "0," + pTipodeCambio.ToString + "," + _
-    '' ''        "if('" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as corriente" + _
-    '' ''        ",tblventas.totalapagar*tblventas.tipodecambio as totalapagar,idsucursal from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0  and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and tblventas.idconversion<>2"
-    '' ''    Else
-    '' ''        Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo,tipodecambio,corriente,totalapagar,idsucursal) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+30),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-    '' ''        "ifnull((select sum(if(tblventaspagos.idmoneda=tblventas.idconversion,cantidad,cantidad/ptipodecambio)) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0) as credito," + _
-    '' ''        "0,0," + _
-    '' ''        "if('" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d'),tblventas.totalapagar,0) as corriente" + _
-    '' ''        ",totalapagar,idsucursal from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0  and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and tblventas.idconversion<>2"
-    '' ''    End If
-
-    '' ''    If pIdSucursal > 0 Then
-    '' ''        Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-    '' ''    End If
-    '' ''    If pIdCliente > 0 Then
-    '' ''        Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-    '' ''    End If
-    '' ''    If pIdTipo > 0 Then
-    '' ''        Comm.CommandText += " and tblclientes.idtipo=" + pIdTipo.ToString
-    '' ''    End If
-    '' ''    If pidMoneda > 0 Then
-    '' ''        Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-    '' ''    End If
-    '' ''    Comm.ExecuteNonQuery()
-
-
-
-    '' ''    '---------Notas de Cargo
-
-
-
-    '' ''    Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo,tipodecambio,corriente,totalapagar,idsucursal) select tblventas.fecha,tblclientes.idcliente,tblventas.folio,0,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''    "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,(tblventas.totalapagar)*tblventas.tipodecambio),0) as sietedias," + _
-    '' ''    "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-    '' ''    "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-    '' ''    "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-    '' ''    "ifnull((select sum(if(tblventaspagos.idmoneda=2,cantidad,cantidad*ptipodecambio)) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0) as credito," + _
-    '' ''    "1,0," + _
-    '' ''    "if('" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as corriente" + _
-    '' ''    ",totalapagar,idsucursal from tblnotasdecargo as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where  tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and tblventas.idmoneda=2"
-
-
-
-    '' ''    If pIdSucursal > 0 Then
-    '' ''        Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-    '' ''    End If
-    '' ''    If pIdCliente > 0 Then
-    '' ''        Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-    '' ''    End If
-    '' ''    If pIdTipo > 0 Then
-    '' ''        Comm.CommandText += " and tblclientes.idtipo=" + pIdTipo.ToString
-    '' ''    End If
-    '' ''    If pidMoneda > 0 Then
-    '' ''        Comm.CommandText += " and tblventas.idmoneda=" + pidMoneda.ToString
-    '' ''    End If
-    '' ''    Comm.ExecuteNonQuery()
-
-    '' ''    If pMostrarEnPesos = 0 Then
-    '' ''        Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo,tipodecambio,corriente,totalapagar,idsucursal) select tblventas.fecha,tblclientes.idcliente,tblventas.folio,0,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,(tblventas.totalapagar)*tblventas.tipodecambio),0) as sietedias," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-    '' ''        "ifnull((select sum(if(tblventaspagos.idmoneda=tblventas.idmoneda,cantidad,cantidad/ptipodecambio)) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0)*tblventas.tipodecambio as credito," + _
-    '' ''        "1," + pTipodeCambio.ToString + "," + _
-    '' ''        "if('" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as corriente" + _
-    '' ''        ",tblventas.totalapagar*tblventas.tipodecambio as totalapagar,idsucursal from tblnotasdecargo as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where  tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and tblventas.idmoneda<>2"
-    '' ''    Else
-    '' ''        Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo,tipodecambio,corriente,totalapagar,idsucursal) select tblventas.fecha,tblclientes.idcliente,tblventas.folio,0,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+30),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-    '' ''        "ifnull((select sum(if(tblventaspagos.idmoneda=tblventas.idmoneda,cantidad,cantidad/ptipodecambio)) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0) as credito," + _
-    '' ''        "1,0," + _
-    '' ''        "if('" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d'),tblventas.totalapagar,0) as corriente" + _
-    '' ''        ",totalapagar,idsucursal from tblnotasdecargo as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where  tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and tblventas.idmoneda<>2"
-    '' ''    End If
-    '' ''    If pIdSucursal > 0 Then
-    '' ''        Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-    '' ''    End If
-    '' ''    If pIdCliente > 0 Then
-    '' ''        Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-    '' ''    End If
-    '' ''    If pIdTipo > 0 Then
-    '' ''        Comm.CommandText += " and tblclientes.idtipo=" + pIdTipo.ToString
-    '' ''    End If
-    '' ''    If pidMoneda > 0 Then
-    '' ''        Comm.CommandText += " and tblventas.idmoneda=" + pidMoneda.ToString
-    '' ''    End If
-    '' ''    Comm.ExecuteNonQuery()
-    '' ''    '-------------Documentos Saldo Inicial
-
-    '' ''    Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo,tipodecambio,corriente,totalapagar,idsucursal) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''    "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,(tblventas.totalapagar)*tblventas.tipodecambio),0) as sietedias," + _
-    '' ''    "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-    '' ''    "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-    '' ''    "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-    '' ''    "ifnull((select sum(if(tblventaspagos.idmoneda=2,cantidad,cantidad*ptipodecambio)) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0) as credito," + _
-    '' ''    "2,0," + _
-    '' ''    "if('" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as corriente" + _
-    '' ''    ",totalapagar,idsucursal from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=0 and  tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and tblventas.idmoneda=2"
-
-    '' ''    If pIdSucursal > 0 Then
-    '' ''        Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-    '' ''    End If
-    '' ''    If pIdCliente > 0 Then
-    '' ''        Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-    '' ''    End If
-    '' ''    If pidMoneda > 0 Then
-    '' ''        Comm.CommandText += " and tblventas.idmoneda=" + pidMoneda.ToString
-    '' ''    End If
-    '' ''    If pIdTipo > 0 Then
-    '' ''        Comm.CommandText += " and tblclientes.idtipo=" + pIdTipo.ToString
-    '' ''    End If
-    '' ''    Comm.ExecuteNonQuery()
-
-    '' ''    If pMostrarEnPesos = 0 Then
-    '' ''        Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo,tipodecambio,corriente,totalapagar,idsucursal) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,(tblventas.totalapagar)*tblventas.tipodecambio),0) as sietedias," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-    '' ''        "ifnull((select sum(if(tblventaspagos.idmoneda=tblventas.idmoneda,cantidad,cantidad/ptipodecambio)) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)*tblventas.tipodecambio as credito," + _
-    '' ''        "2," + pTipodeCambio.ToString + "," + _
-    '' ''        "if('" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as corriente" + _
-    '' ''        ",tblventas.totalapagar*tblventas.tipodecambio as totalapagar,idsucursal from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=0 and  tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and tblventas.idmoneda<>2"
-    '' ''    Else
-    '' ''        Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo,tipodecambio,corriente,totalapagar,idsucursal) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+30),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-    '' ''        "ifnull((select sum(if(tblventaspagos.idmoneda=tblventas.idmoneda,cantidad,cantidad/ptipodecambio)) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0) as credito," + _
-    '' ''        "2,0," + _
-    '' ''        "if('" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d'),tblventas.totalapagar,0) as corriente" + _
-    '' ''        ",totalapagar,idsucursal from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=0 and  tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and tblventas.idmoneda<>2"
-    '' ''    End If
-    '' ''    If pIdSucursal > 0 Then
-    '' ''        Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-    '' ''    End If
-    '' ''    If pIdCliente > 0 Then
-    '' ''        Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-    '' ''    End If
-    '' ''    If pidMoneda > 0 Then
-    '' ''        Comm.CommandText += " and tblventas.idmoneda=" + pidMoneda.ToString
-    '' ''    End If
-    '' ''    If pIdTipo > 0 Then
-    '' ''        Comm.CommandText += " and tblclientes.idtipo=" + pIdTipo.ToString
-    '' ''    End If
-    '' ''    Comm.ExecuteNonQuery()
-    '' ''    'Documentos documentos
-
-    '' ''    'If pMostrarEnPesos = 0 Then
-
-    '' ''    Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo,tipodecambio,corriente,totalapagar,idsucursal) select tblventas.fecha,tblclientes.idcliente,tblventas.seriereferencia,tblventas.folioreferencia,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''    "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,(tblventas.totalapagar)*tblventas.tipodecambio),0) as sietedias," + _
-    '' ''    "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-    '' ''    "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-    '' ''    "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-    '' ''    "ifnull((select sum(if(tblventaspagos.idmoneda=2,cantidad,cantidad*ptipodecambio)) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0) as credito," + _
-    '' ''    "3,0," + _
-    '' ''    "if('" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as corriente" + _
-    '' ''    ",totalapagar,idsucursal from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=1  and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and tblventas.idmoneda=2"
-
-    '' ''    If pIdSucursal > 0 Then
-    '' ''        Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-    '' ''    End If
-    '' ''    If pIdCliente > 0 Then
-    '' ''        Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-    '' ''    End If
-    '' ''    If pidMoneda > 0 Then
-    '' ''        Comm.CommandText += " and tblventas.idmoneda=" + pidMoneda.ToString
-    '' ''    End If
-    '' ''    If pIdTipo > 0 Then
-    '' ''        Comm.CommandText += " and tblclientes.idtipo=" + pIdTipo.ToString
-    '' ''    End If
-    '' ''    Comm.ExecuteNonQuery()
-    '' ''    If pMostrarEnPesos = 0 Then
-    '' ''        Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo,tipodecambio,corriente,totalapagar,idsucursal) select tblventas.fecha,tblclientes.idcliente,tblventas.seriereferencia,tblventas.folioreferencia,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,(tblventas.totalapagar)*tblventas.tipodecambio),0) as sietedias," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-    '' ''        "ifnull((select sum(if(tblventaspagos.idmoneda=tblventas.idmoneda,cantidad,cantidad/ptipodecambio)) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)*tblventas.tipodecambio as credito," + _
-    '' ''        "3," + pTipodeCambio.ToString + "," + _
-    '' ''        "if('" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as corriente" + _
-    '' ''        ",tblventas.totalapagar*tblventas.tipodecambio as totalapagar,idsucursal from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=1  and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and tblventas.idmoneda<>2"
-    '' ''    Else
-    '' ''        Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo,tipodecambio,corriente,totalapagar,idsucursal) select tblventas.fecha,tblclientes.idcliente,tblventas.seriereferencia,tblventas.folioreferencia,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+30),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-    '' ''        "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-    '' ''        "ifnull((select sum(if(tblventaspagos.idmoneda=tblventas.idmoneda,cantidad,cantidad/ptipodecambio)) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0) as credito," + _
-    '' ''        "3,0," + _
-    '' ''        "if('" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d'),tblventas.totalapagar,0) as corriente" + _
-    '' ''        ",totalapagar,idsucursal from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=1  and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and tblventas.idmoneda<>2"
-    '' ''    End If
-    '' ''    If pIdSucursal > 0 Then
-    '' ''        Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-    '' ''    End If
-    '' ''    If pIdCliente > 0 Then
-    '' ''        Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-    '' ''    End If
-    '' ''    If pidMoneda > 0 Then
-    '' ''        Comm.CommandText += " and tblventas.idmoneda=" + pidMoneda.ToString
-    '' ''    End If
-    '' ''    If pIdTipo > 0 Then
-    '' ''        Comm.CommandText += " and tblclientes.idtipo=" + pIdTipo.ToString
-    '' ''    End If
-    '' ''    Comm.ExecuteNonQuery()
-    '' ''    'Saca saldos
-    '' ''    'Comm.CommandText = "delete from tblclientesmovimientossaldos"
-    '' ''    'Comm.ExecuteNonQuery()
-    '' ''    'Comm.CommandText = "insert into tblclientesmovimientossaldos(idcliente,saldoant) select idcliente,spdasaldoafechaproveedor(idcliente,'" + Format(DateAdd(DateInterval.Day, 1, CDate(Pfecha)), "yyyy/MM/dd") + "') from tblclientesviejossaldos group by idcliente"
-    '' ''    'Comm.ExecuteNonQuery()
-
-
-    '' ''    If IdCliente <= 0 Then
-    '' ''        'If idTipo < 0 Then
-    '' ''        Comm.CommandText = "select fecha,tblclientes.clave,tblclientes.nombre,tblclientes.idcliente,tblclientesviejossaldos.serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,tipo,tblclientesviejossaldos.credito,0 as saldoant,s.nombre as tipodecambio,tblclientesviejossaldos.corriente from tblclientesviejossaldos inner join tblclientes on tblclientesviejossaldos.idcliente=tblclientes.idcliente inner join tblsucursales as s on tblclientesviejossaldos.idsucursal=s.idsucursal where round(totalapagar-tblclientesviejossaldos.credito,2)>0 and tblclientesviejossaldos.fecha>='" + pFecha1 + "' order by tblclientes.nombre,fecha,serie,folio"
-    '' ''        'Else
-    '' ''        '   Comm.CommandText = "select fecha,tblclientes.clave,tblclientes.nombre,tblclientes.idcliente,tblclientesviejossaldos.serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,tipo,tblclientesviejossaldos.credito,0 as saldoant,s.nombre as tipodecambio,tblclientesviejossaldos.corriente from tblclientesviejossaldos inner join tblclientes on tblclientesviejossaldos.idcliente=tblclientes.idcliente inner join tblsucursales as s on tblclientesviejossaldos.idsucursal=s.idsucursal where round(totalapagar-tblclientesviejossaldos.credito,2)>0 and tblclientes.idtipo=" + idTipo.ToString() + " order by tblclientes.nombre,fecha,serie,folio"
-    '' ''        'End If
-    '' ''    Else
-    '' ''        Comm.CommandText = "select fecha,tblclientes.clave,tblclientes.nombre,tblclientes.idcliente,tblclientesviejossaldos.serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,tipo,tblclientesviejossaldos.credito,0 as saldoant,s.nombre as tipodecambio,tblclientesviejossaldos.corriente from tblclientesviejossaldos inner join tblclientes on tblclientesviejossaldos.idcliente=tblclientes.idcliente inner join tblsucursales as s on tblclientesviejossaldos.idsucursal=s.idsucursal where tblclientesviejossaldos.idcliente=" + IdCliente.ToString + " and round(totalapagar-tblclientesviejossaldos.credito,2)>0 and tblclientesviejossaldos.fecha>='" + pFecha1 + "' order by tblclientes.nombre,fecha,serie,folio"
-    '' ''    End If
-
-    '' ''    Dim DA As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
-    '' ''    DA.Fill(DS, "tblclientesviejo")
-    '' ''    'DS.WriteXmlSchema("tblcomprasviejo.xml")
-    '' ''    Return DS.Tables("tblclientesviejo").DefaultView
-    '' ''    '        Dim DS As New DataSet
-    '' ''    '        Dim F As String
-    '' ''    '        F = pFecha
-    '' ''    '        Comm.CommandTimeout = 10000
-    '' ''    '        If pIdCliente > 0 Then
-    '' ''    '            Comm.CommandText = "delete from tblclientesviejossaldos where idcliente=" + pIdCliente.ToString
-    '' ''    '        Else
-    '' ''    '            Comm.CommandText = "delete from tblclientesviejossaldos"
-    '' ''    '        End If
-    '' ''    '        Comm.ExecuteNonQuery()
-    '' ''    '        If pMostrarEnPesos = 0 Then
-    '' ''    '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-    '' ''    '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-    '' ''    '"if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-    '' ''    '"if(tblventas.idconversion=2," + _
-    '' ''    '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0)," + _
-    '' ''    '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0)*tblventas.tipodecambio) as credito,0 from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and tblventas.estado=3 and tblventas.fecha<='" + pFecha + "'"
-    '' ''    '        Else
-    '' ''    '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''    '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-    '' ''    '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-    '' ''    '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-    '' ''    '"if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-    '' ''    '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0) as credito,0 from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and tblventas.estado=3 and tblventas.estado=3 and tblventas.fecha<='" + pFecha + "'"
-    '' ''    '        End If
-
-    '' ''    '        If pIdSucursal > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-    '' ''    '        End If
-    '' ''    '        If pIdCliente > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-    '' ''    '        End If
-    '' ''    '        If pidVendedor > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-    '' ''    '        End If
-    '' ''    '        If pidMoneda > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-    '' ''    '        End If
-    '' ''    '        Comm.ExecuteNonQuery()
-    '' ''    '        '---------Notas de Cargo
-
-    '' ''    '        If pMostrarEnPesos = 0 Then
-    '' ''    '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-    '' ''    '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-    '' ''    '            "if(tblventas.idmoneda=2," + _
-    '' ''    '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0)," + _
-    '' ''    '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0)*tblventas.tipodecambio) as credito,1 from tblnotasdecargo as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.fecha<='" + pFecha + "' and tblventas.estado=3"
-    '' ''    '        Else
-    '' ''    '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''    '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-    '' ''    '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-    '' ''    '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-    '' ''    '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0) as credito,1 from tblnotasdecargo as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.fecha<='" + pFecha + "' and tblventas.estado=3"
-    '' ''    '        End If
-
-    '' ''    '        If pIdSucursal > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-    '' ''    '        End If
-    '' ''    '        If pIdCliente > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-    '' ''    '        End If
-    '' ''    '        If pidVendedor > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-    '' ''    '        End If
-    '' ''    '        If pidMoneda > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-    '' ''    '        End If
-    '' ''    '        Comm.ExecuteNonQuery()
-    '' ''    '        '-------------Documentos Saldo Inicial
-
-    '' ''    '        If pMostrarEnPesos = 0 Then
-    '' ''    '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-    '' ''    '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-    '' ''    '            "if(tblventas.idmoneda=2," + _
-    '' ''    '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)," + _
-    '' ''    '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)*tblventas.tipodecambio) as credito,2 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=0 and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3"
-    '' ''    '        Else
-    '' ''    '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''    '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-    '' ''    '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-    '' ''    '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-    '' ''    '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)) as credito,2 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=0 and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3"
-    '' ''    '        End If
-
-    '' ''    '        If pIdSucursal > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-    '' ''    '        End If
-    '' ''    '        If pIdCliente > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-    '' ''    '        End If
-    '' ''    '        If pidVendedor > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-    '' ''    '        End If
-    '' ''    '        If pidMoneda > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-    '' ''    '        End If
-    '' ''    '        Comm.ExecuteNonQuery()
-    '' ''    '        'Documentos documentos
-
-    '' ''    '        If pMostrarEnPesos = 0 Then
-    '' ''    '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.seriereferencia,tblventas.folioreferencia,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-    '' ''    '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-    '' ''    '            "if(tblventas.idmoneda=2," + _
-    '' ''    '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)," + _
-    '' ''    '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)*tblventas.tipodecambio) as credito,3 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=1 and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3"
-    '' ''    '        Else
-    '' ''    '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.seriereferencia,tblventas.folioreferencia,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''    '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-    '' ''    '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-    '' ''    '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-    '' ''    '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0) as credito,3 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=1 and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3"
-    '' ''    '        End If
-
-    '' ''    '        If pIdSucursal > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-    '' ''    '        End If
-    '' ''    '        If pIdCliente > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-    '' ''    '        End If
-    '' ''    '        If pidVendedor > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-    '' ''    '        End If
-    '' ''    '        If pidMoneda > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-    '' ''    '        End If
-    '' ''    '        Comm.ExecuteNonQuery()
-
-    '' ''    '        'Saca saldos
-    '' ''    '        Comm.CommandText = "delete from tblclientesmovimientossaldos"
-    '' ''    '        Comm.ExecuteNonQuery()
-    '' ''    '        'Comm.CommandText = "insert into tblclientesmovimientossaldos(idcliente,saldoant) select idcliente,spdasaldoafechaclientes(idcliente,'" + Format(DateAdd(DateInterval.Day, 1, CDate(pFecha)), "yyyy/MM/dd") + "') from tblclientesviejossaldos group by idcliente"
-    '' ''    '        Comm.CommandText = "insert into tblclientesmovimientossaldos(idcliente,saldoant) select c.idcliente, " + _
-    '' ''    '        "ifnull((select if(idconversion=2,sum(totalapagar),sum(totalapagar*tipodecambio)) from tblventas inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and idcliente=c.idcliente and estado=3 and tblventas.fecha<='" + pFecha + "'),0)+" + _
-    '' ''    '"ifnull((select if(idmoneda=2,sum(totalapagar),sum(totalapagar*tipodecambio)) from tblnotasdecargo where idcliente=c.idcliente and estado=3 and tblnotasdecargo.fecha<='" + pFecha + "'),0)+" + _
-    '' ''    '"ifnull((select if(idmoneda=2,sum(totalapagar),sum(totalapagar*tipodecambio)) from tbldocumentosclientes where idcliente=c.idcliente and estado=3 and tbldocumentosclientes.fecha<='" + pFecha + "'),0)-" + _
-    '' ''    '"ifnull((select if(idmoneda=2,sum(cantidad),sum(cantidad*ptipodecambio)) from tblventaspagos where idcliente=c.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "'),0) AS saldo " + _
-    '' ''    '"from tblclientesviejossaldos as c group by c.idcliente"
-    '' ''    '        Comm.ExecuteNonQuery()
-    '' ''    '        If pIdCliente <= 0 Then
-    '' ''    '            Comm.CommandText = "select fecha,tblclientes.clave,tblclientes.nombre,tblclientes.idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,tipo,tblclientesviejossaldos.credito,saldoant from tblclientesviejossaldos inner join tblclientes on tblclientesviejossaldos.idcliente=tblclientes.idcliente inner join tblclientesmovimientossaldos on tblclientesviejossaldos.idcliente=tblclientesmovimientossaldos.idcliente where round(sietedias+quincedias+treintadias+sesentadias-tblclientesviejossaldos.credito,2)>0 order by tblclientes.nombre,fecha,serie,folio"
-    '' ''    '        Else
-    '' ''    '            Comm.CommandText = "select fecha,tblclientes.clave,tblclientes.nombre,tblclientes.idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,tipo,tblclientesviejossaldos.credito,saldoant from tblclientesviejossaldos inner join tblclientes on tblclientesviejossaldos.idcliente=tblclientes.idcliente inner join tblclientesmovimientossaldos on tblclientesviejossaldos.idcliente=tblclientesmovimientossaldos.idcliente where tblclientesviejossaldos.idcliente=" + pIdCliente.ToString + " and round(sietedias+quincedias+treintadias+sesentadias-tblclientesviejossaldos.credito,2)>0 order by tblclientes.nombre,fecha,serie,folio"
-    '' ''    '        End If
-
-    '' ''    '        Dim DA As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
-    '' ''    '        DA.Fill(DS, "tblventasviejo")
-    '' ''    '        'DS.WriteXmlSchema("tblventasviejo.xml")
-    '' ''    '        Return DS.Tables("tblventasviejo").DefaultView
-    '' ''    '    End Function
-
-    '' ''    '    Public Function ReporteViejosSaldosHN(ByVal pIdSucursal As Integer, ByVal pIdCliente As Integer, ByVal pidVendedor As Integer, ByVal pidMoneda As Integer, ByVal pMostrarEnPesos As Byte, ByVal pFecha As String) As DataView
-    '' ''    '        Dim DS As New DataSet
-    '' ''    '        Dim F As String
-    '' ''    '        F = pFecha
-    '' ''    '        Comm.CommandTimeout = 10000
-    '' ''    '        If pIdCliente > 0 Then
-    '' ''    '            Comm.CommandText = "delete from tblclientesviejossaldos where idcliente=" + pIdCliente.ToString
-    '' ''    '        Else
-    '' ''    '            Comm.CommandText = "delete from tblclientesviejossaldos"
-    '' ''    '        End If
-    '' ''    '        Comm.ExecuteNonQuery()
-    '' ''    '        If pMostrarEnPesos = 0 Then
-
-    '' ''    '            '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''    '            '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-    '' ''    '            '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-    '' ''    '            '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-    '' ''    '            '"if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-    '' ''    '            '"if(tblventas.idconversion=2," + _
-    '' ''    '            '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0)," + _
-    '' ''    '            '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0)*tblventas.tipodecambio) as credito,0 from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and tblventas.estado=3 and tblventas.fecha<='" + pFecha + "' and round(tblventas.totalapagar-tblventas.credito,2)>0;"
-
-
-    '' ''    '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(tblventas.fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(tblventas.fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(tblventas.fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(tblventas.fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-    '' ''    '"if('" + F + "'>=date_format(adddate(tblventas.fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(tblventas.fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-    '' ''    '"if('" + F + "'<date_format(adddate(tblventas.fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-    '' ''    '"if(tblventas.idconversion=2," + _
-    '' ''    '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0)," + _
-    '' ''    '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0)*tblventas.tipodecambio) as credito,0 from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and tblventas.estado=3 and tblventas.fecha<='" + pFecha + "' and round(tblventas.totalapagar-ifnull((select sum(cantidad) from tblventaspagos where tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0),2)>0"
-
-
-    '' ''    '        Else
-    '' ''    '            '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''    '            '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-    '' ''    '            '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-    '' ''    '            '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-    '' ''    '            '"if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-    '' ''    '            '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0) as credito,0 from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and tblventas.estado=3 and tblventas.estado=3 and tblventas.fecha<='" + pFecha + "' and round(tblventas.totalapagar-tblventas.credito,2)>0"
-
-    '' ''    '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''    '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-    '' ''    '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-    '' ''    '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-    '' ''    '"if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-    '' ''    '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0) as credito,0 from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and tblventas.estado=3 and tblventas.estado=3 and tblventas.fecha<='" + pFecha + "' and round(tblventas.totalapagar-ifnull((select sum(cantidad) from tblventaspagos where tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0),2)>0"
-    '' ''    '        End If
-
-    '' ''    '        If pIdSucursal > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-    '' ''    '        End If
-    '' ''    '        If pIdCliente > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-    '' ''    '        End If
-    '' ''    '        If pidVendedor > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-    '' ''    '        End If
-    '' ''    '        If pidMoneda > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-    '' ''    '        End If
-    '' ''    '        Comm.ExecuteNonQuery()
-    '' ''    '        '---------Notas de Cargo
-
-    '' ''    '        If pMostrarEnPesos = 0 Then
-    '' ''    '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-    '' ''    '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-    '' ''    '            "if(tblventas.idmoneda=2," + _
-    '' ''    '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0)," + _
-    '' ''    '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0)*tblventas.tipodecambio) as credito,1 from tblnotasdecargo as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and round(tblventas.totalapagar-ifnull((select sum(cantidad) from tblventaspagos where tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0),2)>0"
-
-    '' ''    '            'Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''    '            '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-    '' ''    '            '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-    '' ''    '            '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-    '' ''    '            '"if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-    '' ''    '            '"if(tblventas.idmoneda=2," + _
-    '' ''    '            '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0)," + _
-    '' ''    '            '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0)*tblventas.tipodecambio) as credito,1 from tblnotasdecargo as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.fecha<='" + pFecha + "' and tblventas.estado=3"
-
-    '' ''    '        Else
-    '' ''    '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''    '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-    '' ''    '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-    '' ''    '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-    '' ''    '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0) as credito,1 from tblnotasdecargo as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and round(tblventas.totalapagar-ifnull((select sum(cantidad) from tblventaspagos where tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0),2)>0"
-    '' ''    '        End If
-
-    '' ''    '        If pIdSucursal > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-    '' ''    '        End If
-    '' ''    '        If pIdCliente > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-    '' ''    '        End If
-    '' ''    '        If pidVendedor > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-    '' ''    '        End If
-    '' ''    '        If pidMoneda > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-    '' ''    '        End If
-    '' ''    '        Comm.ExecuteNonQuery()
-    '' ''    '        '-------------Documentos Saldo Inicial
-
-    '' ''    '        If pMostrarEnPesos = 0 Then
-    '' ''    '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-    '' ''    '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-    '' ''    '            "if(tblventas.idmoneda=2," + _
-    '' ''    '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)," + _
-    '' ''    '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)*tblventas.tipodecambio) as credito,2 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=0 and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and round(tblventas.totalapagar-ifnull((select sum(cantidad) from tblventaspagos where tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0),2)>0"
-    '' ''    '        Else
-    '' ''    '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''    '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-    '' ''    '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-    '' ''    '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-    '' ''    '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)) as credito,2 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=0 and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and round(tblventas.totalapagar-ifnull((select sum(cantidad) from tblventaspagos where tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0),2)>0"
-    '' ''    '        End If
-
-    '' ''    '        If pIdSucursal > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-    '' ''    '        End If
-    '' ''    '        If pIdCliente > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-    '' ''    '        End If
-    '' ''    '        If pidVendedor > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-    '' ''    '        End If
-    '' ''    '        If pidMoneda > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-    '' ''    '        End If
-    '' ''    '        Comm.ExecuteNonQuery()
-    '' ''    '        'Documentos documentos
-
-    '' ''    '        If pMostrarEnPesos = 0 Then
-    '' ''    '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.seriereferencia,tblventas.folioreferencia,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-    '' ''    '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-    '' ''    '            "if(tblventas.idmoneda=2," + _
-    '' ''    '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)," + _
-    '' ''    '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)*tblventas.tipodecambio) as credito,3 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=1 and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and round(tblventas.totalapagar-ifnull((select sum(cantidad) from tblventaspagos where tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0),2)>0"
-    '' ''    '        Else
-    '' ''    '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.seriereferencia,tblventas.folioreferencia,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-    '' ''    '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-    '' ''    '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-    '' ''    '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-    '' ''    '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-    '' ''    '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0) as credito,3 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=1 and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and round(tblventas.totalapagar-ifnull((select sum(cantidad) from tblventaspagos where tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0),2)>0"
-    '' ''    '        End If
-
-    '' ''    '        If pIdSucursal > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-    '' ''    '        End If
-    '' ''    '        If pIdCliente > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-    '' ''    '        End If
-    '' ''    '        If pidVendedor > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-    '' ''    '        End If
-    '' ''    '        If pidMoneda > 0 Then
-    '' ''    '            Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-    '' ''    '        End If
-    '' ''    '        Comm.ExecuteNonQuery()
-
-    '' ''    '        'Saca saldos
-    '' ''    '        Comm.CommandText = "delete from tblclientesmovimientossaldos"
-    '' ''    '        Comm.ExecuteNonQuery()
-    '' ''    '        'Comm.CommandText = "insert into tblclientesmovimientossaldos(idcliente,saldoant) select idcliente,spdasaldoafechaclientes(idcliente,'" + Format(DateAdd(DateInterval.Day, 1, CDate(pFecha)), "yyyy/MM/dd") + "') from tblclientesviejossaldos group by idcliente"
-    '' ''    '        Comm.CommandText = "insert into tblclientesmovimientossaldos(idcliente,saldoant) select c.idcliente, " + _
-    '' ''    '        "ifnull((select if(idconversion=2,sum(totalapagar),sum(totalapagar*tipodecambio)) from tblventas inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and idcliente=c.idcliente and estado=3 and tblventas.fecha<='" + pFecha + "'),0)+" + _
-    '' ''    '"ifnull((select if(idmoneda=2,sum(totalapagar),sum(totalapagar*tipodecambio)) from tblnotasdecargo where idcliente=c.idcliente and estado=3 and tblnotasdecargo.fecha<='" + pFecha + "'),0)+" + _
-    '' ''    '"ifnull((select if(idmoneda=2,sum(totalapagar),sum(totalapagar*tipodecambio)) from tbldocumentosclientes where idcliente=c.idcliente and estado=3 and tbldocumentosclientes.fecha<='" + pFecha + "'),0)-" + _
-    '' ''    '"ifnull((select if(idmoneda=2,sum(cantidad),sum(cantidad*ptipodecambio)) from tblventaspagos where idcliente=c.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "'),0) AS saldo " + _
-    '' ''    '"from tblclientesviejossaldos as c group by c.idcliente"
-    '' ''    '        Comm.ExecuteNonQuery()
-    '' ''    '        If pIdCliente <= 0 Then
-    '' ''    '            Comm.CommandText = "select fecha,tblclientes.clave,tblclientes.nombre,tblclientes.idcliente,serie,folio,limite,round(sietedias,2) as sietedias,quincedias,treintadias,sesentadias,tipo,round(tblclientesviejossaldos.credito,2) as credito,round(saldoant,2) as saldoant from tblclientesviejossaldos inner join tblclientes on tblclientesviejossaldos.idcliente=tblclientes.idcliente inner join tblclientesmovimientossaldos on tblclientesviejossaldos.idcliente=tblclientesmovimientossaldos.idcliente where round(sietedias+quincedias+treintadias+sesentadias-tblclientesviejossaldos.credito,2)>0 order by tblclientes.nombre,fecha,serie,folio"
-    '' ''    '        Else
-    '' ''    '            Comm.CommandText = "select fecha,tblclientes.clave,tblclientes.nombre,tblclientes.idcliente,serie,folio,limite,round(sietedias,2) as sietedias,quincedias,treintadias,sesentadias,tipo,round(tblclientesviejossaldos.credito,2) as credito,round(saldoant,2) as saldoant from tblclientesviejossaldos inner join tblclientes on tblclientesviejossaldos.idcliente=tblclientes.idcliente inner join tblclientesmovimientossaldos on tblclientesviejossaldos.idcliente=tblclientesmovimientossaldos.idcliente where tblclientesviejossaldos.idcliente=" + pIdCliente.ToString + " and round(sietedias+quincedias+treintadias+sesentadias-tblclientesviejossaldos.credito,2)>0 order by tblclientes.nombre,fecha,serie,folio"
-    '' ''    '        End If
-
-    '' ''    '        Dim DA As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
-    '' ''    '        DA.Fill(DS, "tblventasviejo")
-    '' ''    '        'DS.WriteXmlSchema("tblventasviejo.xml")
-    '' ''    '       '        Return DS.Tables("tblventasviejo").DefaultView
-    '' ''End Function
 
     Public Function ReporteVentasSeries(ByVal pidVenta As Integer) As DataView
         Dim DS As New DataSet
@@ -7348,11 +6013,7 @@ Public Class dbVentas
         Fecha1 = DateSerial(Year(pFecha), Month(pFecha), 1)
         Fecha2 = DateSerial(Year(pFecha), Month(pFecha) + 1, 0)
         Dim S As String = ""
-        'If pidSucursal <> 0 Then
-        '    Comm.CommandText = "select tblventas.idventa,tblclientes.rfc,tblventas.serie,tblventas.folio,tblventas.noaprobacion,tblventas.yearaprobacion,tblventas.fecha,tblventas.hora,tblventas.totalapagar,tblventas.total,tblventas.estado,tblventas.fechacancelado,tblventas.tipodecambio,tblventas.idconversion from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where ((fecha>='" + Format(Fecha1, "yyyy/MM/dd") + "' and fecha<='" + Format(Fecha2, "yyyy/MM/dd") + "') or (fechacancelado>='" + Format(Fecha1, "yyyy/MM/dd") + "' and fechacancelado<='" + Format(Fecha2, "yyyy/MM/dd") + "')) and (tblventas.estado=3 or tblventas.estado=4) and tblventas.idsucursal=" + pidSucursal.ToString + " order by serie,folio"
-        'Else
-        '    Comm.CommandText = "select tblventas.idventa,tblclientes.rfc,tblventas.serie,tblventas.folio,tblventas.noaprobacion,tblventas.yearaprobacion,tblventas.fecha,tblventas.hora,tblventas.totalapagar,tblventas.total,tblventas.estado,tblventas.fechacancelado,tblventas.tipodecambio,tblventas.idconversion from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where ((fecha>='" + Format(Fecha1, "yyyy/MM/dd") + "' and fecha<='" + Format(Fecha2, "yyyy/MM/dd") + "') or (fechacancelado>='" + Format(Fecha1, "yyyy/MM/dd") + "' and fechacancelado<='" + Format(Fecha2, "yyyy/MM/dd") + "')) and (tblventas.estado=3 or tblventas.estado=4) order by serie,folio"
-        'End If
+    
         'Facturas normales
         If pidSucursal <> 0 Then
             Comm.CommandText = "select tblventas.idventa,tblclientes.rfc,tblventas.serie,tblventas.folio,tblventas.noaprobacion,tblventas.yearaprobacion,tblventas.fecha,tblventas.hora,tblventas.totalapagar,tblventas.total,tblventas.estado,tblventas.fechacancelado,tblventas.tipodecambio,tblventas.idconversion from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where fecha>='" + Format(Fecha1, "yyyy/MM/dd") + "' and fecha<='" + Format(Fecha2, "yyyy/MM/dd") + "' and (tblventas.estado=3 or tblventas.estado=4) and tblventas.idsucursal=" + pidSucursal.ToString + " order by serie,folio"
@@ -7362,54 +6023,7 @@ Public Class dbVentas
 
         DReader = Comm.ExecuteReader
         While DReader.Read
-            'Mes1 = Month(CDate(DReader("fecha")))
-            'Mes2 = Month(CDate(DReader("fechacancelado")))
-            'If Mes1 = Mes2 And DReader("estado") = Estados.Cancelada Then
-            '    If S <> "" Then S += vbCrLf
-            '    S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
-            '    S += DReader("serie") + "|"
-            '    S += DReader("folio").ToString + "|"
-            '    S += DReader("yearaprobacion") + DReader("noaprobacion") + "|"
-            '    S += Format(CDate(DReader("fecha")), "dd/MM/yyyy") + " " + DReader("hora") + "|"
-            '    If DReader("idconversion") = 2 Then
-            '        S += Format(DReader("totalapagar"), "#0.00") + "|"
-            '        S += Format(DReader("totalapagar") - DReader("total"), "#0.00") + "|"
-            '    Else
-            '        S += Format(DReader("totalapagar") * DReader("tipodecambio"), "#0.00") + "|"
-            '        S += Format((DReader("totalapagar") - DReader("total")) * DReader("tipodecambio"), "#0.00") + "|"
-            '    End If
-            '    S += "1|I||||" + vbCrLf
-            '    S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
-            '    S += DReader("serie") + "|"
-            '    S += DReader("folio").ToString + "|"
-            '    S += DReader("yearaprobacion") + DReader("noaprobacion") + "|"
-            '    S += Format(CDate(DReader("fecha")), "dd/MM/yyyy") + " " + DReader("hora") + "|"
-            '    If DReader("idconversion") = 2 Then
-            '        S += Format(DReader("totalapagar"), "#0.00") + "|"
-            '        S += Format(DReader("totalapagar") - DReader("total"), "#0.00") + "|"
-            '    Else
-            '        S += Format(DReader("totalapagar") * DReader("tipodecambio"), "#0.00") + "|"
-            '        S += Format((DReader("totalapagar") - DReader("total")) * DReader("tipodecambio"), "#0.00") + "|"
-            '    End If
-            '    S += "0|I||||"
-            'Else
-            'If DReader("estado") = Estados.Cancelada Then
-            '    If S <> "" Then S += vbCrLf
-            '    S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
-            '    S += DReader("serie") + "|"
-            '    S += DReader("folio").ToString + "|"
-            '    S += DReader("yearaprobacion") + DReader("noaprobacion") + "|"
-            '    S += Format(CDate(DReader("fecha")), "dd/MM/yyyy") + " " + DReader("hora") + "|"
-            '    If DReader("idconversion") = 2 Then
-            '        S += Format(DReader("totalapagar"), "#0.00") + "|"
-            '        S += Format(DReader("totalapagar") - DReader("total"), "#0.00") + "|"
-            '    Else
-            '        S += Format(DReader("totalapagar") * DReader("tipodecambio"), "#0.00") + "|"
-            '        S += Format((DReader("totalapagar") - DReader("total")) * DReader("tipodecambio"), "#0.00") + "|"
-            '    End If
-            '    S += "0|I||||"
-            'End If
-            'If DReader("estado") = Estados.Guardada Then
+    
             If S <> "" Then S += vbCrLf
             S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
             S += DReader("serie") + "|"
@@ -7439,37 +6053,7 @@ Public Class dbVentas
 
         DReader = Comm.ExecuteReader
         While DReader.Read
-            'Mes1 = Month(CDate(DReader("fecha")))
-            'Mes2 = Month(CDate(DReader("fechacancelado")))
-            'If Mes1 = Mes2 And DReader("estado") = Estados.Cancelada Then
-            '    If S <> "" Then S += vbCrLf
-            '    S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
-            '    S += DReader("serie") + "|"
-            '    S += DReader("folio").ToString + "|"
-            '    S += DReader("yearaprobacion") + DReader("noaprobacion") + "|"
-            '    S += Format(CDate(DReader("fecha")), "dd/MM/yyyy") + " " + DReader("hora") + "|"
-            '    If DReader("idconversion") = 2 Then
-            '        S += Format(DReader("totalapagar"), "#0.00") + "|"
-            '        S += Format(DReader("totalapagar") - DReader("total"), "#0.00") + "|"
-            '    Else
-            '        S += Format(DReader("totalapagar") * DReader("tipodecambio"), "#0.00") + "|"
-            '        S += Format((DReader("totalapagar") - DReader("total")) * DReader("tipodecambio"), "#0.00") + "|"
-            '    End If
-            '    S += "1|I||||" + vbCrLf
-            '    S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
-            '    S += DReader("serie") + "|"
-            '    S += DReader("folio").ToString + "|"
-            '    S += DReader("yearaprobacion") + DReader("noaprobacion") + "|"
-            '    S += Format(CDate(DReader("fecha")), "dd/MM/yyyy") + " " + DReader("hora") + "|"
-            '    If DReader("idconversion") = 2 Then
-            '        S += Format(DReader("totalapagar"), "#0.00") + "|"
-            '        S += Format(DReader("totalapagar") - DReader("total"), "#0.00") + "|"
-            '    Else
-            '        S += Format(DReader("totalapagar") * DReader("tipodecambio"), "#0.00") + "|"
-            '        S += Format((DReader("totalapagar") - DReader("total")) * DReader("tipodecambio"), "#0.00") + "|"
-            '    End If
-            '    S += "0|I||||"
-            'Else
+    
             If DReader("estado") = Estados.Cancelada Then
                 If S <> "" Then S += vbCrLf
                 S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
@@ -7486,34 +6070,10 @@ Public Class dbVentas
                 End If
                 S += "0|I||||"
             End If
-            'If DReader("estado") = Estados.Guardada Then
-            '    If S <> "" Then S += vbCrLf
-            '    S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
-            '    S += DReader("serie") + "|"
-            '    S += DReader("folio").ToString + "|"
-            '    S += DReader("yearaprobacion") + DReader("noaprobacion") + "|"
-            '    S += Format(CDate(DReader("fecha")), "dd/MM/yyyy") + " " + DReader("hora") + "|"
-            '    If DReader("idconversion") = 2 Then
-            '        S += Format(DReader("totalapagar"), "#0.00") + "|"
-            '        S += Format(DReader("totalapagar") - DReader("total"), "#0.00") + "|"
-            '    Else
-            '        S += Format(DReader("totalapagar") * DReader("tipodecambio"), "#0.00") + "|"
-            '        S += Format((DReader("totalapagar") - DReader("total")) * DReader("tipodecambio"), "#0.00") + "|"
-            '    End If
-            '    S += "1|I||||"
-            'End If
-            'End If
+    
         End While
         DReader.Close()
 
-        '--------------------------------------------------------------------------------------------------------------
-        '-------------------------------------------------Notas de Crédito-----------------------------------------------
-        'If pidSucursal <> 0 Then
-        '    Comm.CommandText = "select tblnotasdecredito.idnota,tblclientes.rfc,tblnotasdecredito.serie,tblnotasdecredito.folio,tblnotasdecredito.noaprobacion,tblnotasdecredito.yearaprobacion,tblnotasdecredito.fecha,tblnotasdecredito.hora,tblnotasdecredito.totalapagar,tblnotasdecredito.total,tblnotasdecredito.estado,tblnotasdecredito.fechacancelado,tblnotasdecredito.tipodecambio,tblnotasdecredito.idmoneda from tblnotasdecredito inner join tblclientes on tblnotasdecredito.idcliente=tblclientes.idcliente where ((fecha>='" + Format(Fecha1, "yyyy/MM/dd") + "' and fecha<='" + Format(Fecha2, "yyyy/MM/dd") + "') or (fechacancelado>='" + Format(Fecha1, "yyyy/MM/dd") + "' and fechacancelado<='" + Format(Fecha2, "yyyy/MM/dd") + "')) and (tblnotasdecredito.estado=3 or tblnotasdecredito.estado=4) and tblnotasdecredito.idsucursal=" + pidSucursal.ToString + " order by serie,folio"
-        'Else
-        '    Comm.CommandText = "select tblnotasdecredito.idnota,tblclientes.rfc,tblnotasdecredito.serie,tblnotasdecredito.folio,tblnotasdecredito.noaprobacion,tblnotasdecredito.yearaprobacion,tblnotasdecredito.fecha,tblnotasdecredito.hora,tblnotasdecredito.totalapagar,tblnotasdecredito.total,tblnotasdecredito.estado,tblnotasdecredito.fechacancelado,tblnotasdecredito.tipodecambio,tblnotasdecredito.idmoneda from tblnotasdecredito inner join tblclientes on tblnotasdecredito.idcliente=tblclientes.idcliente where ((fecha>='" + Format(Fecha1, "yyyy/MM/dd") + "' and fecha<='" + Format(Fecha2, "yyyy/MM/dd") + "') or (fechacancelado>='" + Format(Fecha1, "yyyy/MM/dd") + "' and fechacancelado<='" + Format(Fecha2, "yyyy/MM/dd") + "')) and (tblnotasdecredito.estado=3 or tblnotasdecredito.estado=4) order by serie,folio"
-        'End If
-        'NC normales
         If pidSucursal <> 0 Then
             Comm.CommandText = "select tblnotasdecredito.idnota,tblclientes.rfc,tblnotasdecredito.serie,tblnotasdecredito.folio,tblnotasdecredito.noaprobacion,tblnotasdecredito.yearaprobacion,tblnotasdecredito.fecha,tblnotasdecredito.hora,tblnotasdecredito.totalapagar,tblnotasdecredito.total,tblnotasdecredito.estado,tblnotasdecredito.fechacancelado,tblnotasdecredito.tipodecambio,tblnotasdecredito.idmoneda from tblnotasdecredito inner join tblclientes on tblnotasdecredito.idcliente=tblclientes.idcliente where fecha>='" + Format(Fecha1, "yyyy/MM/dd") + "' and fecha<='" + Format(Fecha2, "yyyy/MM/dd") + "' and (tblnotasdecredito.estado=3 or tblnotasdecredito.estado=4) and tblnotasdecredito.idsucursal=" + pidSucursal.ToString + " order by serie,folio"
         Else
@@ -7521,54 +6081,7 @@ Public Class dbVentas
         End If
         DReader = Comm.ExecuteReader
         While DReader.Read
-            'Mes1 = Month(CDate(DReader("fecha")))
-            'Mes2 = Month(CDate(DReader("fechacancelado")))
-            'If Mes1 = Mes2 And DReader("estado") = Estados.Cancelada Then
-            '    If S <> "" Then S += vbCrLf
-            '    S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
-            '    S += DReader("serie") + "|"
-            '    S += DReader("folio").ToString + "|"
-            '    S += DReader("yearaprobacion") + DReader("noaprobacion") + "|"
-            '    S += Format(CDate(DReader("fecha")), "dd/MM/yyyy") + " " + DReader("hora") + "|"
-            '    If DReader("idmoneda") = 2 Then
-            '        S += Format(DReader("totalapagar"), "#0.00") + "|"
-            '        S += Format(DReader("totalapagar") - DReader("total"), "#0.00") + "|"
-            '    Else
-            '        S += Format(DReader("totalapagar") * DReader("tipodecambio"), "#0.00") + "|"
-            '        S += Format((DReader("totalapagar") - DReader("total")) * DReader("tipodecambio"), "#0.00") + "|"
-            '    End If
-            '    S += "1|E||||" + vbCrLf
-            '    S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
-            '    S += DReader("serie") + "|"
-            '    S += DReader("folio").ToString + "|"
-            '    S += DReader("yearaprobacion") + DReader("noaprobacion") + "|"
-            '    S += Format(CDate(DReader("fecha")), "dd/MM/yyyy") + " " + DReader("hora") + "|"
-            '    If DReader("idmoneda") = 2 Then
-            '        S += Format(DReader("totalapagar"), "#0.00") + "|"
-            '        S += Format(DReader("totalapagar") - DReader("total"), "#0.00") + "|"
-            '    Else
-            '        S += Format(DReader("totalapagar") * DReader("tipodecambio"), "#0.00") + "|"
-            '        S += Format((DReader("totalapagar") - DReader("total")) * DReader("tipodecambio"), "#0.00") + "|"
-            '    End If
-            '    S += "0|E||||"
-            'Else
-            'If DReader("estado") = Estados.Cancelada Then
-            '    If S <> "" Then S += vbCrLf
-            '    S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
-            '    S += DReader("serie") + "|"
-            '    S += DReader("folio").ToString + "|"
-            '    S += DReader("yearaprobacion") + DReader("noaprobacion") + "|"
-            '    S += Format(CDate(DReader("fecha")), "dd/MM/yyyy") + " " + DReader("hora") + "|"
-            '    If DReader("idmoneda") = 2 Then
-            '        S += Format(DReader("totalapagar"), "#0.00") + "|"
-            '        S += Format(DReader("totalapagar") - DReader("total"), "#0.00") + "|"
-            '    Else
-            '        S += Format(DReader("totalapagar") * DReader("tipodecambio"), "#0.00") + "|"
-            '        S += Format((DReader("totalapagar") - DReader("total")) * DReader("tipodecambio"), "#0.00") + "|"
-            '    End If
-            '    S += "0|E||||"
-            'End If
-            'If DReader("estado") = Estados.Guardada Then
+        
             If S <> "" Then S += vbCrLf
             S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
             S += DReader("serie") + "|"
@@ -7596,37 +6109,7 @@ Public Class dbVentas
         End If
         DReader = Comm.ExecuteReader
         While DReader.Read
-            'Mes1 = Month(CDate(DReader("fecha")))
-            'Mes2 = Month(CDate(DReader("fechacancelado")))
-            'If Mes1 = Mes2 And DReader("estado") = Estados.Cancelada Then
-            '    If S <> "" Then S += vbCrLf
-            '    S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
-            '    S += DReader("serie") + "|"
-            '    S += DReader("folio").ToString + "|"
-            '    S += DReader("yearaprobacion") + DReader("noaprobacion") + "|"
-            '    S += Format(CDate(DReader("fecha")), "dd/MM/yyyy") + " " + DReader("hora") + "|"
-            '    If DReader("idmoneda") = 2 Then
-            '        S += Format(DReader("totalapagar"), "#0.00") + "|"
-            '        S += Format(DReader("totalapagar") - DReader("total"), "#0.00") + "|"
-            '    Else
-            '        S += Format(DReader("totalapagar") * DReader("tipodecambio"), "#0.00") + "|"
-            '        S += Format((DReader("totalapagar") - DReader("total")) * DReader("tipodecambio"), "#0.00") + "|"
-            '    End If
-            '    S += "1|E||||" + vbCrLf
-            '    S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
-            '    S += DReader("serie") + "|"
-            '    S += DReader("folio").ToString + "|"
-            '    S += DReader("yearaprobacion") + DReader("noaprobacion") + "|"
-            '    S += Format(CDate(DReader("fecha")), "dd/MM/yyyy") + " " + DReader("hora") + "|"
-            '    If DReader("idmoneda") = 2 Then
-            '        S += Format(DReader("totalapagar"), "#0.00") + "|"
-            '        S += Format(DReader("totalapagar") - DReader("total"), "#0.00") + "|"
-            '    Else
-            '        S += Format(DReader("totalapagar") * DReader("tipodecambio"), "#0.00") + "|"
-            '        S += Format((DReader("totalapagar") - DReader("total")) * DReader("tipodecambio"), "#0.00") + "|"
-            '    End If
-            '    S += "0|E||||"
-            'Else
+        
             If DReader("estado") = Estados.Cancelada Then
                 If S <> "" Then S += vbCrLf
                 S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
@@ -7643,34 +6126,12 @@ Public Class dbVentas
                 End If
                 S += "0|E||||"
             End If
-            'If DReader("estado") = Estados.Guardada Then
-            '    If S <> "" Then S += vbCrLf
-            '    S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
-            '    S += DReader("serie") + "|"
-            '    S += DReader("folio").ToString + "|"
-            '    S += DReader("yearaprobacion") + DReader("noaprobacion") + "|"
-            '    S += Format(CDate(DReader("fecha")), "dd/MM/yyyy") + " " + DReader("hora") + "|"
-            '    If DReader("idmoneda") = 2 Then
-            '        S += Format(DReader("totalapagar"), "#0.00") + "|"
-            '        S += Format(DReader("totalapagar") - DReader("total"), "#0.00") + "|"
-            '    Else
-            '        S += Format(DReader("totalapagar") * DReader("tipodecambio"), "#0.00") + "|"
-            '        S += Format((DReader("totalapagar") - DReader("total")) * DReader("tipodecambio"), "#0.00") + "|"
-            '    End If
-            '    S += "1|E||||"
-            'End If
-            'End If
+     
         End While
         DReader.Close()
         '----------------------------------------------------------------------------------------------------------
         '----------------------------------------------Notas de Cargo----------------------------------------------
 
-        'If pidSucursal <> 0 Then
-        '    Comm.CommandText = "select tblnotasdecargo.idcargo,tblclientes.rfc,tblnotasdecargo.serie,tblnotasdecargo.folio,tblnotasdecargo.noaprobacion,tblnotasdecargo.yearaprobacion,tblnotasdecargo.fecha,tblnotasdecargo.hora,tblnotasdecargo.totalapagar,tblnotasdecargo.total,tblnotasdecargo.estado,tblnotasdecargo.fechacancelado,tblnotasdecargo.tipodecambio,tblnotasdecargo.idmoneda from tblnotasdecargo inner join tblclientes on tblnotasdecargo.idcliente=tblclientes.idcliente where ((fecha>='" + Format(Fecha1, "yyyy/MM/dd") + "' and fecha<='" + Format(Fecha2, "yyyy/MM/dd") + "') or (fechacancelado>='" + Format(Fecha1, "yyyy/MM/dd") + "' and fechacancelado<='" + Format(Fecha2, "yyyy/MM/dd") + "')) and (tblnotasdecargo.estado=3 or tblnotasdecargo.estado=4) and tblnotasdecargo.idsucursal=" + pidSucursal.ToString + " order by serie,folio"
-        'Else
-        '    Comm.CommandText = "select tblnotasdecargo.idcargo,tblclientes.rfc,tblnotasdecargo.serie,tblnotasdecargo.folio,tblnotasdecargo.noaprobacion,tblnotasdecargo.yearaprobacion,tblnotasdecargo.fecha,tblnotasdecargo.hora,tblnotasdecargo.totalapagar,tblnotasdecargo.total,tblnotasdecargo.estado,tblnotasdecargo.fechacancelado,tblnotasdecargo.tipodecambio,tblnotasdecargo.idmoneda from tblnotasdecargo inner join tblclientes on tblnotasdecargo.idcliente=tblclientes.idcliente where ((fecha>='" + Format(Fecha1, "yyyy/MM/dd") + "' and fecha<='" + Format(Fecha2, "yyyy/MM/dd") + "') or (fechacancelado>='" + Format(Fecha1, "yyyy/MM/dd") + "' and fechacancelado<='" + Format(Fecha2, "yyyy/MM/dd") + "')) and (tblnotasdecargo.estado=3 or tblnotasdecargo.estado=4) order by serie,folio"
-        'End If
-        'NCargo normales
         If pidSucursal <> 0 Then
             Comm.CommandText = "select tblnotasdecargo.idcargo,tblclientes.rfc,tblnotasdecargo.serie,tblnotasdecargo.folio,tblnotasdecargo.noaprobacion,tblnotasdecargo.yearaprobacion,tblnotasdecargo.fecha,tblnotasdecargo.hora,tblnotasdecargo.totalapagar,tblnotasdecargo.total,tblnotasdecargo.estado,tblnotasdecargo.fechacancelado,tblnotasdecargo.tipodecambio,tblnotasdecargo.idmoneda from tblnotasdecargo inner join tblclientes on tblnotasdecargo.idcliente=tblclientes.idcliente where fecha>='" + Format(Fecha1, "yyyy/MM/dd") + "' and fecha<='" + Format(Fecha2, "yyyy/MM/dd") + "' and (tblnotasdecargo.estado=3 or tblnotasdecargo.estado=4)  and tblnotasdecargo.idsucursal=" + pidSucursal.ToString + " order by serie,folio"
         Else
@@ -7678,54 +6139,7 @@ Public Class dbVentas
         End If
         DReader = Comm.ExecuteReader
         While DReader.Read
-            'Mes1 = Month(CDate(DReader("fecha")))
-            'Mes2 = Month(CDate(DReader("fechacancelado")))
-            'If Mes1 = Mes2 And DReader("estado") = Estados.Cancelada Then
-            '    If S <> "" Then S += vbCrLf
-            '    S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
-            '    S += DReader("serie") + "|"
-            '    S += DReader("folio").ToString + "|"
-            '    S += DReader("yearaprobacion") + DReader("noaprobacion") + "|"
-            '    S += Format(CDate(DReader("fecha")), "dd/MM/yyyy") + " " + DReader("hora") + "|"
-            '    If DReader("idmoneda") = 2 Then
-            '        S += Format(DReader("totalapagar"), "#0.00") + "|"
-            '        S += Format(DReader("totalapagar") - DReader("total"), "#0.00") + "|"
-            '    Else
-            '        S += Format(DReader("totalapagar") * DReader("tipodecambio"), "#0.00") + "|"
-            '        S += Format((DReader("totalapagar") - DReader("total")) * DReader("tipodecambio"), "#0.00") + "|"
-            '    End If
-            '    S += "1|I||||" + vbCrLf
-            '    S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
-            '    S += DReader("serie") + "|"
-            '    S += DReader("folio").ToString + "|"
-            '    S += DReader("yearaprobacion") + DReader("noaprobacion") + "|"
-            '    S += Format(CDate(DReader("fecha")), "dd/MM/yyyy") + " " + DReader("hora") + "|"
-            '    If DReader("idmoneda") = 2 Then
-            '        S += Format(DReader("totalapagar"), "#0.00") + "|"
-            '        S += Format(DReader("totalapagar") - DReader("total"), "#0.00") + "|"
-            '    Else
-            '        S += Format(DReader("totalapagar") * DReader("tipodecambio"), "#0.00") + "|"
-            '        S += Format((DReader("totalapagar") - DReader("total")) * DReader("tipodecambio"), "#0.00") + "|"
-            '    End If
-            '    S += "0|I||||"
-            'Else
-            'If DReader("estado") = Estados.Cancelada Then
-            '    If S <> "" Then S += vbCrLf
-            '    S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
-            '    S += DReader("serie") + "|"
-            '    S += DReader("folio").ToString + "|"
-            '    S += DReader("yearaprobacion") + DReader("noaprobacion") + "|"
-            '    S += Format(CDate(DReader("fecha")), "dd/MM/yyyy") + " " + DReader("hora") + "|"
-            '    If DReader("idmoneda") = 2 Then
-            '        S += Format(DReader("totalapagar"), "#0.00") + "|"
-            '        S += Format(DReader("totalapagar") - DReader("total"), "#0.00") + "|"
-            '    Else
-            '        S += Format(DReader("totalapagar") * DReader("tipodecambio"), "#0.00") + "|"
-            '        S += Format((DReader("totalapagar") - DReader("total")) * DReader("tipodecambio"), "#0.00") + "|"
-            '    End If
-            '    S += "0|I||||"
-            'End If
-            'If DReader("estado") = Estados.Guardada Then
+          
             If S <> "" Then S += vbCrLf
             S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
             S += DReader("serie") + "|"
@@ -7753,37 +6167,7 @@ Public Class dbVentas
         End If
         DReader = Comm.ExecuteReader
         While DReader.Read
-            'Mes1 = Month(CDate(DReader("fecha")))
-            'Mes2 = Month(CDate(DReader("fechacancelado")))
-            'If Mes1 = Mes2 And DReader("estado") = Estados.Cancelada Then
-            '    If S <> "" Then S += vbCrLf
-            '    S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
-            '    S += DReader("serie") + "|"
-            '    S += DReader("folio").ToString + "|"
-            '    S += DReader("yearaprobacion") + DReader("noaprobacion") + "|"
-            '    S += Format(CDate(DReader("fecha")), "dd/MM/yyyy") + " " + DReader("hora") + "|"
-            '    If DReader("idmoneda") = 2 Then
-            '        S += Format(DReader("totalapagar"), "#0.00") + "|"
-            '        S += Format(DReader("totalapagar") - DReader("total"), "#0.00") + "|"
-            '    Else
-            '        S += Format(DReader("totalapagar") * DReader("tipodecambio"), "#0.00") + "|"
-            '        S += Format((DReader("totalapagar") - DReader("total")) * DReader("tipodecambio"), "#0.00") + "|"
-            '    End If
-            '    S += "1|I||||" + vbCrLf
-            '    S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
-            '    S += DReader("serie") + "|"
-            '    S += DReader("folio").ToString + "|"
-            '    S += DReader("yearaprobacion") + DReader("noaprobacion") + "|"
-            '    S += Format(CDate(DReader("fecha")), "dd/MM/yyyy") + " " + DReader("hora") + "|"
-            '    If DReader("idmoneda") = 2 Then
-            '        S += Format(DReader("totalapagar"), "#0.00") + "|"
-            '        S += Format(DReader("totalapagar") - DReader("total"), "#0.00") + "|"
-            '    Else
-            '        S += Format(DReader("totalapagar") * DReader("tipodecambio"), "#0.00") + "|"
-            '        S += Format((DReader("totalapagar") - DReader("total")) * DReader("tipodecambio"), "#0.00") + "|"
-            '    End If
-            '    S += "0|I||||"
-            'Else
+          
             If DReader("estado") = Estados.Cancelada Then
                 If S <> "" Then S += vbCrLf
                 S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
@@ -7800,33 +6184,12 @@ Public Class dbVentas
                 End If
                 S += "0|I||||"
             End If
-            'If DReader("estado") = Estados.Guardada Then
-            '    If S <> "" Then S += vbCrLf
-            '    S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
-            '    S += DReader("serie") + "|"
-            '    S += DReader("folio").ToString + "|"
-            '    S += DReader("yearaprobacion") + DReader("noaprobacion") + "|"
-            '    S += Format(CDate(DReader("fecha")), "dd/MM/yyyy") + " " + DReader("hora") + "|"
-            '    If DReader("idmoneda") = 2 Then
-            '        S += Format(DReader("totalapagar"), "#0.00") + "|"
-            '        S += Format(DReader("totalapagar") - DReader("total"), "#0.00") + "|"
-            '    Else
-            '        S += Format(DReader("totalapagar") * DReader("tipodecambio"), "#0.00") + "|"
-            '        S += Format((DReader("totalapagar") - DReader("total")) * DReader("tipodecambio"), "#0.00") + "|"
-            '    End If
-            '    S += "1|I||||"
-            'End If
-            'End If
+          
         End While
         DReader.Close()
         '---------------------------------------------------------------------------------------------------------
         '------------------------------------------Devoluciones--------------------------------------------------------
-        'If pidSucursal <> 0 Then
-        '    Comm.CommandText = "select tbldevoluciones.iddevolucion,tblclientes.rfc,tbldevoluciones.serie,tbldevoluciones.folio,tbldevoluciones.noaprobacion,tbldevoluciones.yearaprobacion,tbldevoluciones.fecha,tbldevoluciones.hora,tbldevoluciones.totalapagar,tbldevoluciones.total,tbldevoluciones.estado,tbldevoluciones.fechacancelado,tbldevoluciones.tipodecambio,tbldevoluciones.idconversion from tbldevoluciones inner join tblclientes on tbldevoluciones.idcliente=tblclientes.idcliente where ((fecha>='" + Format(Fecha1, "yyyy/MM/dd") + "' and fecha<='" + Format(Fecha2, "yyyy/MM/dd") + "') or (fechacancelado>='" + Format(Fecha1, "yyyy/MM/dd") + "' and fechacancelado<='" + Format(Fecha2, "yyyy/MM/dd") + "')) and (tbldevoluciones.estado=3 or tbldevoluciones.estado=4) and tbldevoluciones.idsucursal=" + pidSucursal.ToString + " order by serie,folio"
-        'Else
-        '    Comm.CommandText = "select tbldevoluciones.iddevolucion,tblclientes.rfc,tbldevoluciones.serie,tbldevoluciones.folio,tbldevoluciones.noaprobacion,tbldevoluciones.yearaprobacion,tbldevoluciones.fecha,tbldevoluciones.hora,tbldevoluciones.totalapagar,tbldevoluciones.total,tbldevoluciones.estado,tbldevoluciones.fechacancelado,tbldevoluciones.tipodecambio,tbldevoluciones.idconversion from tbldevoluciones inner join tblclientes on tbldevoluciones.idcliente=tblclientes.idcliente where ((fecha>='" + Format(Fecha1, "yyyy/MM/dd") + "' and fecha<='" + Format(Fecha2, "yyyy/MM/dd") + "') or (fechacancelado>='" + Format(Fecha1, "yyyy/MM/dd") + "' and fechacancelado<='" + Format(Fecha2, "yyyy/MM/dd") + "')) and (tbldevoluciones.estado=3 or tbldevoluciones.estado=4) order by serie,folio"
-        'End If
-        'Devoluciones normales
+        
         If pidSucursal <> 0 Then
             Comm.CommandText = "select tbldevoluciones.iddevolucion,tblclientes.rfc,tbldevoluciones.serie,tbldevoluciones.folio,tbldevoluciones.noaprobacion,tbldevoluciones.yearaprobacion,tbldevoluciones.fecha,tbldevoluciones.hora,tbldevoluciones.totalapagar,tbldevoluciones.total,tbldevoluciones.estado,tbldevoluciones.fechacancelado,tbldevoluciones.tipodecambio,tbldevoluciones.idconversion from tbldevoluciones inner join tblclientes on tbldevoluciones.idcliente=tblclientes.idcliente where fecha>='" + Format(Fecha1, "yyyy/MM/dd") + "' and fecha<='" + Format(Fecha2, "yyyy/MM/dd") + "' and (tbldevoluciones.estado=3 or tbldevoluciones.estado=4) and tbldevoluciones.idsucursal=" + pidSucursal.ToString + " order by serie,folio"
         Else
@@ -7835,54 +6198,7 @@ Public Class dbVentas
 
         DReader = Comm.ExecuteReader
         While DReader.Read
-            'Mes1 = Month(CDate(DReader("fecha")))
-            'Mes2 = Month(CDate(DReader("fechacancelado")))
-            'If Mes1 = Mes2 And DReader("estado") = Estados.Cancelada Then
-            '    If S <> "" Then S += vbCrLf
-            '    S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
-            '    S += DReader("serie") + "|"
-            '    S += DReader("folio").ToString + "|"
-            '    S += DReader("yearaprobacion") + DReader("noaprobacion") + "|"
-            '    S += Format(CDate(DReader("fecha")), "dd/MM/yyyy") + " " + DReader("hora") + "|"
-            '    If DReader("idconversion") = 2 Then
-            '        S += Format(DReader("totalapagar"), "#0.00") + "|"
-            '        S += Format(DReader("totalapagar") - DReader("total"), "#0.00") + "|"
-            '    Else
-            '        S += Format(DReader("totalapagar") * DReader("tipodecambio"), "#0.00") + "|"
-            '        S += Format((DReader("totalapagar") - DReader("total")) * DReader("tipodecambio"), "#0.00") + "|"
-            '    End If
-            '    S += "1|E||||" + vbCrLf
-            '    S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
-            '    S += DReader("serie") + "|"
-            '    S += DReader("folio").ToString + "|"
-            '    S += DReader("yearaprobacion") + DReader("noaprobacion") + "|"
-            '    S += Format(CDate(DReader("fecha")), "dd/MM/yyyy") + " " + DReader("hora") + "|"
-            '    If DReader("idconversion") = 2 Then
-            '        S += Format(DReader("totalapagar"), "#0.00") + "|"
-            '        S += Format(DReader("totalapagar") - DReader("total"), "#0.00") + "|"
-            '    Else
-            '        S += Format(DReader("totalapagar") * DReader("tipodecambio"), "#0.00") + "|"
-            '        S += Format((DReader("totalapagar") - DReader("total")) * DReader("tipodecambio"), "#0.00") + "|"
-            '    End If
-            '    S += "0|E||||"
-            'Else
-            'If DReader("estado") = Estados.Cancelada Then
-            '    If S <> "" Then S += vbCrLf
-            '    S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
-            '    S += DReader("serie") + "|"
-            '    S += DReader("folio").ToString + "|"
-            '    S += DReader("yearaprobacion") + DReader("noaprobacion") + "|"
-            '    S += Format(CDate(DReader("fecha")), "dd/MM/yyyy") + " " + DReader("hora") + "|"
-            '    If DReader("idconversion") = 2 Then
-            '        S += Format(DReader("totalapagar"), "#0.00") + "|"
-            '        S += Format(DReader("totalapagar") - DReader("total"), "#0.00") + "|"
-            '    Else
-            '        S += Format(DReader("totalapagar") * DReader("tipodecambio"), "#0.00") + "|"
-            '        S += Format((DReader("totalapagar") - DReader("total")) * DReader("tipodecambio"), "#0.00") + "|"
-            '    End If
-            '    S += "0|E||||"
-            'End If
-            'If DReader("estado") = Estados.Guardada Then
+        
             If S <> "" Then S += vbCrLf
             S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
             S += DReader("serie") + "|"
@@ -7911,37 +6227,7 @@ Public Class dbVentas
 
         DReader = Comm.ExecuteReader
         While DReader.Read
-            'Mes1 = Month(CDate(DReader("fecha")))
-            'Mes2 = Month(CDate(DReader("fechacancelado")))
-            'If Mes1 = Mes2 And DReader("estado") = Estados.Cancelada Then
-            '    If S <> "" Then S += vbCrLf
-            '    S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
-            '    S += DReader("serie") + "|"
-            '    S += DReader("folio").ToString + "|"
-            '    S += DReader("yearaprobacion") + DReader("noaprobacion") + "|"
-            '    S += Format(CDate(DReader("fecha")), "dd/MM/yyyy") + " " + DReader("hora") + "|"
-            '    If DReader("idconversion") = 2 Then
-            '        S += Format(DReader("totalapagar"), "#0.00") + "|"
-            '        S += Format(DReader("totalapagar") - DReader("total"), "#0.00") + "|"
-            '    Else
-            '        S += Format(DReader("totalapagar") * DReader("tipodecambio"), "#0.00") + "|"
-            '        S += Format((DReader("totalapagar") - DReader("total")) * DReader("tipodecambio"), "#0.00") + "|"
-            '    End If
-            '    S += "1|E||||" + vbCrLf
-            '    S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
-            '    S += DReader("serie") + "|"
-            '    S += DReader("folio").ToString + "|"
-            '    S += DReader("yearaprobacion") + DReader("noaprobacion") + "|"
-            '    S += Format(CDate(DReader("fecha")), "dd/MM/yyyy") + " " + DReader("hora") + "|"
-            '    If DReader("idconversion") = 2 Then
-            '        S += Format(DReader("totalapagar"), "#0.00") + "|"
-            '        S += Format(DReader("totalapagar") - DReader("total"), "#0.00") + "|"
-            '    Else
-            '        S += Format(DReader("totalapagar") * DReader("tipodecambio"), "#0.00") + "|"
-            '        S += Format((DReader("totalapagar") - DReader("total")) * DReader("tipodecambio"), "#0.00") + "|"
-            '    End If
-            '    S += "0|E||||"
-            'Else
+        
             If DReader("estado") = Estados.Cancelada Then
                 If S <> "" Then S += vbCrLf
                 S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
@@ -7958,23 +6244,7 @@ Public Class dbVentas
                 End If
                 S += "0|E||||"
             End If
-            'If DReader("estado") = Estados.Guardada Then
-            '    If S <> "" Then S += vbCrLf
-            '    S += "|" + Replace(Replace(Trim(DReader("rfc")), " ", ""), "-", "") + "|"
-            '    S += DReader("serie") + "|"
-            '    S += DReader("folio").ToString + "|"
-            '    S += DReader("yearaprobacion") + DReader("noaprobacion") + "|"
-            '    S += Format(CDate(DReader("fecha")), "dd/MM/yyyy") + " " + DReader("hora") + "|"
-            '    If DReader("idconversion") = 2 Then
-            '        S += Format(DReader("totalapagar"), "#0.00") + "|"
-            '        S += Format(DReader("totalapagar") - DReader("total"), "#0.00") + "|"
-            '    Else
-            '        S += Format(DReader("totalapagar") * DReader("tipodecambio"), "#0.00") + "|"
-            '        S += Format((DReader("totalapagar") - DReader("total")) * DReader("tipodecambio"), "#0.00") + "|"
-            '    End If
-            '    S += "1|E||||"
-            'End If
-            'End If
+        
         End While
         DReader.Close()
 
@@ -8026,7 +6296,6 @@ Public Class dbVentas
         Dim EsInventariable As Integer
         Dim iContenido As Double
         While Cont <= IDs.Count
-            'Comm.CommandText = "select idinventario,idvariante,cantidad,idalmacen,if(idinventario>1,(select inventariable from tblinventario where tblinventario.idinventario=tblventasinventario.idinventario),0) as esinventariable,if(idvariante>1,(select inventariable from tblproductos inner join tblproductosvariantes on tblproductos.idproducto=tblproductosvariantes.idproducto where tblproductosvariantes.idvariante=tblventasinventario.idvariante),0) as esinventariablep,(select contenido from tblinventario where tblinventario.idinventario=tblventasinventario.idinventario) as contenido from tblventasinventario where idventasinventario=" + IDs(Cont).ToString
             Comm.CommandText = "select tblinventario.inventariable as esinventariable,tblinventario.contenido,ifnull((sum(tblventasinventario.cantidad)),0) as cantidad,tblventasinventario.idalmacen from tblventasinventario inner join tblinventario on tblinventario.idinventario=tblventasinventario.idinventario where tblventasinventario.idventa=" + pId.ToString + " and tblventasinventario.idinventario=" + IDs(Cont).ToString + " limit 1"
             DReader = Comm.ExecuteReader
             If DReader.Read() Then
@@ -8066,7 +6335,6 @@ Public Class dbVentas
         End While
         DReader.Close()
         While Cont <= IDs.Count
-            'Comm.CommandText = "select idinventario,idvariante,cantidad,idalmacen,if(idinventario>1,(select inventariable from tblinventario where tblinventario.idinventario=tblventasinventario.idinventario),0) as esinventariable,if(idvariante>1,(select inventariable from tblproductos inner join tblproductosvariantes on tblproductos.idproducto=tblproductosvariantes.idproducto where tblproductosvariantes.idvariante=tblventasinventario.idvariante),0) as esinventariablep,(select contenido from tblinventario where tblinventario.idinventario=tblventasinventario.idinventario) as contenido from tblventasinventario where idventasinventario=" + IDs(Cont).ToString
             Comm.CommandText = "select tblinventario.inventariable as esinventariable,tblinventario.contenido,ifnull((sum(tblventaskits.cantidad)),0) as cantidad,tblventaskits.idalmacen from tblventaskits inner join tblinventario on tblinventario.idinventario=tblventaskits.idinventario where tblventaskits.idventa=" + pId.ToString + " and tblventaskits.idinventario=" + IDs(Cont).ToString + " limit 1"
             DReader = Comm.ExecuteReader
             If DReader.Read() Then
@@ -8386,55 +6654,7 @@ Public Class dbVentas
         Comm.CommandText = "select ifnull((select sum(tblventasinventario.precio) from tblventasinventario where tblventasinventario.idventa=" + pidVenta.ToString + " and tblventasinventario.iva=0 and tblventasinventario.ieps=0 and tblventasinventario.ivaretenido=0),0)"
         Return Comm.ExecuteScalar
     End Function
-    'Public Function ReportexVendedor(ByVal pFecha1 As String, ByVal pFecha2 As String, ByVal pIdSucursal As Integer, ByVal pIdCliente As Integer, ByVal pidVendedor As Integer, ByVal pidMoneda As Integer, ByVal pMostrarEnPesos As Byte, ByVal pidinventario As Integer, ByVal pidclasificacion1 As Integer, ByVal pidclasificacion2 As Integer, ByVal pidclasificacion3 As Integer, ByVal pSoloCanceladas As Boolean, ByVal pSerie As String) As DataView
-    '    Dim DS As New DataSet
-    '    If pMostrarEnPesos = 0 Then
-    '        Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,if(tblventas.idconversion=2,round(tblventas.total,2),round(tblventas.total*tblventas.tipodecambio,2)) as total,if(tblventas.idconversion=2,round(tblventas.totalapagar,2),round(tblventas.totalapagar*tblventas.tipodecambio,2)) as totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,round(tblventasinventario.cantidad,2) as cantidad,tblventasinventario.descripcion,round(tblventasinventario.precio,2) as precio,0 as costoinv,0 as costopro,tblventasinventario.idinventario,tblventasinventario.idvariante,tblformasdepago.tipo as formadepago,tblclientes.nombre as cnombre,tblventas.isr,tblventas.ivaretenido,tblvendedores.nombre as vnombre,tblventas.idvendedor " + _
-    '        "from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblproductosvariantes on tblproductosvariantes.idvariante=tblventasinventario.idvariante inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma inner join tblvendedores on tblventas.idvendedor=tblvendedores.idvendedor where tblformasdepago.tipo<>2 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "'"
-    '    Else
-    '        Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,round(tblventas.total,2) as total,round(tblventas.totalapagar,2) as totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,round(tblventasinventario.cantidad,2),tblventasinventario.descripcion,round(tblventasinventario.precio,2),0 as costoinv,0 as costopro,tblventasinventario.idinventario,tblventasinventario.idvariante,tblformasdepago.tipo as formadepago,tblclientes.nombre as cnombre,tblventas.isr,tblventas.ivaretenido,tblvendedores.nombre as vnombre,tblventas.idvendedor  " + _
-    '        "from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblproductosvariantes on tblproductosvariantes.idvariante=tblventasinventario.idvariante inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma inner join tblvendedores on tblventas.idvendedor=tblvendedores.idvendedor where tblformasdepago.tipo<>2 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "'"
-    '    End If
-    '    If pSoloCanceladas Then
-    '        Comm.CommandText += " and tblventas.estado=4"
-    '    Else
-    '        Comm.CommandText += " and tblventas.estado=3"
-    '    End If
-    '    'Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,tblventasinventario.cantidad,tblventasinventario.descripcion,tblventasinventario.precio,if(tblventasinventario.idinventario>1,spsacacostoarticulo(tblventasinventario.idinventario," + pTipoCosteo.ToString + ",tblinventario.contenido),0) as costoinv,if(tblventasinventario.idvariante>1,spsacacostoproducto(tblproductosvariantes.idproducto," + pTipoCosteo.ToString + "),0) as costopro,tblventasinventario.idinventario,tblventasinventario.idvariante,tblformasdepago.nombre as formadepago,tblclientes.nombre as cnombre from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblproductosvariantes on tblproductosvariantes.idvariante=tblventasinventario.idvariante inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.estado=3 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "'"
-    '    If pIdSucursal > 0 Then
-    '        Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-    '    End If
-    '    If pIdCliente > 0 Then
-    '        Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-    '    End If
-    '    If pidVendedor > 0 Then
-    '        Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-    '    End If
-    '    If pidMoneda > 0 Then
-    '        Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-    '    End If
-    '    If pidinventario > 1 Then
-    '        Comm.CommandText += " and tblventasinventario.idinventario=" + pidinventario.ToString
-    '    Else
-    '        If pidclasificacion1 > 0 Then
-    '            Comm.CommandText += " and tblinventario.idclasificacion=" + pidclasificacion1.ToString
-    '        End If
-    '        If pidclasificacion2 > 0 Then
-    '            Comm.CommandText += " and tblinventario.idclasificacion2=" + pidclasificacion2.ToString
-    '        End If
-    '        If pidclasificacion3 > 0 Then
-    '            Comm.CommandText += " and tblinventario.idclasificacion3=" + pidclasificacion3.ToString
-    '        End If
-    '    End If
-    '    If pSerie <> "" Then
-    '        Comm.CommandText += " and tblventas.serie like '%" + Replace(pSerie, "'", "''") + "%'"
-    '    End If
-    '    Comm.CommandText += " order by tblventas.fecha,tblventas.serie,tblventas.folio,tblventas.idvendedor"
-    '    Dim DA As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
-    '    DA.Fill(DS, "tblventas")
-    '    'DS.WriteXmlSchema("tblventasxv.xml")
-    '    Return DS.Tables("tblventas").DefaultView
-    'End Function
+   
     Public Function ReportexVendedor(ByVal pFecha1 As String, ByVal pFecha2 As String, ByVal pIdSucursal As Integer, ByVal pIdCliente As Integer, ByVal pidVendedor As Integer, ByVal pidMoneda As Integer, ByVal pMostrarEnPesos As Byte, ByVal pidinventario As Integer, ByVal pidclasificacion1 As Integer, ByVal pidclasificacion2 As Integer, ByVal pidclasificacion3 As Integer, ByVal pSoloCanceladas As Boolean, ByVal pSerie As String, ByVal pZona As Integer, ByVal pZona2 As Integer, pIdAlmacen As Integer, pIdTipo As Integer, pidTipoSucursal As Integer) As DataView
         Dim DS As New DataSet
         If pMostrarEnPesos = 0 Then
@@ -8456,7 +6676,6 @@ Public Class dbVentas
         If pZona2 > 0 Then
             Comm.CommandText += " and tblclientes.zona='" + pZona2.ToString() + "' or tblclientes.zona2='" + pZona2.ToString() + "'"
         End If
-        'Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,tblventasinventario.cantidad,tblventasinventario.descripcion,tblventasinventario.precio,if(tblventasinventario.idinventario>1,spsacacostoarticulo(tblventasinventario.idinventario," + pTipoCosteo.ToString + ",tblinventario.contenido),0) as costoinv,if(tblventasinventario.idvariante>1,spsacacostoproducto(tblproductosvariantes.idproducto," + pTipoCosteo.ToString + "),0) as costopro,tblventasinventario.idinventario,tblventasinventario.idvariante,tblformasdepago.nombre as formadepago,tblclientes.nombre as cnombre from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblproductosvariantes on tblproductosvariantes.idvariante=tblventasinventario.idvariante inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.estado=3 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "'"
         If pIdSucursal > 0 Then
             Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
         End If
@@ -8500,56 +6719,7 @@ Public Class dbVentas
         'DS.WriteXmlSchema("tblventasxv.xml")
         Return DS.Tables("tblventas").DefaultView
     End Function
-    'Public Function ReporteVentasArticulosClas(ByVal pFecha1 As String, ByVal pFecha2 As String, ByVal pIdSucursal As Integer, ByVal pIdCliente As Integer, ByVal pIdInventario As Integer, ByVal pidClasificacion As Integer, ByVal pidClasificacion2 As Integer, ByVal pidClasificacion3 As Integer, ByVal pidVendedor As Integer, ByVal pidMoneda As Integer, ByVal pMostrarEnPesos As Byte, ByVal pConcendaso As Boolean, ByVal pSerie As String) As DataView
-    '    Dim DS As New DataSet
-    '    If pMostrarEnPesos = 0 Then
-    '        Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,tblventasinventario.cantidad,tblinventario.nombre as descripcion,round(if(tblventasinventario.idmoneda=2,tblventasinventario.precio,tblventasinventario.precio*tblventas.tipodecambio),2) as precio,0 as costoinv,0 as costopro,tblventasinventario.idinventario,tblformasdepago.tipo as formadepago,tblclientes.nombre as cnombre,tblventasinventario.iva,tblventas.isr,tblventas.ivaretenido,round(if(tblventasinventario.idmoneda=2,tblventasinventario.precio/tblventasinventario.cantidad,tblventasinventario.precio*tblventas.tipodecambio/tblventasinventario.cantidad),2) as preciou,tblinventario.clave,(select nombre from tblinventarioclasificaciones where idclasificacion=tblinventario.idclasificacion) as nclase1,(select nombre from tblinventarioclasificaciones2 where idclasificacion=tblinventario.idclasificacion2) as nclase2,(select nombre from tblinventarioclasificaciones3 where idclasificacion=tblinventario.idclasificacion3) as nclase3,tblinventario.idclasificacion,tblinventario.idclasificacion2,tblinventario.idclasificacion3,tblventas.porsurtir " + _
-    '        "from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.estado=3 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "' and tblformasdepago.tipo<>2 and tblventasinventario.cantidad<>0"
-    '    Else
-    '        Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,tblventasinventario.cantidad,tblinventario.nombre as descripcion,round(tblventasinventario.precio,2),0 as costoinv,0 as costopro,tblventasinventario.idinventario,tblformasdepago.tipo as formadepago,tblclientes.nombre as cnombre,tblventasinventario.iva,tblventas.isr,tblventas.ivaretenido,round(tblventasinventario.precio/tblventasinventario.cantidad,2) as preciou,tblinventario.clave,(select nombre from tblinventarioclasificaciones where idclasificacion=tblinventario.idclasificacion) as nclase1,(select nombre from tblinventarioclasificaciones2 where idclasificacion=tblinventario.idclasificacion2) as nclase2,(select nombre from tblinventarioclasificaciones3 where idclasificacion=tblinventario.idclasificacion3) as nclase3,tblinventario.idclasificacion,tblinventario.idclasificacion2,tblinventario.idclasificacion3,tblventas.porsurtir " + _
-    '        "from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.estado=3 and tblformasdepago.tipo<>2 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "' and tblventasinventario.cantidad<>0"
-    '    End If
-    '    'Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,tblventasinventario.cantidad,tblventasinventario.descripcion,tblventasinventario.precio,if(tblventasinventario.idinventario>1,spsacacostoarticulo(tblventasinventario.idinventario," + pTipoCosteo.ToString + ",tblinventario.contenido),0) as costoinv,if(tblventasinventario.idvariante>1,spsacacostoproducto(tblproductosvariantes.idproducto," + pTipoCosteo.ToString + "),0) as costopro,tblventasinventario.idinventario,tblventasinventario.idvariante,tblformasdepago.nombre as formadepago,tblclientes.nombre as cnombre from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblproductosvariantes on tblproductosvariantes.idvariante=tblventasinventario.idvariante inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.estado=3 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "'"
-    '    If pIdSucursal > 0 Then
-    '        Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-    '    End If
-    '    If pIdCliente > 0 Then
-    '        Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-    '    End If
-    '    If pidVendedor > 0 Then
-    '        Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-    '    End If
-    '    If pidMoneda > 0 Then
-    '        Comm.CommandText += " and tblventasinventario.idmoneda=" + pidMoneda.ToString
-    '    End If
-    '    If pIdInventario > 1 Then
-    '        Comm.CommandText += " and tblventasinventario.idinventario=" + pIdInventario.ToString
-    '    Else
-    '        If pidClasificacion > 0 Then
-    '            Comm.CommandText += " and tblinventario.idclasificacion=" + pidClasificacion.ToString
-    '        End If
-    '        If pidClasificacion2 > 0 Then
-    '            Comm.CommandText += " and tblinventario.idclasificacion2=" + pidClasificacion2.ToString
-    '        End If
-    '        If pidClasificacion3 > 0 Then
-    '            Comm.CommandText += " and tblinventario.idclasificacion3=" + pidClasificacion3.ToString
-    '        End If
-    '    End If
-
-    '    If pSerie <> "" Then
-    '        Comm.CommandText += " and tblventas.serie like '%" + Replace(pSerie, "'", "''") + "%'"
-    '    End If
-
-    '    If pConcendaso = False Then
-    '        Comm.CommandText += " order by tblinventario.idclasificacion,tblinventario.idclasificacion2,tblinventario.idclasificacion3,tblventas.fecha,tblventas.serie,tblventas.folio"
-    '    Else
-    '        Comm.CommandText += " order by tblinventario.idclasificacion,tblinventario.idclasificacion2,tblinventario.idclasificacion3,tblventasinventario.idinventario,preciou"
-    '    End If
-    '    Dim DA As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
-    '    DA.Fill(DS, "tblventas")
-    '    DS.WriteXmlSchema("tblventasclas.xml")
-    '    Return DS.Tables("tblventas").DefaultView
-    'End Function
+   
     Public Function ReporteVentasArticulosClas(ByVal pFecha1 As String, ByVal pFecha2 As String, ByVal pIdSucursal As Integer, ByVal pIdCliente As Integer, ByVal pIdInventario As Integer, ByVal pidClasificacion As Integer, ByVal pidClasificacion2 As Integer, ByVal pidClasificacion3 As Integer, ByVal pidVendedor As Integer, ByVal pidMoneda As Integer, ByVal pMostrarEnPesos As Byte, ByVal pConcendaso As Boolean, ByVal pSerie As String, ByVal pZona As Integer, ByVal pZona2 As Integer, pIdAlmacen As Integer, pidTipo As Integer, pIdtipoSucursales As Integer) As DataView
         Dim DS As New DataSet
         If pMostrarEnPesos = 0 Then
@@ -8559,8 +6729,7 @@ Public Class dbVentas
             Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,tblventasinventario.cantidad,tblinventario.nombre as descripcion,round(tblventasinventario.precio,2),0 as costoinv,0 as costopro,tblventasinventario.idinventario,tblformasdepago.tipo as formadepago,tblclientes.nombre as cnombre,tblventasinventario.iva,tblventas.isr,tblventas.ivaretenido,round(tblventasinventario.precio/tblventasinventario.cantidad,2) as preciou,tblinventario.clave,(select nombre from tblinventarioclasificaciones where idclasificacion=tblinventario.idclasificacion) as nclase1,(select nombre from tblinventarioclasificaciones2 where idclasificacion=tblinventario.idclasificacion2) as nclase2,(select nombre from tblinventarioclasificaciones3 where idclasificacion=tblinventario.idclasificacion3) as nclase3,tblinventario.idclasificacion,tblinventario.idclasificacion2,tblinventario.idclasificacion3,tblventas.porsurtir,tblventasinventario.ivaretenido ivar,tblventasinventario.ieps,tblsucursales.nombre as snombre,tblventas.idsucursal " + _
             "from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma inner join tblvendedores on tblventas.idvendedor=tblvendedores.idvendedor inner join tblsucursales on tblventas.idsucursal=tblsucursales.idsucursal where tblventas.estado=3 and tblformasdepago.tipo<>2 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "' and tblventasinventario.cantidad<>0 and tblventasinventario.noimpimporte=0"
         End If
-        'Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,tblventasinventario.cantidad,tblventasinventario.descripcion,tblventasinventario.precio,if(tblventasinventario.idinventario>1,spsacacostoarticulo(tblventasinventario.idinventario," + pTipoCosteo.ToString + ",tblinventario.contenido),0) as costoinv,if(tblventasinventario.idvariante>1,spsacacostoproducto(tblproductosvariantes.idproducto," + pTipoCosteo.ToString + "),0) as costopro,tblventasinventario.idinventario,tblventasinventario.idvariante,tblformasdepago.nombre as formadepago,tblclientes.nombre as cnombre from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblproductosvariantes on tblproductosvariantes.idvariante=tblventasinventario.idvariante inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.estado=3 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "'"
-        If pIdSucursal > 0 Then
+          If pIdSucursal > 0 Then
             Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
         End If
         If pIdtipoSucursales > 0 Then
@@ -8625,16 +6794,14 @@ Public Class dbVentas
         Comm.CommandText = "insert into tblrepventasporsurtir(folio,serie,fecha,idcliente,nombre,clave,inombre,cantidad,csurtido,tipo,idsucursal,preciou) select tblventas.folio,tblventas.serie,tblventas.fecha,tblventas.idcliente,tblclientes.nombre,tblinventario.clave,tblinventario.nombre as inombre,sum(tblventasinventario.cantidad)," + _
         "ifnull((select sum(cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento where tblmovimientos.idventa=tblventas.idventa and tblmovimientosdetalles.idinventario=tblventasinventario.idinventario and tblmovimientos.estado=3),0) as csurtido,'F' as tipo, tblventas.idsucursal,ifnull(sum((tblventasinventario.precio*(1+tblventasinventario.ieps/100))*(1+(tblventasinventario.iva-tblventasinventario.ivaretenido-tblventas.ivaretenido)/100))/sum(tblventasinventario.cantidad),0) preciou  " + _
         "from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblclientes on tblclientes.idcliente=tblventas.idcliente inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario where tblventas.porsurtir=1 and tblventas.estado=3 "
-        'Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,tblventasinventario.cantidad,tblinventario.nombre as descripcion,round(if(tblventasinventario.idmoneda=2,tblventasinventario.precio,tblventasinventario.precio*tblventas.tipodecambio),2) as precio,0 as costoinv,0 as costopro,tblventasinventario.idinventario,tblformasdepago.tipo as formadepago,tblclientes.nombre as cnombre,tblventasinventario.iva,tblventas.isr,tblventas.ivaretenido,round(if(tblventasinventario.idmoneda=2,tblventasinventario.precio/tblventasinventario.cantidad,tblventasinventario.precio*tblventas.tipodecambio/tblventasinventario.cantidad),2) as preciou,tblinventario.clave,(select nombre from tblinventarioclasificaciones where idclasificacion=tblinventario.idclasificacion) as nclase1,(select nombre from tblinventarioclasificaciones2 where idclasificacion=tblinventario.idclasificacion2) as nclase2,(select nombre from tblinventarioclasificaciones3 where idclasificacion=tblinventario.idclasificacion3) as nclase3,tblinventario.idclasificacion,tblinventario.idclasificacion2,tblinventario.idclasificacion3 " + _
-        '"from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.estado=3 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "' and tblformasdepago.tipo<>2 and tblventasinventario.cantidad<>0"
-        'End If
+      
         If pTipo = 0 Then
             Comm.CommandText += " and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "'"
         End If
         If pTipo = 1 Then
             Comm.CommandText += " and (ifnull((select sum(vi.cantidad) from tblventasinventario vi where vi.idventa=tblventas.idventa and vi.idinventario=tblventasinventario.idinventario),0)-ifnull((select sum(cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento where tblmovimientos.idventa=tblventas.idventa and tblmovimientosdetalles.idinventario=tblventasinventario.idinventario and tblmovimientos.estado=3),0))>0"
         End If
-        'Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,tblventasinventario.cantidad,tblventasinventario.descripcion,tblventasinventario.precio,if(tblventasinventario.idinventario>1,spsacacostoarticulo(tblventasinventario.idinventario," + pTipoCosteo.ToString + ",tblinventario.contenido),0) as costoinv,if(tblventasinventario.idvariante>1,spsacacostoproducto(tblproductosvariantes.idproducto," + pTipoCosteo.ToString + "),0) as costopro,tblventasinventario.idinventario,tblventasinventario.idvariante,tblformasdepago.nombre as formadepago,tblclientes.nombre as cnombre from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblproductosvariantes on tblproductosvariantes.idvariante=tblventasinventario.idvariante inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.estado=3 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "'"
+
         If pIdSucursal > 0 Then
             Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
         End If
@@ -8680,16 +6847,14 @@ Public Class dbVentas
         Comm.CommandText = "insert into tblrepventasporsurtir(folio,serie,fecha,idcliente,nombre,clave,inombre,cantidad,csurtido,tipo,idsucursal,preciou) select tblventasremisiones.folio,tblventasremisiones.serie,tblventasremisiones.fecha,tblventasremisiones.idcliente,tblclientes.nombre,tblinventario.clave,tblinventario.nombre as inombre,sum(tblventasremisionesinventario.cantidad)," + _
         "ifnull((select sum(cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento where tblmovimientos.idremision=tblventasremisiones.idremision and tblmovimientosdetalles.idinventario=tblventasremisionesinventario.idinventario and tblmovimientos.estado=3),0) as csurtido,'R' as tipo, tblventasremisiones.idsucursal,ifnull(sum((tblventasremisionesinventario.precio*(1+tblventasremisionesinventario.ieps/100))*(1+(tblventasremisionesinventario.iva-tblventasremisionesinventario.ivaretenido)/100))/sum(tblventasremisionesinventario.cantidad),0) preciou  " + _
         "from tblventasremisiones inner join tblventasremisionesinventario on tblventasremisiones.idremision=tblventasremisionesinventario.idremision inner join tblclientes on tblclientes.idcliente=tblventasremisiones.idcliente inner join tblinventario on tblventasremisionesinventario.idinventario=tblinventario.idinventario where tblventasremisiones.porsurtir=1 and tblventasremisiones.estado=3 and idventar=0"
-        'Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,tblventasinventario.cantidad,tblinventario.nombre as descripcion,round(if(tblventasinventario.idmoneda=2,tblventasinventario.precio,tblventasinventario.precio*tblventas.tipodecambio),2) as precio,0 as costoinv,0 as costopro,tblventasinventario.idinventario,tblformasdepago.tipo as formadepago,tblclientes.nombre as cnombre,tblventasinventario.iva,tblventas.isr,tblventas.ivaretenido,round(if(tblventasinventario.idmoneda=2,tblventasinventario.precio/tblventasinventario.cantidad,tblventasinventario.precio*tblventas.tipodecambio/tblventasinventario.cantidad),2) as preciou,tblinventario.clave,(select nombre from tblinventarioclasificaciones where idclasificacion=tblinventario.idclasificacion) as nclase1,(select nombre from tblinventarioclasificaciones2 where idclasificacion=tblinventario.idclasificacion2) as nclase2,(select nombre from tblinventarioclasificaciones3 where idclasificacion=tblinventario.idclasificacion3) as nclase3,tblinventario.idclasificacion,tblinventario.idclasificacion2,tblinventario.idclasificacion3 " + _
-        '"from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.estado=3 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "' and tblformasdepago.tipo<>2 and tblventasinventario.cantidad<>0"
-        'End If
+      
         If pTipo = 0 Then
             Comm.CommandText += " and tblventasremisiones.fecha>='" + pFecha1 + "' and tblventasremisiones.fecha<='" + pFecha2 + "'"
         End If
         If pTipo = 1 Then
             Comm.CommandText += " and (ifnull((select sum(vi.cantidad) from tblventasremisionesinventario vi where vi.idremision=tblventasremisiones.idremision and vi.idinventario=tblventasremisionesinventario.idinventario),0)-ifnull((select sum(cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento where tblmovimientos.idremision=tblventasremisiones.idremision and tblmovimientosdetalles.idinventario=tblventasremisionesinventario.idinventario and tblmovimientos.estado=3),0))>0"
         End If
-        'Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,tblventasinventario.cantidad,tblventasinventario.descripcion,tblventasinventario.precio,if(tblventasinventario.idinventario>1,spsacacostoarticulo(tblventasinventario.idinventario," + pTipoCosteo.ToString + ",tblinventario.contenido),0) as costoinv,if(tblventasinventario.idvariante>1,spsacacostoproducto(tblproductosvariantes.idproducto," + pTipoCosteo.ToString + "),0) as costopro,tblventasinventario.idinventario,tblventasinventario.idvariante,tblformasdepago.nombre as formadepago,tblclientes.nombre as cnombre from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblproductosvariantes on tblproductosvariantes.idvariante=tblventasinventario.idvariante inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.estado=3 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "'"
+
         If pIdSucursal > 0 Then
             Comm.CommandText += " and tblventasremisiones.idsucursal=" + pIdSucursal.ToString
         End If
@@ -8726,21 +6891,8 @@ Public Class dbVentas
         End If
         Comm.CommandText += " group by tblventasremisiones.serie,tblventasremisiones.folio,tblventasremisionesinventario.idinventario"
         Comm.ExecuteNonQuery()
-
-
-
-
-        'If pConcendaso = False Then
-        'If pIdTipo < 0 Then
         Comm.CommandText = "select * from tblrepventasporsurtir order by idcliente,fecha,serie,folio"
-        'Else
-        'Comm.CommandText = "select * from tblrepventasporsurtir inner join tblclientes as c on tblrepventasporsurtir.idcliente=c.idcliente where c.idtipo=" + pIdTipo.ToString + " order by c.idcliente,fecha,serie,folio"
-        'End If
-        'Else
-        '    Comm.CommandText += " order by tblinventario.idclasificacion,tblinventario.idclasificacion2,tblinventario.idclasificacion3,tblventasinventario.idinventario,preciou"
-        'End If
-
-
+        
         Dim DA As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
         DA.Fill(DS, "tblinventarioporsurtir")
         'DS.WriteXmlSchema("tblinventarioporsurtir.xml")
@@ -8765,7 +6917,7 @@ Public Class dbVentas
         If pTipo = 1 Then
             Comm.CommandText += " and (tblventasinventario.cantidad-ifnull((select sum(cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento where tblmovimientos.idventa=tblventas.idventa and tblmovimientosdetalles.idinventario=tblventasinventario.idinventario),0))>0"
         End If
-        'Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,tblventasinventario.cantidad,tblventasinventario.descripcion,tblventasinventario.precio,if(tblventasinventario.idinventario>1,spsacacostoarticulo(tblventasinventario.idinventario," + pTipoCosteo.ToString + ",tblinventario.contenido),0) as costoinv,if(tblventasinventario.idvariante>1,spsacacostoproducto(tblproductosvariantes.idproducto," + pTipoCosteo.ToString + "),0) as costopro,tblventasinventario.idinventario,tblventasinventario.idvariante,tblformasdepago.nombre as formadepago,tblclientes.nombre as cnombre from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblproductosvariantes on tblproductosvariantes.idvariante=tblventasinventario.idvariante inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.estado=3 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "'"
+
         If pIdSucursal > 0 Then
             Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
         End If
@@ -8814,7 +6966,6 @@ Public Class dbVentas
         If pTipo = 1 Then
             Comm.CommandText += " and (tblventasremisionesinventario.cantidad-ifnull((select sum(cantidad) from tblmovimientosdetalles inner join tblmovimientos on tblmovimientosdetalles.idmovimiento=tblmovimientos.idmovimiento where tblmovimientos.idremision=tblventasremisiones.idremision and tblmovimientosdetalles.idinventario=tblventasremisionesinventario.idinventario),0))>0"
         End If
-        'Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,tblventasinventario.cantidad,tblventasinventario.descripcion,tblventasinventario.precio,if(tblventasinventario.idinventario>1,spsacacostoarticulo(tblventasinventario.idinventario," + pTipoCosteo.ToString + ",tblinventario.contenido),0) as costoinv,if(tblventasinventario.idvariante>1,spsacacostoproducto(tblproductosvariantes.idproducto," + pTipoCosteo.ToString + "),0) as costopro,tblventasinventario.idinventario,tblventasinventario.idvariante,tblformasdepago.nombre as formadepago,tblclientes.nombre as cnombre from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblproductosvariantes on tblproductosvariantes.idvariante=tblventasinventario.idvariante inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.estado=3 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "'"
         If pIdSucursal > 0 Then
             Comm.CommandText += " and tblventasremisiones.idsucursal=" + pIdSucursal.ToString
         End If
@@ -8848,15 +6999,7 @@ Public Class dbVentas
         End If
         Comm.ExecuteNonQuery()
 
-
-
-
-        'If pConcendaso = False Then
         Comm.CommandText = "select * from tblrepventasporsurtird order by idcliente,fecha,serie,folio"
-        'Else
-        '    Comm.CommandText += " order by tblinventario.idclasificacion,tblinventario.idclasificacion2,tblinventario.idclasificacion3,tblventasinventario.idinventario,preciou"
-        'End If
-
 
         Dim DA As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
         DA.Fill(DS, "tblinventarioporsurtird")
@@ -8899,7 +7042,6 @@ Public Class dbVentas
     End Function
     Public Function TotalAmortizacion(ByVal pIdVenta As Integer) As Double
         Comm.CommandText = "select ifnull((select sum(precio*(1+tblventasinventario.iva/100)) from tblventasinventario inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblventas on tblventas.idventa=tblventasinventario.idventa where tblinventario.esamortizacion=1 and tblventas.idventa=" + pIdVenta.ToString + "),0)"
-        '"+ifnull((select sum(precio*(1+tblventasremisionesinventario.iva/100)) from tblventasremisionesinventario inner join tblinventario on tblventasremisionesinventario.idinventario=tblinventario.idinventario inner join tblventasremisiones on tblventasremisiones.idremision=tblventasremisionesinventario.idremision where tblinventario.esamortizacion=1 and tblventasremisiones.estado=3 and tblventasremisiones.idcliente=" + pIdcliente.ToString + "),0)"
         Return Comm.ExecuteScalar
     End Function
     Public Function DaTotalCantidad(ByVal pIdVenta As Integer) As Double
@@ -8953,22 +7095,7 @@ Public Class dbVentas
             Dim Checa As String
             Checa = XmlTimbrado
             Checa = Checa.ToUpper
-            'If Checa.Contains("YA FUE UTILIZADO. VERIFÍQUELO") Then
-            '    XmlTimbrado = "Recuperar"
-            'End If
-            'Return XmlTimbrado
         Catch ex As Exception
-            'If ex.Message.Contains("Response is not well-formed XML") Then
-            '    If pConMsgbox Then
-            '        MsgBox(ex.Message, MsgBoxStyle.Critical, GlobalNombreApp)
-            '    Else
-            '        MensajeError = ex.Message
-            '    End If
-            '    'Response is not well-formed XML.
-            '    NoCertificadoSAT = "Error"
-            '    XmlTimbrado = "ERROR"
-            '    'Return "ERROR"
-            'Else
             Dim en As New Encriptador
             IO.Directory.CreateDirectory(Application.StartupPath + "\temp\")
             If IO.File.Exists(Application.StartupPath + "\temp\ferror.txt") Then
@@ -9059,17 +7186,6 @@ Public Class dbVentas
             End If
             'Return XmlTimbrado
         Catch ex As Exception
-            'If ex.Message.Contains("Response is not well-formed XML") Then
-            '    If pConMsgbox Then
-            '        MsgBox(ex.Message, MsgBoxStyle.Critical, GlobalNombreApp)
-            '    Else
-            '        MensajeError = ex.Message
-            '    End If
-            '    'Response is not well-formed XML.
-            '    NoCertificadoSAT = "Error"
-            '    XmlTimbrado = "ERROR"
-            '    'Return "ERROR"
-            'Else
             Dim en As New Encriptador
             IO.Directory.CreateDirectory(Application.StartupPath + "\temp\")
             If IO.File.Exists(Application.StartupPath + "\temp\ferror.txt") Then
@@ -9186,147 +7302,6 @@ Public Class dbVentas
     End Function
 
     Public Function ReporteViejosSaldosEx(ByVal pIdSucursal As Integer, ByVal pIdCliente As Integer, ByVal pidVendedor As Integer, ByVal pidMoneda As Integer, ByVal pMostrarEnPesos As Byte, ByVal pTipodeCambio As Double, ByVal pZona As Integer, pIdTipo As Integer, pIdZonaCliente As Integer) As DataView
-        'Dim DS As New DataSet
-        'Dim F As String
-        'F = Format(Date.Now, "yyyy/MM/dd")
-        'If pIdCliente > 0 Then
-        '    Comm.CommandText = "delete from tblclientesviejossaldos where idcliente=" + pIdCliente.ToString
-        'Else
-        '    Comm.CommandText = "delete from tblclientesviejossaldos"
-        'End If
-        'Comm.ExecuteNonQuery()
-        'If pMostrarEnPesos = 0 Then
-        '    Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio),0) as sietedias," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio),0) as quincedias," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio),0) as treintadias," + _
-        '    "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio),0) as sesentadias," + _
-        '    "if(tblventas.idconversion=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio) as credito,0 from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and round(tblventas.totalapagar-tblventas.credito,2)>0 and tblventas.estado=3"
-        'Else
-        '    Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '   "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar-tblventas.credito,0) as sietedias," + _
-        '   "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar-tblventas.credito,0) as quincedias," + _
-        '   "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar-tblventas.credito,0) as treintadias," + _
-        '   "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar-tblventas.credito,0) as sesentadias," + _
-        '   "(tblventas.totalapagar-tblventas.credito) as credito,0 from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and round(tblventas.totalapagar-tblventas.credito,2)>0 and tblventas.estado=3"
-        'End If
-
-        'If pIdSucursal > 0 Then
-        '    Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        'End If
-        'If pIdCliente > 0 Then
-        '    Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-        'End If
-        'If pidVendedor > 0 Then
-        '    Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-        'End If
-        'If pidMoneda > 0 Then
-        '    Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-        'End If
-        'Comm.ExecuteNonQuery()
-        ''---------Notas de Cargo
-
-        'If pMostrarEnPesos = 0 Then
-        '    Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.aplicado,(tblventas.totalapagar-tblventas.aplicado)*tblventas.tipodecambio),0) as sietedias," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.aplicado,(tblventas.totalapagar-tblventas.aplicado)*tblventas.tipodecambio),0) as quincedias," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.aplicado,(tblventas.totalapagar-tblventas.aplicado)*tblventas.tipodecambio),0) as treintadias," + _
-        '    "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.aplicado,(tblventas.totalapagar-tblventas.aplicado)*tblventas.tipodecambio),0) as sesentadias," + _
-        '    "if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.aplicado,(tblventas.totalapagar-tblventas.aplicado)*tblventas.tipodecambio) as credito,1 from tblnotasdecargo as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where round(tblventas.totalapagar-tblventas.aplicado,2)>0 and tblventas.estado=3"
-        'Else
-        '    Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar-tblventas.aplicado,0) as sietedias," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar-tblventas.aplicado,0) as quincedias," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar-tblventas.aplicado,0) as treintadias," + _
-        '    "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar-tblventas.aplicado,0) as sesentadias," + _
-        '    "(tblventas.totalapagar-tblventas.aplicado)*tblventas.tipodecambio as credito,1 from tblnotasdecargo as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where round(tblventas.totalapagar-tblventas.aplicado,2)>0 and tblventas.estado=3"
-        'End If
-
-        'If pIdSucursal > 0 Then
-        '    Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        'End If
-        'If pIdCliente > 0 Then
-        '    Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-        'End If
-        'If pidVendedor > 0 Then
-        '    Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-        'End If
-        'If pidMoneda > 0 Then
-        '    Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-        'End If
-        'Comm.ExecuteNonQuery()
-        ''-------------Documentos Saldo Inicial
-
-        'If pMostrarEnPesos = 0 Then
-        '    Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio),0) as sietedias," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio),0) as quincedias," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio),0) as treintadias," + _
-        '    "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio),0) as sesentadias," + _
-        '    "if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio) as credito,2 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=0 and round(tblventas.totalapagar-tblventas.credito,2)>0 and tblventas.estado=3"
-        'Else
-        '    Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '   "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar-tblventas.credito,0) as sietedias," + _
-        '   "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar-tblventas.credito,0) as quincedias," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar-tblventas.credito,0) as treintadias," + _
-        '    "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar-tblventas.credito,0) as sesentadias," + _
-        '    "(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio as credito,2 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=0 and round(tblventas.totalapagar-tblventas.credito,2)>0 and tblventas.estado=3"
-        'End If
-
-        'If pIdSucursal > 0 Then
-        '    Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        'End If
-        'If pIdCliente > 0 Then
-        '    Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-        'End If
-        'If pidVendedor > 0 Then
-        '    Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-        'End If
-        'If pidMoneda > 0 Then
-        '    Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-        'End If
-        'Comm.ExecuteNonQuery()
-        ''Documentos documentos
-
-        'If pMostrarEnPesos = 0 Then
-        '    Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.seriereferencia,tblventas.folioreferencia,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio),0) as sietedias," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio),0) as quincedias," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio),0) as treintadias," + _
-        '    "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio),0) as sesentadias," + _
-        '    "if(tblventas.idmoneda=2,tblventas.totalapagar-tblventas.credito,(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio) as credito,3 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=1 and round(tblventas.totalapagar-tblventas.credito,2)>0 and tblventas.estado=3"
-        'Else
-        '    Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.seriereferencia,tblventas.folioreferencia,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '   "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar-tblventas.credito,0) as sietedias," + _
-        '   "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar-tblventas.credito,0) as quincedias," + _
-        '    "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar-tblventas.credito,0) as treintadias," + _
-        '    "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar-tblventas.credito,0) as sesentadias," + _
-        '    "(tblventas.totalapagar-tblventas.credito)*tblventas.tipodecambio as credito,3 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=1 and round(tblventas.totalapagar-tblventas.credito,2)>0 and tblventas.estado=3"
-        'End If
-
-        'If pIdSucursal > 0 Then
-        '    Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        'End If
-        'If pIdCliente > 0 Then
-        '    Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-        'End If
-        'If pidVendedor > 0 Then
-        '    Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-        'End If
-        'If pidMoneda > 0 Then
-        '    Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-        'End If
-        'Comm.ExecuteNonQuery()
-        'If pIdCliente <= 0 Then
-        '    Comm.CommandText = "select fecha,tblclientes.clave,tblclientes.nombre,tblclientes.idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,tipo,tblclientesviejossaldos.credito,0 as saldoant from tblclientesviejossaldos inner join tblclientes on tblclientesviejossaldos.idcliente=tblclientes.idcliente  order by tblclientes.nombre,fecha,serie,folio"
-        'Else
-        '    Comm.CommandText = "select fecha,tblclientes.clave,tblclientes.nombre,tblclientes.idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,tipo,tblclientesviejossaldos.credito,0 as saldoant from tblclientesviejossaldos inner join tblclientes on tblclientesviejossaldos.idcliente=tblclientes.idcliente where tblclientesviejossaldos.idcliente=" + pIdCliente.ToString + " order by tblclientes.nombre,fecha,serie,folio"
-        'End If
-
-        'Dim DA As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
-        'DA.Fill(DS, "tblventasviejo")
-        ''DS.WriteXmlSchema("tblventasviejo.xml")
-        'Return DS.Tables("tblventasviejo").DefaultView
         Dim DS As New DataSet
         Dim F As String
         F = Format(Date.Now, "yyyy/MM/dd")
@@ -9619,10 +7594,6 @@ Public Class dbVentas
         If pIdZonaCliente > 0 Then
             Comm.CommandText += " and tblclientes.zona=" + pIdZonaCliente.ToString
         End If
-        'If pZona > 0 Then
-        '    'Comm.CommandText += " INNER JOIN tblvendedores t2 ON ( tblventas.idvendedor=t2.id)"
-        '    Comm.CommandText += " and tblvendedores.zona='" + pZona.ToString() + "'"
-        'End If
         Comm.ExecuteNonQuery()
         'Documentos documentos
 
@@ -9714,10 +7685,6 @@ Public Class dbVentas
         If pIdZonaCliente > 0 Then
             Comm.CommandText += " and tblclientes.zona=" + pIdZonaCliente.ToString
         End If
-        'If pZona > 0 Then
-        '    'Comm.CommandText += " INNER JOIN tblvendedores t2 ON ( tblventas.idvendedor=t2.id)"
-        '    Comm.CommandText += " and tblvendedores.zona='" + pZona.ToString() + "'"
-        'End If
         Comm.ExecuteNonQuery()
         'Saca saldos
         'Comm.CommandText = "delete from tblclientesmovimientossaldos"
@@ -9750,16 +7717,6 @@ Public Class dbVentas
             Comm.CommandText = "delete from tblclientesviejossaldosex"
         End If
         Comm.ExecuteNonQuery()
-        'If pMostrarEnPesos = 0 Then
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,concat(tblventas.referencia,' - ',tblventas.serie),tblventas.folioi,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,(tblventas.totalapagar)*tblventas.tipodecambio),0) as quincedias," + _
-        '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,(tblventas.totalapagar)*tblventas.tipodecambio),0) as treintadias," + _
-        '"if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,(tblventas.totalapagar)*tblventas.tipodecambio),0) as sesentadias," + _
-        '"if(tblventas.idmoneda=2," + _
-        '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + Pfecha + "' and tblventaspagos.idventa=tblventas.idventa),0)," + _
-        '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + Pfecha + "' and tblventaspagos.idventa=tblventas.idventa),0)*tblventas.tipodecambio) as credito," + _
-        '"0 from tblcompras as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0  and tblventas.fecha<='" + Pfecha + "' and tblventas.estado=3"
         Comm.CommandText = "insert into tblclientesviejossaldosex(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,tresmeses,seismeses,docemeses,dosyears,tresyears,cuatroyears,cincoyears,credito,tipo,tipodecambio,corriente,totalapagar,idsucursal,snombre) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
         "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
         "if('" + F + "'>date_format(adddate(fecha,tblclientes.creditodias+7),'%Y/%m/%d') and '" + F + "'<=date_format(adddate(fecha,tblclientes.creditodias+15),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
@@ -10122,363 +8079,7 @@ Public Class dbVentas
         DA.Fill(DS, "tblclientesviejo")
         'DS.WriteXmlSchema("tblcomprasviejo.xml")
         Return DS.Tables("tblclientesviejo").DefaultView
-        '        Dim DS As New DataSet
-        '        Dim F As String
-        '        F = pFecha
-        '        Comm.CommandTimeout = 10000
-        '        If pIdCliente > 0 Then
-        '            Comm.CommandText = "delete from tblclientesviejossaldos where idcliente=" + pIdCliente.ToString
-        '        Else
-        '            Comm.CommandText = "delete from tblclientesviejossaldos"
-        '        End If
-        '        Comm.ExecuteNonQuery()
-        '        If pMostrarEnPesos = 0 Then
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-        '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-        '"if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-        '"if(tblventas.idconversion=2," + _
-        '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0)," + _
-        '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0)*tblventas.tipodecambio) as credito,0 from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and tblventas.estado=3 and tblventas.fecha<='" + pFecha + "'"
-        '        Else
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-        '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-        '"if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-        '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0) as credito,0 from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and tblventas.estado=3 and tblventas.estado=3 and tblventas.fecha<='" + pFecha + "'"
-        '        End If
-
-        '        If pIdSucursal > 0 Then
-        '            Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        '        End If
-        '        If pIdCliente > 0 Then
-        '            Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-        '        End If
-        '        If pidVendedor > 0 Then
-        '            Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-        '        End If
-        '        If pidMoneda > 0 Then
-        '            Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-        '        End If
-        '        Comm.ExecuteNonQuery()
-        '        '---------Notas de Cargo
-
-        '        If pMostrarEnPesos = 0 Then
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-        '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-        '            "if(tblventas.idmoneda=2," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0)," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0)*tblventas.tipodecambio) as credito,1 from tblnotasdecargo as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.fecha<='" + pFecha + "' and tblventas.estado=3"
-        '        Else
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-        '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0) as credito,1 from tblnotasdecargo as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.fecha<='" + pFecha + "' and tblventas.estado=3"
-        '        End If
-
-        '        If pIdSucursal > 0 Then
-        '            Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        '        End If
-        '        If pIdCliente > 0 Then
-        '            Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-        '        End If
-        '        If pidVendedor > 0 Then
-        '            Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-        '        End If
-        '        If pidMoneda > 0 Then
-        '            Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-        '        End If
-        '        Comm.ExecuteNonQuery()
-        '        '-------------Documentos Saldo Inicial
-
-        '        If pMostrarEnPesos = 0 Then
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-        '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-        '            "if(tblventas.idmoneda=2," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)*tblventas.tipodecambio) as credito,2 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=0 and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3"
-        '        Else
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-        '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)) as credito,2 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=0 and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3"
-        '        End If
-
-        '        If pIdSucursal > 0 Then
-        '            Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        '        End If
-        '        If pIdCliente > 0 Then
-        '            Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-        '        End If
-        '        If pidVendedor > 0 Then
-        '            Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-        '        End If
-        '        If pidMoneda > 0 Then
-        '            Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-        '        End If
-        '        Comm.ExecuteNonQuery()
-        '        'Documentos documentos
-
-        '        If pMostrarEnPesos = 0 Then
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.seriereferencia,tblventas.folioreferencia,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-        '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-        '            "if(tblventas.idmoneda=2," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)*tblventas.tipodecambio) as credito,3 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=1 and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3"
-        '        Else
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.seriereferencia,tblventas.folioreferencia,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-        '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0) as credito,3 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=1 and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3"
-        '        End If
-
-        '        If pIdSucursal > 0 Then
-        '            Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        '        End If
-        '        If pIdCliente > 0 Then
-        '            Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-        '        End If
-        '        If pidVendedor > 0 Then
-        '            Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-        '        End If
-        '        If pidMoneda > 0 Then
-        '            Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-        '        End If
-        '        Comm.ExecuteNonQuery()
-
-        '        'Saca saldos
-        '        Comm.CommandText = "delete from tblclientesmovimientossaldos"
-        '        Comm.ExecuteNonQuery()
-        '        'Comm.CommandText = "insert into tblclientesmovimientossaldos(idcliente,saldoant) select idcliente,spdasaldoafechaclientes(idcliente,'" + Format(DateAdd(DateInterval.Day, 1, CDate(pFecha)), "yyyy/MM/dd") + "') from tblclientesviejossaldos group by idcliente"
-        '        Comm.CommandText = "insert into tblclientesmovimientossaldos(idcliente,saldoant) select c.idcliente, " + _
-        '        "ifnull((select if(idconversion=2,sum(totalapagar),sum(totalapagar*tipodecambio)) from tblventas inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and idcliente=c.idcliente and estado=3 and tblventas.fecha<='" + pFecha + "'),0)+" + _
-        '"ifnull((select if(idmoneda=2,sum(totalapagar),sum(totalapagar*tipodecambio)) from tblnotasdecargo where idcliente=c.idcliente and estado=3 and tblnotasdecargo.fecha<='" + pFecha + "'),0)+" + _
-        '"ifnull((select if(idmoneda=2,sum(totalapagar),sum(totalapagar*tipodecambio)) from tbldocumentosclientes where idcliente=c.idcliente and estado=3 and tbldocumentosclientes.fecha<='" + pFecha + "'),0)-" + _
-        '"ifnull((select if(idmoneda=2,sum(cantidad),sum(cantidad*ptipodecambio)) from tblventaspagos where idcliente=c.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "'),0) AS saldo " + _
-        '"from tblclientesviejossaldos as c group by c.idcliente"
-        '        Comm.ExecuteNonQuery()
-        '        If pIdCliente <= 0 Then
-        '            Comm.CommandText = "select fecha,tblclientes.clave,tblclientes.nombre,tblclientes.idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,tipo,tblclientesviejossaldos.credito,saldoant from tblclientesviejossaldos inner join tblclientes on tblclientesviejossaldos.idcliente=tblclientes.idcliente inner join tblclientesmovimientossaldos on tblclientesviejossaldos.idcliente=tblclientesmovimientossaldos.idcliente where round(sietedias+quincedias+treintadias+sesentadias-tblclientesviejossaldos.credito,2)>0 order by tblclientes.nombre,fecha,serie,folio"
-        '        Else
-        '            Comm.CommandText = "select fecha,tblclientes.clave,tblclientes.nombre,tblclientes.idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,tipo,tblclientesviejossaldos.credito,saldoant from tblclientesviejossaldos inner join tblclientes on tblclientesviejossaldos.idcliente=tblclientes.idcliente inner join tblclientesmovimientossaldos on tblclientesviejossaldos.idcliente=tblclientesmovimientossaldos.idcliente where tblclientesviejossaldos.idcliente=" + pIdCliente.ToString + " and round(sietedias+quincedias+treintadias+sesentadias-tblclientesviejossaldos.credito,2)>0 order by tblclientes.nombre,fecha,serie,folio"
-        '        End If
-
-        '        Dim DA As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
-        '        DA.Fill(DS, "tblventasviejo")
-        '        'DS.WriteXmlSchema("tblventasviejo.xml")
-        '        Return DS.Tables("tblventasviejo").DefaultView
-        '    End Function
-
-        '    Public Function ReporteViejosSaldosHN(ByVal pIdSucursal As Integer, ByVal pIdCliente As Integer, ByVal pidVendedor As Integer, ByVal pidMoneda As Integer, ByVal pMostrarEnPesos As Byte, ByVal pFecha As String) As DataView
-        '        Dim DS As New DataSet
-        '        Dim F As String
-        '        F = pFecha
-        '        Comm.CommandTimeout = 10000
-        '        If pIdCliente > 0 Then
-        '            Comm.CommandText = "delete from tblclientesviejossaldos where idcliente=" + pIdCliente.ToString
-        '        Else
-        '            Comm.CommandText = "delete from tblclientesviejossaldos"
-        '        End If
-        '        Comm.ExecuteNonQuery()
-        '        If pMostrarEnPesos = 0 Then
-
-        '            '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '            '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-        '            '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-        '            '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-        '            '"if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-        '            '"if(tblventas.idconversion=2," + _
-        '            '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0)," + _
-        '            '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0)*tblventas.tipodecambio) as credito,0 from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and tblventas.estado=3 and tblventas.fecha<='" + pFecha + "' and round(tblventas.totalapagar-tblventas.credito,2)>0;"
-
-
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(tblventas.fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '            "if('" + F + "'>=date_format(adddate(tblventas.fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-        '            "if('" + F + "'>=date_format(adddate(tblventas.fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(tblventas.fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-        '"if('" + F + "'>=date_format(adddate(tblventas.fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(tblventas.fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-        '"if('" + F + "'<date_format(adddate(tblventas.fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idconversion=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-        '"if(tblventas.idconversion=2," + _
-        '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0)," + _
-        '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0)*tblventas.tipodecambio) as credito,0 from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and tblventas.estado=3 and tblventas.fecha<='" + pFecha + "' and round(tblventas.totalapagar-ifnull((select sum(cantidad) from tblventaspagos where tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0),2)>0"
-
-
-        '        Else
-        '            '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '            '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-        '            '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-        '            '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-        '            '"if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-        '            '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0) as credito,0 from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and tblventas.estado=3 and tblventas.estado=3 and tblventas.fecha<='" + pFecha + "' and round(tblventas.totalapagar-tblventas.credito,2)>0"
-
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-        '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-        '"if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-        '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0) as credito,0 from tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and tblventas.estado=3 and tblventas.estado=3 and tblventas.fecha<='" + pFecha + "' and round(tblventas.totalapagar-ifnull((select sum(cantidad) from tblventaspagos where tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idventa=tblventas.idventa),0),2)>0"
-        '        End If
-
-        '        If pIdSucursal > 0 Then
-        '            Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        '        End If
-        '        If pIdCliente > 0 Then
-        '            Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-        '        End If
-        '        If pidVendedor > 0 Then
-        '            Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-        '        End If
-        '        If pidMoneda > 0 Then
-        '            Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-        '        End If
-        '        Comm.ExecuteNonQuery()
-        '        '---------Notas de Cargo
-
-        '        If pMostrarEnPesos = 0 Then
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-        '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-        '            "if(tblventas.idmoneda=2," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0)," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0)*tblventas.tipodecambio) as credito,1 from tblnotasdecargo as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and round(tblventas.totalapagar-ifnull((select sum(cantidad) from tblventaspagos where tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0),2)>0"
-
-        '            'Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '            '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-        '            '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-        '            '"if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-        '            '"if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-        '            '"if(tblventas.idmoneda=2," + _
-        '            '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0)," + _
-        '            '"ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0)*tblventas.tipodecambio) as credito,1 from tblnotasdecargo as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.fecha<='" + pFecha + "' and tblventas.estado=3"
-
-        '        Else
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-        '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0) as credito,1 from tblnotasdecargo as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and round(tblventas.totalapagar-ifnull((select sum(cantidad) from tblventaspagos where tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.idcargo=tblventas.idcargo),0),2)>0"
-        '        End If
-
-        '        If pIdSucursal > 0 Then
-        '            Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        '        End If
-        '        If pIdCliente > 0 Then
-        '            Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-        '        End If
-        '        If pidVendedor > 0 Then
-        '            Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-        '        End If
-        '        If pidMoneda > 0 Then
-        '            Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-        '        End If
-        '        Comm.ExecuteNonQuery()
-        '        '-------------Documentos Saldo Inicial
-
-        '        If pMostrarEnPesos = 0 Then
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-        '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-        '            "if(tblventas.idmoneda=2," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)*tblventas.tipodecambio) as credito,2 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=0 and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and round(tblventas.totalapagar-ifnull((select sum(cantidad) from tblventaspagos where tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0),2)>0"
-        '        Else
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.serie,tblventas.folio,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-        '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)) as credito,2 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=0 and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and round(tblventas.totalapagar-ifnull((select sum(cantidad) from tblventaspagos where tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0),2)>0"
-        '        End If
-
-        '        If pIdSucursal > 0 Then
-        '            Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        '        End If
-        '        If pIdCliente > 0 Then
-        '            Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-        '        End If
-        '        If pidVendedor > 0 Then
-        '            Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-        '        End If
-        '        If pidMoneda > 0 Then
-        '            Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-        '        End If
-        '        Comm.ExecuteNonQuery()
-        '        'Documentos documentos
-
-        '        If pMostrarEnPesos = 0 Then
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.seriereferencia,tblventas.folioreferencia,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sietedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as quincedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as treintadias," + _
-        '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),if(tblventas.idmoneda=2,tblventas.totalapagar,tblventas.totalapagar*tblventas.tipodecambio),0) as sesentadias," + _
-        '            "if(tblventas.idmoneda=2," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0)*tblventas.tipodecambio) as credito,3 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=1 and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and round(tblventas.totalapagar-ifnull((select sum(cantidad) from tblventaspagos where tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0),2)>0"
-        '        Else
-        '            Comm.CommandText = "insert into tblclientesviejossaldos(fecha,idcliente,serie,folio,limite,sietedias,quincedias,treintadias,sesentadias,credito,tipo) select tblventas.fecha,tblclientes.idcliente,tblventas.seriereferencia,tblventas.folioreferencia,date_format(adddate(fecha,tblclientes.creditodias),'%Y/%m/%d') as limite," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as sietedias," + _
-        '           "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-7),'%Y/%m/%d'),tblventas.totalapagar,0) as quincedias," + _
-        '            "if('" + F + "'>=date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d') and '" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-15),'%Y/%m/%d'),tblventas.totalapagar,0) as treintadias," + _
-        '            "if('" + F + "'<date_format(adddate(fecha,tblclientes.creditodias-30),'%Y/%m/%d'),tblventas.totalapagar,0) as sesentadias," + _
-        '            "ifnull((select sum(cantidad) from tblventaspagos where idcliente=tblventas.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0) as credito,3 from tbldocumentosclientes as tblventas inner join tblclientes on tblventas.idcliente=tblclientes.idcliente where tblventas.tiposaldo=1 and tblventas.fecha<='" + pFecha + "' and tblventas.estado=3 and round(tblventas.totalapagar-ifnull((select sum(cantidad) from tblventaspagos where tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "' and tblventaspagos.iddocumentod=tblventas.iddocumento),0),2)>0"
-        '        End If
-
-        '        If pIdSucursal > 0 Then
-        '            Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
-        '        End If
-        '        If pIdCliente > 0 Then
-        '            Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
-        '        End If
-        '        If pidVendedor > 0 Then
-        '            Comm.CommandText += " and tblventas.idvendedor=" + pidVendedor.ToString
-        '        End If
-        '        If pidMoneda > 0 Then
-        '            Comm.CommandText += " and tblventas.idconversion=" + pidMoneda.ToString
-        '        End If
-        '        Comm.ExecuteNonQuery()
-
-        '        'Saca saldos
-        '        Comm.CommandText = "delete from tblclientesmovimientossaldos"
-        '        Comm.ExecuteNonQuery()
-        '        'Comm.CommandText = "insert into tblclientesmovimientossaldos(idcliente,saldoant) select idcliente,spdasaldoafechaclientes(idcliente,'" + Format(DateAdd(DateInterval.Day, 1, CDate(pFecha)), "yyyy/MM/dd") + "') from tblclientesviejossaldos group by idcliente"
-        '        Comm.CommandText = "insert into tblclientesmovimientossaldos(idcliente,saldoant) select c.idcliente, " + _
-        '        "ifnull((select if(idconversion=2,sum(totalapagar),sum(totalapagar*tipodecambio)) from tblventas inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma where tblformasdepago.tipo=0 and idcliente=c.idcliente and estado=3 and tblventas.fecha<='" + pFecha + "'),0)+" + _
-        '"ifnull((select if(idmoneda=2,sum(totalapagar),sum(totalapagar*tipodecambio)) from tblnotasdecargo where idcliente=c.idcliente and estado=3 and tblnotasdecargo.fecha<='" + pFecha + "'),0)+" + _
-        '"ifnull((select if(idmoneda=2,sum(totalapagar),sum(totalapagar*tipodecambio)) from tbldocumentosclientes where idcliente=c.idcliente and estado=3 and tbldocumentosclientes.fecha<='" + pFecha + "'),0)-" + _
-        '"ifnull((select if(idmoneda=2,sum(cantidad),sum(cantidad*ptipodecambio)) from tblventaspagos where idcliente=c.idcliente and tblventaspagos.estado=3 and tblventaspagos.fecha<='" + pFecha + "'),0) AS saldo " + _
-        '"from tblclientesviejossaldos as c group by c.idcliente"
-        '        Comm.ExecuteNonQuery()
-        '        If pIdCliente <= 0 Then
-        '            Comm.CommandText = "select fecha,tblclientes.clave,tblclientes.nombre,tblclientes.idcliente,serie,folio,limite,round(sietedias,2) as sietedias,quincedias,treintadias,sesentadias,tipo,round(tblclientesviejossaldos.credito,2) as credito,round(saldoant,2) as saldoant from tblclientesviejossaldos inner join tblclientes on tblclientesviejossaldos.idcliente=tblclientes.idcliente inner join tblclientesmovimientossaldos on tblclientesviejossaldos.idcliente=tblclientesmovimientossaldos.idcliente where round(sietedias+quincedias+treintadias+sesentadias-tblclientesviejossaldos.credito,2)>0 order by tblclientes.nombre,fecha,serie,folio"
-        '        Else
-        '            Comm.CommandText = "select fecha,tblclientes.clave,tblclientes.nombre,tblclientes.idcliente,serie,folio,limite,round(sietedias,2) as sietedias,quincedias,treintadias,sesentadias,tipo,round(tblclientesviejossaldos.credito,2) as credito,round(saldoant,2) as saldoant from tblclientesviejossaldos inner join tblclientes on tblclientesviejossaldos.idcliente=tblclientes.idcliente inner join tblclientesmovimientossaldos on tblclientesviejossaldos.idcliente=tblclientesmovimientossaldos.idcliente where tblclientesviejossaldos.idcliente=" + pIdCliente.ToString + " and round(sietedias+quincedias+treintadias+sesentadias-tblclientesviejossaldos.credito,2)>0 order by tblclientes.nombre,fecha,serie,folio"
-        '        End If
-
-        '        Dim DA As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
-        '        DA.Fill(DS, "tblventasviejo")
-        '        'DS.WriteXmlSchema("tblventasviejo.xml")
-        '        Return DS.Tables("tblventasviejo").DefaultView
+  
     End Function
     Public Function ReporteGroupByFolio(ByVal pFecha1 As String, ByVal pFecha2 As String, ByVal pIdSucursal As Integer, ByVal pIdCliente As Integer, ByVal pidVendedor As Integer, ByVal pidMoneda As Integer, ByVal pMostrarEnPesos As Byte, ByVal pidinventario As Integer, ByVal pidclasificacion1 As Integer, ByVal pidclasificacion2 As Integer, ByVal pidclasificacion3 As Integer, ByVal pSoloCanceladas As Boolean, ByVal pSerie As String, ByVal pZona As Integer, ByVal pZona2 As Integer) As DataView
         Dim DS As New DataSet
@@ -10494,7 +8095,6 @@ Public Class dbVentas
         Else
             Comm.CommandText += " and tblventas.estado=3"
         End If
-        'Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,tblventasinventario.cantidad,tblventasinventario.descripcion,tblventasinventario.precio,if(tblventasinventario.idinventario>1,spsacacostoarticulo(tblventasinventario.idinventario," + pTipoCosteo.ToString + ",tblinventario.contenido),0) as costoinv,if(tblventasinventario.idvariante>1,spsacacostoproducto(tblproductosvariantes.idproducto," + pTipoCosteo.ToString + "),0) as costopro,tblventasinventario.idinventario,tblventasinventario.idvariante,tblformasdepago.nombre as formadepago,tblclientes.nombre as cnombre from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblproductosvariantes on tblproductosvariantes.idvariante=tblventasinventario.idvariante inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.estado=3 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "'"
         If pIdSucursal > 0 Then
             Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
         End If
@@ -11145,14 +8745,6 @@ Public Class dbVentas
         If pNoceros Then
             Comm.CommandText += " where cantidad<>0"
         End If
-        'If pModulo > 0 Then
-        'If pNoceros Then
-        '    Comm.CommandText += " and modulo=" + CStr(pModulo - 1)
-        'Else
-        '    Comm.CommandText += " where modulo=" + CStr(pModulo - 1)
-        'End If
-
-        'End If
         Comm.CommandText += " order by modulo,posicion"
         Dim dr As MySql.Data.MySqlClient.MySqlDataReader = Comm.ExecuteReader()
         Dim S As String
@@ -11213,7 +8805,6 @@ Public Class dbVentas
             Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,s.nombre as tipodecambio,tblventas.idconversion,tblventasinventario.cantidad," + CampoDesc + " as descripcion,round(tblventasinventario.precio,2) precio,0 as costoinv,0 as costopro,tblventasinventario.idinventario,0 idvariante,tblformasdepago.tipo as formadepago,tblclientes.nombre as cnombre,tblventasinventario.iva,tblventas.isr,tblventas.ivaretenido,round(tblventasinventario.precio/tblventasinventario.cantidad,2) as preciou,tblinventario.clave,(select nombre from tblvendedores where idvendedor=tblventas.idvendedor) as vnombre,tblventas.idvendedor,tblventas.porsurtir,tblformasdepago.tipo as tipoforma,tblventasinventario.ieps,tblventasinventario.ivaretenido ivar, (tblventasinventario.cantidad*tblinventario.peso) as peso " + _
             "from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma inner join tblvendedores on tblventas.idvendedor=tblvendedores.idvendedor inner join tblsucursales as s on tblventas.idsucursal=s.idsucursal where tblformasdepago.tipo<>2 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "' and tblventasinventario.cantidad<>0 "
         End If
-        'Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,tblventasinventario.cantidad,tblventasinventario.descripcion,tblventasinventario.precio,if(tblventasinventario.idinventario>1,spsacacostoarticulo(tblventasinventario.idinventario," + pTipoCosteo.ToString + ",tblinventario.contenido),0) as costoinv,if(tblventasinventario.idvariante>1,spsacacostoproducto(tblproductosvariantes.idproducto," + pTipoCosteo.ToString + "),0) as costopro,tblventasinventario.idinventario,tblventasinventario.idvariante,tblformasdepago.nombre as formadepago,tblclientes.nombre as cnombre from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblproductosvariantes on tblproductosvariantes.idvariante=tblventasinventario.idvariante inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.estado=3 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "'"
         If pIdSucursal > 0 Then
             Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
         End If
@@ -11315,18 +8906,8 @@ Public Class dbVentas
         If pIdCliente > 0 Then Comm.CommandText += " and tblventas.idcliente=" + pIdCliente.ToString
         If pFormadepago = 1 Then Comm.CommandText += " and tblformasdepago.tipo=0"
         If pFormadepago = 2 Then Comm.CommandText += " and tblformasdepago.tipo=1"
-        'If pSoloActivas Then
         Comm.CommandText += " and tblventas.estado=3"
-        '    Else
-        'If pSoloCanceladas Then
-        'Comm.CommandText += " and tblventas.estado=4"
-        'Else
-        'Comm.CommandText += " and (tblventas.estado=3 or tblventas.estado=4)"
-        'End If
-        '    End If
-
-        'Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,tblventasinventario.cantidad,tblventasinventario.descripcion,tblventasinventario.precio,if(tblventasinventario.idinventario>1,spsacacostoarticulo(tblventasinventario.idinventario," + pTipoCosteo.ToString + ",tblinventario.contenido),0) as costoinv,if(tblventasinventario.idvariante>1,spsacacostoproducto(tblproductosvariantes.idproducto," + pTipoCosteo.ToString + "),0) as costopro,tblventasinventario.idinventario,tblventasinventario.idvariante,tblformasdepago.nombre as formadepago,tblclientes.nombre as cnombre from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblproductosvariantes on tblproductosvariantes.idvariante=tblventasinventario.idvariante inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.estado=3 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "'"
-
+        
         Comm.CommandText += " order by tblventas.fecha"
         Dim dr As MySql.Data.MySqlClient.MySqlDataReader = Comm.ExecuteReader
         While dr.Read()
@@ -11368,8 +8949,7 @@ Public Class dbVentas
         End If
         If pFormadepago = 1 Then Comm.CommandText += " and tblformasdepago.tipo=0"
         If pFormadepago = 2 Then Comm.CommandText += " and tblformasdepago.tipo=1"
-        'Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,tblventasinventario.cantidad,tblventasinventario.descripcion,tblventasinventario.precio,if(tblventasinventario.idinventario>1,spsacacostoarticulo(tblventasinventario.idinventario," + pTipoCosteo.ToString + ",tblinventario.contenido),0) as costoinv,if(tblventasinventario.idvariante>1,spsacacostoproducto(tblproductosvariantes.idproducto," + pTipoCosteo.ToString + "),0) as costopro,tblventasinventario.idinventario,tblventasinventario.idvariante,tblformasdepago.nombre as formadepago,tblclientes.nombre as cnombre from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblproductosvariantes on tblproductosvariantes.idvariante=tblventasinventario.idvariante inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.estado=3 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "'"
-
+     
         Comm.CommandText += " order by tblventas.fecha,tblventas.serie,tblventas.folio,tblventas.idventa"
         Dim dr As MySql.Data.MySqlClient.MySqlDataReader = Comm.ExecuteReader
         Dim dt As New DataTable
@@ -11431,7 +9011,6 @@ Public Class dbVentas
             End If
         End If
 
-        'Comm.CommandText = "select tblventas.idventa,tblventas.folio,tblventas.serie,tblventas.estado,tblventas.total,tblventas.totalapagar,tblventas.fecha,tblventas.tipodecambio,tblventas.idconversion,tblventasinventario.cantidad,tblventasinventario.descripcion,tblventasinventario.precio,if(tblventasinventario.idinventario>1,spsacacostoarticulo(tblventasinventario.idinventario," + pTipoCosteo.ToString + ",tblinventario.contenido),0) as costoinv,if(tblventasinventario.idvariante>1,spsacacostoproducto(tblproductosvariantes.idproducto," + pTipoCosteo.ToString + "),0) as costopro,tblventasinventario.idinventario,tblventasinventario.idvariante,tblformasdepago.nombre as formadepago,tblclientes.nombre as cnombre from tblventas inner join tblventasinventario on tblventas.idventa=tblventasinventario.idventa inner join tblinventario on tblventasinventario.idinventario=tblinventario.idinventario inner join tblproductosvariantes on tblproductosvariantes.idvariante=tblventasinventario.idvariante inner join tblclientes on tblventas.idcliente=tblclientes.idcliente inner join tblformasdepago on tblformasdepago.idforma=tblventas.idforma where tblventas.estado=3 and tblventas.fecha>='" + pFecha1 + "' and tblventas.fecha<='" + pFecha2 + "'"
         If pIdSucursal > 0 Then
             Comm.CommandText += " and tblventas.idsucursal=" + pIdSucursal.ToString
         End If

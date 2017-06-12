@@ -112,6 +112,7 @@
             ListBox1.Items.Add("Antigüedad de saldos extendido.")
             'ListBox1.Items.Add("Antigüedad de saldos a fecha.")
             ListBox1.Items.Add("Cobranza.")
+            ListBox1.Items.Add("Cobranza detallado por tasa de IEPS.")
             ListBox1.Items.Add("Analítica de clientes.")
 
             ListBox1.Items.Add("Saldos.")
@@ -226,26 +227,7 @@
             End If
             If RadioButton1.Checked Then TipoCosteo = 1
             If RadioButton2.Checked Then TipoCosteo = 2
-            'If RadioButton3.Checked Then TipoCosteo = 3
-            'ListBox1.Items.Add("Ventas.")
-            'ListBox1.Items.Add("Ventas por tipo de pago.")
-            'ListBox1.Items.Add("Ventas por artículo.")
-            'ListBox1.Items.Add("Utilidad de venta.")
-            'ListBox1.Items.Add("Utilidada de venta por artículo.")
-            'ListBox1.Items.Add("Cobranza.")
-            'ListBox1.Items.Add("Saldos.")
-            'ListBox1.Items.Add("Antigüedad de saldos.")
-            'ListBox1.Items.Add("Antigüedad de saldos a fecha.")
-            'ListBox1.Items.Add("Documentos de clientes.")
-            'ListBox1.Items.Add("Notas de crédito.")
-            'ListBox1.Items.Add("Notas de cargo.")
-            'ListBox1.Items.Add("Devoluciones.")
-            'ListBox1.Items.Add("Remisiones.")
-            'ListBox1.Items.Add("Remisiones por artículo.")
-            'ListBox1.Items.Add("Cotizaciones.")
-            'ListBox1.Items.Add("Pedidos.")
-            'ListBox1.Items.Add("Catálogo de clientes.")
-            'ListBox1.Items.Add("Direcctorio de clientes.")
+
             Select Case ListBox1.Text
                 Case "Ventas."
                     Dim Rep As CrystalDecisions.CrystalReports.Engine.ReportDocument
@@ -676,31 +658,6 @@
                     Dim RV As New frmReportes(Rep, False)
                     RV.Show()
 
-                    'Dim Rep As CrystalDecisions.CrystalReports.Engine.ReportDocument
-                    ''V.Reporte(Tipo, IdsSucursales.Valor(ComboBox1.SelectedIndex), IdCliente)
-                    'Rep = New repVentasIEPS
-                    'Rep.SetDataSource(V.ReporteIEPS(Format(DateTimePicker1.Value, "yyyy/MM/dd"), Format(DateTimePicker2.Value, "yyyy/MM/dd"), IdsSucursales.Valor(ComboBox1.SelectedIndex), IdCliente, IdsVendedores.Valor(ComboBox2.SelectedIndex), IdsMonedas.Valor(ComboBox4.SelectedIndex), ComboBox5.SelectedIndex, IdInventario, idClas, idClas2, idClas3, CheckBox14.Checked, TextBox5.Text, idClas4, idClas5, False, IdsAlmacenes.Valor(ComboBox13.SelectedIndex), idTipo, False, IdsTiposSuc.Valor(ComboBox15.SelectedIndex), True))
-                    'Rep.SetParameterValue("Encabezado", S.NombreFiscal)
-                    'Dim Filtros As String
-                    'Filtros = "Fechas: " + Format(DateTimePicker1.Value, "yyyy/MM/dd") + " al " + Format(DateTimePicker2.Value, "yyyy/MM/dd") + " Sucursal: " + ComboBox1.Text + " Almacen: " + ComboBox13.Text + vbCr
-                    'If IdCliente = 0 Then
-                    '    Filtros += " Cliente: Todos"
-                    'Else
-                    '    Filtros += " Cliente: " + TextBox2.Text
-                    'End If
-                    'If TextBox4.Text = "" Then
-                    '    Filtros += " Artículo: Todos"
-                    'Else
-                    '    Filtros += " Artículo: " + TextBox4.Text
-                    'End If
-                    'If CheckBox14.Checked Then
-                    '    Filtros += " *SOLO CANCELADAS*"
-                    'End If
-                    'Rep.SetParameterValue("Filtros", Filtros)
-                    'Rep.SetParameterValue("sucursal", ComboBox1.Text)
-                    'Rep.SetParameterValue("subtitulo", "Reporte de facturas por tasa de IEPS")
-                    'Dim RV As New frmReportes(Rep, False)
-                    'RV.Show()
                 Case "Remisiones por tasa de IEPS."
 
                     Dim VR As New dbVentasRemisiones(MySqlcon)
@@ -1055,27 +1012,7 @@
                     RV.Show()
                 Case "Ventas por surtir detallado."
                     V.ReporteVentasPorSurtirDetallado(Format(DateTimePicker1.Value, "yyyy/MM/dd"), Format(DateTimePicker2.Value, "yyyy/MM/dd"), IdsSucursales.Valor(ComboBox1.SelectedIndex), IdCliente, IdInventario, idClas, idClas2, idClas3, IdsVendedores.Valor(ComboBox2.SelectedIndex), IdsMonedas.Valor(ComboBox4.SelectedIndex), ComboBox5.SelectedIndex, True, TextBox5.Text, ComboBox10.SelectedIndex, IdsAlmacenes.Valor(ComboBox13.SelectedIndex))
-                    'Dim Rep As CrystalDecisions.CrystalReports.Engine.ReportDocument
-                    ''V.Reporte(TipoCosteo, IdsSucursales.Valor(ComboBox1.SelectedIndex), IdInventario, idClas, idClas2, idClas3, IdCliente)
-                    'Rep = New repVentasporSurtir
-                    'Rep.SetDataSource(V.ReporteVentasPorSurtir(Format(DateTimePicker1.Value, "yyyy/MM/dd"), Format(DateTimePicker2.Value, "yyyy/MM/dd"), IdsSucursales.Valor(ComboBox1.SelectedIndex), IdCliente, IdInventario, idClas, idClas2, idClas3, IdsVendedores.Valor(ComboBox2.SelectedIndex), IdsMonedas.Valor(ComboBox4.SelectedIndex), ComboBox5.SelectedIndex, True, TextBox5.Text, ComboBox10.SelectedIndex))
-                    'Rep.SetParameterValue("Encabezado", S.Nombre)
-                    'Dim Filtros As String = ""
-                    'If ComboBox10.SelectedIndex = 0 Then
-                    '    Filtros += "Período del: " + Format(DateTimePicker1.Value, "yyyy/MM/dd") + " al " + Format(DateTimePicker2.Value, "yyyy/MM/dd") + " Sucursal: " + ComboBox1.Text
-                    'End If
-                    'If IdCliente = 0 Then
-                    '    Filtros += " Cliente: Todos"
-                    'Else
-                    '    Filtros += " Cliente: " + TextBox2.Text
-                    'End If
-                    'If CheckBox14.Checked Then
-                    '    Filtros += " SOLO CANCELADAS"
-                    'End If
-                    'Filtros += " Vendedor: " + ComboBox2.Text
-                    'Rep.SetParameterValue("Filtros", Filtros)
-                    'Dim RV As New frmReportes(Rep, False)
-                    'RV.Show()
+  
                 Case "Ventas por artículo concentrado B."
                     Dim Rep As CrystalDecisions.CrystalReports.Engine.ReportDocument
                     'V.Reporte(TipoCosteo, IdsSucursales.Valor(ComboBox1.SelectedIndex), IdInventario, idClas, idClas2, idClas3, IdCliente)
@@ -1497,6 +1434,41 @@
                     Rep.SetParameterValue("sucursal", ComboBox1.Text)
                     Dim RV As New frmReportes(Rep, False)
                     RV.Show()
+                Case "Cobranza detallado por tasa de IEPS."
+                    Dim Rep As CrystalDecisions.CrystalReports.Engine.ReportDocument
+                    Rep = New repVentasArticulosIEPSCobranza
+                    idTipo = IdsTipos.Valor(comboTipo.SelectedIndex)
+                    Rep.SetDataSource(V.ReporteCobranzaDetallado(Format(DateTimePicker1.Value, "yyyy/MM/dd"), Format(DateTimePicker2.Value, "yyyy/MM/dd"), IdsSucursales.Valor(ComboBox1.SelectedIndex), IdCliente, IdInventario, idClas, idClas2, idClas3, IdsVendedores.Valor(ComboBox2.SelectedIndex), IdsMonedas.Valor(ComboBox4.SelectedIndex), ComboBox5.SelectedIndex, False, TextBox5.Text, False, idClas4, idClas5, CheckBox14.Checked, True, IdsAlmacenes.Valor(ComboBox13.SelectedIndex), CheckBox10.Checked, idTipo, IdsTiposSuc.Valor(ComboBox15.SelectedIndex), True, ComboBox17.SelectedIndex))
+                    Rep.SetParameterValue("Encabezado", S.NombreFiscal)
+                    Dim Filtros As String
+                    Filtros = "Fechas: " + Format(DateTimePicker1.Value, "yyyy/MM/dd") + " al " + Format(DateTimePicker2.Value, "yyyy/MM/dd") + " Sucursal: " + ComboBox1.Text + " Almacen: " + ComboBox13.Text + vbCr
+                    If ComboBox2.SelectedIndex > 0 Then
+                        Filtros += " Vendedor: " + ComboBox2.Text
+                    ElseIf ComboBox2.SelectedIndex = 0 Then
+                        Filtros += " Vendedor: Todos."
+                    End If
+                    If IdCliente = 0 Then
+                        Filtros += " Cliente: Todos"
+                    Else
+                        Filtros += " Cliente: " + TextBox2.Text
+                    End If
+                    If TextBox4.Text = "" Then
+                        Filtros += " Artículo: Todos"
+                    Else
+                        Filtros += " Artículo: " + TextBox4.Text
+                    End If
+                    If CheckBox14.Checked Then
+                        Filtros += " *SOLO CANCELADAS*"
+                    End If
+                    If CheckBox10.Checked Then
+                        Filtros += " Con escritura por descripción"
+                    End If
+                    Filtros += " Forma de pago: " + ComboBox17.Text
+                    'Filtros += " Sucursal: " + ComboBox1.Text
+                    Rep.SetParameterValue("Filtros", Filtros)
+                    Rep.SetParameterValue("sucursal", ComboBox1.Text)
+                    Dim RV As New frmReportes(Rep, False)
+                    RV.Show()
                 Case "Cobranza Remisiones."
                     Dim Rep As CrystalDecisions.CrystalReports.Engine.ReportDocument
                     'V.Reporte(TipoCosteo, IdsSucursales.Valor(ComboBox1.SelectedIndex), IdInventario, idClas, idClas2, idClas3, IdCliente)
@@ -1564,22 +1536,13 @@
                     Dim RV As New frmReportes(Rep, False)
                     RV.Show()
                 Case "Antigüedad de saldos."
-                    'Dim Rep As CrystalDecisions.CrystalReports.Engine.ReportDocument
-                    'V.ReporteViejosSaldos(IdsSucursales.Valor(ComboBox1.SelectedIndex), IdCliente, IdsVendedores.Valor(ComboBox2.SelectedIndex), IdsMonedas.Valor(ComboBox4.SelectedIndex), ComboBox5.SelectedIndex)
                     Dim TP As Double
                     Dim CM As New dbMonedasConversiones(1, MySqlcon)
                     TP = CM.Cantidad.ToString
 
-                    'Rep = New repVentasViejosSaldos
-                    'Rep.SetDataSource()
-                    'Rep.SetParameterValue("Encabezado", S.Nombre)
-                    'Dim RV As New frmReportes(Rep, False)
-                    'RV.Show()
                     Dim Rep As CrystalDecisions.CrystalReports.Engine.ReportDocument
-                    '    'V.ReporteViejosSaldos(IdsSucursales.Valor(ComboBox1.SelectedIndex), IdCliente, IdsVendedores.Valor(ComboBox2.SelectedIndex), IdsMonedas.Valor(ComboBox4.SelectedIndex), ComboBox5.SelectedIndex)
                     Rep = New repVentasViejosSaldosH
                     idTipo = IdsTipos.Valor(comboTipo.SelectedIndex)
-                    '    'Rep.SetDataSource(V.ReporteViejosSaldosHN(IdsSucursales.Valor(ComboBox1.SelectedIndex), IdCliente, IdsVendedores.Valor(ComboBox2.SelectedIndex), IdsMonedas.Valor(ComboBox4.SelectedIndex), ComboBox5.SelectedIndex, Format(DateTimePicker1.Value, "yyyy/MM/dd")))
                     If Format(DateTimePicker1.Value, "yyyyMMdd") = Format(Date.Now, "yyyyMMdd") Then
                         Rep.SetDataSource(V.ReporteViejosSaldos(IdsSucursales.Valor(ComboBox1.SelectedIndex), IdCliente, IdsVendedores.Valor(ComboBox2.SelectedIndex), IdsMonedas.Valor(ComboBox4.SelectedIndex), ComboBox5.SelectedIndex, TP, idClas4, idTipo, idClas5))
                     Else
@@ -1595,15 +1558,7 @@
                     Rep.SetParameterValue("titulo", "Reporte de Antigüedad de Saldos")
                     Dim RV As New frmReportes(Rep, False)
                     RV.Show()
-                    'Case "Antigüedad de saldos a fecha."
-                    '    Dim Rep As CrystalDecisions.CrystalReports.Engine.ReportDocument
-                    '    'V.ReporteViejosSaldos(IdsSucursales.Valor(ComboBox1.SelectedIndex), IdCliente, IdsVendedores.Valor(ComboBox2.SelectedIndex), IdsMonedas.Valor(ComboBox4.SelectedIndex), ComboBox5.SelectedIndex)
-                    '    Rep = New repVentasViejosSaldosH
-                    '    'Rep.SetDataSource(V.ReporteViejosSaldosHN(IdsSucursales.Valor(ComboBox1.SelectedIndex), IdCliente, IdsVendedores.Valor(ComboBox2.SelectedIndex), IdsMonedas.Valor(ComboBox4.SelectedIndex), ComboBox5.SelectedIndex, Format(DateTimePicker1.Value, "yyyy/MM/dd")))
-                    '    Rep.SetParameterValue("Encabezado", S.Nombre)
-                    '    Rep.SetParameterValue("fecha", Format(DateTimePicker1.Value, "yyyy/MM/dd"))
-                    '    Dim RV As New frmReportes(Rep, False)
-                    '    RV.Show()
+
                 Case "Antigüedad de saldos extendido."
                     Dim TP As Double
                     Dim CM As New dbMonedasConversiones(1, MySqlcon)
@@ -1631,24 +1586,15 @@
                     Rep.SetParameterValue("titulo", "Reporte de Antigüedad de Saldos Extendido")
                     Dim RV As New frmReportes(Rep, False)
                     RV.Show()
-                    'V.ReporteViejosSaldosEx(IdsSucursales.Valor(ComboBox1.SelectedIndex), IdCliente, IdsVendedores.Valor(ComboBox2.SelectedIndex), IdsMonedas.Valor(ComboBox4.SelectedIndex), ComboBox5.SelectedIndex, TP, idClas4)
+
                 Case "Antigüedad de saldos remisiones."
-                    'Dim Rep As CrystalDecisions.CrystalReports.Engine.ReportDocument
-                    'V.ReporteViejosSaldos(IdsSucursales.Valor(ComboBox1.SelectedIndex), IdCliente, IdsVendedores.Valor(ComboBox2.SelectedIndex), IdsMonedas.Valor(ComboBox4.SelectedIndex), ComboBox5.SelectedIndex)
                     Dim TP As Double
                     Dim CM As New dbMonedasConversiones(1, MySqlcon)
                     TP = CM.Cantidad.ToString
-                    'Rep = New repVentasViejosSaldos
-                    'Rep.SetDataSource()
-                    'Rep.SetParameterValue("Encabezado", S.Nombre)
-                    'Dim RV As New frmReportes(Rep, False)
-                    'RV.Show()
                     Dim Remi As New dbVentasRemisiones(MySqlcon)
                     Dim Rep As CrystalDecisions.CrystalReports.Engine.ReportDocument
-                    '    'V.ReporteViejosSaldos(IdsSucursales.Valor(ComboBox1.SelectedIndex), IdCliente, IdsVendedores.Valor(ComboBox2.SelectedIndex), IdsMonedas.Valor(ComboBox4.SelectedIndex), ComboBox5.SelectedIndex)
                     Rep = New repVentasViejosSaldosH
                     idTipo = IdsTipos.Valor(comboTipo.SelectedIndex)
-                    '    'Rep.SetDataSource(V.ReporteViejosSaldosHN(IdsSucursales.Valor(ComboBox1.SelectedIndex), IdCliente, IdsVendedores.Valor(ComboBox2.SelectedIndex), IdsMonedas.Valor(ComboBox4.SelectedIndex), ComboBox5.SelectedIndex, Format(DateTimePicker1.Value, "yyyy/MM/dd")))
                     If Format(DateTimePicker2.Value, "yyyyMMdd") = Format(Date.Now, "yyyyMMdd") Then
                         Rep.SetDataSource(Remi.ReporteViejosSaldos(IdsSucursales.Valor(ComboBox1.SelectedIndex), IdCliente, IdsVendedores.Valor(ComboBox2.SelectedIndex), IdsMonedas.Valor(ComboBox4.SelectedIndex), ComboBox5.SelectedIndex, TP, idClas4, idTipo, idClas5))
                     Else
@@ -2925,247 +2871,10 @@
             cmbConcepto.Enabled = True
         End If
 
-        'If ListBox1.Text = "Ventas los más vendidos." Or ListBox1.Text = "Remisiones los más vendidos." Then
-        '    Label11.Enabled = True
-        '    ComboBox8.Enabled = True
-        '    Label12.Enabled = True
-        '    ComboBox9.Enabled = True
-        'Else
-        '    Label12.Enabled = False
-        '    ComboBox9.Enabled = False
-        '    Label11.Enabled = False
-        '    ComboBox8.Enabled = False
-        'End If
-        ''lblzona.Enabled = False
-        ''cmbZona.Enabled = False
-        ''lblZonaCliente.Enabled = False
-        ''cmbZonacliente.Enabled = False
-
-        If ListBox1.Text = "Cobranza." Or ListBox1.Text = "Cobranza Remisiones." Then
+        If ListBox1.Text = "Cobranza." Or ListBox1.Text = "Cobranza Remisiones." Or ListBox1.Text = "Cobranza detallado por tasa de IEPS." Then
             LlenaCombos("tblconceptosnotasventas", cmbConcepto, "nombre", "nombret", "idconceptonotaventa", IdsConceptos, " idconceptonotaventa>0 and tipo=2", "Todos")
-            '    Label8.Enabled = True
-            '    cmbConcepto.Enabled = True
-            '    lblzona.Enabled = True
-            '    cmbZona.Enabled = True
-            '    lblZonaCliente.Enabled = True
-            '    cmbZonacliente.Enabled = True
-            '    btnGraficas.Enabled = True
-            '    cmbIpoGrafica.Enabled = True
-            'Else
-            '    btnGraficas.Enabled = False
-            '    cmbIpoGrafica.Enabled = False
         End If
-        'If ListBox1.Text = "Ventas." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        '    btnGraficas.Enabled = True
-        '    cmbIpoGrafica.Enabled = True
-
-        'End If
-        'If ListBox1.Text = "Ventas tipo B." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        'If ListBox1.Text = "Ventas Resumido." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        'If ListBox1.Text = "Ventas con detalle de IVA." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        'If ListBox1.Text = "Ventas por tipo de pago A." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        'If ListBox1.Text = "Ventas por tipo de pago B." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        'If ListBox1.Text = "Ventas por artículo." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        'If ListBox1.Text = "Ventas por artículo concentrado." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        'If ListBox1.Text = "Ventas por artículo concentrado B." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        'If ListBox1.Text = "Ventas por artículo concentrado por vendedor." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        'If ListBox1.Text = "Ventas por clasificación." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        'If ListBox1.Text = "Ventas por clasificación concentrado." Or ListBox1.Text = "Ventas con detalles por cliente." Or ListBox1.Text = "Remisiones con detalles por cliente." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        'If ListBox1.Text = "Ventas por vendedor." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        'If ListBox1.Text = "Ventas los más vendidos." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        'If ListBox1.Text = "Utilidad de venta." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        '    btnGraficas.Enabled = True
-        '    cmbIpoGrafica.Enabled = False
-        'End If
-        'If ListBox1.Text = "Utilidad de venta por artículo." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        '    btnGraficas.Enabled = True
-        '    cmbIpoGrafica.Enabled = True
-        'End If
-        'If ListBox1.Text = "Utilidad de venta por artículo concentrado." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        ''Remisiones
-        'If ListBox1.Text = "Remisiones." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        'If ListBox1.Text = "Remisiones tipo B." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        'If ListBox1.Text = "Remisiones Resumido." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        'If ListBox1.Text = "Remisiones por método de pago." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        'If ListBox1.Text = "Remisiones por artículo." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        'If ListBox1.Text = "Remisiones por artículo concentrado." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        'End If
-        'If ListBox1.Text = "Remisiones por artículo concentrado B." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        'If ListBox1.Text = "Remisiones por artículo concentrado por vendedor." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        'If ListBox1.Text = "Remisiones por clasificación." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        'If ListBox1.Text = "Remisiones por clasificación concentrado." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        'If ListBox1.Text = "Remisiones por vendedor." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        'If ListBox1.Text = "Remisiones los más vendidos." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        ''nuevo
-        'If ListBox1.Text = "Antigüedad de saldos." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        'If ListBox1.Text = "Saldos." Then
-        '    '    lblzona.Enabled = True
-        '    '    cmbZona.Enabled = True
-        '    lblZonaCliente.Enabled = True
-        '    cmbZonacliente.Enabled = True
-        'End If
-        ''If ListBox1.Text = "Cobranza." Then
-        ''    lblzona.Enabled = True
-        ''    cmbZona.Enabled = True
-        ''    lblZonaCliente.Enabled = True
-        ''    cmbZonacliente.Enabled = True
-        ''End If
-        ''If ListBox1.Text = "Cobranza Remisiones." Then
-        ''    lblzona.Enabled = True
-        ''    cmbZona.Enabled = True
-        ''    lblZonaCliente.Enabled = True
-        ''    cmbZonacliente.Enabled = True
-        ''End If
-        'If ListBox1.Text = "Antigüedad de saldos remisiones." Then
-        '    lblzona.Enabled = True
-        '    cmbZona.Enabled = True
-        'End If
-
-
+        
     End Sub
 
     Private Sub ComboBox11_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ComboBox11.SelectedIndexChanged
