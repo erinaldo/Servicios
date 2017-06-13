@@ -85,7 +85,7 @@ Public Class frmLogIn
                 Else
                     GlobaltpBanxico = "Error"
                 End If
-                If GlobalLicenciaSTR = "RG1Q5LG1KH" Then
+                If GlobalLicenciaSTR = "SW3O1BD0XH" Then
                     If MsgBox("¿Normal?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
                         Dim f As New frmPrincipal
                         f.Show()

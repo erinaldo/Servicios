@@ -80,16 +80,24 @@ Partial Class frmPrincipalN
         Me.btnVenCapDevoluciones = New System.Windows.Forms.RibbonButton()
         Me.mnuVentasApartados = New System.Windows.Forms.RibbonButton()
         Me.mnuVentasNotasCargo = New System.Windows.Forms.RibbonButton()
-        Me.mnuPedidos = New System.Windows.Forms.RibbonButton()
+        Me.mnuVentasPedidos = New System.Windows.Forms.RibbonButton()
         Me.pnlVentasPagos = New System.Windows.Forms.RibbonPanel()
         Me.btnVenPagFacturas = New System.Windows.Forms.RibbonButton()
         Me.btnVenPagRemisiones = New System.Windows.Forms.RibbonButton()
-        Me.RibbonButton2 = New System.Windows.Forms.RibbonButton()
+        Me.btnVenPagApartados = New System.Windows.Forms.RibbonButton()
         Me.pnlVentasConsultas = New System.Windows.Forms.RibbonPanel()
         Me.btnVenConReportes = New System.Windows.Forms.RibbonButton()
         Me.btnVenConMovimientos = New System.Windows.Forms.RibbonButton()
         Me.btnVenConHistorial = New System.Windows.Forms.RibbonButton()
         Me.btnVenConCorte = New System.Windows.Forms.RibbonButton()
+        Me.mnuVentasConOfertas = New System.Windows.Forms.RibbonButton()
+        Me.btnVentasBuscaApartado = New System.Windows.Forms.RibbonButton()
+        Me.btnVentasBuscaDev = New System.Windows.Forms.RibbonButton()
+        Me.RibbonPanel1 = New System.Windows.Forms.RibbonPanel()
+        Me.mnuVentasPagare = New System.Windows.Forms.RibbonButton()
+        Me.mnuVentasDocumentos = New System.Windows.Forms.RibbonButton()
+        Me.BuscarArticulo = New System.Windows.Forms.RibbonPanel()
+        Me.btnBuscarArticulo = New System.Windows.Forms.RibbonButton()
         Me.tabCompras = New System.Windows.Forms.RibbonTab()
         Me.pnlComCapturar = New System.Windows.Forms.RibbonPanel()
         Me.btnComCapFacturas = New System.Windows.Forms.RibbonButton()
@@ -99,36 +107,32 @@ Partial Class frmPrincipalN
         Me.btnComCapDevoluciones = New System.Windows.Forms.RibbonButton()
         Me.btnComCapNotasCargo = New System.Windows.Forms.RibbonButton()
         Me.btnComCapNotasCredito = New System.Windows.Forms.RibbonButton()
-        Me.btnComCapPagos = New System.Windows.Forms.RibbonButton()
-        Me.btnComCapDocumentos = New System.Windows.Forms.RibbonButton()
         Me.pnlComGranos = New System.Windows.Forms.RibbonPanel()
-        Me.btnComGraBoletas = New System.Windows.Forms.RibbonButton()
-        Me.btnComGraLiquidaciones = New System.Windows.Forms.RibbonButton()
-        Me.btnComGraComprobantes = New System.Windows.Forms.RibbonButton()
-        Me.btnComGraReportes = New System.Windows.Forms.RibbonButton()
-        Me.pnlComConsultas = New System.Windows.Forms.RibbonPanel()
-        Me.btnComConReportes = New System.Windows.Forms.RibbonButton()
-        Me.btnComConMovimientos = New System.Windows.Forms.RibbonButton()
-        Me.btnComConDevoluciones = New System.Windows.Forms.RibbonButton()
-        Me.btnComConValidador = New System.Windows.Forms.RibbonButton()
+        Me.btnComprasPagos = New System.Windows.Forms.RibbonButton()
+        Me.btnComprasReportes = New System.Windows.Forms.RibbonButton()
+        Me.BtnComprasDocs = New System.Windows.Forms.RibbonButton()
+        Me.BtnComprasBuscaDev = New System.Windows.Forms.RibbonButton()
+        Me.BtnComprasMovProv = New System.Windows.Forms.RibbonButton()
+        Me.RibbonPanel3 = New System.Windows.Forms.RibbonPanel()
+        Me.btnBuscaArticulos = New System.Windows.Forms.RibbonButton()
         Me.tabInventario = New System.Windows.Forms.RibbonTab()
         Me.pnlInvOperacion = New System.Windows.Forms.RibbonPanel()
         Me.btnInvOpeMovimientos = New System.Windows.Forms.RibbonButton()
         Me.btnInvOpePedidos = New System.Windows.Forms.RibbonButton()
-        Me.btnInvOpeBoletas = New System.Windows.Forms.RibbonButton()
         Me.pnlInvConsultas = New System.Windows.Forms.RibbonPanel()
         Me.btnInvConReportes = New System.Windows.Forms.RibbonButton()
         Me.btnInvConInventario = New System.Windows.Forms.RibbonButton()
         Me.btnInvConMonitor = New System.Windows.Forms.RibbonButton()
         Me.btnInvConCardex = New System.Windows.Forms.RibbonButton()
         Me.btnInvConRevision = New System.Windows.Forms.RibbonButton()
-        Me.btnInvConReportesBoletas = New System.Windows.Forms.RibbonButton()
         Me.pnlInvHerramientas = New System.Windows.Forms.RibbonPanel()
         Me.btnInvHerRecCostos = New System.Windows.Forms.RibbonButton()
         Me.btnInvHerBuscarNeg = New System.Windows.Forms.RibbonButton()
         Me.btnInvHerRecInventario = New System.Windows.Forms.RibbonButton()
         Me.btnInvHerAjustarCero = New System.Windows.Forms.RibbonButton()
         Me.btnInvHerConfigConceptos = New System.Windows.Forms.RibbonButton()
+        Me.RibbonPanel4 = New System.Windows.Forms.RibbonPanel()
+        Me.btnBuscarArticulos = New System.Windows.Forms.RibbonButton()
         Me.tabServicios = New System.Windows.Forms.RibbonTab()
         Me.pnlSerComercial = New System.Windows.Forms.RibbonPanel()
         Me.btnSerComNuevo = New System.Windows.Forms.RibbonButton()
@@ -144,8 +148,8 @@ Partial Class frmPrincipalN
         Me.pnlPunGeneral = New System.Windows.Forms.RibbonPanel()
         Me.btnPunGenVentas = New System.Windows.Forms.RibbonButton()
         Me.btnPunGenMovimientos = New System.Windows.Forms.RibbonButton()
-        Me.btnPunGenHerramientas = New System.Windows.Forms.RibbonButton()
         Me.btnPunGenReportes = New System.Windows.Forms.RibbonButton()
+        Me.btnPunGenHerramientas = New System.Windows.Forms.RibbonButton()
         Me.pnlPunRestaurante = New System.Windows.Forms.RibbonPanel()
         Me.btnPunResVentas = New System.Windows.Forms.RibbonButton()
         Me.btnPunResConfiguracion = New System.Windows.Forms.RibbonButton()
@@ -173,7 +177,6 @@ Partial Class frmPrincipalN
         Me.btnGasOpeGastos = New System.Windows.Forms.RibbonButton()
         Me.btnGasOpeMovimientos = New System.Windows.Forms.RibbonButton()
         Me.btnGasOpeProgramar = New System.Windows.Forms.RibbonButton()
-        Me.btnGasOpeAlertas = New System.Windows.Forms.RibbonButton()
         Me.pnlGasConsultas = New System.Windows.Forms.RibbonPanel()
         Me.btnGasConReportes = New System.Windows.Forms.RibbonButton()
         Me.tabEmpenos = New System.Windows.Forms.RibbonTab()
@@ -222,6 +225,10 @@ Partial Class frmPrincipalN
         Me.pnHerBaseDatos = New System.Windows.Forms.RibbonPanel()
         Me.btnHerBasRespaldar = New System.Windows.Forms.RibbonButton()
         Me.btnHerBasRestaurar = New System.Windows.Forms.RibbonButton()
+        Me.btnComConReportes = New System.Windows.Forms.RibbonButton()
+        Me.btnComConMovimientos = New System.Windows.Forms.RibbonButton()
+        Me.btnComConDevoluciones = New System.Windows.Forms.RibbonButton()
+        Me.btnComConValidador = New System.Windows.Forms.RibbonButton()
         Me.RibbonButton49 = New System.Windows.Forms.RibbonButton()
         Me.RibbonButton48 = New System.Windows.Forms.RibbonButton()
         Me.RibbonButton47 = New System.Windows.Forms.RibbonButton()
@@ -230,10 +237,6 @@ Partial Class frmPrincipalN
         Me.RibbonButton44 = New System.Windows.Forms.RibbonButton()
         Me.RibbonButton25 = New System.Windows.Forms.RibbonButton()
         Me.btnInvConBoletas = New System.Windows.Forms.RibbonButton()
-        Me.RibbonPanel1 = New System.Windows.Forms.RibbonPanel()
-        Me.mnuVentasPagare = New System.Windows.Forms.RibbonButton()
-        Me.mnuVentasDocumentos = New System.Windows.Forms.RibbonButton()
-        Me.mnuVentasConOfertas = New System.Windows.Forms.RibbonButton()
         Me.SuspendLayout()
         '
         'Timer1
@@ -686,6 +689,7 @@ Partial Class frmPrincipalN
         Me.tabVentas.Panels.Add(Me.pnlVentasPagos)
         Me.tabVentas.Panels.Add(Me.pnlVentasConsultas)
         Me.tabVentas.Panels.Add(Me.RibbonPanel1)
+        Me.tabVentas.Panels.Add(Me.BuscarArticulo)
         Me.tabVentas.Text = "Ventas"
         '
         'pnlVentasExpedir
@@ -698,7 +702,7 @@ Partial Class frmPrincipalN
         Me.pnlVentasExpedir.Items.Add(Me.btnVenCapDevoluciones)
         Me.pnlVentasExpedir.Items.Add(Me.mnuVentasApartados)
         Me.pnlVentasExpedir.Items.Add(Me.mnuVentasNotasCargo)
-        Me.pnlVentasExpedir.Items.Add(Me.mnuPedidos)
+        Me.pnlVentasExpedir.Items.Add(Me.mnuVentasPedidos)
         Me.pnlVentasExpedir.Name = "pnlVentasExpedir"
         Me.pnlVentasExpedir.Text = ""
         '
@@ -758,6 +762,7 @@ Partial Class frmPrincipalN
         Me.mnuVentasApartados.LargeImage = CType(resources.GetObject("mnuVentasApartados.LargeImage"), System.Drawing.Image)
         Me.mnuVentasApartados.Name = "mnuVentasApartados"
         Me.mnuVentasApartados.SmallImage = CType(resources.GetObject("mnuVentasApartados.SmallImage"), System.Drawing.Image)
+        Me.mnuVentasApartados.ToolTip = "Apartados"
         '
         'mnuVentasNotasCargo
         '
@@ -767,18 +772,20 @@ Partial Class frmPrincipalN
         Me.mnuVentasNotasCargo.SmallImage = CType(resources.GetObject("mnuVentasNotasCargo.SmallImage"), System.Drawing.Image)
         Me.mnuVentasNotasCargo.ToolTip = "Notas de Cargo"
         '
-        'mnuPedidos
+        'mnuVentasPedidos
         '
-        Me.mnuPedidos.Image = CType(resources.GetObject("mnuPedidos.Image"), System.Drawing.Image)
-        Me.mnuPedidos.LargeImage = CType(resources.GetObject("mnuPedidos.LargeImage"), System.Drawing.Image)
-        Me.mnuPedidos.Name = "mnuPedidos"
-        Me.mnuPedidos.SmallImage = CType(resources.GetObject("mnuPedidos.SmallImage"), System.Drawing.Image)
+        Me.mnuVentasPedidos.Image = CType(resources.GetObject("mnuVentasPedidos.Image"), System.Drawing.Image)
+        Me.mnuVentasPedidos.LargeImage = CType(resources.GetObject("mnuVentasPedidos.LargeImage"), System.Drawing.Image)
+        Me.mnuVentasPedidos.Name = "mnuVentasPedidos"
+        Me.mnuVentasPedidos.SmallImage = CType(resources.GetObject("mnuVentasPedidos.SmallImage"), System.Drawing.Image)
+        Me.mnuVentasPedidos.ToolTip = "Pedidos"
         '
         'pnlVentasPagos
         '
+        Me.pnlVentasPagos.ButtonMoreVisible = False
         Me.pnlVentasPagos.Items.Add(Me.btnVenPagFacturas)
         Me.pnlVentasPagos.Items.Add(Me.btnVenPagRemisiones)
-        Me.pnlVentasPagos.Items.Add(Me.RibbonButton2)
+        Me.pnlVentasPagos.Items.Add(Me.btnVenPagApartados)
         Me.pnlVentasPagos.Name = "pnlVentasPagos"
         Me.pnlVentasPagos.Text = ""
         '
@@ -799,21 +806,26 @@ Partial Class frmPrincipalN
         Me.btnVenPagRemisiones.Name = "btnVenPagRemisiones"
         Me.btnVenPagRemisiones.SmallImage = CType(resources.GetObject("btnVenPagRemisiones.SmallImage"), System.Drawing.Image)
         Me.btnVenPagRemisiones.Text = ""
+        Me.btnVenPagRemisiones.ToolTip = "Pagos Remisiones"
         '
-        'RibbonButton2
+        'btnVenPagApartados
         '
-        Me.RibbonButton2.Image = CType(resources.GetObject("RibbonButton2.Image"), System.Drawing.Image)
-        Me.RibbonButton2.LargeImage = CType(resources.GetObject("RibbonButton2.LargeImage"), System.Drawing.Image)
-        Me.RibbonButton2.Name = "RibbonButton2"
-        Me.RibbonButton2.SmallImage = CType(resources.GetObject("RibbonButton2.SmallImage"), System.Drawing.Image)
+        Me.btnVenPagApartados.Image = CType(resources.GetObject("btnVenPagApartados.Image"), System.Drawing.Image)
+        Me.btnVenPagApartados.LargeImage = CType(resources.GetObject("btnVenPagApartados.LargeImage"), System.Drawing.Image)
+        Me.btnVenPagApartados.Name = "btnVenPagApartados"
+        Me.btnVenPagApartados.SmallImage = CType(resources.GetObject("btnVenPagApartados.SmallImage"), System.Drawing.Image)
+        Me.btnVenPagApartados.ToolTip = "Pagos Apartados"
         '
         'pnlVentasConsultas
         '
+        Me.pnlVentasConsultas.ButtonMoreVisible = False
         Me.pnlVentasConsultas.Items.Add(Me.btnVenConReportes)
         Me.pnlVentasConsultas.Items.Add(Me.btnVenConMovimientos)
         Me.pnlVentasConsultas.Items.Add(Me.btnVenConHistorial)
         Me.pnlVentasConsultas.Items.Add(Me.btnVenConCorte)
         Me.pnlVentasConsultas.Items.Add(Me.mnuVentasConOfertas)
+        Me.pnlVentasConsultas.Items.Add(Me.btnVentasBuscaApartado)
+        Me.pnlVentasConsultas.Items.Add(Me.btnVentasBuscaDev)
         Me.pnlVentasConsultas.Name = "pnlVentasConsultas"
         Me.pnlVentasConsultas.Text = ""
         '
@@ -821,6 +833,7 @@ Partial Class frmPrincipalN
         '
         Me.btnVenConReportes.Image = CType(resources.GetObject("btnVenConReportes.Image"), System.Drawing.Image)
         Me.btnVenConReportes.LargeImage = CType(resources.GetObject("btnVenConReportes.LargeImage"), System.Drawing.Image)
+        Me.btnVenConReportes.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
         Me.btnVenConReportes.Name = "btnVenConReportes"
         Me.btnVenConReportes.SmallImage = CType(resources.GetObject("btnVenConReportes.SmallImage"), System.Drawing.Image)
         Me.btnVenConReportes.Text = ""
@@ -834,6 +847,7 @@ Partial Class frmPrincipalN
         Me.btnVenConMovimientos.Name = "btnVenConMovimientos"
         Me.btnVenConMovimientos.SmallImage = CType(resources.GetObject("btnVenConMovimientos.SmallImage"), System.Drawing.Image)
         Me.btnVenConMovimientos.Text = ""
+        Me.btnVenConMovimientos.ToolTip = "Clientes Movimientos"
         '
         'btnVenConHistorial
         '
@@ -842,7 +856,8 @@ Partial Class frmPrincipalN
         Me.btnVenConHistorial.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
         Me.btnVenConHistorial.Name = "btnVenConHistorial"
         Me.btnVenConHistorial.SmallImage = CType(resources.GetObject("btnVenConHistorial.SmallImage"), System.Drawing.Image)
-        Me.btnVenConHistorial.Text = "Historial"
+        Me.btnVenConHistorial.Text = ""
+        Me.btnVenConHistorial.ToolTip = "Clientes Historial"
         '
         'btnVenConCorte
         '
@@ -851,18 +866,84 @@ Partial Class frmPrincipalN
         Me.btnVenConCorte.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
         Me.btnVenConCorte.Name = "btnVenConCorte"
         Me.btnVenConCorte.SmallImage = CType(resources.GetObject("btnVenConCorte.SmallImage"), System.Drawing.Image)
-        Me.btnVenConCorte.Text = "Corte global"
+        Me.btnVenConCorte.Text = ""
+        Me.btnVenConCorte.ToolTip = "Corte"
+        '
+        'mnuVentasConOfertas
+        '
+        Me.mnuVentasConOfertas.Image = CType(resources.GetObject("mnuVentasConOfertas.Image"), System.Drawing.Image)
+        Me.mnuVentasConOfertas.LargeImage = CType(resources.GetObject("mnuVentasConOfertas.LargeImage"), System.Drawing.Image)
+        Me.mnuVentasConOfertas.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.mnuVentasConOfertas.Name = "mnuVentasConOfertas"
+        Me.mnuVentasConOfertas.SmallImage = CType(resources.GetObject("mnuVentasConOfertas.SmallImage"), System.Drawing.Image)
+        Me.mnuVentasConOfertas.ToolTip = "Historial Ofertas"
+        '
+        'btnVentasBuscaApartado
+        '
+        Me.btnVentasBuscaApartado.Image = CType(resources.GetObject("btnVentasBuscaApartado.Image"), System.Drawing.Image)
+        Me.btnVentasBuscaApartado.LargeImage = CType(resources.GetObject("btnVentasBuscaApartado.LargeImage"), System.Drawing.Image)
+        Me.btnVentasBuscaApartado.Name = "btnVentasBuscaApartado"
+        Me.btnVentasBuscaApartado.SmallImage = CType(resources.GetObject("btnVentasBuscaApartado.SmallImage"), System.Drawing.Image)
+        Me.btnVentasBuscaApartado.ToolTip = "Consulta Apartado"
+        Me.btnVentasBuscaApartado.ToolTipTitle = "Consulta Apartado"
+        '
+        'btnVentasBuscaDev
+        '
+        Me.btnVentasBuscaDev.Image = CType(resources.GetObject("btnVentasBuscaDev.Image"), System.Drawing.Image)
+        Me.btnVentasBuscaDev.LargeImage = CType(resources.GetObject("btnVentasBuscaDev.LargeImage"), System.Drawing.Image)
+        Me.btnVentasBuscaDev.Name = "btnVentasBuscaDev"
+        Me.btnVentasBuscaDev.SmallImage = CType(resources.GetObject("btnVentasBuscaDev.SmallImage"), System.Drawing.Image)
+        '
+        'RibbonPanel1
+        '
+        Me.RibbonPanel1.ButtonMoreVisible = False
+        Me.RibbonPanel1.Items.Add(Me.mnuVentasPagare)
+        Me.RibbonPanel1.Items.Add(Me.mnuVentasDocumentos)
+        Me.RibbonPanel1.Name = "RibbonPanel1"
+        Me.RibbonPanel1.Text = ""
+        '
+        'mnuVentasPagare
+        '
+        Me.mnuVentasPagare.Image = CType(resources.GetObject("mnuVentasPagare.Image"), System.Drawing.Image)
+        Me.mnuVentasPagare.LargeImage = CType(resources.GetObject("mnuVentasPagare.LargeImage"), System.Drawing.Image)
+        Me.mnuVentasPagare.Name = "mnuVentasPagare"
+        Me.mnuVentasPagare.SmallImage = CType(resources.GetObject("mnuVentasPagare.SmallImage"), System.Drawing.Image)
+        Me.mnuVentasPagare.ToolTip = "Pagarés"
+        '
+        'mnuVentasDocumentos
+        '
+        Me.mnuVentasDocumentos.Image = CType(resources.GetObject("mnuVentasDocumentos.Image"), System.Drawing.Image)
+        Me.mnuVentasDocumentos.LargeImage = CType(resources.GetObject("mnuVentasDocumentos.LargeImage"), System.Drawing.Image)
+        Me.mnuVentasDocumentos.Name = "mnuVentasDocumentos"
+        Me.mnuVentasDocumentos.SmallImage = CType(resources.GetObject("mnuVentasDocumentos.SmallImage"), System.Drawing.Image)
+        Me.mnuVentasDocumentos.ToolTip = "Documentos"
+        '
+        'BuscarArticulo
+        '
+        Me.BuscarArticulo.ButtonMoreVisible = False
+        Me.BuscarArticulo.Items.Add(Me.btnBuscarArticulo)
+        Me.BuscarArticulo.Name = "BuscarArticulo"
+        Me.BuscarArticulo.Text = ""
+        '
+        'btnBuscarArticulo
+        '
+        Me.btnBuscarArticulo.Image = CType(resources.GetObject("btnBuscarArticulo.Image"), System.Drawing.Image)
+        Me.btnBuscarArticulo.LargeImage = CType(resources.GetObject("btnBuscarArticulo.LargeImage"), System.Drawing.Image)
+        Me.btnBuscarArticulo.Name = "btnBuscarArticulo"
+        Me.btnBuscarArticulo.SmallImage = CType(resources.GetObject("btnBuscarArticulo.SmallImage"), System.Drawing.Image)
+        Me.btnBuscarArticulo.ToolTip = "Consulta Artículo"
         '
         'tabCompras
         '
         Me.tabCompras.Name = "tabCompras"
         Me.tabCompras.Panels.Add(Me.pnlComCapturar)
         Me.tabCompras.Panels.Add(Me.pnlComGranos)
-        Me.tabCompras.Panels.Add(Me.pnlComConsultas)
+        Me.tabCompras.Panels.Add(Me.RibbonPanel3)
         Me.tabCompras.Text = "Compras"
         '
         'pnlComCapturar
         '
+        Me.pnlComCapturar.ButtonMoreVisible = False
         Me.pnlComCapturar.Items.Add(Me.btnComCapFacturas)
         Me.pnlComCapturar.Items.Add(Me.btnComCapRemisiones)
         Me.pnlComCapturar.Items.Add(Me.btnComCapOrdenes)
@@ -870,10 +951,8 @@ Partial Class frmPrincipalN
         Me.pnlComCapturar.Items.Add(Me.btnComCapDevoluciones)
         Me.pnlComCapturar.Items.Add(Me.btnComCapNotasCargo)
         Me.pnlComCapturar.Items.Add(Me.btnComCapNotasCredito)
-        Me.pnlComCapturar.Items.Add(Me.btnComCapPagos)
-        Me.pnlComCapturar.Items.Add(Me.btnComCapDocumentos)
         Me.pnlComCapturar.Name = "pnlComCapturar"
-        Me.pnlComCapturar.Text = "Capturar"
+        Me.pnlComCapturar.Text = ""
         '
         'btnComCapFacturas
         '
@@ -881,132 +960,1183 @@ Partial Class frmPrincipalN
         Me.btnComCapFacturas.LargeImage = CType(resources.GetObject("btnComCapFacturas.LargeImage"), System.Drawing.Image)
         Me.btnComCapFacturas.Name = "btnComCapFacturas"
         Me.btnComCapFacturas.SmallImage = CType(resources.GetObject("btnComCapFacturas.SmallImage"), System.Drawing.Image)
-        Me.btnComCapFacturas.Text = "Facturas"
+        Me.btnComCapFacturas.Text = ""
+        Me.btnComCapFacturas.ToolTip = "Compras"
         '
         'btnComCapRemisiones
         '
         Me.btnComCapRemisiones.Image = CType(resources.GetObject("btnComCapRemisiones.Image"), System.Drawing.Image)
         Me.btnComCapRemisiones.LargeImage = CType(resources.GetObject("btnComCapRemisiones.LargeImage"), System.Drawing.Image)
-        Me.btnComCapRemisiones.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
+        Me.btnComCapRemisiones.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
         Me.btnComCapRemisiones.Name = "btnComCapRemisiones"
         Me.btnComCapRemisiones.SmallImage = CType(resources.GetObject("btnComCapRemisiones.SmallImage"), System.Drawing.Image)
-        Me.btnComCapRemisiones.Text = "Remisiones"
+        Me.btnComCapRemisiones.Text = ""
+        Me.btnComCapRemisiones.ToolTip = "Remisiones"
         '
         'btnComCapOrdenes
         '
         Me.btnComCapOrdenes.Image = CType(resources.GetObject("btnComCapOrdenes.Image"), System.Drawing.Image)
         Me.btnComCapOrdenes.LargeImage = CType(resources.GetObject("btnComCapOrdenes.LargeImage"), System.Drawing.Image)
-        Me.btnComCapOrdenes.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
+        Me.btnComCapOrdenes.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
         Me.btnComCapOrdenes.Name = "btnComCapOrdenes"
         Me.btnComCapOrdenes.SmallImage = CType(resources.GetObject("btnComCapOrdenes.SmallImage"), System.Drawing.Image)
-        Me.btnComCapOrdenes.Text = "Ordenes"
+        Me.btnComCapOrdenes.Text = ""
+        Me.btnComCapOrdenes.ToolTip = "Ordenes de Compra"
         '
         'btnComCapPreordenes
         '
         Me.btnComCapPreordenes.Image = CType(resources.GetObject("btnComCapPreordenes.Image"), System.Drawing.Image)
         Me.btnComCapPreordenes.LargeImage = CType(resources.GetObject("btnComCapPreordenes.LargeImage"), System.Drawing.Image)
-        Me.btnComCapPreordenes.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
+        Me.btnComCapPreordenes.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
         Me.btnComCapPreordenes.Name = "btnComCapPreordenes"
         Me.btnComCapPreordenes.SmallImage = CType(resources.GetObject("btnComCapPreordenes.SmallImage"), System.Drawing.Image)
-        Me.btnComCapPreordenes.Text = "Preordenes"
+        Me.btnComCapPreordenes.Text = ""
+        Me.btnComCapPreordenes.ToolTip = "Pre-Ordenes"
         '
         'btnComCapDevoluciones
         '
         Me.btnComCapDevoluciones.Image = CType(resources.GetObject("btnComCapDevoluciones.Image"), System.Drawing.Image)
         Me.btnComCapDevoluciones.LargeImage = CType(resources.GetObject("btnComCapDevoluciones.LargeImage"), System.Drawing.Image)
-        Me.btnComCapDevoluciones.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
+        Me.btnComCapDevoluciones.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
         Me.btnComCapDevoluciones.Name = "btnComCapDevoluciones"
         Me.btnComCapDevoluciones.SmallImage = CType(resources.GetObject("btnComCapDevoluciones.SmallImage"), System.Drawing.Image)
-        Me.btnComCapDevoluciones.Text = "Devoluciones"
+        Me.btnComCapDevoluciones.Text = ""
+        Me.btnComCapDevoluciones.ToolTip = "Devoluciones"
         '
         'btnComCapNotasCargo
         '
         Me.btnComCapNotasCargo.Image = CType(resources.GetObject("btnComCapNotasCargo.Image"), System.Drawing.Image)
         Me.btnComCapNotasCargo.LargeImage = CType(resources.GetObject("btnComCapNotasCargo.LargeImage"), System.Drawing.Image)
-        Me.btnComCapNotasCargo.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
+        Me.btnComCapNotasCargo.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
         Me.btnComCapNotasCargo.Name = "btnComCapNotasCargo"
         Me.btnComCapNotasCargo.SmallImage = CType(resources.GetObject("btnComCapNotasCargo.SmallImage"), System.Drawing.Image)
-        Me.btnComCapNotasCargo.Text = "Notas cargo"
+        Me.btnComCapNotasCargo.Text = ""
+        Me.btnComCapNotasCargo.ToolTip = "Notas de Cargo"
         '
         'btnComCapNotasCredito
         '
         Me.btnComCapNotasCredito.Image = CType(resources.GetObject("btnComCapNotasCredito.Image"), System.Drawing.Image)
         Me.btnComCapNotasCredito.LargeImage = CType(resources.GetObject("btnComCapNotasCredito.LargeImage"), System.Drawing.Image)
-        Me.btnComCapNotasCredito.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
+        Me.btnComCapNotasCredito.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
         Me.btnComCapNotasCredito.Name = "btnComCapNotasCredito"
         Me.btnComCapNotasCredito.SmallImage = CType(resources.GetObject("btnComCapNotasCredito.SmallImage"), System.Drawing.Image)
-        Me.btnComCapNotasCredito.Text = "Notas crédito"
-        '
-        'btnComCapPagos
-        '
-        Me.btnComCapPagos.Image = CType(resources.GetObject("btnComCapPagos.Image"), System.Drawing.Image)
-        Me.btnComCapPagos.LargeImage = CType(resources.GetObject("btnComCapPagos.LargeImage"), System.Drawing.Image)
-        Me.btnComCapPagos.Name = "btnComCapPagos"
-        Me.btnComCapPagos.SmallImage = CType(resources.GetObject("btnComCapPagos.SmallImage"), System.Drawing.Image)
-        Me.btnComCapPagos.Text = "Pagos"
-        '
-        'btnComCapDocumentos
-        '
-        Me.btnComCapDocumentos.Image = CType(resources.GetObject("btnComCapDocumentos.Image"), System.Drawing.Image)
-        Me.btnComCapDocumentos.LargeImage = CType(resources.GetObject("btnComCapDocumentos.LargeImage"), System.Drawing.Image)
-        Me.btnComCapDocumentos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnComCapDocumentos.Name = "btnComCapDocumentos"
-        Me.btnComCapDocumentos.SmallImage = CType(resources.GetObject("btnComCapDocumentos.SmallImage"), System.Drawing.Image)
-        Me.btnComCapDocumentos.Text = "Documentos"
+        Me.btnComCapNotasCredito.Text = ""
+        Me.btnComCapNotasCredito.ToolTip = "Notas de Credito"
         '
         'pnlComGranos
         '
-        Me.pnlComGranos.Items.Add(Me.btnComGraBoletas)
-        Me.pnlComGranos.Items.Add(Me.btnComGraLiquidaciones)
-        Me.pnlComGranos.Items.Add(Me.btnComGraComprobantes)
-        Me.pnlComGranos.Items.Add(Me.btnComGraReportes)
+        Me.pnlComGranos.ButtonMoreVisible = False
+        Me.pnlComGranos.Items.Add(Me.btnComprasPagos)
+        Me.pnlComGranos.Items.Add(Me.btnComprasReportes)
+        Me.pnlComGranos.Items.Add(Me.BtnComprasDocs)
+        Me.pnlComGranos.Items.Add(Me.BtnComprasBuscaDev)
+        Me.pnlComGranos.Items.Add(Me.BtnComprasMovProv)
         Me.pnlComGranos.Name = "pnlComGranos"
-        Me.pnlComGranos.Text = "Granos"
+        Me.pnlComGranos.Text = ""
         '
-        'btnComGraBoletas
+        'btnComprasPagos
         '
-        Me.btnComGraBoletas.Image = CType(resources.GetObject("btnComGraBoletas.Image"), System.Drawing.Image)
-        Me.btnComGraBoletas.LargeImage = CType(resources.GetObject("btnComGraBoletas.LargeImage"), System.Drawing.Image)
-        Me.btnComGraBoletas.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnComGraBoletas.Name = "btnComGraBoletas"
-        Me.btnComGraBoletas.SmallImage = CType(resources.GetObject("btnComGraBoletas.SmallImage"), System.Drawing.Image)
-        Me.btnComGraBoletas.Text = "Boletas"
+        Me.btnComprasPagos.Image = CType(resources.GetObject("btnComprasPagos.Image"), System.Drawing.Image)
+        Me.btnComprasPagos.LargeImage = CType(resources.GetObject("btnComprasPagos.LargeImage"), System.Drawing.Image)
+        Me.btnComprasPagos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnComprasPagos.Name = "btnComprasPagos"
+        Me.btnComprasPagos.SmallImage = CType(resources.GetObject("btnComprasPagos.SmallImage"), System.Drawing.Image)
+        Me.btnComprasPagos.ToolTip = "Pagos Compras"
         '
-        'btnComGraLiquidaciones
+        'btnComprasReportes
         '
-        Me.btnComGraLiquidaciones.Image = CType(resources.GetObject("btnComGraLiquidaciones.Image"), System.Drawing.Image)
-        Me.btnComGraLiquidaciones.LargeImage = CType(resources.GetObject("btnComGraLiquidaciones.LargeImage"), System.Drawing.Image)
-        Me.btnComGraLiquidaciones.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnComGraLiquidaciones.Name = "btnComGraLiquidaciones"
-        Me.btnComGraLiquidaciones.SmallImage = CType(resources.GetObject("btnComGraLiquidaciones.SmallImage"), System.Drawing.Image)
-        Me.btnComGraLiquidaciones.Text = "Liquidaciones"
+        Me.btnComprasReportes.Image = CType(resources.GetObject("btnComprasReportes.Image"), System.Drawing.Image)
+        Me.btnComprasReportes.LargeImage = CType(resources.GetObject("btnComprasReportes.LargeImage"), System.Drawing.Image)
+        Me.btnComprasReportes.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnComprasReportes.Name = "btnComprasReportes"
+        Me.btnComprasReportes.SmallImage = CType(resources.GetObject("btnComprasReportes.SmallImage"), System.Drawing.Image)
+        Me.btnComprasReportes.ToolTip = "Reportes de Compras"
         '
-        'btnComGraComprobantes
+        'BtnComprasDocs
         '
-        Me.btnComGraComprobantes.Image = CType(resources.GetObject("btnComGraComprobantes.Image"), System.Drawing.Image)
-        Me.btnComGraComprobantes.LargeImage = CType(resources.GetObject("btnComGraComprobantes.LargeImage"), System.Drawing.Image)
-        Me.btnComGraComprobantes.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnComGraComprobantes.Name = "btnComGraComprobantes"
-        Me.btnComGraComprobantes.SmallImage = CType(resources.GetObject("btnComGraComprobantes.SmallImage"), System.Drawing.Image)
-        Me.btnComGraComprobantes.Text = "Comprobantes"
+        Me.BtnComprasDocs.Image = CType(resources.GetObject("BtnComprasDocs.Image"), System.Drawing.Image)
+        Me.BtnComprasDocs.LargeImage = CType(resources.GetObject("BtnComprasDocs.LargeImage"), System.Drawing.Image)
+        Me.BtnComprasDocs.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.BtnComprasDocs.Name = "BtnComprasDocs"
+        Me.BtnComprasDocs.SmallImage = CType(resources.GetObject("BtnComprasDocs.SmallImage"), System.Drawing.Image)
+        Me.BtnComprasDocs.ToolTip = "Documentos"
         '
-        'btnComGraReportes
+        'BtnComprasBuscaDev
         '
-        Me.btnComGraReportes.Image = CType(resources.GetObject("btnComGraReportes.Image"), System.Drawing.Image)
-        Me.btnComGraReportes.LargeImage = CType(resources.GetObject("btnComGraReportes.LargeImage"), System.Drawing.Image)
-        Me.btnComGraReportes.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnComGraReportes.Name = "btnComGraReportes"
-        Me.btnComGraReportes.SmallImage = CType(resources.GetObject("btnComGraReportes.SmallImage"), System.Drawing.Image)
-        Me.btnComGraReportes.Text = "Reportes"
+        Me.BtnComprasBuscaDev.Image = CType(resources.GetObject("BtnComprasBuscaDev.Image"), System.Drawing.Image)
+        Me.BtnComprasBuscaDev.LargeImage = CType(resources.GetObject("BtnComprasBuscaDev.LargeImage"), System.Drawing.Image)
+        Me.BtnComprasBuscaDev.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.BtnComprasBuscaDev.Name = "BtnComprasBuscaDev"
+        Me.BtnComprasBuscaDev.SmallImage = CType(resources.GetObject("BtnComprasBuscaDev.SmallImage"), System.Drawing.Image)
+        Me.BtnComprasBuscaDev.ToolTip = "Consulta Devoluciones"
         '
-        'pnlComConsultas
+        'BtnComprasMovProv
         '
-        Me.pnlComConsultas.Items.Add(Me.btnComConReportes)
-        Me.pnlComConsultas.Items.Add(Me.btnComConMovimientos)
-        Me.pnlComConsultas.Items.Add(Me.btnComConDevoluciones)
-        Me.pnlComConsultas.Items.Add(Me.btnComConValidador)
-        Me.pnlComConsultas.Name = "pnlComConsultas"
-        Me.pnlComConsultas.Text = "Consultas"
+        Me.BtnComprasMovProv.Image = CType(resources.GetObject("BtnComprasMovProv.Image"), System.Drawing.Image)
+        Me.BtnComprasMovProv.LargeImage = CType(resources.GetObject("BtnComprasMovProv.LargeImage"), System.Drawing.Image)
+        Me.BtnComprasMovProv.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.BtnComprasMovProv.Name = "BtnComprasMovProv"
+        Me.BtnComprasMovProv.SmallImage = CType(resources.GetObject("BtnComprasMovProv.SmallImage"), System.Drawing.Image)
+        Me.BtnComprasMovProv.ToolTip = "Proveedores Movimientos"
+        '
+        'RibbonPanel3
+        '
+        Me.RibbonPanel3.ButtonMoreVisible = False
+        Me.RibbonPanel3.Items.Add(Me.btnBuscaArticulos)
+        Me.RibbonPanel3.Name = "RibbonPanel3"
+        Me.RibbonPanel3.Text = ""
+        '
+        'btnBuscaArticulos
+        '
+        Me.btnBuscaArticulos.Image = CType(resources.GetObject("btnBuscaArticulos.Image"), System.Drawing.Image)
+        Me.btnBuscaArticulos.LargeImage = CType(resources.GetObject("btnBuscaArticulos.LargeImage"), System.Drawing.Image)
+        Me.btnBuscaArticulos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnBuscaArticulos.Name = "btnBuscaArticulos"
+        Me.btnBuscaArticulos.SmallImage = CType(resources.GetObject("btnBuscaArticulos.SmallImage"), System.Drawing.Image)
+        Me.btnBuscaArticulos.ToolTip = "Consulta Artículo"
+        '
+        'tabInventario
+        '
+        Me.tabInventario.Name = "tabInventario"
+        Me.tabInventario.Panels.Add(Me.pnlInvOperacion)
+        Me.tabInventario.Panels.Add(Me.pnlInvConsultas)
+        Me.tabInventario.Panels.Add(Me.pnlInvHerramientas)
+        Me.tabInventario.Panels.Add(Me.RibbonPanel4)
+        Me.tabInventario.Text = "Inventario"
+        '
+        'pnlInvOperacion
+        '
+        Me.pnlInvOperacion.ButtonMoreVisible = False
+        Me.pnlInvOperacion.Items.Add(Me.btnInvOpeMovimientos)
+        Me.pnlInvOperacion.Items.Add(Me.btnInvOpePedidos)
+        Me.pnlInvOperacion.Name = "pnlInvOperacion"
+        Me.pnlInvOperacion.Text = ""
+        '
+        'btnInvOpeMovimientos
+        '
+        Me.btnInvOpeMovimientos.Image = CType(resources.GetObject("btnInvOpeMovimientos.Image"), System.Drawing.Image)
+        Me.btnInvOpeMovimientos.LargeImage = CType(resources.GetObject("btnInvOpeMovimientos.LargeImage"), System.Drawing.Image)
+        Me.btnInvOpeMovimientos.Name = "btnInvOpeMovimientos"
+        Me.btnInvOpeMovimientos.SmallImage = CType(resources.GetObject("btnInvOpeMovimientos.SmallImage"), System.Drawing.Image)
+        Me.btnInvOpeMovimientos.Text = ""
+        Me.btnInvOpeMovimientos.ToolTip = "Movimientos de Inventario"
+        '
+        'btnInvOpePedidos
+        '
+        Me.btnInvOpePedidos.Image = CType(resources.GetObject("btnInvOpePedidos.Image"), System.Drawing.Image)
+        Me.btnInvOpePedidos.LargeImage = CType(resources.GetObject("btnInvOpePedidos.LargeImage"), System.Drawing.Image)
+        Me.btnInvOpePedidos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnInvOpePedidos.Name = "btnInvOpePedidos"
+        Me.btnInvOpePedidos.SmallImage = CType(resources.GetObject("btnInvOpePedidos.SmallImage"), System.Drawing.Image)
+        Me.btnInvOpePedidos.Text = ""
+        Me.btnInvOpePedidos.ToolTip = "Pedidos"
+        '
+        'pnlInvConsultas
+        '
+        Me.pnlInvConsultas.ButtonMoreVisible = False
+        Me.pnlInvConsultas.Items.Add(Me.btnInvConReportes)
+        Me.pnlInvConsultas.Items.Add(Me.btnInvConInventario)
+        Me.pnlInvConsultas.Items.Add(Me.btnInvConMonitor)
+        Me.pnlInvConsultas.Items.Add(Me.btnInvConCardex)
+        Me.pnlInvConsultas.Items.Add(Me.btnInvConRevision)
+        Me.pnlInvConsultas.Name = "pnlInvConsultas"
+        Me.pnlInvConsultas.Text = ""
+        '
+        'btnInvConReportes
+        '
+        Me.btnInvConReportes.Image = CType(resources.GetObject("btnInvConReportes.Image"), System.Drawing.Image)
+        Me.btnInvConReportes.LargeImage = CType(resources.GetObject("btnInvConReportes.LargeImage"), System.Drawing.Image)
+        Me.btnInvConReportes.Name = "btnInvConReportes"
+        Me.btnInvConReportes.SmallImage = CType(resources.GetObject("btnInvConReportes.SmallImage"), System.Drawing.Image)
+        Me.btnInvConReportes.Text = ""
+        Me.btnInvConReportes.ToolTip = "Reportes de Inventario"
+        '
+        'btnInvConInventario
+        '
+        Me.btnInvConInventario.Image = CType(resources.GetObject("btnInvConInventario.Image"), System.Drawing.Image)
+        Me.btnInvConInventario.LargeImage = CType(resources.GetObject("btnInvConInventario.LargeImage"), System.Drawing.Image)
+        Me.btnInvConInventario.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnInvConInventario.Name = "btnInvConInventario"
+        Me.btnInvConInventario.SmallImage = CType(resources.GetObject("btnInvConInventario.SmallImage"), System.Drawing.Image)
+        Me.btnInvConInventario.Text = ""
+        Me.btnInvConInventario.ToolTip = "Artículos"
+        '
+        'btnInvConMonitor
+        '
+        Me.btnInvConMonitor.Image = CType(resources.GetObject("btnInvConMonitor.Image"), System.Drawing.Image)
+        Me.btnInvConMonitor.LargeImage = CType(resources.GetObject("btnInvConMonitor.LargeImage"), System.Drawing.Image)
+        Me.btnInvConMonitor.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnInvConMonitor.Name = "btnInvConMonitor"
+        Me.btnInvConMonitor.SmallImage = CType(resources.GetObject("btnInvConMonitor.SmallImage"), System.Drawing.Image)
+        Me.btnInvConMonitor.Text = ""
+        Me.btnInvConMonitor.ToolTip = "Buscar Pedido"
+        '
+        'btnInvConCardex
+        '
+        Me.btnInvConCardex.Image = CType(resources.GetObject("btnInvConCardex.Image"), System.Drawing.Image)
+        Me.btnInvConCardex.LargeImage = CType(resources.GetObject("btnInvConCardex.LargeImage"), System.Drawing.Image)
+        Me.btnInvConCardex.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnInvConCardex.Name = "btnInvConCardex"
+        Me.btnInvConCardex.SmallImage = CType(resources.GetObject("btnInvConCardex.SmallImage"), System.Drawing.Image)
+        Me.btnInvConCardex.Text = ""
+        Me.btnInvConCardex.ToolTip = "Kardex"
+        '
+        'btnInvConRevision
+        '
+        Me.btnInvConRevision.Image = CType(resources.GetObject("btnInvConRevision.Image"), System.Drawing.Image)
+        Me.btnInvConRevision.LargeImage = CType(resources.GetObject("btnInvConRevision.LargeImage"), System.Drawing.Image)
+        Me.btnInvConRevision.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnInvConRevision.Name = "btnInvConRevision"
+        Me.btnInvConRevision.SmallImage = CType(resources.GetObject("btnInvConRevision.SmallImage"), System.Drawing.Image)
+        Me.btnInvConRevision.Text = ""
+        Me.btnInvConRevision.ToolTip = "Revisión"
+        '
+        'pnlInvHerramientas
+        '
+        Me.pnlInvHerramientas.ButtonMoreVisible = False
+        Me.pnlInvHerramientas.Items.Add(Me.btnInvHerRecCostos)
+        Me.pnlInvHerramientas.Items.Add(Me.btnInvHerBuscarNeg)
+        Me.pnlInvHerramientas.Items.Add(Me.btnInvHerRecInventario)
+        Me.pnlInvHerramientas.Items.Add(Me.btnInvHerAjustarCero)
+        Me.pnlInvHerramientas.Items.Add(Me.btnInvHerConfigConceptos)
+        Me.pnlInvHerramientas.Name = "pnlInvHerramientas"
+        Me.pnlInvHerramientas.Text = ""
+        '
+        'btnInvHerRecCostos
+        '
+        Me.btnInvHerRecCostos.Image = CType(resources.GetObject("btnInvHerRecCostos.Image"), System.Drawing.Image)
+        Me.btnInvHerRecCostos.LargeImage = CType(resources.GetObject("btnInvHerRecCostos.LargeImage"), System.Drawing.Image)
+        Me.btnInvHerRecCostos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnInvHerRecCostos.Name = "btnInvHerRecCostos"
+        Me.btnInvHerRecCostos.SmallImage = CType(resources.GetObject("btnInvHerRecCostos.SmallImage"), System.Drawing.Image)
+        Me.btnInvHerRecCostos.Text = ""
+        Me.btnInvHerRecCostos.ToolTip = "Recalcular Costos"
+        '
+        'btnInvHerBuscarNeg
+        '
+        Me.btnInvHerBuscarNeg.Image = CType(resources.GetObject("btnInvHerBuscarNeg.Image"), System.Drawing.Image)
+        Me.btnInvHerBuscarNeg.LargeImage = CType(resources.GetObject("btnInvHerBuscarNeg.LargeImage"), System.Drawing.Image)
+        Me.btnInvHerBuscarNeg.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnInvHerBuscarNeg.Name = "btnInvHerBuscarNeg"
+        Me.btnInvHerBuscarNeg.SmallImage = CType(resources.GetObject("btnInvHerBuscarNeg.SmallImage"), System.Drawing.Image)
+        Me.btnInvHerBuscarNeg.Text = ""
+        Me.btnInvHerBuscarNeg.ToolTip = "Buscar Negativos"
+        '
+        'btnInvHerRecInventario
+        '
+        Me.btnInvHerRecInventario.Image = CType(resources.GetObject("btnInvHerRecInventario.Image"), System.Drawing.Image)
+        Me.btnInvHerRecInventario.LargeImage = CType(resources.GetObject("btnInvHerRecInventario.LargeImage"), System.Drawing.Image)
+        Me.btnInvHerRecInventario.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnInvHerRecInventario.Name = "btnInvHerRecInventario"
+        Me.btnInvHerRecInventario.SmallImage = CType(resources.GetObject("btnInvHerRecInventario.SmallImage"), System.Drawing.Image)
+        Me.btnInvHerRecInventario.Text = ""
+        Me.btnInvHerRecInventario.ToolTip = "Recalcular Inventario"
+        '
+        'btnInvHerAjustarCero
+        '
+        Me.btnInvHerAjustarCero.Image = CType(resources.GetObject("btnInvHerAjustarCero.Image"), System.Drawing.Image)
+        Me.btnInvHerAjustarCero.LargeImage = CType(resources.GetObject("btnInvHerAjustarCero.LargeImage"), System.Drawing.Image)
+        Me.btnInvHerAjustarCero.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnInvHerAjustarCero.Name = "btnInvHerAjustarCero"
+        Me.btnInvHerAjustarCero.SmallImage = CType(resources.GetObject("btnInvHerAjustarCero.SmallImage"), System.Drawing.Image)
+        Me.btnInvHerAjustarCero.Text = ""
+        Me.btnInvHerAjustarCero.ToolTip = "Ajustar a Cero"
+        '
+        'btnInvHerConfigConceptos
+        '
+        Me.btnInvHerConfigConceptos.Image = CType(resources.GetObject("btnInvHerConfigConceptos.Image"), System.Drawing.Image)
+        Me.btnInvHerConfigConceptos.LargeImage = CType(resources.GetObject("btnInvHerConfigConceptos.LargeImage"), System.Drawing.Image)
+        Me.btnInvHerConfigConceptos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnInvHerConfigConceptos.Name = "btnInvHerConfigConceptos"
+        Me.btnInvHerConfigConceptos.SmallImage = CType(resources.GetObject("btnInvHerConfigConceptos.SmallImage"), System.Drawing.Image)
+        Me.btnInvHerConfigConceptos.Text = ""
+        Me.btnInvHerConfigConceptos.ToolTip = "Configurar Conceptos"
+        '
+        'RibbonPanel4
+        '
+        Me.RibbonPanel4.ButtonMoreVisible = False
+        Me.RibbonPanel4.Items.Add(Me.btnBuscarArticulos)
+        Me.RibbonPanel4.Name = "RibbonPanel4"
+        Me.RibbonPanel4.Text = ""
+        '
+        'btnBuscarArticulos
+        '
+        Me.btnBuscarArticulos.Image = CType(resources.GetObject("btnBuscarArticulos.Image"), System.Drawing.Image)
+        Me.btnBuscarArticulos.LargeImage = CType(resources.GetObject("btnBuscarArticulos.LargeImage"), System.Drawing.Image)
+        Me.btnBuscarArticulos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnBuscarArticulos.Name = "btnBuscarArticulos"
+        Me.btnBuscarArticulos.SmallImage = CType(resources.GetObject("btnBuscarArticulos.SmallImage"), System.Drawing.Image)
+        Me.btnBuscarArticulos.ToolTip = "Consulta de Artículo"
+        '
+        'tabServicios
+        '
+        Me.tabServicios.Name = "tabServicios"
+        Me.tabServicios.Panels.Add(Me.pnlSerComercial)
+        Me.tabServicios.Panels.Add(Me.pnlSerInterno)
+        Me.tabServicios.Text = "Servicios"
+        '
+        'pnlSerComercial
+        '
+        Me.pnlSerComercial.ButtonMoreVisible = False
+        Me.pnlSerComercial.Items.Add(Me.btnSerComNuevo)
+        Me.pnlSerComercial.Items.Add(Me.btnSerComBuscar)
+        Me.pnlSerComercial.Items.Add(Me.btnSerComReportes)
+        Me.pnlSerComercial.Items.Add(Me.btnSerComEstados)
+        Me.pnlSerComercial.Name = "pnlSerComercial"
+        Me.pnlSerComercial.Text = ""
+        '
+        'btnSerComNuevo
+        '
+        Me.btnSerComNuevo.Image = CType(resources.GetObject("btnSerComNuevo.Image"), System.Drawing.Image)
+        Me.btnSerComNuevo.LargeImage = CType(resources.GetObject("btnSerComNuevo.LargeImage"), System.Drawing.Image)
+        Me.btnSerComNuevo.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnSerComNuevo.Name = "btnSerComNuevo"
+        Me.btnSerComNuevo.SmallImage = CType(resources.GetObject("btnSerComNuevo.SmallImage"), System.Drawing.Image)
+        Me.btnSerComNuevo.Text = ""
+        Me.btnSerComNuevo.ToolTip = "Nuevo Servicio"
+        '
+        'btnSerComBuscar
+        '
+        Me.btnSerComBuscar.Image = CType(resources.GetObject("btnSerComBuscar.Image"), System.Drawing.Image)
+        Me.btnSerComBuscar.LargeImage = CType(resources.GetObject("btnSerComBuscar.LargeImage"), System.Drawing.Image)
+        Me.btnSerComBuscar.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnSerComBuscar.Name = "btnSerComBuscar"
+        Me.btnSerComBuscar.SmallImage = CType(resources.GetObject("btnSerComBuscar.SmallImage"), System.Drawing.Image)
+        Me.btnSerComBuscar.Text = ""
+        Me.btnSerComBuscar.ToolTip = "Consulta Servicios"
+        '
+        'btnSerComReportes
+        '
+        Me.btnSerComReportes.Image = CType(resources.GetObject("btnSerComReportes.Image"), System.Drawing.Image)
+        Me.btnSerComReportes.LargeImage = CType(resources.GetObject("btnSerComReportes.LargeImage"), System.Drawing.Image)
+        Me.btnSerComReportes.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnSerComReportes.Name = "btnSerComReportes"
+        Me.btnSerComReportes.SmallImage = CType(resources.GetObject("btnSerComReportes.SmallImage"), System.Drawing.Image)
+        Me.btnSerComReportes.Text = ""
+        Me.btnSerComReportes.ToolTip = "Reporte Servicios"
+        '
+        'btnSerComEstados
+        '
+        Me.btnSerComEstados.Image = CType(resources.GetObject("btnSerComEstados.Image"), System.Drawing.Image)
+        Me.btnSerComEstados.LargeImage = CType(resources.GetObject("btnSerComEstados.LargeImage"), System.Drawing.Image)
+        Me.btnSerComEstados.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnSerComEstados.Name = "btnSerComEstados"
+        Me.btnSerComEstados.SmallImage = CType(resources.GetObject("btnSerComEstados.SmallImage"), System.Drawing.Image)
+        Me.btnSerComEstados.Text = ""
+        Me.btnSerComEstados.ToolTip = "Alta de Estados"
+        '
+        'pnlSerInterno
+        '
+        Me.pnlSerInterno.ButtonMoreVisible = False
+        Me.pnlSerInterno.Items.Add(Me.btnSerIntNuevo)
+        Me.pnlSerInterno.Items.Add(Me.btnSerIntBuscar)
+        Me.pnlSerInterno.Items.Add(Me.btnSerIntReporte)
+        Me.pnlSerInterno.Items.Add(Me.btnSerIntEstados)
+        Me.pnlSerInterno.Name = "pnlSerInterno"
+        Me.pnlSerInterno.Text = ""
+        '
+        'btnSerIntNuevo
+        '
+        Me.btnSerIntNuevo.Image = CType(resources.GetObject("btnSerIntNuevo.Image"), System.Drawing.Image)
+        Me.btnSerIntNuevo.LargeImage = CType(resources.GetObject("btnSerIntNuevo.LargeImage"), System.Drawing.Image)
+        Me.btnSerIntNuevo.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnSerIntNuevo.Name = "btnSerIntNuevo"
+        Me.btnSerIntNuevo.SmallImage = CType(resources.GetObject("btnSerIntNuevo.SmallImage"), System.Drawing.Image)
+        Me.btnSerIntNuevo.Text = ""
+        Me.btnSerIntNuevo.ToolTip = "Nuevo Servicio Interno"
+        '
+        'btnSerIntBuscar
+        '
+        Me.btnSerIntBuscar.Image = CType(resources.GetObject("btnSerIntBuscar.Image"), System.Drawing.Image)
+        Me.btnSerIntBuscar.LargeImage = CType(resources.GetObject("btnSerIntBuscar.LargeImage"), System.Drawing.Image)
+        Me.btnSerIntBuscar.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnSerIntBuscar.Name = "btnSerIntBuscar"
+        Me.btnSerIntBuscar.SmallImage = CType(resources.GetObject("btnSerIntBuscar.SmallImage"), System.Drawing.Image)
+        Me.btnSerIntBuscar.Text = ""
+        Me.btnSerIntBuscar.ToolTip = "Consulta Servicios Internos"
+        '
+        'btnSerIntReporte
+        '
+        Me.btnSerIntReporte.Image = CType(resources.GetObject("btnSerIntReporte.Image"), System.Drawing.Image)
+        Me.btnSerIntReporte.LargeImage = CType(resources.GetObject("btnSerIntReporte.LargeImage"), System.Drawing.Image)
+        Me.btnSerIntReporte.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnSerIntReporte.Name = "btnSerIntReporte"
+        Me.btnSerIntReporte.SmallImage = CType(resources.GetObject("btnSerIntReporte.SmallImage"), System.Drawing.Image)
+        Me.btnSerIntReporte.Text = ""
+        Me.btnSerIntReporte.ToolTip = "Reporte Servicios Internos"
+        '
+        'btnSerIntEstados
+        '
+        Me.btnSerIntEstados.Image = CType(resources.GetObject("btnSerIntEstados.Image"), System.Drawing.Image)
+        Me.btnSerIntEstados.LargeImage = CType(resources.GetObject("btnSerIntEstados.LargeImage"), System.Drawing.Image)
+        Me.btnSerIntEstados.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnSerIntEstados.Name = "btnSerIntEstados"
+        Me.btnSerIntEstados.SmallImage = CType(resources.GetObject("btnSerIntEstados.SmallImage"), System.Drawing.Image)
+        Me.btnSerIntEstados.Text = ""
+        Me.btnSerIntEstados.ToolTip = "Alta de Estados Internos"
+        '
+        'tabPuntoVenta
+        '
+        Me.tabPuntoVenta.Name = "tabPuntoVenta"
+        Me.tabPuntoVenta.Panels.Add(Me.pnlPunGeneral)
+        Me.tabPuntoVenta.Panels.Add(Me.pnlPunRestaurante)
+        Me.tabPuntoVenta.Text = "Punto de venta"
+        '
+        'pnlPunGeneral
+        '
+        Me.pnlPunGeneral.ButtonMoreVisible = False
+        Me.pnlPunGeneral.Items.Add(Me.btnPunGenVentas)
+        Me.pnlPunGeneral.Items.Add(Me.btnPunGenMovimientos)
+        Me.pnlPunGeneral.Items.Add(Me.btnPunGenReportes)
+        Me.pnlPunGeneral.Items.Add(Me.btnPunGenHerramientas)
+        Me.pnlPunGeneral.Name = "pnlPunGeneral"
+        Me.pnlPunGeneral.Text = ""
+        '
+        'btnPunGenVentas
+        '
+        Me.btnPunGenVentas.Image = CType(resources.GetObject("btnPunGenVentas.Image"), System.Drawing.Image)
+        Me.btnPunGenVentas.LargeImage = CType(resources.GetObject("btnPunGenVentas.LargeImage"), System.Drawing.Image)
+        Me.btnPunGenVentas.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnPunGenVentas.Name = "btnPunGenVentas"
+        Me.btnPunGenVentas.SmallImage = CType(resources.GetObject("btnPunGenVentas.SmallImage"), System.Drawing.Image)
+        Me.btnPunGenVentas.Text = ""
+        Me.btnPunGenVentas.ToolTip = "Punto de Venta"
+        '
+        'btnPunGenMovimientos
+        '
+        Me.btnPunGenMovimientos.Image = CType(resources.GetObject("btnPunGenMovimientos.Image"), System.Drawing.Image)
+        Me.btnPunGenMovimientos.LargeImage = CType(resources.GetObject("btnPunGenMovimientos.LargeImage"), System.Drawing.Image)
+        Me.btnPunGenMovimientos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnPunGenMovimientos.Name = "btnPunGenMovimientos"
+        Me.btnPunGenMovimientos.SmallImage = CType(resources.GetObject("btnPunGenMovimientos.SmallImage"), System.Drawing.Image)
+        Me.btnPunGenMovimientos.Text = ""
+        Me.btnPunGenMovimientos.ToolTip = "Movimientos Punto de Venta"
+        '
+        'btnPunGenReportes
+        '
+        Me.btnPunGenReportes.Image = CType(resources.GetObject("btnPunGenReportes.Image"), System.Drawing.Image)
+        Me.btnPunGenReportes.LargeImage = CType(resources.GetObject("btnPunGenReportes.LargeImage"), System.Drawing.Image)
+        Me.btnPunGenReportes.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnPunGenReportes.Name = "btnPunGenReportes"
+        Me.btnPunGenReportes.SmallImage = CType(resources.GetObject("btnPunGenReportes.SmallImage"), System.Drawing.Image)
+        Me.btnPunGenReportes.Text = ""
+        Me.btnPunGenReportes.ToolTip = "Reportes de Punto de Venta"
+        '
+        'btnPunGenHerramientas
+        '
+        Me.btnPunGenHerramientas.Image = CType(resources.GetObject("btnPunGenHerramientas.Image"), System.Drawing.Image)
+        Me.btnPunGenHerramientas.LargeImage = CType(resources.GetObject("btnPunGenHerramientas.LargeImage"), System.Drawing.Image)
+        Me.btnPunGenHerramientas.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnPunGenHerramientas.Name = "btnPunGenHerramientas"
+        Me.btnPunGenHerramientas.SmallImage = CType(resources.GetObject("btnPunGenHerramientas.SmallImage"), System.Drawing.Image)
+        Me.btnPunGenHerramientas.Text = ""
+        Me.btnPunGenHerramientas.ToolTip = "Quitar Barra de Herramientas"
+        '
+        'pnlPunRestaurante
+        '
+        Me.pnlPunRestaurante.ButtonMoreVisible = False
+        Me.pnlPunRestaurante.Items.Add(Me.btnPunResVentas)
+        Me.pnlPunRestaurante.Items.Add(Me.btnPunResConfiguracion)
+        Me.pnlPunRestaurante.Name = "pnlPunRestaurante"
+        Me.pnlPunRestaurante.Text = ""
+        '
+        'btnPunResVentas
+        '
+        Me.btnPunResVentas.Image = CType(resources.GetObject("btnPunResVentas.Image"), System.Drawing.Image)
+        Me.btnPunResVentas.LargeImage = CType(resources.GetObject("btnPunResVentas.LargeImage"), System.Drawing.Image)
+        Me.btnPunResVentas.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnPunResVentas.Name = "btnPunResVentas"
+        Me.btnPunResVentas.SmallImage = CType(resources.GetObject("btnPunResVentas.SmallImage"), System.Drawing.Image)
+        Me.btnPunResVentas.Text = ""
+        Me.btnPunResVentas.ToolTip = "Restaurante"
+        '
+        'btnPunResConfiguracion
+        '
+        Me.btnPunResConfiguracion.Image = CType(resources.GetObject("btnPunResConfiguracion.Image"), System.Drawing.Image)
+        Me.btnPunResConfiguracion.LargeImage = CType(resources.GetObject("btnPunResConfiguracion.LargeImage"), System.Drawing.Image)
+        Me.btnPunResConfiguracion.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnPunResConfiguracion.Name = "btnPunResConfiguracion"
+        Me.btnPunResConfiguracion.SmallImage = CType(resources.GetObject("btnPunResConfiguracion.SmallImage"), System.Drawing.Image)
+        Me.btnPunResConfiguracion.Text = ""
+        Me.btnPunResConfiguracion.ToolTip = "Configuración de Restaurante"
+        '
+        'tabBancos
+        '
+        Me.tabBancos.Name = "tabBancos"
+        Me.tabBancos.Panels.Add(Me.pnlBanCatalogos)
+        Me.tabBancos.Panels.Add(Me.pnlBanOperacion)
+        Me.tabBancos.Panels.Add(Me.pnlBanConsultas)
+        Me.tabBancos.Text = "Bancos"
+        '
+        'pnlBanCatalogos
+        '
+        Me.pnlBanCatalogos.ButtonMoreVisible = False
+        Me.pnlBanCatalogos.Items.Add(Me.btnBanCatCuentas)
+        Me.pnlBanCatalogos.Name = "pnlBanCatalogos"
+        Me.pnlBanCatalogos.Text = ""
+        '
+        'btnBanCatCuentas
+        '
+        Me.btnBanCatCuentas.Image = CType(resources.GetObject("btnBanCatCuentas.Image"), System.Drawing.Image)
+        Me.btnBanCatCuentas.LargeImage = CType(resources.GetObject("btnBanCatCuentas.LargeImage"), System.Drawing.Image)
+        Me.btnBanCatCuentas.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnBanCatCuentas.Name = "btnBanCatCuentas"
+        Me.btnBanCatCuentas.SmallImage = CType(resources.GetObject("btnBanCatCuentas.SmallImage"), System.Drawing.Image)
+        Me.btnBanCatCuentas.Text = ""
+        Me.btnBanCatCuentas.ToolTip = "Catalogo de Cuentas"
+        '
+        'pnlBanOperacion
+        '
+        Me.pnlBanOperacion.ButtonMoreVisible = False
+        Me.pnlBanOperacion.Items.Add(Me.btnBanOpeDepositos)
+        Me.pnlBanOperacion.Items.Add(Me.btnBanOpePagos)
+        Me.pnlBanOperacion.Items.Add(Me.btnBanOpeConciliacion)
+        Me.pnlBanOperacion.Name = "pnlBanOperacion"
+        Me.pnlBanOperacion.Text = ""
+        '
+        'btnBanOpeDepositos
+        '
+        Me.btnBanOpeDepositos.Image = CType(resources.GetObject("btnBanOpeDepositos.Image"), System.Drawing.Image)
+        Me.btnBanOpeDepositos.LargeImage = CType(resources.GetObject("btnBanOpeDepositos.LargeImage"), System.Drawing.Image)
+        Me.btnBanOpeDepositos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnBanOpeDepositos.Name = "btnBanOpeDepositos"
+        Me.btnBanOpeDepositos.SmallImage = CType(resources.GetObject("btnBanOpeDepositos.SmallImage"), System.Drawing.Image)
+        Me.btnBanOpeDepositos.Text = ""
+        Me.btnBanOpeDepositos.ToolTip = "Depositos"
+        '
+        'btnBanOpePagos
+        '
+        Me.btnBanOpePagos.Image = CType(resources.GetObject("btnBanOpePagos.Image"), System.Drawing.Image)
+        Me.btnBanOpePagos.LargeImage = CType(resources.GetObject("btnBanOpePagos.LargeImage"), System.Drawing.Image)
+        Me.btnBanOpePagos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnBanOpePagos.Name = "btnBanOpePagos"
+        Me.btnBanOpePagos.SmallImage = CType(resources.GetObject("btnBanOpePagos.SmallImage"), System.Drawing.Image)
+        Me.btnBanOpePagos.Text = ""
+        Me.btnBanOpePagos.ToolTip = "Pagos"
+        '
+        'btnBanOpeConciliacion
+        '
+        Me.btnBanOpeConciliacion.Image = CType(resources.GetObject("btnBanOpeConciliacion.Image"), System.Drawing.Image)
+        Me.btnBanOpeConciliacion.LargeImage = CType(resources.GetObject("btnBanOpeConciliacion.LargeImage"), System.Drawing.Image)
+        Me.btnBanOpeConciliacion.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnBanOpeConciliacion.Name = "btnBanOpeConciliacion"
+        Me.btnBanOpeConciliacion.SmallImage = CType(resources.GetObject("btnBanOpeConciliacion.SmallImage"), System.Drawing.Image)
+        Me.btnBanOpeConciliacion.Text = ""
+        Me.btnBanOpeConciliacion.ToolTip = "Conciliación"
+        '
+        'pnlBanConsultas
+        '
+        Me.pnlBanConsultas.ButtonMoreVisible = False
+        Me.pnlBanConsultas.Items.Add(Me.btnBanConReportes)
+        Me.pnlBanConsultas.Name = "pnlBanConsultas"
+        Me.pnlBanConsultas.Text = ""
+        '
+        'btnBanConReportes
+        '
+        Me.btnBanConReportes.Image = CType(resources.GetObject("btnBanConReportes.Image"), System.Drawing.Image)
+        Me.btnBanConReportes.LargeImage = CType(resources.GetObject("btnBanConReportes.LargeImage"), System.Drawing.Image)
+        Me.btnBanConReportes.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnBanConReportes.Name = "btnBanConReportes"
+        Me.btnBanConReportes.SmallImage = CType(resources.GetObject("btnBanConReportes.SmallImage"), System.Drawing.Image)
+        Me.btnBanConReportes.Text = ""
+        Me.btnBanConReportes.ToolTip = "Reportes"
+        '
+        'tabNomina
+        '
+        Me.tabNomina.Name = "tabNomina"
+        Me.tabNomina.Panels.Add(Me.pnlNomCatalogos)
+        Me.tabNomina.Panels.Add(Me.pnlNomOpercion)
+        Me.tabNomina.Panels.Add(Me.pnlNomConsultas)
+        Me.tabNomina.Text = "Nómina"
+        '
+        'pnlNomCatalogos
+        '
+        Me.pnlNomCatalogos.ButtonMoreVisible = False
+        Me.pnlNomCatalogos.Items.Add(Me.btnNomCatTrabajadores)
+        Me.pnlNomCatalogos.Name = "pnlNomCatalogos"
+        Me.pnlNomCatalogos.Text = ""
+        '
+        'btnNomCatTrabajadores
+        '
+        Me.btnNomCatTrabajadores.Image = CType(resources.GetObject("btnNomCatTrabajadores.Image"), System.Drawing.Image)
+        Me.btnNomCatTrabajadores.LargeImage = CType(resources.GetObject("btnNomCatTrabajadores.LargeImage"), System.Drawing.Image)
+        Me.btnNomCatTrabajadores.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnNomCatTrabajadores.Name = "btnNomCatTrabajadores"
+        Me.btnNomCatTrabajadores.SmallImage = CType(resources.GetObject("btnNomCatTrabajadores.SmallImage"), System.Drawing.Image)
+        Me.btnNomCatTrabajadores.Text = ""
+        Me.btnNomCatTrabajadores.ToolTip = "Trabajadores"
+        '
+        'pnlNomOpercion
+        '
+        Me.pnlNomOpercion.ButtonMoreVisible = False
+        Me.pnlNomOpercion.Items.Add(Me.btnNomOpeNomina)
+        Me.pnlNomOpercion.Name = "pnlNomOpercion"
+        Me.pnlNomOpercion.Text = ""
+        '
+        'btnNomOpeNomina
+        '
+        Me.btnNomOpeNomina.Image = CType(resources.GetObject("btnNomOpeNomina.Image"), System.Drawing.Image)
+        Me.btnNomOpeNomina.LargeImage = CType(resources.GetObject("btnNomOpeNomina.LargeImage"), System.Drawing.Image)
+        Me.btnNomOpeNomina.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnNomOpeNomina.Name = "btnNomOpeNomina"
+        Me.btnNomOpeNomina.SmallImage = CType(resources.GetObject("btnNomOpeNomina.SmallImage"), System.Drawing.Image)
+        Me.btnNomOpeNomina.Text = ""
+        Me.btnNomOpeNomina.ToolTip = "Nómina"
+        '
+        'pnlNomConsultas
+        '
+        Me.pnlNomConsultas.ButtonMoreVisible = False
+        Me.pnlNomConsultas.Items.Add(Me.btnNomConReportes)
+        Me.pnlNomConsultas.Name = "pnlNomConsultas"
+        Me.pnlNomConsultas.Text = ""
+        '
+        'btnNomConReportes
+        '
+        Me.btnNomConReportes.Image = CType(resources.GetObject("btnNomConReportes.Image"), System.Drawing.Image)
+        Me.btnNomConReportes.LargeImage = CType(resources.GetObject("btnNomConReportes.LargeImage"), System.Drawing.Image)
+        Me.btnNomConReportes.Name = "btnNomConReportes"
+        Me.btnNomConReportes.SmallImage = CType(resources.GetObject("btnNomConReportes.SmallImage"), System.Drawing.Image)
+        Me.btnNomConReportes.Text = ""
+        Me.btnNomConReportes.ToolTip = "Reportes"
+        '
+        'tabGastos
+        '
+        Me.tabGastos.Name = "tabGastos"
+        Me.tabGastos.Panels.Add(Me.pnlGasCatalogos)
+        Me.tabGastos.Panels.Add(Me.pnlGasOperacion)
+        Me.tabGastos.Panels.Add(Me.pnlGasConsultas)
+        Me.tabGastos.Text = "Gastos"
+        '
+        'pnlGasCatalogos
+        '
+        Me.pnlGasCatalogos.ButtonMoreVisible = False
+        Me.pnlGasCatalogos.Items.Add(Me.btnGasCatClasificaciones)
+        Me.pnlGasCatalogos.Items.Add(Me.btnGasCatEmpleados)
+        Me.pnlGasCatalogos.Name = "pnlGasCatalogos"
+        Me.pnlGasCatalogos.Text = ""
+        '
+        'btnGasCatClasificaciones
+        '
+        Me.btnGasCatClasificaciones.Image = CType(resources.GetObject("btnGasCatClasificaciones.Image"), System.Drawing.Image)
+        Me.btnGasCatClasificaciones.LargeImage = CType(resources.GetObject("btnGasCatClasificaciones.LargeImage"), System.Drawing.Image)
+        Me.btnGasCatClasificaciones.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnGasCatClasificaciones.Name = "btnGasCatClasificaciones"
+        Me.btnGasCatClasificaciones.SmallImage = CType(resources.GetObject("btnGasCatClasificaciones.SmallImage"), System.Drawing.Image)
+        Me.btnGasCatClasificaciones.Text = ""
+        Me.btnGasCatClasificaciones.ToolTip = "Clasificaciones"
+        '
+        'btnGasCatEmpleados
+        '
+        Me.btnGasCatEmpleados.Image = CType(resources.GetObject("btnGasCatEmpleados.Image"), System.Drawing.Image)
+        Me.btnGasCatEmpleados.LargeImage = CType(resources.GetObject("btnGasCatEmpleados.LargeImage"), System.Drawing.Image)
+        Me.btnGasCatEmpleados.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnGasCatEmpleados.Name = "btnGasCatEmpleados"
+        Me.btnGasCatEmpleados.SmallImage = CType(resources.GetObject("btnGasCatEmpleados.SmallImage"), System.Drawing.Image)
+        Me.btnGasCatEmpleados.Text = ""
+        Me.btnGasCatEmpleados.ToolTip = "Empleados"
+        '
+        'pnlGasOperacion
+        '
+        Me.pnlGasOperacion.ButtonMoreVisible = False
+        Me.pnlGasOperacion.Items.Add(Me.btnGasOpeGastos)
+        Me.pnlGasOperacion.Items.Add(Me.btnGasOpeMovimientos)
+        Me.pnlGasOperacion.Items.Add(Me.btnGasOpeProgramar)
+        Me.pnlGasOperacion.Name = "pnlGasOperacion"
+        Me.pnlGasOperacion.Text = ""
+        '
+        'btnGasOpeGastos
+        '
+        Me.btnGasOpeGastos.Image = CType(resources.GetObject("btnGasOpeGastos.Image"), System.Drawing.Image)
+        Me.btnGasOpeGastos.LargeImage = CType(resources.GetObject("btnGasOpeGastos.LargeImage"), System.Drawing.Image)
+        Me.btnGasOpeGastos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnGasOpeGastos.Name = "btnGasOpeGastos"
+        Me.btnGasOpeGastos.SmallImage = CType(resources.GetObject("btnGasOpeGastos.SmallImage"), System.Drawing.Image)
+        Me.btnGasOpeGastos.Text = ""
+        Me.btnGasOpeGastos.ToolTip = "Gastos"
+        '
+        'btnGasOpeMovimientos
+        '
+        Me.btnGasOpeMovimientos.Image = CType(resources.GetObject("btnGasOpeMovimientos.Image"), System.Drawing.Image)
+        Me.btnGasOpeMovimientos.LargeImage = CType(resources.GetObject("btnGasOpeMovimientos.LargeImage"), System.Drawing.Image)
+        Me.btnGasOpeMovimientos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnGasOpeMovimientos.Name = "btnGasOpeMovimientos"
+        Me.btnGasOpeMovimientos.SmallImage = CType(resources.GetObject("btnGasOpeMovimientos.SmallImage"), System.Drawing.Image)
+        Me.btnGasOpeMovimientos.Text = ""
+        Me.btnGasOpeMovimientos.ToolTip = "Movimientos de Caja"
+        '
+        'btnGasOpeProgramar
+        '
+        Me.btnGasOpeProgramar.Image = CType(resources.GetObject("btnGasOpeProgramar.Image"), System.Drawing.Image)
+        Me.btnGasOpeProgramar.LargeImage = CType(resources.GetObject("btnGasOpeProgramar.LargeImage"), System.Drawing.Image)
+        Me.btnGasOpeProgramar.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnGasOpeProgramar.Name = "btnGasOpeProgramar"
+        Me.btnGasOpeProgramar.SmallImage = CType(resources.GetObject("btnGasOpeProgramar.SmallImage"), System.Drawing.Image)
+        Me.btnGasOpeProgramar.Text = ""
+        Me.btnGasOpeProgramar.ToolTip = "Programar Gastos"
+        '
+        'pnlGasConsultas
+        '
+        Me.pnlGasConsultas.ButtonMoreVisible = False
+        Me.pnlGasConsultas.Items.Add(Me.btnGasConReportes)
+        Me.pnlGasConsultas.Name = "pnlGasConsultas"
+        Me.pnlGasConsultas.Text = ""
+        '
+        'btnGasConReportes
+        '
+        Me.btnGasConReportes.Image = CType(resources.GetObject("btnGasConReportes.Image"), System.Drawing.Image)
+        Me.btnGasConReportes.LargeImage = CType(resources.GetObject("btnGasConReportes.LargeImage"), System.Drawing.Image)
+        Me.btnGasConReportes.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnGasConReportes.Name = "btnGasConReportes"
+        Me.btnGasConReportes.SmallImage = CType(resources.GetObject("btnGasConReportes.SmallImage"), System.Drawing.Image)
+        Me.btnGasConReportes.Text = ""
+        Me.btnGasConReportes.ToolTip = "Reportes"
+        '
+        'tabEmpenos
+        '
+        Me.tabEmpenos.Name = "tabEmpenos"
+        Me.tabEmpenos.Panels.Add(Me.pnlEmpCatalogos)
+        Me.tabEmpenos.Panels.Add(Me.pnlEmpOperacion)
+        Me.tabEmpenos.Panels.Add(Me.pnlEmpConsultas)
+        Me.tabEmpenos.Panels.Add(Me.pnlEmpHerramientas)
+        Me.tabEmpenos.Text = "Empeños"
+        '
+        'pnlEmpCatalogos
+        '
+        Me.pnlEmpCatalogos.ButtonMoreVisible = False
+        Me.pnlEmpCatalogos.Items.Add(Me.btnEmpCatIdentificaciones)
+        Me.pnlEmpCatalogos.Items.Add(Me.btnEmpCatClasificaciones)
+        Me.pnlEmpCatalogos.Name = "pnlEmpCatalogos"
+        Me.pnlEmpCatalogos.Text = ""
+        '
+        'btnEmpCatIdentificaciones
+        '
+        Me.btnEmpCatIdentificaciones.Image = CType(resources.GetObject("btnEmpCatIdentificaciones.Image"), System.Drawing.Image)
+        Me.btnEmpCatIdentificaciones.LargeImage = CType(resources.GetObject("btnEmpCatIdentificaciones.LargeImage"), System.Drawing.Image)
+        Me.btnEmpCatIdentificaciones.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnEmpCatIdentificaciones.Name = "btnEmpCatIdentificaciones"
+        Me.btnEmpCatIdentificaciones.SmallImage = CType(resources.GetObject("btnEmpCatIdentificaciones.SmallImage"), System.Drawing.Image)
+        Me.btnEmpCatIdentificaciones.Text = ""
+        Me.btnEmpCatIdentificaciones.ToolTip = "Identificaciones"
+        '
+        'btnEmpCatClasificaciones
+        '
+        Me.btnEmpCatClasificaciones.Image = CType(resources.GetObject("btnEmpCatClasificaciones.Image"), System.Drawing.Image)
+        Me.btnEmpCatClasificaciones.LargeImage = CType(resources.GetObject("btnEmpCatClasificaciones.LargeImage"), System.Drawing.Image)
+        Me.btnEmpCatClasificaciones.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnEmpCatClasificaciones.Name = "btnEmpCatClasificaciones"
+        Me.btnEmpCatClasificaciones.SmallImage = CType(resources.GetObject("btnEmpCatClasificaciones.SmallImage"), System.Drawing.Image)
+        Me.btnEmpCatClasificaciones.Text = ""
+        Me.btnEmpCatClasificaciones.ToolTip = "Clasificaciones"
+        '
+        'pnlEmpOperacion
+        '
+        Me.pnlEmpOperacion.ButtonMoreVisible = False
+        Me.pnlEmpOperacion.Items.Add(Me.btnEmpOpeEmpenos)
+        Me.pnlEmpOperacion.Items.Add(Me.btnEmpOpePagos)
+        Me.pnlEmpOperacion.Items.Add(Me.btnEmpOpeCompras)
+        Me.pnlEmpOperacion.Items.Add(Me.btnEmpOpeAdjudicaciones)
+        Me.pnlEmpOperacion.Items.Add(Me.btnEmpOpeCortes)
+        Me.pnlEmpOperacion.Name = "pnlEmpOperacion"
+        Me.pnlEmpOperacion.Text = ""
+        '
+        'btnEmpOpeEmpenos
+        '
+        Me.btnEmpOpeEmpenos.Image = CType(resources.GetObject("btnEmpOpeEmpenos.Image"), System.Drawing.Image)
+        Me.btnEmpOpeEmpenos.LargeImage = CType(resources.GetObject("btnEmpOpeEmpenos.LargeImage"), System.Drawing.Image)
+        Me.btnEmpOpeEmpenos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnEmpOpeEmpenos.Name = "btnEmpOpeEmpenos"
+        Me.btnEmpOpeEmpenos.SmallImage = CType(resources.GetObject("btnEmpOpeEmpenos.SmallImage"), System.Drawing.Image)
+        Me.btnEmpOpeEmpenos.Text = ""
+        Me.btnEmpOpeEmpenos.ToolTip = "Empeños"
+        '
+        'btnEmpOpePagos
+        '
+        Me.btnEmpOpePagos.Image = CType(resources.GetObject("btnEmpOpePagos.Image"), System.Drawing.Image)
+        Me.btnEmpOpePagos.LargeImage = CType(resources.GetObject("btnEmpOpePagos.LargeImage"), System.Drawing.Image)
+        Me.btnEmpOpePagos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnEmpOpePagos.Name = "btnEmpOpePagos"
+        Me.btnEmpOpePagos.SmallImage = CType(resources.GetObject("btnEmpOpePagos.SmallImage"), System.Drawing.Image)
+        Me.btnEmpOpePagos.Text = ""
+        Me.btnEmpOpePagos.ToolTip = "Pagos"
+        '
+        'btnEmpOpeCompras
+        '
+        Me.btnEmpOpeCompras.Image = CType(resources.GetObject("btnEmpOpeCompras.Image"), System.Drawing.Image)
+        Me.btnEmpOpeCompras.LargeImage = CType(resources.GetObject("btnEmpOpeCompras.LargeImage"), System.Drawing.Image)
+        Me.btnEmpOpeCompras.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnEmpOpeCompras.Name = "btnEmpOpeCompras"
+        Me.btnEmpOpeCompras.SmallImage = CType(resources.GetObject("btnEmpOpeCompras.SmallImage"), System.Drawing.Image)
+        Me.btnEmpOpeCompras.Text = ""
+        Me.btnEmpOpeCompras.ToolTip = "Compras"
+        '
+        'btnEmpOpeAdjudicaciones
+        '
+        Me.btnEmpOpeAdjudicaciones.Image = CType(resources.GetObject("btnEmpOpeAdjudicaciones.Image"), System.Drawing.Image)
+        Me.btnEmpOpeAdjudicaciones.LargeImage = CType(resources.GetObject("btnEmpOpeAdjudicaciones.LargeImage"), System.Drawing.Image)
+        Me.btnEmpOpeAdjudicaciones.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnEmpOpeAdjudicaciones.Name = "btnEmpOpeAdjudicaciones"
+        Me.btnEmpOpeAdjudicaciones.SmallImage = CType(resources.GetObject("btnEmpOpeAdjudicaciones.SmallImage"), System.Drawing.Image)
+        Me.btnEmpOpeAdjudicaciones.Text = ""
+        Me.btnEmpOpeAdjudicaciones.ToolTip = "Adjudicaciones"
+        '
+        'btnEmpOpeCortes
+        '
+        Me.btnEmpOpeCortes.Image = CType(resources.GetObject("btnEmpOpeCortes.Image"), System.Drawing.Image)
+        Me.btnEmpOpeCortes.LargeImage = CType(resources.GetObject("btnEmpOpeCortes.LargeImage"), System.Drawing.Image)
+        Me.btnEmpOpeCortes.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnEmpOpeCortes.Name = "btnEmpOpeCortes"
+        Me.btnEmpOpeCortes.SmallImage = CType(resources.GetObject("btnEmpOpeCortes.SmallImage"), System.Drawing.Image)
+        Me.btnEmpOpeCortes.Text = ""
+        Me.btnEmpOpeCortes.ToolTip = "Cortes"
+        '
+        'pnlEmpConsultas
+        '
+        Me.pnlEmpConsultas.ButtonMoreVisible = False
+        Me.pnlEmpConsultas.Items.Add(Me.btnEmpConReportes)
+        Me.pnlEmpConsultas.Items.Add(Me.btnEmpConConsultas)
+        Me.pnlEmpConsultas.Name = "pnlEmpConsultas"
+        Me.pnlEmpConsultas.Text = ""
+        '
+        'btnEmpConReportes
+        '
+        Me.btnEmpConReportes.Image = CType(resources.GetObject("btnEmpConReportes.Image"), System.Drawing.Image)
+        Me.btnEmpConReportes.LargeImage = CType(resources.GetObject("btnEmpConReportes.LargeImage"), System.Drawing.Image)
+        Me.btnEmpConReportes.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnEmpConReportes.Name = "btnEmpConReportes"
+        Me.btnEmpConReportes.SmallImage = CType(resources.GetObject("btnEmpConReportes.SmallImage"), System.Drawing.Image)
+        Me.btnEmpConReportes.Text = ""
+        Me.btnEmpConReportes.ToolTip = "Reportes"
+        '
+        'btnEmpConConsultas
+        '
+        Me.btnEmpConConsultas.Image = CType(resources.GetObject("btnEmpConConsultas.Image"), System.Drawing.Image)
+        Me.btnEmpConConsultas.LargeImage = CType(resources.GetObject("btnEmpConConsultas.LargeImage"), System.Drawing.Image)
+        Me.btnEmpConConsultas.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnEmpConConsultas.Name = "btnEmpConConsultas"
+        Me.btnEmpConConsultas.SmallImage = CType(resources.GetObject("btnEmpConConsultas.SmallImage"), System.Drawing.Image)
+        Me.btnEmpConConsultas.Text = ""
+        Me.btnEmpConConsultas.ToolTip = "Consultas"
+        '
+        'pnlEmpHerramientas
+        '
+        Me.pnlEmpHerramientas.ButtonMoreVisible = False
+        Me.pnlEmpHerramientas.Items.Add(Me.btnEmpherConfiguracion)
+        Me.pnlEmpHerramientas.Name = "pnlEmpHerramientas"
+        Me.pnlEmpHerramientas.Text = ""
+        '
+        'btnEmpherConfiguracion
+        '
+        Me.btnEmpherConfiguracion.Image = CType(resources.GetObject("btnEmpherConfiguracion.Image"), System.Drawing.Image)
+        Me.btnEmpherConfiguracion.LargeImage = CType(resources.GetObject("btnEmpherConfiguracion.LargeImage"), System.Drawing.Image)
+        Me.btnEmpherConfiguracion.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnEmpherConfiguracion.Name = "btnEmpherConfiguracion"
+        Me.btnEmpherConfiguracion.SmallImage = CType(resources.GetObject("btnEmpherConfiguracion.SmallImage"), System.Drawing.Image)
+        Me.btnEmpherConfiguracion.Text = ""
+        Me.btnEmpherConfiguracion.ToolTip = "Configuración"
+        '
+        'tabContabilidad
+        '
+        Me.tabContabilidad.Name = "tabContabilidad"
+        Me.tabContabilidad.Panels.Add(Me.pnlConCatalogos)
+        Me.tabContabilidad.Panels.Add(Me.pnlConOperación)
+        Me.tabContabilidad.Panels.Add(Me.pnlConConsultas)
+        Me.tabContabilidad.Text = "Contabilidad"
+        '
+        'pnlConCatalogos
+        '
+        Me.pnlConCatalogos.ButtonMoreVisible = False
+        Me.pnlConCatalogos.Items.Add(Me.btnConCatClasifPolizas)
+        Me.pnlConCatalogos.Items.Add(Me.btnConCatCuentas)
+        Me.pnlConCatalogos.Items.Add(Me.btnConCatConceptos)
+        Me.pnlConCatalogos.Items.Add(Me.btnConCatMascaras)
+        Me.pnlConCatalogos.Name = "pnlConCatalogos"
+        Me.pnlConCatalogos.Text = ""
+        '
+        'btnConCatClasifPolizas
+        '
+        Me.btnConCatClasifPolizas.Image = CType(resources.GetObject("btnConCatClasifPolizas.Image"), System.Drawing.Image)
+        Me.btnConCatClasifPolizas.LargeImage = CType(resources.GetObject("btnConCatClasifPolizas.LargeImage"), System.Drawing.Image)
+        Me.btnConCatClasifPolizas.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnConCatClasifPolizas.Name = "btnConCatClasifPolizas"
+        Me.btnConCatClasifPolizas.SmallImage = CType(resources.GetObject("btnConCatClasifPolizas.SmallImage"), System.Drawing.Image)
+        Me.btnConCatClasifPolizas.Text = ""
+        Me.btnConCatClasifPolizas.ToolTip = "Clasif. pólizas"
+        '
+        'btnConCatCuentas
+        '
+        Me.btnConCatCuentas.Image = CType(resources.GetObject("btnConCatCuentas.Image"), System.Drawing.Image)
+        Me.btnConCatCuentas.LargeImage = CType(resources.GetObject("btnConCatCuentas.LargeImage"), System.Drawing.Image)
+        Me.btnConCatCuentas.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnConCatCuentas.Name = "btnConCatCuentas"
+        Me.btnConCatCuentas.SmallImage = CType(resources.GetObject("btnConCatCuentas.SmallImage"), System.Drawing.Image)
+        Me.btnConCatCuentas.Text = ""
+        Me.btnConCatCuentas.ToolTip = "Cuentas"
+        '
+        'btnConCatConceptos
+        '
+        Me.btnConCatConceptos.Image = CType(resources.GetObject("btnConCatConceptos.Image"), System.Drawing.Image)
+        Me.btnConCatConceptos.LargeImage = CType(resources.GetObject("btnConCatConceptos.LargeImage"), System.Drawing.Image)
+        Me.btnConCatConceptos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnConCatConceptos.Name = "btnConCatConceptos"
+        Me.btnConCatConceptos.SmallImage = CType(resources.GetObject("btnConCatConceptos.SmallImage"), System.Drawing.Image)
+        Me.btnConCatConceptos.Text = ""
+        Me.btnConCatConceptos.ToolTip = "Conceptos"
+        '
+        'btnConCatMascaras
+        '
+        Me.btnConCatMascaras.Image = CType(resources.GetObject("btnConCatMascaras.Image"), System.Drawing.Image)
+        Me.btnConCatMascaras.LargeImage = CType(resources.GetObject("btnConCatMascaras.LargeImage"), System.Drawing.Image)
+        Me.btnConCatMascaras.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnConCatMascaras.Name = "btnConCatMascaras"
+        Me.btnConCatMascaras.SmallImage = CType(resources.GetObject("btnConCatMascaras.SmallImage"), System.Drawing.Image)
+        Me.btnConCatMascaras.Text = ""
+        Me.btnConCatMascaras.ToolTip = "Máscaras"
+        '
+        'pnlConOperación
+        '
+        Me.pnlConOperación.ButtonMoreVisible = False
+        Me.pnlConOperación.Items.Add(Me.btnConOpePolizas)
+        Me.pnlConOperación.Items.Add(Me.btnConOpeSaldos)
+        Me.pnlConOperación.Items.Add(Me.btnConOpeConciliarDiot)
+        Me.pnlConOperación.Items.Add(Me.btnConOpeGenerarPolizas)
+        Me.pnlConOperación.Items.Add(Me.btnConOpeConfiguracion)
+        Me.pnlConOperación.Name = "pnlConOperación"
+        Me.pnlConOperación.Text = ""
+        '
+        'btnConOpePolizas
+        '
+        Me.btnConOpePolizas.Image = CType(resources.GetObject("btnConOpePolizas.Image"), System.Drawing.Image)
+        Me.btnConOpePolizas.LargeImage = CType(resources.GetObject("btnConOpePolizas.LargeImage"), System.Drawing.Image)
+        Me.btnConOpePolizas.Name = "btnConOpePolizas"
+        Me.btnConOpePolizas.SmallImage = CType(resources.GetObject("btnConOpePolizas.SmallImage"), System.Drawing.Image)
+        Me.btnConOpePolizas.Text = ""
+        Me.btnConOpePolizas.ToolTip = "Pólizas"
+        '
+        'btnConOpeSaldos
+        '
+        Me.btnConOpeSaldos.Image = CType(resources.GetObject("btnConOpeSaldos.Image"), System.Drawing.Image)
+        Me.btnConOpeSaldos.LargeImage = CType(resources.GetObject("btnConOpeSaldos.LargeImage"), System.Drawing.Image)
+        Me.btnConOpeSaldos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnConOpeSaldos.Name = "btnConOpeSaldos"
+        Me.btnConOpeSaldos.SmallImage = CType(resources.GetObject("btnConOpeSaldos.SmallImage"), System.Drawing.Image)
+        Me.btnConOpeSaldos.Text = ""
+        Me.btnConOpeSaldos.ToolTip = "Saldos"
+        '
+        'btnConOpeConciliarDiot
+        '
+        Me.btnConOpeConciliarDiot.Image = CType(resources.GetObject("btnConOpeConciliarDiot.Image"), System.Drawing.Image)
+        Me.btnConOpeConciliarDiot.LargeImage = CType(resources.GetObject("btnConOpeConciliarDiot.LargeImage"), System.Drawing.Image)
+        Me.btnConOpeConciliarDiot.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnConOpeConciliarDiot.Name = "btnConOpeConciliarDiot"
+        Me.btnConOpeConciliarDiot.SmallImage = CType(resources.GetObject("btnConOpeConciliarDiot.SmallImage"), System.Drawing.Image)
+        Me.btnConOpeConciliarDiot.Text = ""
+        Me.btnConOpeConciliarDiot.ToolTip = "Conciliar DIOT"
+        '
+        'btnConOpeGenerarPolizas
+        '
+        Me.btnConOpeGenerarPolizas.Image = CType(resources.GetObject("btnConOpeGenerarPolizas.Image"), System.Drawing.Image)
+        Me.btnConOpeGenerarPolizas.LargeImage = CType(resources.GetObject("btnConOpeGenerarPolizas.LargeImage"), System.Drawing.Image)
+        Me.btnConOpeGenerarPolizas.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnConOpeGenerarPolizas.Name = "btnConOpeGenerarPolizas"
+        Me.btnConOpeGenerarPolizas.SmallImage = CType(resources.GetObject("btnConOpeGenerarPolizas.SmallImage"), System.Drawing.Image)
+        Me.btnConOpeGenerarPolizas.Text = ""
+        Me.btnConOpeGenerarPolizas.ToolTip = "Generar pólizas"
+        '
+        'btnConOpeConfiguracion
+        '
+        Me.btnConOpeConfiguracion.Image = CType(resources.GetObject("btnConOpeConfiguracion.Image"), System.Drawing.Image)
+        Me.btnConOpeConfiguracion.LargeImage = CType(resources.GetObject("btnConOpeConfiguracion.LargeImage"), System.Drawing.Image)
+        Me.btnConOpeConfiguracion.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnConOpeConfiguracion.Name = "btnConOpeConfiguracion"
+        Me.btnConOpeConfiguracion.SmallImage = CType(resources.GetObject("btnConOpeConfiguracion.SmallImage"), System.Drawing.Image)
+        Me.btnConOpeConfiguracion.Text = ""
+        Me.btnConOpeConfiguracion.ToolTip = "Configuración"
+        '
+        'pnlConConsultas
+        '
+        Me.pnlConConsultas.ButtonMoreVisible = False
+        Me.pnlConConsultas.Items.Add(Me.btnConConReportes)
+        Me.pnlConConsultas.Name = "pnlConConsultas"
+        Me.pnlConConsultas.Text = ""
+        '
+        'btnConConReportes
+        '
+        Me.btnConConReportes.Image = CType(resources.GetObject("btnConConReportes.Image"), System.Drawing.Image)
+        Me.btnConConReportes.LargeImage = CType(resources.GetObject("btnConConReportes.LargeImage"), System.Drawing.Image)
+        Me.btnConConReportes.Name = "btnConConReportes"
+        Me.btnConConReportes.SmallImage = CType(resources.GetObject("btnConConReportes.SmallImage"), System.Drawing.Image)
+        Me.btnConConReportes.Text = ""
+        Me.btnConConReportes.ToolTip = "Reportes"
+        '
+        'tabHerramientas
+        '
+        Me.tabHerramientas.Name = "tabHerramientas"
+        Me.tabHerramientas.Panels.Add(Me.pnlHerConfiguracion)
+        Me.tabHerramientas.Panels.Add(Me.pnlHerHerramientas)
+        Me.tabHerramientas.Panels.Add(Me.pnHerBaseDatos)
+        Me.tabHerramientas.Text = "Herramientas"
+        '
+        'pnlHerConfiguracion
+        '
+        Me.pnlHerConfiguracion.ButtonMoreVisible = False
+        Me.pnlHerConfiguracion.Items.Add(Me.btnHerConOpciones)
+        Me.pnlHerConfiguracion.Items.Add(Me.btnHerConConfigCorreo)
+        Me.pnlHerConfiguracion.Items.Add(Me.btnHerConLicencias)
+        Me.pnlHerConfiguracion.Items.Add(Me.btnHerConDistribuidores)
+        Me.pnlHerConfiguracion.Items.Add(Me.btnHerConImportar)
+        Me.pnlHerConfiguracion.Name = "pnlHerConfiguracion"
+        Me.pnlHerConfiguracion.Text = ""
+        '
+        'btnHerConOpciones
+        '
+        Me.btnHerConOpciones.Image = CType(resources.GetObject("btnHerConOpciones.Image"), System.Drawing.Image)
+        Me.btnHerConOpciones.LargeImage = CType(resources.GetObject("btnHerConOpciones.LargeImage"), System.Drawing.Image)
+        Me.btnHerConOpciones.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnHerConOpciones.Name = "btnHerConOpciones"
+        Me.btnHerConOpciones.SmallImage = CType(resources.GetObject("btnHerConOpciones.SmallImage"), System.Drawing.Image)
+        Me.btnHerConOpciones.Text = ""
+        Me.btnHerConOpciones.ToolTip = "Opciones"
+        '
+        'btnHerConConfigCorreo
+        '
+        Me.btnHerConConfigCorreo.Image = CType(resources.GetObject("btnHerConConfigCorreo.Image"), System.Drawing.Image)
+        Me.btnHerConConfigCorreo.LargeImage = CType(resources.GetObject("btnHerConConfigCorreo.LargeImage"), System.Drawing.Image)
+        Me.btnHerConConfigCorreo.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnHerConConfigCorreo.Name = "btnHerConConfigCorreo"
+        Me.btnHerConConfigCorreo.SmallImage = CType(resources.GetObject("btnHerConConfigCorreo.SmallImage"), System.Drawing.Image)
+        Me.btnHerConConfigCorreo.Text = ""
+        Me.btnHerConConfigCorreo.ToolTip = "Config. correo"
+        '
+        'btnHerConLicencias
+        '
+        Me.btnHerConLicencias.Image = CType(resources.GetObject("btnHerConLicencias.Image"), System.Drawing.Image)
+        Me.btnHerConLicencias.LargeImage = CType(resources.GetObject("btnHerConLicencias.LargeImage"), System.Drawing.Image)
+        Me.btnHerConLicencias.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnHerConLicencias.Name = "btnHerConLicencias"
+        Me.btnHerConLicencias.SmallImage = CType(resources.GetObject("btnHerConLicencias.SmallImage"), System.Drawing.Image)
+        Me.btnHerConLicencias.Text = ""
+        Me.btnHerConLicencias.ToolTip = "Licencias"
+        '
+        'btnHerConDistribuidores
+        '
+        Me.btnHerConDistribuidores.Image = CType(resources.GetObject("btnHerConDistribuidores.Image"), System.Drawing.Image)
+        Me.btnHerConDistribuidores.LargeImage = CType(resources.GetObject("btnHerConDistribuidores.LargeImage"), System.Drawing.Image)
+        Me.btnHerConDistribuidores.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnHerConDistribuidores.Name = "btnHerConDistribuidores"
+        Me.btnHerConDistribuidores.SmallImage = CType(resources.GetObject("btnHerConDistribuidores.SmallImage"), System.Drawing.Image)
+        Me.btnHerConDistribuidores.Text = ""
+        Me.btnHerConDistribuidores.ToolTip = "Distribuidores"
+        '
+        'btnHerConImportar
+        '
+        Me.btnHerConImportar.Image = CType(resources.GetObject("btnHerConImportar.Image"), System.Drawing.Image)
+        Me.btnHerConImportar.LargeImage = CType(resources.GetObject("btnHerConImportar.LargeImage"), System.Drawing.Image)
+        Me.btnHerConImportar.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnHerConImportar.Name = "btnHerConImportar"
+        Me.btnHerConImportar.SmallImage = CType(resources.GetObject("btnHerConImportar.SmallImage"), System.Drawing.Image)
+        Me.btnHerConImportar.Text = ""
+        Me.btnHerConImportar.ToolTip = "Importar"
+        '
+        'pnlHerHerramientas
+        '
+        Me.pnlHerHerramientas.ButtonMoreVisible = False
+        Me.pnlHerHerramientas.Items.Add(Me.btnHerHerContadorTimbres)
+        Me.pnlHerHerramientas.Items.Add(Me.btnHerHerActivarconector)
+        Me.pnlHerHerramientas.Items.Add(Me.btnHerHerMovimientosUsuario)
+        Me.pnlHerHerramientas.Items.Add(Me.btnHerHerDisenoDocumentos)
+        Me.pnlHerHerramientas.Items.Add(Me.btnHerHerCambioPrecios)
+        Me.pnlHerHerramientas.Items.Add(Me.btnHerHerModifiarInv)
+        Me.pnlHerHerramientas.Name = "pnlHerHerramientas"
+        Me.pnlHerHerramientas.Text = ""
+        '
+        'btnHerHerContadorTimbres
+        '
+        Me.btnHerHerContadorTimbres.Image = CType(resources.GetObject("btnHerHerContadorTimbres.Image"), System.Drawing.Image)
+        Me.btnHerHerContadorTimbres.LargeImage = CType(resources.GetObject("btnHerHerContadorTimbres.LargeImage"), System.Drawing.Image)
+        Me.btnHerHerContadorTimbres.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnHerHerContadorTimbres.Name = "btnHerHerContadorTimbres"
+        Me.btnHerHerContadorTimbres.SmallImage = CType(resources.GetObject("btnHerHerContadorTimbres.SmallImage"), System.Drawing.Image)
+        Me.btnHerHerContadorTimbres.Text = ""
+        Me.btnHerHerContadorTimbres.ToolTip = "Contador timbres"
+        '
+        'btnHerHerActivarconector
+        '
+        Me.btnHerHerActivarconector.CheckOnClick = True
+        Me.btnHerHerActivarconector.Image = CType(resources.GetObject("btnHerHerActivarconector.Image"), System.Drawing.Image)
+        Me.btnHerHerActivarconector.LargeImage = CType(resources.GetObject("btnHerHerActivarconector.LargeImage"), System.Drawing.Image)
+        Me.btnHerHerActivarconector.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnHerHerActivarconector.Name = "btnHerHerActivarconector"
+        Me.btnHerHerActivarconector.SmallImage = CType(resources.GetObject("btnHerHerActivarconector.SmallImage"), System.Drawing.Image)
+        Me.btnHerHerActivarconector.Text = ""
+        Me.btnHerHerActivarconector.ToolTip = "Activar conector"
+        '
+        'btnHerHerMovimientosUsuario
+        '
+        Me.btnHerHerMovimientosUsuario.Image = CType(resources.GetObject("btnHerHerMovimientosUsuario.Image"), System.Drawing.Image)
+        Me.btnHerHerMovimientosUsuario.LargeImage = CType(resources.GetObject("btnHerHerMovimientosUsuario.LargeImage"), System.Drawing.Image)
+        Me.btnHerHerMovimientosUsuario.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnHerHerMovimientosUsuario.Name = "btnHerHerMovimientosUsuario"
+        Me.btnHerHerMovimientosUsuario.SmallImage = CType(resources.GetObject("btnHerHerMovimientosUsuario.SmallImage"), System.Drawing.Image)
+        Me.btnHerHerMovimientosUsuario.Text = ""
+        Me.btnHerHerMovimientosUsuario.ToolTip = "Movimientos usuario"
+        '
+        'btnHerHerDisenoDocumentos
+        '
+        Me.btnHerHerDisenoDocumentos.Image = CType(resources.GetObject("btnHerHerDisenoDocumentos.Image"), System.Drawing.Image)
+        Me.btnHerHerDisenoDocumentos.LargeImage = CType(resources.GetObject("btnHerHerDisenoDocumentos.LargeImage"), System.Drawing.Image)
+        Me.btnHerHerDisenoDocumentos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnHerHerDisenoDocumentos.Name = "btnHerHerDisenoDocumentos"
+        Me.btnHerHerDisenoDocumentos.SmallImage = CType(resources.GetObject("btnHerHerDisenoDocumentos.SmallImage"), System.Drawing.Image)
+        Me.btnHerHerDisenoDocumentos.Text = ""
+        Me.btnHerHerDisenoDocumentos.ToolTip = "Diseño de documentos"
+        '
+        'btnHerHerCambioPrecios
+        '
+        Me.btnHerHerCambioPrecios.Image = CType(resources.GetObject("btnHerHerCambioPrecios.Image"), System.Drawing.Image)
+        Me.btnHerHerCambioPrecios.LargeImage = CType(resources.GetObject("btnHerHerCambioPrecios.LargeImage"), System.Drawing.Image)
+        Me.btnHerHerCambioPrecios.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnHerHerCambioPrecios.Name = "btnHerHerCambioPrecios"
+        Me.btnHerHerCambioPrecios.SmallImage = CType(resources.GetObject("btnHerHerCambioPrecios.SmallImage"), System.Drawing.Image)
+        Me.btnHerHerCambioPrecios.Text = ""
+        Me.btnHerHerCambioPrecios.ToolTip = "Cambio de precios"
+        '
+        'btnHerHerModifiarInv
+        '
+        Me.btnHerHerModifiarInv.Image = CType(resources.GetObject("btnHerHerModifiarInv.Image"), System.Drawing.Image)
+        Me.btnHerHerModifiarInv.LargeImage = CType(resources.GetObject("btnHerHerModifiarInv.LargeImage"), System.Drawing.Image)
+        Me.btnHerHerModifiarInv.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnHerHerModifiarInv.Name = "btnHerHerModifiarInv"
+        Me.btnHerHerModifiarInv.SmallImage = CType(resources.GetObject("btnHerHerModifiarInv.SmallImage"), System.Drawing.Image)
+        Me.btnHerHerModifiarInv.Text = ""
+        Me.btnHerHerModifiarInv.ToolTip = "Modificar Inventario"
+        '
+        'pnHerBaseDatos
+        '
+        Me.pnHerBaseDatos.ButtonMoreVisible = False
+        Me.pnHerBaseDatos.Items.Add(Me.btnHerBasRespaldar)
+        Me.pnHerBaseDatos.Items.Add(Me.btnHerBasRestaurar)
+        Me.pnHerBaseDatos.Name = "pnHerBaseDatos"
+        Me.pnHerBaseDatos.Text = ""
+        '
+        'btnHerBasRespaldar
+        '
+        Me.btnHerBasRespaldar.Image = CType(resources.GetObject("btnHerBasRespaldar.Image"), System.Drawing.Image)
+        Me.btnHerBasRespaldar.LargeImage = CType(resources.GetObject("btnHerBasRespaldar.LargeImage"), System.Drawing.Image)
+        Me.btnHerBasRespaldar.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnHerBasRespaldar.Name = "btnHerBasRespaldar"
+        Me.btnHerBasRespaldar.SmallImage = CType(resources.GetObject("btnHerBasRespaldar.SmallImage"), System.Drawing.Image)
+        Me.btnHerBasRespaldar.Text = ""
+        Me.btnHerBasRespaldar.ToolTip = "Respaldar"
+        '
+        'btnHerBasRestaurar
+        '
+        Me.btnHerBasRestaurar.Image = CType(resources.GetObject("btnHerBasRestaurar.Image"), System.Drawing.Image)
+        Me.btnHerBasRestaurar.LargeImage = CType(resources.GetObject("btnHerBasRestaurar.LargeImage"), System.Drawing.Image)
+        Me.btnHerBasRestaurar.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large
+        Me.btnHerBasRestaurar.Name = "btnHerBasRestaurar"
+        Me.btnHerBasRestaurar.SmallImage = CType(resources.GetObject("btnHerBasRestaurar.SmallImage"), System.Drawing.Image)
+        Me.btnHerBasRestaurar.Text = ""
+        Me.btnHerBasRestaurar.ToolTip = "Restaurar"
         '
         'btnComConReportes
         '
@@ -1042,938 +2172,6 @@ Partial Class frmPrincipalN
         Me.btnComConValidador.Name = "btnComConValidador"
         Me.btnComConValidador.SmallImage = CType(resources.GetObject("btnComConValidador.SmallImage"), System.Drawing.Image)
         Me.btnComConValidador.Text = "Validador"
-        '
-        'tabInventario
-        '
-        Me.tabInventario.Name = "tabInventario"
-        Me.tabInventario.Panels.Add(Me.pnlInvOperacion)
-        Me.tabInventario.Panels.Add(Me.pnlInvConsultas)
-        Me.tabInventario.Panels.Add(Me.pnlInvHerramientas)
-        Me.tabInventario.Text = "Inventario"
-        '
-        'pnlInvOperacion
-        '
-        Me.pnlInvOperacion.Items.Add(Me.btnInvOpeMovimientos)
-        Me.pnlInvOperacion.Items.Add(Me.btnInvOpePedidos)
-        Me.pnlInvOperacion.Items.Add(Me.btnInvOpeBoletas)
-        Me.pnlInvOperacion.Name = "pnlInvOperacion"
-        Me.pnlInvOperacion.Text = "Operación"
-        '
-        'btnInvOpeMovimientos
-        '
-        Me.btnInvOpeMovimientos.Image = CType(resources.GetObject("btnInvOpeMovimientos.Image"), System.Drawing.Image)
-        Me.btnInvOpeMovimientos.LargeImage = CType(resources.GetObject("btnInvOpeMovimientos.LargeImage"), System.Drawing.Image)
-        Me.btnInvOpeMovimientos.Name = "btnInvOpeMovimientos"
-        Me.btnInvOpeMovimientos.SmallImage = CType(resources.GetObject("btnInvOpeMovimientos.SmallImage"), System.Drawing.Image)
-        Me.btnInvOpeMovimientos.Text = "Movimientos"
-        '
-        'btnInvOpePedidos
-        '
-        Me.btnInvOpePedidos.Image = CType(resources.GetObject("btnInvOpePedidos.Image"), System.Drawing.Image)
-        Me.btnInvOpePedidos.LargeImage = CType(resources.GetObject("btnInvOpePedidos.LargeImage"), System.Drawing.Image)
-        Me.btnInvOpePedidos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnInvOpePedidos.Name = "btnInvOpePedidos"
-        Me.btnInvOpePedidos.SmallImage = CType(resources.GetObject("btnInvOpePedidos.SmallImage"), System.Drawing.Image)
-        Me.btnInvOpePedidos.Text = "Pedidos"
-        '
-        'btnInvOpeBoletas
-        '
-        Me.btnInvOpeBoletas.Image = CType(resources.GetObject("btnInvOpeBoletas.Image"), System.Drawing.Image)
-        Me.btnInvOpeBoletas.LargeImage = CType(resources.GetObject("btnInvOpeBoletas.LargeImage"), System.Drawing.Image)
-        Me.btnInvOpeBoletas.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnInvOpeBoletas.Name = "btnInvOpeBoletas"
-        Me.btnInvOpeBoletas.SmallImage = CType(resources.GetObject("btnInvOpeBoletas.SmallImage"), System.Drawing.Image)
-        Me.btnInvOpeBoletas.Text = "Boletas"
-        '
-        'pnlInvConsultas
-        '
-        Me.pnlInvConsultas.Items.Add(Me.btnInvConReportes)
-        Me.pnlInvConsultas.Items.Add(Me.btnInvConInventario)
-        Me.pnlInvConsultas.Items.Add(Me.btnInvConMonitor)
-        Me.pnlInvConsultas.Items.Add(Me.btnInvConCardex)
-        Me.pnlInvConsultas.Items.Add(Me.btnInvConRevision)
-        Me.pnlInvConsultas.Items.Add(Me.btnInvConReportesBoletas)
-        Me.pnlInvConsultas.Name = "pnlInvConsultas"
-        Me.pnlInvConsultas.Text = "Consultas"
-        '
-        'btnInvConReportes
-        '
-        Me.btnInvConReportes.Image = CType(resources.GetObject("btnInvConReportes.Image"), System.Drawing.Image)
-        Me.btnInvConReportes.LargeImage = CType(resources.GetObject("btnInvConReportes.LargeImage"), System.Drawing.Image)
-        Me.btnInvConReportes.Name = "btnInvConReportes"
-        Me.btnInvConReportes.SmallImage = CType(resources.GetObject("btnInvConReportes.SmallImage"), System.Drawing.Image)
-        Me.btnInvConReportes.Text = "Reportes"
-        '
-        'btnInvConInventario
-        '
-        Me.btnInvConInventario.Image = CType(resources.GetObject("btnInvConInventario.Image"), System.Drawing.Image)
-        Me.btnInvConInventario.LargeImage = CType(resources.GetObject("btnInvConInventario.LargeImage"), System.Drawing.Image)
-        Me.btnInvConInventario.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnInvConInventario.Name = "btnInvConInventario"
-        Me.btnInvConInventario.SmallImage = CType(resources.GetObject("btnInvConInventario.SmallImage"), System.Drawing.Image)
-        Me.btnInvConInventario.Text = "Inventario"
-        '
-        'btnInvConMonitor
-        '
-        Me.btnInvConMonitor.Image = CType(resources.GetObject("btnInvConMonitor.Image"), System.Drawing.Image)
-        Me.btnInvConMonitor.LargeImage = CType(resources.GetObject("btnInvConMonitor.LargeImage"), System.Drawing.Image)
-        Me.btnInvConMonitor.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnInvConMonitor.Name = "btnInvConMonitor"
-        Me.btnInvConMonitor.SmallImage = CType(resources.GetObject("btnInvConMonitor.SmallImage"), System.Drawing.Image)
-        Me.btnInvConMonitor.Text = "Monitor pedidos"
-        '
-        'btnInvConCardex
-        '
-        Me.btnInvConCardex.Image = CType(resources.GetObject("btnInvConCardex.Image"), System.Drawing.Image)
-        Me.btnInvConCardex.LargeImage = CType(resources.GetObject("btnInvConCardex.LargeImage"), System.Drawing.Image)
-        Me.btnInvConCardex.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnInvConCardex.Name = "btnInvConCardex"
-        Me.btnInvConCardex.SmallImage = CType(resources.GetObject("btnInvConCardex.SmallImage"), System.Drawing.Image)
-        Me.btnInvConCardex.Text = "Cardex"
-        '
-        'btnInvConRevision
-        '
-        Me.btnInvConRevision.Image = CType(resources.GetObject("btnInvConRevision.Image"), System.Drawing.Image)
-        Me.btnInvConRevision.LargeImage = CType(resources.GetObject("btnInvConRevision.LargeImage"), System.Drawing.Image)
-        Me.btnInvConRevision.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnInvConRevision.Name = "btnInvConRevision"
-        Me.btnInvConRevision.SmallImage = CType(resources.GetObject("btnInvConRevision.SmallImage"), System.Drawing.Image)
-        Me.btnInvConRevision.Text = "Revisión inv."
-        '
-        'btnInvConReportesBoletas
-        '
-        Me.btnInvConReportesBoletas.Image = CType(resources.GetObject("btnInvConReportesBoletas.Image"), System.Drawing.Image)
-        Me.btnInvConReportesBoletas.LargeImage = CType(resources.GetObject("btnInvConReportesBoletas.LargeImage"), System.Drawing.Image)
-        Me.btnInvConReportesBoletas.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnInvConReportesBoletas.Name = "btnInvConReportesBoletas"
-        Me.btnInvConReportesBoletas.SmallImage = CType(resources.GetObject("btnInvConReportesBoletas.SmallImage"), System.Drawing.Image)
-        Me.btnInvConReportesBoletas.Text = "Boletas"
-        '
-        'pnlInvHerramientas
-        '
-        Me.pnlInvHerramientas.Items.Add(Me.btnInvHerRecCostos)
-        Me.pnlInvHerramientas.Items.Add(Me.btnInvHerBuscarNeg)
-        Me.pnlInvHerramientas.Items.Add(Me.btnInvHerRecInventario)
-        Me.pnlInvHerramientas.Items.Add(Me.btnInvHerAjustarCero)
-        Me.pnlInvHerramientas.Items.Add(Me.btnInvHerConfigConceptos)
-        Me.pnlInvHerramientas.Name = "pnlInvHerramientas"
-        Me.pnlInvHerramientas.Text = "Herramientas"
-        '
-        'btnInvHerRecCostos
-        '
-        Me.btnInvHerRecCostos.Image = CType(resources.GetObject("btnInvHerRecCostos.Image"), System.Drawing.Image)
-        Me.btnInvHerRecCostos.LargeImage = CType(resources.GetObject("btnInvHerRecCostos.LargeImage"), System.Drawing.Image)
-        Me.btnInvHerRecCostos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnInvHerRecCostos.Name = "btnInvHerRecCostos"
-        Me.btnInvHerRecCostos.SmallImage = CType(resources.GetObject("btnInvHerRecCostos.SmallImage"), System.Drawing.Image)
-        Me.btnInvHerRecCostos.Text = "Recalcular costos"
-        '
-        'btnInvHerBuscarNeg
-        '
-        Me.btnInvHerBuscarNeg.Image = CType(resources.GetObject("btnInvHerBuscarNeg.Image"), System.Drawing.Image)
-        Me.btnInvHerBuscarNeg.LargeImage = CType(resources.GetObject("btnInvHerBuscarNeg.LargeImage"), System.Drawing.Image)
-        Me.btnInvHerBuscarNeg.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnInvHerBuscarNeg.Name = "btnInvHerBuscarNeg"
-        Me.btnInvHerBuscarNeg.SmallImage = CType(resources.GetObject("btnInvHerBuscarNeg.SmallImage"), System.Drawing.Image)
-        Me.btnInvHerBuscarNeg.Text = "Buscar negativos"
-        '
-        'btnInvHerRecInventario
-        '
-        Me.btnInvHerRecInventario.Image = CType(resources.GetObject("btnInvHerRecInventario.Image"), System.Drawing.Image)
-        Me.btnInvHerRecInventario.LargeImage = CType(resources.GetObject("btnInvHerRecInventario.LargeImage"), System.Drawing.Image)
-        Me.btnInvHerRecInventario.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnInvHerRecInventario.Name = "btnInvHerRecInventario"
-        Me.btnInvHerRecInventario.SmallImage = CType(resources.GetObject("btnInvHerRecInventario.SmallImage"), System.Drawing.Image)
-        Me.btnInvHerRecInventario.Text = "Recalc. inventario"
-        '
-        'btnInvHerAjustarCero
-        '
-        Me.btnInvHerAjustarCero.Image = CType(resources.GetObject("btnInvHerAjustarCero.Image"), System.Drawing.Image)
-        Me.btnInvHerAjustarCero.LargeImage = CType(resources.GetObject("btnInvHerAjustarCero.LargeImage"), System.Drawing.Image)
-        Me.btnInvHerAjustarCero.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnInvHerAjustarCero.Name = "btnInvHerAjustarCero"
-        Me.btnInvHerAjustarCero.SmallImage = CType(resources.GetObject("btnInvHerAjustarCero.SmallImage"), System.Drawing.Image)
-        Me.btnInvHerAjustarCero.Text = "Ajustar a cero"
-        '
-        'btnInvHerConfigConceptos
-        '
-        Me.btnInvHerConfigConceptos.Image = CType(resources.GetObject("btnInvHerConfigConceptos.Image"), System.Drawing.Image)
-        Me.btnInvHerConfigConceptos.LargeImage = CType(resources.GetObject("btnInvHerConfigConceptos.LargeImage"), System.Drawing.Image)
-        Me.btnInvHerConfigConceptos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnInvHerConfigConceptos.Name = "btnInvHerConfigConceptos"
-        Me.btnInvHerConfigConceptos.SmallImage = CType(resources.GetObject("btnInvHerConfigConceptos.SmallImage"), System.Drawing.Image)
-        Me.btnInvHerConfigConceptos.Text = "Config. conceptos"
-        '
-        'tabServicios
-        '
-        Me.tabServicios.Name = "tabServicios"
-        Me.tabServicios.Panels.Add(Me.pnlSerComercial)
-        Me.tabServicios.Panels.Add(Me.pnlSerInterno)
-        Me.tabServicios.Text = "Servicios"
-        '
-        'pnlSerComercial
-        '
-        Me.pnlSerComercial.Items.Add(Me.btnSerComNuevo)
-        Me.pnlSerComercial.Items.Add(Me.btnSerComBuscar)
-        Me.pnlSerComercial.Items.Add(Me.btnSerComReportes)
-        Me.pnlSerComercial.Items.Add(Me.btnSerComEstados)
-        Me.pnlSerComercial.Name = "pnlSerComercial"
-        Me.pnlSerComercial.Text = "Comercial"
-        '
-        'btnSerComNuevo
-        '
-        Me.btnSerComNuevo.Image = CType(resources.GetObject("btnSerComNuevo.Image"), System.Drawing.Image)
-        Me.btnSerComNuevo.LargeImage = CType(resources.GetObject("btnSerComNuevo.LargeImage"), System.Drawing.Image)
-        Me.btnSerComNuevo.Name = "btnSerComNuevo"
-        Me.btnSerComNuevo.SmallImage = CType(resources.GetObject("btnSerComNuevo.SmallImage"), System.Drawing.Image)
-        Me.btnSerComNuevo.Text = "Nuevo"
-        '
-        'btnSerComBuscar
-        '
-        Me.btnSerComBuscar.Image = CType(resources.GetObject("btnSerComBuscar.Image"), System.Drawing.Image)
-        Me.btnSerComBuscar.LargeImage = CType(resources.GetObject("btnSerComBuscar.LargeImage"), System.Drawing.Image)
-        Me.btnSerComBuscar.Name = "btnSerComBuscar"
-        Me.btnSerComBuscar.SmallImage = CType(resources.GetObject("btnSerComBuscar.SmallImage"), System.Drawing.Image)
-        Me.btnSerComBuscar.Text = "Buscar"
-        '
-        'btnSerComReportes
-        '
-        Me.btnSerComReportes.Image = CType(resources.GetObject("btnSerComReportes.Image"), System.Drawing.Image)
-        Me.btnSerComReportes.LargeImage = CType(resources.GetObject("btnSerComReportes.LargeImage"), System.Drawing.Image)
-        Me.btnSerComReportes.Name = "btnSerComReportes"
-        Me.btnSerComReportes.SmallImage = CType(resources.GetObject("btnSerComReportes.SmallImage"), System.Drawing.Image)
-        Me.btnSerComReportes.Text = "Reportes"
-        '
-        'btnSerComEstados
-        '
-        Me.btnSerComEstados.Image = CType(resources.GetObject("btnSerComEstados.Image"), System.Drawing.Image)
-        Me.btnSerComEstados.LargeImage = CType(resources.GetObject("btnSerComEstados.LargeImage"), System.Drawing.Image)
-        Me.btnSerComEstados.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnSerComEstados.Name = "btnSerComEstados"
-        Me.btnSerComEstados.SmallImage = CType(resources.GetObject("btnSerComEstados.SmallImage"), System.Drawing.Image)
-        Me.btnSerComEstados.Text = "Estados"
-        '
-        'pnlSerInterno
-        '
-        Me.pnlSerInterno.Items.Add(Me.btnSerIntNuevo)
-        Me.pnlSerInterno.Items.Add(Me.btnSerIntBuscar)
-        Me.pnlSerInterno.Items.Add(Me.btnSerIntReporte)
-        Me.pnlSerInterno.Items.Add(Me.btnSerIntEstados)
-        Me.pnlSerInterno.Name = "pnlSerInterno"
-        Me.pnlSerInterno.Text = "Interno"
-        '
-        'btnSerIntNuevo
-        '
-        Me.btnSerIntNuevo.Image = CType(resources.GetObject("btnSerIntNuevo.Image"), System.Drawing.Image)
-        Me.btnSerIntNuevo.LargeImage = CType(resources.GetObject("btnSerIntNuevo.LargeImage"), System.Drawing.Image)
-        Me.btnSerIntNuevo.Name = "btnSerIntNuevo"
-        Me.btnSerIntNuevo.SmallImage = CType(resources.GetObject("btnSerIntNuevo.SmallImage"), System.Drawing.Image)
-        Me.btnSerIntNuevo.Text = "Nuevo"
-        '
-        'btnSerIntBuscar
-        '
-        Me.btnSerIntBuscar.Image = CType(resources.GetObject("btnSerIntBuscar.Image"), System.Drawing.Image)
-        Me.btnSerIntBuscar.LargeImage = CType(resources.GetObject("btnSerIntBuscar.LargeImage"), System.Drawing.Image)
-        Me.btnSerIntBuscar.Name = "btnSerIntBuscar"
-        Me.btnSerIntBuscar.SmallImage = CType(resources.GetObject("btnSerIntBuscar.SmallImage"), System.Drawing.Image)
-        Me.btnSerIntBuscar.Text = "Buscar"
-        '
-        'btnSerIntReporte
-        '
-        Me.btnSerIntReporte.Image = CType(resources.GetObject("btnSerIntReporte.Image"), System.Drawing.Image)
-        Me.btnSerIntReporte.LargeImage = CType(resources.GetObject("btnSerIntReporte.LargeImage"), System.Drawing.Image)
-        Me.btnSerIntReporte.Name = "btnSerIntReporte"
-        Me.btnSerIntReporte.SmallImage = CType(resources.GetObject("btnSerIntReporte.SmallImage"), System.Drawing.Image)
-        Me.btnSerIntReporte.Text = "Reportes"
-        '
-        'btnSerIntEstados
-        '
-        Me.btnSerIntEstados.Image = CType(resources.GetObject("btnSerIntEstados.Image"), System.Drawing.Image)
-        Me.btnSerIntEstados.LargeImage = CType(resources.GetObject("btnSerIntEstados.LargeImage"), System.Drawing.Image)
-        Me.btnSerIntEstados.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnSerIntEstados.Name = "btnSerIntEstados"
-        Me.btnSerIntEstados.SmallImage = CType(resources.GetObject("btnSerIntEstados.SmallImage"), System.Drawing.Image)
-        Me.btnSerIntEstados.Text = "Estados"
-        '
-        'tabPuntoVenta
-        '
-        Me.tabPuntoVenta.Name = "tabPuntoVenta"
-        Me.tabPuntoVenta.Panels.Add(Me.pnlPunGeneral)
-        Me.tabPuntoVenta.Panels.Add(Me.pnlPunRestaurante)
-        Me.tabPuntoVenta.Text = "Punto de venta"
-        '
-        'pnlPunGeneral
-        '
-        Me.pnlPunGeneral.Items.Add(Me.btnPunGenVentas)
-        Me.pnlPunGeneral.Items.Add(Me.btnPunGenMovimientos)
-        Me.pnlPunGeneral.Items.Add(Me.btnPunGenHerramientas)
-        Me.pnlPunGeneral.Items.Add(Me.btnPunGenReportes)
-        Me.pnlPunGeneral.Name = "pnlPunGeneral"
-        Me.pnlPunGeneral.Text = "General"
-        '
-        'btnPunGenVentas
-        '
-        Me.btnPunGenVentas.Image = CType(resources.GetObject("btnPunGenVentas.Image"), System.Drawing.Image)
-        Me.btnPunGenVentas.LargeImage = CType(resources.GetObject("btnPunGenVentas.LargeImage"), System.Drawing.Image)
-        Me.btnPunGenVentas.Name = "btnPunGenVentas"
-        Me.btnPunGenVentas.SmallImage = CType(resources.GetObject("btnPunGenVentas.SmallImage"), System.Drawing.Image)
-        Me.btnPunGenVentas.Text = "Ventas"
-        '
-        'btnPunGenMovimientos
-        '
-        Me.btnPunGenMovimientos.Image = CType(resources.GetObject("btnPunGenMovimientos.Image"), System.Drawing.Image)
-        Me.btnPunGenMovimientos.LargeImage = CType(resources.GetObject("btnPunGenMovimientos.LargeImage"), System.Drawing.Image)
-        Me.btnPunGenMovimientos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnPunGenMovimientos.Name = "btnPunGenMovimientos"
-        Me.btnPunGenMovimientos.SmallImage = CType(resources.GetObject("btnPunGenMovimientos.SmallImage"), System.Drawing.Image)
-        Me.btnPunGenMovimientos.Text = "Movimientos de caja"
-        '
-        'btnPunGenHerramientas
-        '
-        Me.btnPunGenHerramientas.Image = CType(resources.GetObject("btnPunGenHerramientas.Image"), System.Drawing.Image)
-        Me.btnPunGenHerramientas.LargeImage = CType(resources.GetObject("btnPunGenHerramientas.LargeImage"), System.Drawing.Image)
-        Me.btnPunGenHerramientas.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnPunGenHerramientas.Name = "btnPunGenHerramientas"
-        Me.btnPunGenHerramientas.SmallImage = CType(resources.GetObject("btnPunGenHerramientas.SmallImage"), System.Drawing.Image)
-        Me.btnPunGenHerramientas.Text = "Barra de herramientas"
-        '
-        'btnPunGenReportes
-        '
-        Me.btnPunGenReportes.Image = CType(resources.GetObject("btnPunGenReportes.Image"), System.Drawing.Image)
-        Me.btnPunGenReportes.LargeImage = CType(resources.GetObject("btnPunGenReportes.LargeImage"), System.Drawing.Image)
-        Me.btnPunGenReportes.Name = "btnPunGenReportes"
-        Me.btnPunGenReportes.SmallImage = CType(resources.GetObject("btnPunGenReportes.SmallImage"), System.Drawing.Image)
-        Me.btnPunGenReportes.Text = "Reportes"
-        '
-        'pnlPunRestaurante
-        '
-        Me.pnlPunRestaurante.Items.Add(Me.btnPunResVentas)
-        Me.pnlPunRestaurante.Items.Add(Me.btnPunResConfiguracion)
-        Me.pnlPunRestaurante.Name = "pnlPunRestaurante"
-        Me.pnlPunRestaurante.Text = "Restaurante"
-        '
-        'btnPunResVentas
-        '
-        Me.btnPunResVentas.Image = CType(resources.GetObject("btnPunResVentas.Image"), System.Drawing.Image)
-        Me.btnPunResVentas.LargeImage = CType(resources.GetObject("btnPunResVentas.LargeImage"), System.Drawing.Image)
-        Me.btnPunResVentas.Name = "btnPunResVentas"
-        Me.btnPunResVentas.SmallImage = CType(resources.GetObject("btnPunResVentas.SmallImage"), System.Drawing.Image)
-        Me.btnPunResVentas.Text = "Ventas"
-        '
-        'btnPunResConfiguracion
-        '
-        Me.btnPunResConfiguracion.Image = CType(resources.GetObject("btnPunResConfiguracion.Image"), System.Drawing.Image)
-        Me.btnPunResConfiguracion.LargeImage = CType(resources.GetObject("btnPunResConfiguracion.LargeImage"), System.Drawing.Image)
-        Me.btnPunResConfiguracion.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnPunResConfiguracion.Name = "btnPunResConfiguracion"
-        Me.btnPunResConfiguracion.SmallImage = CType(resources.GetObject("btnPunResConfiguracion.SmallImage"), System.Drawing.Image)
-        Me.btnPunResConfiguracion.Text = "Configuración"
-        '
-        'tabBancos
-        '
-        Me.tabBancos.Name = "tabBancos"
-        Me.tabBancos.Panels.Add(Me.pnlBanCatalogos)
-        Me.tabBancos.Panels.Add(Me.pnlBanOperacion)
-        Me.tabBancos.Panels.Add(Me.pnlBanConsultas)
-        Me.tabBancos.Text = "Bancos"
-        '
-        'pnlBanCatalogos
-        '
-        Me.pnlBanCatalogos.Items.Add(Me.btnBanCatCuentas)
-        Me.pnlBanCatalogos.Name = "pnlBanCatalogos"
-        Me.pnlBanCatalogos.Text = "Catálogos"
-        '
-        'btnBanCatCuentas
-        '
-        Me.btnBanCatCuentas.Image = CType(resources.GetObject("btnBanCatCuentas.Image"), System.Drawing.Image)
-        Me.btnBanCatCuentas.LargeImage = CType(resources.GetObject("btnBanCatCuentas.LargeImage"), System.Drawing.Image)
-        Me.btnBanCatCuentas.Name = "btnBanCatCuentas"
-        Me.btnBanCatCuentas.SmallImage = CType(resources.GetObject("btnBanCatCuentas.SmallImage"), System.Drawing.Image)
-        Me.btnBanCatCuentas.Text = "Cuentas"
-        '
-        'pnlBanOperacion
-        '
-        Me.pnlBanOperacion.Items.Add(Me.btnBanOpeDepositos)
-        Me.pnlBanOperacion.Items.Add(Me.btnBanOpePagos)
-        Me.pnlBanOperacion.Items.Add(Me.btnBanOpeConciliacion)
-        Me.pnlBanOperacion.Name = "pnlBanOperacion"
-        Me.pnlBanOperacion.Text = "Operación"
-        '
-        'btnBanOpeDepositos
-        '
-        Me.btnBanOpeDepositos.Image = CType(resources.GetObject("btnBanOpeDepositos.Image"), System.Drawing.Image)
-        Me.btnBanOpeDepositos.LargeImage = CType(resources.GetObject("btnBanOpeDepositos.LargeImage"), System.Drawing.Image)
-        Me.btnBanOpeDepositos.Name = "btnBanOpeDepositos"
-        Me.btnBanOpeDepositos.SmallImage = CType(resources.GetObject("btnBanOpeDepositos.SmallImage"), System.Drawing.Image)
-        Me.btnBanOpeDepositos.Text = "Depósitos"
-        '
-        'btnBanOpePagos
-        '
-        Me.btnBanOpePagos.Image = CType(resources.GetObject("btnBanOpePagos.Image"), System.Drawing.Image)
-        Me.btnBanOpePagos.LargeImage = CType(resources.GetObject("btnBanOpePagos.LargeImage"), System.Drawing.Image)
-        Me.btnBanOpePagos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnBanOpePagos.Name = "btnBanOpePagos"
-        Me.btnBanOpePagos.SmallImage = CType(resources.GetObject("btnBanOpePagos.SmallImage"), System.Drawing.Image)
-        Me.btnBanOpePagos.Text = "Pagos"
-        '
-        'btnBanOpeConciliacion
-        '
-        Me.btnBanOpeConciliacion.Image = CType(resources.GetObject("btnBanOpeConciliacion.Image"), System.Drawing.Image)
-        Me.btnBanOpeConciliacion.LargeImage = CType(resources.GetObject("btnBanOpeConciliacion.LargeImage"), System.Drawing.Image)
-        Me.btnBanOpeConciliacion.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnBanOpeConciliacion.Name = "btnBanOpeConciliacion"
-        Me.btnBanOpeConciliacion.SmallImage = CType(resources.GetObject("btnBanOpeConciliacion.SmallImage"), System.Drawing.Image)
-        Me.btnBanOpeConciliacion.Text = "Conciliación"
-        '
-        'pnlBanConsultas
-        '
-        Me.pnlBanConsultas.Items.Add(Me.btnBanConReportes)
-        Me.pnlBanConsultas.Name = "pnlBanConsultas"
-        Me.pnlBanConsultas.Text = "Consulta"
-        '
-        'btnBanConReportes
-        '
-        Me.btnBanConReportes.Image = CType(resources.GetObject("btnBanConReportes.Image"), System.Drawing.Image)
-        Me.btnBanConReportes.LargeImage = CType(resources.GetObject("btnBanConReportes.LargeImage"), System.Drawing.Image)
-        Me.btnBanConReportes.Name = "btnBanConReportes"
-        Me.btnBanConReportes.SmallImage = CType(resources.GetObject("btnBanConReportes.SmallImage"), System.Drawing.Image)
-        Me.btnBanConReportes.Text = "Reportes"
-        '
-        'tabNomina
-        '
-        Me.tabNomina.Name = "tabNomina"
-        Me.tabNomina.Panels.Add(Me.pnlNomCatalogos)
-        Me.tabNomina.Panels.Add(Me.pnlNomOpercion)
-        Me.tabNomina.Panels.Add(Me.pnlNomConsultas)
-        Me.tabNomina.Text = "Nómina"
-        '
-        'pnlNomCatalogos
-        '
-        Me.pnlNomCatalogos.Items.Add(Me.btnNomCatTrabajadores)
-        Me.pnlNomCatalogos.Name = "pnlNomCatalogos"
-        Me.pnlNomCatalogos.Text = "Catálogos"
-        '
-        'btnNomCatTrabajadores
-        '
-        Me.btnNomCatTrabajadores.Image = CType(resources.GetObject("btnNomCatTrabajadores.Image"), System.Drawing.Image)
-        Me.btnNomCatTrabajadores.LargeImage = CType(resources.GetObject("btnNomCatTrabajadores.LargeImage"), System.Drawing.Image)
-        Me.btnNomCatTrabajadores.Name = "btnNomCatTrabajadores"
-        Me.btnNomCatTrabajadores.SmallImage = CType(resources.GetObject("btnNomCatTrabajadores.SmallImage"), System.Drawing.Image)
-        Me.btnNomCatTrabajadores.Text = "Trabajadores"
-        '
-        'pnlNomOpercion
-        '
-        Me.pnlNomOpercion.Items.Add(Me.btnNomOpeNomina)
-        Me.pnlNomOpercion.Name = "pnlNomOpercion"
-        Me.pnlNomOpercion.Text = "Operación"
-        '
-        'btnNomOpeNomina
-        '
-        Me.btnNomOpeNomina.Image = CType(resources.GetObject("btnNomOpeNomina.Image"), System.Drawing.Image)
-        Me.btnNomOpeNomina.LargeImage = CType(resources.GetObject("btnNomOpeNomina.LargeImage"), System.Drawing.Image)
-        Me.btnNomOpeNomina.Name = "btnNomOpeNomina"
-        Me.btnNomOpeNomina.SmallImage = CType(resources.GetObject("btnNomOpeNomina.SmallImage"), System.Drawing.Image)
-        Me.btnNomOpeNomina.Text = "Nómina"
-        '
-        'pnlNomConsultas
-        '
-        Me.pnlNomConsultas.Items.Add(Me.btnNomConReportes)
-        Me.pnlNomConsultas.Name = "pnlNomConsultas"
-        Me.pnlNomConsultas.Text = "Consultas"
-        '
-        'btnNomConReportes
-        '
-        Me.btnNomConReportes.Image = CType(resources.GetObject("btnNomConReportes.Image"), System.Drawing.Image)
-        Me.btnNomConReportes.LargeImage = CType(resources.GetObject("btnNomConReportes.LargeImage"), System.Drawing.Image)
-        Me.btnNomConReportes.Name = "btnNomConReportes"
-        Me.btnNomConReportes.SmallImage = CType(resources.GetObject("btnNomConReportes.SmallImage"), System.Drawing.Image)
-        Me.btnNomConReportes.Text = "Reportes"
-        '
-        'tabGastos
-        '
-        Me.tabGastos.Name = "tabGastos"
-        Me.tabGastos.Panels.Add(Me.pnlGasCatalogos)
-        Me.tabGastos.Panels.Add(Me.pnlGasOperacion)
-        Me.tabGastos.Panels.Add(Me.pnlGasConsultas)
-        Me.tabGastos.Text = "Gastos"
-        '
-        'pnlGasCatalogos
-        '
-        Me.pnlGasCatalogos.Items.Add(Me.btnGasCatClasificaciones)
-        Me.pnlGasCatalogos.Items.Add(Me.btnGasCatEmpleados)
-        Me.pnlGasCatalogos.Name = "pnlGasCatalogos"
-        Me.pnlGasCatalogos.Text = "Catálogos"
-        '
-        'btnGasCatClasificaciones
-        '
-        Me.btnGasCatClasificaciones.Image = CType(resources.GetObject("btnGasCatClasificaciones.Image"), System.Drawing.Image)
-        Me.btnGasCatClasificaciones.LargeImage = CType(resources.GetObject("btnGasCatClasificaciones.LargeImage"), System.Drawing.Image)
-        Me.btnGasCatClasificaciones.Name = "btnGasCatClasificaciones"
-        Me.btnGasCatClasificaciones.SmallImage = CType(resources.GetObject("btnGasCatClasificaciones.SmallImage"), System.Drawing.Image)
-        Me.btnGasCatClasificaciones.Text = "Clasificaciones"
-        '
-        'btnGasCatEmpleados
-        '
-        Me.btnGasCatEmpleados.Image = CType(resources.GetObject("btnGasCatEmpleados.Image"), System.Drawing.Image)
-        Me.btnGasCatEmpleados.LargeImage = CType(resources.GetObject("btnGasCatEmpleados.LargeImage"), System.Drawing.Image)
-        Me.btnGasCatEmpleados.Name = "btnGasCatEmpleados"
-        Me.btnGasCatEmpleados.SmallImage = CType(resources.GetObject("btnGasCatEmpleados.SmallImage"), System.Drawing.Image)
-        Me.btnGasCatEmpleados.Text = "Empleados"
-        '
-        'pnlGasOperacion
-        '
-        Me.pnlGasOperacion.Items.Add(Me.btnGasOpeGastos)
-        Me.pnlGasOperacion.Items.Add(Me.btnGasOpeMovimientos)
-        Me.pnlGasOperacion.Items.Add(Me.btnGasOpeProgramar)
-        Me.pnlGasOperacion.Items.Add(Me.btnGasOpeAlertas)
-        Me.pnlGasOperacion.Name = "pnlGasOperacion"
-        Me.pnlGasOperacion.Text = "Operación"
-        '
-        'btnGasOpeGastos
-        '
-        Me.btnGasOpeGastos.Image = CType(resources.GetObject("btnGasOpeGastos.Image"), System.Drawing.Image)
-        Me.btnGasOpeGastos.LargeImage = CType(resources.GetObject("btnGasOpeGastos.LargeImage"), System.Drawing.Image)
-        Me.btnGasOpeGastos.Name = "btnGasOpeGastos"
-        Me.btnGasOpeGastos.SmallImage = CType(resources.GetObject("btnGasOpeGastos.SmallImage"), System.Drawing.Image)
-        Me.btnGasOpeGastos.Text = "Gastos"
-        '
-        'btnGasOpeMovimientos
-        '
-        Me.btnGasOpeMovimientos.Image = CType(resources.GetObject("btnGasOpeMovimientos.Image"), System.Drawing.Image)
-        Me.btnGasOpeMovimientos.LargeImage = CType(resources.GetObject("btnGasOpeMovimientos.LargeImage"), System.Drawing.Image)
-        Me.btnGasOpeMovimientos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnGasOpeMovimientos.Name = "btnGasOpeMovimientos"
-        Me.btnGasOpeMovimientos.SmallImage = CType(resources.GetObject("btnGasOpeMovimientos.SmallImage"), System.Drawing.Image)
-        Me.btnGasOpeMovimientos.Text = "Movimientos"
-        '
-        'btnGasOpeProgramar
-        '
-        Me.btnGasOpeProgramar.Image = CType(resources.GetObject("btnGasOpeProgramar.Image"), System.Drawing.Image)
-        Me.btnGasOpeProgramar.LargeImage = CType(resources.GetObject("btnGasOpeProgramar.LargeImage"), System.Drawing.Image)
-        Me.btnGasOpeProgramar.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnGasOpeProgramar.Name = "btnGasOpeProgramar"
-        Me.btnGasOpeProgramar.SmallImage = CType(resources.GetObject("btnGasOpeProgramar.SmallImage"), System.Drawing.Image)
-        Me.btnGasOpeProgramar.Text = "Programar"
-        '
-        'btnGasOpeAlertas
-        '
-        Me.btnGasOpeAlertas.Image = CType(resources.GetObject("btnGasOpeAlertas.Image"), System.Drawing.Image)
-        Me.btnGasOpeAlertas.LargeImage = CType(resources.GetObject("btnGasOpeAlertas.LargeImage"), System.Drawing.Image)
-        Me.btnGasOpeAlertas.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnGasOpeAlertas.Name = "btnGasOpeAlertas"
-        Me.btnGasOpeAlertas.SmallImage = CType(resources.GetObject("btnGasOpeAlertas.SmallImage"), System.Drawing.Image)
-        Me.btnGasOpeAlertas.Text = "Alertas"
-        '
-        'pnlGasConsultas
-        '
-        Me.pnlGasConsultas.Items.Add(Me.btnGasConReportes)
-        Me.pnlGasConsultas.Name = "pnlGasConsultas"
-        Me.pnlGasConsultas.Text = "Consultas"
-        '
-        'btnGasConReportes
-        '
-        Me.btnGasConReportes.Image = CType(resources.GetObject("btnGasConReportes.Image"), System.Drawing.Image)
-        Me.btnGasConReportes.LargeImage = CType(resources.GetObject("btnGasConReportes.LargeImage"), System.Drawing.Image)
-        Me.btnGasConReportes.Name = "btnGasConReportes"
-        Me.btnGasConReportes.SmallImage = CType(resources.GetObject("btnGasConReportes.SmallImage"), System.Drawing.Image)
-        Me.btnGasConReportes.Text = "Reportes"
-        '
-        'tabEmpenos
-        '
-        Me.tabEmpenos.Name = "tabEmpenos"
-        Me.tabEmpenos.Panels.Add(Me.pnlEmpCatalogos)
-        Me.tabEmpenos.Panels.Add(Me.pnlEmpOperacion)
-        Me.tabEmpenos.Panels.Add(Me.pnlEmpConsultas)
-        Me.tabEmpenos.Panels.Add(Me.pnlEmpHerramientas)
-        Me.tabEmpenos.Text = "Empeños"
-        '
-        'pnlEmpCatalogos
-        '
-        Me.pnlEmpCatalogos.Items.Add(Me.btnEmpCatIdentificaciones)
-        Me.pnlEmpCatalogos.Items.Add(Me.btnEmpCatClasificaciones)
-        Me.pnlEmpCatalogos.Name = "pnlEmpCatalogos"
-        Me.pnlEmpCatalogos.Text = "Catálogos"
-        '
-        'btnEmpCatIdentificaciones
-        '
-        Me.btnEmpCatIdentificaciones.Image = CType(resources.GetObject("btnEmpCatIdentificaciones.Image"), System.Drawing.Image)
-        Me.btnEmpCatIdentificaciones.LargeImage = CType(resources.GetObject("btnEmpCatIdentificaciones.LargeImage"), System.Drawing.Image)
-        Me.btnEmpCatIdentificaciones.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnEmpCatIdentificaciones.Name = "btnEmpCatIdentificaciones"
-        Me.btnEmpCatIdentificaciones.SmallImage = CType(resources.GetObject("btnEmpCatIdentificaciones.SmallImage"), System.Drawing.Image)
-        Me.btnEmpCatIdentificaciones.Text = "Identificaciones"
-        '
-        'btnEmpCatClasificaciones
-        '
-        Me.btnEmpCatClasificaciones.Image = CType(resources.GetObject("btnEmpCatClasificaciones.Image"), System.Drawing.Image)
-        Me.btnEmpCatClasificaciones.LargeImage = CType(resources.GetObject("btnEmpCatClasificaciones.LargeImage"), System.Drawing.Image)
-        Me.btnEmpCatClasificaciones.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnEmpCatClasificaciones.Name = "btnEmpCatClasificaciones"
-        Me.btnEmpCatClasificaciones.SmallImage = CType(resources.GetObject("btnEmpCatClasificaciones.SmallImage"), System.Drawing.Image)
-        Me.btnEmpCatClasificaciones.Text = "Clasificaciones"
-        '
-        'pnlEmpOperacion
-        '
-        Me.pnlEmpOperacion.Items.Add(Me.btnEmpOpeEmpenos)
-        Me.pnlEmpOperacion.Items.Add(Me.btnEmpOpePagos)
-        Me.pnlEmpOperacion.Items.Add(Me.btnEmpOpeCompras)
-        Me.pnlEmpOperacion.Items.Add(Me.btnEmpOpeAdjudicaciones)
-        Me.pnlEmpOperacion.Items.Add(Me.btnEmpOpeCortes)
-        Me.pnlEmpOperacion.Name = "pnlEmpOperacion"
-        Me.pnlEmpOperacion.Text = "Operación"
-        '
-        'btnEmpOpeEmpenos
-        '
-        Me.btnEmpOpeEmpenos.Image = CType(resources.GetObject("btnEmpOpeEmpenos.Image"), System.Drawing.Image)
-        Me.btnEmpOpeEmpenos.LargeImage = CType(resources.GetObject("btnEmpOpeEmpenos.LargeImage"), System.Drawing.Image)
-        Me.btnEmpOpeEmpenos.Name = "btnEmpOpeEmpenos"
-        Me.btnEmpOpeEmpenos.SmallImage = CType(resources.GetObject("btnEmpOpeEmpenos.SmallImage"), System.Drawing.Image)
-        Me.btnEmpOpeEmpenos.Text = "Empeños"
-        '
-        'btnEmpOpePagos
-        '
-        Me.btnEmpOpePagos.Image = CType(resources.GetObject("btnEmpOpePagos.Image"), System.Drawing.Image)
-        Me.btnEmpOpePagos.LargeImage = CType(resources.GetObject("btnEmpOpePagos.LargeImage"), System.Drawing.Image)
-        Me.btnEmpOpePagos.Name = "btnEmpOpePagos"
-        Me.btnEmpOpePagos.SmallImage = CType(resources.GetObject("btnEmpOpePagos.SmallImage"), System.Drawing.Image)
-        Me.btnEmpOpePagos.Text = "Pagos"
-        '
-        'btnEmpOpeCompras
-        '
-        Me.btnEmpOpeCompras.Image = CType(resources.GetObject("btnEmpOpeCompras.Image"), System.Drawing.Image)
-        Me.btnEmpOpeCompras.LargeImage = CType(resources.GetObject("btnEmpOpeCompras.LargeImage"), System.Drawing.Image)
-        Me.btnEmpOpeCompras.Name = "btnEmpOpeCompras"
-        Me.btnEmpOpeCompras.SmallImage = CType(resources.GetObject("btnEmpOpeCompras.SmallImage"), System.Drawing.Image)
-        Me.btnEmpOpeCompras.Text = "Compras"
-        '
-        'btnEmpOpeAdjudicaciones
-        '
-        Me.btnEmpOpeAdjudicaciones.Image = CType(resources.GetObject("btnEmpOpeAdjudicaciones.Image"), System.Drawing.Image)
-        Me.btnEmpOpeAdjudicaciones.LargeImage = CType(resources.GetObject("btnEmpOpeAdjudicaciones.LargeImage"), System.Drawing.Image)
-        Me.btnEmpOpeAdjudicaciones.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnEmpOpeAdjudicaciones.Name = "btnEmpOpeAdjudicaciones"
-        Me.btnEmpOpeAdjudicaciones.SmallImage = CType(resources.GetObject("btnEmpOpeAdjudicaciones.SmallImage"), System.Drawing.Image)
-        Me.btnEmpOpeAdjudicaciones.Text = "Adjudicaciones"
-        '
-        'btnEmpOpeCortes
-        '
-        Me.btnEmpOpeCortes.Image = CType(resources.GetObject("btnEmpOpeCortes.Image"), System.Drawing.Image)
-        Me.btnEmpOpeCortes.LargeImage = CType(resources.GetObject("btnEmpOpeCortes.LargeImage"), System.Drawing.Image)
-        Me.btnEmpOpeCortes.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnEmpOpeCortes.Name = "btnEmpOpeCortes"
-        Me.btnEmpOpeCortes.SmallImage = CType(resources.GetObject("btnEmpOpeCortes.SmallImage"), System.Drawing.Image)
-        Me.btnEmpOpeCortes.Text = "Cortes"
-        '
-        'pnlEmpConsultas
-        '
-        Me.pnlEmpConsultas.Items.Add(Me.btnEmpConReportes)
-        Me.pnlEmpConsultas.Items.Add(Me.btnEmpConConsultas)
-        Me.pnlEmpConsultas.Name = "pnlEmpConsultas"
-        Me.pnlEmpConsultas.Text = "Consultas"
-        '
-        'btnEmpConReportes
-        '
-        Me.btnEmpConReportes.Image = CType(resources.GetObject("btnEmpConReportes.Image"), System.Drawing.Image)
-        Me.btnEmpConReportes.LargeImage = CType(resources.GetObject("btnEmpConReportes.LargeImage"), System.Drawing.Image)
-        Me.btnEmpConReportes.Name = "btnEmpConReportes"
-        Me.btnEmpConReportes.SmallImage = CType(resources.GetObject("btnEmpConReportes.SmallImage"), System.Drawing.Image)
-        Me.btnEmpConReportes.Text = "Reportes"
-        '
-        'btnEmpConConsultas
-        '
-        Me.btnEmpConConsultas.Image = CType(resources.GetObject("btnEmpConConsultas.Image"), System.Drawing.Image)
-        Me.btnEmpConConsultas.LargeImage = CType(resources.GetObject("btnEmpConConsultas.LargeImage"), System.Drawing.Image)
-        Me.btnEmpConConsultas.Name = "btnEmpConConsultas"
-        Me.btnEmpConConsultas.SmallImage = CType(resources.GetObject("btnEmpConConsultas.SmallImage"), System.Drawing.Image)
-        Me.btnEmpConConsultas.Text = "Consultas"
-        '
-        'pnlEmpHerramientas
-        '
-        Me.pnlEmpHerramientas.Items.Add(Me.btnEmpherConfiguracion)
-        Me.pnlEmpHerramientas.Name = "pnlEmpHerramientas"
-        Me.pnlEmpHerramientas.Text = "Herramientas"
-        '
-        'btnEmpherConfiguracion
-        '
-        Me.btnEmpherConfiguracion.Image = CType(resources.GetObject("btnEmpherConfiguracion.Image"), System.Drawing.Image)
-        Me.btnEmpherConfiguracion.LargeImage = CType(resources.GetObject("btnEmpherConfiguracion.LargeImage"), System.Drawing.Image)
-        Me.btnEmpherConfiguracion.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnEmpherConfiguracion.Name = "btnEmpherConfiguracion"
-        Me.btnEmpherConfiguracion.SmallImage = CType(resources.GetObject("btnEmpherConfiguracion.SmallImage"), System.Drawing.Image)
-        Me.btnEmpherConfiguracion.Text = "Configuración"
-        '
-        'tabContabilidad
-        '
-        Me.tabContabilidad.Name = "tabContabilidad"
-        Me.tabContabilidad.Panels.Add(Me.pnlConCatalogos)
-        Me.tabContabilidad.Panels.Add(Me.pnlConOperación)
-        Me.tabContabilidad.Panels.Add(Me.pnlConConsultas)
-        Me.tabContabilidad.Text = "Contabilidad"
-        '
-        'pnlConCatalogos
-        '
-        Me.pnlConCatalogos.Items.Add(Me.btnConCatClasifPolizas)
-        Me.pnlConCatalogos.Items.Add(Me.btnConCatCuentas)
-        Me.pnlConCatalogos.Items.Add(Me.btnConCatConceptos)
-        Me.pnlConCatalogos.Items.Add(Me.btnConCatMascaras)
-        Me.pnlConCatalogos.Name = "pnlConCatalogos"
-        Me.pnlConCatalogos.Text = "Catálogos"
-        '
-        'btnConCatClasifPolizas
-        '
-        Me.btnConCatClasifPolizas.Image = CType(resources.GetObject("btnConCatClasifPolizas.Image"), System.Drawing.Image)
-        Me.btnConCatClasifPolizas.LargeImage = CType(resources.GetObject("btnConCatClasifPolizas.LargeImage"), System.Drawing.Image)
-        Me.btnConCatClasifPolizas.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnConCatClasifPolizas.Name = "btnConCatClasifPolizas"
-        Me.btnConCatClasifPolizas.SmallImage = CType(resources.GetObject("btnConCatClasifPolizas.SmallImage"), System.Drawing.Image)
-        Me.btnConCatClasifPolizas.Text = "Clasif. pólizas"
-        '
-        'btnConCatCuentas
-        '
-        Me.btnConCatCuentas.Image = CType(resources.GetObject("btnConCatCuentas.Image"), System.Drawing.Image)
-        Me.btnConCatCuentas.LargeImage = CType(resources.GetObject("btnConCatCuentas.LargeImage"), System.Drawing.Image)
-        Me.btnConCatCuentas.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnConCatCuentas.Name = "btnConCatCuentas"
-        Me.btnConCatCuentas.SmallImage = CType(resources.GetObject("btnConCatCuentas.SmallImage"), System.Drawing.Image)
-        Me.btnConCatCuentas.Text = "Cuentas"
-        '
-        'btnConCatConceptos
-        '
-        Me.btnConCatConceptos.Image = CType(resources.GetObject("btnConCatConceptos.Image"), System.Drawing.Image)
-        Me.btnConCatConceptos.LargeImage = CType(resources.GetObject("btnConCatConceptos.LargeImage"), System.Drawing.Image)
-        Me.btnConCatConceptos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnConCatConceptos.Name = "btnConCatConceptos"
-        Me.btnConCatConceptos.SmallImage = CType(resources.GetObject("btnConCatConceptos.SmallImage"), System.Drawing.Image)
-        Me.btnConCatConceptos.Text = "Conceptos"
-        '
-        'btnConCatMascaras
-        '
-        Me.btnConCatMascaras.Image = CType(resources.GetObject("btnConCatMascaras.Image"), System.Drawing.Image)
-        Me.btnConCatMascaras.LargeImage = CType(resources.GetObject("btnConCatMascaras.LargeImage"), System.Drawing.Image)
-        Me.btnConCatMascaras.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnConCatMascaras.Name = "btnConCatMascaras"
-        Me.btnConCatMascaras.SmallImage = CType(resources.GetObject("btnConCatMascaras.SmallImage"), System.Drawing.Image)
-        Me.btnConCatMascaras.Text = "Máscaras"
-        '
-        'pnlConOperación
-        '
-        Me.pnlConOperación.Items.Add(Me.btnConOpePolizas)
-        Me.pnlConOperación.Items.Add(Me.btnConOpeSaldos)
-        Me.pnlConOperación.Items.Add(Me.btnConOpeConciliarDiot)
-        Me.pnlConOperación.Items.Add(Me.btnConOpeGenerarPolizas)
-        Me.pnlConOperación.Items.Add(Me.btnConOpeConfiguracion)
-        Me.pnlConOperación.Name = "pnlConOperación"
-        Me.pnlConOperación.Text = "Operación"
-        '
-        'btnConOpePolizas
-        '
-        Me.btnConOpePolizas.Image = CType(resources.GetObject("btnConOpePolizas.Image"), System.Drawing.Image)
-        Me.btnConOpePolizas.LargeImage = CType(resources.GetObject("btnConOpePolizas.LargeImage"), System.Drawing.Image)
-        Me.btnConOpePolizas.Name = "btnConOpePolizas"
-        Me.btnConOpePolizas.SmallImage = CType(resources.GetObject("btnConOpePolizas.SmallImage"), System.Drawing.Image)
-        Me.btnConOpePolizas.Text = "Pólizas"
-        '
-        'btnConOpeSaldos
-        '
-        Me.btnConOpeSaldos.Image = CType(resources.GetObject("btnConOpeSaldos.Image"), System.Drawing.Image)
-        Me.btnConOpeSaldos.LargeImage = CType(resources.GetObject("btnConOpeSaldos.LargeImage"), System.Drawing.Image)
-        Me.btnConOpeSaldos.Name = "btnConOpeSaldos"
-        Me.btnConOpeSaldos.SmallImage = CType(resources.GetObject("btnConOpeSaldos.SmallImage"), System.Drawing.Image)
-        Me.btnConOpeSaldos.Text = "Saldos"
-        '
-        'btnConOpeConciliarDiot
-        '
-        Me.btnConOpeConciliarDiot.Image = CType(resources.GetObject("btnConOpeConciliarDiot.Image"), System.Drawing.Image)
-        Me.btnConOpeConciliarDiot.LargeImage = CType(resources.GetObject("btnConOpeConciliarDiot.LargeImage"), System.Drawing.Image)
-        Me.btnConOpeConciliarDiot.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnConOpeConciliarDiot.Name = "btnConOpeConciliarDiot"
-        Me.btnConOpeConciliarDiot.SmallImage = CType(resources.GetObject("btnConOpeConciliarDiot.SmallImage"), System.Drawing.Image)
-        Me.btnConOpeConciliarDiot.Text = "Conciliar DIOT"
-        '
-        'btnConOpeGenerarPolizas
-        '
-        Me.btnConOpeGenerarPolizas.Image = CType(resources.GetObject("btnConOpeGenerarPolizas.Image"), System.Drawing.Image)
-        Me.btnConOpeGenerarPolizas.LargeImage = CType(resources.GetObject("btnConOpeGenerarPolizas.LargeImage"), System.Drawing.Image)
-        Me.btnConOpeGenerarPolizas.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnConOpeGenerarPolizas.Name = "btnConOpeGenerarPolizas"
-        Me.btnConOpeGenerarPolizas.SmallImage = CType(resources.GetObject("btnConOpeGenerarPolizas.SmallImage"), System.Drawing.Image)
-        Me.btnConOpeGenerarPolizas.Text = "Generar pólizas"
-        '
-        'btnConOpeConfiguracion
-        '
-        Me.btnConOpeConfiguracion.Image = CType(resources.GetObject("btnConOpeConfiguracion.Image"), System.Drawing.Image)
-        Me.btnConOpeConfiguracion.LargeImage = CType(resources.GetObject("btnConOpeConfiguracion.LargeImage"), System.Drawing.Image)
-        Me.btnConOpeConfiguracion.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnConOpeConfiguracion.Name = "btnConOpeConfiguracion"
-        Me.btnConOpeConfiguracion.SmallImage = CType(resources.GetObject("btnConOpeConfiguracion.SmallImage"), System.Drawing.Image)
-        Me.btnConOpeConfiguracion.Text = "Configuración"
-        '
-        'pnlConConsultas
-        '
-        Me.pnlConConsultas.Items.Add(Me.btnConConReportes)
-        Me.pnlConConsultas.Name = "pnlConConsultas"
-        Me.pnlConConsultas.Text = "Consultas"
-        '
-        'btnConConReportes
-        '
-        Me.btnConConReportes.Image = CType(resources.GetObject("btnConConReportes.Image"), System.Drawing.Image)
-        Me.btnConConReportes.LargeImage = CType(resources.GetObject("btnConConReportes.LargeImage"), System.Drawing.Image)
-        Me.btnConConReportes.Name = "btnConConReportes"
-        Me.btnConConReportes.SmallImage = CType(resources.GetObject("btnConConReportes.SmallImage"), System.Drawing.Image)
-        Me.btnConConReportes.Text = "Reportes"
-        '
-        'tabHerramientas
-        '
-        Me.tabHerramientas.Name = "tabHerramientas"
-        Me.tabHerramientas.Panels.Add(Me.pnlHerConfiguracion)
-        Me.tabHerramientas.Panels.Add(Me.pnlHerHerramientas)
-        Me.tabHerramientas.Panels.Add(Me.pnHerBaseDatos)
-        Me.tabHerramientas.Text = "Herramientas"
-        '
-        'pnlHerConfiguracion
-        '
-        Me.pnlHerConfiguracion.Items.Add(Me.btnHerConOpciones)
-        Me.pnlHerConfiguracion.Items.Add(Me.btnHerConConfigCorreo)
-        Me.pnlHerConfiguracion.Items.Add(Me.btnHerConLicencias)
-        Me.pnlHerConfiguracion.Items.Add(Me.btnHerConDistribuidores)
-        Me.pnlHerConfiguracion.Items.Add(Me.btnHerConImportar)
-        Me.pnlHerConfiguracion.Name = "pnlHerConfiguracion"
-        Me.pnlHerConfiguracion.Text = "Configuración"
-        '
-        'btnHerConOpciones
-        '
-        Me.btnHerConOpciones.Image = CType(resources.GetObject("btnHerConOpciones.Image"), System.Drawing.Image)
-        Me.btnHerConOpciones.LargeImage = CType(resources.GetObject("btnHerConOpciones.LargeImage"), System.Drawing.Image)
-        Me.btnHerConOpciones.Name = "btnHerConOpciones"
-        Me.btnHerConOpciones.SmallImage = CType(resources.GetObject("btnHerConOpciones.SmallImage"), System.Drawing.Image)
-        Me.btnHerConOpciones.Text = "Opciones"
-        '
-        'btnHerConConfigCorreo
-        '
-        Me.btnHerConConfigCorreo.Image = CType(resources.GetObject("btnHerConConfigCorreo.Image"), System.Drawing.Image)
-        Me.btnHerConConfigCorreo.LargeImage = CType(resources.GetObject("btnHerConConfigCorreo.LargeImage"), System.Drawing.Image)
-        Me.btnHerConConfigCorreo.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnHerConConfigCorreo.Name = "btnHerConConfigCorreo"
-        Me.btnHerConConfigCorreo.SmallImage = CType(resources.GetObject("btnHerConConfigCorreo.SmallImage"), System.Drawing.Image)
-        Me.btnHerConConfigCorreo.Text = "Config. correo"
-        '
-        'btnHerConLicencias
-        '
-        Me.btnHerConLicencias.Image = CType(resources.GetObject("btnHerConLicencias.Image"), System.Drawing.Image)
-        Me.btnHerConLicencias.LargeImage = CType(resources.GetObject("btnHerConLicencias.LargeImage"), System.Drawing.Image)
-        Me.btnHerConLicencias.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnHerConLicencias.Name = "btnHerConLicencias"
-        Me.btnHerConLicencias.SmallImage = CType(resources.GetObject("btnHerConLicencias.SmallImage"), System.Drawing.Image)
-        Me.btnHerConLicencias.Text = "Licencias"
-        '
-        'btnHerConDistribuidores
-        '
-        Me.btnHerConDistribuidores.Image = CType(resources.GetObject("btnHerConDistribuidores.Image"), System.Drawing.Image)
-        Me.btnHerConDistribuidores.LargeImage = CType(resources.GetObject("btnHerConDistribuidores.LargeImage"), System.Drawing.Image)
-        Me.btnHerConDistribuidores.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnHerConDistribuidores.Name = "btnHerConDistribuidores"
-        Me.btnHerConDistribuidores.SmallImage = CType(resources.GetObject("btnHerConDistribuidores.SmallImage"), System.Drawing.Image)
-        Me.btnHerConDistribuidores.Text = "Distribuidores"
-        '
-        'btnHerConImportar
-        '
-        Me.btnHerConImportar.Image = CType(resources.GetObject("btnHerConImportar.Image"), System.Drawing.Image)
-        Me.btnHerConImportar.LargeImage = CType(resources.GetObject("btnHerConImportar.LargeImage"), System.Drawing.Image)
-        Me.btnHerConImportar.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnHerConImportar.Name = "btnHerConImportar"
-        Me.btnHerConImportar.SmallImage = CType(resources.GetObject("btnHerConImportar.SmallImage"), System.Drawing.Image)
-        Me.btnHerConImportar.Text = "Importar"
-        '
-        'pnlHerHerramientas
-        '
-        Me.pnlHerHerramientas.Items.Add(Me.btnHerHerContadorTimbres)
-        Me.pnlHerHerramientas.Items.Add(Me.btnHerHerActivarconector)
-        Me.pnlHerHerramientas.Items.Add(Me.btnHerHerMovimientosUsuario)
-        Me.pnlHerHerramientas.Items.Add(Me.btnHerHerDisenoDocumentos)
-        Me.pnlHerHerramientas.Items.Add(Me.btnHerHerCambioPrecios)
-        Me.pnlHerHerramientas.Items.Add(Me.btnHerHerModifiarInv)
-        Me.pnlHerHerramientas.Name = "pnlHerHerramientas"
-        Me.pnlHerHerramientas.Text = "Herramientas"
-        '
-        'btnHerHerContadorTimbres
-        '
-        Me.btnHerHerContadorTimbres.Image = CType(resources.GetObject("btnHerHerContadorTimbres.Image"), System.Drawing.Image)
-        Me.btnHerHerContadorTimbres.LargeImage = CType(resources.GetObject("btnHerHerContadorTimbres.LargeImage"), System.Drawing.Image)
-        Me.btnHerHerContadorTimbres.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnHerHerContadorTimbres.Name = "btnHerHerContadorTimbres"
-        Me.btnHerHerContadorTimbres.SmallImage = CType(resources.GetObject("btnHerHerContadorTimbres.SmallImage"), System.Drawing.Image)
-        Me.btnHerHerContadorTimbres.Text = "Contador timbres"
-        '
-        'btnHerHerActivarconector
-        '
-        Me.btnHerHerActivarconector.CheckOnClick = True
-        Me.btnHerHerActivarconector.Image = CType(resources.GetObject("btnHerHerActivarconector.Image"), System.Drawing.Image)
-        Me.btnHerHerActivarconector.LargeImage = CType(resources.GetObject("btnHerHerActivarconector.LargeImage"), System.Drawing.Image)
-        Me.btnHerHerActivarconector.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnHerHerActivarconector.Name = "btnHerHerActivarconector"
-        Me.btnHerHerActivarconector.SmallImage = CType(resources.GetObject("btnHerHerActivarconector.SmallImage"), System.Drawing.Image)
-        Me.btnHerHerActivarconector.Text = "Activar conector"
-        '
-        'btnHerHerMovimientosUsuario
-        '
-        Me.btnHerHerMovimientosUsuario.Image = CType(resources.GetObject("btnHerHerMovimientosUsuario.Image"), System.Drawing.Image)
-        Me.btnHerHerMovimientosUsuario.LargeImage = CType(resources.GetObject("btnHerHerMovimientosUsuario.LargeImage"), System.Drawing.Image)
-        Me.btnHerHerMovimientosUsuario.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnHerHerMovimientosUsuario.Name = "btnHerHerMovimientosUsuario"
-        Me.btnHerHerMovimientosUsuario.SmallImage = CType(resources.GetObject("btnHerHerMovimientosUsuario.SmallImage"), System.Drawing.Image)
-        Me.btnHerHerMovimientosUsuario.Text = "Movimientos usuario"
-        '
-        'btnHerHerDisenoDocumentos
-        '
-        Me.btnHerHerDisenoDocumentos.Image = CType(resources.GetObject("btnHerHerDisenoDocumentos.Image"), System.Drawing.Image)
-        Me.btnHerHerDisenoDocumentos.LargeImage = CType(resources.GetObject("btnHerHerDisenoDocumentos.LargeImage"), System.Drawing.Image)
-        Me.btnHerHerDisenoDocumentos.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnHerHerDisenoDocumentos.Name = "btnHerHerDisenoDocumentos"
-        Me.btnHerHerDisenoDocumentos.SmallImage = CType(resources.GetObject("btnHerHerDisenoDocumentos.SmallImage"), System.Drawing.Image)
-        Me.btnHerHerDisenoDocumentos.Text = "Diseño de documentos"
-        '
-        'btnHerHerCambioPrecios
-        '
-        Me.btnHerHerCambioPrecios.Image = CType(resources.GetObject("btnHerHerCambioPrecios.Image"), System.Drawing.Image)
-        Me.btnHerHerCambioPrecios.LargeImage = CType(resources.GetObject("btnHerHerCambioPrecios.LargeImage"), System.Drawing.Image)
-        Me.btnHerHerCambioPrecios.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnHerHerCambioPrecios.Name = "btnHerHerCambioPrecios"
-        Me.btnHerHerCambioPrecios.SmallImage = CType(resources.GetObject("btnHerHerCambioPrecios.SmallImage"), System.Drawing.Image)
-        Me.btnHerHerCambioPrecios.Text = "Cambio de precios"
-        '
-        'btnHerHerModifiarInv
-        '
-        Me.btnHerHerModifiarInv.Image = CType(resources.GetObject("btnHerHerModifiarInv.Image"), System.Drawing.Image)
-        Me.btnHerHerModifiarInv.LargeImage = CType(resources.GetObject("btnHerHerModifiarInv.LargeImage"), System.Drawing.Image)
-        Me.btnHerHerModifiarInv.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnHerHerModifiarInv.Name = "btnHerHerModifiarInv"
-        Me.btnHerHerModifiarInv.SmallImage = CType(resources.GetObject("btnHerHerModifiarInv.SmallImage"), System.Drawing.Image)
-        Me.btnHerHerModifiarInv.Text = "Modificar Inventario"
-        '
-        'pnHerBaseDatos
-        '
-        Me.pnHerBaseDatos.Items.Add(Me.btnHerBasRespaldar)
-        Me.pnHerBaseDatos.Items.Add(Me.btnHerBasRestaurar)
-        Me.pnHerBaseDatos.Name = "pnHerBaseDatos"
-        Me.pnHerBaseDatos.Text = "Base de datos"
-        '
-        'btnHerBasRespaldar
-        '
-        Me.btnHerBasRespaldar.Image = CType(resources.GetObject("btnHerBasRespaldar.Image"), System.Drawing.Image)
-        Me.btnHerBasRespaldar.LargeImage = CType(resources.GetObject("btnHerBasRespaldar.LargeImage"), System.Drawing.Image)
-        Me.btnHerBasRespaldar.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnHerBasRespaldar.Name = "btnHerBasRespaldar"
-        Me.btnHerBasRespaldar.SmallImage = CType(resources.GetObject("btnHerBasRespaldar.SmallImage"), System.Drawing.Image)
-        Me.btnHerBasRespaldar.Text = "Respaldar"
-        '
-        'btnHerBasRestaurar
-        '
-        Me.btnHerBasRestaurar.Image = CType(resources.GetObject("btnHerBasRestaurar.Image"), System.Drawing.Image)
-        Me.btnHerBasRestaurar.LargeImage = CType(resources.GetObject("btnHerBasRestaurar.LargeImage"), System.Drawing.Image)
-        Me.btnHerBasRestaurar.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium
-        Me.btnHerBasRestaurar.Name = "btnHerBasRestaurar"
-        Me.btnHerBasRestaurar.SmallImage = CType(resources.GetObject("btnHerBasRestaurar.SmallImage"), System.Drawing.Image)
-        Me.btnHerBasRestaurar.Text = "Restaurar"
         '
         'RibbonButton49
         '
@@ -2054,34 +2252,6 @@ Partial Class frmPrincipalN
         Me.btnInvConBoletas.SmallImage = CType(resources.GetObject("btnInvConBoletas.SmallImage"), System.Drawing.Image)
         Me.btnInvConBoletas.Text = "Boletas"
         '
-        'RibbonPanel1
-        '
-        Me.RibbonPanel1.Items.Add(Me.mnuVentasPagare)
-        Me.RibbonPanel1.Items.Add(Me.mnuVentasDocumentos)
-        Me.RibbonPanel1.Name = "RibbonPanel1"
-        Me.RibbonPanel1.Text = ""
-        '
-        'mnuVentasPagare
-        '
-        Me.mnuVentasPagare.Image = CType(resources.GetObject("mnuVentasPagare.Image"), System.Drawing.Image)
-        Me.mnuVentasPagare.LargeImage = CType(resources.GetObject("mnuVentasPagare.LargeImage"), System.Drawing.Image)
-        Me.mnuVentasPagare.Name = "mnuVentasPagare"
-        Me.mnuVentasPagare.SmallImage = CType(resources.GetObject("mnuVentasPagare.SmallImage"), System.Drawing.Image)
-        '
-        'mnuVentasDocumentos
-        '
-        Me.mnuVentasDocumentos.Image = CType(resources.GetObject("mnuVentasDocumentos.Image"), System.Drawing.Image)
-        Me.mnuVentasDocumentos.LargeImage = CType(resources.GetObject("mnuVentasDocumentos.LargeImage"), System.Drawing.Image)
-        Me.mnuVentasDocumentos.Name = "mnuVentasDocumentos"
-        Me.mnuVentasDocumentos.SmallImage = CType(resources.GetObject("mnuVentasDocumentos.SmallImage"), System.Drawing.Image)
-        '
-        'mnuVentasConOfertas
-        '
-        Me.mnuVentasConOfertas.Image = CType(resources.GetObject("mnuVentasConOfertas.Image"), System.Drawing.Image)
-        Me.mnuVentasConOfertas.LargeImage = CType(resources.GetObject("mnuVentasConOfertas.LargeImage"), System.Drawing.Image)
-        Me.mnuVentasConOfertas.Name = "mnuVentasConOfertas"
-        Me.mnuVentasConOfertas.SmallImage = CType(resources.GetObject("mnuVentasConOfertas.SmallImage"), System.Drawing.Image)
-        '
         'frmPrincipalN
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -2158,9 +2328,7 @@ Partial Class frmPrincipalN
     Friend WithEvents btnInvHerRecInventario As System.Windows.Forms.RibbonButton
     Friend WithEvents btnInvHerAjustarCero As System.Windows.Forms.RibbonButton
     Friend WithEvents btnInvHerConfigConceptos As System.Windows.Forms.RibbonButton
-    Friend WithEvents btnInvOpeBoletas As System.Windows.Forms.RibbonButton
     Friend WithEvents btnInvConReportes As System.Windows.Forms.RibbonButton
-    Friend WithEvents btnComCapPagos As System.Windows.Forms.RibbonButton
     Friend WithEvents btnComConDevoluciones As System.Windows.Forms.RibbonButton
     Friend WithEvents tabServicios As System.Windows.Forms.RibbonTab
     Friend WithEvents pnlSerComercial As System.Windows.Forms.RibbonPanel
@@ -2190,7 +2358,6 @@ Partial Class frmPrincipalN
     Friend WithEvents btnGasOpeGastos As System.Windows.Forms.RibbonButton
     Friend WithEvents btnGasOpeMovimientos As System.Windows.Forms.RibbonButton
     Friend WithEvents btnGasOpeProgramar As System.Windows.Forms.RibbonButton
-    Friend WithEvents btnGasOpeAlertas As System.Windows.Forms.RibbonButton
     Friend WithEvents tabEmpenos As System.Windows.Forms.RibbonTab
     Friend WithEvents pnlEmpCatalogos As System.Windows.Forms.RibbonPanel
     Friend WithEvents btnEmpCatIdentificaciones As System.Windows.Forms.RibbonButton
@@ -2214,10 +2381,6 @@ Partial Class frmPrincipalN
     Friend WithEvents btnConOpeGenerarPolizas As System.Windows.Forms.RibbonButton
     Friend WithEvents pnlVentasFertilizantes As System.Windows.Forms.RibbonPanel
     Friend WithEvents pnlComGranos As System.Windows.Forms.RibbonPanel
-    Friend WithEvents btnComGraBoletas As System.Windows.Forms.RibbonButton
-    Friend WithEvents btnComGraLiquidaciones As System.Windows.Forms.RibbonButton
-    Friend WithEvents btnComGraComprobantes As System.Windows.Forms.RibbonButton
-    Friend WithEvents btnComGraReportes As System.Windows.Forms.RibbonButton
     Friend WithEvents btnComConValidador As System.Windows.Forms.RibbonButton
     Friend WithEvents pnlPunRestaurante As System.Windows.Forms.RibbonPanel
     Friend WithEvents btnPunResVentas As System.Windows.Forms.RibbonButton
@@ -2263,8 +2426,6 @@ Partial Class frmPrincipalN
     Friend WithEvents btnHerHerModifiarInv As System.Windows.Forms.RibbonButton
     Friend WithEvents btnConOpeConfiguracion As System.Windows.Forms.RibbonButton
     Friend WithEvents btnVenCapDevoluciones As System.Windows.Forms.RibbonButton
-    Friend WithEvents btnComCapDocumentos As System.Windows.Forms.RibbonButton
-    Friend WithEvents btnInvConReportesBoletas As System.Windows.Forms.RibbonButton
     Friend WithEvents btnInvConBoletas As System.Windows.Forms.RibbonButton
     Friend WithEvents btnArcGenUsuarios As System.Windows.Forms.RibbonButton
     Friend WithEvents btnArcGenEmpresas As System.Windows.Forms.RibbonButton
@@ -2302,11 +2463,25 @@ Partial Class frmPrincipalN
     Friend WithEvents btnCambiarUsuario As System.Windows.Forms.RibbonOrbOptionButton
     Friend WithEvents btnAcerca As System.Windows.Forms.RibbonOrbOptionButton
     Friend WithEvents mnuVentasApartados As System.Windows.Forms.RibbonButton
-    Friend WithEvents RibbonButton2 As System.Windows.Forms.RibbonButton
     Friend WithEvents mnuVentasNotasCargo As System.Windows.Forms.RibbonButton
-    Friend WithEvents mnuPedidos As System.Windows.Forms.RibbonButton
+    Friend WithEvents mnuVentasPedidos As System.Windows.Forms.RibbonButton
     Friend WithEvents mnuVentasConOfertas As System.Windows.Forms.RibbonButton
     Friend WithEvents RibbonPanel1 As System.Windows.Forms.RibbonPanel
     Friend WithEvents mnuVentasPagare As System.Windows.Forms.RibbonButton
     Friend WithEvents mnuVentasDocumentos As System.Windows.Forms.RibbonButton
+    Friend WithEvents btnVentasBuscaApartado As System.Windows.Forms.RibbonButton
+    Friend WithEvents btnVenPagApartados As System.Windows.Forms.RibbonButton
+    Friend WithEvents btnVentasBuscaDev As System.Windows.Forms.RibbonButton
+    Friend WithEvents BuscarArticulo As System.Windows.Forms.RibbonPanel
+    Friend WithEvents btnBuscarArticulo As System.Windows.Forms.RibbonButton
+    Friend WithEvents RibbonPanel2 As System.Windows.Forms.RibbonPanel
+    Friend WithEvents btnComprasReportes As System.Windows.Forms.RibbonButton
+    Friend WithEvents BtnComprasDocs As System.Windows.Forms.RibbonButton
+    Friend WithEvents BtnComprasBuscaDev As System.Windows.Forms.RibbonButton
+    Friend WithEvents BtnComprasMovProv As System.Windows.Forms.RibbonButton
+    Friend WithEvents btnComprasPagos As System.Windows.Forms.RibbonButton
+    Friend WithEvents RibbonPanel3 As System.Windows.Forms.RibbonPanel
+    Friend WithEvents btnBuscaArticulos As System.Windows.Forms.RibbonButton
+    Friend WithEvents RibbonPanel4 As System.Windows.Forms.RibbonPanel
+    Friend WithEvents btnBuscarArticulos As System.Windows.Forms.RibbonButton
 End Class

@@ -620,8 +620,8 @@
         btnComConDevoluciones.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Compras.DevolucionesVer, PermisosN.Secciones.Compras)
         btnComCapNotasCredito.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Compras.NotasdeCreditoVer, PermisosN.Secciones.Compras)
         btnComCapNotasCargo.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Compras.NotasdeCargoVer, PermisosN.Secciones.Compras)
-        btnComCapDocumentos.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Compras.DocumentosProveedoresVer, PermisosN.Secciones.Compras)
-        btnComCapPagos.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Compras.PagosVer, PermisosN.Secciones.Compras)
+        'btnComCapDocumentos.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Compras.DocumentosProveedoresVer, PermisosN.Secciones.Compras)
+        'btnComCapPagos.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Compras.PagosVer, PermisosN.Secciones.Compras)
         btnComConReportes.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Compras.Reportes, PermisosN.Secciones.Compras)
         btnComConMovimientos.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Compras.Consultas, PermisosN.Secciones.Compras)
         btnComConValidador.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Compras.Consultas, PermisosN.Secciones.Compras)
@@ -666,7 +666,7 @@
         btnGasCatEmpleados.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Gastos.GastosEmpleadosAlta, PermisosN.Secciones.Gastos)
         btnGasOpeProgramar.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Gastos.GastosProgramarVer, PermisosN.Secciones.Gastos)
         btnGasConReportes.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Gastos.GastosReportesVer, PermisosN.Secciones.Gastos)
-        btnGasOpeAlertas.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Gastos.GastosVerNotificaciones, PermisosN.Secciones.Gastos)
+        'btnGasOpeAlertas.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Gastos.GastosVerNotificaciones, PermisosN.Secciones.Gastos)
         btnGasOpeMovimientos.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.PuntodeVentas.CajasmovimientosVer, PermisosN.Secciones.PuntodeVenta)
 
         btnEmpOpeEmpenos.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Empenios.EmpeniosVer, PermisosN.Secciones.Empenios)
@@ -694,10 +694,10 @@
         btnConCatMascaras.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Contabilidad.GenerarPolizasPermitir, PermisosN.Secciones.Contabilidad)
         btnConCatConceptos.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Contabilidad.NominaConceptosVer, PermisosN.Secciones.Contabilidad)
 
-        btnComGraBoletas.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Semillas.BoletasVer, PermisosN.Secciones.Semillas)
-        btnComGraLiquidaciones.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Semillas.LiquidacionVer, PermisosN.Secciones.Semillas)
-        btnComGraComprobantes.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Semillas.ComprobanteVer, PermisosN.Secciones.Semillas)
-        btnComGraReportes.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Semillas.ReportesVer, PermisosN.Secciones.Semillas)
+        'btnComGraBoletas.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Semillas.BoletasVer, PermisosN.Secciones.Semillas)
+        'btnComGraLiquidaciones.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Semillas.LiquidacionVer, PermisosN.Secciones.Semillas)
+        'btnComGraComprobantes.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Semillas.ComprobanteVer, PermisosN.Secciones.Semillas)
+        'btnComGraReportes.Enabled = GlobalPermisos.ChecaPermiso(PermisosN.Semillas.ReportesVer, PermisosN.Secciones.Semillas)
 
     End Sub
 
@@ -866,7 +866,7 @@
         End If
     End Sub
 
-    Private Sub mnuComprasPagos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnComCapPagos.Click
+    Private Sub mnuComprasPagos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         CierraVentanas()
         If BuscaVentanas("frmComprasPagos") = False Then
             Dim f As New frmComprasPagos("", "")
@@ -952,7 +952,7 @@
     End Sub
 
 
-    Private Sub DocumentosToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnComCapDocumentos.Click
+    Private Sub DocumentosToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         CierraVentanas()
         If BuscaVentanas("frmProveedoresDocumentos") = False Then
             Dim f As New frmProveedoresDocumentos()
@@ -5505,7 +5505,7 @@
         End If
     End Sub
 
-    Private Sub BoletasToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles btnComGraBoletas.Click
+    Private Sub BoletasToolStripMenuItem_Click(sender As Object, e As EventArgs)
         CierraVentanas()
         If BuscaVentanas("frmSemillasBoleta") = False Then
             Dim f As New frmSemillasBoleta(GlobalSemillasResumida, GlobalPermisos.ChecaPermiso(PermisosN.Semillas.PrecioVerBoleta, PermisosN.Secciones.Semillas))
@@ -5514,7 +5514,7 @@
         End If
     End Sub
 
-    Private Sub MnuSemillasLiquidaciones_Click(sender As Object, e As EventArgs) Handles btnComGraLiquidaciones.Click
+    Private Sub MnuSemillasLiquidaciones_Click(sender As Object, e As EventArgs)
         CierraVentanas()
         If BuscaVentanas("frmSemillasLiquidacion") = False Then
             Dim f As New frmSemillasLiquidacion()
@@ -5523,7 +5523,7 @@
         End If
     End Sub
 
-    Private Sub mnuSemillasComprobantes_Click(sender As Object, e As EventArgs) Handles btnComGraComprobantes.Click
+    Private Sub mnuSemillasComprobantes_Click(sender As Object, e As EventArgs)
         CierraVentanas()
         If BuscaVentanas("frmSemillasComprobante") = False Then
             Dim f As New frmSemillasComprobante()
@@ -5532,7 +5532,7 @@
         End If
     End Sub
 
-    Private Sub mnuSemillasReportes_Click(sender As Object, e As EventArgs) Handles btnComGraReportes.Click
+    Private Sub mnuSemillasReportes_Click(sender As Object, e As EventArgs)
         CierraVentanas()
         If BuscaVentanas("frmSemillasReportes") = False Then
             Dim f As New frmSemillasReportes(0)
@@ -5541,7 +5541,7 @@
         End If
     End Sub
 
-    Private Sub mnuBoletasInventario_Click(sender As Object, e As EventArgs) Handles btnInvOpeBoletas.Click
+    Private Sub mnuBoletasInventario_Click(sender As Object, e As EventArgs)
         CierraVentanas()
         If BuscaVentanas("frmSemillasBoleta") = False Then
             Dim f As New frmSemillasBoleta(GlobalSemillasResumida, GlobalPermisos.ChecaPermiso(PermisosN.Semillas.PrecioVerBoleta, PermisosN.Secciones.Semillas))
@@ -5550,7 +5550,7 @@
         End If
     End Sub
 
-    Private Sub mnuReportesBoletasInv_Click(sender As Object, e As EventArgs) Handles btnInvConReportesBoletas.Click
+    Private Sub mnuReportesBoletasInv_Click(sender As Object, e As EventArgs)
         CierraVentanas()
         If BuscaVentanas("frmSemillasReportes") = False Then
             Dim f As New frmSemillasReportes(1)
@@ -5699,7 +5699,7 @@
         End If
     End Sub
 
-    Private Sub VerAlertasToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles btnGasOpeAlertas.Click
+    Private Sub VerAlertasToolStripMenuItem_Click(sender As Object, e As EventArgs)
         CierraVentanas()
         If BuscaVentanas("frmGastosAviso") = False Then
             Dim f As New frmGastosAviso()
