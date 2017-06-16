@@ -177,6 +177,7 @@
     <Compile Include="Clases BD\produccion\dbProduccionProcesos.vb" />
     <Compile Include="Clases BD\produccion\dbProduccionProductosDetalles.vb" />
     <Compile Include="Clases BD\produccion\dbProduccionSubProceso.vb" />
+    <Compile Include="Clases BD\ventas\complementos\dbComplementoPagos.vb" />
     <Compile Include="Clases BD\ventas\complementos\dbComplementoPropietarios.vb" />
     <Compile Include="Clases BD\produccion\dbProduccionProductos.vb" />
     <Compile Include="Clases BD\ventas\dbVentas.vb" />
@@ -562,6 +563,12 @@
     <Compile Include="Formas\inventario\frmConsultaUbicaciones.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Formas\inventario\frmInventarioCodigosPrev.Designer.vb">
+      <DependentUpon>frmInventarioCodigosPrev.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formas\inventario\frmInventarioCodigosPrev.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Formas\inventario\frmInventarioPedidos.Designer.vb">
       <DependentUpon>frmInventarioPedidos.vb</DependentUpon>
     </Compile>
@@ -898,6 +905,12 @@
     <Compile Include="Formas\ventas\frmComplementoINE.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Formas\ventas\frmComplementoPagos.Designer.vb">
+      <DependentUpon>frmComplementoPagos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formas\ventas\frmComplementoPagos.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Formas\ventas\frmConfiguracionCorte.designer.vb">
       <DependentUpon>frmConfiguracionCorte.vb</DependentUpon>
     </Compile>
@@ -1166,12 +1179,6 @@
       <DependentUpon>frmExportacion.vb</DependentUpon>
     </Compile>
     <Compile Include="Formas\ventas\frmExportacion.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Formas\ventas\frmExportacionPaises.designer.vb">
-      <DependentUpon>frmExportacionPaises.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Formas\ventas\frmExportacionPaises.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formas\ventas\frmExportacionPropietarios.designer.vb">
@@ -2699,6 +2706,12 @@
       <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Reportes\repVentasArticulosIEPSCobranza.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>repVentasArticulosIEPSCobranza.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reportes\repVentasArticulosRemisionesIEPS.vb">
       <DependentUpon>repVentasArticulosRemisionesIEPS.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -3630,6 +3643,9 @@
     <EmbeddedResource Include="Formas\inventario\frmConsultaUbicaciones.resx">
       <DependentUpon>frmConsultaUbicaciones.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Formas\inventario\frmInventarioCodigosPrev.resx">
+      <DependentUpon>frmInventarioCodigosPrev.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formas\inventario\frmInventarioPedidos.resx">
       <DependentUpon>frmInventarioPedidos.vb</DependentUpon>
     </EmbeddedResource>
@@ -3814,6 +3830,9 @@
     <EmbeddedResource Include="Formas\ventas\frmComplementoINE.resx">
       <DependentUpon>frmComplementoINE.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Formas\ventas\frmComplementoPagos.resx">
+      <DependentUpon>frmComplementoPagos.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formas\ventas\frmConfiguracionCorte.resx">
       <DependentUpon>frmConfiguracionCorte.vb</DependentUpon>
     </EmbeddedResource>
@@ -3984,9 +4003,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formas\ventas\frmExportacion.resx">
       <DependentUpon>frmExportacion.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Formas\ventas\frmExportacionPaises.resx">
-      <DependentUpon>frmExportacionPaises.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formas\ventas\frmExportacionPropietarios.resx">
       <DependentUpon>frmExportacionPropietarios.vb</DependentUpon>
@@ -4983,6 +4999,10 @@
     <EmbeddedResource Include="Reportes\repVentasArticulosEscritura.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>repVentasArticulosEscritura.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\repVentasArticulosIEPSCobranza.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>repVentasArticulosIEPSCobranza.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\repVentasArticulosRemisionesIEPS.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

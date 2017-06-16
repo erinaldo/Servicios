@@ -271,11 +271,11 @@
             Dim C As New dbNotasDeCredito(MySqlcon)
             Dim Desglozar As Byte
             If IsNumeric(TextBox2.Text) = False Then MensajeError = "El folio debe ser un valor numérico."
-            'If FolioAnt <> TextBox2.Text Then
+
             If C.ChecaFolioRepetido(TextBox2.Text, TextBox11.Text) Then
                 If pEstado = Estados.Guardada Then TextBox2.Text = C.DaNuevoFolio(TextBox11.Text, IdsSucursales.Valor(ComboBox3.SelectedIndex)).ToString
             End If
-            'End If
+
             If GlobalPermisos.ChecaPermiso(PermisosN.Ventas.NotasdeCreditoAlta, PermisosN.Secciones.Ventas) = False And pEstado <> Estados.Cancelada Then
                 MensajeError += " No tiene permiso para realizar esta operación."
             End If
@@ -289,11 +289,10 @@
                     Desglozar = 0
                 End If
                 Dim O As New dbOpciones(MySqlcon)
-                'Dim FP As New dbFormasdePago(idsFormasDePago.Valor(ComboBox4.SelectedIndex), MySqlcon)
+
                 Dim CM As New dbMonedasConversiones(MySqlcon)
                 CM.Modificar(1, CDbl(TextBox10.Text))
-                'Dim Credito As Byte
-                'Credito = FP.Tipo
+                
                 Dim Sf As New dbSucursalesFolios(MySqlcon)
                 Sf.BuscaFolios(IdsSucursales.Valor(ComboBox3.SelectedIndex), dbSucursalesFolios.TipoDocumentos.NotadeCredito, GlobalTipoFacturacion)
                 Dim Sc As New dbSucursalesCertificados(Sf.IdCertificado, MySqlcon)
@@ -303,20 +302,9 @@
                 If pEstado = Estados.Cancelada Then
                     Dim VP As New dbVentasPagos(MySqlcon)
                     VP.CancelarPagosxDocumento(idNota, 1, idCliente, Estados.Cancelada)
-                    '    Dim S As New dbInventarioSeries(MySqlcon)
-                    '    S.QuitaSeriesAVenta(idNota)
-                    '    If FP.Tipo = 0 And Estado = Estados.Guardada Then
-                    '        Dim Cliente As New dbClientes(MySqlcon)
-                    '        Cliente.ModificaSaldo(idCliente, C.TotalVenta, 1)
-                    '    End If
-                    '    C.RegresaInventario(idNota)
+                    
                 End If
                 If pEstado = Estados.Guardada Then
-                    'If FP.Tipo = 0 Then
-                    '    Dim Cliente As New dbClientes(MySqlcon)
-                    '    Cliente.ModificaSaldo(idCliente, C.TotalVenta, 0)
-                    'End If
-                    'If PrintDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
                     Select Case EsElectronica
                         Case 0
                             Imprimir(idNota)
@@ -324,6 +312,8 @@
                             CadenaOriginal()
                         Case 2
                             CadenaOriginali(pEstado)
+                        Case 3
+                            CadenaOriginali33(pEstado)
                     End Select
                     'End If
                 End If
@@ -784,7 +774,7 @@
                 'If EsElectronica = 2 And GlobalConector = 1 Then
                 Dim V As New dbNotasDeCredito(idNota, MySqlcon)
                 V.DaDatosTimbrado(idNota)
-                Dim op As New dbOpciones(MySqlcon)
+                'Dim op As New dbOpciones(MySqlcon)
                 If EsElectronica = 2 And GlobalConector = 1 And GlobalPacCFDI = 1 Then
                     V.DaDatosTimbrado(idNota)
                     Dim S As New dbSucursales(V.IdSucursal, MySqlcon)
@@ -909,8 +899,7 @@
     End Sub
     
     Private Sub Button15_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button15.Click
-        'If PrintDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
-        Dim op As New dbOpciones(MySqlcon)
+
         If Op.NoImpSinGuardar = 1 And Estado < 3 Then
             MsgBox("No se puede imprimir un documento sin guardar.", MsgBoxStyle.Information, GlobalNombreApp)
             Exit Sub
@@ -922,10 +911,10 @@
                 CadenaOriginal()
             Case 2
                 CadenaOriginali(Estado)
+            Case 3
+                CadenaOriginali33(Estado)
         End Select
-        'PrintDocument1.PrinterSettings = PrintDialog1.PrinterSettings
-        'PrintDocument1.Print()
-        'End If
+        
     End Sub
 
     Private Sub TextBox12_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBox12.TextChanged
@@ -1176,6 +1165,138 @@
         End If
     End Sub
 
+    Private Sub CadenaOriginali33(ByVal pEstado As Byte)
+        Dim en As New Encriptador
+        Dim V As New dbNotasDeCredito(idNota, MySqlcon)
+        Dim RutaXmlTemp As String
+        Dim RutaXml As String
+        Dim RutaXmlTimbrado As String
+        Dim RutaPDF As String
+        Dim MsgError As String = ""
+        
+        Cadena = V.CreaCadenaOriginali33(idNota, GlobalIdMoneda, "", GlobalIdEmpresa, "", 0, "")
+        Dim Archivos As New dbSucursalesArchivos
+        Archivos.DaRutaCER(V.IdSucursal, GlobalIdEmpresa, False)
+        RutaXml = Archivos.DaRutaArchivos(V.IdSucursal, GlobalIdEmpresa, dbSucursalesArchivos.TipoRutas.NotasdeCreditoXML, False)
+        RutaPDF = Archivos.DaRutaArchivos(V.IdSucursal, GlobalIdEmpresa, dbSucursalesArchivos.TipoRutas.NotasdeCreditoPDF, False)
+        Archivos.CierraDB()
+        Sello = en.GeneraSello(Cadena, Archivos.RutaCer, Format(CDate(V.Fecha), "yyyy"), True)
+        IO.Directory.CreateDirectory(RutaPDF + "\" + Format(CDate(V.Fecha), "yyyy") + "\")
+        IO.Directory.CreateDirectory(RutaPDF + "\" + Format(CDate(V.Fecha), "yyyy") + "\" + Format(CDate(V.Fecha), "MM") + "\")
+        IO.Directory.CreateDirectory(RutaXml + "\" + Format(CDate(V.Fecha), "yyyy") + "\")
+        IO.Directory.CreateDirectory(RutaXml + "\" + Format(CDate(V.Fecha), "yyyy") + "\" + Format(CDate(V.Fecha), "MM") + "\")
+        RutaXmlTemp = RutaXml + "\" + Format(CDate(V.Fecha), "yyyy") + "\" + Format(CDate(V.Fecha), "MM") + "\PSSNOTADECREDITO-" + V.Serie + V.Folio.ToString + ".xml"
+        RutaXmlTimbrado = RutaXml + "\" + Format(CDate(V.Fecha), "yyyy") + "\" + Format(CDate(V.Fecha), "MM") + "\PSSNOTADECREDITO-" + V.Serie + V.Folio.ToString + ".xml"
+        RutaXml = RutaXml + "\" + Format(CDate(V.Fecha), "yyyy") + "\" + Format(CDate(V.Fecha), "MM") + "\PSSNOTADECREDITO-" + V.Serie + V.Folio.ToString + ".xml"
+        If op._NoRutas = "0" Then
+            RutaPDF = RutaPDF + "\" + Format(CDate(V.Fecha), "yyyy") + "\" + Format(CDate(V.Fecha), "MM")
+        End If
+        'RutaPDF = RutaPDF + "\" + Format(CDate(V.Fecha), "yyyy") + "\" + Format(CDate(V.Fecha), "MM")
+
+        Dim Enc As New System.Text.UTF8Encoding
+        'Dim strXML As String = V.CreaXMLi(idNota, GlobalIdMoneda, Sello, GlobalIdEmpresa)
+
+
+        Dim strXML As String
+        strXML = V.CreaXMLi33(idNota, GlobalIdMoneda, Sello, GlobalIdEmpresa, "", 0)  
+        en.GuardaArchivoTexto("temp.xml", strXML, System.Text.Encoding.UTF8)
+        Dim Bytes() As Byte = Enc.GetBytes(strXML)
+        'Dim Os As New dbOpciones(MySqlcon)
+        Dim S As New dbSucursales(V.IdSucursal, MySqlcon)
+        'en.GuardaArchivo(My.Settings.rutaxmlnc + "\" + Format(CDate(V.Fecha), "yyyy") + "\" + Format(CDate(V.Fecha), "MM") + "\XMLFacCFDI-" + V.Serie + V.Folio.ToString + ".xml", Bytes)
+        V.DaDatosTimbrado(idNota)
+        If (V.uuid = "**No Timbrado**" Or V.uuid = "") And pEstado = Estados.Guardada Then
+            If GlobalPacCFDI = 2 Then
+                en.GuardaArchivoTexto("temp.xml", strXML, System.Text.Encoding.UTF8)
+                Dim Timbre As String
+                Dim sa As New dbSucursalesArchivos
+                sa.DaOpciones(GlobalIdEmpresa, True)
+                Timbre = Timbrar33(S.RFC, strXML, "", Op._ApiKey, True, V.Folio, V.Serie, "NotadeCredito", V.ID)
+                If UCase(Timbre.Substring(0, 5)) <> "ERROR" Then
+                    Dim xmldoc As New Xml.XmlDocument
+                    en.GuardaArchivoTexto(RutaXmlTimbrado, Timbre, System.Text.Encoding.UTF8)
+                    xmldoc.Load(RutaXmlTimbrado)
+                    V.uuid = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("UUID").Value
+                    V.SelloCFD = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("SelloCFD").Value
+                    V.NoCertificadoSAT = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("NoCertificadoSAT").Value
+                    V.FechaTimbrado = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("FechaTimbrado").Value
+                    V.SelloSAT = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("SelloSAT").Value
+                    V.GuardaDatosTimbrado(idNota, V.uuid, V.FechaTimbrado, V.SelloCFD, V.NoCertificadoSAT, V.SelloSAT)
+                Else
+                    MsgError = Timbre
+                    V.NoCertificadoSAT = "Error"
+                End If
+            End If
+
+        Else
+            'Crear XML Timbrado
+            Dim ExisteArchivo As Boolean = False
+            If GlobalConector = 0 Then
+                If IO.File.Exists(RutaXml) Then ExisteArchivo = True
+            Else
+                If IO.File.Exists(RutaXmlTimbrado) Then ExisteArchivo = True
+            End If
+
+
+            If pEstado = Estados.Guardada And ExisteArchivo = False Then
+                Dim strTimbrado As String
+                strTimbrado = vbCrLf + "<cfdi:Complemento>" + vbCrLf
+                strTimbrado += "<tfd:TimbreFiscalDigital version=""1.0"" UUID=""" + V.uuid + """ FechaTimbrado=""" + V.FechaTimbrado + """ SelloCFD=""" + V.SelloCFD + """ NoCertificadoSAT=""" + V.NoCertificadoSAT + """ SelloSAT=""" + V.SelloSAT + """ />" + vbCrLf
+                strTimbrado += "</cfdi:Complemento>" + vbCrLf
+                strXML = strXML.Insert(strXML.LastIndexOf("</cfdi:Comprobante>"), strTimbrado)
+                If GlobalConector = 0 Then
+                    en.GuardaArchivoTexto(RutaXml, strXML, System.Text.Encoding.UTF8)
+                Else
+                    en.GuardaArchivoTexto(RutaXmlTimbrado, strXML, System.Text.Encoding.UTF8)
+                End If
+            End If
+        End If
+        If V.NoCertificadoSAT <> "Error" Then
+            Imprimir(idNota)
+
+            If V.Cliente.Email <> "" Then
+                Try
+                    If MsgBox("¿Enviar nota de crédito por correo electrónico?", MsgBoxStyle.YesNo, GlobalNombreApp) = MsgBoxResult.Yes Then
+                        If V.Cliente.Email <> "" Then
+                            Dim M As New MailManager(My.Settings.emailhost, My.Settings.emailfrom, My.Settings.emailusuario, My.Settings.emailpassword, My.Settings.emailpuerto, My.Settings.encriptacionssl)
+                            'Dim O As New dbOpciones(MySqlcon)
+                            Dim C As String
+                            Dim rpdf As String
+                            'If GlobalTipoVersion <> 3 Then
+                            rpdf = RutaPDF + "\PSSNOTADECREDITO-" + V.Serie + V.Folio.ToString + ".pdf"
+                            'Else
+                            '   rpdf = RutaPDF + "\NC-" + V.Serie + V.Folio.ToString + ".pdf"
+                            'End If
+                            C = "Eviado por: " + S.Nombre + vbNewLine + "RFC: " + S.RFC + vbNewLine + "NOTA DE CRÉDITO" + vbNewLine + "Folio: " + V.uuid + vbNewLine + vbNewLine
+                            C += op.CorreoContenido
+
+                            If GlobalConector = 0 Then
+                                M.send("Comprobante Fiscal Digital por Internet Nota de Crédito: " + V.uuid, C, V.Cliente.Email, V.Cliente.Nombre, rpdf, RutaXml)
+                            Else
+                                M.send("Comprobante Fiscal Digital por Internet Nota de Crédito: " + V.uuid, C, V.Cliente.Email, V.Cliente.Nombre, rpdf, RutaXmlTimbrado)
+                            End If
+                        End If
+                    End If
+                Catch ex As Exception
+                    MsgBox("No puedo enviar el correo, verifique la configuración de correo o el correo del cliente." + vbCrLf + ex.Message, MsgBoxStyle.Critical, GlobalNombreApp)
+                End Try
+            End If
+        Else
+            MsgBox("Ha ocurrido un error en el timbrado del la nota de crédito, intente mas tarde. " + MsgError, MsgBoxStyle.Critical, GlobalNombreApp)
+            If MsgBox("¿Guardarla como pendiente? Si elige no; ésta se eliminará.", MsgBoxStyle.YesNo, GlobalNombreApp) = MsgBoxResult.Yes Then
+                V.ModificaEstado(idNota, Estados.Pendiente)
+                Nuevo()
+            Else
+                'Dim Se As New dbInventarioSeries(MySqlcon)
+                'Se.QuitaSeriesAVenta(idNota)
+                'If V.Estado = Estados.Guardada Then V.RegresaInventario(idVenta)
+                V.Eliminar(idNota)
+                PopUp("Nota de Crédito Eliminada", 90)
+                Nuevo()
+            End If
+            'Error en timbrado
+        End If
+    End Sub
 
     Private Sub LlenaNodosImpresion()
         'Dim O As New dbOpciones(MySqlcon)

@@ -19,6 +19,7 @@
     Public TipoDoci As Byte
     Public Idconceptonotaventa As Integer
     Public IDDeposito As Integer
+    Public IdCPago As Integer
     Public Sub New(ByVal Conexion As MySql.Data.MySqlClient.MySqlConnection)
         ID = -1
         Cantidad = 0
@@ -38,6 +39,7 @@
         TipoDoci = 0
         Idconceptonotaventa = 0
         IDDeposito = 0
+        IdCPago = 0
         Comm.Connection = Conexion
     End Sub
     Public Sub New(ByVal pID As Integer, ByVal Conexion As MySql.Data.MySqlClient.MySqlConnection)
@@ -68,6 +70,7 @@
             TipoDoci = DReader("tipodoci")
             Idconceptonotaventa = DReader("idconceptonotaventa")
             IDDeposito = DReader("iddeposito")
+            IdCPago = DReader("idcpago")
         End If
         DReader.Close()
     End Sub
@@ -87,7 +90,7 @@
         Idconceptonotaventa = pIdConceptoNotaVenta
         Comm.CommandTimeout = 200
         Comm.Transaction = Comm.Connection.BeginTransaction
-        Comm.CommandText = "insert into tblventaspagos(idventa,cantidad,estado,fecha,tipo,iddocumento,tipodocumento,hora,fechacancelado,horacancelado,idcargo,idcliente,idmoneda,ptipodecambio,iddocumentod,tipodoci,idconceptonotaventa,iddeposito,idUsuarioAlta,fechaAlta,horaAlta,idUsuarioCambio,fechaCambio,horaCambio) values(" + IdVenta.ToString + "," + Cantidad.ToString + ",3,'" + Fecha + "','" + Replace(Tipo, "'", "''") + "'," + IdDocumento.ToString + "," + TipoDocumento.ToString + ",'" + Format(TimeOfDay, "HH:mm:ss") + "','" + Format(Date.Now, "yyyy/MM/dd") + "','" + Format(TimeOfDay, "HH:mm:ss") + "'," + IdCargo.ToString + "," + IdCliente.ToString + "," + idMoneda.ToString + "," + pTipodeCambio.ToString + "," + IdDocumentod.ToString + "," + TipoDoci.ToString + "," + Idconceptonotaventa.ToString + ",0," + GlobalIdUsuario.ToString() + ",'" + DateTime.Now.ToString("yyyy/MM/dd") + "','" + TimeOfDay.ToString("HH:mm:ss") + "'," + GlobalIdUsuario.ToString() + ",'" + DateTime.Now.ToString("yyyy/MM/dd") + "','" + TimeOfDay.ToString("HH:mm:ss") + "'); select max(idpago) from tblventaspagos;"
+        Comm.CommandText = "insert into tblventaspagos(idventa,cantidad,estado,fecha,tipo,iddocumento,tipodocumento,hora,fechacancelado,horacancelado,idcargo,idcliente,idmoneda,ptipodecambio,iddocumentod,tipodoci,idconceptonotaventa,iddeposito,idUsuarioAlta,fechaAlta,horaAlta,idUsuarioCambio,fechaCambio,horaCambio,idcpago) values(" + IdVenta.ToString + "," + Cantidad.ToString + ",3,'" + Fecha + "','" + Replace(Tipo, "'", "''") + "'," + IdDocumento.ToString + "," + TipoDocumento.ToString + ",'" + Format(TimeOfDay, "HH:mm:ss") + "','" + Format(Date.Now, "yyyy/MM/dd") + "','" + Format(TimeOfDay, "HH:mm:ss") + "'," + IdCargo.ToString + "," + IdCliente.ToString + "," + idMoneda.ToString + "," + pTipodeCambio.ToString + "," + IdDocumentod.ToString + "," + TipoDoci.ToString + "," + Idconceptonotaventa.ToString + ",0," + GlobalIdUsuario.ToString() + ",'" + DateTime.Now.ToString("yyyy/MM/dd") + "','" + TimeOfDay.ToString("HH:mm:ss") + "'," + GlobalIdUsuario.ToString() + ",'" + DateTime.Now.ToString("yyyy/MM/dd") + "','" + TimeOfDay.ToString("HH:mm:ss") + "',0);select ifnull(last_insert_id(),0);"
         'Comm.ExecuteNonQuery()
         'Comm.CommandText = ""
         ID = Comm.ExecuteScalar

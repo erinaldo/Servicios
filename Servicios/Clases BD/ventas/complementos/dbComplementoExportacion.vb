@@ -151,10 +151,10 @@ Public Class dbComplementoExportacion
             xml += " Observaciones=""" + observaciones + """"
         End If
         If tipoCambioUSD <> 0 Then
-            xml += " TipoCambioUSD=""" + tipoCambioUSD.ToString() + """"
+            xml += " TipoCambioUSD=""" + Format(tipoCambioUSD, "0.00") + """"
         End If
         If totalUSD <> 0 Then
-            xml += " TotalUSD=""" + totalUSD.ToString() + """"
+            xml += " TotalUSD=""" + Format(totalUSD, "0.00") + """"
         End If
         xml += ">" + vbCrLf
         'EMISOR
@@ -306,9 +306,9 @@ Public Class dbComplementoExportacion
                     xml += " UnidadAduana=""" + m.unidadAduana + """"
                 End If
                 If m.valorUnitarioAduana <> 0 Then
-                    xml += " ValorUnitarioAduana=""" + m.valorUnitarioAduana.ToString() + """"
+                    xml += " ValorUnitarioAduana=""" + Format(m.valorUnitarioAduana, "0.00") + """"
                 End If
-                xml += " ValorDolares=""" + m.valorDolares.ToString() + """>" + vbCrLf
+                xml += " ValorDolares=""" + Format(m.valorDolares, "0.00") + """>" + vbCrLf
                 IdsDescripciones = des.buscaMercancia(m.idMercancia)
                 If IdsDescripciones.Length > 0 Then
                     For Each x As Integer In IdsDescripciones
@@ -375,10 +375,10 @@ Public Class dbComplementoExportacion
             xml += observaciones + "|"
         End If
         If tipoCambioUSD <> 0 Then
-            xml += tipoCambioUSD.ToString() + "|"
+            xml += Format(tipoCambioUSD, "0.00") + "|"
         End If
         If totalUSD <> 0 Then
-            xml += totalUSD.ToString() + "|"
+            xml += Format(totalUSD, "0.00") + "|"
         End If
         'Emisor
         If curpEmisor <> "" Then
@@ -517,9 +517,9 @@ Public Class dbComplementoExportacion
                     xml += m.unidadAduana + "|"
                 End If
                 If m.valorUnitarioAduana <> 0 Then
-                    xml += m.valorUnitarioAduana.ToString() + "|"
+                    xml += Format(m.valorUnitarioAduana, "0.00") + "|"
                 End If
-                xml += m.valorDolares.ToString() + "|" + vbCrLf
+                xml += m.valorDolares.ToString("0.00") + "|" + vbCrLf
                 IdsDescripciones = des.buscaMercancia(m.idMercancia)
                 If IdsDescripciones.Length > 0 Then
                     For Each x As Integer In IdsDescripciones

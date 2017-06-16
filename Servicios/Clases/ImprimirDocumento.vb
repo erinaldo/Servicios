@@ -321,7 +321,9 @@
                                     'lineas
                                 Case 2
                                     'etiquetas
-                                    e.DrawString(n.Texto, n.Fuente, Brushes.Black, n.X / 40 * 10, n.Y / 40 * 10)
+                                    'e.DrawString(n.Texto, n.Fuente, Brushes.Black, n.X / 40 * 10, n.Y / 40 * 10)
+                                    Rec = New RectangleF(n.X / 40 * 10, n.Y / 40 * 10, n.XL / 40 * 10, n.YL / 40 * 10)
+                                    e.DrawString(n.Texto, n.Fuente, Brushes.Black, Rec, strF)
                                 Case 3
                                     'imagenes
                                     Nimp = ImpND(n.DataPropertyName)
@@ -473,7 +475,9 @@
                                         'lineas
                                     Case 2
                                         'etiquetas
-                                        e.DrawString(n.Texto, n.Fuente, Brushes.Black, n.X / 40 * 10, n.Y / 40 * 10)
+                                        Rec = New RectangleF(n.X / 40 * 10, n.Y / 40 * 10, n.XL / 40 * 10, n.YL / 40 * 10)
+                                        e.DrawString(n.Texto, n.Fuente, Brushes.Black, Rec, strF)
+                                        'e.DrawString(n.Texto, n.Fuente, Brushes.Black, n.X / 40 * 10, n.Y / 40 * 10)
                                     Case 3
                                         'imagenes
                                         Nimp = ImpND(n.DataPropertyName)
@@ -742,7 +746,9 @@
                                     'lineas
                                 Case 2
                                     'etiquetas
-                                    e.DrawString(n.Texto, n.Fuente, Brushes.Black, n.X / 40 * 10, Math.Abs((n.Y / 40 * 10) - ((pZonaY + pZonaYL) / 40 * 10)) + YCoord)
+                                    Rec = New RectangleF(n.X / 40 * 10, n.Y / 40 * 10, n.XL / 40 * 10, n.YL / 40 * 10)
+                                    e.DrawString(n.Texto, n.Fuente, Brushes.Black, Rec, strF)
+                                    'e.DrawString(n.Texto, n.Fuente, Brushes.Black, n.X / 40 * 10, Math.Abs((n.Y / 40 * 10) - ((pZonaY + pZonaYL) / 40 * 10)) + YCoord)
                                 Case 3
                                     'imagenes
                                     Nimp = ImpND(n.DataPropertyName)

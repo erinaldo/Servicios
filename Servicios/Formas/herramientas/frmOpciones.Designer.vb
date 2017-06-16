@@ -551,6 +551,13 @@ Partial Class frmOpciones
         Me.RadioButton37 = New System.Windows.Forms.RadioButton()
         Me.RadioButton38 = New System.Windows.Forms.RadioButton()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.Button55 = New System.Windows.Forms.Button()
+        Me.Panel29 = New System.Windows.Forms.Panel()
+        Me.RadioButton55 = New System.Windows.Forms.RadioButton()
+        Me.RadioButton56 = New System.Windows.Forms.RadioButton()
+        Me.TextBox26 = New System.Windows.Forms.TextBox()
+        Me.TextBox27 = New System.Windows.Forms.TextBox()
+        Me.Button91 = New System.Windows.Forms.Button()
         Me.TabPage1.SuspendLayout()
         Me.Panel28.SuspendLayout()
         Me.General.SuspendLayout()
@@ -596,6 +603,7 @@ Partial Class frmOpciones
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage4.SuspendLayout()
         Me.Panel24.SuspendLayout()
+        Me.Panel29.SuspendLayout()
         Me.SuspendLayout()
         '
         'OpenFileDialog1
@@ -4072,6 +4080,11 @@ Partial Class frmOpciones
         '
         'TabPage5
         '
+        Me.TabPage5.Controls.Add(Me.Button55)
+        Me.TabPage5.Controls.Add(Me.Panel29)
+        Me.TabPage5.Controls.Add(Me.TextBox26)
+        Me.TabPage5.Controls.Add(Me.TextBox27)
+        Me.TabPage5.Controls.Add(Me.Button91)
         Me.TabPage5.Controls.Add(Me.Button5)
         Me.TabPage5.Controls.Add(Me.Panel27)
         Me.TabPage5.Controls.Add(Me.TextBox7)
@@ -6585,6 +6598,77 @@ Partial Class frmOpciones
         Me.ToolTip1.InitialDelay = 500
         Me.ToolTip1.ReshowDelay = 100
         '
+        'Button55
+        '
+        Me.Button55.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button55.Location = New System.Drawing.Point(505, 349)
+        Me.Button55.Name = "Button55"
+        Me.Button55.Size = New System.Drawing.Size(171, 24)
+        Me.Button55.TabIndex = 396
+        Me.Button55.Text = "Comp. Pagos Flujo"
+        Me.Button55.UseVisualStyleBackColor = True
+        '
+        'Panel29
+        '
+        Me.Panel29.Controls.Add(Me.RadioButton55)
+        Me.Panel29.Controls.Add(Me.RadioButton56)
+        Me.Panel29.Location = New System.Drawing.Point(914, 321)
+        Me.Panel29.Name = "Panel29"
+        Me.Panel29.Size = New System.Drawing.Size(69, 52)
+        Me.Panel29.TabIndex = 392
+        '
+        'RadioButton55
+        '
+        Me.RadioButton55.AutoSize = True
+        Me.RadioButton55.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.RadioButton55.Location = New System.Drawing.Point(3, 31)
+        Me.RadioButton55.Name = "RadioButton55"
+        Me.RadioButton55.Size = New System.Drawing.Size(63, 18)
+        Me.RadioButton55.TabIndex = 297
+        Me.RadioButton55.TabStop = True
+        Me.RadioButton55.Text = "Activar"
+        Me.RadioButton55.UseVisualStyleBackColor = True
+        '
+        'RadioButton56
+        '
+        Me.RadioButton56.AutoSize = True
+        Me.RadioButton56.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.RadioButton56.Location = New System.Drawing.Point(3, 4)
+        Me.RadioButton56.Name = "RadioButton56"
+        Me.RadioButton56.Size = New System.Drawing.Size(63, 18)
+        Me.RadioButton56.TabIndex = 296
+        Me.RadioButton56.TabStop = True
+        Me.RadioButton56.Text = "Activar"
+        Me.RadioButton56.UseVisualStyleBackColor = True
+        '
+        'TextBox26
+        '
+        Me.TextBox26.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox26.Location = New System.Drawing.Point(677, 350)
+        Me.TextBox26.MaxLength = 300
+        Me.TextBox26.Name = "TextBox26"
+        Me.TextBox26.Size = New System.Drawing.Size(236, 22)
+        Me.TextBox26.TabIndex = 395
+        '
+        'TextBox27
+        '
+        Me.TextBox27.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox27.Location = New System.Drawing.Point(677, 323)
+        Me.TextBox27.MaxLength = 300
+        Me.TextBox27.Name = "TextBox27"
+        Me.TextBox27.Size = New System.Drawing.Size(236, 22)
+        Me.TextBox27.TabIndex = 394
+        '
+        'Button91
+        '
+        Me.Button91.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button91.Location = New System.Drawing.Point(505, 322)
+        Me.Button91.Name = "Button91"
+        Me.Button91.Size = New System.Drawing.Size(171, 24)
+        Me.Button91.TabIndex = 393
+        Me.Button91.Text = "Comp. Pagos Estático"
+        Me.Button91.UseVisualStyleBackColor = True
+        '
         'frmOpciones
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -6690,6 +6774,8 @@ Partial Class frmOpciones
         Me.TabPage4.ResumeLayout(False)
         Me.Panel24.ResumeLayout(False)
         Me.Panel24.PerformLayout()
+        Me.Panel29.ResumeLayout(False)
+        Me.Panel29.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -7222,4 +7308,11 @@ Partial Class frmOpciones
     Friend WithEvents TextBox2 As System.Windows.Forms.TextBox
     Friend WithEvents Button2 As System.Windows.Forms.Button
     Friend WithEvents CheckBox79 As System.Windows.Forms.CheckBox
+    Friend WithEvents Button55 As System.Windows.Forms.Button
+    Friend WithEvents Panel29 As System.Windows.Forms.Panel
+    Friend WithEvents RadioButton55 As System.Windows.Forms.RadioButton
+    Friend WithEvents RadioButton56 As System.Windows.Forms.RadioButton
+    Friend WithEvents TextBox26 As System.Windows.Forms.TextBox
+    Friend WithEvents TextBox27 As System.Windows.Forms.TextBox
+    Friend WithEvents Button91 As System.Windows.Forms.Button
 End Class

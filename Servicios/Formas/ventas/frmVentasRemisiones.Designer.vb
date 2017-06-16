@@ -23,7 +23,7 @@ Partial Class frmVentasRemisiones
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.TextBox11 = New System.Windows.Forms.TextBox()
         Me.Label19 = New System.Windows.Forms.Label()
@@ -129,6 +129,8 @@ Partial Class frmVentasRemisiones
         Me.SerialPort1 = New System.IO.Ports.SerialPort(Me.components)
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.Label43 = New System.Windows.Forms.Label()
+        Me.TextBox20 = New System.Windows.Forms.TextBox()
         Me.Panel1.SuspendLayout()
         CType(Me.DGDetalles, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel2.SuspendLayout()
@@ -718,8 +720,8 @@ Partial Class frmVentasRemisiones
         Me.DGDetalles.AllowUserToAddRows = False
         Me.DGDetalles.AllowUserToDeleteRows = False
         Me.DGDetalles.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.DGDetalles.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.DGDetalles.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
         Me.DGDetalles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGDetalles.Location = New System.Drawing.Point(20, 229)
         Me.DGDetalles.Name = "DGDetalles"
@@ -756,7 +758,7 @@ Partial Class frmVentasRemisiones
         Me.TextBox7.Multiline = True
         Me.TextBox7.Name = "TextBox7"
         Me.TextBox7.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.TextBox7.Size = New System.Drawing.Size(517, 57)
+        Me.TextBox7.Size = New System.Drawing.Size(517, 29)
         Me.TextBox7.TabIndex = 9
         Me.TextBox7.TabStop = False
         '
@@ -1178,6 +1180,8 @@ Partial Class frmVentasRemisiones
         '
         'Panel3
         '
+        Me.Panel3.Controls.Add(Me.Label43)
+        Me.Panel3.Controls.Add(Me.TextBox20)
         Me.Panel3.Controls.Add(Me.Label39)
         Me.Panel3.Controls.Add(Me.Label3)
         Me.Panel3.Controls.Add(Me.Button26)
@@ -1291,6 +1295,29 @@ Partial Class frmVentasRemisiones
         'Timer1
         '
         Me.Timer1.Interval = 17
+        '
+        'Label43
+        '
+        Me.Label43.AutoSize = True
+        Me.Label43.BackColor = System.Drawing.Color.Transparent
+        Me.Label43.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label43.Location = New System.Drawing.Point(155, 85)
+        Me.Label43.Name = "Label43"
+        Me.Label43.Size = New System.Drawing.Size(84, 16)
+        Me.Label43.TabIndex = 321
+        Me.Label43.Text = "Ref. cliente:"
+        Me.Label43.Visible = False
+        '
+        'TextBox20
+        '
+        Me.TextBox20.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox20.Location = New System.Drawing.Point(243, 82)
+        Me.TextBox20.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.TextBox20.MaxLength = 150
+        Me.TextBox20.Name = "TextBox20"
+        Me.TextBox20.Size = New System.Drawing.Size(481, 22)
+        Me.TextBox20.TabIndex = 320
+        Me.TextBox20.Visible = False
         '
         'frmVentasRemisiones
         '
@@ -1423,4 +1450,6 @@ Partial Class frmVentasRemisiones
     Friend WithEvents TextBox13 As System.Windows.Forms.TextBox
     Friend WithEvents lblUbicacion As System.Windows.Forms.Label
     Friend WithEvents cmbUbicacion As System.Windows.Forms.ComboBox
+    Friend WithEvents Label43 As System.Windows.Forms.Label
+    Friend WithEvents TextBox20 As System.Windows.Forms.TextBox
 End Class

@@ -79,6 +79,7 @@ Partial Class frmExportacion
         Me.Label15 = New System.Windows.Forms.Label()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.txt_incoterms = New System.Windows.Forms.TextBox()
         Me.btnPropietarios = New System.Windows.Forms.Button()
         Me.Combo_MTraslado = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -122,7 +123,6 @@ Partial Class frmExportacion
         Me.btnGuardar = New System.Windows.Forms.Button()
         Me.btnCerrar = New System.Windows.Forms.Button()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
-        Me.txt_incoterms = New System.Windows.Forms.TextBox()
         Me.GroupBox1.SuspendLayout()
         Me.Panel_Destinatario.SuspendLayout()
         Me.TabControl1.SuspendLayout()
@@ -312,7 +312,7 @@ Partial Class frmExportacion
         'Label13
         '
         Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(313, 44)
+        Me.Label13.Location = New System.Drawing.Point(326, 44)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(13, 16)
         Me.Label13.TabIndex = 26
@@ -321,7 +321,7 @@ Partial Class frmExportacion
         'txtReceptorID
         '
         Me.txtReceptorID.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtReceptorID.Location = New System.Drawing.Point(168, 44)
+        Me.txtReceptorID.Location = New System.Drawing.Point(181, 44)
         Me.txtReceptorID.Name = "txtReceptorID"
         Me.txtReceptorID.Size = New System.Drawing.Size(142, 22)
         Me.txtReceptorID.TabIndex = 12
@@ -331,9 +331,9 @@ Partial Class frmExportacion
         Me.Label12.AutoSize = True
         Me.Label12.Location = New System.Drawing.Point(6, 47)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(154, 16)
+        Me.Label12.Size = New System.Drawing.Size(176, 16)
         Me.Label12.TabIndex = 24
-        Me.Label12.Text = "Número de identificación:"
+        Me.Label12.Text = "No. Reg. Identidad Tributaria:"
         '
         'txtReceptorCurp
         '
@@ -635,7 +635,7 @@ Partial Class frmExportacion
         'destinatario_id
         '
         Me.destinatario_id.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.destinatario_id.Location = New System.Drawing.Point(168, 21)
+        Me.destinatario_id.Location = New System.Drawing.Point(181, 21)
         Me.destinatario_id.Name = "destinatario_id"
         Me.destinatario_id.Size = New System.Drawing.Size(169, 22)
         Me.destinatario_id.TabIndex = 13
@@ -645,9 +645,9 @@ Partial Class frmExportacion
         Me.Label15.AutoSize = True
         Me.Label15.Location = New System.Drawing.Point(6, 24)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(154, 16)
+        Me.Label15.Size = New System.Drawing.Size(176, 16)
         Me.Label15.TabIndex = 27
-        Me.Label15.Text = "Número de identificación:"
+        Me.Label15.Text = "No. Reg. Identidad Tributaria:"
         '
         'TabControl1
         '
@@ -691,6 +691,15 @@ Partial Class frmExportacion
         Me.TabPage1.Size = New System.Drawing.Size(902, 497)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Datos"
+        '
+        'txt_incoterms
+        '
+        Me.txt_incoterms.Location = New System.Drawing.Point(92, 187)
+        Me.txt_incoterms.Multiline = True
+        Me.txt_incoterms.Name = "txt_incoterms"
+        Me.txt_incoterms.ReadOnly = True
+        Me.txt_incoterms.Size = New System.Drawing.Size(261, 39)
+        Me.txt_incoterms.TabIndex = 33
         '
         'btnPropietarios
         '
@@ -1121,15 +1130,6 @@ Partial Class frmExportacion
         Me.CheckBox1.TabIndex = 53
         Me.CheckBox1.Text = "Agregar Destinatario"
         Me.CheckBox1.UseVisualStyleBackColor = True
-        '
-        'txt_incoterms
-        '
-        Me.txt_incoterms.Location = New System.Drawing.Point(92, 187)
-        Me.txt_incoterms.Multiline = True
-        Me.txt_incoterms.Name = "txt_incoterms"
-        Me.txt_incoterms.ReadOnly = True
-        Me.txt_incoterms.Size = New System.Drawing.Size(261, 39)
-        Me.txt_incoterms.TabIndex = 33
         '
         'frmExportacion
         '

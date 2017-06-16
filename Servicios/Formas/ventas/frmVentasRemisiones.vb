@@ -64,6 +64,7 @@
     Dim IdVendedorU As Integer
     Dim Almacen As dbAlmacenes
     Dim Descontando As Boolean = True
+    Dim Contenido As Double
     Public Sub New(Optional ByVal pidVenta As Integer = 0)
 
         ' This call is required by the Windows Form Designer.
@@ -308,6 +309,11 @@
         CheckBox2.Enabled = True
         RadioButton1.Enabled = True
         ComboBox4.Enabled = True
+        TextBox7.Height = 57
+        Label43.Visible = False
+        TextBox20.Visible = False
+        TextBox20.Enabled = True
+        TextBox20.Text = ""
         If Op.NoPermitirRemisionesdeCredito = 0 And GlobalPermisos.ChecaPermiso(PermisosN.Ventas.PermitirRemisionesCredito, PermisosN.Secciones.Ventas) = True Then
             RadioButton2.Enabled = True
         Else
@@ -399,16 +405,20 @@
 
     Private Sub TextBox1_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles TextBox1.KeyDown
         If e.KeyCode = Keys.Enter Then
-            If Op._TipoSelAlmacen <> "0" Then
-                'If ComboBox8.SelectedIndex <= 0 Then
-                ComboBox8.Focus()
-                'End If
-            Else
-                If Op._CursorVentas = "0" Then
-                    TextBox5.Focus()
+            If TextBox20.Visible = False Then
+                If Op._TipoSelAlmacen <> "0" Then
+                    'If ComboBox8.SelectedIndex <= 0 Then
+                    ComboBox8.Focus()
+                    'End If
                 Else
-                    TextBox3.Focus()
+                    If Op._CursorVentas = "0" Then
+                        TextBox5.Focus()
+                    Else
+                        TextBox3.Focus()
+                    End If
                 End If
+            Else
+                TextBox20.Focus()
             End If
         End If
         If e.KeyCode = Keys.F1 Then
@@ -442,6 +452,15 @@
                     IdLista = c.IdLista
                     SIVA = c.IVA
                     Sobre = c.SobreescribeIVA
+                    If c.RFC = "XAXX010101000" Then
+                        TextBox7.Height = 29
+                        Label43.Visible = True
+                        TextBox20.Visible = True
+                    Else
+                        TextBox7.Height = 57
+                        Label43.Visible = False
+                        TextBox20.Visible = False
+                    End If
                     If Saldo >= c.Credito Then
                         SinCredito = True
                     Else
@@ -485,6 +504,10 @@
                     Sobre = 0
                     SIVA = 0
                     CreditoCliente = 0
+                    TextBox7.Height = 57
+                    Label43.Visible = False
+                    TextBox20.Visible = False
+                    TextBox20.Text = ""
                     SinCredito = False
                 End If
             End If
@@ -604,7 +627,7 @@
                 Sf.BuscaFolios(IdsSucursales.Valor(ComboBox3.SelectedIndex), dbSucursalesFolios.TipoDocumentos.Remision, 0)
                 'Dim Sc As New dbSucursalesCertificados(Sf.IdCertificado, MySqlcon)
                 CM.Modificar(1, CDbl(TextBox10.Text))
-                C.Modificar(idRemision, Format(DateTimePicker1.Value, "yyyy/MM/dd"), CInt(TextBox2.Text), Desglozar, 0, pEstado, TextBox11.Text, CDbl(TextBox10.Text), IDsMonedas2.Valor(ComboBox2.SelectedIndex), C.Subtototal, C.TotalVenta, idCliente, IdsConceptos.Valor(ComboBox4.SelectedIndex), IdsVendedores.Valor(ComboBox5.SelectedIndex), TextBox14.Text, Porsurtir, CheckBox3.Checked, IdsCajas.Valor(ComboBox6.SelectedIndex))
+                C.Modificar(idRemision, Format(DateTimePicker1.Value, "yyyy/MM/dd"), CInt(TextBox2.Text), Desglozar, 0, pEstado, TextBox11.Text, CDbl(TextBox10.Text), IDsMonedas2.Valor(ComboBox2.SelectedIndex), C.Subtototal, C.TotalVenta, idCliente, IdsConceptos.Valor(ComboBox4.SelectedIndex), IdsVendedores.Valor(ComboBox5.SelectedIndex), TextBox14.Text, Porsurtir, CheckBox3.Checked, IdsCajas.Valor(ComboBox6.SelectedIndex), TextBox20.Text)
                 MensajeErrorEx += " Modifico"
                 Dim S As New dbInventarioSeries(MySqlcon)
                 Dim CajaG As New dbCajas(IdsCajas.Valor(ComboBox6.SelectedIndex), MySqlcon)
@@ -676,7 +699,7 @@
                 End If
                 Dim O As New dbOpciones(MySqlcon)
                 ComboBox2.SelectedIndex = IDsMonedas2.Busca(IDsMonedas.Valor(ComboBox1.SelectedIndex))
-                C.Guardar(idCliente, Format(DateTimePicker1.Value, "yyyy/MM/dd"), CInt(TextBox2.Text), Desglozar, CDbl(TextBox8.Text), IdsSucursales.Valor(ComboBox3.SelectedIndex), TextBox11.Text, TextBox10.Text, IDsMonedas2.Valor(ComboBox2.SelectedIndex), IdsCajas.Valor(ComboBox6.SelectedIndex))
+                C.Guardar(idCliente, Format(DateTimePicker1.Value, "yyyy/MM/dd"), CInt(TextBox2.Text), Desglozar, CDbl(TextBox8.Text), IdsSucursales.Valor(ComboBox3.SelectedIndex), TextBox11.Text, TextBox10.Text, IDsMonedas2.Valor(ComboBox2.SelectedIndex), IdsCajas.Valor(ComboBox6.SelectedIndex), TextBox20.Text)
                 ComboBox3.Enabled = False
                 idRemision = C.ID
                 Estado = 1
@@ -785,6 +808,7 @@
         Else
             CheckBox2.Checked = False
         End If
+        TextBox20.Text = C.ClientePG
         ConsultaOn = True
         If C.IdVentaR <> 0 Then
             Label29.Visible = True
@@ -832,8 +856,10 @@
                 Button2.Enabled = False
                 ComboBox5.Enabled = False
                 Label39.Visible = True
+                TextBox20.Enabled = False
             Case Estados.Guardada
                 Label24.Visible = True
+                TextBox20.Enabled = False
                 Label24.Text = "Guardada"
                 Button13.Enabled = True
                 Label24.ForeColor = Color.FromArgb(50, 255, 50)
@@ -854,6 +880,7 @@
                 Button14.Enabled = True
                 Button2.Enabled = True
                 ComboBox5.Enabled = True
+                TextBox20.Enabled = True
                 If GlobalPermisos.ChecaPermiso(PermisosN.Ventas.CambiodeFolio, PermisosN.Secciones.Ventas) = False Then
                     TextBox11.Enabled = False
                     TextBox2.Enabled = False
@@ -1137,12 +1164,12 @@
                             IDe.Dispose()
                         End If
                         If PorLotes = 1 Then
-                            Dim F As New frmInventarioLotes(0, IdDetalle, 0, 0, CDbl(TextBox5.Text), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
+                            Dim F As New frmInventarioLotes(0, IdDetalle, 0, 0, Math.Round(CDbl(TextBox5.Text) / Contenido, 4), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
                             F.ShowDialog()
                             F.Dispose()
                         End If
                         If Aduana = 1 Then
-                            Dim F As New frmInventarioAduana(0, IdDetalle, 0, 0, CDbl(TextBox5.Text), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
+                            Dim F As New frmInventarioAduana(0, IdDetalle, 0, 0, Math.Round(CDbl(TextBox5.Text) / Contenido, 4), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
                             F.ShowDialog()
                             F.Dispose()
                         End If
@@ -1187,12 +1214,12 @@
                             IDe.Dispose()
                         End If
                         If PorLotes = 1 Then
-                            Dim F As New frmInventarioLotes(0, IdDetalle, 0, 0, CDbl(TextBox5.Text), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
+                            Dim F As New frmInventarioLotes(0, IdDetalle, 0, 0, Math.Round(CDbl(TextBox5.Text) / Contenido, 4), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
                             F.ShowDialog()
                             F.Dispose()
                         End If
                         If Aduana = 1 Then
-                            Dim F As New frmInventarioAduana(0, IdDetalle, 0, 0, CDbl(TextBox5.Text), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
+                            Dim F As New frmInventarioAduana(0, IdDetalle, 0, 0, Math.Round(CDbl(TextBox5.Text) / Contenido, 4), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
                             F.ShowDialog()
                             F.Dispose()
                         End If
@@ -1259,6 +1286,7 @@
             TextBox3.Text = CD.Inventario.Clave
             PrecioNeto = CD.Inventario.PrecioNeto
             CostoArticulo = CD.Inventario.CostoBase
+            Contenido = CD.Inventario.Contenido
             If CD.Inventario.Contenido > 1 Then
                 CostoArticulo = CostoArticulo / CD.Inventario.Contenido
             End If
@@ -1468,6 +1496,15 @@
             Else
                 SinCredito = False
             End If
+            If B.Cliente.RFC = "XAXX010101000" Then
+                TextBox7.Height = 29
+                Label43.Visible = True
+                TextBox20.Visible = True
+            Else
+                TextBox7.Height = 57
+                Label43.Visible = False
+                TextBox20.Visible = False
+            End If
             If B.Cliente.CreditoDias <> 0 Then
                 If B.Cliente.TieneCreditoporFecha(B.Cliente.ID, B.Cliente.CreditoDias) = False Then
                     SinCredito = True
@@ -1599,7 +1636,7 @@
         PrecioU = Math.Round(a.Precio, 2)
         Esamortizacion = Articulo.EsAmortizacion
         CostoArticulo = Articulo.CostoBase
-        CostoArticulo = Articulo.CostoBase
+        Contenido = Articulo.Contenido
         If Articulo.Contenido > 1 Then
             CostoArticulo = CostoArticulo / Articulo.Contenido
         End If
@@ -2866,7 +2903,7 @@
 
     Private Sub Button28_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button28.Click
         If PorLotes = 1 Then
-            Dim F As New frmInventarioLotes(0, IdDetalle, 0, 0, CDbl(TextBox5.Text), IdInventario, 1, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
+            Dim F As New frmInventarioLotes(0, IdDetalle, 0, 0, Math.Round(CDbl(TextBox5.Text) / Contenido, 4), IdInventario, 1, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
             F.ShowDialog()
             F.Dispose()
         End If
@@ -2890,7 +2927,7 @@
 
     Private Sub Button23_Click(sender As Object, e As EventArgs) Handles Button23.Click
         If Aduana = 1 Then
-            Dim F As New frmInventarioAduana(0, IdDetalle, 0, 0, CDbl(TextBox5.Text), IdInventario, 1, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
+            Dim F As New frmInventarioAduana(0, IdDetalle, 0, 0, Math.Round(CDbl(TextBox5.Text) / Contenido, 4), IdInventario, 1, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
             F.ShowDialog()
             F.Dispose()
         End If
@@ -3021,5 +3058,25 @@
             End If
             Descontando = True
         End If
+    End Sub
+
+    Private Sub TextBox20_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox20.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If Op._TipoSelAlmacen <> "0" Then
+                'If ComboBox8.SelectedIndex <= 0 Then
+                ComboBox8.Focus()
+                'End If
+            Else
+                If Op._CursorVentas = "0" Then
+                    TextBox5.Focus()
+                Else
+                    TextBox3.Focus()
+                End If
+            End If
+        End If
+    End Sub
+
+    Private Sub TextBox20_TextChanged(sender As Object, e As EventArgs) Handles TextBox20.TextChanged
+
     End Sub
 End Class

@@ -2890,8 +2890,8 @@
             CO += Replace(Replace(Replace(Replace(Replace(Replace(Des, vbCrLf, ""), "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + "|"
 
             If DR("cantidad") <> 0 Then
-                CO += Format((PrecioTemp + DR("cdescuento")) / DR("cantidad"), "#0.00####") + "|"
-                CO += Format(PrecioTemp + DR("cdescuento"), "#0.00####") + "|"
+                CO += Format(PrecioTemp / DR("cantidad"), "#0.00####") + "|"
+                CO += Format(PrecioTemp, "#0.00####") + "|"
             Else
                 CO += "0.00|"
                 CO += "0.00|"
@@ -3212,7 +3212,6 @@
         Dim AduanaCol As New Collection
         Dim AduanaCont As Integer
         Dim AduanaXML As String
-        Dim PredialXML As String
         Dim IA As New dbInventarioAduana(Comm.Connection)
         'Dim VA As New dbventasaduana(Comm.Connection)
         'If IA.HayViejaAduanaGlobal(ID) Then
@@ -3229,11 +3228,9 @@
         Dim PrecioTemp As Double = 0
         Dim ImpXML As String = ""
         While DR.Read
-            If DR("noimpimporte") <> 0 Then
-                PrecioTemp = DR("noimpimporte")
-            Else
+            
                 PrecioTemp = DR("precio")
-            End If
+
             'If DR("cantidad") <> 0 And PrecioTemp <> 0 Then
             XMLDoc += "<cfdi:Concepto "
             XMLDoc += "ClaveProdServ=""" + DR("cproductoserv") + """ "
@@ -3253,23 +3250,15 @@
             '    XMLDoc += "importe=""" + Format(DR("precio") * TipodeCambio, "#0.00") + """" + vbCrLf
             '    XMLDoc += "/> " + vbCrLf
             'Else
-            If pEsEgreso = 0 Then
-                If DR("cantidad") <> 0 Then
-                    XMLDoc += "ValorUnitario=""" + Format((PrecioTemp + DR("cdescuento")) / DR("cantidad"), "#0.00####") + """ "
-                    XMLDoc += "Importe=""" + Format(PrecioTemp + DR("cdescuento"), "#0.00####") + """ "
-                Else
-                    XMLDoc += "ValorUnitario=""0.00"" "
-                    XMLDoc += "Importe=""0.00"" "
-                End If
+
+            If DR("cantidad") <> 0 Then
+                XMLDoc += "ValorUnitario=""" + Format(PrecioTemp / DR("cantidad"), "#0.00####") + """ "
+                XMLDoc += "Importe=""" + Format(PrecioTemp, "#0.00####") + """ "
             Else
-                If DR("cantidad") <> 0 Then
-                    XMLDoc += "ValorUnitario=""" + Format(If((PrecioTemp + DR("cdescuento")) / DR("cantidad") >= 0, (PrecioTemp + DR("cdescuento")) / DR("cantidad"), ((PrecioTemp + DR("cdescuento")) / DR("cantidad")) * -1), "#0.00####") + """ "
-                    XMLDoc += "Importe=""" + Format(If(PrecioTemp + DR("cdescuento") >= 0, PrecioTemp + DR("cdescuento"), (PrecioTemp + DR("cdescuento")) * -1), "#0.00####") + """ "
-                Else
-                    XMLDoc += "ValorUnitario=""0.00"" "
-                    XMLDoc += "Importe=""0.00"" "
-                End If
+                XMLDoc += "ValorUnitario=""0.00"" "
+                XMLDoc += "Importe=""0.00"" "
             End If
+
             'If DR("cdescuento") <> 0 Then XMLDoc += "Descuento=""" + Format(DR("cdescuento"), "#0.00####") + """ "
             ImpXML = ""
             If DR("iva") <> 0 Or DR("ieps") <> 0 Or DR("ivaretenido") <> 0 Or ISR <> 0 Or IvaRetenido <> 0 Then
@@ -3333,7 +3322,7 @@
             If AduanaCont = 0 And ImpXML = "" Then
                 XMLDoc += "/> "
             Else
-                XMLDoc += ">" + ImpXML + AduanaXML + PredialXML + "</cfdi:Concepto>"
+                XMLDoc += ">" + ImpXML + AduanaXML + "</cfdi:Concepto>"
             End If
             'End If
 

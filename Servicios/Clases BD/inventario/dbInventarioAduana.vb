@@ -56,7 +56,7 @@
     End Sub
     Public Sub LlenaDatos()
         Dim DReader As MySql.Data.MySqlClient.MySqlDataReader
-        Comm.CommandText = "select fecha,aduana,numero,idinventario,yvalidacion,claveaduana,patente"
+        Comm.CommandText = "select fecha,aduana,numero,idinventario,yvalidacion,claveaduana,patente,"
         If IdAlmacen = 0 Then
             Comm.CommandText += "ifnull((select sum(cantidad) from tblalmacenesiaduanas where tblalmacenesiaduanas.idaduana=tblinventarioaduana.idaduana),0) as cantidad"
         Else
@@ -345,7 +345,7 @@
         Return Comm.ExecuteReader
     End Function
     Public Function ConsultaAduanaDevReader(ByVal pidDev As Integer) As MySql.Data.MySqlClient.MySqlDataReader
-        Comm.CommandText = "select tbldevolucionesaduana.idaduana,tblinventarioaduana.numero,tblinventarioaduana.fecha,tblinventarioaduana.aduana,tblventasaduanan.iddetalle,tblinventarioaduana.yvalidacion,tblinventarioaduana.claveaduana,tblinventarioaduana.patente from tbldevolucionesaduana inner join tbldevolucionesdetalles on tbldevolucionesaduana.iddetalle=tbldevolucionesdetalles.idventasinventario inner join tblinventarioaduana on tblventasaduanan.idaduana=tblinventarioaduana.idaduana where tbldevolucionesdetalles.iddevolucion=" + pidDev.ToString
+        Comm.CommandText = "select tbldevolucionesaduana.idaduana,tblinventarioaduana.numero,tblinventarioaduana.fecha,tblinventarioaduana.aduana,tbldevolucionesaduana.iddetalle,tblinventarioaduana.yvalidacion,tblinventarioaduana.claveaduana,tblinventarioaduana.patente from tbldevolucionesaduana inner join tbldevolucionesdetalles on tbldevolucionesaduana.iddetalle=tbldevolucionesdetalles.iddetalle inner join tblinventarioaduana on tbldevolucionesaduana.idaduana=tblinventarioaduana.idaduana where tbldevolucionesdetalles.iddevolucion=" + pidDev.ToString
         Return Comm.ExecuteReader
     End Function
 

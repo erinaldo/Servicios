@@ -11,7 +11,7 @@ Public Class frmExportacion
     "IRQ", "IRN", "IRL", "BVT", "IMN", "CXR", "NFK", "ISL", "CYM", "CCK", "COK", "FRO", "SGS", "HMD", "FLK", "MNP", "MHL", "PCN", "SLB", "TCA", "UMI", "VGB", "VIR", "ISR", "ITA", "JAM", "JPN", "JEY", "JOR", "KAZ", "KEN", "KGZ", "KIR", "KWT", "LAO", "LSO", "LVA", "LBN", "LBR", "LBY", "LIE", "LTU", "LUX", "MAC", "MDG", "MYS", "MWI", "MDV", "MLI", "MLT", "MAR", "MTQ", "MUS", "MRT", "MYT", "MEX", "FSM", "MDA", "MCO",
     "MNG", "MNE", "MSR", "MOZ", "NAM", "NRU", "NPL", "NIC", "NER", "NGA", "NIU", "NOR", "NCL", "NZL", "OMN", "NLD", "PAK", "PLW", "PSE", "PAN", "PNG", "PRY", "PER", "PYF", "POL", "PRT", "PRI", "GBR", "CAF", "CZE", "MKD", "COG", "COD", "DOM", "REU", "RWA", "ROU", "RUS", "WSM", "ASM", "BLM", "KNA", "SMR", "MAF", "SPM", "VCT", "SHN", "LCA", "STP", "SEN", "SRB", "SYC", "SLE", "SGP", "SXM", "SYR", "SOM", "LKA",
     "SWZ", "ZAF", "SDN", "SSD", "SWE", "CHE", "SUR", "SJM", "THA", "TWN", "TZA", "TJK", "IOT", "ATF", "TLS", "TGO", "TKL", "TON", "TTO", "TUN", "TKM", "TUR", "TUV", "UKR", "UGA", "URY", "UZB", "VUT", "VAT", "VEN", "VNM", "WLF", "YEM", "DJI", "ZMB", "ZWE", "ESH"}
-    Public unidadesMedida() As String = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "99"}
+    Public unidadesMedida() As String = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "99"}
     Private complemento As dbComplementoExportacion
     Private receptor As dbComplementoExportacionReceptor
     Private destinatario As dbComplementoExportacioDestinatario
@@ -348,49 +348,49 @@ Public Class frmExportacion
     Public Function unidadACombo() As Integer
         Dim clave As Integer
         Select Case mercancia.unidadAduana
-            Case 1
+            Case "01"
                 clave = 0
-            Case 2
+            Case "02"
                 clave = 1
-            Case 3
+            Case "03"
                 clave = 2
-            Case 4
+            Case "04"
                 clave = 3
-            Case 5
+            Case "05"
                 clave = 4
-            Case 6
+            Case "06"
                 clave = 5
-            Case 7
+            Case "07"
                 clave = 6
-            Case 8
+            Case "08"
                 clave = 7
-            Case 9
+            Case "09"
                 clave = 8
-            Case 10
+            Case "10"
                 clave = 9
-            Case 11
+            Case "11"
                 clave = 10
-            Case 12
+            Case "12"
                 clave = 11
-            Case 13
+            Case "13"
                 clave = 12
-            Case 14
+            Case "14"
                 clave = 13
-            Case 15
+            Case "15"
                 clave = 14
-            Case 16
+            Case "16"
                 clave = 15
-            Case 17
+            Case "17"
                 clave = 16
-            Case 18
+            Case "18"
                 clave = 17
-            Case 19
+            Case "19"
                 clave = 18
-            Case 20
+            Case "20"
                 clave = 19
-            Case 21
+            Case "21"
                 clave = 20
-            Case 99
+            Case "99"
                 clave = 21
         End Select
         Return clave
@@ -537,16 +537,15 @@ Public Class frmExportacion
         End If
     End Sub
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnPais.Click
-        Dim frm As New frmExportacionPaises()
-        frm.ShowDialog()
-        Dim codigo = frm.codigo
-        If codigo = "" Then
-            MsgBox("Debe seleccionar un país o introducir el código.")
-            destinatario_Pais.BackColor = Color.Red
-        Else
-            destinatario_Pais.BackColor = Color.White
-            destinatario_Pais.Text = codigo
+        Dim CSat = New dbCatalogosSat
+        CSat.IniciarMySQL(My.Settings.Servidor, My.Settings.DBUsuario, My.Settings.DBPassword, My.Settings.puertodb)
+        Dim fbc As New frmBuscadorCatalogosSat(5)
+        fbc.Cat = CSat
+        fbc.CerrarCon = True
+        If fbc.ShowDialog = Windows.Forms.DialogResult.OK Then
+            destinatario_Pais.Text = fbc.Clave
         End If
+        fbc.Dispose()
     End Sub
     Private Sub dgvMercancia_DoubleClick(sender As Object, e As EventArgs) Handles dgvMercancia.DoubleClick
         Try
@@ -687,16 +686,15 @@ Public Class frmExportacion
     End Sub
 
     Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
-        Dim frm As New frmExportacionPaises()
-        frm.ShowDialog()
-        Dim codigo = frm.codigo
-        If codigo = "" Then
-            MsgBox("Debe seleccionar un país o introducir el código.")
-            receptor_pais.BackColor = Color.Red
-        Else
-            receptor_pais.BackColor = Color.White
-            receptor_pais.Text = codigo
+        Dim CSat = New dbCatalogosSat
+        Csat.IniciarMySQL(My.Settings.Servidor, My.Settings.DBUsuario, My.Settings.DBPassword, My.Settings.puertodb)
+        Dim fbc As New frmBuscadorCatalogosSat(5)
+        fbc.Cat = CSat
+        fbc.CerrarCon = True
+        If fbc.ShowDialog = Windows.Forms.DialogResult.OK Then
+            receptor_pais.Text = fbc.Clave
         End If
+        fbc.Dispose()
     End Sub
 
     Private Sub txtIncoterm_SelectedIndexChanged(sender As Object, e As EventArgs) Handles txtIncoterm.SelectedIndexChanged
@@ -731,5 +729,9 @@ Public Class frmExportacion
         ElseIf txtIncoterm.SelectedIndex = 14 Then
             txt_incoterms.Text = "FRANCO A BORDO (PUERTO DE CARGA CONVENIDO)."
         End If
+    End Sub
+
+    Private Sub dgvMercancia_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvMercancia.CellContentClick
+
     End Sub
 End Class

@@ -86,7 +86,11 @@ Public Class dbComplementoIne
         If idContabilidadP <> "" Then
             IdCont = " IdContabilidad=""" + idContabilidadP + """"
         End If
-        xml += "<ine:INE xmlns:ine=""http://www.sat.gob.mx/ine"" Version=""1.1"" TipoProceso=""" + proceso + """ TipoComite=""" + comite + """" + IdCont + ">"
+        If proceso = "Ordinario" Then
+            xml += "<ine:INE xmlns:ine=""http://www.sat.gob.mx/ine"" Version=""1.1"" TipoProceso=""" + proceso + """ TipoComite=""" + comite + """" + IdCont + ">"
+        Else
+            xml += "<ine:INE xmlns:ine=""http://www.sat.gob.mx/ine"" Version=""1.1"" TipoProceso=""" + proceso + """" + IdCont + ">"
+        End If
         While dr1.Read()
             ids.Add(dr1("idtblcomplementoineentidad"))
             en.Add(dr1("entidad"))
@@ -97,7 +101,7 @@ Public Class dbComplementoIne
             aux = idsConta.listaClaves(ids(i))
             If proceso <> "Ordinario" Then
                 If comite <> "Ejecutivo Nacional" Then
-                    xml += "<ine:Entidad ClaveEntidad=""" + en(i) + """ ambito=""" + am(i) + """>"
+                    xml += "<ine:Entidad ClaveEntidad=""" + en(i) + """ Ambito=""" + am(i) + """>"
                 End If
             Else
                 If comite <> "Ejecutivo Nacional" Then
@@ -119,7 +123,11 @@ Public Class dbComplementoIne
 
     Public Function cadenaOriginal() As String
         Dim c As String = ""
-        c += "|" + version + "|" + proceso + "|" + comite + "|" + idContabilidadP + "|"
+        If proceso = "Ordinario" Then
+            c += "|" + version + "|" + proceso + "|" + comite + "|" + idContabilidadP + "|"
+        Else
+            c += "|" + version + "|" + proceso + "|" + idContabilidadP + "|"
+        End If
         Dim entidad As New dbComplementoIneEntidad(MySqlcon)
         Dim idsConta As New dbComplementoIneContabilidad(MySqlcon)
         Dim dr1 As MySql.Data.MySqlClient.MySqlDataReader

@@ -163,11 +163,11 @@
     Private Sub llenaDatosComplemento()
         comboProcesos.SelectedIndex = comboProcesos.Items.IndexOf(complemento.proceso)
         comboComite.SelectedIndex = comboComite.Items.IndexOf(complemento.comite)
-        comboAmbito.SelectedIndex = comboAmbito.Items.IndexOf(complemento.ambito)
         TextBox2.Text = complemento.idContabilidadP
         For Each s As String In comboEntidad.Items
             If entidadesINE.buscaComplementoEntidad(complemento.id, s) Then
                 comboEntidad.SelectedIndex = comboEntidad.Items.IndexOf(s)
+                comboAmbito.SelectedIndex = comboAmbito.Items.IndexOf(entidadesINE.ambito)
                 llenaGrid()
                 Exit For
             End If

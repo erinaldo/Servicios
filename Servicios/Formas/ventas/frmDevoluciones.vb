@@ -463,7 +463,7 @@
                             End If
                         Case 3
                             If IdRemision = 0 Then
-                                CadenaOriginali(pEstado)
+                                CadenaOriginali33(pEstado)
                             Else
                                 Imprimir(idDevolucion)
                             End If
@@ -1691,7 +1691,7 @@
         Dim MsgError As String = ""
 
        
-        Cadena = V.CreaCadenaOriginali33(idDevolucion, GlobalIdMoneda, "", "", "", 0, "")
+        Cadena = V.CreaCadenaOriginali33(idDevolucion, GlobalIdMoneda, "", GlobalIdEmpresa, "", 0, "")
 
         Dim Archivos As New dbSucursalesArchivos
         Archivos.DaRutaCER(V.IdSucursal, GlobalIdEmpresa, False)
@@ -1723,11 +1723,9 @@
         'Dim strXML As String = V.CreaXMLi(idDevolucion, GlobalIdMoneda, Sello, GlobalIdEmpresa)
 
         Dim strXML As String
-        If V.Fecha > FechaVerPunto2 And ActivaVerPunto2 Then
-            strXML = V.CreaXMLi32(idDevolucion, GlobalIdMoneda, Sello, GlobalIdEmpresa)
-        Else
-            strXML = V.CreaXMLi(idDevolucion, GlobalIdMoneda, Sello, GlobalIdEmpresa)
-        End If
+
+        strXML = V.CreaXMLi33(idDevolucion, GlobalIdMoneda, Sello, GlobalIdEmpresa, "", 0)
+
         Dim Bytes() As Byte = Enc.GetBytes(strXML)
         'Dim Os As New dbOpciones(MySqlcon)
         Dim S As New dbSucursales(V.IdSucursal, MySqlcon)
@@ -1739,7 +1737,7 @@
                 Dim Timbre As String
                 Dim sa As New dbSucursalesArchivos
                 sa.DaOpciones(GlobalIdEmpresa, True)
-                Timbre = Timbrar33(S.RFC, strXML, "", op._ApiKey, True, V.Serie, V.Folio, "Devolución", V.ID)
+                Timbre = Timbrar33(S.RFC, strXML, "", op._ApiKey, True, V.Folio, V.Serie, "Factura", V.ID)
                 If UCase(Timbre.Substring(0, 5)) <> "ERROR" Then
                     Dim xmldoc As New Xml.XmlDocument
                     en.GuardaArchivoTexto(RutaXmlTimbrado, Timbre, System.Text.Encoding.UTF8)

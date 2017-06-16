@@ -338,7 +338,7 @@
                         Remision.Serie = CajaG.Serie
                     End If
                     Remision.Comentario = ""
-                    Remision.Guardar(idCliente, Format(Date.Now, "yyyy/MM/dd"), Remision.Folio, 0, 0, idSucursal, Remision.Serie, 1, 2, IdCaja)
+                    Remision.Guardar(idCliente, Format(Date.Now, "yyyy/MM/dd"), Remision.Folio, 0, 0, idSucursal, Remision.Serie, 1, 2, IdCaja, "")
                     If CajaG.Maximo > 0 Then
                         If CajaG.Maximo < CajaG.CuantoEnCaja(IdCaja) Then
                             MsgBox("Efectivo en caja exedió $" + CajaG.Maximo.ToString("#,###,##0.00") + " , favor de hacer un retiro.", MsgBoxStyle.Exclamation, GlobalNombreApp)
@@ -871,7 +871,7 @@
                                                 S.QuitaSeriesARemision(IdDoc)
                                                 Re.RegresaInventario(IdDoc)
                                                 Re.DaTotal(IdDoc, Re.IdMoneda)
-                                                Re.Modificar(IdDoc, Re.Fecha, Re.Folio, Re.Desglosar, Re.Iva, Estados.Cancelada, Re.Serie, Re.TipodeCambio, Re.IdMoneda, Re.Subtototal, Re.TotalVenta, Re.IdCliente, Re.idForma, Re.IdVEndedor, "", 0, False, Re.idCaja)
+                                            Re.Modificar(IdDoc, Re.Fecha, Re.Folio, Re.Desglosar, Re.Iva, Estados.Cancelada, Re.Serie, Re.TipodeCambio, Re.IdMoneda, Re.Subtototal, Re.TotalVenta, Re.IdCliente, Re.idForma, Re.IdVEndedor, "", 0, False, Re.idCaja, "")
                                                 MsgBox("Cancelación exitosa.", MsgBoxStyle.OkOnly, GlobalNombreApp)
                                             End If
                                         Else
@@ -967,9 +967,9 @@
                             Dim NF As Integer
                             NF = Remision.DaNuevoFolio(Opc.SerieOc, Remision.IdSucursal)
                             If NF < Opc.FolioOc Then NF = Opc.FolioOc
-                            Remision.Modificar(Remision.ID, Remision.Fecha, NF, 0, 0, Estados.Guardada, Opc.SerieOc, Remision.TipodeCambio, Remision.IdMoneda, Remision.Subtototal, Remision.TotalVenta, idCliente, Idconcepto, IdVendedor, Remision.Comentario, 0, False, Remision.idCaja)
+                            Remision.Modificar(Remision.ID, Remision.Fecha, NF, 0, 0, Estados.Guardada, Opc.SerieOc, Remision.TipodeCambio, Remision.IdMoneda, Remision.Subtototal, Remision.TotalVenta, idCliente, Idconcepto, IdVendedor, Remision.Comentario, 0, False, Remision.idCaja, "")
                         Else
-                            Remision.Modificar(Remision.ID, Remision.Fecha, Remision.DaNuevoFolio(Remision.Serie, Remision.IdSucursal), 0, 0, Estados.Guardada, Remision.Serie, Remision.TipodeCambio, Remision.IdMoneda, Remision.Subtototal, Remision.TotalVenta, idCliente, Idconcepto, IdVendedor, Remision.Comentario, 0, False, Remision.idCaja)
+                            Remision.Modificar(Remision.ID, Remision.Fecha, Remision.DaNuevoFolio(Remision.Serie, Remision.IdSucursal), 0, 0, Estados.Guardada, Remision.Serie, Remision.TipodeCambio, Remision.IdMoneda, Remision.Subtototal, Remision.TotalVenta, idCliente, Idconcepto, IdVendedor, Remision.Comentario, 0, False, Remision.idCaja, "")
                         End If
                         Remision.ModificaInventario(Remision.ID, 0)
                         Dim TotalAgregado As Double = MetodosdePago.TotalAgregado(1, Remision.ID)
@@ -1038,9 +1038,9 @@
                                 Dim NF As Integer
                                 NF = Remision.DaNuevoFolio(Opc.SerieOc, Remision.IdSucursal)
                                 If NF < Opc.FolioOc Then NF = Opc.FolioOc
-                                Remision.Modificar(Remision.ID, Remision.Fecha, NF, 0, 0, Estados.Pendiente, Opc.SerieOc, Remision.TipodeCambio, Remision.IdMoneda, Remision.Subtototal, Remision.TotalVenta, idCliente, Idconcepto, IdVendedor, Remision.Comentario, 0, False, Remision.idCaja)
+                                Remision.Modificar(Remision.ID, Remision.Fecha, NF, 0, 0, Estados.Pendiente, Opc.SerieOc, Remision.TipodeCambio, Remision.IdMoneda, Remision.Subtototal, Remision.TotalVenta, idCliente, Idconcepto, IdVendedor, Remision.Comentario, 0, False, Remision.idCaja, "")
                             Else
-                                Remision.Modificar(Remision.ID, Remision.Fecha, Remision.DaNuevoFolio(Remision.Serie, Remision.IdSucursal), 0, 0, Estados.Pendiente, Remision.Serie, Remision.TipodeCambio, Remision.IdMoneda, Remision.Subtototal, Remision.TotalVenta, idCliente, Idconcepto, IdVendedor, Remision.Comentario, 0, False, Remision.idCaja)
+                                Remision.Modificar(Remision.ID, Remision.Fecha, Remision.DaNuevoFolio(Remision.Serie, Remision.IdSucursal), 0, 0, Estados.Pendiente, Remision.Serie, Remision.TipodeCambio, Remision.IdMoneda, Remision.Subtototal, Remision.TotalVenta, idCliente, Idconcepto, IdVendedor, Remision.Comentario, 0, False, Remision.idCaja, "")
                             End If
                         Else
                             MsgBox("No tiene permiso para realizar esta operación.", MsgBoxStyle.Information, GlobalNombreApp)

@@ -742,6 +742,7 @@ Partial Class frmVentasPagos
         Me.CheckBox5.TabIndex = 323
         Me.CheckBox5.Text = "Múltiples Clientes"
         Me.CheckBox5.UseVisualStyleBackColor = True
+        Me.CheckBox5.Visible = False
         '
         'frmVentasPagos
         '

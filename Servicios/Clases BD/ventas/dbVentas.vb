@@ -3505,12 +3505,13 @@ Public Class dbVentas
         Dim strMetodos As String = ""
         Dim MeP As New dbVentasAddMetodos(Comm.Connection)
         DR = MeP.ConsultaReader(0, ID)
-        DR.Read()
-        'If strMetodos <> "" Then strMetodos += ","
-        If DR("clavesat") < 1000 Then
-            strMetodos += Format(DR("clavesat"), "00")
-        Else
-            strMetodos += "NA"
+        If DR.Read() Then
+            'If strMetodos <> "" Then strMetodos += ","
+            If DR("clavesat") < 1000 Then
+                strMetodos += Format(DR("clavesat"), "00")
+            Else
+                strMetodos += "NA"
+            End If
         End If
         DR.Close()
         CO += strMetodos + "|"
@@ -3881,33 +3882,34 @@ Public Class dbVentas
             Dim strMetodos As String = ""
             Dim MeP As New dbVentasAddMetodos(Comm.Connection)
             DR = MeP.ConsultaReader(0, ID)
-            DR.Read()
+        If DR.Read() Then
             'While DR.Read()
-            If strMetodos <> "" Then strMetodos += ","
+            'If strMetodos <> "" Then strMetodos += ","
             If DR("clavesat") < 1000 Then
                 strMetodos += Format(DR("clavesat"), "00")
             Else
                 strMetodos += "NA"
             End If
-            'End While
-            DR.Close()
+        End If
+        'End While
+        DR.Close()
 
-            XMLDoc += "FormaPago=""" + strMetodos + """ "
+        XMLDoc += "FormaPago=""" + strMetodos + """ "
 
-            If NoCertificado <> "" Then XMLDoc += "NoCertificado=""" + NoCertificado + """ "
-            If Sucursal.RFC <> "SUL010720JN8" Then
-                XMLDoc += "Certificado=""" + en.Certificado64 + """ "
-            Else
-                XMLDoc += "Certificado="""" "
-            End If
-            'xmldoc+="CondicionesDePago="""""
-            If pEsEgreso = 0 Then
-                XMLDoc += "SubTotal=""" + Format(Subtototal + Descuento, "#0.00####") + """ "
-            Else
-                XMLDoc += "SubTotal=""" + Format(If(Subtototal + Descuento >= 0, Subtototal + Descuento, (Subtototal + Descuento) * -1), "#0.00####") + """ "
-            End If
+        If NoCertificado <> "" Then XMLDoc += "NoCertificado=""" + NoCertificado + """ "
+        If Sucursal.RFC <> "SUL010720JN8" Then
+            XMLDoc += "Certificado=""" + en.Certificado64 + """ "
+        Else
+            XMLDoc += "Certificado="""" "
+        End If
+        'xmldoc+="CondicionesDePago="""""
+        If pEsEgreso = 0 Then
+            XMLDoc += "SubTotal=""" + Format(Subtototal + Descuento, "#0.00####") + """ "
+        Else
+            XMLDoc += "SubTotal=""" + Format(If(Subtototal + Descuento >= 0, Subtototal + Descuento, (Subtototal + Descuento) * -1), "#0.00####") + """ "
+        End If
 
-            'If NoAprobacion <> "" Then XMLDoc += "noAprobacion=""" + NoAprobacion + """" + vbCrLf
+        'If NoAprobacion <> "" Then XMLDoc += "noAprobacion=""" + NoAprobacion + """" + vbCrLf
         'If YearAprobacion <> "" Then XMLDoc += "anoAprobacion=""" + YearAprobacion + """" + vbCrLf
         If Descuento + DescuentoG2 > 0 Then
             If pEsEgreso = 0 Then
@@ -4157,7 +4159,7 @@ Public Class dbVentas
             For Each ad As InfoAduana In AduanaCol
                 If ad.IdDetalle = DR("idventasinventario") Then
                     AduanaXML += "<cfdi:InformacionAduanera "
-                    AduanaXML += "NumeroPedimento=""" + ad.YValidacion + " " + ad.ClaveAduana + "  " + ad.Patente + "  " + ad.Numero + """/>"
+                    AduanaXML += "NumeroPedimento=""" + ad.YValidacion + "  " + ad.ClaveAduana + "  " + ad.Patente + "  " + ad.Numero + """/>"
                     AduanaCont += 1
                 End If
             Next

@@ -183,32 +183,7 @@
 
     End Sub
 
-    Private Sub DGDetalles_CellClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DGDetalles.CellClick
-        If e.RowIndex > -1 Then
-            'Label9.Text = DGDetalles.Item(0, e.RowIndex).Value.ToString + "|" + DGDetalles.Item(1, e.RowIndex).Value.ToString + "|" + DGDetalles.Item(2, e.RowIndex).Value.ToString + "|" + DGDetalles.Item(3, e.RowIndex).Value.ToString + "|" + DGDetalles.Item(4, e.RowIndex).Value.ToString + "|" + DGDetalles.Item(5, e.RowIndex).Value.ToString + "|" + DGDetalles.Item(6, e.RowIndex).Value.ToString + "|" + DGDetalles.Item(7, e.RowIndex).Value.ToString + "|" + DGDetalles.Item(8, e.RowIndex).Value.ToString + "|" + DGDetalles.Item(9, e.RowIndex).Value.ToString + "|" + DGDetalles.Item(10, e.RowIndex).Value.ToString
-            'IdVenta = DGDetalles.Item(0, e.RowIndex).Value
-            'If DGDetalles.Item(1, e.RowIndex).Value = 1 Then
-            '    DGDetalles.Item(1, e.RowIndex).Value = 0
-            'Else
-            '    DGDetalles.Item(1, e.RowIndex).Value = 1
-            'End If
-
-            ''Dim V As New dbVentas(IdVenta, MySqlcon)
-            'Dim R As Integer = 0
-            'Dim T As Double = 0
-            'While R < DGDetalles.RowCount
-            '    If DGDetalles.Item(1, R).Value = 1 Then
-            '        T += DGDetalles.Item(8, R).Value
-            '    End If
-            '    R += 1
-            'End While
-            'NuevoPago()
-            'ConsultaAbonos()
-            'TextBox1.Text = Format(T, "#0.00")
-            'TextBox1.Focus()
-
-        End If
-    End Sub
+  
 
     Private Sub ConsultaAbonos()
         Try
@@ -273,7 +248,7 @@
                 Dim HuboAbonos As Boolean = False
                 Dim Errores As Boolean = False
                 TotalaAbonar = CDbl(TextBox1.Text)
-                Eselectronica = Sf.EsElectronica
+                Eselectronica = GlobalTipoFacturacion
                 Folio = NC.DaNuevoFolio(Sf.Serie, IdsSucursales.Valor(ComboBox3.SelectedIndex))
                 If Folio < Sf.FolioInicial Then Folio = Sf.FolioInicial
                 If Folio > Sf.FolioFinal Then
@@ -300,37 +275,37 @@
                             End If
                             If AbonaTotal = False Then
                                 If DGDetalles.Item("tipo", R).Value = 0 Then
-                                    NCD.Guardar(idNota, 0, 1, DGDetalles.Item("Cantidad", R).Value, IdsMonedas.Valor(ComboBox1.SelectedIndex), TextBox2.Text, CDbl(TextBox5.Text), 0, DGDetalles.Item("idv", R).Value, 0, 0, "80141629", "ACT")
+                                    NCD.Guardar(idNota, 0, 1, DGDetalles.Item("Cantidad", R).Value, IdsMonedas.Valor(ComboBox1.SelectedIndex), TextBox2.Text, CDbl(TextBox5.Text), 0, DGDetalles.Item("idv", R).Value, 0, 0, "84111506", "ACT")
                                     If CheckBox4.Checked = False Then VP.Guardar(DGDetalles.Item("idv", R).Value, DGDetalles.Item("Cantidad", R).Value, Format(dtpFechaPago.Value, "yyyy/MM/dd"), TextBox2.Text + " Nota de Crédito-" + Sf.Serie + Format(Folio, Sf.Formato), IdCliente, idNota, 1, 0, CDbl(TextBox4.Text), IdsMonedas.Valor(ComboBox1.SelectedIndex), 0, 0, 4)
                                 End If
                                 If DGDetalles.Item("tipo", R).Value = 1 Then
-                                    NCD.Guardar(idNota, 1, 1, DGDetalles.Item("Cantidad", R).Value, IdsMonedas.Valor(ComboBox1.SelectedIndex), TextBox2.Text, CDbl(TextBox5.Text), 0, DGDetalles.Item("idv", R).Value, 0, 0, "80141629", "ACT")
+                                    NCD.Guardar(idNota, 1, 1, DGDetalles.Item("Cantidad", R).Value, IdsMonedas.Valor(ComboBox1.SelectedIndex), TextBox2.Text, CDbl(TextBox5.Text), 0, DGDetalles.Item("idv", R).Value, 0, 0, "84111506", "ACT")
                                     VP.Guardar(0, DGDetalles.Item("Cantidad", R).Value, Format(dtpFechaPago.Value, "yyyy/MM/dd"), TextBox2.Text + " Nota de Crédito-" + Sf.Serie + Format(Folio, Sf.Formato), IdCliente, idNota, 1, DGDetalles.Item("idv", R).Value, CDbl(TextBox4.Text), IdsMonedas.Valor(ComboBox1.SelectedIndex), 0, 1, 4)
                                 End If
                                 If DGDetalles.Item("tipo", R).Value = 2 Then
-                                    NCD.Guardar(idNota, 2, 1, DGDetalles.Item("Cantidad", R).Value, IdsMonedas.Valor(ComboBox1.SelectedIndex), TextBox2.Text, CDbl(TextBox5.Text), 0, DGDetalles.Item("idv", R).Value, 0, 0, "80141629", "ACT")
+                                    NCD.Guardar(idNota, 2, 1, DGDetalles.Item("Cantidad", R).Value, IdsMonedas.Valor(ComboBox1.SelectedIndex), TextBox2.Text, CDbl(TextBox5.Text), 0, DGDetalles.Item("idv", R).Value, 0, 0, "84111506", "ACT")
                                     VP.Guardar(0, DGDetalles.Item("Cantidad", R).Value, Format(dtpFechaPago.Value, "yyyy/MM/dd"), TextBox2.Text + " Nota de Crédito-" + Sf.Serie + Format(Folio, Sf.Formato), IdCliente, idNota, 1, 0, CDbl(TextBox4.Text), IdsMonedas.Valor(ComboBox1.SelectedIndex), DGDetalles.Item("idv", R).Value, 2, 4)
                                 End If
                                 If DGDetalles.Item("tipo", R).Value = 3 Then
-                                    NCD.Guardar(idNota, 3, 1, DGDetalles.Item("Cantidad", R).Value, IdsMonedas.Valor(ComboBox1.SelectedIndex), TextBox2.Text, CDbl(TextBox5.Text), 0, DGDetalles.Item("idv", R).Value, 0, 0, "80141629", "ACT")
+                                    NCD.Guardar(idNota, 3, 1, DGDetalles.Item("Cantidad", R).Value, IdsMonedas.Valor(ComboBox1.SelectedIndex), TextBox2.Text, CDbl(TextBox5.Text), 0, DGDetalles.Item("idv", R).Value, 0, 0, "84111506", "ACT")
                                     VP.Guardar(0, DGDetalles.Item("Cantidad", R).Value, Format(dtpFechaPago.Value, "yyyy/MM/dd"), TextBox2.Text + " Nota de Crédito-" + Sf.Serie + Format(Folio, Sf.Formato), IdCliente, idNota, 1, 0, CDbl(TextBox4.Text), IdsMonedas.Valor(ComboBox1.SelectedIndex), DGDetalles.Item("idv", R).Value, 3, 4)
                                 End If
                                 HuboAbonos = True
                             Else
                                 If DGDetalles.Item("tipo", R).Value = 0 Then
-                                    NCD.Guardar(idNota, 0, 1, DGDetalles.Item("restante2", R).Value, IdsMonedas.Valor(ComboBox1.SelectedIndex), TextBox2.Text, CDbl(TextBox5.Text), 0, DGDetalles.Item("idv", R).Value, 0, 0, "80141629", "ACT")
+                                    NCD.Guardar(idNota, 0, 1, DGDetalles.Item("restante2", R).Value, IdsMonedas.Valor(ComboBox1.SelectedIndex), TextBox2.Text, CDbl(TextBox5.Text), 0, DGDetalles.Item("idv", R).Value, 0, 0, "84111506", "ACT")
                                     If CheckBox4.Checked = False Then VP.Guardar(DGDetalles.Item("idv", R).Value, DGDetalles.Item("restante2", R).Value, Format(dtpFechaPago.Value, "yyyy/MM/dd"), TextBox2.Text + " Nota de Crédito-" + Sf.Serie + Format(Folio, Sf.Formato), IdCliente, idNota, 1, 0, CDbl(TextBox4.Text), IdsMonedas.Valor(ComboBox1.SelectedIndex), 0, 0, 4)
                                 End If
                                 If DGDetalles.Item("tipo", R).Value = 1 Then
-                                    NCD.Guardar(idNota, 1, 1, DGDetalles.Item("restante2", R).Value, IdsMonedas.Valor(ComboBox1.SelectedIndex), TextBox2.Text, CDbl(TextBox5.Text), 0, DGDetalles.Item("idv", R).Value, 0, 0, "80141629", "ACT")
+                                    NCD.Guardar(idNota, 1, 1, DGDetalles.Item("restante2", R).Value, IdsMonedas.Valor(ComboBox1.SelectedIndex), TextBox2.Text, CDbl(TextBox5.Text), 0, DGDetalles.Item("idv", R).Value, 0, 0, "84111506", "ACT")
                                     VP.Guardar(0, DGDetalles.Item("restante2", R).Value, Format(dtpFechaPago.Value, "yyyy/MM/dd"), TextBox2.Text + " Nota de Crédito-" + Sf.Serie + Format(Folio, Sf.Formato), IdCliente, idNota, 1, DGDetalles.Item("idv", R).Value, CDbl(TextBox4.Text), IdsMonedas.Valor(ComboBox1.SelectedIndex), 0, 1, 4)
                                 End If
                                 If DGDetalles.Item("tipo", R).Value = 2 Then
-                                    NCD.Guardar(idNota, 2, 1, DGDetalles.Item("restante2", R).Value, IdsMonedas.Valor(ComboBox1.SelectedIndex), TextBox2.Text, CDbl(TextBox5.Text), 0, DGDetalles.Item("idv", R).Value, 0, 0, "80141629", "ACT")
+                                    NCD.Guardar(idNota, 2, 1, DGDetalles.Item("restante2", R).Value, IdsMonedas.Valor(ComboBox1.SelectedIndex), TextBox2.Text, CDbl(TextBox5.Text), 0, DGDetalles.Item("idv", R).Value, 0, 0, "84111506", "ACT")
                                     VP.Guardar(0, DGDetalles.Item("restante2", R).Value, Format(dtpFechaPago.Value, "yyyy/MM/dd"), TextBox2.Text + " Nota de Crédito-" + Sf.Serie + Format(Folio, Sf.Formato), IdCliente, idNota, 1, 0, CDbl(TextBox4.Text), IdsMonedas.Valor(ComboBox1.SelectedIndex), DGDetalles.Item("idv", R).Value, 2, 4)
                                 End If
                                 If DGDetalles.Item("tipo", R).Value = 3 Then
-                                    NCD.Guardar(idNota, 3, 1, DGDetalles.Item("restante2", R).Value, IdsMonedas.Valor(ComboBox1.SelectedIndex), TextBox2.Text, CDbl(TextBox5.Text), 0, DGDetalles.Item("idv", R).Value, 0, 0, "80141629", "ACT")
+                                    NCD.Guardar(idNota, 3, 1, DGDetalles.Item("restante2", R).Value, IdsMonedas.Valor(ComboBox1.SelectedIndex), TextBox2.Text, CDbl(TextBox5.Text), 0, DGDetalles.Item("idv", R).Value, 0, 0, "84111506", "ACT")
                                     VP.Guardar(0, DGDetalles.Item("restante2", R).Value, Format(dtpFechaPago.Value, "yyyy/MM/dd"), TextBox2.Text + " Nota de Crédito-" + Sf.Serie + Format(Folio, Sf.Formato), IdCliente, idNota, 1, 0, CDbl(TextBox4.Text), IdsMonedas.Valor(ComboBox1.SelectedIndex), DGDetalles.Item("idv", R).Value, 3, 4)
                                 End If
                                 HuboAbonos = True
@@ -356,6 +331,8 @@
                                 CadenaOriginal()
                             Case 2
                                 CadenaOriginali(Estados.Guardada)
+                            Case 3
+                                CadenaOriginali33(Estados.Guardada)
                         End Select
                         GeneraPoliza()
                     End If
@@ -1030,6 +1007,132 @@
 
 
             'Error en timbrado
+        End If
+    End Sub
+
+    Private Sub CadenaOriginali33(ByVal pEstado As Byte)
+        Dim en As New Encriptador
+        Dim V As New dbNotasDeCredito(idNota, MySqlcon)
+        Dim RutaXmlTemp As String
+        Dim RutaXml As String
+        Dim RutaXmlTimbrado As String
+        Dim RutaPDF As String
+        Dim MsgError As String = ""
+        Cadena = V.CreaCadenaOriginali33(idNota, GlobalIdMoneda, "", GlobalIdEmpresa, "", 0, "")
+        Dim Archivos As New dbSucursalesArchivos
+        Archivos.DaRutaCER(V.IdSucursal, GlobalIdEmpresa, False)
+        RutaXml = Archivos.DaRutaArchivos(V.IdSucursal, GlobalIdEmpresa, dbSucursalesArchivos.TipoRutas.NotasdeCreditoXML, False)
+        RutaPDF = Archivos.DaRutaArchivos(V.IdSucursal, GlobalIdEmpresa, dbSucursalesArchivos.TipoRutas.NotasdeCreditoPDF, False)
+        Archivos.CierraDB()
+        Sello = en.GeneraSello(Cadena, Archivos.RutaCer, Format(CDate(V.Fecha), "yyyy"), True)
+        IO.Directory.CreateDirectory(RutaPDF + "\" + Format(CDate(V.Fecha), "yyyy") + "\")
+        IO.Directory.CreateDirectory(RutaPDF + "\" + Format(CDate(V.Fecha), "yyyy") + "\" + Format(CDate(V.Fecha), "MM") + "\")
+        IO.Directory.CreateDirectory(RutaXml + "\" + Format(CDate(V.Fecha), "yyyy") + "\")
+        IO.Directory.CreateDirectory(RutaXml + "\" + Format(CDate(V.Fecha), "yyyy") + "\" + Format(CDate(V.Fecha), "MM") + "\")
+        RutaXmlTemp = RutaXml + "\" + Format(CDate(V.Fecha), "yyyy") + "\" + Format(CDate(V.Fecha), "MM") + "\PSSNOTADECREDITO-" + V.Serie + V.Folio.ToString + ".xml"
+        RutaXmlTimbrado = RutaXml + "\" + Format(CDate(V.Fecha), "yyyy") + "\" + Format(CDate(V.Fecha), "MM") + "\PSSNOTADECREDITO-" + V.Serie + V.Folio.ToString + ".xml"
+        RutaXml = RutaXml + "\" + Format(CDate(V.Fecha), "yyyy") + "\" + Format(CDate(V.Fecha), "MM") + "\PSSNOTADECREDITO-" + V.Serie + V.Folio.ToString + ".xml"
+
+        If Op._NoRutas = "0" Then
+            RutaPDF = RutaPDF + "\" + Format(CDate(V.Fecha), "yyyy") + "\" + Format(CDate(V.Fecha), "MM")
+        End If
+
+        Dim strXML As String
+        Dim Enc As New System.Text.UTF8Encoding
+        strXML = V.CreaXMLi33(idNota, GlobalIdMoneda, Sello, GlobalIdEmpresa, "", 0)
+        
+        en.GuardaArchivoTexto("temp.xml", strXML, System.Text.Encoding.UTF8)
+        Dim Bytes() As Byte = Enc.GetBytes(strXML)
+        'Dim Os As New dbOpciones(MySqlcon)
+        Dim S As New dbSucursales(V.IdSucursal, MySqlcon)
+        'en.GuardaArchivo(My.Settings.rutaxmlnc + "\" + Format(CDate(V.Fecha), "yyyy") + "\" + Format(CDate(V.Fecha), "MM") + "\XMLFacCFDI-" + V.Serie + V.Folio.ToString + ".xml", Bytes)
+        V.DaDatosTimbrado(idNota)
+        If (V.uuid = "**No Timbrado**" Or V.uuid = "") And pEstado = Estados.Guardada Then
+            If GlobalPacCFDI = 2 Then
+                Dim Os As New dbOpciones(MySqlcon)
+                en.GuardaArchivoTexto("temp.xml", strXML, System.Text.Encoding.UTF8)
+                Dim Timbre As String
+                Dim sa As New dbSucursalesArchivos
+                sa.DaOpciones(GlobalIdEmpresa, True)
+                Timbre = Timbrar33(S.RFC, strXML, "", Os._ApiKey, True, V.Serie, V.Folio, "NotadeCredito", V.ID)
+                If UCase(Timbre.Substring(0, 5)) <> "ERROR" Then
+                    Dim xmldoc As New Xml.XmlDocument
+                    en.GuardaArchivoTexto(RutaXmlTimbrado, Timbre, System.Text.Encoding.UTF8)
+                    xmldoc.Load(RutaXmlTimbrado)
+                    V.uuid = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("UUID").Value
+                    V.SelloCFD = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("SelloCFD").Value
+                    V.NoCertificadoSAT = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("NoCertificadoSAT").Value
+                    V.FechaTimbrado = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("FechaTimbrado").Value
+                    V.SelloSAT = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("SelloSAT").Value
+                    V.GuardaDatosTimbrado(idNota, V.uuid, V.FechaTimbrado, V.SelloCFD, V.NoCertificadoSAT, V.SelloSAT)
+                Else
+                    MsgError = Timbre
+                    V.NoCertificadoSAT = "Error"
+                End If
+            End If
+        Else
+            'Crear XML Timbrado
+            Dim ExisteArchivo As Boolean = False
+            If GlobalConector = 0 Then
+                If IO.File.Exists(RutaXml) Then ExisteArchivo = True
+            Else
+                If IO.File.Exists(RutaXmlTimbrado) Then ExisteArchivo = True
+            End If
+
+
+            If pEstado = Estados.Guardada And ExisteArchivo = False Then
+                Dim strTimbrado As String
+                strTimbrado = vbCrLf + "<cfdi:Complemento>" + vbCrLf
+                strTimbrado += "<tfd:TimbreFiscalDigital version=""1.0"" UUID=""" + V.uuid + """ FechaTimbrado=""" + V.FechaTimbrado + """ SelloCFD=""" + V.SelloCFD + """ NoCertificadoSAT=""" + V.NoCertificadoSAT + """ SelloSAT=""" + V.SelloSAT + """ />" + vbCrLf
+                strTimbrado += "</cfdi:Complemento>" + vbCrLf
+                strXML = strXML.Insert(strXML.LastIndexOf("</cfdi:Comprobante>"), strTimbrado)
+                If GlobalConector = 0 Then
+                    en.GuardaArchivoTexto(RutaXml, strXML, System.Text.Encoding.UTF8)
+                Else
+                    en.GuardaArchivoTexto(RutaXmlTimbrado, strXML, System.Text.Encoding.UTF8)
+                End If
+            End If
+        End If
+        'Dim op As New dbOpciones(MySqlcon)
+        If V.NoCertificadoSAT <> "Error" Then
+            Try
+                CadenaCFDI = "||1.0|" + V.uuid + "|" + V.FechaTimbrado + "|" + V.SelloCFD + "|" + V.NoCertificadoSAT + "||"
+                'PrintDocument1.DocumentName = "PSSNOTADECREDITO-" + V.Serie + V.Folio.ToString
+                Imprimir(V.ID)
+            Catch ex As Exception
+                MsgBox("Error al imprimir: " + ex.Message, MsgBoxStyle.Critical, GlobalNombreApp)
+            End Try
+
+            If V.Cliente.Email <> "" Then
+                Try
+                    If MsgBox("¿Enviar nota de crédito por correo electrónico?", MsgBoxStyle.YesNo, GlobalNombreApp) = MsgBoxResult.Yes Then
+                        If V.Cliente.Email <> "" Then
+                            Dim M As New MailManager(My.Settings.emailhost, My.Settings.emailfrom, My.Settings.emailusuario, My.Settings.emailpassword, My.Settings.emailpuerto, My.Settings.encriptacionssl)
+                            'Dim O As New dbOpciones(MySqlcon)
+                            Dim C As String
+                            C = "Eviado por: " + S.Nombre + vbNewLine + "RFC: " + S.RFC + vbNewLine + "NOTA DE CRÉDITO" + vbNewLine + "Folio: " + V.uuid + vbNewLine + vbNewLine
+                            C += Op.CorreoContenido
+                            If GlobalConector = 0 Then
+                                M.send("Comprobante Fiscal Digital por Internet Nota de Crédito: " + V.uuid, C, V.Cliente.Email, V.Cliente.Nombre, RutaPDF + "\PSSNOTADECREDITO-" + V.Serie + V.Folio.ToString + ".pdf", RutaXml)
+                            Else
+                                M.send("Comprobante Fiscal Digital por Internet Nota de Crédito: " + V.uuid, C, V.Cliente.Email, V.Cliente.Nombre, RutaPDF + "\PSSNOTADECREDITO-" + V.Serie + V.Folio.ToString + ".pdf", RutaXmlTimbrado)
+                            End If
+                        End If
+                    End If
+                Catch ex As Exception
+                    MsgBox("No puedo enviar el correo, verifique la configuración de correo o el correo del cliente." + vbCrLf + ex.Message, MsgBoxStyle.Critical, GlobalNombreApp)
+                End Try
+            End If
+        Else
+            MsgBox("Ha ocurrido un error en el timbrado del la nota de crédito, intente mas tarde.", MsgBoxStyle.Critical, GlobalNombreApp)
+            If MsgBox("¿Guardarla como pendiente? Si elige no; ésta se eliminará.", MsgBoxStyle.YesNo, GlobalNombreApp) = MsgBoxResult.Yes Then
+                V.ModificaEstado(idNota, Estados.Pendiente)
+            Else
+                V.Eliminar(idNota)
+                PopUp("Nota de Crédito Eliminada", 90)
+            End If
+
+            
         End If
     End Sub
     Private Sub LlenaNodosImpresion()

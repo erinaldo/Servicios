@@ -2171,7 +2171,7 @@
     End Function
 
     Public Function DaIvas(ByVal pIdNota As Integer) As MySql.Data.MySqlClient.MySqlDataReader
-        Comm.CommandText = "select iva,precio,idmoneda from tblnotasdecreditodetalles where idnota=" + pIdNota.ToString
+        Comm.CommandText = "select iva,ieps,ivaretenido,precio,idmoneda from tblnotasdecreditodetalles where idnota=" + pIdNota.ToString
         Return Comm.ExecuteReader
     End Function
     Public Sub Aplicar(ByVal pId As Integer, ByVal pCantidad As Double, ByVal pSuma As Boolean)
@@ -2609,20 +2609,20 @@
 
         'CO+="CondicionesDePago="""""
 
-        CO += Format(Subtotal, "#0.00####") + "|"
+        CO += Format(Subtotal - TotalIva - TotalIeps + TotalISR + TotalIvaRetenida, "#0.00") + "|"
 
         'Descuento CO+="0|"
         'Tipo deCambio nuevo
         If IdMoneda <> 2 Then
             Dim Moneda As New dbMonedas(IdMoneda, Comm.Connection)
             CO += Moneda.Abreviatura + "|"
-            CO += Format(TipodeCambio, "#0.00####") + "|"
+            CO += Format(TipodeCambio, "#0.00") + "|"
         Else
             CO += "MXN|"
         End If
 
 
-        CO += Format(TotalNota, "#0.00####") + "|"
+        CO += Format(TotalNota, "#0.00") + "|"
 
 
         'Dim CP As New dbVentasCartaPorte(ID, MySqlcon)
@@ -2679,17 +2679,19 @@
         DR = VI.ConsultaReader(ID)
         Dim PrecioTemp As Double = 0
         Dim ImpXML As String = ""
+        Dim PU As Double
+        Dim PT As Double
         While DR.Read
             'If DR("noimpimporte") <> 0 Then
             'PrecioTemp = DR("noimpimporte")
             'Else
             PrecioTemp = DR("precio")
+            
             'End If
             CO += DR("cproductoserv") + "|"
-            CO += Replace(Replace(Replace(Replace(Replace(DR("clave"), "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + "|"
             CO += DR("cantidad").ToString + "|"
             CO += DR("cunidad") + "|"
-            CO += Replace(Replace(Replace(Replace(Replace(DR("tipocantidad"), "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + "|"
+            CO += "ACT|"
             Dim Des As String
             Des = Trim(Replace(DR("descripcion"), vbCrLf, ""))
             While Des.IndexOf("  ") <> -1
@@ -2699,46 +2701,48 @@
             CO += Replace(Replace(Replace(Replace(Replace(Replace(Des, vbCrLf, ""), "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + "|"
 
             If DR("cantidad") <> 0 Then
-                CO += Format((PrecioTemp + DR("cdescuento")) / DR("cantidad"), "#0.00####") + "|"
-                CO += Format(PrecioTemp + DR("cdescuento"), "#0.00####") + "|"
+                PU = PrecioTemp / DR("cantidad")
+                PT = PrecioTemp
+                CO += Format((PU / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100)), "#0.00") + "|"
+                CO += Format((PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100)), "#0.00") + "|"
             Else
                 CO += "0.00|"
                 CO += "0.00|"
             End If
 
-            'If DR("cdescuento") <> 0 Then CO += Format(DR("cdescuento"), "#0.00####") + "|"
+            'If DR("cdescuento") <> 0 Then CO += Format(DR("cdescuento"), "#0.00") + "|"
             ImpXML = ""
             If DR("iva") <> 0 Or DR("ieps") <> 0 Or DR("ivaretenido") <> 0 Or ISR <> 0 Or IvaRetenido <> 0 Then
                 If DR("iva") <> 0 Or DR("ieps") <> 0 Then
                     If DR("iva") <> 0 Then
-                        ImpXML += Format(DR("precio"), "0.00####") + "|"
+                        ImpXML += Format((PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100)), "0.00") + "|"
                         ImpXML += "002|"
                         ImpXML += "Tasa|"
                         ImpXML += Format(DR("iva") / 100, "0.000000") + "|"
-                        ImpXML += Format(DR("precio") * DR("iva") / 100, "0.00####") + "|"
+                        ImpXML += Format((PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100)) * DR("iva") / 100, "0.00") + "|"
                     End If
                     If DR("ieps") <> 0 Then
-                        ImpXML += Format(DR("precio"), "0.00####") + "|"
+                        ImpXML += Format((PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100)), "0.00") + "|"
                         ImpXML += "003|"
                         ImpXML += "Tasa|"
                         ImpXML += Format(DR("ieps") / 100, "0.000000") + "|"
-                        ImpXML += Format(DR("precio") * DR("ieps") / 100, "0.00####") + "|"
+                        ImpXML += Format((PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100)) * DR("ieps") / 100, "0.00") + "|"
                     End If
                 End If
                 If ISR <> 0 Or DR("ivaretenido") <> 0 Or IvaRetenido <> 0 Then
                     If ISR <> 0 Then
-                        ImpXML += Format(DR("precio"), "0.00####") + "|"
+                        ImpXML += Format((PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100)), "0.00") + "|"
                         ImpXML += "001|"
                         ImpXML += "Tasa|"
                         ImpXML += Format(ISR / 100, "0.000000") + "|"
-                        ImpXML += Format(DR("precio") * ISR / 100, "0.00####") + "|"
+                        ImpXML += Format((PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100)) * ISR / 100, "0.00") + "|"
                     End If
                     If DR("ivaretenido") <> 0 Or IvaRetenido <> 0 Then
-                        ImpXML += Format(DR("precio"), "0.00####") + "|"
+                        ImpXML += Format((PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100)), "0.00") + "|"
                         ImpXML += "002|"
                         ImpXML += "Tasa|"
                         ImpXML += Format((DR("ivaretenido") + IvaRetenido) / 100, "0.000000") + "|"
-                        ImpXML += Format(DR("precio") * (DR("ivaretenido") + IvaRetenido) / 100, "0.00####") + "|"
+                        ImpXML += Format((PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100)) * (DR("ivaretenido") + IvaRetenido) / 100, "0.00") + "|"
                     End If
                 End If
             End If
@@ -2762,18 +2766,18 @@
                 If ISR <> 0 Then
                     CO += "001|"
                     If pEsEgreso = 0 Then
-                        CO += Format(TotalISR, "#0.00####") + "|"
+                        CO += Format(TotalISR, "#0.00") + "|"
                     Else
-                        CO += Format(If(TotalISR >= 0, TotalISR, TotalISR * -1), "#0.00####") + "|"
+                        CO += Format(If(TotalISR >= 0, TotalISR, TotalISR * -1), "#0.00") + "|"
                     End If
                 End If
                 If IvaRetenido <> 0 Then
                     CO += "002|"
-                    CO += Format(TotalIvaRetenida, "#0.00####") + "|"
+                    CO += Format(TotalIvaRetenida, "#0.00") + "|"
                 End If
 
                 If ISR <> 0 Or IvaRetenido <> 0 Then
-                    CO += Format(TotalISR + TotalIvaRetenida, "#0.00####") + "|"
+                    CO += Format(TotalISR + TotalIvaRetenida, "#0.00") + "|"
                 End If
             End If
             If TotalIva <> 0 Or TotalIeps <> 0 Then
@@ -2782,27 +2786,23 @@
                 Dim Diodescuento As Boolean = False
 
                 DR = DaIvas(ID)
-
+                'Dim IAnt As Double
+                Dim Desgloce As Double
                 While DR.Read
                     If Ivas.Contains(DR("iva").ToString) = False Then
                         Ivas.Add(DR("iva"), DR("iva").ToString)
                     End If
+
                     If IvasImporte.Contains(DR("iva").ToString) = False Then
-                        If DR("precio") > 0 And Diodescuento = False Then
-                            IvasImporte.Add((DR("precio")) * (DR("iva") / 100), DR("iva").ToString)
-                            Diodescuento = True
-                        Else
-                            IvasImporte.Add(DR("precio") * (DR("iva") / 100), DR("iva").ToString)
-                        End If
+                            PT = DR("precio")
+                        Desgloce = (PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100))
+                            IvasImporte.Add(Desgloce * DR("iva") / 100, DR("iva").ToString)
                     Else
                         IAnt = IvasImporte(DR("iva").ToString)
                         IvasImporte.Remove(DR("iva").ToString)
-                        If DR("precio") > 0 And Diodescuento = False Then
-                            IvasImporte.Add(IAnt + (DR("precio")) * (DR("iva") / 100), DR("iva").ToString)
-                            Diodescuento = True
-                        Else
-                            IvasImporte.Add(IAnt + DR("precio") * (DR("iva") / 100), DR("iva").ToString)
-                        End If
+                            PT = DR("precio")
+                        Desgloce = (PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100))
+                            IvasImporte.Add(IAnt + (Desgloce * DR("iva") / 100), DR("iva").ToString)
                     End If
                 End While
                 DR.Close()
@@ -2812,9 +2812,9 @@
                         CO += "Tasa|"
                         CO += Format(I / 100, "0.000000") + "|"
                         If pEsEgreso = 0 Then
-                            CO += Format(IvasImporte(I.ToString), "#0.00####") + "|"
+                            CO += Format(IvasImporte(I.ToString), "#0.00") + "|"
                         Else
-                            CO += Format(If(IvasImporte(I.ToString) >= 0, IvasImporte(I.ToString), IvasImporte(I.ToString) * -1), "#0.00####") + "|"
+                            CO += Format(If(IvasImporte(I.ToString) >= 0, IvasImporte(I.ToString), IvasImporte(I.ToString) * -1), "#0.00") + "|"
                         End If
                     End If
                 Next
@@ -2826,12 +2826,17 @@
                     If Ivas.Contains(DR("ieps").ToString) = False Then
                         Ivas.Add(DR("ieps"), DR("ieps").ToString)
                     End If
+
                     If IvasImporte.Contains(DR("ieps").ToString) = False Then
-                        IvasImporte.Add(DR("precio") * (DR("ieps") / 100), DR("ieps").ToString)
+                        PT = DR("precio")
+                        Desgloce = (PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100))
+                        IvasImporte.Add(Desgloce * DR("ieps") / 100, DR("ieps").ToString)
                     Else
                         IAnt = IvasImporte(DR("ieps").ToString)
                         IvasImporte.Remove(DR("ieps").ToString)
-                        IvasImporte.Add(IAnt + (DR("precio") * (DR("ieps") / 100)), DR("ieps").ToString)
+                        PT = DR("precio")
+                        Desgloce = (PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100))
+                        IvasImporte.Add(IAnt + (Desgloce * DR("ieps") / 100), DR("ieps").ToString)
                     End If
                 End While
                 DR.Close()
@@ -2841,16 +2846,16 @@
                         CO += "Tasa|"
                         CO += Format(I / 100, "0.000000") + "|"
                         If pEsEgreso = 0 Then
-                            CO += Format(IvasImporte(I.ToString), "#0.00####") + "|"
+                            CO += Format(IvasImporte(I.ToString), "#0.00") + "|"
                         Else
-                            CO += Format(If(IvasImporte(I.ToString) >= 0, IvasImporte(I.ToString), IvasImporte(I.ToString) * -1), "#0.00####") + "|"
+                            CO += Format(If(IvasImporte(I.ToString) >= 0, IvasImporte(I.ToString), IvasImporte(I.ToString) * -1), "#0.00") + "|"
                         End If
                     End If
                 Next
 
 
                 If TotalIva <> 0 Or TotalIeps <> 0 Then
-                    CO += Format(TotalIva + TotalIeps, "#0.00####") + "|"
+                    CO += Format(TotalIva + TotalIeps, "#0.00") + "|"
                 End If
 
 
@@ -2860,18 +2865,18 @@
 
         'If ImpLocales.Count > 0 Then
         '    If pEsEgreso = 0 Then
-        '        CO += "1.0|" + Format(TotalRetLocal, "#0.00####") + "|" + Format(TotalTrasLocal, "#0.00####") + "|"
+        '        CO += "1.0|" + Format(TotalRetLocal, "#0.00") + "|" + Format(TotalTrasLocal, "#0.00") + "|"
         '    Else
-        '        CO += "1.0|" + Format(If(TotalRetLocal >= 0, TotalRetLocal, TotalRetLocal * -1), "#0.00####") + "|" + Format(If(TotalTrasLocal >= 0, TotalTrasLocal, TotalTrasLocal * -1), "#0.00####") + "|"
+        '        CO += "1.0|" + Format(If(TotalRetLocal >= 0, TotalRetLocal, TotalRetLocal * -1), "#0.00") + "|" + Format(If(TotalTrasLocal >= 0, TotalTrasLocal, TotalTrasLocal * -1), "#0.00") + "|"
         '    End If
         '    For Each Im As Implocal In ImpLocales
         '        If Im.Tipo = 1 Then
-        '            CO += Im.Nombre + "|" + Format(Im.Tasa, "#0.00####") + "|" + Format(Im.Importe, "#0.00####") + "|"
+        '            CO += Im.Nombre + "|" + Format(Im.Tasa, "#0.00") + "|" + Format(Im.Importe, "#0.00") + "|"
         '        Else
         '            If pEsEgreso = 0 Then
-        '                CO += Im.Nombre + "|" + Format(Im.Tasa, "#0.00####") + "|" + Format(Im.Importe, "#0.00####") + "|"
+        '                CO += Im.Nombre + "|" + Format(Im.Tasa, "#0.00") + "|" + Format(Im.Importe, "#0.00") + "|"
         '            Else
-        '                CO += Im.Nombre + "|" + Format(Im.Tasa, "#0.00####") + "|" + Format(If(Im.Importe >= 0, Im.Importe, Im.Importe * -1), "#0.00####") + "|"
+        '                CO += Im.Nombre + "|" + Format(Im.Tasa, "#0.00") + "|" + Format(If(Im.Importe >= 0, Im.Importe, Im.Importe * -1), "#0.00") + "|"
         '            End If
         '        End If
         '    Next
@@ -2948,16 +2953,16 @@
         End If
         'xmldoc+="CondicionesDePago="""""
 
-        XMLDoc += "SubTotal=""" + Format(Subtotal, "#0.00####") + """ "
+        XMLDoc += "SubTotal=""" + Format(Subtotal - TotalIva - TotalIeps + TotalISR + TotalIvaRetenida, "#0.00") + """ "
 
 
         'If NoAprobacion <> "" Then XMLDoc += "noAprobacion=""" + NoAprobacion + """" + vbCrLf
         'If YearAprobacion <> "" Then XMLDoc += "anoAprobacion=""" + YearAprobacion + """" + vbCrLf
         'If Descuento + DescuentoG2 > 0 Then
         '    If pEsEgreso = 0 Then
-        '        XMLDoc += "Descuento=""" + Format(Descuento + DescuentoG2, "#0.00####") + """ "
+        '        XMLDoc += "Descuento=""" + Format(Descuento + DescuentoG2, "#0.00") + """ "
         '    Else
-        '        XMLDoc += "Descuento=""" + Format(If(Descuento + DescuentoG2 >= 0, Descuento + DescuentoG2, (Descuento + DescuentoG2) * -1), "#0.00####") + """ "
+        '        XMLDoc += "Descuento=""" + Format(If(Descuento + DescuentoG2 >= 0, Descuento + DescuentoG2, (Descuento + DescuentoG2) * -1), "#0.00") + """ "
         '    End If
         'End If
 
@@ -2965,12 +2970,12 @@
         If IdMoneda <> 2 Then
             Dim Moneda As New dbMonedas(IdMoneda, Comm.Connection)
             XMLDoc += "Moneda=""" + Moneda.Abreviatura + """ "
-            XMLDoc += "TipoCambio=""" + Format(TipodeCambio, "#0.00####") + """ "
+            XMLDoc += "TipoCambio=""" + Format(TipodeCambio, "#0.00") + """ "
         Else
             XMLDoc += "Moneda=""MXN"" "
         End If
 
-        XMLDoc += "Total=""" + Format(TotalNota, "#0.00####") + """ "
+        XMLDoc += "Total=""" + Format(TotalNota, "#0.00") + """ "
         XMLDoc += "TipoDeComprobante=""E"" "
         XMLDoc += "MetodoPago=""PUE"" "
 
@@ -3033,25 +3038,22 @@
         'End While
         'DR.Close()
         ''End If
-
+        Dim PU As Double
+        Dim PT As Double
 
         Dim VI As New dbNotasDeCreditoDetalles(MySqlcon)
         DR = VI.ConsultaReader(ID)
         Dim PrecioTemp As Double = 0
         Dim ImpXML As String = ""
         While DR.Read
-            If DR("noimpimporte") <> 0 Then
-                PrecioTemp = DR("noimpimporte")
-            Else
-                PrecioTemp = DR("precio")
-            End If
+
+            PrecioTemp = DR("precio")
             'If DR("cantidad") <> 0 And PrecioTemp <> 0 Then
             XMLDoc += "<cfdi:Concepto "
             XMLDoc += "ClaveProdServ=""" + DR("cproductoserv") + """ "
-            XMLDoc += "NoIdentificacion=""" + Replace(Replace(Replace(Replace(Replace(DR("clave"), "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
             XMLDoc += "Cantidad=""" + DR("cantidad").ToString + """ "
             XMLDoc += "ClaveUnidad=""" + DR("cunidad") + """ "
-            XMLDoc += "Unidad=""" + Replace(Replace(Replace(Replace(Replace(DR("tipocantidad"), "&", "&amp;"), ">", "&gt"), "<", "&lt;"), """", "&quot;"), "'", "&apos;") + """ "
+            XMLDoc += "Unidad=""ACT"" "
             Dim Des As String
             Des = Trim(Replace(DR("descripcion"), vbCrLf, ""))
             While Des.IndexOf("  ") <> -1
@@ -3066,14 +3068,18 @@
             'Else
 
             If DR("cantidad") <> 0 Then
-                XMLDoc += "ValorUnitario=""" + Format((PrecioTemp + DR("cdescuento")) / DR("cantidad"), "#0.00####") + """ "
-                XMLDoc += "Importe=""" + Format(PrecioTemp + DR("cdescuento"), "#0.00####") + """ "
+                PU = PrecioTemp / DR("cantidad")
+                PT = PrecioTemp
+                XMLDoc += "ValorUnitario=""" + Format((PU / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100)), "#0.00") + """ "
+                XMLDoc += "Importe=""" + Format((PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100)), "#0.00") + """ "
+
+                
             Else
                 XMLDoc += "ValorUnitario=""0.00"" "
                 XMLDoc += "Importe=""0.00"" "
             End If
-            
-            'If DR("cdescuento") <> 0 Then XMLDoc += "Descuento=""" + Format(DR("cdescuento"), "#0.00####") + """ "
+
+            'If DR("cdescuento") <> 0 Then XMLDoc += "Descuento=""" + Format(DR("cdescuento"), "#0.00") + """ "
             ImpXML = ""
             If DR("iva") <> 0 Or DR("ieps") <> 0 Or DR("ivaretenido") <> 0 Or ISR <> 0 Or IvaRetenido <> 0 Then
                 ImpXML += "<cfdi:Impuestos>"
@@ -3081,19 +3087,19 @@
                     ImpXML += "<cfdi:Traslados>"
                     If DR("iva") <> 0 Then
                         ImpXML += "<cfdi:Traslado "
-                        ImpXML += "Base=""" + Format(DR("precio"), "0.00####") + """ "
+                        ImpXML += "Base=""" + Format((PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100)), "#0.00") + """ "
                         ImpXML += "Impuesto=""002"" "
                         ImpXML += "TipoFactor=""Tasa"" "
                         ImpXML += "TasaOCuota=""" + Format(DR("iva") / 100, "0.000000") + """ "
-                        ImpXML += "Importe=""" + Format((DR("precio")) * DR("iva") / 100, "0.00####") + """/>"
+                        ImpXML += "Importe=""" + Format((PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100)) * DR("iva") / 100, "0.00") + """/>"
                     End If
                     If DR("ieps") <> 0 Then
                         ImpXML += "<cfdi:Traslado "
-                        ImpXML += "Base=""" + Format(DR("precio"), "0.00####") + """ "
+                        ImpXML += "Base=""" + Format((PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100)), "#0.00") + """ "
                         ImpXML += "Impuesto=""003"" "
                         ImpXML += "TipoFactor=""Tasa"" "
                         ImpXML += "TasaOCuota=""" + Format(DR("ieps") / 100, "0.000000") + """ "
-                        ImpXML += "Importe=""" + Format((DR("precio")) * DR("ieps") / 100, "0.00####") + """/>"
+                        ImpXML += "Importe=""" + Format((PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100)) * DR("ieps") / 100, "0.00") + """/>"
                     End If
                     ImpXML += "</cfdi:Traslados>"
                 End If
@@ -3101,31 +3107,29 @@
                     ImpXML += "<cfdi:Retenciones>"
                     If ISR <> 0 Then
                         ImpXML += "<cfdi:Retencion "
-                        ImpXML += "Base=""" + Format(DR("precio"), "0.00####") + """ "
+                        ImpXML += "Base=""" + Format((PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100)), "#0.00") + """ "
                         ImpXML += "Impuesto=""001"" "
                         ImpXML += "TipoFactor=""Tasa"" "
                         ImpXML += "TasaOCuota=""" + Format(ISR / 100, "0.000000") + """ "
-                        ImpXML += "Importe=""" + Format(DR("precio") * ISR / 100, "0.00####") + """/>"
+                        ImpXML += "Importe=""" + Format((PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100)) * ISR / 100, "0.00") + """/>"
                     End If
                     If DR("ivaretenido") <> 0 Or IvaRetenido Then
                         ImpXML += "<cfdi:Retencion "
-                        ImpXML += "Base=""" + Format(DR("precio"), "0.00####") + """ "
+                        ImpXML += "Base=""" + Format((PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100)), "#0.00") + """ "
                         ImpXML += "Impuesto=""002"" "
                         ImpXML += "TipoFactor=""Tasa"" "
                         ImpXML += "TasaOCuota=""" + Format((DR("ivaretenido") + IvaRetenido) / 100, "0.000000") + """ "
-                        ImpXML += "Importe=""" + Format(DR("precio") * (DR("ivaretenido") + IvaRetenido) / 100, "0.00####") + """/>"
+                        ImpXML += "Importe=""" + Format((PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100)) * (DR("ivaretenido") + IvaRetenido) / 100, "0.00") + """/>"
                     End If
                     ImpXML += "</cfdi:Retenciones>"
                 End If
                 ImpXML += "</cfdi:Impuestos>"
             End If
-
-            
-            'If AduanaCont = 0 And ImpXML = "" Then
-            XMLDoc += "/> "
-            'Else
-            'XMLDoc += ">" + ImpXML + AduanaXML + PredialXML + "</cfdi:Concepto>"
-            'End If
+            If ImpXML = "" Then
+                XMLDoc += "/> "
+            Else
+                XMLDoc += ">" + ImpXML + "</cfdi:Concepto>"
+            End If
             'End If
 
 
@@ -3141,10 +3145,10 @@
 
             XMLDoc += "<cfdi:Impuestos "
             If ISR <> 0 Or IvaRetenido <> 0 Then
-                XMLDoc += "TotalImpuestosRetenidos=""" + Format(TotalISR + TotalIvaRetenida, "#0.00####") + """ "
+                XMLDoc += "TotalImpuestosRetenidos=""" + Format(TotalISR + TotalIvaRetenida, "#0.00") + """ "
             End If
             If TotalIva <> 0 Or TotalIeps <> 0 Then
-                XMLDoc += "TotalImpuestosTrasladados=""" + Format(TotalIva + TotalIeps, "#0.00####") + """ "
+                XMLDoc += "TotalImpuestosTrasladados=""" + Format(TotalIva + TotalIeps, "#0.00") + """ "
             End If
 
             XMLDoc += ">"
@@ -3153,16 +3157,16 @@
                 If ISR <> 0 Then
                     XMLDoc += "<cfdi:Retencion Impuesto=""001"" "
                     If pEsEgreso = 0 Then
-                        XMLDoc += "Importe=""" + Format(TotalISR, "#0.00####") + """/>"
+                        XMLDoc += "Importe=""" + Format(TotalISR, "#0.00") + """/>"
                     Else
-                        XMLDoc += "Importe=""" + Format(If(TotalISR >= 0, TotalISR, TotalISR * -1), "#0.00####") + """/>"
+                        XMLDoc += "Importe=""" + Format(If(TotalISR >= 0, TotalISR, TotalISR * -1), "#0.00") + """/>"
                     End If
                 End If
 
                 If IvaRetenido <> 0 Then
                     XMLDoc += "<cfdi:Retencion Impuesto=""002"" "
 
-                    XMLDoc += "Importe=""" + Format(TotalIvaRetenida, "#0.00####") + """/>"
+                    XMLDoc += "Importe=""" + Format(TotalIvaRetenida, "#0.00") + """/>"
                 End If
 
                 XMLDoc += "</cfdi:Retenciones>"
@@ -3176,16 +3180,22 @@
 
                 DR = DaIvas(ID)
 
+                Dim Desgloce As Double
                 While DR.Read
                     If Ivas.Contains(DR("iva").ToString) = False Then
                         Ivas.Add(DR("iva"), DR("iva").ToString)
                     End If
+
                     If IvasImporte.Contains(DR("iva").ToString) = False Then
-                        IvasImporte.Add(DR("precio") * (DR("iva") / 100), DR("iva").ToString)
+                        PT = DR("precio")
+                        Desgloce = (PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100))
+                        IvasImporte.Add(Desgloce * DR("iva") / 100, DR("iva").ToString)
                     Else
                         IAnt = IvasImporte(DR("iva").ToString)
                         IvasImporte.Remove(DR("iva").ToString)
-                        IvasImporte.Add(IAnt + DR("precio") * (DR("iva") / 100), DR("iva").ToString)
+                        PT = DR("precio")
+                        Desgloce = (PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100))
+                        IvasImporte.Add(IAnt + (Desgloce * DR("iva") / 100), DR("iva").ToString)
                     End If
                 End While
                 DR.Close()
@@ -3195,9 +3205,9 @@
                         XMLDoc += "TipoFactor=""Tasa"" "
                         XMLDoc += "TasaOCuota=""" + Format(I / 100, "0.000000") + """ "
                         If pEsEgreso = 0 Then
-                            XMLDoc += "Importe=""" + Format(IvasImporte(I.ToString), "#0.00####") + """ />"
+                            XMLDoc += "Importe=""" + Format(IvasImporte(I.ToString), "#0.00") + """ />"
                         Else
-                            XMLDoc += "Importe=""" + Format(If(IvasImporte(I.ToString) >= 0, IvasImporte(I.ToString), IvasImporte(I.ToString) * -1), "#0.00####") + """ />"
+                            XMLDoc += "Importe=""" + Format(If(IvasImporte(I.ToString) >= 0, IvasImporte(I.ToString), IvasImporte(I.ToString) * -1), "#0.00") + """ />"
                         End If
                     End If
                 Next
@@ -3209,17 +3219,17 @@
                     If Ivas.Contains(DR("ieps").ToString) = False Then
                         Ivas.Add(DR("ieps"), DR("ieps").ToString)
                     End If
+
                     If IvasImporte.Contains(DR("ieps").ToString) = False Then
-
-                        IvasImporte.Add(DR("precio") * (DR("ieps") / 100), DR("ieps").ToString)
-
+                        PT = DR("precio")
+                        Desgloce = (PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100))
+                        IvasImporte.Add(Desgloce * DR("ieps") / 100, DR("ieps").ToString)
                     Else
                         IAnt = IvasImporte(DR("ieps").ToString)
                         IvasImporte.Remove(DR("ieps").ToString)
-
-                        IvasImporte.Add(IAnt + (DR("precio") * (DR("ieps") / 100)), DR("ieps").ToString)
-
-
+                        PT = DR("precio")
+                        Desgloce = (PT / (1 + (DR("iva") + DR("ieps") - ISR - IvaRetenido) / 100))
+                        IvasImporte.Add(IAnt + (Desgloce * DR("ieps") / 100), DR("ieps").ToString)
                     End If
                 End While
                 DR.Close()
@@ -3229,9 +3239,9 @@
                         XMLDoc += "TipoFactor=""Tasa"" "
                         XMLDoc += "TasaOCuota=""" + Format(I / 100, "0.000000") + """ "
                         If pEsEgreso = 0 Then
-                            XMLDoc += "Importe=""" + Format(IvasImporte(I.ToString), "#0.00####") + """ />"
+                            XMLDoc += "Importe=""" + Format(IvasImporte(I.ToString), "#0.00") + """ />"
                         Else
-                            XMLDoc += "Importe=""" + Format(If(IvasImporte(I.ToString) >= 0, IvasImporte(I.ToString), IvasImporte(I.ToString) * -1), "#0.00####") + """ />"
+                            XMLDoc += "Importe=""" + Format(If(IvasImporte(I.ToString) >= 0, IvasImporte(I.ToString), IvasImporte(I.ToString) * -1), "#0.00") + """ />"
                         End If
                     End If
                 Next
@@ -3244,11 +3254,11 @@
 
     End Function
     Public Function DaIvasIEPS(ByVal pId As Integer) As MySql.Data.MySqlClient.MySqlDataReader
-        Comm.CommandText = "select ieps,precio,idmoneda from tblnotasdecreditodetalles where idnota=" + pId.ToString
+        Comm.CommandText = "select ieps,precio,iva,ivaretenido,idmoneda from tblnotasdecreditodetalles where idnota=" + pId.ToString + " and ieps<>0"
         Return Comm.ExecuteReader
     End Function
     Public Function DaIvasUUIDS(ByVal pId As Integer) As MySql.Data.MySqlClient.MySqlDataReader
-        Comm.CommandText = "select vt.uuid from tblnotasdecreditodetalles nd inner join tblventastimbrado vt where nd.idventa=vt.idventa where vt.idnota=" + pId.ToString
+        Comm.CommandText = "select vt.uuid from tblnotasdecreditodetalles nd inner join tblventastimbrado vt on nd.idventa=vt.idventa where nd.idnota=" + pId.ToString
         Return Comm.ExecuteReader
     End Function
 End Class

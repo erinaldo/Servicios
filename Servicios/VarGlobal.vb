@@ -21,8 +21,8 @@ Module VarGlobal
     Public GlobalIdMoneda As Integer
     Public GlobalTipoCosteo As Byte
     Public GlobalNombreApp As String = "Pull Admin - Pull System Soft"
-    Public Version As String = "0.9.037 rev 28"
-    Public VersionDB As String = "00903727"
+    Public Version As String = "0.9.037 rev 29"
+    Public VersionDB As String = "00903728"
     Public GlobalTipoFacturacion As Byte
     Public GlobalDireccionTimbrado As String
     Public GlobalPacCFDI As Byte
@@ -130,8 +130,8 @@ Module VarGlobal
         <Description("Ventas - Apartado")> VentasApartados = 33
 
         <Description("Compra - Factura")> Compra = 7
-        <Description("Compra - Orden de compra")> CompraCotizacion = 8
-        <Description("Compra - Pedido")> CompraPedido = 9
+        <Description("Compra - Pre Orden")> CompraCotizacion = 8
+        <Description("Compra - Orden de Compra")> CompraPedido = 9
         <Description("Compra - Remisión")> CompraRemision = 10
         <Description("Compra - Devolución")> CompraDevolucion = 11
         <Description("Compra - Nota de crédito")> CompraNotadeCredito = 12
@@ -160,7 +160,7 @@ Module VarGlobal
         <Description("Semillas - Boleta")> SemillasBoleta = 45
         <Description("Semillas - Liquidación")> SemillasLiquidacion = 46
         <Description("Semillas - Comprobante")> SemillasComprobante = 47
-
+        <Description("Complemento Pagos")> ComplementoPagos = 51
         <Description("Gastos")> Gastos = 199
         <Description("PDF")> PDF = 200
     End Enum

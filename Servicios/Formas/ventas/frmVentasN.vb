@@ -94,6 +94,7 @@ Public Class frmVentasN
     Dim CSat As dbCatalogosSat
     Dim xSat As New elemento
     Dim Descontando As Boolean = True
+    Dim Contenido As Double
     Public Sub New(ByVal pidVenta As Integer, ByVal pFuncion As Byte, ByVal pImporte As Double, ByVal pidCliente As Integer)
 
         ' This call is required by the Windows Form Designer.
@@ -1582,12 +1583,12 @@ Public Class frmVentasN
                             IDe.Dispose()
                         End If
                         If PorLotes = 1 Then
-                            Dim F As New frmInventarioLotes(IdDetalle, 0, 0, 0, CDbl(TextBox5.Text), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
+                            Dim F As New frmInventarioLotes(IdDetalle, 0, 0, 0, Math.Round(CDbl(TextBox5.Text) / Contenido, 4), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
                             F.ShowDialog()
                             F.Dispose()
                         End If
                         If Aduana = 1 Then
-                            Dim F As New frmInventarioAduana(IdDetalle, 0, 0, 0, CDbl(TextBox5.Text), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
+                            Dim F As New frmInventarioAduana(IdDetalle, 0, 0, 0, Math.Round(CDbl(TextBox5.Text) / Contenido, 4), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
                             F.ShowDialog()
                             F.Dispose()
                         End If
@@ -1624,12 +1625,12 @@ Public Class frmVentasN
                             IDe.Dispose()
                         End If
                         If PorLotes = 1 Then
-                            Dim F As New frmInventarioLotes(IdDetalle, 0, 0, 0, CDbl(TextBox5.Text), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
+                            Dim F As New frmInventarioLotes(IdDetalle, 0, 0, 0, Math.Round(CDbl(TextBox5.Text) / Contenido, 4), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
                             F.ShowDialog()
                             F.Dispose()
                         End If
                         If Aduana = 1 Then
-                            Dim F As New frmInventarioAduana(IdDetalle, 0, 0, 0, CDbl(TextBox5.Text), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
+                            Dim F As New frmInventarioAduana(IdDetalle, 0, 0, 0, Math.Round(CDbl(TextBox5.Text) / Contenido, 4), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
                             F.ShowDialog()
                             F.Dispose()
                         End If
@@ -1690,6 +1691,7 @@ Public Class frmVentasN
             PrecioNeto = CD.Inventario.PrecioNeto
             UsaFormula = CD.Inventario.UsaFormula
             CostoArticulo = CD.Inventario.CostoBase
+            Contenido = CD.Inventario.Contenido
             If CD.Inventario.Contenido > 1 Then
                 CostoArticulo = CostoArticulo / CD.Inventario.Contenido
             End If
@@ -2071,6 +2073,7 @@ Public Class frmVentasN
         PrecioU = Math.Round(a.Precio, 2)
         PrecioBase = Math.Round(a.Precio, 2) 'a.Precio
         CostoArticulo = Articulo.CostoBase
+        Contenido = Articulo.Contenido
         If Articulo.Contenido > 1 Then
             CostoArticulo = CostoArticulo / Articulo.Contenido
         End If
@@ -4905,7 +4908,7 @@ Public Class frmVentasN
 
     Private Sub Button25_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button25.Click
         If Aduana = 1 Then
-            Dim F As New frmInventarioAduana(IdDetalle, 0, 0, 0, CDbl(TextBox5.Text), IdInventario, 1, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
+            Dim F As New frmInventarioAduana(IdDetalle, 0, 0, 0, Math.Round(CDbl(TextBox5.Text) / Contenido, 4), IdInventario, 1, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
             If F.HayViejaAduana(IdDetalle) = False Then
                 F.ShowDialog()
                 F.Dispose()
@@ -5114,7 +5117,7 @@ Public Class frmVentasN
 
     Private Sub Button28_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button28.Click
         If PorLotes = 1 Then
-            Dim F As New frmInventarioLotes(IdDetalle, 0, 0, 0, CDbl(TextBox5.Text), IdInventario, 1, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
+            Dim F As New frmInventarioLotes(IdDetalle, 0, 0, 0, Math.Round(CDbl(TextBox5.Text) / Contenido, 4), IdInventario, 1, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
             F.ShowDialog()
             F.Dispose()
         End If

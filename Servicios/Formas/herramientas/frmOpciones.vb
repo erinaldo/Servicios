@@ -476,6 +476,11 @@
         TextBox7.Text = SA.DaImpresoraPorTipo(pidSucursal, GlobalIdEmpresa, False, 1, TiposDocumentos.RestauranteTicket)
         If SA.Activa = 1 Then RadioButton53.Checked = True
 
+        TextBox27.Text = SA.DaImpresoraPorTipo(pidSucursal, GlobalIdEmpresa, False, 0, TiposDocumentos.ComplementoPagos)
+        If SA.Activa = 1 Then RadioButton56.Checked = True
+        TextBox26.Text = SA.DaImpresoraPorTipo(pidSucursal, GlobalIdEmpresa, False, 1, TiposDocumentos.ComplementoPagos)
+        If SA.Activa = 1 Then RadioButton55.Checked = True
+
         SA.CierraDB()
     End Sub
     Private Sub GuardaImpresoras(ByVal pidSucursal As Integer)
@@ -657,6 +662,13 @@
         Act = 0
         If RadioButton53.Checked Then Act = 1
         SA.GuardaImpresora(1, pidSucursal, TextBox7.Text, GlobalIdEmpresa, Act, TiposDocumentos.RestauranteTicket)
+
+        Act = 0
+        If RadioButton56.Checked Then Act = 1
+        SA.GuardaImpresora(0, pidSucursal, TextBox27.Text, GlobalIdEmpresa, Act, TiposDocumentos.ComplementoPagos)
+        Act = 0
+        If RadioButton55.Checked Then Act = 1
+        SA.GuardaImpresora(1, pidSucursal, TextBox26.Text, GlobalIdEmpresa, Act, TiposDocumentos.ComplementoPagos)
 
         SA.CierraDB()
     End Sub
@@ -2229,6 +2241,18 @@
         If IsNumeric(TextBox2.Text) And IsNumeric(TextBox63.Text) Then
             TextBox63.Text = CInt(TextBox63.Text) + CInt(TextBox2.Text)
             TextBox2.Text = "0"
+        End If
+    End Sub
+
+    Private Sub Button91_Click(sender As Object, e As EventArgs) Handles Button91.Click
+        If PrintDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            TextBox27.Text = PrintDialog1.PrinterSettings.PrinterName
+        End If
+    End Sub
+
+    Private Sub Button55_Click(sender As Object, e As EventArgs) Handles Button55.Click
+        If PrintDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            TextBox26.Text = PrintDialog1.PrinterSettings.PrinterName
         End If
     End Sub
 End Class

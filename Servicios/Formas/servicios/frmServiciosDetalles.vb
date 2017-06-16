@@ -727,7 +727,7 @@
         serie = Sf.Serie
         Folio = V.DaNuevoFolio(serie, GlobalIdSucursalDefault).ToString
         'Guardar Remision
-        C.Guardar(S.IdCliente, Date.Now.ToString("yyyy/MM/dd"), Folio, 0, 0, GlobalIdSucursalDefault, serie, 1, 2, 1)
+        C.Guardar(S.IdCliente, Date.Now.ToString("yyyy/MM/dd"), Folio, 0, 0, GlobalIdSucursalDefault, serie, 1, 2, 1, "")
         idRemision = C.ID
         'Guardar detalles Remisión
         '  * Guardar Eventos *

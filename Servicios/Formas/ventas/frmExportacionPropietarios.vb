@@ -14,16 +14,15 @@
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        Dim frm As New frmExportacionPaises()
-        frm.ShowDialog()
-        Dim codigo = frm.codigo
-        If codigo = "" Then
-            MsgBox("Debe seleccionar un país o introducir el código.")
-            txt_clave.BackColor = Color.Red
-        Else
-            txt_clave.BackColor = Color.White
-            txt_clave.Text = codigo
+        Dim CSat = New dbCatalogosSat
+        CSat.IniciarMySQL(My.Settings.Servidor, My.Settings.DBUsuario, My.Settings.DBPassword, My.Settings.puertodb)
+        Dim fbc As New frmBuscadorCatalogosSat(5)
+        fbc.Cat = CSat
+        fbc.CerrarCon = True
+        If fbc.ShowDialog = Windows.Forms.DialogResult.OK Then
+            txt_clave.Text = fbc.Clave
         End If
+        fbc.Dispose()
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles btn_cancelar.Click

@@ -17,10 +17,8 @@ Public Class dbDeposito
 
     Public Function Guardar(ByVal pFecha As String, ByVal pReferencia As String, ByVal pBanco As String, ByVal pCantidad As String, ByVal pBanco2 As String, ByVal pComentario As String, pFechaConta As String) As Integer
         Dim id As Integer
-        Comm.CommandText = "insert into tbldepostito (Fecha,Referencia,Banco,Cantidad,Banco2,comentario,idpagoprov,idusuarioAlta,fechaAlta,horaAlta,idUsuarioCambio,fechaCambio,horaCambio,fechaconta) values('" + Replace(pFecha, "'", "''") + "','" + Replace(pReferencia, "'", "''") + "'," + pBanco + "," + pCantidad + "," + pBanco2 + ",'" + Replace(pComentario, "'", "''") + "',0," + GlobalIdUsuario.ToString() + ",'" + DateTime.Now.ToString("yyyy/MM/dd") + "','" + TimeOfDay.ToString("HH:mm:ss") + "'," + GlobalIdUsuario.ToString() + ",'" + DateTime.Now.ToString("yyyy/MM/dd") + "','" + TimeOfDay.ToString("HH:mm:ss") + "','" + pFechaConta + "')"
-        Comm.ExecuteNonQuery()
-        'Dim DReader As MySql.Data.MySqlClient.MySqlDataReader
-        Comm.CommandText = "select ifnull((select max(iddeposito) from tbldepostito),0)"
+        Comm.CommandText = "insert into tbldepostito (Fecha,Referencia,Banco,Cantidad,Banco2,comentario,idpagoprov,idusuarioAlta,fechaAlta,horaAlta,idUsuarioCambio,fechaCambio,horaCambio,fechaconta) values('" + Replace(pFecha, "'", "''") + "','" + Replace(pReferencia, "'", "''") + "'," + pBanco + "," + pCantidad + "," + pBanco2 + ",'" + Replace(pComentario, "'", "''") + "',0," + GlobalIdUsuario.ToString() + ",'" + DateTime.Now.ToString("yyyy/MM/dd") + "','" + TimeOfDay.ToString("HH:mm:ss") + "'," + GlobalIdUsuario.ToString() + ",'" + DateTime.Now.ToString("yyyy/MM/dd") + "','" + TimeOfDay.ToString("HH:mm:ss") + "','" + pFechaConta + "');"
+        Comm.CommandText += "select ifnull(last_insert_id(),0);"
         id = Comm.ExecuteScalar
         Return id
     End Function
