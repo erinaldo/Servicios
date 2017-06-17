@@ -2682,6 +2682,12 @@
       <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Reportes\repVentasArticulosIEPSCobranza.vb">
+      <DependentUpon>repVentasArticulosIEPSCobranza.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Reportes\repVentasArticulosIEPS.vb">
       <DependentUpon>repVentasArticulosIEPS.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -2705,12 +2711,6 @@
       <AutoGen>True</AutoGen>
       <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Reportes\repVentasArticulosIEPSCobranza.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>repVentasArticulosIEPSCobranza.rpt</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reportes\repVentasArticulosRemisionesIEPS.vb">
       <DependentUpon>repVentasArticulosRemisionesIEPS.rpt</DependentUpon>

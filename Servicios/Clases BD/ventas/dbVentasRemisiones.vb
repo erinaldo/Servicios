@@ -392,7 +392,7 @@
             Comm.ExecuteNonQuery()
 
             'ubicaciones
-            Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.surtido, 0, 0, 1, u.ubicacion) from tblventasremisionesinventario d inner join tblventasremisionesubicaciones u on d.iddetalle=u.iddetalle where d.idremision=" + pId.ToString + ";"
+            Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.surtido, 0, 0, 1, u.ubicacion, u.tarima) from tblventasremisionesinventario d inner join tblventasremisionesubicaciones u on d.iddetalle=u.iddetalle where d.idremision=" + pId.ToString + ";"
             Comm.CommandText += "update tblventasremisionesubicaciones inner join tblventasremisionesinventario on tblventasremisionesubicaciones.iddetalle = tblventasremisionesinventario.iddetalle set tblventasremisionesubicaciones.surtido = tblventasremisionesubicaciones.cantidad where tblventasremisionesinventario.idremision=" + pId.ToString + ";"
             Comm.ExecuteNonQuery()
         End If
@@ -426,7 +426,7 @@
             Comm.ExecuteNonQuery()
 
             'ubicaciones
-            Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.cantidad-u.surtido, 0, 1, 0, u.ubicacion) from tblventasremisionesinventario d inner join tblventasremisionesubicaciones u on d.iddetalle=u.iddetalle where d.idremision=" + pId.ToString + ";"
+            Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.cantidad-u.surtido, 0, 1, 0, u.ubicacion, u.tarima) from tblventasremisionesinventario d inner join tblventasremisionesubicaciones u on d.iddetalle=u.iddetalle where d.idremision=" + pId.ToString + ";"
             Comm.CommandText += "update tblventasremisionesubicaciones inner join tblventasremisionesinventario on tblventasremisionesubicaciones.iddetalle = tblventasremisionesinventario.iddetalle set tblventasremisionesubicaciones.surtido = tblventasremisionesubicaciones.cantidad where tblventasremisionesinventario.idremision=" + pId.ToString + ";"
             Comm.ExecuteNonQuery()
         End If

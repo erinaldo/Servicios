@@ -190,4 +190,9 @@ Public Class dbAlmacenes
         End If
         Return False
     End Function
+
+    Public Function Tarima(idalmacen As Integer, ubicacion As String) As String
+        Comm.CommandText = "select ifnull(tarima,'') from tblalmacenesiubicaciones where idalmacen=" + idalmacen.ToString() + " and ubicacion='" + ubicacion.Replace("'", "''") + "';"
+        Return Comm.ExecuteScalar
+    End Function
 End Class

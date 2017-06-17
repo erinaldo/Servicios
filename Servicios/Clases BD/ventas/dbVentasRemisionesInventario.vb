@@ -1,4 +1,5 @@
-﻿Public Class dbVentasRemisionesInventario
+﻿Imports MySql.Data.MySqlClient
+Public Class dbVentasRemisionesInventario
     Public ID As Integer
     Public Idinventario As Integer
     Public Inventario As dbInventario
@@ -24,6 +25,7 @@
     Public TipoCantidadM As Integer
     Public CDescuento As Integer
     Public Ubicacion As String
+    Public Tarima As String
     'Public Costo As Double
     Dim Comm As New MySql.Data.MySqlClient.MySqlCommand
 
@@ -57,7 +59,7 @@
     End Sub
     Public Sub LlenaDatos()
         Dim DReader As MySql.Data.MySqlClient.MySqlDataReader
-        Comm.CommandText = "select vri.*,ifnull(vru.ubicacion,'') ubicacion from tblventasremisionesinventario vri left outer join tblventasremisionesubicaciones vru on vri.iddetalle=vru.iddetalle where vri.iddetalle=" + ID.ToString
+        Comm.CommandText = "select vri.*,ifnull(vru.ubicacion,'') ubicacion, ifnull(vru.tarima,'') tarima from tblventasremisionesinventario vri left outer join tblventasremisionesubicaciones vru on vri.iddetalle=vru.iddetalle where vri.iddetalle=" + ID.ToString
         DReader = Comm.ExecuteReader
         If DReader.Read() Then
             Precio = DReader("precio")
@@ -80,6 +82,7 @@
             CantidadM = DReader("cantidadm")
             CDescuento = DReader("cdescuento")
             Ubicacion = DReader("ubicacion")
+            Tarima = DReader("tarima")
         End If
         DReader.Close()
         Inventario = New dbInventario(Idinventario, Comm.Connection)
@@ -88,7 +91,7 @@
         Moneda = New dbMonedas(IdMoneda, Comm.Connection)
 
     End Sub
-    Public Sub Guardar(ByVal pIdVenta As Integer, ByVal pIdinventario As Integer, ByVal pCantidad As Double, ByVal pPrecio As Double, ByVal pIdMoneda As Integer, ByVal pDescripcion As String, ByVal pIdAlmacen As Integer, ByVal pIva As Double, ByVal pDescuento As Double, ByVal pIdVariante As Integer, ByVal pIdServicio As Integer, ByVal pIEPS As Double, ByVal pIVARetenido As Double, pCantidadM As Double, pTipoCantidadM As Integer, pCDescuento As Double, pUbicacion As String)
+    Public Sub Guardar(ByVal pIdVenta As Integer, ByVal pIdinventario As Integer, ByVal pCantidad As Double, ByVal pPrecio As Double, ByVal pIdMoneda As Integer, ByVal pDescripcion As String, ByVal pIdAlmacen As Integer, ByVal pIva As Double, ByVal pDescuento As Double, ByVal pIdVariante As Integer, ByVal pIdServicio As Integer, ByVal pIEPS As Double, ByVal pIVARetenido As Double, pCantidadM As Double, pTipoCantidadM As Integer, pCDescuento As Double, pUbicacion As String, pTarima As String)
 
 
         Idinventario = pIdinventario
@@ -108,6 +111,7 @@
         CDescuento = pCDescuento
         TipoCantidadM = pTipoCantidadM
         Ubicacion = pUbicacion
+        Tarima = pTarima
         If Cantidad = 1 Then
             PrecioOriginal = Precio
         Else
@@ -119,11 +123,14 @@
         Comm.CommandText += "select ifnull(last_insert_id(),0);"
         ID = Comm.ExecuteScalar
         If pUbicacion <> "" Then
-            Comm.CommandText = "insert into tblventasremisionesubicaciones (iddetalle, cantidad, surtido, ubicacion) values(" + ID.ToString + ", " + Cantidad.ToString() + ", 0, '" + Trim(Replace(Ubicacion, "'", "''")) + "');"
+            Comm.CommandText = "insert into tblventasremisionesubicaciones (iddetalle, cantidad, surtido, ubicacion, tarima) values(" + ID.ToString + ", " + Cantidad.ToString() + ", 0, @ubicacion, @tarima);"
+            Comm.Parameters.Add(New MySqlParameter("@ubicacion", Ubicacion))
+            Comm.Parameters.Add(New MySqlParameter("@tarima", If(Tarima = "", DBNull.Value, Tarima)))
             Comm.ExecuteNonQuery()
+            Comm.Parameters.Clear()
         End If
     End Sub
-    Public Sub Modificar(ByVal pID As Integer, ByVal pCantidad As Double, ByVal pPrecio As Double, ByVal pIdMoneda As Integer, ByVal pDescripcion As String, ByVal pIva As Double, ByVal pDescuento As Double, ByVal pIEPS As Double, ByVal pIVARetenido As Double, pCantidadM As Double, pTipocantidadM As Integer, pcDescuento As Double, pUbicacion As String)
+    Public Sub Modificar(ByVal pID As Integer, ByVal pCantidad As Double, ByVal pPrecio As Double, ByVal pIdMoneda As Integer, ByVal pDescripcion As String, ByVal pIva As Double, ByVal pDescuento As Double, ByVal pIEPS As Double, ByVal pIVARetenido As Double, pCantidadM As Double, pTipocantidadM As Integer, pcDescuento As Double, pUbicacion As String, pTarima As String)
         ID = pID
         Cantidad = pCantidad
         Precio = pPrecio
@@ -136,6 +143,8 @@
         CantidadM = pCantidadM
         TipoCantidadM = pTipocantidadM
         CDescuento = pcDescuento
+        Ubicacion = pUbicacion
+        Tarima = pTarima
         If Cantidad = 1 Then
             PrecioOriginal = Precio
         Else
@@ -144,8 +153,11 @@
         Comm.CommandText = "update tblventasremisionesinventario set precio=" + Precio.ToString + ",idmoneda=" + IdMoneda.ToString + ",cantidad=" + Cantidad.ToString + ",descripcion='" + Replace(Descripcion, "'", "''") + "',iva=" + Iva.ToString + ",descuento=" + Descuento.ToString + ",preciooriginal=" + Precio.ToString + " ,IEPS=" + IEPS.ToString() + " ,IVARetenido=" + IVARetenido.ToString() + ",cantidadm=" + CantidadM.ToString + ",tipocantidadm=" + TipoCantidadM.ToString + ",cdescuento=" + CDescuento.ToString + " where iddetalle=" + ID.ToString
         Comm.ExecuteNonQuery()
         If pUbicacion <> "" Then
-            Comm.CommandText = "update tblventasremisionesubicaciones set cantidad=" + pCantidad.ToString + ", ubicacion='" + Trim(Replace(pUbicacion, "'", "''")) + "' where iddetalle=" + ID.ToString
+            Comm.CommandText = "update tblventasremisionesubicaciones set cantidad=" + pCantidad.ToString + ", ubicacion=@ubicacion, tarima=@tarima where iddetalle=" + ID.ToString
+            Comm.Parameters.Add(New MySqlParameter("@ubicacion", Ubicacion))
+            Comm.Parameters.Add(New MySqlParameter("@tarima", If(Tarima = "", DBNull.Value, Tarima)))
             Comm.ExecuteNonQuery()
+            Comm.Parameters.Clear()
         End If
     End Sub
     Public Sub AgregarCantidad(ByVal pID As Integer, ByVal pCantidad As Double, ByVal pTiporedondeo As Byte, ByVal pCantidadDecimales As Byte)

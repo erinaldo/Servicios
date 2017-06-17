@@ -24,9 +24,6 @@ Partial Class frmConsultaUbicaciones
     Private Sub InitializeComponent()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-        Me.colAlmacen = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colUbicacion = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colExistencia = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.txtArticulo = New System.Windows.Forms.TextBox()
@@ -35,6 +32,10 @@ Partial Class frmConsultaUbicaciones
         Me.cmbAlmacen = New System.Windows.Forms.ComboBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
+        Me.colAlmacen = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colUbicacion = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colTarima = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colExistencia = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -43,41 +44,15 @@ Partial Class frmConsultaUbicaciones
         Me.DataGridView1.AllowUserToAddRows = False
         Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colAlmacen, Me.colUbicacion, Me.colExistencia})
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colAlmacen, Me.colUbicacion, Me.colTarima, Me.colExistencia})
         Me.DataGridView1.Location = New System.Drawing.Point(17, 133)
         Me.DataGridView1.MultiSelect = False
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.ReadOnly = True
         Me.DataGridView1.RowHeadersVisible = False
         Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DataGridView1.Size = New System.Drawing.Size(385, 371)
+        Me.DataGridView1.Size = New System.Drawing.Size(492, 371)
         Me.DataGridView1.TabIndex = 5
-        '
-        'colAlmacen
-        '
-        Me.colAlmacen.DataPropertyName = "nombre"
-        Me.colAlmacen.FillWeight = 200.0!
-        Me.colAlmacen.HeaderText = "Almacén"
-        Me.colAlmacen.Name = "colAlmacen"
-        Me.colAlmacen.ReadOnly = True
-        '
-        'colUbicacion
-        '
-        Me.colUbicacion.DataPropertyName = "ubicacion"
-        Me.colUbicacion.FillWeight = 200.0!
-        Me.colUbicacion.HeaderText = "Ubicación"
-        Me.colUbicacion.Name = "colUbicacion"
-        Me.colUbicacion.ReadOnly = True
-        '
-        'colExistencia
-        '
-        Me.colExistencia.DataPropertyName = "cantidad"
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle1.Format = "N2"
-        Me.colExistencia.DefaultCellStyle = DataGridViewCellStyle1
-        Me.colExistencia.HeaderText = "Existencia"
-        Me.colExistencia.Name = "colExistencia"
-        Me.colExistencia.ReadOnly = True
         '
         'Label1
         '
@@ -160,13 +135,47 @@ Partial Class frmConsultaUbicaciones
         Me.Button1.Text = "Cancelar"
         Me.Button1.UseVisualStyleBackColor = True
         '
+        'colAlmacen
+        '
+        Me.colAlmacen.DataPropertyName = "nombre"
+        Me.colAlmacen.FillWeight = 200.0!
+        Me.colAlmacen.HeaderText = "Almacén"
+        Me.colAlmacen.Name = "colAlmacen"
+        Me.colAlmacen.ReadOnly = True
+        '
+        'colUbicacion
+        '
+        Me.colUbicacion.DataPropertyName = "ubicacion"
+        Me.colUbicacion.FillWeight = 200.0!
+        Me.colUbicacion.HeaderText = "Ubicación"
+        Me.colUbicacion.Name = "colUbicacion"
+        Me.colUbicacion.ReadOnly = True
+        '
+        'colTarima
+        '
+        Me.colTarima.DataPropertyName = "Tarima"
+        Me.colTarima.FillWeight = 200.0!
+        Me.colTarima.HeaderText = "Tarima"
+        Me.colTarima.Name = "colTarima"
+        Me.colTarima.ReadOnly = True
+        '
+        'colExistencia
+        '
+        Me.colExistencia.DataPropertyName = "cantidad"
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle1.Format = "N2"
+        Me.colExistencia.DefaultCellStyle = DataGridViewCellStyle1
+        Me.colExistencia.HeaderText = "Existencia"
+        Me.colExistencia.Name = "colExistencia"
+        Me.colExistencia.ReadOnly = True
+        '
         'frmConsultaUbicaciones
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(230, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(230, Byte), Integer))
         Me.CancelButton = Me.Button1
-        Me.ClientSize = New System.Drawing.Size(414, 517)
+        Me.ClientSize = New System.Drawing.Size(521, 517)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.cmbAlmacen)
@@ -195,8 +204,9 @@ Partial Class frmConsultaUbicaciones
     Friend WithEvents Button2 As System.Windows.Forms.Button
     Friend WithEvents cmbAlmacen As System.Windows.Forms.ComboBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents colAlmacen As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colUbicacion As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colTarima As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colExistencia As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Button1 As System.Windows.Forms.Button
 End Class

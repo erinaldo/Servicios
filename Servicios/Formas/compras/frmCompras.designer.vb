@@ -22,10 +22,10 @@ Partial Class frmCompras
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.txtReferencia = New System.Windows.Forms.TextBox()
         Me.Button1 = New System.Windows.Forms.Button()
@@ -58,8 +58,11 @@ Partial Class frmCompras
         Me.ComboBox2 = New System.Windows.Forms.ComboBox()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.lblUbicacion = New System.Windows.Forms.Label()
+        Me.pnlUbicacion = New System.Windows.Forms.Panel()
+        Me.Label30 = New System.Windows.Forms.Label()
         Me.cmbUbicacion = New System.Windows.Forms.ComboBox()
+        Me.txtTarima = New System.Windows.Forms.TextBox()
+        Me.lblUbicacion = New System.Windows.Forms.Label()
         Me.Label33 = New System.Windows.Forms.Label()
         Me.txtIVARetenido = New System.Windows.Forms.TextBox()
         Me.lblIEPS = New System.Windows.Forms.Label()
@@ -77,7 +80,7 @@ Partial Class frmCompras
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label18 = New System.Windows.Forms.Label()
-        Me.ComboBox8 = New System.Windows.Forms.ComboBox()
+        Me.cmbAlmacen = New System.Windows.Forms.ComboBox()
         Me.Button22 = New System.Windows.Forms.Button()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.TextBox13 = New System.Windows.Forms.TextBox()
@@ -128,6 +131,7 @@ Partial Class frmCompras
         Me.Button25 = New System.Windows.Forms.Button()
         CType(Me.DGDetalles, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
+        Me.pnlUbicacion.SuspendLayout()
         Me.Panel2.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -207,19 +211,19 @@ Partial Class frmCompras
         Me.DGDetalles.AllowUserToAddRows = False
         Me.DGDetalles.AllowUserToDeleteRows = False
         Me.DGDetalles.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.DGDetalles.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.DGDetalles.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle5
         Me.DGDetalles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DGDetalles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGDetalles.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colId, Me.colTipoR, Me.colExtra, Me.colCantidad, Me.colCodigo, Me.colDescripcion, Me.colCostoU, Me.colImporte, Me.colMoneda})
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DGDetalles.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DGDetalles.DefaultCellStyle = DataGridViewCellStyle8
         Me.DGDetalles.Location = New System.Drawing.Point(5, 212)
         Me.DGDetalles.Name = "DGDetalles"
         Me.DGDetalles.ReadOnly = True
@@ -278,9 +282,9 @@ Partial Class frmCompras
         'colCostoU
         '
         Me.colCostoU.DataPropertyName = "precio"
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle2.Format = "N2"
-        Me.colCostoU.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle6.Format = "N2"
+        Me.colCostoU.DefaultCellStyle = DataGridViewCellStyle6
         Me.colCostoU.HeaderText = "Costo U."
         Me.colCostoU.Name = "colCostoU"
         Me.colCostoU.ReadOnly = True
@@ -288,9 +292,9 @@ Partial Class frmCompras
         'colImporte
         '
         Me.colImporte.DataPropertyName = "importe"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle3.Format = "N2"
-        Me.colImporte.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle7.Format = "N2"
+        Me.colImporte.DefaultCellStyle = DataGridViewCellStyle7
         Me.colImporte.HeaderText = "Importe"
         Me.colImporte.Name = "colImporte"
         Me.colImporte.ReadOnly = True
@@ -308,7 +312,7 @@ Partial Class frmCompras
         Me.Button4.Location = New System.Drawing.Point(752, 14)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(139, 34)
-        Me.Button4.TabIndex = 25
+        Me.Button4.TabIndex = 26
         Me.Button4.Text = "Agregar artículo"
         Me.Button4.UseVisualStyleBackColor = True
         '
@@ -382,7 +386,7 @@ Partial Class frmCompras
         Me.Button8.Location = New System.Drawing.Point(752, 53)
         Me.Button8.Name = "Button8"
         Me.Button8.Size = New System.Drawing.Size(139, 24)
-        Me.Button8.TabIndex = 26
+        Me.Button8.TabIndex = 27
         Me.Button8.Text = "Nuevo artículo"
         Me.Button8.UseVisualStyleBackColor = True
         '
@@ -442,8 +446,7 @@ Partial Class frmCompras
         '
         'Panel1
         '
-        Me.Panel1.Controls.Add(Me.lblUbicacion)
-        Me.Panel1.Controls.Add(Me.cmbUbicacion)
+        Me.Panel1.Controls.Add(Me.pnlUbicacion)
         Me.Panel1.Controls.Add(Me.Label33)
         Me.Panel1.Controls.Add(Me.txtIVARetenido)
         Me.Panel1.Controls.Add(Me.lblIEPS)
@@ -473,16 +476,27 @@ Partial Class frmCompras
         Me.Panel1.Size = New System.Drawing.Size(895, 87)
         Me.Panel1.TabIndex = 11
         '
-        'lblUbicacion
+        'pnlUbicacion
         '
-        Me.lblUbicacion.AutoSize = True
-        Me.lblUbicacion.BackColor = System.Drawing.Color.Transparent
-        Me.lblUbicacion.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblUbicacion.Location = New System.Drawing.Point(611, 44)
-        Me.lblUbicacion.Name = "lblUbicacion"
-        Me.lblUbicacion.Size = New System.Drawing.Size(75, 16)
-        Me.lblUbicacion.TabIndex = 220
-        Me.lblUbicacion.Text = "Ubicación:"
+        Me.pnlUbicacion.Controls.Add(Me.Label30)
+        Me.pnlUbicacion.Controls.Add(Me.cmbUbicacion)
+        Me.pnlUbicacion.Controls.Add(Me.txtTarima)
+        Me.pnlUbicacion.Controls.Add(Me.lblUbicacion)
+        Me.pnlUbicacion.Location = New System.Drawing.Point(527, 45)
+        Me.pnlUbicacion.Name = "pnlUbicacion"
+        Me.pnlUbicacion.Size = New System.Drawing.Size(225, 42)
+        Me.pnlUbicacion.TabIndex = 25
+        '
+        'Label30
+        '
+        Me.Label30.AutoSize = True
+        Me.Label30.BackColor = System.Drawing.Color.Transparent
+        Me.Label30.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label30.Location = New System.Drawing.Point(145, -1)
+        Me.Label30.Name = "Label30"
+        Me.Label30.Size = New System.Drawing.Size(56, 16)
+        Me.Label30.TabIndex = 223
+        Me.Label30.Text = "Tarima:"
         '
         'cmbUbicacion
         '
@@ -492,19 +506,38 @@ Partial Class frmCompras
         Me.cmbUbicacion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbUbicacion.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmbUbicacion.FormattingEnabled = True
-        Me.cmbUbicacion.Location = New System.Drawing.Point(608, 60)
+        Me.cmbUbicacion.Location = New System.Drawing.Point(4, 17)
         Me.cmbUbicacion.Name = "cmbUbicacion"
         Me.cmbUbicacion.Size = New System.Drawing.Size(138, 24)
-        Me.cmbUbicacion.TabIndex = 219
-        Me.cmbUbicacion.TabStop = False
+        Me.cmbUbicacion.TabIndex = 0
         Me.cmbUbicacion.ValueMember = "ubicacion"
+        '
+        'txtTarima
+        '
+        Me.txtTarima.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTarima.Location = New System.Drawing.Point(148, 17)
+        Me.txtTarima.Name = "txtTarima"
+        Me.txtTarima.Size = New System.Drawing.Size(71, 22)
+        Me.txtTarima.TabIndex = 1
+        Me.txtTarima.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'lblUbicacion
+        '
+        Me.lblUbicacion.AutoSize = True
+        Me.lblUbicacion.BackColor = System.Drawing.Color.Transparent
+        Me.lblUbicacion.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblUbicacion.Location = New System.Drawing.Point(7, 0)
+        Me.lblUbicacion.Name = "lblUbicacion"
+        Me.lblUbicacion.Size = New System.Drawing.Size(75, 16)
+        Me.lblUbicacion.TabIndex = 220
+        Me.lblUbicacion.Text = "Ubicación:"
         '
         'Label33
         '
         Me.Label33.AutoSize = True
         Me.Label33.BackColor = System.Drawing.Color.Transparent
         Me.Label33.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label33.Location = New System.Drawing.Point(410, 45)
+        Me.Label33.Location = New System.Drawing.Point(325, 45)
         Me.Label33.Name = "Label33"
         Me.Label33.Size = New System.Drawing.Size(76, 16)
         Me.Label33.TabIndex = 218
@@ -513,7 +546,7 @@ Partial Class frmCompras
         'txtIVARetenido
         '
         Me.txtIVARetenido.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtIVARetenido.Location = New System.Drawing.Point(410, 62)
+        Me.txtIVARetenido.Location = New System.Drawing.Point(325, 62)
         Me.txtIVARetenido.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.txtIVARetenido.Name = "txtIVARetenido"
         Me.txtIVARetenido.Size = New System.Drawing.Size(76, 22)
@@ -526,7 +559,7 @@ Partial Class frmCompras
         Me.lblIEPS.AutoSize = True
         Me.lblIEPS.BackColor = System.Drawing.Color.Transparent
         Me.lblIEPS.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblIEPS.Location = New System.Drawing.Point(338, 44)
+        Me.lblIEPS.Location = New System.Drawing.Point(253, 44)
         Me.lblIEPS.Name = "lblIEPS"
         Me.lblIEPS.Size = New System.Drawing.Size(56, 16)
         Me.lblIEPS.TabIndex = 217
@@ -535,7 +568,7 @@ Partial Class frmCompras
         'txtIEPS
         '
         Me.txtIEPS.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtIEPS.Location = New System.Drawing.Point(341, 62)
+        Me.txtIEPS.Location = New System.Drawing.Point(256, 62)
         Me.txtIEPS.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.txtIEPS.Name = "txtIEPS"
         Me.txtIEPS.Size = New System.Drawing.Size(63, 22)
@@ -548,7 +581,7 @@ Partial Class frmCompras
         Me.Label23.AutoSize = True
         Me.Label23.BackColor = System.Drawing.Color.Transparent
         Me.Label23.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label23.Location = New System.Drawing.Point(489, 44)
+        Me.Label23.Location = New System.Drawing.Point(404, 44)
         Me.Label23.Name = "Label23"
         Me.Label23.Size = New System.Drawing.Size(60, 16)
         Me.Label23.TabIndex = 185
@@ -557,7 +590,7 @@ Partial Class frmCompras
         'TextBox9
         '
         Me.TextBox9.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox9.Location = New System.Drawing.Point(492, 62)
+        Me.TextBox9.Location = New System.Drawing.Point(407, 62)
         Me.TextBox9.Name = "TextBox9"
         Me.TextBox9.Size = New System.Drawing.Size(57, 22)
         Me.TextBox9.TabIndex = 23
@@ -568,7 +601,7 @@ Partial Class frmCompras
         Me.Label20.AutoSize = True
         Me.Label20.BackColor = System.Drawing.Color.Transparent
         Me.Label20.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label20.Location = New System.Drawing.Point(555, 44)
+        Me.Label20.Location = New System.Drawing.Point(470, 44)
         Me.Label20.Name = "Label20"
         Me.Label20.Size = New System.Drawing.Size(47, 16)
         Me.Label20.TabIndex = 184
@@ -577,7 +610,7 @@ Partial Class frmCompras
         'TextBox11
         '
         Me.TextBox11.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox11.Location = New System.Drawing.Point(555, 62)
+        Me.TextBox11.Location = New System.Drawing.Point(470, 62)
         Me.TextBox11.Name = "TextBox11"
         Me.TextBox11.Size = New System.Drawing.Size(47, 22)
         Me.TextBox11.TabIndex = 24
@@ -678,15 +711,15 @@ Partial Class frmCompras
         Me.Label18.TabIndex = 126
         Me.Label18.Text = "Almacén:"
         '
-        'ComboBox8
+        'cmbAlmacen
         '
-        Me.ComboBox8.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBox8.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ComboBox8.FormattingEnabled = True
-        Me.ComboBox8.Location = New System.Drawing.Point(80, 100)
-        Me.ComboBox8.Name = "ComboBox8"
-        Me.ComboBox8.Size = New System.Drawing.Size(155, 24)
-        Me.ComboBox8.TabIndex = 12
+        Me.cmbAlmacen.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbAlmacen.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbAlmacen.FormattingEnabled = True
+        Me.cmbAlmacen.Location = New System.Drawing.Point(80, 100)
+        Me.cmbAlmacen.Name = "cmbAlmacen"
+        Me.cmbAlmacen.Size = New System.Drawing.Size(155, 24)
+        Me.cmbAlmacen.TabIndex = 12
         '
         'Button22
         '
@@ -1199,7 +1232,7 @@ Partial Class frmCompras
         Me.Controls.Add(Me.Label28)
         Me.Controls.Add(Me.Label18)
         Me.Controls.Add(Me.TextBox14)
-        Me.Controls.Add(Me.ComboBox8)
+        Me.Controls.Add(Me.cmbAlmacen)
         Me.Controls.Add(Me.CheckBox2)
         Me.Controls.Add(Me.CheckScroll)
         Me.Controls.Add(Me.Button19)
@@ -1244,6 +1277,8 @@ Partial Class frmCompras
         CType(Me.DGDetalles, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
+        Me.pnlUbicacion.ResumeLayout(False)
+        Me.pnlUbicacion.PerformLayout()
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
         Me.ResumeLayout(False)
@@ -1291,7 +1326,7 @@ Partial Class frmCompras
     Friend WithEvents Label12 As System.Windows.Forms.Label
     Friend WithEvents Button12 As System.Windows.Forms.Button
     Friend WithEvents Label18 As System.Windows.Forms.Label
-    Friend WithEvents ComboBox8 As System.Windows.Forms.ComboBox
+    Friend WithEvents cmbAlmacen As System.Windows.Forms.ComboBox
     Friend WithEvents Button13 As System.Windows.Forms.Button
     Friend WithEvents Button14 As System.Windows.Forms.Button
     Friend WithEvents Label17 As System.Windows.Forms.Label
@@ -1350,4 +1385,7 @@ Partial Class frmCompras
     Friend WithEvents colCostoU As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colImporte As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colMoneda As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents pnlUbicacion As System.Windows.Forms.Panel
+    Friend WithEvents Label30 As System.Windows.Forms.Label
+    Friend WithEvents txtTarima As System.Windows.Forms.TextBox
 End Class

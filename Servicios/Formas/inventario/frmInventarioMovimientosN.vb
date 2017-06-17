@@ -135,7 +135,7 @@
             Nuevo(IdPedido)
         Else
             'Nuevo()
-            LlenaCombos("tblalmacenes", cmbAlmacenOrigen, "nombre", "nombret", "idalmacen", IdsAlmacenes, "idalmacen<>1 and idsucursal=" + IdsSucursales.Valor(ComboBox3.SelectedIndex).ToString)
+            LlenaCombos("tblalmacenes", cmbAlmacen, "nombre", "nombret", "idalmacen", IdsAlmacenes, "idalmacen<>1 and idsucursal=" + IdsSucursales.Valor(ComboBox3.SelectedIndex).ToString)
             LlenaDatosVenta()
             NuevoConcepto()
         End If
@@ -143,7 +143,7 @@
             'Nuevo()
             ComboBox3.SelectedIndex = IdsSucursales.Busca(IdSucursalB)
             ComboBox6.SelectedIndex = IdsMovimientos.Busca(idconceptoP)
-            cmbAlmacenOrigen.SelectedIndex = IdsAlmacenes.Busca(IdAlmacenB)
+            cmbAlmacen.SelectedIndex = IdsAlmacenes.Busca(IdAlmacenB)
             cmbAlmacenDestino.SelectedIndex = IdsAlmacenes2.Busca(IdAlmacenA)
             CrearDesdePedido()
         End If
@@ -197,11 +197,11 @@
         TextBox1.Text = CM.Cantidad.ToString
         Estado = Estados.Inicio
         iTipoFacturacion = GlobalTipoFacturacion
-        LlenaCombos("tblalmacenes", cmbAlmacenOrigen, "nombre", "nombret", "idalmacen", IdsAlmacenes, "idalmacen<>1 and idsucursal=" + IdsSucursales.Valor(ComboBox3.SelectedIndex).ToString)
+        LlenaCombos("tblalmacenes", cmbAlmacen, "nombre", "nombret", "idalmacen", IdsAlmacenes, "idalmacen<>1 and idsucursal=" + IdsSucursales.Valor(ComboBox3.SelectedIndex).ToString)
         'LlenaCombos("tblinventarioconceptos", ComboBox6, "nombre", "nombret", "idconcepto", IdsMovimientos, "idsucursal=" + IdsSucursales.Valor(ComboBox3.SelectedIndex).ToString)
         Dim S As New dbSucursales(IdsSucursales.Valor(ComboBox3.SelectedIndex), MySqlcon)
         'TextBox11.Text = S.Serie
-        cmbAlmacenOrigen.SelectedIndex = IdsAlmacenes.Busca(S.IdAlmacenM)
+        cmbAlmacen.SelectedIndex = IdsAlmacenes.Busca(S.IdAlmacenM)
         'Dim Sf As New dbSucursalesFolios(MySqlcon)
         'Sf.BuscaFolios(IdsSucursales.Valor(ComboBox3.SelectedIndex), dbSucursalesFolios.TipoDocumentos.MovimientosInventario, 0)
         'TextBox11.Text = Sf.Serie
@@ -330,7 +330,7 @@
                 End If
                 If pEstado = Estados.Guardada Then
                     Estado = Estados.Guardada
-                    If Op.RecibidoDefault = 1 Or IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex) = IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex) Then
+                    If Op.RecibidoDefault = 1 Or IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex) = IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex) Then
                         C.Recibir(idMovimiento, False)
                     End If
                     C.ModificaInventario(idMovimiento, GlobalTipoCosteo, CDbl(TextBox1.Text))
@@ -392,7 +392,7 @@
                 Else
                     FolioAnt = TextBox2.Text
                 End If
-                C.Guardar(CInt(TextBox2.Text), Format(DateTimePicker1.Value, "yyyy/MM/dd"), IdsMovimientos.Valor(ComboBox6.SelectedIndex), TextBox11.Text, IdsSucursales.Valor(ComboBox3.SelectedIndex), CDbl(TextBox1.Text), IDsMonedas.Valor(ComboBox4.SelectedIndex), IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex), IdPedido, idCliente)
+                C.Guardar(CInt(TextBox2.Text), Format(DateTimePicker1.Value, "yyyy/MM/dd"), IdsMovimientos.Valor(ComboBox6.SelectedIndex), TextBox11.Text, IdsSucursales.Valor(ComboBox3.SelectedIndex), CDbl(TextBox1.Text), IDsMonedas.Valor(ComboBox4.SelectedIndex), IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex), IdPedido, idCliente)
                 idMovimiento = C.ID
                 Estado = 1
 
@@ -438,7 +438,7 @@
                     IdInventario = 0
                     TextBox4.Text = ""
                     TextBox6.Text = "0"
-                    cmbUbicacionOrigen.Text = ""
+                    cmbUbicacion.Text = ""
                     cmbUbicacionDestino.Text = ""
                     PrecioU = 0
                 End If
@@ -585,14 +585,12 @@
         TextBox3.Text = ""
         TextBox4.Text = ""
         txtCantidad.Text = "0"
-        cmbUbicacionOrigen.Text = ""
+        cmbUbicacion.Text = ""
         cmbUbicacionDestino.Text = ""
-        cmbUbicacionOrigen.Visible = False
-        cmbUbicacionDestino.Visible = False
-        lblUbicacionOrigen.Visible = False
-        lblUbicacionDestino.Visible = False
-        cmbUbicacionOrigen.Enabled = False
-        cmbUbicacionDestino.Enabled = False
+        pnlUbicacion.Visible = False
+        pnlUbicacionDestino.Visible = False
+        'pnlUbicacion.Enabled = False
+        'pnlUbicacionDestino.Enabled = False
 
         TextBox6.Text = "0"
         PrecioBase = 0
@@ -602,16 +600,12 @@
         Button6.Enabled = True
         EsSemillas = False
         Button4.Text = "Agregar Concepto"
-        If IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex) = IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex) Then
-            cmbUbicacionDestino.Enabled = True
-        Else
-            cmbUbicacionDestino.Enabled = False
-        End If
+        
         If GlobalPermisos.ChecaPermiso(PermisosN.Inventario.CambiodeAlamcen, PermisosN.Secciones.Inventario) = False Then
-            cmbAlmacenOrigen.Enabled = False
+            cmbAlmacen.Enabled = False
             cmbAlmacenDestino.Enabled = False
         Else
-            cmbAlmacenOrigen.Enabled = True
+            cmbAlmacen.Enabled = True
             cmbAlmacenDestino.Enabled = True
         End If
         Button16.Visible = False
@@ -630,142 +624,151 @@
             If Not IsNumeric(txtCantidad.Text) Then MsgError += "La cantidad debe ser un valor numérico."
             If Not IsNumeric(txtCosto.Text) Then MsgError += vbCrLf + "El costo debe ser un valor numérico."
 
-            Dim I As New dbInventario(IdInventario, MySqlcon)
-            If I.UsaUbicacion And cmbUbicacionOrigen.SelectedIndex = -1 And cmbUbicacionDestino.SelectedIndex = -1 Then MsgError += vbCrLf + "Debe indicar una ubicación."
-
-            If Almacen.TienePermiso(IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex)) = False Then
+            If Almacen.TienePermiso(IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex)) = False Then
                 MsgError += vbCrLf + " No tiene permiso para realizar operaciones en el almacén seleccionado."
             End If
             Dim Concep As New dbInventarioConceptos(IdsMovimientos.Valor(ComboBox6.SelectedIndex), MySqlcon)
 
-            'Dim Concep As New dbInventarioConceptos(IdsMovimientos.Valor(ComboBox6.SelectedIndex), MySqlcon)
+            Dim I As New dbInventario(IdInventario, MySqlcon)
+            If I.UsaUbicacion Then
+                Dim Op As New dbOpciones(MySqlcon)
+                If Concep.Tipo = dbInventarioConceptos.Tipos.Traspaso And Op.RecibidoDefault = 1 Then
+                    If cmbUbicacion.SelectedIndex = -1 Or txtTarima.Text = "" Or cmbUbicacionDestino.SelectedIndex = -1 Or txtTarimaDesino.Text = "" Then
+                        MsgError += vbCrLf + "Debe indicar una ubicaciones y tarimas de origen y destino."
+                    End If
+                Else
+                    If cmbUbicacion.SelectedIndex = -1 Or txtTarima.Text = "" Then
+                        MsgError += vbCrLf + "Debe indicar una ubicación y una tarima."
+                    End If
+                End If
+            End If
 
             If Concep.Tipo = dbInventarioConceptos.Tipos.Traspaso Then
-                If Not I.UsaUbicacion And IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex) = IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex) Then
+                If Not I.UsaUbicacion And IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex) = IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex) Then
                     MsgError += vbCrLf + "No se puede hacer un traspaso al mismo almacen."
-                ElseIf I.UsaUbicacion And IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex) = IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex) And cmbUbicacionDestino.SelectedValue = cmbUbicacionOrigen.SelectedValue Then
+                ElseIf I.UsaUbicacion And IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex) = IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex) And cmbUbicacionDestino.SelectedValue = cmbUbicacion.SelectedValue Then
                     MsgError += vbCrLf + "No se puede hacer un traspaso al mismo almacen y ubicación."
                 End If
             End If
 
-            If IdInventario > 1 And GlobalSoloExistencia And I.Inventariable = 1 And (Concep.Tipo = dbInventarioConceptos.Tipos.Salida Or Concep.Tipo = dbInventarioConceptos.Tipos.Traspaso) Then
-                InvAnt = I.DaInventario(IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), IdInventario)
-                If InvAnt < CDbl(txtCantidad.Text) And I.Inventariable = 1 Then
-                    MsgError += " Artículo sin existencia suficiente."
-                End If
-                If IdInventario > 1 And GlobalSoloExistencia And I.Inventariable = 1 And (Concep.Tipo = dbInventarioConceptos.Tipos.Salida Or Concep.Tipo = dbInventarioConceptos.Tipos.Traspaso) And I.UsaUbicacion Then
-                    InvAnt = I.DaInventario(IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), IdInventario, cmbUbicacionOrigen.SelectedValue)
+                If IdInventario > 1 And GlobalSoloExistencia And I.Inventariable = 1 And (Concep.Tipo = dbInventarioConceptos.Tipos.Salida Or Concep.Tipo = dbInventarioConceptos.Tipos.Traspaso) Then
+                    InvAnt = I.DaInventario(IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), IdInventario)
                     If InvAnt < CDbl(txtCantidad.Text) And I.Inventariable = 1 Then
-                        MsgError += " Ubicación de origen sin existencia suficiente."
+                        MsgError += " Artículo sin existencia suficiente."
                     End If
+                    If IdInventario > 1 And GlobalSoloExistencia And I.Inventariable = 1 And (Concep.Tipo = dbInventarioConceptos.Tipos.Salida Or Concep.Tipo = dbInventarioConceptos.Tipos.Traspaso) And I.UsaUbicacion Then
+                        InvAnt = I.DaInventario(IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), IdInventario, cmbUbicacion.SelectedValue)
+                        If InvAnt < CDbl(txtCantidad.Text) And I.Inventariable = 1 Then
+                            MsgError += " Ubicación de origen sin existencia suficiente."
+                        End If
 
+                    End If
                 End If
-            End If
 
-            If (IdVenta <> 0 Or IdRemision <> 0) And Button4.Text = "Agregar Concepto" Then
-                MsgError += " No se pueden agregar artículos a una salida por surtir."
-            End If
-            If MsgError = "" Then
-                If Button4.Text = "Agregar Concepto" Then
-                    btnReferencia.Enabled = False
-                    CD.Guardar(idMovimiento, IdInventario, CDbl(txtCantidad.Text), CDbl(TextBox6.Text), IDsMonedas2.Valor(ComboBox2.SelectedIndex), Trim(TextBox4.Text), IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex), IdVariante, 1, InvAnt, If(cmbUbicacionOrigen.Visible, cmbUbicacionOrigen.SelectedValue, ""), If(cmbUbicacionDestino.Visible, cmbUbicacionDestino.SelectedValue, ""))
-                    If ManejaSeries <> 0 Then
-                        If Concep.Tipo <> dbInventarioConceptos.Tipos.Traspaso Then
-                            If CD.NuevoConcepto Then
+                If (IdVenta <> 0 Or IdRemision <> 0) And Button4.Text = "Agregar Concepto" Then
+                    MsgError += " No se pueden agregar artículos a una salida por surtir."
+                End If
+                If MsgError = "" Then
+                    If Button4.Text = "Agregar Concepto" Then
+                        btnReferencia.Enabled = False
+                        CD.Guardar(idMovimiento, IdInventario, CDbl(txtCantidad.Text), CDbl(TextBox6.Text), IDsMonedas2.Valor(ComboBox2.SelectedIndex), Trim(TextBox4.Text), IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex), IdVariante, 1, InvAnt, If(cmbUbicacion.Visible, cmbUbicacion.SelectedValue, ""), If(cmbUbicacionDestino.Visible, cmbUbicacionDestino.SelectedValue, ""), txtTarima.Text, txtTarimaDesino.Text)
+                        If ManejaSeries <> 0 Then
+                            If Concep.Tipo <> dbInventarioConceptos.Tipos.Traspaso Then
+                                If CD.NuevoConcepto Then
+                                    Dim F As New frmInventarioSeries(IdInventario, 0, 0, CDbl(txtCantidad.Text), DateTimePicker1.Value, idMovimiento, 0)
+                                    F.ShowDialog()
+                                    F.Dispose()
+                                Else
+                                    Dim F As New frmInventarioSeries(IdInventario, 0, 0, CD.Cantidad, DateTimePicker1.Value, idMovimiento, 0)
+                                    F.ShowDialog()
+                                    F.Dispose()
+                                End If
+                            End If
+                        End If
+                        If EsSemillas And (Concep.Tipo = dbInventarioConceptos.Tipos.Entrada Or Concep.Tipo = dbInventarioConceptos.Tipos.Salida Or Concep.Tipo = dbInventarioConceptos.Tipos.InventarioInicial) Then
+                            Dim Tipoboleta As String = ""
+                            If Concep.Tipo = dbInventarioConceptos.Tipos.Entrada Or Concep.Tipo = dbInventarioConceptos.Tipos.InventarioInicial Then
+                                Tipoboleta = "E"
+                            End If
+                            If Concep.Tipo = dbInventarioConceptos.Tipos.Salida Then
+                                Tipoboleta = "S"
+                            End If
+                            Dim Boleta As New frmSemillasBoleta(Tipoboleta, TextBox3.Text, CDbl(txtCantidad.Text), CD.ID, GlobalSemillasResumida, cmbAlmacen.Text, GlobalPermisos.ChecaPermiso(PermisosN.Semillas.PrecioVerBoleta, PermisosN.Secciones.Semillas))
+                            Boleta.ShowDialog()
+                            txtCantidad.Text = Boleta.pesoBrutoAnalizado.ToString
+                            CD.ModificarCantidad(CD.ID, Boleta.pesoBrutoAnalizado, CDbl(TextBox6.Text))
+                            Boleta.Dispose()
+                        End If
+                        If Lotes = 1 Then
+                            Dim F As New frmInventarioLotes(0, 0, 0, 0, CDbl(txtCantidad.Text), IdInventario, 0, 0, 0, CD.ID, IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), cmbAlmacen.Text, Concep.Tipo, 0, 0)
+                            F.ShowDialog()
+                            F.Dispose()
+                        End If
+                        If Aduana = 1 Then
+                            Dim F As New frmInventarioAduana(0, 0, 0, 0, CDbl(txtCantidad.Text), IdInventario, 0, 0, 0, CD.ID, IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), cmbAlmacen.Text, Concep.Tipo, 0, 0)
+                            F.ShowDialog()
+                            F.Dispose()
+                        End If
+
+
+                        'If IdVariante <> 0 Then
+                        'Dim PV As New dbProductosVariantes(MySqlcon)
+                        'PV.ModificaInventario(IdVariante, CDbl(TextBox5.Text), IdsAlmacenes.Valor(ComboBox8.SelectedIndex))
+                        'End If
+
+                        ConsultaDetalles()
+                        NuevoConcepto()
+                        'PopUp("Artículo agregado", 90)
+                    Else
+                        CD.Modificar(IdDetalle, CDbl(txtCantidad.Text), IDsMonedas2.Valor(ComboBox2.SelectedIndex), IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex), CDbl(TextBox6.Text), If(cmbUbicacion.Visible, cmbUbicacion.SelectedValue, ""), If(cmbUbicacionDestino.Visible, cmbUbicacionDestino.SelectedValue, ""), txtTarima.Text, txtTarimaDesino.Text)
+
+                        If ManejaSeries <> 0 Then
+                            'Dim Concep As New dbInventarioConceptos(IdsMovimientos.Valor(ComboBox6.SelectedIndex), MySqlcon)
+                            If Concep.Tipo <> dbInventarioConceptos.Tipos.Traspaso Then
                                 Dim F As New frmInventarioSeries(IdInventario, 0, 0, CDbl(txtCantidad.Text), DateTimePicker1.Value, idMovimiento, 0)
-                                F.ShowDialog()
-                                F.Dispose()
-                            Else
-                                Dim F As New frmInventarioSeries(IdInventario, 0, 0, CD.Cantidad, DateTimePicker1.Value, idMovimiento, 0)
                                 F.ShowDialog()
                                 F.Dispose()
                             End If
                         End If
-                    End If
-                    If EsSemillas And (Concep.Tipo = dbInventarioConceptos.Tipos.Entrada Or Concep.Tipo = dbInventarioConceptos.Tipos.Salida Or Concep.Tipo = dbInventarioConceptos.Tipos.InventarioInicial) Then
-                        Dim Tipoboleta As String = ""
-                        If Concep.Tipo = dbInventarioConceptos.Tipos.Entrada Or Concep.Tipo = dbInventarioConceptos.Tipos.InventarioInicial Then
-                            Tipoboleta = "E"
+
+                        If EsSemillas And (Concep.Tipo = dbInventarioConceptos.Tipos.Entrada Or Concep.Tipo = dbInventarioConceptos.Tipos.Salida Or Concep.Tipo = dbInventarioConceptos.Tipos.InventarioInicial) Then
+                            Dim Tipoboleta As String = ""
+                            If Concep.Tipo = dbInventarioConceptos.Tipos.Entrada Or Concep.Tipo = dbInventarioConceptos.Tipos.InventarioInicial Then
+                                Tipoboleta = "E"
+                            End If
+                            If Concep.Tipo = dbInventarioConceptos.Tipos.Salida Then
+                                Tipoboleta = "S"
+                            End If
+                            Dim Boleta As New frmSemillasBoleta(Tipoboleta, TextBox3.Text, CDbl(txtCantidad.Text), IdDetalle, GlobalSemillasResumida, cmbAlmacen.Text, GlobalPermisos.ChecaPermiso(PermisosN.Semillas.PrecioVerBoleta, PermisosN.Secciones.Semillas))
+                            Boleta.ShowDialog()
+                            txtCantidad.Text = Boleta.pesoBrutoAnalizado.ToString
+                            CD.ModificarCantidad(CD.ID, Boleta.pesoBrutoAnalizado, CDbl(TextBox6.Text))
+                            Boleta.Dispose()
                         End If
-                        If Concep.Tipo = dbInventarioConceptos.Tipos.Salida Then
-                            Tipoboleta = "S"
-                        End If
-                        Dim Boleta As New frmSemillasBoleta(Tipoboleta, TextBox3.Text, CDbl(txtCantidad.Text), CD.ID, GlobalSemillasResumida, cmbAlmacenOrigen.Text, GlobalPermisos.ChecaPermiso(PermisosN.Semillas.PrecioVerBoleta, PermisosN.Secciones.Semillas))
-                        Boleta.ShowDialog()
-                        txtCantidad.Text = Boleta.pesoBrutoAnalizado.ToString
-                        CD.ModificarCantidad(CD.ID, Boleta.pesoBrutoAnalizado, CDbl(TextBox6.Text))
-                        Boleta.Dispose()
-                    End If
-                    If Lotes = 1 Then
-                        Dim F As New frmInventarioLotes(0, 0, 0, 0, CDbl(txtCantidad.Text), IdInventario, 0, 0, 0, CD.ID, IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), cmbAlmacenOrigen.Text, Concep.Tipo, 0, 0)
-                        F.ShowDialog()
-                        F.Dispose()
-                    End If
-                    If Aduana = 1 Then
-                        Dim F As New frmInventarioAduana(0, 0, 0, 0, CDbl(txtCantidad.Text), IdInventario, 0, 0, 0, CD.ID, IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), cmbAlmacenOrigen.Text, Concep.Tipo, 0, 0)
-                        F.ShowDialog()
-                        F.Dispose()
-                    End If
-
-
-                    'If IdVariante <> 0 Then
-                    'Dim PV As New dbProductosVariantes(MySqlcon)
-                    'PV.ModificaInventario(IdVariante, CDbl(TextBox5.Text), IdsAlmacenes.Valor(ComboBox8.SelectedIndex))
-                    'End If
-
-                    ConsultaDetalles()
-                    NuevoConcepto()
-                    'PopUp("Artículo agregado", 90)
-                Else
-                    CD.Modificar(IdDetalle, CDbl(txtCantidad.Text), IDsMonedas2.Valor(ComboBox2.SelectedIndex), IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex), CDbl(TextBox6.Text), If(cmbUbicacionOrigen.Visible, cmbUbicacionOrigen.SelectedValue, ""), If(cmbUbicacionDestino.Visible, cmbUbicacionDestino.SelectedValue, ""))
-
-                    If ManejaSeries <> 0 Then
-                        'Dim Concep As New dbInventarioConceptos(IdsMovimientos.Valor(ComboBox6.SelectedIndex), MySqlcon)
-                        If Concep.Tipo <> dbInventarioConceptos.Tipos.Traspaso Then
-                            Dim F As New frmInventarioSeries(IdInventario, 0, 0, CDbl(txtCantidad.Text), DateTimePicker1.Value, idMovimiento, 0)
+                        'Dim I As New dbInventario(MySqlcon)
+                        'I.MovimientoDeInventario(IdInventario, CDbl(TextBox5.Text), CantAnt, dbInventario.TipoMovimiento.CambioBaja, IdAlmacen)
+                        If Lotes = 1 Then
+                            Dim F As New frmInventarioLotes(0, 0, 0, 0, CDbl(txtCantidad.Text), IdInventario, 0, 0, 0, IdDetalle, IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), cmbAlmacen.Text, Concep.Tipo, 0, 0)
                             F.ShowDialog()
                             F.Dispose()
                         End If
-                    End If
-
-                    If EsSemillas And (Concep.Tipo = dbInventarioConceptos.Tipos.Entrada Or Concep.Tipo = dbInventarioConceptos.Tipos.Salida Or Concep.Tipo = dbInventarioConceptos.Tipos.InventarioInicial) Then
-                        Dim Tipoboleta As String = ""
-                        If Concep.Tipo = dbInventarioConceptos.Tipos.Entrada Or Concep.Tipo = dbInventarioConceptos.Tipos.InventarioInicial Then
-                            Tipoboleta = "E"
+                        If Aduana = 1 Then
+                            Dim F As New frmInventarioAduana(0, 0, 0, 0, CDbl(txtCantidad.Text), IdInventario, 0, 0, 0, IdDetalle, IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), cmbAlmacen.Text, Concep.Tipo, 0, 0)
+                            F.ShowDialog()
+                            F.Dispose()
                         End If
-                        If Concep.Tipo = dbInventarioConceptos.Tipos.Salida Then
-                            Tipoboleta = "S"
-                        End If
-                        Dim Boleta As New frmSemillasBoleta(Tipoboleta, TextBox3.Text, CDbl(txtCantidad.Text), IdDetalle, GlobalSemillasResumida, cmbAlmacenOrigen.Text, GlobalPermisos.ChecaPermiso(PermisosN.Semillas.PrecioVerBoleta, PermisosN.Secciones.Semillas))
-                        Boleta.ShowDialog()
-                        txtCantidad.Text = Boleta.pesoBrutoAnalizado.ToString
-                        CD.ModificarCantidad(CD.ID, Boleta.pesoBrutoAnalizado, CDbl(TextBox6.Text))
-                        Boleta.Dispose()
+                        'If IdVariante <> 0 Then
+                        'Dim PV As New dbProductosVariantes(MySqlcon)
+                        'PV.ModificaInventario(IdVariante, CantAnt * -1, IdAlmacen)
+                        'PV.ModificaInventario(IdVariante, CDbl(TextBox5.Text), IdAlmacen)
+                        'End If
+                        ConsultaDetalles()
+                        NuevoConcepto()
+                        'PopUp("Artículo modificado", 90)
                     End If
-                    'Dim I As New dbInventario(MySqlcon)
-                    'I.MovimientoDeInventario(IdInventario, CDbl(TextBox5.Text), CantAnt, dbInventario.TipoMovimiento.CambioBaja, IdAlmacen)
-                    If Lotes = 1 Then
-                        Dim F As New frmInventarioLotes(0, 0, 0, 0, CDbl(txtCantidad.Text), IdInventario, 0, 0, 0, IdDetalle, IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), cmbAlmacenOrigen.Text, Concep.Tipo, 0, 0)
-                        F.ShowDialog()
-                        F.Dispose()
-                    End If
-                    If Aduana = 1 Then
-                        Dim F As New frmInventarioAduana(0, 0, 0, 0, CDbl(txtCantidad.Text), IdInventario, 0, 0, 0, IdDetalle, IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), cmbAlmacenOrigen.Text, Concep.Tipo, 0, 0)
-                        F.ShowDialog()
-                        F.Dispose()
-                    End If
-                    'If IdVariante <> 0 Then
-                    'Dim PV As New dbProductosVariantes(MySqlcon)
-                    'PV.ModificaInventario(IdVariante, CantAnt * -1, IdAlmacen)
-                    'PV.ModificaInventario(IdVariante, CDbl(TextBox5.Text), IdAlmacen)
-                    'End If
-                    ConsultaDetalles()
-                    NuevoConcepto()
-                    'PopUp("Artículo modificado", 90)
+                Else
+                    MsgBox(MsgError, MsgBoxStyle.Critical, GlobalNombreApp)
                 End If
-            Else
-                MsgBox(MsgError, MsgBoxStyle.Critical, GlobalNombreApp)
-            End If
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, GlobalNombreApp)
         End Try
@@ -842,7 +845,7 @@
 
             TextBox6.Text = CD.Precio.ToString
             TextBox4.Text = CD.Descripcion
-            cmbUbicacionOrigen.Text = CD.Ubicacion
+            cmbUbicacion.Text = CD.Ubicacion
             cmbUbicacionDestino.Text = CD.UbicacionD
             Button4.Text = "Modificar Concepto"
             If IdVenta <> 0 Or IdRemision <> 0 Then
@@ -852,23 +855,24 @@
             If Estado <> Estados.Guardada And Estado <> Estados.Cancelada Then Button9.Enabled = True
             ComboBox2.SelectedIndex = IDsMonedas2.Busca(CD.IdMoneda)
 
-            cmbAlmacenOrigen.SelectedIndex = IdsAlmacenes.Busca(CD.IdAlmacen)
+            cmbAlmacen.SelectedIndex = IdsAlmacenes.Busca(CD.IdAlmacen)
             cmbAlmacenDestino.SelectedIndex = IdsAlmacenes2.Busca(CD.IdAlmacen2)
             cmbAlmacenDestino.Enabled = False
-            cmbAlmacenOrigen.Enabled = False
+            cmbAlmacen.Enabled = False
 
+            Dim Op As New dbOpciones(MySqlcon)
             Dim Mov As New dbInventarioConceptos(IdsMovimientos.Valor(ComboBox6.SelectedIndex), MySqlcon)
             Dim articulo As New dbInventario(IdInventario, MySqlcon)
-            lblUbicacionOrigen.Visible = articulo.UsaUbicacion
-            cmbUbicacionOrigen.Visible = articulo.UsaUbicacion
-            lblUbicacionDestino.Visible = articulo.UsaUbicacion And Mov.Tipo = dbInventarioConceptos.Tipos.Traspaso
-            cmbUbicacionDestino.Visible = articulo.UsaUbicacion And Mov.Tipo = dbInventarioConceptos.Tipos.Traspaso
-            cmbUbicacionOrigen.DataSource = articulo.Ubicaciones(IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), IdInventario)
-            cmbUbicacionOrigen.SelectedValue = CD.Ubicacion
+            pnlUbicacion.Visible = articulo.UsaUbicacion
+            pnlUbicacionDestino.Visible = articulo.UsaUbicacion And Mov.Tipo = dbInventarioConceptos.Tipos.Traspaso And ((cmbAlmacen.SelectedIndex <> cmbAlmacen.SelectedIndex And Op.RecibidoDefault = 1) Or (cmbAlmacen.SelectedIndex = cmbAlmacen.SelectedIndex))
+            cmbUbicacion.DataSource = articulo.Ubicaciones(IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), IdInventario)
+            cmbUbicacion.SelectedValue = CD.Ubicacion
+            txtTarima.Text = CD.Tarima
             cmbUbicacionDestino.DataSource = articulo.Ubicaciones(IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex), IdInventario)
-            cmbUbicacionDestino.SelectedValue = CD.UbicacionD
-            cmbUbicacionDestino.Enabled = Estado = Estados.Inicio Or Estado = Estados.Pendiente Or Estado = Estados.SinGuardar Or (Transito = 0 And Mov.Tipo = dbInventarioConceptos.Tipos.Traspaso)
-            cmbUbicacionOrigen.Enabled = Estado = Estados.Inicio Or Estado = Estados.Pendiente Or Estado = Estados.SinGuardar
+            If CD.UbicacionD <> "" Then cmbUbicacionDestino.SelectedValue = CD.UbicacionD
+            txtTarimaDesino.Text = CD.TarimaD
+            'pnlUbicacionDestino.Visible = Estado = Estados.Inicio Or Estado = Estados.Pendiente Or Estado = Estados.SinGuardar Or (Transito = 0 And Mov.Tipo = dbInventarioConceptos.Tipos.Traspaso)
+            'pnlUbicacion.Enabled = Estado = Estados.Inicio Or Estado = Estados.Pendiente Or Estado = Estados.SinGuardar
 
             'cmbtipoarticulo.Text = "A"
             'ComboBox1.SelectedIndex = IDsMonedas.Busca(CD.IdMoneda)
@@ -957,7 +961,7 @@
         TipodeBusqueda = frmBuscador.TipoDeBusqueda.ArticuloInv
         Dim op As New dbOpciones(MySqlcon)
         If op.BusquedaporClases = 0 Then
-            Dim B As New frmBuscador(TipodeBusqueda, IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), False, False, True)
+            Dim B As New frmBuscador(TipodeBusqueda, IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), False, False, True)
             B.ShowDialog()
             If B.DialogResult = Windows.Forms.DialogResult.OK Then
                 Select Case B.Tipo
@@ -968,7 +972,7 @@
             End If
             B.Dispose()
         Else
-            Dim B As New frmBuscadorClases(TipodeBusqueda, IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), False, False, True)
+            Dim B As New frmBuscadorClases(TipodeBusqueda, IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), False, False, True)
             B.ShowDialog()
             If B.DialogResult = Windows.Forms.DialogResult.OK Then
                 Select Case B.Tipo
@@ -1043,37 +1047,31 @@
 
         Dim dbmov As New dbInventario(MySqlcon)
         cmbUbicacionDestino.DataSource = dbmov.Ubicaciones(IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex), IdInventario)
-        cmbUbicacionOrigen.DataSource = dbmov.Ubicaciones(IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), IdInventario)
+        cmbUbicacion.DataSource = dbmov.Ubicaciones(IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), IdInventario)
 
-        lblUbicacionOrigen.Visible = False
-        cmbUbicacionOrigen.Visible = False
-        lblUbicacionDestino.Visible = False
-        cmbUbicacionDestino.Visible = False
-        cmbUbicacionOrigen.Enabled = True
+        pnlUbicacion.Visible = False
+        pnlUbicacionDestino.Visible = False
+        pnlUbicacion.Enabled = True
 
-        If cmbAlmacenOrigen.Items.Count > 0 And cmbAlmacenDestino.Items.Count > 0 Then
-            If IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex) = IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex) Then
-                cmbUbicacionDestino.Enabled = True
+        If cmbAlmacen.Items.Count > 0 And cmbAlmacenDestino.Items.Count > 0 Then
+            Dim Op As New dbOpciones(MySqlcon)
+            If Concep.Tipo = dbInventarioConceptos.Tipos.Traspaso And Articulo.UsaUbicacion And (IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex) = IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex) Or Op.RecibidoDefault = 1) Then
+                pnlUbicacionDestino.Visible = True
             Else
-                cmbUbicacionDestino.Enabled = False
+                pnlUbicacionDestino.Visible = False
             End If
         Else
-            cmbUbicacionDestino.Enabled = False
+            pnlUbicacionDestino.Visible = False
         End If
 
-        Dim inv As New dbInventario(IdInventario, MySqlcon)
         Select Case Concep.Tipo
             Case 0, 4
-                lblUbicacionOrigen.Visible = inv.UsaUbicacion
-                cmbUbicacionOrigen.Visible = inv.UsaUbicacion
+                pnlUbicacion.Visible = Articulo.UsaUbicacion
             Case 1
-                lblUbicacionOrigen.Visible = inv.UsaUbicacion
-                cmbUbicacionOrigen.Visible = inv.UsaUbicacion
+                pnlUbicacion.Visible = Articulo.UsaUbicacion
             Case 3
-                lblUbicacionOrigen.Visible = inv.UsaUbicacion
-                cmbUbicacionOrigen.Visible = inv.UsaUbicacion
-                lblUbicacionDestino.Visible = inv.UsaUbicacion
-                cmbUbicacionDestino.Visible = inv.UsaUbicacion
+                pnlUbicacion.Visible = Articulo.UsaUbicacion
+                pnlUbicacionDestino.Visible = Articulo.UsaUbicacion
         End Select
         'cmbUbicacionDestino.Text = ""
         'cmbUbicacionOrigen.Text = ""
@@ -1153,11 +1151,11 @@
 
     Private Sub ComboBox3_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ComboBox3.SelectedIndexChanged
         If ConsultaOn Then
-            LlenaCombos("tblalmacenes", cmbAlmacenOrigen, "nombre", "nombret", "idalmacen", IdsAlmacenes, "idalmacen<>1 and idsucursal=" + IdsSucursales.Valor(ComboBox3.SelectedIndex).ToString)
+            LlenaCombos("tblalmacenes", cmbAlmacen, "nombre", "nombret", "idalmacen", IdsAlmacenes, "idalmacen<>1 and idsucursal=" + IdsSucursales.Valor(ComboBox3.SelectedIndex).ToString)
             LlenaCombos("tblinventarioconceptos", ComboBox6, "nombre", "nombret", "idconcepto", IdsMovimientos, "idsucursal=" + IdsSucursales.Valor(ComboBox3.SelectedIndex).ToString)
             Dim S As New dbSucursales(IdsSucursales.Valor(ComboBox3.SelectedIndex), MySqlcon)
-            If cmbAlmacenOrigen.Items.Count > 0 Then
-                cmbAlmacenOrigen.SelectedIndex = IdsAlmacenes.Busca(S.IdAlmacenM)
+            If cmbAlmacen.Items.Count > 0 Then
+                cmbAlmacen.SelectedIndex = IdsAlmacenes.Busca(S.IdAlmacenM)
                 Button4.Enabled = True
             Else
                 MsgBox("No hay almacenes registrados en esta sucursal.", MsgBoxStyle.Critical, GlobalNombreApp)
@@ -1333,15 +1331,15 @@
 
     Private Sub ComboBox6_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles ComboBox6.KeyDown
         If e.KeyCode = Keys.Enter Then
-            cmbAlmacenOrigen.Focus()
+            cmbAlmacen.Focus()
         End If
     End Sub
 
     Private Sub ComboBox6_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ComboBox6.SelectedIndexChanged
         Dim Concep As New dbInventarioConceptos(IdsMovimientos.Valor(ComboBox6.SelectedIndex), MySqlcon)
         txtCosto.Enabled = False
-        lblAlmacenOrigen.Visible = False
-        cmbAlmacenOrigen.Visible = False
+        lblAlmacen.Visible = False
+        cmbAlmacen.Visible = False
         lblAlmacenDestino.Visible = False
         cmbAlmacenDestino.Visible = False
         btnReferencia.Visible = False
@@ -1349,32 +1347,27 @@
         btnDocumento.Visible = False
         btnRecibir.Visible = False
         Label11.Visible = False
-        lblUbicacionOrigen.Visible = False
-        cmbUbicacionOrigen.Visible = False
-        lblUbicacionDestino.Visible = False
-        cmbUbicacionDestino.Visible = False
+        pnlUbicacion.Visible = False
+        pnlUbicacionDestino.Visible = False
         btnEntrega.Enabled = Concep.Tipo = dbInventarioConceptos.Tipos.Entrada
         Dim inv As New dbInventario(IdInventario, MySqlcon)
         Select Case Concep.Tipo
             Case dbInventarioConceptos.Tipos.Traspaso
-                lblAlmacenOrigen.Visible = True
-                cmbAlmacenOrigen.Visible = True
+                lblAlmacen.Visible = True
+                cmbAlmacen.Visible = True
                 lblAlmacenDestino.Visible = True
                 cmbAlmacenDestino.Visible = True
                 btnReferencia.Visible = True
                 TextBox7.Visible = True
                 btnDocumento.Visible = True
                 btnRecibir.Visible = True
-                lblUbicacionOrigen.Visible = inv.UsaUbicacion
-                cmbUbicacionOrigen.Visible = inv.UsaUbicacion
-                lblUbicacionDestino.Visible = inv.UsaUbicacion
-                cmbUbicacionDestino.Visible = inv.UsaUbicacion
+                pnlUbicacion.Visible = inv.UsaUbicacion
+                pnlUbicacionDestino.Visible = inv.UsaUbicacion
             Case dbInventarioConceptos.Tipos.Entrada, dbInventarioConceptos.Tipos.InventarioInicial
                 txtCosto.Enabled = True
-                lblAlmacenOrigen.Visible = True
-                cmbAlmacenOrigen.Visible = True
-                lblUbicacionOrigen.Visible = inv.UsaUbicacion
-                cmbUbicacionOrigen.Visible = inv.UsaUbicacion
+                lblAlmacen.Visible = True
+                cmbAlmacen.Visible = True
+                pnlUbicacion.Visible = inv.UsaUbicacion
 
             Case dbInventarioConceptos.Tipos.Ajuste
                 txtCosto.Enabled = True
@@ -1382,11 +1375,10 @@
             Case dbInventarioConceptos.Tipos.Salida
                 btnReferencia.Visible = True
                 TextBox7.Visible = True
-                lblAlmacenOrigen.Visible = True
-                cmbAlmacenOrigen.Visible = True
+                lblAlmacen.Visible = True
+                cmbAlmacen.Visible = True
                 btnDocumento.Visible = True
-                lblUbicacionOrigen.Visible = inv.UsaUbicacion
-                cmbUbicacionOrigen.Visible = inv.UsaUbicacion
+                pnlUbicacion.Visible = inv.UsaUbicacion
         End Select
         TextBox11.Text = Concep.Serie
         Dim V As New dbMovimientos(MySqlcon)
@@ -1394,7 +1386,7 @@
         If CInt(TextBox2.Text) < Concep.Folio Then TextBox2.Text = Concep.Folio.ToString
     End Sub
 
-    Private Sub ComboBox8_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles cmbAlmacenOrigen.KeyDown
+    Private Sub ComboBox8_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles cmbAlmacen.KeyDown
         If e.KeyCode = Keys.Enter Then
             If cmbAlmacenDestino.Visible Then
                 cmbAlmacenDestino.Focus()
@@ -1404,16 +1396,16 @@
         End If
     End Sub
 
-    Private Sub ComboBox8_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbAlmacenOrigen.SelectedIndexChanged
+    Private Sub ComboBox8_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbAlmacen.SelectedIndexChanged
         If ComboBox6.Items.Count > 0 Then
             Dim Concep As New dbInventarioConceptos(IdsMovimientos.Valor(ComboBox6.SelectedIndex), MySqlcon)
             If Concep.Tipo <> dbInventarioConceptos.Tipos.Traspaso Then
-                cmbAlmacenDestino.SelectedIndex = IdsAlmacenes2.Busca(IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex))
+                cmbAlmacenDestino.SelectedIndex = IdsAlmacenes2.Busca(IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex))
             End If
         End If
         Dim dbmov As New dbInventario(MySqlcon)
-        cmbUbicacionOrigen.DataSource = dbmov.Ubicaciones(IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), IdInventario)
-        cmbUbicacionOrigen.Text = ""
+        cmbUbicacion.DataSource = dbmov.Ubicaciones(IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), IdInventario)
+        cmbUbicacion.Text = ""
     End Sub
     Private Sub ImprimirSeries()
         Dim V As New dbMovimientos(idMovimiento, MySqlcon)
@@ -1505,7 +1497,7 @@
                 Case dbInventarioConceptos.Tipos.Traspaso
                     Dim PC As New frmInventarioPedidosConsulta(1, False, IdsSucursales.Valor(ComboBox3.SelectedIndex))
                     If PC.ShowDialog = Windows.Forms.DialogResult.OK Then
-                        IdAlmacenB = IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex)
+                        IdAlmacenB = IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex)
                         IdAlmacenA = IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex)
                         IdPedido = PC.IdPedido
                         CrearDesdePedido()
@@ -1550,11 +1542,11 @@
 
                             Guardar()
                             If Estado <> 0 Then
-                                V.AgregarDetallesReferencia(idMovimiento, Forma.id(0), Forma.Tipo, IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), IdsAlmacenes2.Valor(cmbAlmacenOrigen.SelectedIndex))
+                                V.AgregarDetallesReferencia(idMovimiento, Forma.id(0), Forma.Tipo, IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), IdsAlmacenes2.Valor(cmbAlmacen.SelectedIndex))
                                 ConsultaDetalles()
                             End If
                         Else
-                            V.AgregarDetallesReferencia(idMovimiento, Forma.id(0), Forma.Tipo, IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), IdsAlmacenes2.Valor(cmbAlmacenOrigen.SelectedIndex))
+                            V.AgregarDetallesReferencia(idMovimiento, Forma.id(0), Forma.Tipo, IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), IdsAlmacenes2.Valor(cmbAlmacen.SelectedIndex))
                             ConsultaDetalles()
                         End If
                         NuevoConcepto()
@@ -1606,7 +1598,7 @@
             If Concep.Tipo = dbInventarioConceptos.Tipos.Salida Then
                 Tipoboleta = "S"
             End If
-            Dim Boleta As New frmSemillasBoleta(Tipoboleta, TextBox3.Text, CDbl(txtCantidad.Text), IdDetalle, GlobalSemillasResumida, cmbAlmacenOrigen.Text, GlobalPermisos.ChecaPermiso(PermisosN.Semillas.PrecioVerBoleta, PermisosN.Secciones.Semillas))
+            Dim Boleta As New frmSemillasBoleta(Tipoboleta, TextBox3.Text, CDbl(txtCantidad.Text), IdDetalle, GlobalSemillasResumida, cmbAlmacen.Text, GlobalPermisos.ChecaPermiso(PermisosN.Semillas.PrecioVerBoleta, PermisosN.Secciones.Semillas))
             Boleta.ShowDialog()
             Boleta.Dispose()
         End If
@@ -1614,14 +1606,14 @@
 
     Private Sub Button25_Click(sender As Object, e As EventArgs) Handles Button25.Click
         Dim Concep As New dbInventarioConceptos(IdsMovimientos.Valor(ComboBox6.SelectedIndex), MySqlcon)
-        Dim F As New frmInventarioAduana(0, 0, 0, 0, CDbl(txtCantidad.Text), IdInventario, 1, 0, 0, IdDetalle, IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), cmbAlmacenOrigen.Text, Concep.Tipo, 0, 0)
+        Dim F As New frmInventarioAduana(0, 0, 0, 0, CDbl(txtCantidad.Text), IdInventario, 1, 0, 0, IdDetalle, IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), cmbAlmacen.Text, Concep.Tipo, 0, 0)
         F.ShowDialog()
         F.Dispose()
     End Sub
 
     Private Sub Button28_Click(sender As Object, e As EventArgs) Handles Button28.Click
         Dim Concep As New dbInventarioConceptos(IdsMovimientos.Valor(ComboBox6.SelectedIndex), MySqlcon)
-        Dim F As New frmInventarioLotes(0, 0, 0, 0, CDbl(txtCantidad.Text), IdInventario, 1, 0, 0, IdDetalle, IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex), cmbAlmacenOrigen.Text, Concep.Tipo, 0, 0)
+        Dim F As New frmInventarioLotes(0, 0, 0, 0, CDbl(txtCantidad.Text), IdInventario, 1, 0, 0, IdDetalle, IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), cmbAlmacen.Text, Concep.Tipo, 0, 0)
         F.ShowDialog()
         F.Dispose()
     End Sub
@@ -1631,7 +1623,7 @@
             Dim mov As New dbMovimientos(MySqlcon)
             mov.Recibir(idMovimiento, True)
             Transito = 1
-            cmbUbicacionDestino.Enabled = False
+            pnlUbicacionDestino.Visible = False
             btnRecibir.Enabled = False
             Label11.Text = "Recibido"
         End If
@@ -1728,14 +1720,18 @@
     Private Sub cmbAlmacenDestino_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbAlmacenDestino.SelectedIndexChanged
         Dim dbmov As New dbInventario(MySqlcon)
         cmbUbicacionDestino.DataSource = dbmov.Ubicaciones(IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex), IdInventario)
-        If cmbAlmacenOrigen.Items.Count > 0 And cmbAlmacenDestino.Items.Count > 0 Then
-            If IdsAlmacenes.Valor(cmbAlmacenOrigen.SelectedIndex) = IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex) Then
-                cmbUbicacionDestino.Enabled = True
+
+        If cmbAlmacen.Items.Count > 0 And cmbAlmacenDestino.Items.Count > 0 Then
+            Dim concep As New dbInventarioConceptos(IdsMovimientos.Valor(ComboBox6.SelectedIndex), MySqlcon)
+            Dim inv As New dbInventario(IdInventario, MySqlcon)
+            Dim Op As New dbOpciones(MySqlcon)
+            If concep.Tipo = dbInventarioConceptos.Tipos.Traspaso And inv.UsaUbicacion And (IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex) = IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex) Or Op.RecibidoDefault = 1) Then
+                pnlUbicacionDestino.Visible = True
             Else
-                cmbUbicacionDestino.Enabled = False
+                pnlUbicacionDestino.Visible = False
             End If
         Else
-            cmbUbicacionDestino.Enabled = False
+            pnlUbicacionDestino.Visible = False
         End If
     End Sub
 
@@ -1746,5 +1742,27 @@
         End If
     End Sub
 
-   
+    Private Sub cmbUbicacion_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbUbicacion.SelectedIndexChanged
+        If cmbUbicacion.SelectedIndex = -1 Then
+            txtTarima.Text = ""
+        Else
+            Dim db As New dbAlmacenes(MySqlcon)
+            txtTarima.Text = db.Tarima(IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), cmbUbicacion.SelectedValue)
+        End If
+        Dim Concep As New dbInventarioConceptos(IdsMovimientos.Valor(ComboBox6.SelectedIndex), MySqlcon)
+        txtTarima.Enabled = txtTarima.Text = "" And Concep.Tipo = dbInventarioConceptos.Tipos.Entrada
+
+    End Sub
+
+    Private Sub cmbUbicacionDestino_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbUbicacionDestino.SelectedIndexChanged
+        If cmbUbicacion.SelectedIndex = -1 Then
+            txtTarimaDesino.Text = ""
+        Else
+            Dim db As New dbAlmacenes(MySqlcon)
+            txtTarimaDesino.Text = db.Tarima(IdsAlmacenes2.Valor(cmbAlmacenDestino.SelectedIndex), cmbUbicacionDestino.SelectedValue)
+        End If
+        Dim Concep As New dbInventarioConceptos(IdsMovimientos.Valor(ComboBox6.SelectedIndex), MySqlcon)
+        'txtTarimaDesino.Enabled = True 'txtTarimaDesino.Text = "" And Concep.Tipo = dbInventarioConceptos.Tipos.Traspaso
+
+    End Sub
 End Class

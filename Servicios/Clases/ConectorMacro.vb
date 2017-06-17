@@ -583,7 +583,7 @@
 
                     If L.StartsWith("ESTILV") Then
                         Clave = L.Substring(L.IndexOf("   ")).Trim
-                        If Inventario.BuscaArticulo(Clave, 0) = False Then
+                        If Inventario.BuscaArticulo(Clave, 0, "") = False Then
                             If Medidas.ID <= 0 Then Medidas.ID = 1
                             Inventario.Guardar(Clave, 0, Medidas.ID, 0, Medidas.ID, 1, "", Clave, 0, 0, 2, "", 1, 1, 0, 0, 16, 0, "", "", 0, Inventario.Ubicacion, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "", 0, 0, 0, 0, "", "06 PIEZA", "", "", 0, 0, 0, False)
                             NuevoConcepto = True
@@ -632,7 +632,7 @@
                         If FacturaDetalles.Descuento <> 0 Then
                             FacturaDetalles.Precio = FacturaDetalles.Precio - (FacturaDetalles.Precio * FacturaDetalles.Descuento / 100)
                         End If
-                        FacturaDetalles.Guardar(Factura.ID, Inventario.ID, FacturaDetalles.Cantidad, FacturaDetalles.Precio, idMoneda, Replace(FacturaDetalles.Descripcion, "|", ""), 1, FacturaDetalles.Iva, FacturaDetalles.Descuento, 1, 0, 0, FacturaDetalles.Cantidad, Medidas.ID, 0, FacturaDetalles.ivaRetencion, "", 0, "")
+                        FacturaDetalles.Guardar(Factura.ID, Inventario.ID, FacturaDetalles.Cantidad, FacturaDetalles.Precio, idMoneda, Replace(FacturaDetalles.Descripcion, "|", ""), 1, FacturaDetalles.Iva, FacturaDetalles.Descuento, 1, 0, 0, FacturaDetalles.Cantidad, Medidas.ID, 0, FacturaDetalles.ivaRetencion, "", 0, "", "")
                         FacturaDetalles.Extra = ""
                         FacturaDetalles.ivaRetencion = 0
                         If Aduana.Numero <> "" And Aduana.Fecha <> "" And Aduana.Aduana <> "" Then
@@ -650,7 +650,7 @@
                 If FacturaDetalles.Descuento <> 0 Then
                     FacturaDetalles.Precio = FacturaDetalles.Precio - (FacturaDetalles.Precio * FacturaDetalles.Descuento / 100)
                 End If
-                FacturaDetalles.Guardar(Factura.ID, Inventario.ID, FacturaDetalles.Cantidad, FacturaDetalles.Precio, idMoneda, Replace(FacturaDetalles.Descripcion, "|", ""), 1, FacturaDetalles.Iva, FacturaDetalles.Descuento, 1, 0, 0, FacturaDetalles.Cantidad, Medidas.ID, 0, FacturaDetalles.ivaRetencion, "", 0, "")
+                FacturaDetalles.Guardar(Factura.ID, Inventario.ID, FacturaDetalles.Cantidad, FacturaDetalles.Precio, idMoneda, Replace(FacturaDetalles.Descripcion, "|", ""), 1, FacturaDetalles.Iva, FacturaDetalles.Descuento, 1, 0, 0, FacturaDetalles.Cantidad, Medidas.ID, 0, FacturaDetalles.ivaRetencion, "", 0, "", "")
                 FacturaDetalles.Extra = ""
                 FacturaDetalles.ivaRetencion = 0
                 If Aduana.Numero <> "" And Aduana.Fecha <> "" And Aduana.Aduana <> "" Then
@@ -749,7 +749,7 @@
 
                     If L.StartsWith("ESTILV") Then
                         Clave = L.Substring(L.IndexOf("   ")).Trim
-                        If Inventario.BuscaArticulo(Clave, 0) = False Then
+                        If Inventario.BuscaArticulo(Clave, 0, "") = False Then
                             If Medidas.ID <= 0 Then Medidas.ID = 1
                             Inventario.Guardar(Clave, 0, Medidas.ID, 0, Medidas.ID, 1, "", Clave, 0, 0, 2, "", 1, 1, 0, 0, 16, 0, "", "", 0, Inventario.Ubicacion, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "", 0, 0, 0, 0, "", "06 PIEZA", "", "", 0, 0, 0, False)
                             NuevoConcepto = True

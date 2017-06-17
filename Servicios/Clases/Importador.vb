@@ -592,7 +592,7 @@
                                             If dReader("costo") > 0 And Math.Round(dReader("existencia"), 2) > 0 Then
                                                 'Mov.Guardar(Mov.DaNuevoFolio("", pidSucursal, pIdConcepto), Format(Date.Now, "yyyy/MM/dd"), pIdConcepto, "", pidSucursal, 0, 2)
                                                 Mov.GuardarImp(Folio, Format(Date.Now, "yyyy/MM/dd"), pIdConcepto, Concepto.Serie, pidSucursal, 0, 2, dReader("costo") * dReader("existencia"), pIdAlmacen, 0, 0, 0)
-                                                MovD.Guardar(Mov.ID, C.ID, dReader("existencia"), dReader("costo") * dReader("existencia"), 2, C.Nombre, pIdAlmacen, pIdAlmacen, 1, 0, 0, "", "")
+                                                MovD.Guardar(Mov.ID, C.ID, dReader("existencia"), dReader("costo") * dReader("existencia"), 2, C.Nombre, pIdAlmacen, pIdAlmacen, 1, 0, 0, "", "", "", "")
                                                 If pCalculaExCost Then
                                                     Mov.ModificaInventario(Mov.ID, op._TipoCosteo, 0)
                                                     Mov.ReCalculaCostos(Mov.ID, op._TipoCosteo, op.CostoTiempoReal, 0)
@@ -978,7 +978,7 @@
                             If IsNumeric(dReader("costo")) And IsNumeric(dReader("existencia")) Then
                                 If dReader("costo") > 0 And Math.Round(dReader("existencia"), 2) > 0 Then
                                     Mov.GuardarImp(Folio, Format(Date.Now, "yyyy/MM/dd"), pIdConcepto, Concepto.Serie, pidSucursal, 0, 2, dReader("costo") * dReader("existencia"), pIdAlmacen, 0, 0, 0)
-                                    MovD.Guardar(Mov.ID, C.ID, dReader("existencia"), dReader("costo") * dReader("existencia"), 2, C.Nombre, pIdAlmacen, pIdAlmacen, 1, 0, 0, "", "")
+                                    MovD.Guardar(Mov.ID, C.ID, dReader("existencia"), dReader("costo") * dReader("existencia"), 2, C.Nombre, pIdAlmacen, pIdAlmacen, 1, 0, 0, "", "", "", "")
                                     'Mov.DaTotal(Mov.ID, 2)
                                     'Mov.Modificar(Mov.ID, Mov.Folio, 3, "", Mov.Serie, Mov.TotalVenta, Mov.TotalVenta, 0, 2, Mov.Fecha, 0, 0, 0)
                                     If pCalculaExCost Then

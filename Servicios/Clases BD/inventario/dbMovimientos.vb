@@ -201,8 +201,8 @@ Public Class dbMovimientos
         Comm.CommandText = "update tblmovimientos set transito=1 where idmovimiento=" + pid.ToString
         Comm.ExecuteNonQuery()
         If pMueveInv Then
-            Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario,d.idalmacen2, u.surtido, 0, 1, 1, u.ubicaciond2) from tblmovimientosdetalles d inner join tblmovimientosubicaciones u on d.iddetalle = u.iddetalle where d.idmovimiento=" + pid.ToString + ";"
-            Comm.CommandText += "select spmodificainventarioubicacionesf(d.idinventario,d.idalmacen2, u.surtido, 0, 0, 1, u.ubicaciond) from tblmovimientosdetalles d inner join tblmovimientosubicaciones u on d.iddetalle = u.iddetalle where d.idmovimiento=" + pid.ToString + ";"
+            Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario,d.idalmacen2, u.surtido, 0, 1, 1, u.ubicaciond2, u.tarimad) from tblmovimientosdetalles d inner join tblmovimientosubicaciones u on d.iddetalle = u.iddetalle where d.idmovimiento=" + pid.ToString + ";"
+            Comm.CommandText += "select spmodificainventarioubicacionesf(d.idinventario,d.idalmacen2, u.surtido, 0, 0, 1, u.ubicaciond, u.tarima) from tblmovimientosdetalles d inner join tblmovimientosubicaciones u on d.iddetalle = u.iddetalle where d.idmovimiento=" + pid.ToString + ";"
             'Comm.CommandText += "update tblmovimientosdetalles inner join tblmovimientosubicaciones on tblmovimientosdetalles.iddetalle=tblmovimientosubicaciones.iddetalle set tblmovimientosubicaciones.surtido=tblmovimientosubicaciones.cantidad where tblmovimientosdetalles.idmovimiento=" + pid.ToString + ";"
             Comm.ExecuteNonQuery()
         End If
@@ -381,53 +381,74 @@ Public Class dbMovimientos
         Comm.CommandText = "select tblinventarioconceptos.tipo from tblinventarioconceptos inner join tblmovimientos on tblinventarioconceptos.idconcepto=tblmovimientos.idconcepto where tblmovimientos.idmovimiento=" + pId.ToString
         Tipo = Comm.ExecuteScalar
         If Tipo = dbInventarioConceptos.Tipos.Entrada Or Tipo = dbInventarioConceptos.Tipos.InventarioInicial Then
-            Comm.CommandText = "select spmodificainventarioi(idinventario,idalmacen,surtido,0,1,1) from tblmovimientosdetalles where idmovimiento=" + pId.ToString + ";"
+            Comm.Transaction = Comm.Connection.BeginTransaction
+            Try
+                Comm.CommandText = "select spmodificainventarioi(idinventario,idalmacen,surtido,0,1,1) from tblmovimientosdetalles where idmovimiento=" + pId.ToString + ";"
 
-            'lotes
-            Comm.CommandText += "select spmodificainventariolotesf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen, tblmovimientoslotes.surtido, 0, 1, 1, tblmovimientoslotes.idlote) from tblmovimientosdetalles inner join tblmovimientoslotes on tblmovimientosdetalles.iddetalle = tblmovimientoslotes.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+                'lotes
+                Comm.CommandText += "select spmodificainventariolotesf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen, tblmovimientoslotes.surtido, 0, 1, 1, tblmovimientoslotes.idlote) from tblmovimientosdetalles inner join tblmovimientoslotes on tblmovimientosdetalles.iddetalle = tblmovimientoslotes.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
 
-            'aduana
-            Comm.CommandText += "select spmodificainventarioaduanaf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen, tblmovimientosaduana.surtido, 0, 1, 1, tblmovimientosaduana.idaduana) from tblmovimientosdetalles inner join tblmovimientosaduana on tblmovimientosdetalles.iddetalle=tblmovimientosaduana.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+                'aduana
+                Comm.CommandText += "select spmodificainventarioaduanaf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen, tblmovimientosaduana.surtido, 0, 1, 1, tblmovimientosaduana.idaduana) from tblmovimientosdetalles inner join tblmovimientosaduana on tblmovimientosdetalles.iddetalle=tblmovimientosaduana.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
 
-            'ubicaciones
-            Comm.CommandText += "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.surtido, 0, 1, 1, u.ubicacion) from tblmovimientosdetalles d inner join tblmovimientosubicaciones u on d.iddetalle = u.iddetalle where d.idmovimiento=" + pId.ToString + ";"
+                'ubicaciones
+                Comm.CommandText += "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.surtido, 0, 1, 1, u.ubicacion, u.tarima) from tblmovimientosdetalles d inner join tblmovimientosubicaciones u on d.iddetalle = u.iddetalle where d.idmovimiento=" + pId.ToString + ";"
 
-            Comm.ExecuteNonQuery()
+                Comm.ExecuteNonQuery()
+                Comm.Transaction.Commit()
+            Catch ex As Exception
+                Comm.Transaction.Rollback()
+                Throw ex
+            End Try
         ElseIf Tipo = dbInventarioConceptos.Tipos.Salida Then
-            Comm.CommandText = "select spmodificainventarioi(idinventario, idalmacen, surtido, 0, 0, 1) from tblmovimientosdetalles where idmovimiento=" + pId.ToString + ";"
+            Comm.Transaction = Comm.Connection.BeginTransaction
+            Try
+                Comm.CommandText = "select spmodificainventarioi(idinventario, idalmacen, surtido, 0, 0, 1) from tblmovimientosdetalles where idmovimiento=" + pId.ToString + ";"
 
-            'lotes
-            Comm.CommandText += "select spmodificainventariolotesf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen, tblmovimientoslotes.surtido, 0, 0, 1, tblmovimientoslotes.idlote) from tblmovimientosdetalles inner join tblmovimientoslotes on tblmovimientosdetalles.iddetalle=tblmovimientoslotes.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+                'lotes
+                Comm.CommandText += "select spmodificainventariolotesf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen, tblmovimientoslotes.surtido, 0, 0, 1, tblmovimientoslotes.idlote) from tblmovimientosdetalles inner join tblmovimientoslotes on tblmovimientosdetalles.iddetalle=tblmovimientoslotes.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
 
-            'aduana
-            Comm.CommandText += "select spmodificainventarioaduanaf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen, tblmovimientosaduana.surtido, 0, 0, 1, tblmovimientosaduana.idaduana) from tblmovimientosdetalles inner join tblmovimientosaduana on tblmovimientosdetalles.iddetalle=tblmovimientosaduana.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+                'aduana
+                Comm.CommandText += "select spmodificainventarioaduanaf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen, tblmovimientosaduana.surtido, 0, 0, 1, tblmovimientosaduana.idaduana) from tblmovimientosdetalles inner join tblmovimientosaduana on tblmovimientosdetalles.iddetalle=tblmovimientosaduana.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
 
-            'ubicaciones
-            Comm.CommandText += "select spmodificainventarioubicacionesf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen, tblmovimientosubicaciones.surtido, 0, 0, 1, tblmovimientosubicaciones.ubicacion) from tblmovimientosdetalles inner join tblmovimientosubicaciones on tblmovimientosdetalles.iddetalle=tblmovimientosubicaciones.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+                'ubicaciones
+                Comm.CommandText += "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.surtido, 0, 0, 1, u.ubicacion, u.tarima) from tblmovimientosdetalles d inner join tblmovimientosubicaciones u on d.iddetalle=u.iddetalle where d.idmovimiento=" + pId.ToString + ";"
 
-            Comm.ExecuteNonQuery()
+                Comm.ExecuteNonQuery()
+                Comm.Transaction.Commit()
+            Catch ex As Exception
+                Comm.Transaction.Rollback()
+                Throw ex
+            End Try
         ElseIf Tipo = dbInventarioConceptos.Tipos.Traspaso Then
-            Comm.CommandText = "select spmodificainventarioi(idinventario, idalmacen, surtido, 0, 0, 1) from tblmovimientosdetalles where idmovimiento=" + pId.ToString + ";"
-            Comm.CommandText += "select spmodificainventarioi(idinventario, idalmacen2, surtido, 0, 1, 1) from tblmovimientosdetalles where idmovimiento=" + pId.ToString + ";"
+            Comm.Transaction = Comm.Connection.BeginTransaction
+            Try
+                Comm.CommandText = "select spmodificainventarioi(idinventario, idalmacen, surtido, 0, 0, 1) from tblmovimientosdetalles where idmovimiento=" + pId.ToString + ";"
+                Comm.CommandText += "select spmodificainventarioi(idinventario, idalmacen2, surtido, 0, 1, 1) from tblmovimientosdetalles where idmovimiento=" + pId.ToString + ";"
 
-            'lotes
-            Comm.CommandText += "select spmodificainventariolotesf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen, tblmovimientoslotes.surtido, 0, 0, 1, tblmovimientoslotes.idlote) from tblmovimientosdetalles inner join tblmovimientoslotes on tblmovimientosdetalles.iddetalle = tblmovimientoslotes.iddetalle  where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
-            Comm.CommandText += "select spmodificainventariolotesf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen2, tblmovimientoslotes.surtido, 0, 1, 1, tblmovimientoslotes.idlote) from tblmovimientosdetalles inner join tblmovimientoslotes on tblmovimientosdetalles.iddetalle = tblmovimientoslotes.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+                'lotes
+                Comm.CommandText += "select spmodificainventariolotesf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen, tblmovimientoslotes.surtido, 0, 0, 1, tblmovimientoslotes.idlote) from tblmovimientosdetalles inner join tblmovimientoslotes on tblmovimientosdetalles.iddetalle = tblmovimientoslotes.iddetalle  where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+                Comm.CommandText += "select spmodificainventariolotesf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen2, tblmovimientoslotes.surtido, 0, 1, 1, tblmovimientoslotes.idlote) from tblmovimientosdetalles inner join tblmovimientoslotes on tblmovimientosdetalles.iddetalle = tblmovimientoslotes.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
 
-            'aduana
-            Comm.CommandText += "select spmodificainventarioaduanaf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen2, tblmovimientosaduana.surtido, 0, 1, 1, tblmovimientosaduana.idaduana) from tblmovimientosdetalles inner join tblmovimientosaduana on tblmovimientosdetalles.iddetalle = tblmovimientosaduana.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
-            Comm.CommandText += "select spmodificainventarioaduanaf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen, tblmovimientosaduana.surtido, 0, 0, 1, tblmovimientosaduana.idaduana) from tblmovimientosdetalles inner join tblmovimientosaduana on tblmovimientosdetalles.iddetalle=tblmovimientosaduana.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+                'aduana
+                Comm.CommandText += "select spmodificainventarioaduanaf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen2, tblmovimientosaduana.surtido, 0, 1, 1, tblmovimientosaduana.idaduana) from tblmovimientosdetalles inner join tblmovimientosaduana on tblmovimientosdetalles.iddetalle = tblmovimientosaduana.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+                Comm.CommandText += "select spmodificainventarioaduanaf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen, tblmovimientosaduana.surtido, 0, 0, 1, tblmovimientosaduana.idaduana) from tblmovimientosdetalles inner join tblmovimientosaduana on tblmovimientosdetalles.iddetalle=tblmovimientosaduana.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
 
-            'ubicaciones
-            Comm.CommandText += "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.surtido, 0, 0, 1, u.ubicacion) from tblmovimientosdetalles d inner join tblmovimientosubicaciones u on d.iddetalle = u.iddetalle  where d.idmovimiento=" + pId.ToString + ";"
-            Comm.CommandText += "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen2, u.surtido, 0, 1, 1, u.ubicaciond) from tblmovimientosdetalles d inner join tblmovimientosubicaciones u on d.iddetalle = u.iddetalle where d.idmovimiento=" + pId.ToString + ";"
+                'ubicaciones
+                Comm.CommandText += "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.surtido, 0, 0, 1, u.ubicacion, u.tarima) from tblmovimientosdetalles d inner join tblmovimientosubicaciones u on d.iddetalle = u.iddetalle  where d.idmovimiento=" + pId.ToString + ";"
+                Comm.CommandText += "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen2, u.surtido, 0, 1, 1, u.ubicaciond, u.tarimad) from tblmovimientosdetalles d inner join tblmovimientosubicaciones u on d.iddetalle = u.iddetalle where d.idmovimiento=" + pId.ToString + ";"
 
-            Comm.ExecuteNonQuery()
+                Comm.ExecuteNonQuery()
+                Comm.Transaction.Commit()
+            Catch ex As Exception
+                Comm.Transaction.Rollback()
+                Throw ex
+            End Try
         ElseIf Tipo = dbInventarioConceptos.Tipos.Ajuste Then
-            'Comm.CommandText = "select if(idinventario>1,spajustainventarioi(idinventario,idalmacen,inventarioanterior),0),if(idvariante>1,spajustainventariop(idvariante,idalmacen,inventarioanterior),0) from tblmovimientosdetalles where idmovimiento=" + pId.ToString + ";"
-            'Comm.ExecuteNonQuery()
-            Comm.CommandText = "select spmodificainventarioi(idinventario, idalmacen, inventarioanterior, 0, 0, 1) from tblmovimientosdetalles where idmovimiento=" + pId.ToString + ";"
-            Comm.ExecuteNonQuery()
+                'Comm.CommandText = "select if(idinventario>1,spajustainventarioi(idinventario,idalmacen,inventarioanterior),0),if(idvariante>1,spajustainventariop(idvariante,idalmacen,inventarioanterior),0) from tblmovimientosdetalles where idmovimiento=" + pId.ToString + ";"
+                'Comm.ExecuteNonQuery()
+                Comm.CommandText = "select spmodificainventarioi(idinventario, idalmacen, inventarioanterior, 0, 0, 1) from tblmovimientosdetalles where idmovimiento=" + pId.ToString + ";"
+                Comm.ExecuteNonQuery()
         End If
     End Sub
 
@@ -437,69 +458,92 @@ Public Class dbMovimientos
         Comm.CommandText = "select tblinventarioconceptos.tipo from tblinventarioconceptos inner join tblmovimientos on tblinventarioconceptos.idconcepto=tblmovimientos.idconcepto where tblmovimientos.idmovimiento=" + pId.ToString
         Tipo = Comm.ExecuteScalar
         If Tipo = dbInventarioConceptos.Tipos.Entrada Or Tipo = dbInventarioConceptos.Tipos.InventarioInicial Then
-            Comm.CommandText = "select spmodificainventarioi(idinventario, idalmacen, cantidad-surtido, 0, 0, 1) from tblmovimientosdetalles where idmovimiento=" + pId.ToString + ";"
-            Comm.CommandText += "update tblmovimientosdetalles set surtido=cantidad where idmovimiento=" + pId.ToString + ";"
+            Comm.Transaction = Comm.Connection.BeginTransaction
+            Try
+                Comm.CommandText = "select spmodificainventarioi(idinventario, idalmacen, cantidad-surtido, 0, 0, 1) from tblmovimientosdetalles where idmovimiento=" + pId.ToString + ";"
+                Comm.CommandText += "update tblmovimientosdetalles set surtido=cantidad where idmovimiento=" + pId.ToString + ";"
 
-            'lotes
-            Comm.CommandText += "select spmodificainventariolotesf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen, tblmovimientoslotes.cantidad-tblmovimientoslotes.surtido, 0, 0, 1, tblmovimientoslotes.idlote) from tblmovimientosdetalles inner join tblmovimientoslotes on tblmovimientosdetalles.iddetalle=tblmovimientoslotes.iddetalle where idmovimiento=" + pId.ToString + ";"
-            Comm.CommandText += "update tblmovimientoslotes inner join tblmovimientosdetalles on tblmovimientoslotes.iddetalle=tblmovimientosdetalles.iddetalle set tblmovimientoslotes.surtido=tblmovimientoslotes.cantidad where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+                'lotes
+                Comm.CommandText += "select spmodificainventariolotesf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen, tblmovimientoslotes.cantidad-tblmovimientoslotes.surtido, 0, 0, 1, tblmovimientoslotes.idlote) from tblmovimientosdetalles inner join tblmovimientoslotes on tblmovimientosdetalles.iddetalle=tblmovimientoslotes.iddetalle where idmovimiento=" + pId.ToString + ";"
+                Comm.CommandText += "update tblmovimientoslotes inner join tblmovimientosdetalles on tblmovimientoslotes.iddetalle=tblmovimientosdetalles.iddetalle set tblmovimientoslotes.surtido=tblmovimientoslotes.cantidad where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
 
-            'aduana
-            Comm.CommandText += "select spmodificainventarioaduanaf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen, tblmovimientosaduana.cantidad-tblmovimientosaduana.surtido, 0, 0, 1, tblmovimientosaduana.idaduana) from tblmovimientosdetalles inner join tblmovimientosaduana on tblmovimientosdetalles.iddetalle=tblmovimientosaduana.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
-            Comm.CommandText += "update tblmovimientosaduana inner join tblmovimientosdetalles on tblmovimientosaduana.iddetalle=tblmovimientosdetalles.iddetalle set tblmovimientosaduana.surtido=tblmovimientosaduana.cantidad where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+                'aduana
+                Comm.CommandText += "select spmodificainventarioaduanaf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen, tblmovimientosaduana.cantidad-tblmovimientosaduana.surtido, 0, 0, 1, tblmovimientosaduana.idaduana) from tblmovimientosdetalles inner join tblmovimientosaduana on tblmovimientosdetalles.iddetalle=tblmovimientosaduana.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+                Comm.CommandText += "update tblmovimientosaduana inner join tblmovimientosdetalles on tblmovimientosaduana.iddetalle=tblmovimientosdetalles.iddetalle set tblmovimientosaduana.surtido=tblmovimientosaduana.cantidad where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+                Comm.ExecuteNonQuery()
 
-            'ubicaciones
-            Comm.CommandText += "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.cantidad-u.surtido, 0, 0, 1, u.ubicacion) from tblmovimientosdetalles d inner join tblmovimientosubicaciones u on d.iddetalle=u.iddetalle where d.idmovimiento=" + pId.ToString + ";"
-            Comm.CommandText += "update tblmovimientosubicaciones inner join tblmovimientosdetalles on tblmovimientosubicaciones.iddetalle = tblmovimientosdetalles.iddetalle set tblmovimientosubicaciones.surtido = tblmovimientosubicaciones.cantidad where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+                'ubicaciones
+                Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.cantidad-u.surtido, 0, 0, 1, u.ubicacion, u.tarima) from tblmovimientosdetalles d inner join tblmovimientosubicaciones u on d.iddetalle=u.iddetalle where d.idmovimiento=" + pId.ToString + ";"
+                If Comm.ExecuteScalar = -1062 Then Throw New Exception("La tarima ya existe en otra ubicación.")
+                Comm.CommandText = "update tblmovimientosubicaciones inner join tblmovimientosdetalles on tblmovimientosubicaciones.iddetalle = tblmovimientosdetalles.iddetalle set tblmovimientosubicaciones.surtido = tblmovimientosubicaciones.cantidad where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
 
-            Comm.ExecuteNonQuery()
+                Comm.ExecuteNonQuery()
+                Comm.Transaction.Commit()
+            Catch ex As Exception
+                Comm.Transaction.Rollback()
+                Throw ex
+            End Try
         End If
         If Tipo = dbInventarioConceptos.Tipos.Salida Then
-            Comm.CommandText = "select spmodificainventarioi(idinventario,idalmacen,cantidad-surtido,0,1,1) from tblmovimientosdetalles where idmovimiento=" + pId.ToString + ";"
-            Comm.CommandText += "update tblmovimientosdetalles set surtido=cantidad where idmovimiento=" + pId.ToString + ";"
+            Comm.Transaction = Comm.Connection.BeginTransaction
+            Try
+                Comm.CommandText = "select spmodificainventarioi(idinventario,idalmacen,cantidad-surtido,0,1,1) from tblmovimientosdetalles where idmovimiento=" + pId.ToString + ";"
+                Comm.CommandText += "update tblmovimientosdetalles set surtido=cantidad where idmovimiento=" + pId.ToString + ";"
 
-            'lotes
-            Comm.CommandText += "select spmodificainventariolotesf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen, tblmovimientoslotes.cantidad-tblmovimientoslotes.surtido, 0, 1, 1, tblmovimientoslotes.idlote) from tblmovimientosdetalles inner join tblmovimientoslotes on tblmovimientosdetalles.iddetalle=tblmovimientoslotes.iddetalle where idmovimiento=" + pId.ToString + ";"
-            Comm.CommandText += "update tblmovimientosdetalles inner join tblmovimientoslotes on tblmovimientosdetalles.iddetalle = tblmovimientoslotes.iddetalle set tblmovimientoslotes.surtido = tblmovimientoslotes.cantidad where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+                'lotes
+                Comm.CommandText += "select spmodificainventariolotesf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen, tblmovimientoslotes.cantidad-tblmovimientoslotes.surtido, 0, 1, 1, tblmovimientoslotes.idlote) from tblmovimientosdetalles inner join tblmovimientoslotes on tblmovimientosdetalles.iddetalle=tblmovimientoslotes.iddetalle where idmovimiento=" + pId.ToString + ";"
+                Comm.CommandText += "update tblmovimientosdetalles inner join tblmovimientoslotes on tblmovimientosdetalles.iddetalle = tblmovimientoslotes.iddetalle set tblmovimientoslotes.surtido = tblmovimientoslotes.cantidad where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
 
-            'aduana
-            Comm.CommandText += "select spmodificainventarioaduanaf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen, tblmovimientosaduana.cantidad-tblmovimientosaduana.surtido, 0, 1, 1, tblmovimientosaduana.idaduana) from tblmovimientosdetalles inner join tblmovimientosaduana on tblmovimientosdetalles.iddetalle = tblmovimientosaduana.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
-            Comm.CommandText += "update tblmovimientosdetalles inner join tblmovimientosaduana on tblmovimientosdetalles.iddetalle = tblmovimientosaduana.iddetalle set tblmovimientosaduana.surtido=tblmovimientosaduana.cantidad where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+                'aduana
+                Comm.CommandText += "select spmodificainventarioaduanaf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen, tblmovimientosaduana.cantidad-tblmovimientosaduana.surtido, 0, 1, 1, tblmovimientosaduana.idaduana) from tblmovimientosdetalles inner join tblmovimientosaduana on tblmovimientosdetalles.iddetalle = tblmovimientosaduana.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+                Comm.CommandText += "update tblmovimientosdetalles inner join tblmovimientosaduana on tblmovimientosdetalles.iddetalle = tblmovimientosaduana.iddetalle set tblmovimientosaduana.surtido=tblmovimientosaduana.cantidad where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
 
-            'ubicaciones
-            Comm.CommandText += "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.cantidad-u.surtido, 0, 1, 1, u.ubicacion) from tblmovimientosdetalles d inner join tblmovimientosubicaciones u on d.iddetalle = u.iddetalle where d.idmovimiento=" + pId.ToString + ";"
-            Comm.CommandText += "update tblmovimientosdetalles inner join tblmovimientosubicaciones on tblmovimientosdetalles.iddetalle = tblmovimientosubicaciones.iddetalle set tblmovimientosubicaciones.surtido = tblmovimientosubicaciones.cantidad where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+                'ubicaciones
+                Comm.CommandText += "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.cantidad-u.surtido, 0, 1, 1, u.ubicacion, u.tarima) from tblmovimientosdetalles d inner join tblmovimientosubicaciones u on d.iddetalle = u.iddetalle where d.idmovimiento=" + pId.ToString + ";"
+                Comm.CommandText += "update tblmovimientosdetalles inner join tblmovimientosubicaciones on tblmovimientosdetalles.iddetalle = tblmovimientosubicaciones.iddetalle set tblmovimientosubicaciones.surtido = tblmovimientosubicaciones.cantidad where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
 
-            Comm.ExecuteNonQuery()
+                Comm.ExecuteNonQuery()
+                Comm.Transaction.Commit()
+            Catch ex As Exception
+                Comm.Transaction.Rollback()
+                Throw ex
+            End Try
         End If
         If Tipo = dbInventarioConceptos.Tipos.Traspaso Then
-            Comm.CommandText = "select spmodificainventarioi(idinventario, idalmacen, cantidad-surtido, 0, 1, 1) from tblmovimientosdetalles where idmovimiento=" + pId.ToString + ";"
-            Comm.CommandText += "select spmodificainventarioi(idinventario, idalmacen2, cantidad-surtido, 0, 0, 1) from tblmovimientosdetalles where idmovimiento=" + pId.ToString + ";"
-            Comm.CommandText += "update tblmovimientosdetalles set surtido=cantidad where idmovimiento=" + pId.ToString + ";"
+            Comm.Transaction = Comm.Connection.BeginTransaction
+            Try
+                Comm.CommandText = "select spmodificainventarioi(idinventario, idalmacen, cantidad-surtido, 0, 1, 1) from tblmovimientosdetalles where idmovimiento=" + pId.ToString + ";"
+                Comm.CommandText += "select spmodificainventarioi(idinventario, idalmacen2, cantidad-surtido, 0, 0, 1) from tblmovimientosdetalles where idmovimiento=" + pId.ToString + ";"
+                Comm.CommandText += "update tblmovimientosdetalles set surtido=cantidad where idmovimiento=" + pId.ToString + ";"
 
-            'lotes
-            Comm.CommandText += "select spmodificainventariolotesf(tblmovimientosdetalles.idinventario,tblmovimientosdetalles.idalmacen, tblmovimientoslotes.cantidad-tblmovimientoslotes.surtido, 0, 1, 1, tblmovimientoslotes.idlote) from tblmovimientosdetalles inner join tblmovimientoslotes on tblmovimientosdetalles.iddetalle = tblmovimientoslotes.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
-            Comm.CommandText += "select spmodificainventariolotesf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen2, tblmovimientoslotes.cantidad-tblmovimientoslotes.surtido, 0, 0, 1, tblmovimientoslotes.idlote) from tblmovimientosdetalles inner join tblmovimientoslotes on tblmovimientosdetalles.iddetalle = tblmovimientoslotes.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
-            Comm.CommandText += "update tblmovimientosdetalles inner join tblmovimientoslotes on tblmovimientosdetalles.iddetalle=tblmovimientoslotes.iddetalle set tblmovimientoslotes.surtido=tblmovimientoslotes.cantidad where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+                'lotes
+                Comm.CommandText += "select spmodificainventariolotesf(tblmovimientosdetalles.idinventario,tblmovimientosdetalles.idalmacen, tblmovimientoslotes.cantidad-tblmovimientoslotes.surtido, 0, 1, 1, tblmovimientoslotes.idlote) from tblmovimientosdetalles inner join tblmovimientoslotes on tblmovimientosdetalles.iddetalle = tblmovimientoslotes.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+                Comm.CommandText += "select spmodificainventariolotesf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen2, tblmovimientoslotes.cantidad-tblmovimientoslotes.surtido, 0, 0, 1, tblmovimientoslotes.idlote) from tblmovimientosdetalles inner join tblmovimientoslotes on tblmovimientosdetalles.iddetalle = tblmovimientoslotes.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+                Comm.CommandText += "update tblmovimientosdetalles inner join tblmovimientoslotes on tblmovimientosdetalles.iddetalle=tblmovimientoslotes.iddetalle set tblmovimientoslotes.surtido=tblmovimientoslotes.cantidad where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
 
-            'aduana
-            Comm.CommandText += "select spmodificainventarioaduanaf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen ,tblmovimientosaduana.cantidad-tblmovimientosaduana.surtido, 0, 1, 1, tblmovimientosaduana.idaduana) from tblmovimientosdetalles inner join tblmovimientosaduana on tblmovimientosdetalles.iddetalle = tblmovimientosaduana.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
-            Comm.CommandText += "select spmodificainventarioaduanaf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen2, tblmovimientosaduana.cantidad-tblmovimientosaduana.surtido, 0, 0, 1, tblmovimientosaduana.idaduana) from tblmovimientosdetalles inner join tblmovimientosaduana on tblmovimientosdetalles.iddetalle = tblmovimientosaduana.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
-            Comm.CommandText += "update tblmovimientosdetalles inner join tblmovimientosaduana on tblmovimientosdetalles.iddetalle=tblmovimientosaduana.iddetalle set tblmovimientosaduana.surtido=tblmovimientosaduana.cantidad where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+                'aduana
+                Comm.CommandText += "select spmodificainventarioaduanaf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen ,tblmovimientosaduana.cantidad-tblmovimientosaduana.surtido, 0, 1, 1, tblmovimientosaduana.idaduana) from tblmovimientosdetalles inner join tblmovimientosaduana on tblmovimientosdetalles.iddetalle = tblmovimientosaduana.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+                Comm.CommandText += "select spmodificainventarioaduanaf(tblmovimientosdetalles.idinventario, tblmovimientosdetalles.idalmacen2, tblmovimientosaduana.cantidad-tblmovimientosaduana.surtido, 0, 0, 1, tblmovimientosaduana.idaduana) from tblmovimientosdetalles inner join tblmovimientosaduana on tblmovimientosdetalles.iddetalle = tblmovimientosaduana.iddetalle where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+                Comm.CommandText += "update tblmovimientosdetalles inner join tblmovimientosaduana on tblmovimientosdetalles.iddetalle=tblmovimientosaduana.iddetalle set tblmovimientosaduana.surtido=tblmovimientosaduana.cantidad where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
 
-            'ubicaciones
-            Comm.CommandText += "select spmodificainventarioubicacionesf(d.idinventario,d.idalmacen, u.cantidad-u.surtido, 0, 1, 1, u.ubicacion) from tblmovimientosdetalles d inner join tblmovimientosubicaciones u on d.iddetalle = u.iddetalle where d.idmovimiento=" + pId.ToString + ";"
-            Comm.CommandText += "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen2, u.cantidad-u.surtido, 0, 0, 1, u.ubicaciond) from tblmovimientosdetalles d inner join tblmovimientosubicaciones u on d.iddetalle = u.iddetalle where d.idmovimiento=" + pId.ToString + ";"
-            Comm.CommandText += "update tblmovimientosdetalles inner join tblmovimientosubicaciones on tblmovimientosdetalles.iddetalle=tblmovimientosubicaciones.iddetalle set tblmovimientosubicaciones.surtido=tblmovimientosubicaciones.cantidad where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
+                'ubicaciones
+                Comm.CommandText += "select spmodificainventarioubicacionesf(d.idinventario,d.idalmacen, u.cantidad-u.surtido, 0, 1, 1, u.ubicacion, u.tarima) from tblmovimientosdetalles d inner join tblmovimientosubicaciones u on d.iddetalle = u.iddetalle where d.idmovimiento=" + pId.ToString + ";"
+                Comm.CommandText += "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen2, u.cantidad-u.surtido, 0, 0, 1, u.ubicaciond, u.tarimad) from tblmovimientosdetalles d inner join tblmovimientosubicaciones u on d.iddetalle = u.iddetalle where d.idmovimiento=" + pId.ToString + ";"
+                Comm.CommandText += "update tblmovimientosdetalles inner join tblmovimientosubicaciones on tblmovimientosdetalles.iddetalle=tblmovimientosubicaciones.iddetalle set tblmovimientosubicaciones.surtido=tblmovimientosubicaciones.cantidad where tblmovimientosdetalles.idmovimiento=" + pId.ToString + ";"
 
-            Comm.ExecuteNonQuery()
+                Comm.ExecuteNonQuery()
+                Comm.Transaction.Commit()
+            Catch ex As Exception
+                Comm.Transaction.Rollback()
+                Throw ex
+            End Try
         End If
         If Tipo = dbInventarioConceptos.Tipos.Ajuste Then
             Comm.CommandText = "update tblmovimientosdetalles set inventarioanterior=spdainventario(idinventario,idalmacen,0)-cantidad where idinventario>1 and idmovimiento=" + pId.ToString
             Comm.ExecuteNonQuery()
             Comm.CommandText = "select if(idinventario>1,spajustainventarioi(idinventario,idalmacen,cantidad),0),if(idvariante>1,spajustainventariop(idvariante,idalmacen,cantidad),0) from tblmovimientosdetalles where idmovimiento=" + pId.ToString + ";"
             Comm.CommandText += "update tblmovimientosdetalles set surtido=cantidad where idmovimiento=" + pId.ToString
-            Comm.CommandText += "select spmodificainventarioubicacionesf(d.idinventario,d.idalmacen, u.cantidad, 0, 2, 1, u.ubicacion) from tblmovimientosdetalles d inner join tblmovimientosubicaciones u on d.iddetalle = u.iddetalle where d.idmovimiento=" + pId.ToString + ";"
+            'Comm.CommandText += "select spmodificainventarioubicacionesf(d.idinventario,d.idalmacen, u.cantidad, 0, 2, 1, u.ubicacion, u.tarima) from tblmovimientosdetalles d inner join tblmovimientosubicaciones u on d.iddetalle = u.iddetalle where d.idmovimiento=" + pId.ToString + ";"
             Comm.ExecuteNonQuery()
         End If
     End Sub

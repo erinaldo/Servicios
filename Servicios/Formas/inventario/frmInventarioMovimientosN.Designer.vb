@@ -56,10 +56,16 @@ Partial Class frmInventarioMovimientosN
         Me.Button13 = New System.Windows.Forms.Button()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.cmbUbicacionOrigen = New System.Windows.Forms.ComboBox()
+        Me.pnlUbicacionDestino = New System.Windows.Forms.Panel()
         Me.lblUbicacionDestino = New System.Windows.Forms.Label()
-        Me.lblUbicacionOrigen = New System.Windows.Forms.Label()
         Me.cmbUbicacionDestino = New System.Windows.Forms.ComboBox()
+        Me.lblTarimaDestino = New System.Windows.Forms.Label()
+        Me.txtTarimaDesino = New System.Windows.Forms.TextBox()
+        Me.pnlUbicacion = New System.Windows.Forms.Panel()
+        Me.lblUbicacion = New System.Windows.Forms.Label()
+        Me.cmbUbicacion = New System.Windows.Forms.ComboBox()
+        Me.lblTarima = New System.Windows.Forms.Label()
+        Me.txtTarima = New System.Windows.Forms.TextBox()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.ComboBox2 = New System.Windows.Forms.ComboBox()
         Me.Label27 = New System.Windows.Forms.Label()
@@ -78,8 +84,8 @@ Partial Class frmInventarioMovimientosN
         Me.TextBox6 = New System.Windows.Forms.TextBox()
         Me.lblAlmacenDestino = New System.Windows.Forms.Label()
         Me.cmbAlmacenDestino = New System.Windows.Forms.ComboBox()
-        Me.lblAlmacenOrigen = New System.Windows.Forms.Label()
-        Me.cmbAlmacenOrigen = New System.Windows.Forms.ComboBox()
+        Me.lblAlmacen = New System.Windows.Forms.Label()
+        Me.cmbAlmacen = New System.Windows.Forms.ComboBox()
         Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
         Me.Button7 = New System.Windows.Forms.Button()
         Me.TextBox2 = New System.Windows.Forms.TextBox()
@@ -117,6 +123,8 @@ Partial Class frmInventarioMovimientosN
         Me.btnEntrega = New System.Windows.Forms.Button()
         Me.Panel2.SuspendLayout()
         Me.Panel1.SuspendLayout()
+        Me.pnlUbicacionDestino.SuspendLayout()
+        Me.pnlUbicacion.SuspendLayout()
         Me.Panel3.SuspendLayout()
         CType(Me.DGDetalles, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -439,10 +447,8 @@ Partial Class frmInventarioMovimientosN
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.Color.Transparent
-        Me.Panel1.Controls.Add(Me.cmbUbicacionOrigen)
-        Me.Panel1.Controls.Add(Me.lblUbicacionDestino)
-        Me.Panel1.Controls.Add(Me.lblUbicacionOrigen)
-        Me.Panel1.Controls.Add(Me.cmbUbicacionDestino)
+        Me.Panel1.Controls.Add(Me.pnlUbicacionDestino)
+        Me.Panel1.Controls.Add(Me.pnlUbicacion)
         Me.Panel1.Controls.Add(Me.Label10)
         Me.Panel1.Controls.Add(Me.ComboBox2)
         Me.Panel1.Controls.Add(Me.Label27)
@@ -464,51 +470,113 @@ Partial Class frmInventarioMovimientosN
         Me.Panel1.Size = New System.Drawing.Size(918, 87)
         Me.Panel1.TabIndex = 11
         '
-        'cmbUbicacionOrigen
+        'pnlUbicacionDestino
         '
-        Me.cmbUbicacionOrigen.DisplayMember = "ubicacionc"
-        Me.cmbUbicacionOrigen.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbUbicacionOrigen.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmbUbicacionOrigen.FormattingEnabled = True
-        Me.cmbUbicacionOrigen.Location = New System.Drawing.Point(514, 60)
-        Me.cmbUbicacionOrigen.Name = "cmbUbicacionOrigen"
-        Me.cmbUbicacionOrigen.Size = New System.Drawing.Size(130, 24)
-        Me.cmbUbicacionOrigen.TabIndex = 19
-        Me.cmbUbicacionOrigen.TabStop = False
-        Me.cmbUbicacionOrigen.ValueMember = "ubicacion"
+        Me.pnlUbicacionDestino.Controls.Add(Me.lblUbicacionDestino)
+        Me.pnlUbicacionDestino.Controls.Add(Me.cmbUbicacionDestino)
+        Me.pnlUbicacionDestino.Controls.Add(Me.lblTarimaDestino)
+        Me.pnlUbicacionDestino.Controls.Add(Me.txtTarimaDesino)
+        Me.pnlUbicacionDestino.Location = New System.Drawing.Point(558, 40)
+        Me.pnlUbicacionDestino.Name = "pnlUbicacionDestino"
+        Me.pnlUbicacionDestino.Size = New System.Drawing.Size(217, 47)
+        Me.pnlUbicacionDestino.TabIndex = 20
         '
         'lblUbicacionDestino
         '
         Me.lblUbicacionDestino.AutoSize = True
         Me.lblUbicacionDestino.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblUbicacionDestino.Location = New System.Drawing.Point(647, 41)
+        Me.lblUbicacionDestino.Location = New System.Drawing.Point(3, 2)
         Me.lblUbicacionDestino.Name = "lblUbicacionDestino"
         Me.lblUbicacionDestino.Size = New System.Drawing.Size(125, 16)
         Me.lblUbicacionDestino.TabIndex = 220
         Me.lblUbicacionDestino.Text = "Ubicación destino:"
         '
-        'lblUbicacionOrigen
-        '
-        Me.lblUbicacionOrigen.AutoSize = True
-        Me.lblUbicacionOrigen.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblUbicacionOrigen.Location = New System.Drawing.Point(511, 41)
-        Me.lblUbicacionOrigen.Name = "lblUbicacionOrigen"
-        Me.lblUbicacionOrigen.Size = New System.Drawing.Size(120, 16)
-        Me.lblUbicacionOrigen.TabIndex = 219
-        Me.lblUbicacionOrigen.Text = "Ubicación origen:"
-        '
         'cmbUbicacionDestino
         '
+        Me.cmbUbicacionDestino.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.cmbUbicacionDestino.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cmbUbicacionDestino.DisplayMember = "ubicacionc"
         Me.cmbUbicacionDestino.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbUbicacionDestino.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmbUbicacionDestino.FormattingEnabled = True
-        Me.cmbUbicacionDestino.Location = New System.Drawing.Point(650, 60)
+        Me.cmbUbicacionDestino.Location = New System.Drawing.Point(6, 21)
         Me.cmbUbicacionDestino.Name = "cmbUbicacionDestino"
         Me.cmbUbicacionDestino.Size = New System.Drawing.Size(125, 24)
-        Me.cmbUbicacionDestino.TabIndex = 20
+        Me.cmbUbicacionDestino.TabIndex = 0
         Me.cmbUbicacionDestino.TabStop = False
         Me.cmbUbicacionDestino.ValueMember = "ubicacion"
+        '
+        'lblTarimaDestino
+        '
+        Me.lblTarimaDestino.AutoSize = True
+        Me.lblTarimaDestino.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTarimaDestino.Location = New System.Drawing.Point(138, 2)
+        Me.lblTarimaDestino.Name = "lblTarimaDestino"
+        Me.lblTarimaDestino.Size = New System.Drawing.Size(56, 16)
+        Me.lblTarimaDestino.TabIndex = 224
+        Me.lblTarimaDestino.Text = "Tarima:"
+        '
+        'txtTarimaDesino
+        '
+        Me.txtTarimaDesino.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTarimaDesino.Location = New System.Drawing.Point(137, 21)
+        Me.txtTarimaDesino.Name = "txtTarimaDesino"
+        Me.txtTarimaDesino.Size = New System.Drawing.Size(78, 22)
+        Me.txtTarimaDesino.TabIndex = 1
+        '
+        'pnlUbicacion
+        '
+        Me.pnlUbicacion.Controls.Add(Me.lblUbicacion)
+        Me.pnlUbicacion.Controls.Add(Me.cmbUbicacion)
+        Me.pnlUbicacion.Controls.Add(Me.lblTarima)
+        Me.pnlUbicacion.Controls.Add(Me.txtTarima)
+        Me.pnlUbicacion.Location = New System.Drawing.Point(330, 40)
+        Me.pnlUbicacion.Name = "pnlUbicacion"
+        Me.pnlUbicacion.Size = New System.Drawing.Size(222, 45)
+        Me.pnlUbicacion.TabIndex = 19
+        '
+        'lblUbicacion
+        '
+        Me.lblUbicacion.AutoSize = True
+        Me.lblUbicacion.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblUbicacion.Location = New System.Drawing.Point(3, 2)
+        Me.lblUbicacion.Name = "lblUbicacion"
+        Me.lblUbicacion.Size = New System.Drawing.Size(75, 16)
+        Me.lblUbicacion.TabIndex = 219
+        Me.lblUbicacion.Text = "Ubicación:"
+        '
+        'cmbUbicacion
+        '
+        Me.cmbUbicacion.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.cmbUbicacion.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cmbUbicacion.DisplayMember = "ubicacionc"
+        Me.cmbUbicacion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbUbicacion.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbUbicacion.FormattingEnabled = True
+        Me.cmbUbicacion.Location = New System.Drawing.Point(6, 21)
+        Me.cmbUbicacion.Name = "cmbUbicacion"
+        Me.cmbUbicacion.Size = New System.Drawing.Size(130, 24)
+        Me.cmbUbicacion.TabIndex = 0
+        Me.cmbUbicacion.TabStop = False
+        Me.cmbUbicacion.ValueMember = "ubicacion"
+        '
+        'lblTarima
+        '
+        Me.lblTarima.AutoSize = True
+        Me.lblTarima.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTarima.Location = New System.Drawing.Point(140, 2)
+        Me.lblTarima.Name = "lblTarima"
+        Me.lblTarima.Size = New System.Drawing.Size(56, 16)
+        Me.lblTarima.TabIndex = 223
+        Me.lblTarima.Text = "Tarima:"
+        '
+        'txtTarima
+        '
+        Me.txtTarima.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTarima.Location = New System.Drawing.Point(142, 21)
+        Me.txtTarima.Name = "txtTarima"
+        Me.txtTarima.Size = New System.Drawing.Size(78, 22)
+        Me.txtTarima.TabIndex = 1
         '
         'Label10
         '
@@ -696,26 +764,26 @@ Partial Class frmInventarioMovimientosN
         Me.cmbAlmacenDestino.TabIndex = 6
         Me.cmbAlmacenDestino.TabStop = False
         '
-        'lblAlmacenOrigen
+        'lblAlmacen
         '
-        Me.lblAlmacenOrigen.AutoSize = True
-        Me.lblAlmacenOrigen.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblAlmacenOrigen.Location = New System.Drawing.Point(11, 0)
-        Me.lblAlmacenOrigen.Name = "lblAlmacenOrigen"
-        Me.lblAlmacenOrigen.Size = New System.Drawing.Size(113, 16)
-        Me.lblAlmacenOrigen.TabIndex = 126
-        Me.lblAlmacenOrigen.Text = "Almacen origen:"
+        Me.lblAlmacen.AutoSize = True
+        Me.lblAlmacen.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblAlmacen.Location = New System.Drawing.Point(11, 0)
+        Me.lblAlmacen.Name = "lblAlmacen"
+        Me.lblAlmacen.Size = New System.Drawing.Size(68, 16)
+        Me.lblAlmacen.TabIndex = 126
+        Me.lblAlmacen.Text = "Almacen:"
         '
-        'cmbAlmacenOrigen
+        'cmbAlmacen
         '
-        Me.cmbAlmacenOrigen.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbAlmacenOrigen.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmbAlmacenOrigen.FormattingEnabled = True
-        Me.cmbAlmacenOrigen.Location = New System.Drawing.Point(6, 20)
-        Me.cmbAlmacenOrigen.Name = "cmbAlmacenOrigen"
-        Me.cmbAlmacenOrigen.Size = New System.Drawing.Size(151, 24)
-        Me.cmbAlmacenOrigen.TabIndex = 5
-        Me.cmbAlmacenOrigen.TabStop = False
+        Me.cmbAlmacen.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbAlmacen.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbAlmacen.FormattingEnabled = True
+        Me.cmbAlmacen.Location = New System.Drawing.Point(6, 20)
+        Me.cmbAlmacen.Name = "cmbAlmacen"
+        Me.cmbAlmacen.Size = New System.Drawing.Size(151, 24)
+        Me.cmbAlmacen.TabIndex = 5
+        Me.cmbAlmacen.TabStop = False
         '
         'DateTimePicker1
         '
@@ -830,9 +898,9 @@ Partial Class frmInventarioMovimientosN
         '
         'Panel3
         '
-        Me.Panel3.Controls.Add(Me.cmbAlmacenOrigen)
+        Me.Panel3.Controls.Add(Me.cmbAlmacen)
         Me.Panel3.Controls.Add(Me.lblAlmacenDestino)
-        Me.Panel3.Controls.Add(Me.lblAlmacenOrigen)
+        Me.Panel3.Controls.Add(Me.lblAlmacen)
         Me.Panel3.Controls.Add(Me.cmbAlmacenDestino)
         Me.Panel3.Location = New System.Drawing.Point(12, 43)
         Me.Panel3.Name = "Panel3"
@@ -1106,6 +1174,10 @@ Partial Class frmInventarioMovimientosN
         Me.Panel2.PerformLayout()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
+        Me.pnlUbicacionDestino.ResumeLayout(False)
+        Me.pnlUbicacionDestino.PerformLayout()
+        Me.pnlUbicacion.ResumeLayout(False)
+        Me.pnlUbicacion.PerformLayout()
         Me.Panel3.ResumeLayout(False)
         Me.Panel3.PerformLayout()
         CType(Me.DGDetalles, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1143,8 +1215,8 @@ Partial Class frmInventarioMovimientosN
     Friend WithEvents Label27 As System.Windows.Forms.Label
     Friend WithEvents txtCosto As System.Windows.Forms.TextBox
     Friend WithEvents Label20 As System.Windows.Forms.Label
-    Friend WithEvents lblAlmacenOrigen As System.Windows.Forms.Label
-    Friend WithEvents cmbAlmacenOrigen As System.Windows.Forms.ComboBox
+    Friend WithEvents lblAlmacen As System.Windows.Forms.Label
+    Friend WithEvents cmbAlmacen As System.Windows.Forms.ComboBox
     Friend WithEvents Label7 As System.Windows.Forms.Label
     Friend WithEvents Label8 As System.Windows.Forms.Label
     Friend WithEvents Label9 As System.Windows.Forms.Label
@@ -1188,9 +1260,9 @@ Partial Class frmInventarioMovimientosN
     Friend WithEvents txtdatoscliente As System.Windows.Forms.TextBox
     Friend WithEvents btnBuscarCliente As System.Windows.Forms.Button
     Friend WithEvents txtcliente As System.Windows.Forms.TextBox
-    Friend WithEvents cmbUbicacionOrigen As System.Windows.Forms.ComboBox
+    Friend WithEvents cmbUbicacion As System.Windows.Forms.ComboBox
     Friend WithEvents lblUbicacionDestino As System.Windows.Forms.Label
-    Friend WithEvents lblUbicacionOrigen As System.Windows.Forms.Label
+    Friend WithEvents lblUbicacion As System.Windows.Forms.Label
     Friend WithEvents cmbUbicacionDestino As System.Windows.Forms.ComboBox
     Friend WithEvents DGDetalles As System.Windows.Forms.DataGridView
     Friend WithEvents colId As System.Windows.Forms.DataGridViewTextBoxColumn
@@ -1202,4 +1274,10 @@ Partial Class frmInventarioMovimientosN
     Friend WithEvents colAlmacen As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colAlmacenDest As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents btnEntrega As System.Windows.Forms.Button
+    Friend WithEvents lblTarimaDestino As System.Windows.Forms.Label
+    Friend WithEvents lblTarima As System.Windows.Forms.Label
+    Friend WithEvents txtTarimaDesino As System.Windows.Forms.TextBox
+    Friend WithEvents txtTarima As System.Windows.Forms.TextBox
+    Friend WithEvents pnlUbicacionDestino As System.Windows.Forms.Panel
+    Friend WithEvents pnlUbicacion As System.Windows.Forms.Panel
 End Class

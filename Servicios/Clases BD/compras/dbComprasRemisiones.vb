@@ -325,7 +325,7 @@
         Comm.ExecuteNonQuery()
 
         'ubicaciones
-        Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.cantidad-u.surtido, 0, 0, 1, u.ubicacion) from tblcomprasremisionesdetalles d inner join tblcomprasremisionesubicaciones u on d.iddetalle=u.iddetalle where d.idremision=" + pId.ToString + ";"
+        Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.cantidad-u.surtido, 0, 0, 1, u.ubicacion, u.tarima) from tblcomprasremisionesdetalles d inner join tblcomprasremisionesubicaciones u on d.iddetalle=u.iddetalle where d.idremision=" + pId.ToString + ";"
         Comm.CommandText += "update tblcomprasremisionesubicaciones inner join tblcomprasremisionesdetalles on tblcomprasremisionesubicaciones.iddetalle = tblcomprasremisionesdetalles.iddetalle set tblcomprasremisionesubicaciones.surtido = tblcomprasremisionesubicaciones.cantidad where tblcomprasremisionesdetalles.idremision=" + pId.ToString + ";"
         Comm.ExecuteNonQuery()
 
@@ -348,7 +348,7 @@
         Comm.ExecuteNonQuery()
 
         'ubicaciones
-        Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.surtido, 0, 1, 1, u.ubicacion) from tblcomprasremisionesdetalles d inner join tblcomprasremisionesubicaciones u on d.iddetalle=u.iddetalle where d.idremision=" + pId.ToString + ";"
+        Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.surtido, 0, 1, 1, u.ubicacion, u.tarima) from tblcomprasremisionesdetalles d inner join tblcomprasremisionesubicaciones u on d.iddetalle=u.iddetalle where d.idremision=" + pId.ToString + ";"
         Comm.CommandText += "update tblcomprasremisionesubicaciones inner join tblcomprasremisionesdetalles on tblcomprasremisionesubicaciones.iddetalle = tblcomprasremisionesdetalles.iddetalle set tblcomprasremisionesubicaciones.surtido = tblcomprasremisionesubicaciones.cantidad where tblcomprasremisionesdetalles.idremision=" + pId.ToString + ";"
         Comm.ExecuteNonQuery()
     End Sub

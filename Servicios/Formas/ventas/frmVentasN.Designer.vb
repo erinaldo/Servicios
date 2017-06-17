@@ -132,7 +132,7 @@ Partial Class frmVentasN
         Me.Button8 = New System.Windows.Forms.Button()
         Me.TextBox6 = New System.Windows.Forms.TextBox()
         Me.Label18 = New System.Windows.Forms.Label()
-        Me.ComboBox8 = New System.Windows.Forms.ComboBox()
+        Me.cmbAlmacen = New System.Windows.Forms.ComboBox()
         Me.TextBox7 = New System.Windows.Forms.TextBox()
         Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
         Me.Button7 = New System.Windows.Forms.Button()
@@ -160,10 +160,14 @@ Partial Class frmVentasN
         Me.SerialPort1 = New System.IO.Ports.SerialPort(Me.components)
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.pnlUbicacion = New System.Windows.Forms.Panel()
+        Me.Label44 = New System.Windows.Forms.Label()
+        Me.txtTarima = New System.Windows.Forms.TextBox()
         Me.Panel2.SuspendLayout()
         CType(Me.DGDetalles, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
         Me.Panel4.SuspendLayout()
+        Me.pnlUbicacion.SuspendLayout()
         Me.SuspendLayout()
         '
         'PrintDocument1
@@ -994,8 +998,7 @@ Partial Class frmVentasN
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.Color.Transparent
-        Me.Panel1.Controls.Add(Me.lblUbicacion)
-        Me.Panel1.Controls.Add(Me.cmbUbicacion)
+        Me.Panel1.Controls.Add(Me.pnlUbicacion)
         Me.Panel1.Controls.Add(Me.Label41)
         Me.Panel1.Controls.Add(Me.TextBox17)
         Me.Panel1.Controls.Add(Me.ComboBox7)
@@ -1028,7 +1031,7 @@ Partial Class frmVentasN
         Me.Panel1.Location = New System.Drawing.Point(3, 129)
         Me.Panel1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(978, 96)
+        Me.Panel1.Size = New System.Drawing.Size(1000, 96)
         Me.Panel1.TabIndex = 12
         '
         'lblUbicacion
@@ -1036,7 +1039,7 @@ Partial Class frmVentasN
         Me.lblUbicacion.AutoSize = True
         Me.lblUbicacion.BackColor = System.Drawing.Color.Transparent
         Me.lblUbicacion.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblUbicacion.Location = New System.Drawing.Point(678, 47)
+        Me.lblUbicacion.Location = New System.Drawing.Point(3, 0)
         Me.lblUbicacion.Name = "lblUbicacion"
         Me.lblUbicacion.Size = New System.Drawing.Size(75, 16)
         Me.lblUbicacion.TabIndex = 221
@@ -1050,11 +1053,11 @@ Partial Class frmVentasN
         Me.cmbUbicacion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbUbicacion.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmbUbicacion.FormattingEnabled = True
-        Me.cmbUbicacion.Location = New System.Drawing.Point(676, 65)
+        Me.cmbUbicacion.Location = New System.Drawing.Point(1, 18)
         Me.cmbUbicacion.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.cmbUbicacion.Name = "cmbUbicacion"
         Me.cmbUbicacion.Size = New System.Drawing.Size(126, 24)
-        Me.cmbUbicacion.TabIndex = 27
+        Me.cmbUbicacion.TabIndex = 0
         Me.cmbUbicacion.ValueMember = "ubicacion"
         '
         'Label41
@@ -1062,7 +1065,7 @@ Partial Class frmVentasN
         Me.Label41.AutoSize = True
         Me.Label41.BackColor = System.Drawing.Color.Transparent
         Me.Label41.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label41.Location = New System.Drawing.Point(420, 47)
+        Me.Label41.Location = New System.Drawing.Point(367, 47)
         Me.Label41.Name = "Label41"
         Me.Label41.Size = New System.Drawing.Size(18, 16)
         Me.Label41.TabIndex = 219
@@ -1071,7 +1074,7 @@ Partial Class frmVentasN
         'TextBox17
         '
         Me.TextBox17.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox17.Location = New System.Drawing.Point(348, 67)
+        Me.TextBox17.Location = New System.Drawing.Point(295, 67)
         Me.TextBox17.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.TextBox17.Name = "TextBox17"
         Me.TextBox17.Size = New System.Drawing.Size(68, 22)
@@ -1085,7 +1088,7 @@ Partial Class frmVentasN
         Me.ComboBox7.BackColor = System.Drawing.SystemColors.Window
         Me.ComboBox7.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ComboBox7.FormattingEnabled = True
-        Me.ComboBox7.Location = New System.Drawing.Point(140, 66)
+        Me.ComboBox7.Location = New System.Drawing.Point(87, 67)
         Me.ComboBox7.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.ComboBox7.Name = "ComboBox7"
         Me.ComboBox7.Size = New System.Drawing.Size(202, 24)
@@ -1096,7 +1099,7 @@ Partial Class frmVentasN
         Me.Label35.AutoSize = True
         Me.Label35.BackColor = System.Drawing.Color.Transparent
         Me.Label35.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label35.Location = New System.Drawing.Point(76, 70)
+        Me.Label35.Location = New System.Drawing.Point(23, 71)
         Me.Label35.Name = "Label35"
         Me.Label35.Size = New System.Drawing.Size(58, 16)
         Me.Label35.TabIndex = 216
@@ -1107,7 +1110,7 @@ Partial Class frmVentasN
         Me.Label33.AutoSize = True
         Me.Label33.BackColor = System.Drawing.Color.Transparent
         Me.Label33.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label33.Location = New System.Drawing.Point(594, 49)
+        Me.Label33.Location = New System.Drawing.Point(541, 49)
         Me.Label33.Name = "Label33"
         Me.Label33.Size = New System.Drawing.Size(76, 16)
         Me.Label33.TabIndex = 214
@@ -1116,11 +1119,11 @@ Partial Class frmVentasN
         'txtIVARetenido
         '
         Me.txtIVARetenido.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtIVARetenido.Location = New System.Drawing.Point(593, 67)
+        Me.txtIVARetenido.Location = New System.Drawing.Point(540, 67)
         Me.txtIVARetenido.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.txtIVARetenido.Name = "txtIVARetenido"
         Me.txtIVARetenido.Size = New System.Drawing.Size(77, 22)
-        Me.txtIVARetenido.TabIndex = 266
+        Me.txtIVARetenido.TabIndex = 26
         Me.txtIVARetenido.Text = "0"
         Me.txtIVARetenido.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -1129,7 +1132,7 @@ Partial Class frmVentasN
         Me.lblIEPS.AutoSize = True
         Me.lblIEPS.BackColor = System.Drawing.Color.Transparent
         Me.lblIEPS.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblIEPS.Location = New System.Drawing.Point(526, 49)
+        Me.lblIEPS.Location = New System.Drawing.Point(473, 49)
         Me.lblIEPS.Name = "lblIEPS"
         Me.lblIEPS.Size = New System.Drawing.Size(56, 16)
         Me.lblIEPS.TabIndex = 212
@@ -1138,7 +1141,7 @@ Partial Class frmVentasN
         'txtIEPS
         '
         Me.txtIEPS.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtIEPS.Location = New System.Drawing.Point(528, 67)
+        Me.txtIEPS.Location = New System.Drawing.Point(475, 67)
         Me.txtIEPS.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.txtIEPS.Name = "txtIEPS"
         Me.txtIEPS.Size = New System.Drawing.Size(59, 22)
@@ -1182,7 +1185,7 @@ Partial Class frmVentasN
         Me.Label23.AutoSize = True
         Me.Label23.BackColor = System.Drawing.Color.Transparent
         Me.Label23.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label23.Location = New System.Drawing.Point(346, 47)
+        Me.Label23.Location = New System.Drawing.Point(293, 47)
         Me.Label23.Name = "Label23"
         Me.Label23.Size = New System.Drawing.Size(46, 16)
         Me.Label23.TabIndex = 208
@@ -1201,7 +1204,7 @@ Partial Class frmVentasN
         'TextBox9
         '
         Me.TextBox9.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox9.Location = New System.Drawing.Point(422, 67)
+        Me.TextBox9.Location = New System.Drawing.Point(369, 67)
         Me.TextBox9.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.TextBox9.Name = "TextBox9"
         Me.TextBox9.Size = New System.Drawing.Size(34, 22)
@@ -1213,7 +1216,7 @@ Partial Class frmVentasN
         Me.Label19.AutoSize = True
         Me.Label19.BackColor = System.Drawing.Color.Transparent
         Me.Label19.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label19.Location = New System.Drawing.Point(459, 49)
+        Me.Label19.Location = New System.Drawing.Point(406, 49)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(47, 16)
         Me.Label19.TabIndex = 158
@@ -1222,7 +1225,7 @@ Partial Class frmVentasN
         'TextBox8
         '
         Me.TextBox8.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox8.Location = New System.Drawing.Point(462, 67)
+        Me.TextBox8.Location = New System.Drawing.Point(409, 67)
         Me.TextBox8.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.TextBox8.Name = "TextBox8"
         Me.TextBox8.Size = New System.Drawing.Size(60, 22)
@@ -1316,7 +1319,7 @@ Partial Class frmVentasN
         'Button4
         '
         Me.Button4.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button4.Location = New System.Drawing.Point(810, 19)
+        Me.Button4.Location = New System.Drawing.Point(835, 13)
         Me.Button4.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(158, 40)
@@ -1351,7 +1354,7 @@ Partial Class frmVentasN
         'Button8
         '
         Me.Button8.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button8.Location = New System.Drawing.Point(811, 63)
+        Me.Button8.Location = New System.Drawing.Point(836, 57)
         Me.Button8.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.Button8.Name = "Button8"
         Me.Button8.Size = New System.Drawing.Size(159, 30)
@@ -1380,17 +1383,17 @@ Partial Class frmVentasN
         Me.Label18.TabIndex = 126
         Me.Label18.Text = "Almacén:"
         '
-        'ComboBox8
+        'cmbAlmacen
         '
-        Me.ComboBox8.BackColor = System.Drawing.SystemColors.Window
-        Me.ComboBox8.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBox8.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ComboBox8.FormattingEnabled = True
-        Me.ComboBox8.Location = New System.Drawing.Point(83, 104)
-        Me.ComboBox8.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.ComboBox8.Name = "ComboBox8"
-        Me.ComboBox8.Size = New System.Drawing.Size(235, 24)
-        Me.ComboBox8.TabIndex = 21
+        Me.cmbAlmacen.BackColor = System.Drawing.SystemColors.Window
+        Me.cmbAlmacen.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbAlmacen.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbAlmacen.FormattingEnabled = True
+        Me.cmbAlmacen.Location = New System.Drawing.Point(83, 104)
+        Me.cmbAlmacen.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.cmbAlmacen.Name = "cmbAlmacen"
+        Me.cmbAlmacen.Size = New System.Drawing.Size(235, 24)
+        Me.cmbAlmacen.TabIndex = 21
         '
         'TextBox7
         '
@@ -1538,7 +1541,7 @@ Partial Class frmVentasN
         Me.Panel4.Controls.Add(Me.Label18)
         Me.Panel4.Controls.Add(Me.Button28)
         Me.Panel4.Controls.Add(Me.Button3)
-        Me.Panel4.Controls.Add(Me.ComboBox8)
+        Me.Panel4.Controls.Add(Me.cmbAlmacen)
         Me.Panel4.Controls.Add(Me.Button27)
         Me.Panel4.Controls.Add(Me.TextBox1)
         Me.Panel4.Controls.Add(Me.Button26)
@@ -1731,6 +1734,38 @@ Partial Class frmVentasN
         '
         Me.OpenFileDialog1.Filter = """Archivos Excel|*.xlsx;*.xls"""
         '
+        'pnlUbicacion
+        '
+        Me.pnlUbicacion.Controls.Add(Me.Label44)
+        Me.pnlUbicacion.Controls.Add(Me.txtTarima)
+        Me.pnlUbicacion.Controls.Add(Me.lblUbicacion)
+        Me.pnlUbicacion.Controls.Add(Me.cmbUbicacion)
+        Me.pnlUbicacion.Location = New System.Drawing.Point(623, 48)
+        Me.pnlUbicacion.Name = "pnlUbicacion"
+        Me.pnlUbicacion.Size = New System.Drawing.Size(213, 48)
+        Me.pnlUbicacion.TabIndex = 27
+        '
+        'Label44
+        '
+        Me.Label44.AutoSize = True
+        Me.Label44.BackColor = System.Drawing.Color.Transparent
+        Me.Label44.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label44.Location = New System.Drawing.Point(130, 1)
+        Me.Label44.Name = "Label44"
+        Me.Label44.Size = New System.Drawing.Size(56, 16)
+        Me.Label44.TabIndex = 223
+        Me.Label44.Text = "Tarima:"
+        '
+        'txtTarima
+        '
+        Me.txtTarima.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTarima.Location = New System.Drawing.Point(133, 19)
+        Me.txtTarima.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.txtTarima.Name = "txtTarima"
+        Me.txtTarima.Size = New System.Drawing.Size(78, 22)
+        Me.txtTarima.TabIndex = 1
+        Me.txtTarima.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
         'frmVentasN
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -1756,6 +1791,8 @@ Partial Class frmVentasN
         Me.Panel1.PerformLayout()
         Me.Panel4.ResumeLayout(False)
         Me.Panel4.PerformLayout()
+        Me.pnlUbicacion.ResumeLayout(False)
+        Me.pnlUbicacion.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1820,7 +1857,7 @@ Partial Class frmVentasN
     Friend WithEvents TextBox8 As System.Windows.Forms.TextBox
     Friend WithEvents Label10 As System.Windows.Forms.Label
     Friend WithEvents Label7 As System.Windows.Forms.Label
-    Friend WithEvents ComboBox8 As System.Windows.Forms.ComboBox
+    Friend WithEvents cmbAlmacen As System.Windows.Forms.ComboBox
     Friend WithEvents Label8 As System.Windows.Forms.Label
     Friend WithEvents Label9 As System.Windows.Forms.Label
     Friend WithEvents Label6 As System.Windows.Forms.Label
@@ -1891,4 +1928,7 @@ Partial Class frmVentasN
     Friend WithEvents cmbUbicacion As System.Windows.Forms.ComboBox
     Friend WithEvents TextBox20 As System.Windows.Forms.TextBox
     Friend WithEvents Label43 As System.Windows.Forms.Label
+    Friend WithEvents pnlUbicacion As System.Windows.Forms.Panel
+    Friend WithEvents Label44 As System.Windows.Forms.Label
+    Friend WithEvents txtTarima As System.Windows.Forms.TextBox
 End Class

@@ -118,12 +118,12 @@
             LlenaCombos("tblmonedas", ComboBox2, "nombre", "nombrem", "idmoneda", IDsMonedas2, "idmoneda>1")
             'LlenaCombos("tblformasdepago", ComboBox4, "nombre", "nombret", "idforma", IdsFormasdePago, , , "idforma")
             LlenaCombos("tblformasdepago", ComboBox4, "concat(convert(if(tipo=0,'CRÉDITO','CONTADO') using utf8),'-',nombre)", "nombret", "idforma", IdsFormasdePago, , , "idforma")
-            LlenaCombos("tblalmacenes", ComboBox8, "nombre", "nombret", "idalmacen", IdsAlmacenes, "idalmacen<>1")
+            LlenaCombos("tblalmacenes", cmbAlmacen, "nombre", "nombret", "idalmacen", IdsAlmacenes, "idalmacen<>1")
             Op.RutaXMLEgresos = Op.DaRutaXMLCompras
             If Op.RutaXMLEgresos <> "" Then OpenFileDialog1.InitialDirectory = Op.RutaXMLEgresos
             ConsultaOn = True
             ComboBox3.SelectedIndex = IdsSucursales.Busca(GlobalIdSucursalDefault)
-            ComboBox8.SelectedIndex = IdsAlmacenes.Busca(GlobalIdAlmacen)
+            cmbAlmacen.SelectedIndex = IdsAlmacenes.Busca(GlobalIdAlmacen)
             ImpDoc = New ImprimirDocumento()
             If idCompra = 0 Then
                 Nuevo()
@@ -190,7 +190,7 @@
         End If
         DGDetalles.DataSource = Nothing
         Panel1.Enabled = True
-        ComboBox8.Enabled = True
+        cmbAlmacen.Enabled = True
         Panel2.Enabled = True
         Button2.Enabled = False
         Button13.Enabled = False
@@ -206,17 +206,17 @@
         Label13.Text = "0"
         Label14.Text = "0"
         TextBox12.Text = "0"
-        'LlenaCombos("tblalmacenes", ComboBox8, "nombre", "nombret", "idalmacen", IdsAlmacenes, "idalmacen<>1 and idsucursal=" + IdsSucursales.Valor(ComboBox3.SelectedIndex).ToString)
+        'LlenaCombos("tblalmacenes", cmbAlmacen, "nombre", "nombret", "idalmacen", IdsAlmacenes, "idalmacen<>1 and idsucursal=" + IdsSucursales.Valor(ComboBox3.SelectedIndex).ToString)
         If Op._TipoSelAlmacen = "0" Then
-            LlenaCombos("tblalmacenes", ComboBox8, "nombre", "nombret", "idalmacen", IdsAlmacenes, "idalmacen<>1 and idsucursal=" + IdsSucursales.Valor(ComboBox3.SelectedIndex).ToString)
+            LlenaCombos("tblalmacenes", cmbAlmacen, "nombre", "nombret", "idalmacen", IdsAlmacenes, "idalmacen<>1 and idsucursal=" + IdsSucursales.Valor(ComboBox3.SelectedIndex).ToString)
         Else
-            LlenaCombos("tblalmacenes", ComboBox8, "nombre", "nombret", "idalmacen", IdsAlmacenes, "idalmacen<>1 and idsucursal=" + IdsSucursales.Valor(ComboBox3.SelectedIndex).ToString, "Sel. Almacen")
+            LlenaCombos("tblalmacenes", cmbAlmacen, "nombre", "nombret", "idalmacen", IdsAlmacenes, "idalmacen<>1 and idsucursal=" + IdsSucursales.Valor(ComboBox3.SelectedIndex).ToString, "Sel. Almacen")
         End If
         Dim S As New dbSucursales(IdsSucursales.Valor(ComboBox3.SelectedIndex), MySqlcon)
         If Op._TipoSelAlmacen = "0" Then
-            ComboBox8.SelectedIndex = IdsAlmacenes.Busca(S.IdAlmacenC)
+            cmbAlmacen.SelectedIndex = IdsAlmacenes.Busca(S.IdAlmacenC)
         Else
-            ComboBox8.SelectedIndex = 0
+            cmbAlmacen.SelectedIndex = 0
         End If
         ComboBox2.SelectedIndex = IDsMonedas2.Busca(GlobalIdMoneda)
         If GlobalPermisos.ChecaPermiso(PermisosN.Compras.CambioSucursal, PermisosN.Secciones.Compras) = False Then
@@ -231,8 +231,8 @@
     Private Sub TextBox1_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles TextBox1.KeyDown
         If e.KeyCode = Keys.Enter Then
             If Op._TipoSelAlmacen <> "0" Then
-                'If ComboBox8.SelectedIndex <= 0 Then
-                ComboBox8.Focus()
+                'If cmbAlmacen.SelectedIndex <= 0 Then
+                cmbAlmacen.Focus()
                 'End If
             Else
                 txtCantidad.Focus()
@@ -477,9 +477,9 @@
         TextBox1.Text = C.Proveedor.Clave
 
         If Op._TipoSelAlmacen = "0" Then
-            LlenaCombos("tblalmacenes", ComboBox8, "nombre", "nombret", "idalmacen", IdsAlmacenes, "idalmacen<>1 and idsucursal=" + IdsSucursales.Valor(ComboBox3.SelectedIndex).ToString)
+            LlenaCombos("tblalmacenes", cmbAlmacen, "nombre", "nombret", "idalmacen", IdsAlmacenes, "idalmacen<>1 and idsucursal=" + IdsSucursales.Valor(ComboBox3.SelectedIndex).ToString)
         Else
-            LlenaCombos("tblalmacenes", ComboBox8, "nombre", "nombret", "idalmacen", IdsAlmacenes, "idalmacen<>1 and idsucursal=" + IdsSucursales.Valor(ComboBox3.SelectedIndex).ToString, "Sel. Almacen")
+            LlenaCombos("tblalmacenes", cmbAlmacen, "nombre", "nombret", "idalmacen", IdsAlmacenes, "idalmacen<>1 and idsucursal=" + IdsSucursales.Valor(ComboBox3.SelectedIndex).ToString, "Sel. Almacen")
         End If
         Estado = C.Estado
         If C.Desglosar = 1 Then
@@ -510,7 +510,7 @@
             'Button2.Enabled = False
             'else
             Panel1.Enabled = True
-            ComboBox8.Enabled = True
+            cmbAlmacen.Enabled = True
             Panel2.Enabled = True
             Button1.Enabled = False
             Button14.Enabled = True
@@ -535,7 +535,7 @@
             lblCancelada.ForeColor = Color.Red
             Button14.Enabled = False
             Panel1.Enabled = False
-            ComboBox8.Enabled = False
+            cmbAlmacen.Enabled = False
         End If
     End Sub
 
@@ -626,7 +626,7 @@
         PorLotes = 0
         Aduana = 0
         lblUbicacion.Visible = False
-        cmbUbicacion.Visible = False
+        pnlUbicacion.Visible = False
         cmbUbicacion.Enabled = True
 
         Button9.Enabled = False
@@ -638,9 +638,9 @@
             TextBox9.Text = Format(DescuentoAterior, "0.00")
         End If
         If GlobalPermisos.ChecaPermiso(PermisosN.Compras.CambiodeAlmacen, PermisosN.Secciones.Compras) = False Then
-            ComboBox8.Enabled = False
+            cmbAlmacen.Enabled = False
         Else
-            ComboBox8.Enabled = True
+            cmbAlmacen.Enabled = True
         End If
         Button4.Text = "Agregar artículo"
     End Sub
@@ -650,7 +650,7 @@
             Dim HayError As Boolean = False
             Dim MsgError As String = ""
             If Op._TipoSelAlmacen = "1" Then
-                If ComboBox8.SelectedIndex <= 0 Then
+                If cmbAlmacen.SelectedIndex <= 0 Then
                     MsgError = "Debe seleccionar un almacen."
                     HayError = True
                 End If
@@ -691,7 +691,7 @@
                     txtCosto.Text = CStr(CDbl(txtCosto.Text) - (CDbl(txtCosto.Text) * CDbl(TextBox9.Text) / 100))
                 End If
             End If
-            If Almacen.TienePermiso(IdsAlmacenes.Valor(ComboBox8.SelectedIndex)) = False Then
+            If Almacen.TienePermiso(IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex)) = False Then
                 HayError = True
                 MsgError += vbCrLf + " No tiene permiso para realizar operaciones en el almacén seleccionado."
             End If
@@ -702,7 +702,7 @@
                 IvaRetAnterior = CDbl(txtIVARetenido.Text)
                 If Button4.Text = "Agregar artículo" Then
 
-                    CD.Guardar(idCompra, IdInventario, CDbl(txtCantidad.Text), CDbl(txtImporte.Text), IDsMonedas.Valor(cmbMoneda.SelectedIndex), IdsAlmacenes.Valor(ComboBox8.SelectedIndex), CDbl(TextBox11.Text), CDbl(TextBox9.Text), True, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), If(cmbUbicacion.Visible, cmbUbicacion.SelectedValue, ""))
+                    CD.Guardar(idCompra, IdInventario, CDbl(txtCantidad.Text), CDbl(txtImporte.Text), IDsMonedas.Valor(cmbMoneda.SelectedIndex), IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), CDbl(TextBox11.Text), CDbl(TextBox9.Text), True, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), If(pnlUbicacion.Visible, cmbUbicacion.SelectedValue, ""), txtTarima.Text)
                     If ManejaSeries <> 0 Then
                         If CD.NuevoConcepto Then
                             Dim F As New frmInventarioSeries(IdInventario, idCompra, 0, CInt(txtCantidad.Text), DateTimePicker1.Value, 0, 0)
@@ -715,12 +715,12 @@
                         End If
                     End If
                     If PorLotes = 1 Then
-                        Dim F As New frmInventarioLotes(0, 0, CD.ID, 0, CDbl(txtCantidad.Text), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
+                        Dim F As New frmInventarioLotes(0, 0, CD.ID, 0, CDbl(txtCantidad.Text), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), cmbAlmacen.Text, 0, 0, 0)
                         F.ShowDialog()
                         F.Dispose()
                     End If
                     If Aduana = 1 Then
-                        Dim F As New frmInventarioAduana(0, 0, CD.ID, 0, CDbl(txtCantidad.Text), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
+                        Dim F As New frmInventarioAduana(0, 0, CD.ID, 0, CDbl(txtCantidad.Text), IdInventario, 0, 0, 0, 0, IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), cmbAlmacen.Text, 0, 0, 0)
                         F.ShowDialog()
                         F.Dispose()
                     End If
@@ -728,24 +728,24 @@
                     'Dim IK As New dbiKardex(MySqlcon)
                     'Dim EAnt As Double
                     'EAnt = I.DaInventarioTodos(IdInventario)
-                    'I.MovimientoDeInventario(IdInventario, CDbl(TextBox5.Text), 0, dbInventario.TipoMovimiento.Alta, IdsAlmacenes.Valor(ComboBox8.SelectedIndex))
+                    'I.MovimientoDeInventario(IdInventario, CDbl(TextBox5.Text), 0, dbInventario.TipoMovimiento.Alta, IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex))
                     'IK.Guardar(IdInventario, TiposDeMovimientos.CompraAlta, idCompra, CDbl(TextBox5.Text), EAnt, I.DaInventarioTodos(IdInventario), Format(Date.Today, "yyyy/MM/dd"), Format(Date.Today, "HH:mm:ss"))
                     ConsultaDetalles()
                     NuevoArticulo()
                     'PopUp("Artículo agregado", 90)
                 Else
-                    CD.Modificar(IdDetalle, CDbl(txtCantidad.Text), CDbl(txtImporte.Text), IDsMonedas.Valor(cmbMoneda.SelectedIndex), CDbl(TextBox11.Text), CDbl(TextBox9.Text), Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), If(cmbUbicacion.Visible, cmbUbicacion.SelectedValue, ""))
+                    CD.Modificar(IdDetalle, CDbl(txtCantidad.Text), CDbl(txtImporte.Text), IDsMonedas.Valor(cmbMoneda.SelectedIndex), CDbl(TextBox11.Text), CDbl(TextBox9.Text), Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), If(pnlUbicacion.Visible, cmbUbicacion.SelectedValue, ""), txtTarima.Text)
                     If ManejaSeries <> 0 Then
                         Dim F As New frmInventarioSeries(IdInventario, idCompra, 0, CDbl(txtCantidad.Text), DateTimePicker1.Value, 0, 0)
                         F.ShowDialog()
                     End If
                     If PorLotes = 1 Then
-                        Dim F As New frmInventarioLotes(0, 0, CD.ID, 0, CDbl(txtCantidad.Text), IdInventario, 1, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
+                        Dim F As New frmInventarioLotes(0, 0, CD.ID, 0, CDbl(txtCantidad.Text), IdInventario, 1, 0, 0, 0, IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), cmbAlmacen.Text, 0, 0, 0)
                         F.ShowDialog()
                         F.Dispose()
                     End If
                     If Aduana = 1 Then
-                        Dim F As New frmInventarioAduana(0, 0, CD.ID, 0, CDbl(txtCantidad.Text), IdInventario, 1, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
+                        Dim F As New frmInventarioAduana(0, 0, CD.ID, 0, CDbl(txtCantidad.Text), IdInventario, 1, 0, 0, 0, IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), cmbAlmacen.Text, 0, 0, 0)
                         F.ShowDialog()
                         F.Dispose()
                     End If
@@ -767,7 +767,7 @@
     End Sub
     Private Sub BotonAgregar()
         'If Op._TipoSelAlmacen = "1" Then
-        '    If ComboBox8.SelectedIndex <= 0 Then
+        '    If cmbAlmacen.SelectedIndex <= 0 Then
         '        MsgBox("Debe seleccionar un almacen.", MsgBoxStyle.Information, GlobalNombreApp)
         '        Exit Sub
         '    End If
@@ -814,7 +814,7 @@
             txtIVARetenido.Text = CD.ivaRetenido
             TextBox11.Text = CD.Iva.ToString
             TextBox9.Text = CD.Descuento.ToString
-            ComboBox8.SelectedIndex = IdsAlmacenes.Busca(IdAlmacen)
+            cmbAlmacen.SelectedIndex = IdsAlmacenes.Busca(IdAlmacen)
             If CD.Descuento = 0 Then
                 'If PrecioNeto = 0 Then
                 PrecioU = Math.Round(CD.Precio / CD.Cantidad, 2)
@@ -859,14 +859,14 @@
             cmbMoneda.SelectedIndex = IDsMonedas.Busca(CD.IdMoneda)
             Button6.Enabled = False
             txtCodigo.Enabled = False
-            ComboBox8.Enabled = False
+            cmbAlmacen.Enabled = False
 
-            lblUbicacion.Visible = CD.Inventario.UsaUbicacion
-            cmbUbicacion.Visible = CD.Inventario.UsaUbicacion
-            cmbUbicacion.DataSource = CD.Inventario.Ubicaciones(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario)
+            pnlUbicacion.Visible = CD.Inventario.UsaUbicacion
+            cmbUbicacion.DataSource = CD.Inventario.Ubicaciones(IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), IdInventario)
             cmbUbicacion.SelectedValue = CD.Ubicacion
+            txtTarima.Text = CD.Tarima
             cmbUbicacion.Enabled = Estado = Estados.Inicio Or Estado = Estados.Pendiente Or Estado = Estados.SinGuardar
-
+            
             If CheckScroll.Checked Then txtCantidad.Focus()
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, GlobalNombreApp)
@@ -946,8 +946,8 @@
             TextBox1.Text = B.Proveedor.Clave
             ConsultaOn = True
             If Op._TipoSelAlmacen <> "0" Then
-                'If ComboBox8.SelectedIndex <= 0 Then
-                ComboBox8.Focus()
+                'If cmbAlmacen.SelectedIndex <= 0 Then
+                cmbAlmacen.Focus()
                 'End If
             Else
                 txtCantidad.Focus()
@@ -959,7 +959,7 @@
     End Sub
     Private Sub BotonBuscar()
         If Op.BusquedaporClases = 0 Then
-            Dim B As New frmBuscador(frmBuscador.TipoDeBusqueda.Articulo, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), False, True, False)
+            Dim B As New frmBuscador(frmBuscador.TipoDeBusqueda.Articulo, IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), False, True, False)
             B.ShowDialog()
             If B.DialogResult = Windows.Forms.DialogResult.OK Then
                 LlenaDatosArticulo(B.Inventario)
@@ -967,7 +967,7 @@
             End If
             B.Dispose()
         Else
-            Dim B As New frmBuscadorClases(frmBuscador.TipoDeBusqueda.Articulo, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), False, True, False)
+            Dim B As New frmBuscadorClases(frmBuscador.TipoDeBusqueda.Articulo, IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), False, True, False)
             B.ShowDialog()
             If B.DialogResult = Windows.Forms.DialogResult.OK Then
                 LlenaDatosArticulo(B.Inventario)
@@ -1005,9 +1005,8 @@
         IdInventario = Articulo.ID
         PorLotes = Articulo.PorLotes
         Aduana = Articulo.Aduana
-        lblUbicacion.Visible = Articulo.UsaUbicacion
-        cmbUbicacion.Visible = Articulo.UsaUbicacion
-        cmbUbicacion.DataSource = Articulo.Ubicaciones(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario)
+        pnlUbicacion.Visible = Articulo.UsaUbicacion
+        cmbUbicacion.DataSource = Articulo.Ubicaciones(IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), IdInventario)
         'IdVariante = 0
         'If ManejaSeries = 0 Then
         '    Button12.Visible = False
@@ -1102,18 +1101,18 @@
 
     Private Sub ComboBox3_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ComboBox3.SelectedIndexChanged
         If ConsultaOn Then
-            'LlenaCombos("tblalmacenes", ComboBox8, "nombre", "nombret", "idalmacen", IdsAlmacenes, "idalmacen<>1 and idsucursal=" + IdsSucursales.Valor(ComboBox3.SelectedIndex).ToString)
+            'LlenaCombos("tblalmacenes", cmbAlmacen, "nombre", "nombret", "idalmacen", IdsAlmacenes, "idalmacen<>1 and idsucursal=" + IdsSucursales.Valor(ComboBox3.SelectedIndex).ToString)
             If Op._TipoSelAlmacen = "0" Then
-                LlenaCombos("tblalmacenes", ComboBox8, "nombre", "nombret", "idalmacen", IdsAlmacenes, "idalmacen<>1 and idsucursal=" + IdsSucursales.Valor(ComboBox3.SelectedIndex).ToString)
+                LlenaCombos("tblalmacenes", cmbAlmacen, "nombre", "nombret", "idalmacen", IdsAlmacenes, "idalmacen<>1 and idsucursal=" + IdsSucursales.Valor(ComboBox3.SelectedIndex).ToString)
             Else
-                LlenaCombos("tblalmacenes", ComboBox8, "nombre", "nombret", "idalmacen", IdsAlmacenes, "idalmacen<>1 and idsucursal=" + IdsSucursales.Valor(ComboBox3.SelectedIndex).ToString, "Sel. Almacen")
+                LlenaCombos("tblalmacenes", cmbAlmacen, "nombre", "nombret", "idalmacen", IdsAlmacenes, "idalmacen<>1 and idsucursal=" + IdsSucursales.Valor(ComboBox3.SelectedIndex).ToString, "Sel. Almacen")
             End If
             Dim S As New dbSucursales(IdsSucursales.Valor(ComboBox3.SelectedIndex), MySqlcon)
-            If ComboBox8.Items.Count > 0 Then
+            If cmbAlmacen.Items.Count > 0 Then
                 If Op._TipoSelAlmacen = "0" Then
-                    ComboBox8.SelectedIndex = IdsAlmacenes.Busca(S.IdAlmacenC)
+                    cmbAlmacen.SelectedIndex = IdsAlmacenes.Busca(S.IdAlmacenC)
                 Else
-                    ComboBox8.SelectedIndex = 0
+                    cmbAlmacen.SelectedIndex = 0
                 End If
             Else
                 MsgBox("Esta sucursal no cuenta con almacenes.", MsgBoxStyle.Critical, GlobalNombreApp)
@@ -1376,11 +1375,11 @@
                     End Select
                     Guardar()
                     If Estado <> 0 Then
-                        V.AgregarDetallesReferencia(idCompra, Forma.id(0), Forma.Tipo, IdsAlmacenes.Valor(ComboBox8.SelectedIndex))
+                        V.AgregarDetallesReferencia(idCompra, Forma.id(0), Forma.Tipo, IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex))
                         ConsultaDetalles()
                     End If
                 Else
-                    V.AgregarDetallesReferencia(idCompra, Forma.id(0), Forma.Tipo, IdsAlmacenes.Valor(ComboBox8.SelectedIndex))
+                    V.AgregarDetallesReferencia(idCompra, Forma.id(0), Forma.Tipo, IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex))
                     ConsultaDetalles()
                 End If
                 Button11.Enabled = False
@@ -1457,16 +1456,16 @@
 
     End Sub
 
-    Private Sub ComboBox8_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles ComboBox8.KeyDown
+    Private Sub ComboBox8_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles cmbAlmacen.KeyDown, cmbAlmacen.KeyDown
         If e.KeyCode = Keys.Enter Then
             txtCantidad.Focus()
         End If
     End Sub
 
-    Private Sub ComboBox8_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ComboBox8.SelectedIndexChanged
+    Private Sub ComboBox8_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbAlmacen.SelectedIndexChanged, cmbAlmacen.SelectedIndexChanged
         If IdInventario <> 0 Then
             Dim db As New dbInventario(IdInventario, MySqlcon)
-            cmbUbicacion.DataSource = db.Ubicaciones(IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario)
+            cmbUbicacion.DataSource = db.Ubicaciones(IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), IdInventario)
         End If
     End Sub
 
@@ -1541,7 +1540,7 @@
 
     Private Sub Button20_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button20.Click
         If PorLotes = 1 Then
-            Dim F As New frmInventarioLotes(0, 0, IdDetalle, 0, CDbl(txtCantidad.Text), IdInventario, 1, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
+            Dim F As New frmInventarioLotes(0, 0, IdDetalle, 0, CDbl(txtCantidad.Text), IdInventario, 1, 0, 0, 0, IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), cmbAlmacen.Text, 0, 0, 0)
             F.ShowDialog()
             F.Dispose()
         End If
@@ -1723,7 +1722,7 @@
 
     Private Sub Button23_Click(sender As Object, e As EventArgs) Handles Button23.Click
         If Aduana = 1 Then
-            Dim F As New frmInventarioAduana(0, 0, IdDetalle, 0, CDbl(txtCantidad.Text), IdInventario, 1, 0, 0, 0, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), ComboBox8.Text, 0, 0, 0)
+            Dim F As New frmInventarioAduana(0, 0, IdDetalle, 0, CDbl(txtCantidad.Text), IdInventario, 1, 0, 0, 0, IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), cmbAlmacen.Text, 0, 0, 0)
             F.ShowDialog()
             F.Dispose()
         End If
@@ -1813,5 +1812,16 @@
                 MsgBox(ex.Message, MsgBoxStyle.Information, GlobalNombreApp)
             End Try
         End If
+    End Sub
+
+    Private Sub cmbUbicacion_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbUbicacion.SelectedIndexChanged
+        If cmbUbicacion.SelectedIndex = -1 Then
+            txtTarima.Text = ""
+        Else
+            Dim db As New dbAlmacenes(MySqlcon)
+            txtTarima.Text = db.Tarima(IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), cmbUbicacion.SelectedValue)
+        End If
+        txtTarima.Enabled = txtTarima.Text = ""
+
     End Sub
 End Class

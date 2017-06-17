@@ -1085,7 +1085,7 @@ Public Class dbVentas
         Comm.ExecuteNonQuery()
 
         'ubicaciones
-        Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.surtido, 0, 0, 1, u.ubicacion) from tblventasinventario d inner join tblventasubicaciones u on d.idventasinventario=u.iddetalle where d.idventa=" + pId.ToString + ";"
+        Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.surtido, 0, 0, 1, u.ubicacion, u.tarima) from tblventasinventario d inner join tblventasubicaciones u on d.idventasinventario=u.iddetalle where d.idventa=" + pId.ToString + ";"
         Comm.CommandText += "update tblventasubicaciones inner join tblventasinventario on tblventasubicaciones.iddetalle = tblventasinventario.idventasinventario set tblventasubicaciones.surtido = tblventasubicaciones.cantidad where tblventasinventario.idventa=" + pId.ToString + ";"
         Comm.ExecuteNonQuery()
     End Sub
@@ -6271,7 +6271,7 @@ Public Class dbVentas
             Comm.ExecuteNonQuery()
 
             'ubicaciones
-            Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.cantidad-u.surtido, 0, 1, 0, u.ubicacion) from tblventasinventario d inner join tblventasubicaciones u on d.idventasinventario=u.iddetalle where d.idventa=" + pId.ToString + ";"
+            Comm.CommandText = "select spmodificainventarioubicacionesf(d.idinventario, d.idalmacen, u.cantidad-u.surtido, 0, 1, 0, u.ubicacion, u.tarima) from tblventasinventario d inner join tblventasubicaciones u on d.idventasinventario=u.iddetalle where d.idventa=" + pId.ToString + ";"
             Comm.CommandText += "update tblventasubicaciones inner join tblventasinventario on tblventasubicaciones.iddetalle = tblventasinventario.idventasinventario set tblventasubicaciones.surtido = tblventasubicaciones.cantidad where tblventasinventario.idventa=" + pId.ToString + ";"
             Comm.ExecuteNonQuery()
         End If

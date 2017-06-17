@@ -1389,7 +1389,7 @@
                     Case 0 'remision
                         
                         If Articulo.SepararKit = 0 Then
-                            RemisionDetalles.Guardar(Remision.ID, Articulo.ID, 1, Temp, IP.IdMoneda, Articulo.Nombre, idAlmacen, Articulo.Iva, 0, 1, 0, Articulo.ieps, Articulo.ivaRetenido, 1, Articulo.TipoContenido.ID, 0, "")
+                            RemisionDetalles.Guardar(Remision.ID, Articulo.ID, 1, Temp, IP.IdMoneda, Articulo.Nombre, idAlmacen, Articulo.Iva, 0, 1, 0, Articulo.ieps, Articulo.ivaRetenido, 1, Articulo.TipoContenido.ID, 0, "", "")
                             RemisionDetalles.Inventario = Articulo
                         Else
                             If Articulo.EsKit = 1 And Articulo.SepararKit = 1 Then
