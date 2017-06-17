@@ -1,42 +1,12 @@
 ﻿Imports MySql.Data.MySqlClient
 Public Class frmRestauranteOrden
     Private idMesa As Integer
-    Private mesaController As dbRestauranteMesas
-    Private mesa As RestauranteMesa
-    Public ventas As New dbRestauranteVentas(MySqlcon)
-    Private comensales As New dbRestauranteComensales(MySqlcon)
-    Private mesaVenta As New dbRestauranteVentasMesas(MySqlcon)
-    Public estado As Integer = EstadosMesas.Libre
-    Dim cantidadComensales As Integer
-    Private inv As New dbInventario(MySqlcon)
-    Private detalles As New dbRestauranteVentasDetalles(MySqlcon)
-    Private precios As New dbInventarioPrecios(MySqlcon)
-    Private platillosComensal As New dbRestauranteComensalesPlatillos(MySqlcon)
-    Public idVenta As Integer = -1
-    Private ClaveInventario1 As String
-    Private ClaveInventario2 As String
-    Private ClaveInventario3 As String
-    Private ClaveInventario4 As String
-    Private ClaveInventario5 As String
+    Public Property IdVenta As Integer
     Private idMesero As Integer
     Private idCliente As Integer = 16
-    Public listaPagar As New List(Of Integer)
-    Public pagar As Boolean = False
-    Private multiSelect As Boolean = False
-    Public cuentaCompleta As Boolean = True
-    Public idnuevaVenta As Integer
-    'Public mesero As String
-    Private colores As dbRestauranteColores
-    Private idComensal As Integer = -1
-    Private impreso As Boolean = False
-    Private numComensal As Integer = 1
-    Private coloresComensales As Color() = {Color.Aqua, Color.Yellow, Color.Gray, Color.GreenYellow, Color.Lime, Color.Silver, Color.Azure, Color.Beige, Color.Aquamarine, Color.BlueViolet, Color.Chartreuse}
-    Private comandaEnviada = False
-    Private articuloAgregado = False
-    Private totalPlatillos As Integer = 0
-    Dim listaNuevos As List(Of Integer)
-    Private nuevosPlatillos As Boolean = False
 
+    Private coloresComensales As Color() = {Color.Aqua, Color.Yellow, Color.Gray, Color.GreenYellow, Color.Lime, Color.Silver, Color.Azure, Color.Beige, Color.Aquamarine, Color.BlueViolet, Color.Chartreuse}
+   
     Dim ImpND As New Collection
     Dim ImpNDD As New Collection
     Dim ImpNDDi As New Collection
@@ -50,9 +20,8 @@ Public Class frmRestauranteOrden
     Dim CuantaY As Integer
     Dim TipoImpresora As String
     Dim IdSucursal As Integer
-    Public mesero As New dbVendedores(MySqlcon)
-    Dim EstadoRenglon As Integer
-    Public Sub New(ByVal idMesa As Integer, ByVal idMesero As Integer, pIdSucursal As Integer)
+    
+    Public Sub New(ByVal idMesa As Integer, idVenta As Integer, ByVal idMesero As Integer, pIdSucursal As Integer)
 
         ' This call is required by the designer.
         InitializeComponent()
@@ -60,417 +29,160 @@ Public Class frmRestauranteOrden
         ' Add any initialization after the InitializeComponent() call.
         Me.idMesa = idMesa
         Me.idMesero = idMesero
-        mesero = New dbVendedores(idMesero, MySqlcon)
-        checaVenta()
-        IdSucursal = pIdSucursal
-        mesaController = New dbRestauranteMesas(MySqlcon, IdSucursal)
+        Me.IdVenta = idVenta
+        btnAgregarComensal.Enabled = idMesa <> 0
+
+        Dim ventas As New dbRestauranteVentas(IdVenta, MySqlcon)
+        If idMesa = 0 Then
+            If idVenta = 0 Then
+                Me.IdVenta = ventas.Agregar(ventas.obtenFolio, idMesero, idCliente, GlobalIdSucursalDefault, idMesa, 1)
+            End If
+        Else
+            If ventas.buscarventaabierta(idMesa) Then
+                Me.IdVenta = ventas.idVenta
+            Else
+                Me.IdVenta = ventas.Agregar(ventas.obtenFolio, idMesero, idCliente, GlobalIdSucursalDefault, idMesa, 1)
+            End If
+        End If
+            IdSucursal = pIdSucursal
     End Sub
     Private Sub frmRestauranteOrden_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
             Me.Icon = GlobalIcono
         Catch ex As Exception
         End Try
-        colores = New dbRestauranteColores(MySqlcon)
+        Dim colores As New dbRestauranteColores(MySqlcon)
         cargarConfiguracion()
-        mesa = mesaController.buscar(idMesa)
-        lblMesa.Text = "Mesa: " + mesa.numero.ToString()
-        actualizaGridComensales()
-        llenaGridPlatillos()
-        If dgvComensales.RowCount > 0 Then
-            idComensal = ventas.NoPersonas
-        End If
-        'dgvComensales.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-        'dgvPlatillos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+        Dim mesacontroller As New dbRestauranteMesas(MySqlcon, IdSucursal)
+        Dim mesa As RestauranteMesa = mesacontroller.Buscar(idMesa)
+        If mesa IsNot Nothing Then lblMesa.Text = "Mesa: " + mesa.Numero.ToString()
+
+        dgvComensales.AutoGenerateColumns = False
+        dgvPlatillos.AutoGenerateColumns = False
+        Dim comensales As New dbRestauranteComensales(MySqlcon)
+        Dim ventas As New dbRestauranteVentas(idVenta, MySqlcon)
+        dgvComensales.DataSource = comensales.vistaComensales(idMesa)
+        dgvPlatillos.DataSource = ventas.vistaDetalles(IdVenta, -1, -1)
+        btnImprimirComanda.Enabled = dgvPlatillos.RowCount > 0
+        dgvPlatillos.ClearSelection()
+        dgvComensales.ClearSelection()
+        If dgvComensales.RowCount > 0 Then dgvComensales.Rows(dgvComensales.RowCount - 1).Selected = True
+        If dgvPlatillos.RowCount > 0 Then dgvPlatillos.Rows(dgvPlatillos.RowCount - 1).Selected = True
+        dgvComensales.Show()
+        dgvPlatillos.Show()
+
         Label4.Text = "Folio: " + ventas.folio
+        Dim mesero As New dbVendedores(idMesero, MySqlcon)
         Label1.Text = "Mesero: " + mesero.Nombre
         panelObjetos.Left = (Me.Size.Width / 2) - (Me.MinimumSize.Width / 2 - 1)
     End Sub
 
-    Private Sub llenaGridPlatillos()
-        dgvPlatillos.DataSource = detalles.vistaDetalles(idVenta, -1, CInt(estadosPlatillos.inicio).ToString)
-        If dgvPlatillos.Rows.Count > 0 Then
-            'For i As Integer = 0 To dgvPlatillos.Rows.Count - 1
-            '    dgvPlatillos.Rows(i).Selected = False
-            'Next
-            dgvPlatillos.Columns(0).Visible = False
-            dgvPlatillos.Columns(5).Visible = False
-            dgvPlatillos.Columns(1).HeaderText = "Cant."
-            dgvPlatillos.Columns(2).HeaderText = "Descripción"
-            dgvPlatillos.Columns(3).HeaderText = "Com."
-            dgvPlatillos.Columns(4).HeaderText = "Precio"
-            dgvPlatillos.Columns(1).Width = 40
-            dgvPlatillos.Columns(3).Width = 40
-            dgvPlatillos.Columns(2).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-            dgvPlatillos.Columns(4).Width = 110
-            dgvPlatillos.Columns(4).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            dgvPlatillos.Columns(4).DefaultCellStyle.Format = "#,##0.00"
-            dgvPlatillos.ClearSelection()
-            For Each i As DataGridViewRow In dgvComensales.Rows
-                Dim c As Integer = CInt(i.Cells(0).Value.ToString)
-                For Each x As DataGridViewRow In dgvPlatillos.Rows
-                    Dim pc As Integer = CInt(x.Cells("comensal").Value.ToString())
-                    If c = pc Then
-                        x.DefaultCellStyle.BackColor = i.DefaultCellStyle.BackColor
-                    End If
-                Next
-            Next
-        End If
-    End Sub
-
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        'idComensal = comensales.guardar(cantidadComensales + 1, idMesa)
-        'cantidadComensales += 1
-        ventas.AumentaComensal(idVenta)
-        actualizaGridComensales()
-        idComensal = ventas.NoPersonas
-    End Sub
-
-    Private Sub actualizaGridComensales()
-        dgvComensales.Rows.Clear()
-        Dim SelColor As Byte = 0
-        For i As Integer = 0 To ventas.NoPersonas - 1
-            dgvComensales.Rows.Add((i + 1).ToString)
-            dgvComensales.Rows(i).DefaultCellStyle.BackColor = coloresComensales(SelColor)
-            SelColor += 1
-            If SelColor = 11 Then SelColor = 0
-        Next
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnAgregarComensal.Click
+        Dim comensales As New dbRestauranteComensales(MySqlcon)
+        Dim mesacontroller As New dbRestauranteMesas(MySqlcon, IdSucursal)
+        Dim mesa As RestauranteMesa = mesacontroller.Buscar(idMesa)
+        comensales.Agregar(mesa.Id)
+        dgvComensales.DataSource = comensales.vistaComensales(idMesa)
         dgvComensales.ClearSelection()
+        dgvComensales.Rows(dgvComensales.RowCount - 1).Selected = True
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        'estado = EstadosMesas.Ocupada
+    
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles btnCancelarVenta.Click
         If MsgBox("¿Cancelar esta venta?", MsgBoxStyle.YesNo, GlobalNombreApp) = MsgBoxResult.Yes Then
-            ventas.modificar(ventas.idVenta, ventas.idCliente, ventas.descuento, ventas.total, ventas.totalapagar, Estados.Cancelada, ventas.fecha, ventas.idSucursal, ventas.IdCajero, ventas.IdCaja, "")
+            Dim ventas As New dbRestauranteVentas(idVenta, MySqlcon)
+            ventas.Cancelar(IdVenta)
             Me.Close()
         End If
     End Sub
 
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles btnPagar.Click
-        Dim contPlatillos As Integer = 0
-        If comandaEnviada Then
-            If nuevosPlatillos Then
-                EnviarComanda()
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles btnCarta.Click
+        If idMesa = 0 Or dgvComensales.SelectedRows.Count > 0 Then
+            If dgvComensales.SelectedRows.Count = 0 Then
+                Dim frm As New frmRestauranteBuscador(IdVenta, 0)
+                frm.ShowDialog()
             Else
-                'Dim result = MsgBox("¿El ticket es correcto?", MsgBoxStyle.YesNo)
-                'If result = DialogResult.Yes Then
-                If dgvPlatillos.Rows.Count > 0 Then
-                    'For Each row As DataGridViewRow In dgvPlatillos.Rows
-                    '    If row.Cells("sel").Value = True Then
-                    '        contPlatillos += 1
-                    '    End If
-                    'Next
-                    'If contPlatillos > 0 And contPlatillos < dgvPlatillos.Rows.Count Then
-                    '    cuentaCompleta = False
-                    'Else
-                    cuentaCompleta = True
-                    'End If
-                    If cuentaCompleta = False Then
-                        'Dim arr As Integer() = {}
-                        'Dim r As DataGridViewRow
-                        'For Each r In DGServicios.SelectedRows
-                        '    ReDim Preserve arr(arr.Length)
-                        '    arr(arr.Length - 1) = r.Cells(0).Value
-                        'Next
-                        'Return arr
-                        idnuevaVenta = ventas.Guardar(ventas.obtenFolio, idMesero, idCliente, GlobalIdSucursalDefault, idMesa, My.Settings.cajadefault)
-                        For Each i As DataGridViewRow In dgvPlatillos.Rows
-                            If i.Cells("sel").Value = True Then
-                                detalles.buscar(CInt(i.Cells("iddetalle").Value))
-                                detalles.modificar(detalles.idDetalle, detalles.idInventario, detalles.cantidad, detalles.descripcion, detalles.precio, detalles.iva, idnuevaVenta, "")
-                                detalles.pagarDetalle(CInt(i.Cells("iddetalle").Value), CInt(estadosPlatillos.pendiente))
-                                detalles.cambiarEstado(detalles.idDetalle, CInt(estadosPlatillos.pendiente))
-                                'platillosComensal.eliminarDetalle(detalles.idDetalle)
-                                listaPagar.Add(detalles.idDetalle)
-                            End If
-                        Next
-                        idVenta = idnuevaVenta
-                        'comensales.eliminar(idComensal)
-                        estado = EstadosMesas.Ocupada
-                    Else
-                        'For Each i As DataGridViewRow In dgvPlatillos.Rows
-                        '    detalles.buscar(CInt(i.Cells("iddetalle").Value))
-                        '    detalles.pagarDetalle(CInt(i.Cells("iddetalle").Value), CInt(estadosPlatillos.pendiente))
-                        '    detalles.cambiarEstado(detalles.idDetalle, CInt(estadosPlatillos.pendiente))
-                        '    'platillosComensal.eliminarDetalle(CInt(i.Cells("iddetalle").Value))
-                        '    listaPagar.Add(detalles.idDetalle)
-                        'Next
-                        'For Each i As DataGridViewRow In dgvComensales.Rows
-                        '    'comensales.eliminar(CInt(i.Cells("idcomensal").Value.ToString))
-                        'Next
-                        Dim f As New frmRestaurantePuntoVenta(ventas.IdMesa, ventas.idVenta, , True)
-                        f.ShowDialog()
-                        estado = EstadosMesas.Libre
-                        'mesaVenta.eliminar(idMesa)
-                    End If
-                    'If ventas.cuantosPlatillos(ventas.idVenta, CInt(estadosPlatillos.inicio).ToString) <= 0 Then
-                    '    estado = EstadosMesas.Libre
-                    'Else
-                    '    estado = EstadosMesas.Ocupada
-                    'End If
-                    'cuentaCompleta = False
-                    pagar = True
-                End If
-                'Else
-                '   impreso = False
-                'End If
+                Dim frm As New frmRestauranteBuscador(IdVenta, dgvComensales.SelectedRows(0).Cells(0).Value)
+                frm.ShowDialog()
             End If
+            Dim ventas As New dbRestauranteVentas(IdVenta, MySqlcon)
+            dgvPlatillos.DataSource = ventas.vistaDetalles(IdVenta, -1, -1)
+            btnImprimirComanda.Enabled = dgvPlatillos.RowCount > 0
         Else
-            totalPlatillos = dgvPlatillos.Rows.Count
-            If EnviarComanda() Then
-                btnPagar.Text = "Pagar"
-                If ventas.cuantosPlatillos(ventas.idVenta, estadosPlatillos.inicio) <= 0 Then
-                    estado = EstadosMesas.Libre
-                Else
-                    estado = EstadosMesas.Ocupada
-                End If
-            End If
-            End If
-        Me.Close()
-    End Sub
-
-    Private Function EnviarComanda() As Boolean
-
-        If imprimir() Then
-            comandaEnviada = True
-            Dim listaAux As List(Of Integer) = ventas.listaDetalles(ventas.idVenta, estadosPlatillos.sinEnviar)
-            'For Each i As Integer In listaAux
-            detalles.cambiarEstado(idVenta, estadosPlatillos.enviado)
-            'Next
-            'listaNuevos = New List(Of Integer)
-            nuevosPlatillos = False
-            Return True
-        End If
-        Return False
-    End Function
-
-    'Private Sub dgvComensales_DoubleClick(sender As Object, e As EventArgs) Handles dgvComensales.DoubleClick
-
-    '    Dim id As Integer = dgvComensales.CurrentRow.Cells(0).Value
-    '    comensales.eliminar(id)
-    '    actualizaGridComensales()
-    'End Sub
-
-    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
-        Dim frm As New frmRestauranteBuscador()
-        frm.ShowDialog()
-        If frm.clave.Count > 0 Then
-            For Each c As String In frm.clave
-                inv.BuscaArticulo(c, 0)
-                If agregarPlatillo() = False Then
-                    MsgBox("Debe seleccionar un comensal.")
-                    Exit Sub
-                End If
-            Next
-            comandaEnviada = False
-            btnPagar.Text = "Enviar comanda."
-            estado = EstadosMesas.Ocupada
+            MsgBox("Seleccione un comensal.")
         End If
     End Sub
 
-    Private Function agregarPlatillo() As Boolean
-        If idComensal < 0 Then
-            Return False
-        End If
-        Dim precio As Double
-        precios.BuscaPrecio(inv.ID, 1)
-        precio = precios.Precio
-        detalles.agregar(inv.ID, 1, inv.Nombre, precio, inv.Iva, idVenta, "", idComensal)
-        'detalles.buscar(detalles.ultimoId)
-        'platillosComensal.agregar(idComensal, detalles.ultimoId)
-        'If comandaEnviada Then
-        '    listaNuevos.Add(detalles.idDetalle)
-        '    nuevosPlatillos = True
-        '    btnPagar.Text = "Enviar comanda"
-        'End If
-        nuevosPlatillos = ventas.checaPendientes(ventas.idVenta)
-        llenaGridPlatillos()
-        Return True
-    End Function
 
     Private Sub cargarConfiguracion()
         Dim c As New dbRestauranteConfiguracion(MySqlcon)
         If c.llenaDatos Then
-            ClaveInventario1 = c.claveProducto1
-            ClaveInventario2 = c.claveProducto2
-            ClaveInventario3 = c.claveProducto3
-            ClaveInventario4 = c.claveProducto4
-            ClaveInventario5 = c.claveProducto5
+            btnDirecto1.Tag = c.claveProducto1
+            btnDirecto2.Tag = c.claveProducto2
+            btnDirecto3.Tag = c.claveProducto3
+            btnDirecto4.Tag = c.claveProducto4
+            btnDirecto5.Tag = c.claveProducto5
             Me.BackColor = Color.FromArgb(c.colorVentanas)
-            If inv.BuscaArticulo(ClaveInventario1, 1) Then
-                btnDirecto1.Text = inv.Nombre
-            Else
-                btnDirecto1.Text = "No Asig."
-            End If
-            If inv.BuscaArticulo(ClaveInventario2, 1) Then
-                btnDirecto2.Text = inv.Nombre
-            Else
-                btnDirecto2.Text = "No Asig."
-            End If
-            If inv.BuscaArticulo(ClaveInventario3, 1) Then
-                btnDirecto3.Text = inv.Nombre
-            Else
-                btnDirecto3.Text = "No Asig."
-            End If
-            If inv.BuscaArticulo(ClaveInventario4, 1) Then
-                btnDirecto4.Text = inv.Nombre
-            Else
-                btnDirecto4.Text = "No Asig."
-            End If
-            If inv.BuscaArticulo(ClaveInventario5, 1) Then
-                btnDirecto5.Text = inv.Nombre
-            Else
-                btnDirecto5.Text = "No Asig."
-            End If
+            Dim inv As New dbInventario(MySqlcon)
+            If inv.BuscaArticulo(c.claveProducto1, 1, "") Then btnDirecto1.Text = inv.Nombre
+            If inv.BuscaArticulo(c.claveProducto2, 1, "") Then btnDirecto2.Text = inv.Nombre
+            If inv.BuscaArticulo(c.claveProducto3, 1, "") Then btnDirecto3.Text = inv.Nombre
+            If inv.BuscaArticulo(c.claveProducto4, 1, "") Then btnDirecto4.Text = inv.Nombre
+            If inv.BuscaArticulo(c.claveProducto5, 1, "") Then btnDirecto5.Text = inv.Nombre
         End If
     End Sub
 
-    Private Sub checaVenta()
-        mesero = New dbVendedores(idMesero, MySqlcon)
-        If ventas.buscarventaabierta(idMesa) Then
-            idVenta = ventas.idVenta
-            checaPendientes()
+    Private Sub btnDirecto1_Click(sender As Object, e As EventArgs) Handles btnDirecto1.Click, btnDirecto2.Click, btnDirecto3.Click, btnDirecto4.Click, btnDirecto5.Click
+        If idMesa = 0 Or dgvComensales.SelectedRows.Count > 0 Then
+            Dim inv As New dbInventario(MySqlcon)
+            inv.BuscaArticulo(DirectCast(sender, Button).Tag, True, "")
+            inv.LlenaDatos()
+            Dim precios As New dbInventarioPrecios(MySqlcon)
+            Dim ventas As New dbRestauranteVentas(IdVenta, MySqlcon)
+            precios.BuscaPrecio(inv.ID, 1)
+            Dim detalles As New dbRestauranteVentasDetalles(MySqlcon)
+            If idMesa = 0 Then
+                detalles.Agregar(inv.ID, 1, inv.Nombre, precios.Precio, inv.Iva, IdVenta, "", 0)
+            Else
+                detalles.Agregar(inv.ID, 1, inv.Nombre, precios.Precio, inv.Iva, IdVenta, "", dgvComensales.SelectedRows(colComensal1.Index).Cells(colComensal1.Index).Value)
+            End If
+            dgvPlatillos.DataSource = ventas.vistaDetalles(IdVenta, -1, -1)
+            btnImprimirComanda.Enabled = dgvPlatillos.RowCount > 0
+            dgvPlatillos.ClearSelection()
+            If dgvPlatillos.RowCount > 0 Then dgvPlatillos.Rows(dgvPlatillos.RowCount - 1).Selected = True
         Else
-            idVenta = ventas.Guardar(ventas.obtenFolio, idMesero, idCliente, GlobalIdSucursalDefault, idMesa, My.Settings.cajadefault)
+            MsgBox("Seleccione un comensal.")
         End If
     End Sub
 
-    Private Sub btnDirecto1_Click(sender As Object, e As EventArgs) Handles btnDirecto1.Click
-        If inv.BuscaArticulo(ClaveInventario1, 0) Then
-            If agregarPlatillo() = False Then
-                MsgBox("Debe seleccionar un comensal.")
-            End If
-        End If
-    End Sub
-
-    Private Sub btnDirecto2_Click(sender As Object, e As EventArgs) Handles btnDirecto2.Click
-        If inv.BuscaArticulo(ClaveInventario2, 0) Then
-            If agregarPlatillo() = False Then
-                MsgBox("Debe seleccionar un comensal.")
-            End If
-        End If
-    End Sub
-
-    Private Sub btnDirecto3_Click(sender As Object, e As EventArgs) Handles btnDirecto3.Click
-        If inv.BuscaArticulo(ClaveInventario3, 0) Then
-            If agregarPlatillo() = False Then
-                MsgBox("Debe seleccionar un comensal.")
-            End If
-        End If
-    End Sub
-
-    Private Sub btnDirecto4_Click(sender As Object, e As EventArgs) Handles btnDirecto4.Click
-        If inv.BuscaArticulo(ClaveInventario4, 0) Then
-            If agregarPlatillo() = False Then
-                MsgBox("Debe seleccionar un comensal.")
-            End If
-        End If
-    End Sub
-
-    Private Sub btnDirecto5_Click(sender As Object, e As EventArgs) Handles btnDirecto5.Click
-        If inv.BuscaArticulo(ClaveInventario5, 0) Then
-            If agregarPlatillo() = False Then
-                MsgBox("Debe seleccionar un comensal.")
-            End If
-        End If
-    End Sub
-
-    Private Sub Button5_Click(sender As Object, e As EventArgs)
-        For i As Integer = 0 To dgvPlatillos.RowCount - 1
-            listaPagar.Add(CInt(dgvPlatillos.Rows(i).Cells(0).Value.ToString()))
-        Next
-        estado = EstadosMesas.Libre
-        cuentaCompleta = True
-        pagar = True
-        Me.Dispose()
-    End Sub
-
-    Private Sub btnCambiar_Click(sender As Object, e As EventArgs)
-        Dim f As New frmRestauranteCambioMesa(Me.idMesa, Nothing, idSucursal)
-        f.ShowDialog()
-        If Me.idMesa <> f.idMesa Then
-            mesa = mesaController.buscar(ventas.IdMesa)
-            lblMesa.Text = "Mesa: " + mesa.numero.ToString()
-        End If
-    End Sub
 
     Private Sub frmRestauranteOrden_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        Dim t As Integer = ventas.listaDetalles(ventas.idVenta, -1).Count
-        If t <= 0 Then
-            ventas.eliminar(ventas.idVenta)
-            mesaVenta.eliminar(Me.idMesa)
-            comensales.eliminarPorMesa(Me.idMesa)
-            estado = EstadosMesas.Libre
+        Dim ventas As New dbRestauranteVentas(idVenta, MySqlcon)
+        Dim numPlatillos As Integer = ventas.vistaDetalles(idVenta, -1, -1).Count
+        If numPlatillos = 0 Then
+            Dim mesacontroller As New dbRestauranteMesas(MySqlcon, IdSucursal)
+            mesacontroller.Desocupar(IdVenta)
         End If
     End Sub
 
-    Private Sub seleccionaPlatillosComensal(ByVal idComensal As Integer)
-        Dim lista As List(Of Integer) = platillosComensal.listaDetalles(idComensal, -1)
-        For x As Integer = 0 To dgvPlatillos.Rows.Count - 1
-            dgvPlatillos.Rows(x).Cells("seleccionado").Value = False
-        Next
-        For Each i As Integer In lista
-            For x As Integer = 0 To dgvPlatillos.Rows.Count - 1
-                If CInt(dgvPlatillos.Rows(x).Cells("iddetalle").Value) = i Then
-                    dgvPlatillos.Rows(x).Cells("seleccionado").Value = True
-                    Exit For
-                End If
-            Next
-        Next
-    End Sub
-
-    Private Sub dgvComensales_Click(sender As Object, e As EventArgs)
-        Try
-            idComensal = CInt(dgvComensales.CurrentRow.Cells("idcomensal").Value)
-            seleccionaPlatillosComensal(idComensal)
-        Catch ex As Exception
-
-        End Try
-    End Sub
-
-    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
-        Dim contPlatillos As Integer = 0
-        If dgvPlatillos.Rows.Count > 0 Then
-            For Each row As DataGridViewRow In dgvPlatillos.Rows
-                If row.Cells("seleccionado").Value = True Then
-                    contPlatillos += 1
-                End If
-            Next
-            If contPlatillos > 0 And contPlatillos < dgvPlatillos.Rows.Count Then
-                cuentaCompleta = False
-            Else
-                cuentaCompleta = True
-            End If
-            If cuentaCompleta = False Then
-                idnuevaVenta = ventas.Guardar(ventas.obtenFolio, idMesero, idCliente, GlobalIdSucursalDefault, idMesa, My.Settings.cajadefault)
-                For Each i As DataGridViewRow In dgvPlatillos.Rows
-                    If i.Cells("seleccionado").Value = True Then
-                        detalles.buscar(CInt(i.Cells("iddetalle").Value))
-                        detalles.modificar(detalles.idDetalle, detalles.idInventario, detalles.cantidad, detalles.descripcion, detalles.precio, detalles.iva, idnuevaVenta, "")
-                        detalles.pagarDetalle(CInt(i.Cells("iddetalle").Value), CInt(estadosPlatillos.pendiente).ToString)
-                    End If
-                Next
-                ventas.buscar(idnuevaVenta)
-            Else
-                For Each i As DataGridViewRow In dgvPlatillos.Rows
-                    detalles.pagarDetalle(CInt(i.Cells("iddetalle").Value), CInt(estadosPlatillos.pendiente).ToString)
-                    'platillosComensal.eliminarDetalle(CInt(i.Cells("iddetalle").Value))
-                Next
-                'For i As Integer = 0 To dgvComensales.Rows.Count - 1
-                'comensales.eliminar(CInt(dgvComensales.CurrentRow.Cells(0).Value))
-                'Next
-            End If
-            If imprimir() Then
-                impreso = True
-                btnPagar.Enabled = True
-            End If
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles btnImprimirComanda.Click
+        If dgvPlatillos.RowCount > 0 Then
+            imprimir()
+            Dim ventas As New dbRestauranteVentas(IdVenta, MySqlcon)
+            Dim detalles As New dbRestauranteVentasDetalles(MySqlcon)
+            detalles.modificarEstadosDetalles(idVenta, estadosPlatillos.enviado)
+            dgvPlatillos.DataSource = ventas.vistaDetalles(IdVenta, -1, -1)
+            btnImprimirComanda.Enabled = dgvPlatillos.RowCount > 0
         Else
             MsgBox("No hay platillos para esta mesa.")
         End If
     End Sub
 
+#Region "Impresion"
     Private Function imprimir() As Boolean
         Try
             Dim suc As New dbSucursales(GlobalIdSucursalDefault, MySqlcon)
+            Dim ventas As New dbRestauranteVentas(idVenta, MySqlcon)
 
             Dim SA As New dbSucursalesArchivos
             Dim Impresora As String
@@ -1247,16 +959,14 @@ Public Class frmRestauranteOrden
         Dim iva As Double = 0
         Dim total As Double = 0
         Dim subtotal As Double = 0
-        Dim lista As List(Of Integer)
-        Dim comen As List(Of Integer) = comensales.listaComensales(idMesa)
-        If nuevosPlatillos Then
-            lista = listaNuevos
+        Dim vista As DataView
+        Dim ventas As New dbRestauranteVentas(idVenta, MySqlcon)
+        'Dim lista As List(Of Integer)
+        'Dim comen As List(Of Integer) = comensales.listaComensales(idMesa)
+        If ventas.checaPendientes(IdVenta, 0) Then
+            vista = ventas.vistaDetalles(IdVenta, 6, -1)
         Else
-            If comandaEnviada Then
-                lista = ventas.listaDetalles(ventas.idVenta, 2)
-            Else
-                lista = ventas.listaDetalles(ventas.idVenta, 0)
-            End If
+            vista = ventas.vistaDetalles(IdVenta, -1, -1)
         End If
         ImpND.Clear()
         ImpNDD.Clear()
@@ -1266,25 +976,24 @@ Public Class frmRestauranteOrden
         Dim cont As Integer = 0
         Dim cont1 As Integer = 0
 
-        For Each i As Integer In comen
-            comensales.buscar(i)
-            lista = platillosComensal.listaDetalles(i, CInt(estadosPlatillos.sinEnviar))
-            For Each x As Integer In lista
-                detalles.buscar(x)
-                ImpNDD.Add(New NodoImpresionN("", "comensal", comensales.numero.ToString, 0), "comensal" + Format(cont, "000"))
-                ImpNDD.Add(New NodoImpresionN("", "producto", detalles.descripcion, 0), "producto" + Format(cont, "000"))
-                ImpNDD.Add(New NodoImpresionN("", "cantidad", detalles.cantidad.ToString, 0), "cantidad" + Format(cont, "000"))
-                cont += 1
-                CuantosRenglones += 1
-                total += detalles.precio
-                iva += detalles.iva
-                subtotal = detalles.precio
-            Next
+        For Each r As DataRowView In vista
+            ImpNDD.Add(New NodoImpresionN("", "comensal", r("comensal"), 0), "comensal" + Format(cont, "000"))
+            ImpNDD.Add(New NodoImpresionN("", "producto", r("descripcion"), 0), "producto" + Format(cont, "000"))
+            ImpNDD.Add(New NodoImpresionN("", "cantidad", r("cantidad"), 0), "cantidad" + Format(cont, "000"))
+            cont += 1
+            CuantosRenglones += 1
+            total += r("comensal")
+            iva += r("iva")
+            subtotal = r("precio")
         Next
         ImpND.Add(New NodoImpresionN("", "mesero", GlobalUsuario, 0), "mesero")
         Dim m As New dbRestauranteMesas(MySqlcon, IdSucursal)
-        Dim m2 As RestauranteMesa = m.buscar(Me.idMesa)
-        ImpND.Add(New NodoImpresionN("", "mesa", m2.numero.ToString, 0), "mesa")
+        Dim m2 As RestauranteMesa = m.Buscar(Me.idMesa)
+        If m2 Is Nothing Then
+            ImpND.Add(New NodoImpresionN("", "mesa", "", 0), "mesa")
+        Else
+            ImpND.Add(New NodoImpresionN("", "mesa", m2.Numero.ToString, 0), "mesa")
+        End If
         ImpND.Add(New NodoImpresionN("", "hora", TimeOfDay.ToString("HH:mm:ss"), 0), "hora")
 
 
@@ -1309,67 +1018,139 @@ Public Class frmRestauranteOrden
         End While
         Return Yx
     End Function
+#End Region
 
+    Private Sub Button3_Click_1(sender As Object, e As EventArgs) Handles btnRepetir.Click
+        If dgvPlatillos.SelectedRows.Count > 0 Then
+            If idMesa = 0 Or dgvComensales.SelectedRows.Count > 0 Then
+                Dim ventas As New dbRestauranteVentas(IdVenta, MySqlcon)
+                Dim inv As New dbInventario(MySqlcon)
+                Dim detalles As New dbRestauranteVentasDetalles(MySqlcon)
 
+                inv.BuscaArticulo("", True, dgvPlatillos.SelectedRows(0).Cells(colDescripcion.Index).Value)
+                inv.LlenaDatos()
+                If idMesa = 0 Then
+                    detalles.Agregar(inv.ID, 1, inv.Nombre, inv.PrecioNeto, inv.Iva, IdVenta, "", 0)
+                Else
+                    detalles.Agregar(inv.ID, 1, inv.Nombre, inv.PrecioNeto, inv.Iva, IdVenta, "", dgvComensales.SelectedRows(colComensal1.Index).Cells(colComensal1.Index).Value)
+                End If
+                dgvPlatillos.DataSource = ventas.vistaDetalles(IdVenta, -1, -1)
+                btnImprimirComanda.Enabled = dgvPlatillos.RowCount > 0
+                dgvPlatillos.ClearSelection()
+                If dgvPlatillos.RowCount > 0 Then dgvPlatillos.Rows(dgvPlatillos.RowCount - 1).Selected = True
+            Else
+                MsgBox("Seleccione un comensal.")
+            End If
+            Else
+                MsgBox("Seleccione un platillo.")
+            End If
+    End Sub
 
-    Private Sub checaPendientes()
-        If ventas.checaPendientes(ventas.idVenta) Then
-            comandaEnviada = False
+    Private Sub Button5_Click_1(sender As Object, e As EventArgs) Handles btnRemover.Click
+        If dgvPlatillos.SelectedRows.Count > 0 Then
+            Dim rowIndex As Integer = dgvPlatillos.SelectedRows(0).Index
+            Dim ventas As New dbRestauranteVentas(idVenta, MySqlcon)
+            Dim detalles As New dbRestauranteVentasDetalles(MySqlcon)
+            If detalles.eliminar(dgvPlatillos.SelectedRows(0).Cells(colId.Index).Value) Then
+                dgvPlatillos.DataSource = ventas.vistaDetalles(IdVenta, -1, -1)
+                btnImprimirComanda.Enabled = dgvPlatillos.RowCount > 0
+                dgvPlatillos.ClearSelection()
+                If dgvPlatillos.RowCount > 0 Then
+                    If rowIndex < dgvPlatillos.RowCount Then
+                        dgvPlatillos.Rows(rowIndex).Selected = True
+                    Else
+                        dgvPlatillos.Rows(dgvPlatillos.RowCount - 1).Selected = True
+                    End If
+                End If
+            Else
+                MsgBox("No es posible eliminar el platillo.")
+            End If
         Else
-            comandaEnviada = True
-            btnPagar.Text = "Pagar"
+            MsgBox("Seleccione un platillo.")
         End If
     End Sub
 
-    Private Sub frmRestauranteOrden_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
-        panelObjetos.Left = (Me.Size.Width / 2) - (Me.MinimumSize.Width / 2 - 1)
-    End Sub
-
-    Private Sub Button3_Click_1(sender As Object, e As EventArgs) Handles Button3.Click
-        If detalles.idUltimoInventario <> 0 Then
-            inv.ID = detalles.idUltimoInventario
-            inv.LlenaDatos()
-            agregarPlatillo()
-        End If
-    End Sub
-
-    Private Sub Button5_Click_1(sender As Object, e As EventArgs) Handles Button5.Click
-        If detalles.idUltimoDetalle <> 0 And detalles.EsBorrable(detalles.idUltimoDetalle) Then
-            detalles.eliminar(detalles.idUltimoDetalle)
-            llenaGridPlatillos()
-            detalles.DaUltimoDetalle(idVenta)
-        End If
-    End Sub
-
-    Private Sub dgvPlatillos_CellClick(sender As Object, e As DataGridViewCellEventArgs)
-        If e.RowIndex >= 0 Then
-            detalles.idUltimoDetalle = dgvPlatillos.Item(6, e.RowIndex).Value
-        End If
-    End Sub
-
-    Private Sub dgvPlatillos_CellFormatting(sender As Object, e As System.Windows.Forms.DataGridViewCellFormattingEventArgs)
-        If e.ColumnIndex = 5 Then
-            e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            e.Value = Format(CDbl(e.Value), "###,##0.00")
-        End If
-    End Sub
-
-    Private Sub dgvComensales_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvComensales.CellClick
-        If e.RowIndex >= 0 Then
-            idComensal = e.RowIndex + 1
-        End If
-    End Sub
-
-    
-   
-    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
-        If detalles.vistaDetalles(idVenta, -1, CInt(estadosPlatillos.inicio).ToString).Count > 0 Then
-            estado = EstadosMesas.Ocupada
-        End If
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles btnCerrar.Click
         Me.Close()
     End Sub
 
-    Private Sub dgvComensales_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvComensales.CellContentClick
-
+    Private Sub dgvComensales_CellPainting(sender As Object, e As DataGridViewCellPaintingEventArgs) Handles dgvComensales.CellPainting
+            If e.RowIndex <> -1 Then
+            If e.Value < coloresComensales.Length And e.Value > 0 Then e.CellStyle.BackColor = coloresComensales(e.Value - 1)
+            End If
     End Sub
+
+    Private Sub dgvPlatillos_CellPainting(sender As Object, e As DataGridViewCellPaintingEventArgs) Handles dgvPlatillos.CellPainting
+        If e.RowIndex <> -1 Then
+            If dgvPlatillos.Rows(e.RowIndex).Cells(colComensal.Index).Value < coloresComensales.Length And dgvPlatillos.Rows(e.RowIndex).Cells(colComensal.Index).Value > 0 Then e.CellStyle.BackColor = coloresComensales(dgvPlatillos.Rows(e.RowIndex).Cells(colComensal.Index).Value - 1)
+        End If
+    End Sub
+
+
+
+#Region "DragDrop"
+    'Private dragBoxFromMouseDown As Rectangle
+    'Private rowIndexFromMouseDown As Integer
+    'Private rowIndexOfItemUnderMouseToDrop As Integer
+    'Private Sub dataGridView1_MouseMove(sender As Object, e As MouseEventArgs) Handles dgvPlatillos.MouseMove
+
+    '    If (e.Button & MouseButtons.Left) = MouseButtons.Left Then
+    '        ' If the mouse moves outside the rectangle, start the drag.
+    '        If dragBoxFromMouseDown <> Rectangle.Empty And Not dragBoxFromMouseDown.Contains(e.X, e.Y) Then
+    '            ' Proceed with the drag and drop, passing in the list item.                    
+    '            Dim dropEffect As DragDropEffects = dgvPlatillos.DoDragDrop(dgvPlatillos.Rows(rowIndexFromMouseDown), DragDropEffects.Move)
+    '        End If
+    '    End If
+    'End Sub
+
+    'Private Sub dataGridView1_MouseDown(sender As Object, e As MouseEventArgs) Handles dgvPlatillos.MouseDown
+    '    ' Get the index of the item the mouse is below.
+    '    rowIndexFromMouseDown = dgvPlatillos.HitTest(e.X, e.Y).RowIndex
+    '    If rowIndexFromMouseDown <> -1 Then
+    '        ' Remember the point where the mouse down occurred. 
+    '        ' The DragSize indicates the size that the mouse can move before a drag event should be started.                
+    '        Dim dragSize As Size = SystemInformation.DragSize
+    '        ' Create a rectangle using the DragSize, with the mouse position being at the center of the rectangle.
+    '        dragBoxFromMouseDown = New Rectangle(New Point(e.X - (dragSize.Width / 2), e.Y - (dragSize.Height / 2)), dragSize)
+    '    Else
+    '        ' Reset the rectangle if the mouse is not over an item in the ListBox.
+    '        dragBoxFromMouseDown = Rectangle.Empty
+    '    End If
+    'End Sub
+
+    'Private Sub dataGridView1_DragOver(sender As Object, e As DragEventArgs) Handles dgvComensales.DragOver, dgvPlatillos.DragOver
+    '    e.Effect = DragDropEffects.Move
+    'End Sub
+
+    'Private Sub dataGridView1_DragDrop(sender As Object, e As DragEventArgs) Handles dgvComensales.DragDrop
+
+    '    ' The mouse locations are relative to the screen, so they must be 
+    '    ' converted to client coordinates.
+    '    Dim clientPoint As Point = dgvComensales.PointToClient(New Point(e.X, e.Y))
+
+    '    ' Get the row index of the item the mouse is below. 
+    '    rowIndexOfItemUnderMouseToDrop = dgvComensales.HitTest(clientPoint.X, clientPoint.Y).RowIndex
+
+    '    ' If the drag operation was a move then remove and insert the row.
+    '    If e.Effect = DragDropEffects.Move Then
+    '        Dim rowToMove As DataGridViewRow = e.Data.GetData(GetType(DataGridViewRow))
+    '        detalles.modificarComensal(dgvPlatillos.Rows(rowIndexFromMouseDown).Cells(colId.Index).Value, dgvComensales.Rows(rowIndexOfItemUnderMouseToDrop).Cells(colComensal1.Index).Value)
+    '        dgvPlatillos.DataSource = ventas.vistaDetalles(idVenta, -1, -1)
+    'btnImprimirComanda.Enabled = dgvPlatillos.RowCount > 0
+    '        btnCambiarMesa.Enabled = dgvPlatillos.RowCount > 0
+    '        dgvPlatillos.ClearSelection()
+    '        dgvPlatillos.Rows(rowIndexOfItemUnderMouseToDrop).Selected = True
+    '        rowIndexFromMouseDown = -1
+    '        dragBoxFromMouseDown = Rectangle.Empty
+    '    End If
+    'End Sub
+
+    'Private Sub dataGridView2_DragDrop(sender As Object, e As DragEventArgs) Handles dgvPlatillos.DragDrop
+
+    '    rowIndexFromMouseDown = -1
+    '    dragBoxFromMouseDown = Rectangle.Empty
+    'End Sub
+
+#End Region
+
 End Class

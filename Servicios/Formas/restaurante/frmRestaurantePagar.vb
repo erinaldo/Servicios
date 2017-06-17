@@ -62,7 +62,7 @@
     End Sub
 
     Private Sub txtRecibido_Enter(sender As Object, e As EventArgs) Handles txtRecibido.Enter
-        f = New frmRestauranteTeclado(txtRecibido)
+        Dim f As frmRestauranteTeclado = frmRestauranteTeclado.Instanciar(txtRecibido)
         f.MdiParent = Me
         f.Show()
     End Sub

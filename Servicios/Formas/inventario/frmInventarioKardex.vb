@@ -342,7 +342,7 @@
         Try
             If ConsultaOn Then
                 Dim p As New dbInventario(MySqlcon)
-                If p.BuscaArticulo(TextBox1.Text, 1) Then
+                If p.BuscaArticulo(TextBox1.Text, 1, "") Then
                     IdInventario = p.ID
                     TextBox2.Text = p.Nombre
                 Else

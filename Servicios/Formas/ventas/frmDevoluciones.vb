@@ -552,15 +552,15 @@
         Try
             If ConsultaOn Then
                 Dim p As New dbInventario(MySqlcon)
-                If p.BuscaArticulo(TextBox3.Text, 1) Then
+                If p.BuscaArticulo(TextBox3.Text, 1, "") Then
                     LlenaDatosArticulo(p)
                 Else
                     IdInventario = 0
-                        TextBox4.Text = ""
-                        TextBox6.Text = "0"
-                        TextBox8.Text = "0"
-                        TextBox9.Text = "0"
-                        PrecioU = 0
+                    TextBox4.Text = ""
+                    TextBox6.Text = "0"
+                    TextBox8.Text = "0"
+                    TextBox9.Text = "0"
+                    PrecioU = 0
                 End If
             End If
         Catch ex As Exception

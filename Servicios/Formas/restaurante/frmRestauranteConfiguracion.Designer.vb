@@ -110,6 +110,9 @@ Partial Class frmRestauranteConfiguracion
         Me.Label21 = New System.Windows.Forms.Label()
         Me.Label20 = New System.Windows.Forms.Label()
         Me.dgvSecciones = New System.Windows.Forms.DataGridView()
+        Me.colId = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colNumero = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colNombre = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.Button5 = New System.Windows.Forms.Button()
         Me.Button6 = New System.Windows.Forms.Button()
@@ -122,7 +125,7 @@ Partial Class frmRestauranteConfiguracion
         Me.btnGuardarColor = New System.Windows.Forms.Button()
         Me.panelCategorias = New System.Windows.Forms.Panel()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.chkTeclado = New System.Windows.Forms.CheckBox()
         Me.Button4 = New System.Windows.Forms.Button()
         Me.panelFondoVentanas = New System.Windows.Forms.Panel()
         Me.Label29 = New System.Windows.Forms.Label()
@@ -133,6 +136,12 @@ Partial Class frmRestauranteConfiguracion
         Me.Label26 = New System.Windows.Forms.Label()
         Me.Label25 = New System.Windows.Forms.Label()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.Label34 = New System.Windows.Forms.Label()
+        Me.panelColorLetraSucio = New System.Windows.Forms.Panel()
+        Me.txtTextoSucio = New System.Windows.Forms.TextBox()
+        Me.btnLetraSucio = New System.Windows.Forms.Button()
+        Me.txtColorSucio = New System.Windows.Forms.Panel()
+        Me.btnSucio = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -521,8 +530,14 @@ Partial Class frmRestauranteConfiguracion
         '
         'GroupBox3
         '
+        Me.GroupBox3.Controls.Add(Me.panelColorLetraSucio)
+        Me.GroupBox3.Controls.Add(Me.Label34)
+        Me.GroupBox3.Controls.Add(Me.txtTextoSucio)
         Me.GroupBox3.Controls.Add(Me.panelColorLetraReservado)
+        Me.GroupBox3.Controls.Add(Me.btnLetraSucio)
+        Me.GroupBox3.Controls.Add(Me.txtColorSucio)
         Me.GroupBox3.Controls.Add(Me.Label19)
+        Me.GroupBox3.Controls.Add(Me.btnSucio)
         Me.GroupBox3.Controls.Add(Me.panelColorLetraOcupado)
         Me.GroupBox3.Controls.Add(Me.txtTextoReservado)
         Me.GroupBox3.Controls.Add(Me.panelColorLetraLibre)
@@ -1036,6 +1051,7 @@ Partial Class frmRestauranteConfiguracion
         Me.dgvSecciones.AllowUserToAddRows = False
         Me.dgvSecciones.AllowUserToDeleteRows = False
         Me.dgvSecciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvSecciones.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colId, Me.colNumero, Me.colNombre})
         Me.dgvSecciones.Location = New System.Drawing.Point(368, 65)
         Me.dgvSecciones.Name = "dgvSecciones"
         Me.dgvSecciones.ReadOnly = True
@@ -1043,6 +1059,29 @@ Partial Class frmRestauranteConfiguracion
         Me.dgvSecciones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgvSecciones.Size = New System.Drawing.Size(470, 152)
         Me.dgvSecciones.TabIndex = 0
+        '
+        'colId
+        '
+        Me.colId.DataPropertyName = "Id"
+        Me.colId.HeaderText = "Id"
+        Me.colId.Name = "colId"
+        Me.colId.ReadOnly = True
+        Me.colId.Visible = False
+        '
+        'colNumero
+        '
+        Me.colNumero.DataPropertyName = "Numero"
+        Me.colNumero.HeaderText = "Número"
+        Me.colNumero.Name = "colNumero"
+        Me.colNumero.ReadOnly = True
+        '
+        'colNombre
+        '
+        Me.colNombre.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.colNombre.DataPropertyName = "Text"
+        Me.colNombre.HeaderText = "Nombre"
+        Me.colNombre.Name = "colNombre"
+        Me.colNombre.ReadOnly = True
         '
         'TabPage3
         '
@@ -1164,7 +1203,7 @@ Partial Class frmRestauranteConfiguracion
         '
         Me.TabPage4.BackColor = System.Drawing.Color.Lavender
         Me.TabPage4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TabPage4.Controls.Add(Me.CheckBox1)
+        Me.TabPage4.Controls.Add(Me.chkTeclado)
         Me.TabPage4.Controls.Add(Me.Button4)
         Me.TabPage4.Controls.Add(Me.panelFondoVentanas)
         Me.TabPage4.Controls.Add(Me.Label29)
@@ -1175,15 +1214,15 @@ Partial Class frmRestauranteConfiguracion
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "Ventanas"
         '
-        'CheckBox1
+        'chkTeclado
         '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(24, 61)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(125, 20)
-        Me.CheckBox1.TabIndex = 3
-        Me.CheckBox1.Text = "Activar Teclado"
-        Me.CheckBox1.UseVisualStyleBackColor = True
+        Me.chkTeclado.AutoSize = True
+        Me.chkTeclado.Location = New System.Drawing.Point(24, 61)
+        Me.chkTeclado.Name = "chkTeclado"
+        Me.chkTeclado.Size = New System.Drawing.Size(125, 20)
+        Me.chkTeclado.TabIndex = 3
+        Me.chkTeclado.Text = "Activar Teclado"
+        Me.chkTeclado.UseVisualStyleBackColor = True
         '
         'Button4
         '
@@ -1275,6 +1314,62 @@ Partial Class frmRestauranteConfiguracion
         'OpenFileDialog1
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
+        '
+        'Label34
+        '
+        Me.Label34.AutoSize = True
+        Me.Label34.Location = New System.Drawing.Point(24, 130)
+        Me.Label34.Name = "Label34"
+        Me.Label34.Size = New System.Drawing.Size(48, 16)
+        Me.Label34.TabIndex = 23
+        Me.Label34.Text = "Sucia:"
+        '
+        'panelColorLetraSucio
+        '
+        Me.panelColorLetraSucio.BackColor = System.Drawing.Color.White
+        Me.panelColorLetraSucio.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.panelColorLetraSucio.Location = New System.Drawing.Point(161, 129)
+        Me.panelColorLetraSucio.Name = "panelColorLetraSucio"
+        Me.panelColorLetraSucio.Size = New System.Drawing.Size(59, 19)
+        Me.panelColorLetraSucio.TabIndex = 26
+        '
+        'txtTextoSucio
+        '
+        Me.txtTextoSucio.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTextoSucio.Location = New System.Drawing.Point(78, 127)
+        Me.txtTextoSucio.Name = "txtTextoSucio"
+        Me.txtTextoSucio.Size = New System.Drawing.Size(77, 22)
+        Me.txtTextoSucio.TabIndex = 25
+        '
+        'btnLetraSucio
+        '
+        Me.btnLetraSucio.BackColor = System.Drawing.Color.White
+        Me.btnLetraSucio.ForeColor = System.Drawing.Color.Black
+        Me.btnLetraSucio.Location = New System.Drawing.Point(226, 127)
+        Me.btnLetraSucio.Name = "btnLetraSucio"
+        Me.btnLetraSucio.Size = New System.Drawing.Size(37, 23)
+        Me.btnLetraSucio.TabIndex = 24
+        Me.btnLetraSucio.Text = "..."
+        Me.btnLetraSucio.UseVisualStyleBackColor = False
+        '
+        'txtColorSucio
+        '
+        Me.txtColorSucio.BackColor = System.Drawing.Color.White
+        Me.txtColorSucio.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.txtColorSucio.Location = New System.Drawing.Point(269, 129)
+        Me.txtColorSucio.Name = "txtColorSucio"
+        Me.txtColorSucio.Size = New System.Drawing.Size(59, 19)
+        Me.txtColorSucio.TabIndex = 23
+        '
+        'btnSucio
+        '
+        Me.btnSucio.BackColor = System.Drawing.Color.White
+        Me.btnSucio.Location = New System.Drawing.Point(334, 127)
+        Me.btnSucio.Name = "btnSucio"
+        Me.btnSucio.Size = New System.Drawing.Size(37, 23)
+        Me.btnSucio.TabIndex = 22
+        Me.btnSucio.Text = "..."
+        Me.btnSucio.UseVisualStyleBackColor = False
         '
         'frmRestauranteConfiguracion
         '
@@ -1404,7 +1499,7 @@ Partial Class frmRestauranteConfiguracion
     Friend WithEvents Button4 As System.Windows.Forms.Button
     Friend WithEvents panelFondoVentanas As System.Windows.Forms.Panel
     Friend WithEvents Label29 As System.Windows.Forms.Label
-    Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
+    Friend WithEvents chkTeclado As System.Windows.Forms.CheckBox
     Friend WithEvents OpenFileDialog1 As System.Windows.Forms.OpenFileDialog
     Friend WithEvents btnRuta As System.Windows.Forms.Button
     Friend WithEvents txtRuta As System.Windows.Forms.TextBox
@@ -1425,4 +1520,13 @@ Partial Class frmRestauranteConfiguracion
     Friend WithEvents Button5 As System.Windows.Forms.Button
     Friend WithEvents comboSucursal As System.Windows.Forms.ComboBox
     Friend WithEvents Label33 As System.Windows.Forms.Label
+    Friend WithEvents colId As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colNumero As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colNombre As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents panelColorLetraSucio As System.Windows.Forms.Panel
+    Friend WithEvents Label34 As System.Windows.Forms.Label
+    Friend WithEvents txtTextoSucio As System.Windows.Forms.TextBox
+    Friend WithEvents btnLetraSucio As System.Windows.Forms.Button
+    Friend WithEvents txtColorSucio As System.Windows.Forms.Panel
+    Friend WithEvents btnSucio As System.Windows.Forms.Button
 End Class

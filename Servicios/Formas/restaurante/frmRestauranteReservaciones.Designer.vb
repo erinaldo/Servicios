@@ -23,283 +23,190 @@ Partial Class frmRestauranteReservaciones
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.dtpFecha = New System.Windows.Forms.DateTimePicker()
-        Me.panelMesas = New System.Windows.Forms.Panel()
-        Me.comboSeccion = New System.Windows.Forms.ComboBox()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.dtpHoraInicio = New System.Windows.Forms.DateTimePicker()
-        Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.txtClave = New System.Windows.Forms.TextBox()
-        Me.txtNombre = New System.Windows.Forms.TextBox()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.txtMesa = New System.Windows.Forms.TextBox()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.txtPersonas = New System.Windows.Forms.TextBox()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.dtpHoraFin = New System.Windows.Forms.DateTimePicker()
         Me.btnGuardar = New System.Windows.Forms.Button()
-        Me.btnCerrar = New System.Windows.Forms.Button()
+        Me.btnNuevo = New System.Windows.Forms.Button()
+        Me.txtNombre = New System.Windows.Forms.TextBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.btnEliminar = New System.Windows.Forms.Button()
+        Me.colTelefono = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colNombre = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colFecha = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'dtpFecha
         '
-        Me.dtpFecha.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dtpFecha.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtpFecha.Location = New System.Drawing.Point(281, 19)
+        Me.dtpFecha.CustomFormat = "dd/MM/yyyy HH:mm"
+        Me.dtpFecha.Font = New System.Drawing.Font("Arial", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtpFecha.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dtpFecha.Location = New System.Drawing.Point(94, 13)
+        Me.dtpFecha.Margin = New System.Windows.Forms.Padding(4)
         Me.dtpFecha.Name = "dtpFecha"
-        Me.dtpFecha.Size = New System.Drawing.Size(102, 21)
+        Me.dtpFecha.Size = New System.Drawing.Size(169, 23)
         Me.dtpFecha.TabIndex = 1
-        '
-        'panelMesas
-        '
-        Me.panelMesas.BackColor = System.Drawing.Color.Silver
-        Me.panelMesas.Location = New System.Drawing.Point(13, 47)
-        Me.panelMesas.Name = "panelMesas"
-        Me.panelMesas.Size = New System.Drawing.Size(793, 316)
-        Me.panelMesas.TabIndex = 3
-        '
-        'comboSeccion
-        '
-        Me.comboSeccion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.comboSeccion.FormattingEnabled = True
-        Me.comboSeccion.Location = New System.Drawing.Point(77, 19)
-        Me.comboSeccion.Name = "comboSeccion"
-        Me.comboSeccion.Size = New System.Drawing.Size(138, 21)
-        Me.comboSeccion.TabIndex = 0
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(12, 21)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(63, 16)
-        Me.Label1.TabIndex = 3
-        Me.Label1.Text = "Sección:"
-        '
-        'dtpHoraInicio
-        '
-        Me.dtpHoraInicio.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dtpHoraInicio.Format = System.Windows.Forms.DateTimePickerFormat.Time
-        Me.dtpHoraInicio.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.dtpHoraInicio.Location = New System.Drawing.Point(486, 19)
-        Me.dtpHoraInicio.Name = "dtpHoraInicio"
-        Me.dtpHoraInicio.ShowUpDown = True
-        Me.dtpHoraInicio.Size = New System.Drawing.Size(102, 21)
-        Me.dtpHoraInicio.TabIndex = 2
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(399, 21)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(81, 16)
-        Me.Label2.TabIndex = 5
-        Me.Label2.Text = "Hora inicio:"
         '
         'Label3
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(228, 21)
+        Me.Label3.Location = New System.Drawing.Point(14, 18)
+        Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(51, 16)
         Me.Label3.TabIndex = 6
         Me.Label3.Text = "Fecha:"
         '
-        'Label4
+        'btnGuardar
         '
-        Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(42, 393)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(57, 16)
-        Me.Label4.TabIndex = 7
-        Me.Label4.Text = "Cliente:"
+        Me.btnGuardar.BackColor = System.Drawing.Color.White
+        Me.btnGuardar.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnGuardar.Location = New System.Drawing.Point(94, 108)
+        Me.btnGuardar.Margin = New System.Windows.Forms.Padding(4)
+        Me.btnGuardar.Name = "btnGuardar"
+        Me.btnGuardar.Size = New System.Drawing.Size(98, 39)
+        Me.btnGuardar.TabIndex = 10
+        Me.btnGuardar.Text = "Guardar"
+        Me.btnGuardar.UseVisualStyleBackColor = False
         '
-        'txtClave
+        'btnNuevo
         '
-        Me.txtClave.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtClave.Location = New System.Drawing.Point(102, 391)
-        Me.txtClave.Name = "txtClave"
-        Me.txtClave.Size = New System.Drawing.Size(65, 20)
-        Me.txtClave.TabIndex = 4
+        Me.btnNuevo.BackColor = System.Drawing.Color.White
+        Me.btnNuevo.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.btnNuevo.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnNuevo.Location = New System.Drawing.Point(306, 108)
+        Me.btnNuevo.Margin = New System.Windows.Forms.Padding(4)
+        Me.btnNuevo.Name = "btnNuevo"
+        Me.btnNuevo.Size = New System.Drawing.Size(98, 39)
+        Me.btnNuevo.TabIndex = 11
+        Me.btnNuevo.Text = "Nuevo"
+        Me.btnNuevo.UseVisualStyleBackColor = False
         '
         'txtNombre
         '
-        Me.txtNombre.Location = New System.Drawing.Point(180, 391)
+        Me.txtNombre.Font = New System.Drawing.Font("Arial", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtNombre.Location = New System.Drawing.Point(94, 46)
+        Me.txtNombre.Margin = New System.Windows.Forms.Padding(4)
         Me.txtNombre.Name = "txtNombre"
-        Me.txtNombre.Size = New System.Drawing.Size(242, 20)
-        Me.txtNombre.TabIndex = 5
-        '
-        'Button1
-        '
-        Me.Button1.BackColor = System.Drawing.Color.White
-        Me.Button1.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.Location = New System.Drawing.Point(432, 384)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(57, 28)
-        Me.Button1.TabIndex = 6
-        Me.Button1.Text = "..."
-        Me.Button1.UseVisualStyleBackColor = False
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(110, 370)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(48, 16)
-        Me.Label5.TabIndex = 11
-        Me.Label5.Text = "Clave:"
+        Me.txtNombre.Size = New System.Drawing.Size(281, 23)
+        Me.txtNombre.TabIndex = 2
         '
         'Label6
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(270, 370)
+        Me.Label6.Location = New System.Drawing.Point(14, 49)
+        Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(62, 16)
         Me.Label6.TabIndex = 12
         Me.Label6.Text = "Nombre:"
         '
-        'Label7
+        'DataGridView1
         '
-        Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(54, 424)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(45, 16)
-        Me.Label7.TabIndex = 13
-        Me.Label7.Text = "Mesa:"
+        Me.DataGridView1.AllowUserToResizeRows = False
+        Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colFecha, Me.colNombre, Me.colTelefono})
+        Me.DataGridView1.Location = New System.Drawing.Point(17, 154)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.RowHeadersVisible = False
+        Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DataGridView1.Size = New System.Drawing.Size(435, 155)
+        Me.DataGridView1.TabIndex = 100
         '
-        'txtMesa
+        'Label1
         '
-        Me.txtMesa.Location = New System.Drawing.Point(102, 422)
-        Me.txtMesa.Name = "txtMesa"
-        Me.txtMesa.Size = New System.Drawing.Size(65, 20)
-        Me.txtMesa.TabIndex = 7
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(14, 80)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(67, 16)
+        Me.Label1.TabIndex = 102
+        Me.Label1.Text = "Teléfono:"
         '
-        'Label8
+        'TextBox1
         '
-        Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(29, 456)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(70, 16)
-        Me.Label8.TabIndex = 15
-        Me.Label8.Text = "Personas:"
+        Me.TextBox1.Font = New System.Drawing.Font("Arial", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox1.Location = New System.Drawing.Point(94, 77)
+        Me.TextBox1.Margin = New System.Windows.Forms.Padding(4)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(281, 23)
+        Me.TextBox1.TabIndex = 101
         '
-        'txtPersonas
+        'btnEliminar
         '
-        Me.txtPersonas.Location = New System.Drawing.Point(102, 454)
-        Me.txtPersonas.Name = "txtPersonas"
-        Me.txtPersonas.Size = New System.Drawing.Size(65, 20)
-        Me.txtPersonas.TabIndex = 8
+        Me.btnEliminar.BackColor = System.Drawing.Color.White
+        Me.btnEliminar.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnEliminar.Location = New System.Drawing.Point(200, 108)
+        Me.btnEliminar.Margin = New System.Windows.Forms.Padding(4)
+        Me.btnEliminar.Name = "btnEliminar"
+        Me.btnEliminar.Size = New System.Drawing.Size(98, 39)
+        Me.btnEliminar.TabIndex = 103
+        Me.btnEliminar.Text = "Eliminar"
+        Me.btnEliminar.UseVisualStyleBackColor = False
         '
-        'Label9
+        'colTelefono
         '
-        Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(13, 490)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(86, 16)
-        Me.Label9.TabIndex = 18
-        Me.Label9.Text = "Hora Limite:"
+        Me.colTelefono.HeaderText = "Teléfono"
+        Me.colTelefono.Name = "colTelefono"
         '
-        'dtpHoraFin
+        'colNombre
         '
-        Me.dtpHoraFin.CalendarFont = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dtpHoraFin.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dtpHoraFin.Format = System.Windows.Forms.DateTimePickerFormat.Time
-        Me.dtpHoraFin.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.dtpHoraFin.Location = New System.Drawing.Point(102, 488)
-        Me.dtpHoraFin.Name = "dtpHoraFin"
-        Me.dtpHoraFin.ShowUpDown = True
-        Me.dtpHoraFin.Size = New System.Drawing.Size(109, 22)
-        Me.dtpHoraFin.TabIndex = 9
+        Me.colNombre.HeaderText = "Nombre"
+        Me.colNombre.Name = "colNombre"
         '
-        'btnGuardar
+        'colFecha
         '
-        Me.btnGuardar.BackColor = System.Drawing.Color.White
-        Me.btnGuardar.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnGuardar.Location = New System.Drawing.Point(576, 477)
-        Me.btnGuardar.Name = "btnGuardar"
-        Me.btnGuardar.Size = New System.Drawing.Size(112, 42)
-        Me.btnGuardar.TabIndex = 10
-        Me.btnGuardar.Text = "Guardar"
-        Me.btnGuardar.UseVisualStyleBackColor = False
-        '
-        'btnCerrar
-        '
-        Me.btnCerrar.BackColor = System.Drawing.Color.White
-        Me.btnCerrar.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnCerrar.Location = New System.Drawing.Point(694, 477)
-        Me.btnCerrar.Name = "btnCerrar"
-        Me.btnCerrar.Size = New System.Drawing.Size(112, 42)
-        Me.btnCerrar.TabIndex = 11
-        Me.btnCerrar.Text = "Cerrar"
-        Me.btnCerrar.UseVisualStyleBackColor = False
+        Me.colFecha.HeaderText = "Fecha"
+        Me.colFecha.Name = "colFecha"
         '
         'frmRestauranteReservaciones
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AcceptButton = Me.btnGuardar
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Lavender
-        Me.ClientSize = New System.Drawing.Size(819, 531)
-        Me.Controls.Add(Me.btnCerrar)
-        Me.Controls.Add(Me.btnGuardar)
-        Me.Controls.Add(Me.Label9)
-        Me.Controls.Add(Me.dtpHoraFin)
-        Me.Controls.Add(Me.txtPersonas)
-        Me.Controls.Add(Me.Label8)
-        Me.Controls.Add(Me.txtMesa)
-        Me.Controls.Add(Me.Label7)
-        Me.Controls.Add(Me.Label6)
-        Me.Controls.Add(Me.Label5)
-        Me.Controls.Add(Me.Button1)
-        Me.Controls.Add(Me.txtNombre)
-        Me.Controls.Add(Me.txtClave)
-        Me.Controls.Add(Me.Label4)
-        Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.dtpHoraInicio)
+        Me.CancelButton = Me.btnNuevo
+        Me.ClientSize = New System.Drawing.Size(464, 321)
+        Me.Controls.Add(Me.btnEliminar)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.comboSeccion)
-        Me.Controls.Add(Me.panelMesas)
+        Me.Controls.Add(Me.TextBox1)
+        Me.Controls.Add(Me.btnNuevo)
+        Me.Controls.Add(Me.btnGuardar)
+        Me.Controls.Add(Me.DataGridView1)
+        Me.Controls.Add(Me.Label6)
+        Me.Controls.Add(Me.txtNombre)
+        Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.dtpFecha)
+        Me.Font = New System.Drawing.Font("Arial", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Margin = New System.Windows.Forms.Padding(4)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "frmRestauranteReservaciones"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Reservaciones"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
     Friend WithEvents dtpFecha As System.Windows.Forms.DateTimePicker
-    Friend WithEvents panelMesas As System.Windows.Forms.Panel
-    Friend WithEvents comboSeccion As System.Windows.Forms.ComboBox
-    Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents dtpHoraInicio As System.Windows.Forms.DateTimePicker
-    Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents Label4 As System.Windows.Forms.Label
-    Friend WithEvents txtClave As System.Windows.Forms.TextBox
-    Friend WithEvents txtNombre As System.Windows.Forms.TextBox
-    Friend WithEvents Button1 As System.Windows.Forms.Button
-    Friend WithEvents Label5 As System.Windows.Forms.Label
-    Friend WithEvents Label6 As System.Windows.Forms.Label
-    Friend WithEvents Label7 As System.Windows.Forms.Label
-    Friend WithEvents txtMesa As System.Windows.Forms.TextBox
-    Friend WithEvents Label8 As System.Windows.Forms.Label
-    Friend WithEvents txtPersonas As System.Windows.Forms.TextBox
-    Friend WithEvents Label9 As System.Windows.Forms.Label
-    Friend WithEvents dtpHoraFin As System.Windows.Forms.DateTimePicker
     Friend WithEvents btnGuardar As System.Windows.Forms.Button
-    Friend WithEvents btnCerrar As System.Windows.Forms.Button
+    Friend WithEvents btnNuevo As System.Windows.Forms.Button
+    Friend WithEvents txtNombre As System.Windows.Forms.TextBox
+    Friend WithEvents Label6 As System.Windows.Forms.Label
+    Friend WithEvents DataGridView1 As System.Windows.Forms.DataGridView
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+    Friend WithEvents btnEliminar As System.Windows.Forms.Button
+    Friend WithEvents colFecha As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colNombre As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colTelefono As System.Windows.Forms.DataGridViewTextBoxColumn
 End Class

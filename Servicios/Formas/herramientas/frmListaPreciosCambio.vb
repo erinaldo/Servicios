@@ -140,12 +140,12 @@
         Try
             If ConsultaOn Then
                 Dim p As New dbInventario(MySqlcon)
-                If p.BuscaArticulo(TextBox3.Text, 1) Then
+                If p.BuscaArticulo(TextBox3.Text, 1, "") Then
                     IdInventario = p.ID
                     TextBox4.Text = p.Nombre
                 Else
                     IdInventario = 0
-                        TextBox4.Text = ""
+                    TextBox4.Text = ""
                 End If
             End If
         Catch ex As Exception

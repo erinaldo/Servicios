@@ -78,37 +78,37 @@ Public Class dbRestauranteVentas
         comm.ExecuteNonQuery()
         NoPersonas -= 1
     End Sub
-    Public Sub modificar(ByVal idVenta As Integer, ByVal idCliente As Integer, ByVal descuento As Double, ByVal total As Double, ByVal totalapagar As Double, ByVal estado As Integer, ByVal fecha As String, ByVal idSucursal As Integer, pidCajero As Integer, pIdCaja As Integer, pMotivo As String)
-        comm.CommandText = "update tblrestauranteventas set idcliente=" + idCliente.ToString() + ", descuento=" + descuento.ToString() + ",total=" + total.ToString() + ", totalapagar=" + totalapagar.ToString() + ", estado=" + estado.ToString() + ", fecha='" + fecha + "', idsucursal=" + idSucursal.ToString + ",idcajero=" + pidCajero.ToString + ",idcaja=" + pIdCaja.ToString + ",fechacancelado='" + Format(Date.Now, "yyyy/MM/dd") + "',horacancelado='" + Format(Date.Now, "HH:mm:ss") + "',motivocan='" + Replace(pMotivo, "'", "''") + "'"
-        comm.CommandText += " where idventa=" + idVenta.ToString()
+    Public Sub Pagar(idventa As Integer)
+        comm.CommandText = "update tblrestauranteventas set estado=" + CInt(Estados.Guardada).ToString() + " where idventa=" + idventa.ToString() + "; update tblrestauranteventasdetalles set estado = " + CInt(estadosPlatillos.pagado).ToString + "; update tblrestaurantemesas set estado = " + CInt(EstadosMesas.Sucia).ToString() + " where idmesa=(select idmesa from tblrestauranteventas where idventa=" + idventa.ToString() + ");delete from tblrestaurantecomensales where mesa = (select idmesa from tblrestauranteventas where idventa = " + idventa.ToString() + ");"
         comm.ExecuteNonQuery()
     End Sub
-    Public Sub eliminar(ByVal idVenta As Integer)
+    
+    Public Sub Cancelar(ByVal idVenta As Integer)
+        comm.CommandText = "update tblrestauranteventas set estado=" + CInt(Estados.Cancelada).ToString() + " where idventa=" + idVenta.ToString() + "; update tblrestaurantemesas set estado = 1 where idmesa = (select idmesa from tblrestauranteventas where idventa = " + idVenta.ToString() + "); delete from tblrestaurantecomensales where mesa = (select idmesa from tblrestauranteventas where idventa = " + idVenta.ToString() + ");"
+        comm.ExecuteNonQuery()
+    End Sub
+    Public Sub CambiarMesa(ByVal idMesaOrigen As Integer, idmesa As Integer)
+        comm.CommandText = "update tblrestaurantecomensales set mesa = " + idmesa.ToString() + " where mesa = " + idMesaOrigen.ToString() + "; update tblrestaurantemesas set estado = " + CInt(EstadosMesas.Libre).ToString() + " where idmesa = " + idMesaOrigen.ToString() + "; update tblrestauranteventas set idmesa = " + idmesa.ToString + " where idmesa=" + idMesaOrigen.ToString() + "; update tblrestaurantemesas set estado = " + CInt(EstadosMesas.Ocupada).ToString() + " where idmesa = " + idmesa.ToString() + ";"
+        comm.ExecuteNonQuery()
+    End Sub
+    Public Sub Eliminar(ByVal idVenta As Integer)
         comm.CommandText = "delete from tblrestauranteventas where idventa=" + idVenta.ToString()
         comm.ExecuteNonQuery()
     End Sub
-    Public Function checaFolioRepetido(ByVal serie As String, ByVal folio As Integer) As Boolean
-        comm.CommandText = "select serie,folio from tblrestauranteventas where serie='" + serie + "' and folio=" + folio.ToString() + ";"
-        Dim dr As MySqlDataReader
-        dr = comm.ExecuteReader
-        If dr.HasRows() Then
-            dr.Close()
-            Return True
-        Else
-            dr.Close()
-            Return False
-        End If
-    End Function
-
+  
     Public Function DaNuevoFolio(ByVal pSerie As String) As Integer
         comm.CommandText = "select ifnull((select max(folio) from tblsemillasliquidacion where serie='" + Replace(Trim(pSerie), "'", "''") + "'),0)"
         Return comm.ExecuteScalar + 1
     End Function
 
-    Public Function Guardar(ByVal folio As Integer, ByVal idMesero As Integer, ByVal idCliente As Integer, ByVal idSucursal As Integer, pIdMesa As Integer, pidCaja As Integer) As Integer
-        comm.CommandText = "insert into tblrestauranteventas(folio,fecha,hora,total,totalapagar,idcliente,idmesero,descuento,estado,idsucursal,nopersonas,serie,idmesa,idcajero,idcaja,fechacancelado,horacancelado,motivocan) "
-        comm.CommandText += "values(" + folio.ToString() + ",'" + Date.Now.ToString("yyyy/MM/dd") + "','" + Date.Now.ToString("HH:mm:ss") + "'," + total.ToString() + "," + totalapagar.ToString() + "," + idCliente.ToString() + "," + idMesero.ToString() + "," + descuento.ToString() + ",2," + idSucursal.ToString + ",1,''," + pIdMesa.ToString + "," + idMesero.ToString + "," + pidCaja.ToString + ",'" + Date.Now.ToString("yyyy/MM/dd") + "','" + Date.Now.ToString("HH:mm:ss") + "','');"
-        comm.CommandText += "select ifnull(last_insert_id(),0);"
+    Public Function Agregar(ByVal folio As Integer, ByVal idMesero As Integer, ByVal idCliente As Integer, ByVal idSucursal As Integer, pIdMesa As Integer, pidCaja As Integer) As Integer
+        If pIdMesa = 0 Then
+            comm.CommandText = "insert into tblrestauranteventas(folio, fecha, hora, total, totalapagar, idcliente, idmesero, descuento, estado, idsucursal, nopersonas, serie, idmesa, idcajero, idcaja, fechacancelado, horacancelado, motivocan) values(" + folio.ToString() + ",'" + Date.Now.ToString("yyyy/MM/dd") + "','" + Date.Now.ToString("HH:mm:ss") + "'," + total.ToString() + "," + totalapagar.ToString() + "," + idCliente.ToString() + "," + idMesero.ToString() + "," + descuento.ToString() + "," + CInt(Estados.Pendiente).ToString() + "," + idSucursal.ToString + ",1,''," + pIdMesa.ToString + "," + idMesero.ToString + "," + pidCaja.ToString + ",'" + Date.Now.ToString("yyyy/MM/dd") + "','" + Date.Now.ToString("HH:mm:ss") + "','');"
+        Else
+            comm.CommandText = "insert into tblrestaurantecomensales (numero,mesa) values (1," + pIdMesa.ToString() + "); insert into tblrestauranteventas(folio, fecha, hora, total, totalapagar, idcliente, idmesero, descuento, estado, idsucursal, nopersonas, serie, idmesa, idcajero, idcaja, fechacancelado, horacancelado, motivocan) values(" + folio.ToString() + ",'" + Date.Now.ToString("yyyy/MM/dd") + "','" + Date.Now.ToString("HH:mm:ss") + "'," + total.ToString() + "," + totalapagar.ToString() + "," + idCliente.ToString() + "," + idMesero.ToString() + "," + descuento.ToString() + "," + CInt(Estados.Pendiente).ToString() + "," + idSucursal.ToString + ",1,''," + pIdMesa.ToString + "," + idMesero.ToString + "," + pidCaja.ToString + ",'" + Date.Now.ToString("yyyy/MM/dd") + "','" + Date.Now.ToString("HH:mm:ss") + "','');"
+        End If
+        comm.ExecuteNonQuery()
+        comm.CommandText = "select ifnull(last_insert_id(),0);"
         idVenta = comm.ExecuteScalar()
         Me.folio = folio
         Me.fecha = Date.Now.ToString("yyyy/MM/dd")
@@ -159,24 +159,11 @@ Public Class dbRestauranteVentas
     End Function
 
     Public Function obtenFolio() As Integer
-        comm.CommandText = "select ifnull(max(folio),0) from tblrestauranteventas;"
-        Dim f = comm.ExecuteScalar
-        f = f + 1
-        Return f
+        comm.CommandText = "select ifnull(max(folio),0)+1 from tblrestauranteventas;"
+        Return comm.ExecuteScalar
     End Function
 
-    'Public Function DaNuevoFolio(ByVal pSerie As String, ByVal pidSucursal As Integer, ByVal pEsElectronica As Integer, pModoB As String) As Integer
-    '    If pModoB = "0" Then
-    '        'Comm.CommandText = "select ifnull((select max(folio) from tblventas where serie='" + Replace(Trim(pSerie), "'", "''") + "' and (estado=3 or estado=4) and eselectronica=" + pEsElectronica.ToString + " ),0)"
-    '        Comm.CommandText = "select ifnull((select folio from tblventas where serie='" + Replace(Trim(pSerie), "'", "''") + "' and (estado=3 or estado=4) and eselectronica=" + pEsElectronica.ToString + " order by folio desc limit 1),0)"
-    '        Return Comm.ExecuteScalar + 1
-    '    Else
-    '        'Comm.CommandText = "select ifnull((select max(folio) from tblventas where serie='" + Replace(Trim(pSerie), "'", "''") + "' and eselectronica=" + pEsElectronica.ToString + " ),0)"
-    '        Comm.CommandText = "select ifnull((select folio from tblventas where serie='" + Replace(Trim(pSerie), "'", "''") + "' and eselectronica=" + pEsElectronica.ToString + " order by folio desc limit 1),0)"
-    '        Return Comm.ExecuteScalar + 1
-    '    End If
-    'End Function
-
+    
     Public Function buscarSucursal(ByVal idSucursal) As DataView
         comm.CommandText = "select idventa,folio,fecha,hora,total from tblrestauranteventas where idSucursal=" + idSucursal.ToString()
         Dim ds As New DataSet
@@ -215,13 +202,13 @@ Public Class dbRestauranteVentas
         Return lista
     End Function
 
-    Public Function checaPendientes(ByVal idVenta As Integer) As Boolean
-        comm.CommandText = "select count(*) from tblrestauranteventasdetalles where idventa=" + idVenta.ToString + " and estado=" + CInt(estadosPlatillos.sinEnviar).ToString
-        Dim i As Integer = comm.ExecuteScalar
-        If i > 0 Then
-            Return True
+    Public Function checaPendientes(ByVal idVenta As Integer, idmesa As Integer) As Boolean
+        If idVenta = 0 Then
+            comm.CommandText = "select count(*) from tblrestauranteventasdetalles vd inner join tblrestauranteventas v on v.idventa=vd.idventa where idmesa=" + idmesa.ToString + " and vd.estado=" + CInt(estadosPlatillos.sinEnviar).ToString + " and v.estado=2;"
+        Else
+            comm.CommandText = "select count(*) from tblrestauranteventasdetalles where idventa=" + idVenta.ToString + " and estado=" + CInt(estadosPlatillos.sinEnviar).ToString + ";"
         End If
-        Return False
+        Return comm.ExecuteScalar > 0
     End Function
 
     Public Function cuantosPlatillos(ByVal idVenta As Integer, ByVal pagado As Integer) As Integer
@@ -234,16 +221,27 @@ Public Class dbRestauranteVentas
     End Function
 
     Public Function vistaDetalles(ByVal idVenta As Integer, ByVal estado As Integer, ByVal pagado As Integer) As DataView
-        comm.CommandText = "select iddetalle,cantidad,descripcion,precio,(precio*cantidad) as total from tblrestauranteventasdetalles where idVenta=" + idVenta.ToString
-        If estado > -1 Then
-            comm.CommandText += " and estado=" + estado.ToString()
-        End If
-        If pagado > -1 Then
-            comm.CommandText += " and pagado=" + pagado.ToString()
-        End If
+        comm.CommandText = "select iddetalle,cantidad,descripcion,precio,(precio*cantidad) as total,iva,comensal,estado<>6 as enviado from tblrestauranteventasdetalles where idVenta=" + idVenta.ToString
+        If estado > -1 Then comm.CommandText += " and estado=" + estado.ToString()
+        If pagado > -1 Then comm.CommandText += " and pagado=" + pagado.ToString()
+        comm.CommandText += " order by comensal,descripcion,cantidad,iddetalle"
         Dim ds As New DataSet
         Dim da As New MySqlDataAdapter(comm)
         da.Fill(ds, "detalles")
         Return ds.Tables("detalles").DefaultView
+    End Function
+
+    Public Function Pedidos() As ArrayList
+        comm.CommandText = "select * from tblrestauranteventas where idmesa = 0 and estado = 2 order by folio;"
+        Dim arr As New ArrayList
+        Dim dr As MySqlDataReader = comm.ExecuteReader
+        While dr.Read
+            Dim p As New RestaurantePedido
+            p.Id = dr("IdVenta")
+            p.Text = "Pedido " + dr("Folio").ToString()
+            arr.Add(p)
+        End While
+        dr.Close()
+        Return arr
     End Function
 End Class

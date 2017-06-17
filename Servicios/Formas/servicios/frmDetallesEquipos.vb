@@ -252,7 +252,7 @@
     End Sub
 
     Private Sub txtArticulo_TextChanged(sender As Object, e As EventArgs) Handles txtArticulo.TextChanged
-        If i.BuscaArticulo(txtArticulo.Text, 0) Then
+        If i.BuscaArticulo(txtArticulo.Text, 0, "") Then
             LlenaDatosArticulo(i)
         End If
     End Sub

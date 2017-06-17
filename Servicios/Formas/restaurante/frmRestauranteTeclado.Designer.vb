@@ -759,6 +759,7 @@ Partial Class frmRestauranteTeclado
         Me.Controls.Add(Me.btn3)
         Me.Controls.Add(Me.btn2)
         Me.Controls.Add(Me.btn1)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "frmRestauranteTeclado"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Teclado Virtual"

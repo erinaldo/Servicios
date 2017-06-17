@@ -40,8 +40,10 @@ Public Class dbRestauranteComensales
         dr.Close()
     End Sub
 
-    Public Function guardar(ByVal numero As Integer, ByVal mesa As Integer) As Integer
-        comm.CommandText = "insert into tblrestaurantecomensales(numero,mesa) values(" + numero.ToString() + "," + mesa.ToString() + ");"
+    Public Function Agregar(ByVal mesa As Integer) As Integer
+        comm.CommandText = "select ifnull(max(numero)+1,1) from tblrestaurantecomensales where mesa = " + mesa.ToString()
+        Dim siguiente As String = comm.ExecuteScalar.ToString()
+        comm.CommandText = "insert into tblrestaurantecomensales(numero,mesa) values(" + siguiente + "," + mesa.ToString() + ");"
         comm.CommandText += "select ifnull(last_insert_id(),0);"
         Return comm.ExecuteScalar
     End Function

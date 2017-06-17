@@ -487,7 +487,7 @@
         Try
             If ConsultaOn Then
                 Dim p As New dbInventario(MySqlcon)
-                If p.BuscaArticulo(TextBox3.Text, 0) Then
+                If p.BuscaArticulo(TextBox3.Text, 0, "") Then
                     LlenaDatosArticulo(p)
                 Else
                     IdInventario = 0

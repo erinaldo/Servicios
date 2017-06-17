@@ -17,12 +17,15 @@ Public Class frmRestauranteConfiguracion
     Private colorLibre As New String("")
     Private colorOcupada As New String("")
     Private colorReservada As New String("")
+    Private colorSucio As New String("")
     Private colorLetraLibre As New String("")
     Private colorLetraOcupado As New String("")
     Private colorLetraReservado As New String("")
+    Private colorLetraSucio As New String("")
     Private textoLibre As String
     Private textoOcupado As String
     Private textoReservado As String
+    Private textoSucio As String
     Private inventario As dbInventario
     Private configuracion As dbRestauranteConfiguracion
     Private listacajas As New elemento
@@ -67,13 +70,14 @@ Public Class frmRestauranteConfiguracion
         clasColor = New dbRestauranteColores(MySqlcon)
         LlenaCombos("tblcajas", comboCaja, "nombre", "nombret", "idcaja", listacajas)
         LlenaCombos("tblvendedores", comboVendedores, "nombre", "nombret", "idvendedor", listaVendedores)
-        LlenaCombos("tblrestaurantemeseros", comboMeseros, "nombre", "nombret", "idmesero", IdsMeseros)
+        'LlenaCombos("tblrestaurantemeseros", comboMeseros, "nombre", "nombret", "idmesero", IdsMeseros)
         LlenaCombos("tblsucursales", comboSucursal, "nombre", "nombret", "idsucursal", idsSucursales)
         ' Add any initialization after the InitializeComponent() call.
         llenaGridSecciones()
         muestraCategorias()
     End Sub
     Private Sub frmRestauranteConfiguracion_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        dgvSecciones.AutoGenerateColumns = False
         llenaDatos()
         Me.BackColor = Color.FromArgb(configuracion.colorVentanas)
         tabConfiguracion.Left = (Me.Size.Width / 2) - (Me.MinimumSize.Width / 2 - 1)
@@ -96,9 +100,11 @@ Public Class frmRestauranteConfiguracion
             buscaColor(txtColorLibre, configuracion.colorLibre, colorLibre)
             buscaColor(txtColorOcupada, configuracion.colorOcupado, colorOcupada)
             buscaColor(txtColorReservada, configuracion.colorReservado, colorReservada)
+            buscaColor(txtColorSucio, configuracion.colorSucio, colorSucio)
             colorLetraLibre = configuracion.colorLetraLibre
             colorLetraOcupado = configuracion.colorLetraOcupado
             colorLetraReservado = configuracion.colorLetraReservado
+            colorLetraSucio = configuracion.colorLetraSucio
             If configuracion.colorVentanas = "" Then
                 colorVentanas = Me.BackColor.ToArgb()
             Else
@@ -107,13 +113,16 @@ Public Class frmRestauranteConfiguracion
             panelColorLetraLibre.BackColor = Color.FromArgb(colorLetraLibre)
             panelColorLetraOcupado.BackColor = Color.FromArgb(colorLetraOcupado)
             panelColorLetraReservado.BackColor = Color.FromArgb(colorLetraReservado)
+            If colorSucio <> "" Then panelColorLetraSucio.BackColor = Color.FromArgb(colorLetraSucio)
             panelFondoVentanas.BackColor = Color.FromArgb(colorVentanas)
             textoLibre = configuracion.textoLibre
-            txtTextoLibre.Text = textoLibre
             textoOcupado = configuracion.textoOcupado
-            txtTextoOcupado.Text = textoOcupado
             textoReservado = configuracion.textoReservado
+            textoSucio = configuracion.textoSucio
+            txtTextoLibre.Text = textoLibre
+            txtTextoOcupado.Text = textoOcupado
             txtTextoReservado.Text = textoReservado
+            txtTextoSucio.Text = textoSucio
             clienteDefault = New dbClientes(configuracion.clienteDefault, MySqlcon)
             txtCliente.Text = clienteDefault.Nombre
             idCaja = configuracion.cajaDefault
@@ -124,8 +133,9 @@ Public Class frmRestauranteConfiguracion
             txtTamano.Text = configuracion.tamano
             txtHorizontal.Text = configuracion.horizontal.ToString
             txtVertical.Text = configuracion.vertical.ToString
+            chkTeclado.Checked = configuracion.activarTeclado
         Else
-            configuracion.agregar("0001", "0002", "0003", "0004", "0005", "Arial", "10", Color.Green.ToArgb, Color.Red.ToArgb, Color.Yellow.ToArgb, Color.Black.ToArgb, Color.Black.ToArgb, Color.Black.ToArgb, "Libre", "Ocupado", "Reservado", 2, 1, 2, 1, Me.BackColor.ToArgb, True, 0, 0)
+            configuracion.agregar("0001", "0002", "0003", "0004", "0005", "Arial", "10", Color.Green.ToArgb, Color.Red.ToArgb, Color.Yellow.ToArgb, Color.Brown.ToArgb, Color.Black.ToArgb, Color.Black.ToArgb, Color.Black.ToArgb, Color.Black.ToArgb, "Libre", "Ocupado", "Reservado", "Sucio", 2, 1, 2, 1, Me.BackColor.ToArgb, True, 0, 0)
             idConfig = configuracion.regresaIdConfig
             llenaDatos()
         End If
@@ -135,7 +145,7 @@ Public Class frmRestauranteConfiguracion
 
 
     Private Sub buscar(ByVal clave As String, ByVal cajaClave As TextBox, ByVal cajaNombre As TextBox, ByRef idInventario As Integer, ByRef claveArticulo As String)
-        If inventario.BuscaArticulo(clave, 0, True) Then
+        If inventario.BuscaArticulo(clave, 0, "", True) Then
             cajaClave.Text = inventario.Clave
             claveArticulo = inventario.Clave
             cajaNombre.Text = inventario.Nombre
@@ -170,12 +180,13 @@ Public Class frmRestauranteConfiguracion
         textoLibre = txtTextoLibre.Text
         textoOcupado = txtTextoOcupado.Text
         textoReservado = txtTextoReservado.Text
+        textoSucio = txtTextoSucio.Text
         horizontal = CInt(If(txtHorizontal.Text = "", "0", txtHorizontal.Text))
         vertical = CInt(If(txtVertical.Text = "", "0", txtVertical.Text))
         Try
             buscadorPorPaginas = CheckBox2.Checked
             'configuracion = New dbRestauranteConfiguracion(1, MySqlcon)
-            configuracion.actualiza(idConfig, clave1, clave2, clave3, clave4, clave5, fuente, tamano, colorLibre, colorOcupada, colorReservada, colorLetraLibre, colorLetraOcupado, colorLetraReservado, textoLibre, textoOcupado, textoReservado, clienteDefault.ID, idCaja, vendedorDefault, idMesero, colorVentanas, CheckBox1.Checked, horizontal, vertical)
+            configuracion.actualiza(idConfig, clave1, clave2, clave3, clave4, clave5, fuente, tamano, colorLibre, colorOcupada, colorReservada, colorSucio, colorLetraLibre, colorLetraOcupado, colorLetraReservado, colorLetraSucio, textoLibre, textoOcupado, textoReservado, textoSucio, clienteDefault.ID, idCaja, vendedorDefault, idMesero, colorVentanas, chkTeclado.Checked, horizontal, vertical)
             PopUp("guardado", 30)
         Catch ex As Exception
             MsgBox("No se pudo guardar la configuración. " + ex.ToString())
@@ -323,13 +334,13 @@ Public Class frmRestauranteConfiguracion
     End Sub
 
     Private Sub llenaGridSecciones()
-        dgvSecciones.DataSource = secciones.vistaSecciones(idsSucursales.Valor(comboSucursal.SelectedIndex))
-        dgvSecciones.Columns(0).Visible = False
-        dgvSecciones.Columns(1).Visible = False
-        dgvSecciones.Columns(4).Visible = False
-        dgvSecciones.Columns(3).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-        dgvSecciones.Columns(2).HeaderText = "No. Sec."
-        dgvSecciones.Columns(3).HeaderText = "Sección"
+        dgvSecciones.DataSource = secciones.ListaSecciones(idsSucursales.Valor(comboSucursal.SelectedIndex))
+        'dgvSecciones.Columns(0).Visible = False
+        'dgvSecciones.Columns(1).Visible = False
+        'dgvSecciones.Columns(4).Visible = False
+        'dgvSecciones.Columns(3).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+        'dgvSecciones.Columns(2).HeaderText = "No. Sec."
+        'dgvSecciones.Columns(3).HeaderText = "Sección"
     End Sub
 
     Private Sub NuevoSeccion()
@@ -555,5 +566,17 @@ Public Class frmRestauranteConfiguracion
     
     Private Sub txtVertical_TextChanged(sender As Object, e As EventArgs) Handles txtVertical.TextChanged
 
+    End Sub
+
+    Private Sub btnLetraSucio_Click(sender As Object, e As EventArgs) Handles btnLetraSucio.Click
+        If ColorDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            buscaColor(panelColorLetraSucio, ColorDialog1.Color.ToArgb(), colorLetraSucio)
+        End If
+    End Sub
+
+    Private Sub btnSucio_Click(sender As Object, e As EventArgs) Handles btnSucio.Click
+        If ColorDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            buscaColor(txtColorSucio, ColorDialog1.Color.ToArgb, colorSucio)
+        End If
     End Sub
 End Class

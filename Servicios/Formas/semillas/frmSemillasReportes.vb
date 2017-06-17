@@ -106,7 +106,7 @@
     Private Sub txtClaveProducto_TextChanged(sender As Object, e As EventArgs) Handles txtClaveProducto.TextChanged
         'If chkTiempo.Checked Then
         Dim clave As String = txtClaveProducto.Text
-        If productos.BuscaArticulo(clave, 1) Then
+        If productos.BuscaArticulo(clave, 1, "") Then
             txtProducto.Text = productos.Nombre
         Else
             productos = New dbInventario(MySqlcon)

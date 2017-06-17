@@ -89,12 +89,25 @@ Public Class dbRestauranteSecciones
         End Try
     End Function
 
-    Public Function vistaSecciones(pIdSucursal As Integer) As DataView
-        Dim ds As New DataSet
-        comm.CommandText = "select * from tblrestaurantesecciones where idsucursal=" + pIdSucursal.ToString
-        Dim da As New MySqlDataAdapter(comm)
-        da.Fill(ds, "secciones")
-        Return ds.Tables("secciones").DefaultView
+    Public Function ListaSecciones(pIdSucursal As Integer) As ArrayList
+        comm.CommandText = "select * from tblrestaurantesecciones where idsucursal=@idsucursal order by numSeccion;"
+        comm.Parameters.Add(New MySqlParameter("@idsucursal", pIdSucursal))
+        Dim array As New ArrayList
+        Dim dr As MySqlDataReader = Nothing
+        Try
+            dr = comm.ExecuteReader
+            While dr.Read
+                Dim m As New RestauranteSeccion(dr("idseccion"), dr("idSucursal"), dr("numSeccion"), dr("nombre"))
+                m.TextAlign = ContentAlignment.MiddleCenter
+                m.FlatStyle = FlatStyle.System
+                'm.FlatAppearance.CheckedBackColor = Color.Aquamarine
+                array.Add(m)
+            End While
+            Return array
+        Finally
+            If Not dr.IsClosed Then dr.Close()
+            comm.Parameters.Clear()
+        End Try
     End Function
 
     Public Function seccionesSucursal(ByVal idSucursal As Integer) As List(Of dbRestauranteSecciones)

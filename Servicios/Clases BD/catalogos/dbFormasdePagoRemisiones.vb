@@ -94,4 +94,12 @@
         Return lista
     End Function
 
+    Public Function vistaFormas() As DataTable
+        Comm.CommandText = "select * from tblformasdepagoremisiones;"
+        Dim ds As New DataSet
+        Dim da As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
+        da.Fill(ds, "formas")
+        Return ds.Tables("formas")
+    End Function
+
 End Class

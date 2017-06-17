@@ -1,59 +1,8 @@
 ﻿Public Class frmRestaurantePuntoVenta
-    Private sf As dbSucursalesFolios
-    Private inv As New dbInventario(MySqlcon)
-    Private listaPagar As List(Of String)
-    Private idSeccion As Integer = -1
-    Private idVenta = -1
+    Private idVenta As Integer = -1
     Private idMesa As Integer
-    Private mesas As New dbRestauranteMesas(MySqlcon, GlobalIdSucursalDefault)
-    Private descuentos As New dbRestauranteDescuentos(MySqlcon)
-    Private listaSecciones As New elemento
-    Private ventas As New dbRestauranteVentas(MySqlcon)
-    Private detalles As New dbRestauranteVentasDetalles(MySqlcon)
-    Private mesaVenta As New dbRestauranteVentasMesas(MySqlcon)
-    Private teclado As frmRestauranteTeclado
-    Private precios As New dbInventarioPrecios(MySqlcon)
-    Private config As New dbRestauranteConfiguracion(1, MySqlcon)
-    Private opciones As New dbOpciones(MySqlcon)
-    Dim metodos As New dbFormasdePagoRemisiones(MySqlcon)
-    Private listaDetalles As New List(Of Integer)
-    Private tabla As New DataTable
-    Private listaFormasPago As New elemento
-    Private idFormaPago
-    Private total As Double
-    Public liberar As Boolean = False
-    Private nuevaVenta As Boolean = True
-    Private cajaClaveActiva As Boolean = False
-    Private cajaRecibidoActiva As Boolean = False
-    Private cajaActiva As TextBox
-    Dim claves As List(Of String)
-    Private idForma As Integer
-    Private f As frmRestauranteTeclado
-    Private cambio As Double
-    Private recibido As Double
-    Private platillosComensales As New dbRestauranteComensalesPlatillos(MySqlcon)
-    Private tablaMetodos As New DataTable
-    Private movimientoCaja As New dbCajasMovimientos(MySqlcon)
-    Private movimientoCajaDetalle As New dbCajasMovimientosDetalles(MySqlcon)
-    Private activarTeclado As Boolean
-    Private comensales As New dbRestauranteComensales(MySqlcon)
-    Private platillos As New dbRestauranteComensalesPlatillos(MySqlcon)
-    Private ventasPagos As New dbRestauranteVentaPago(MySqlcon)
-    Private formaPago As New dbRestauranteFormasPagos(MySqlcon)
-    Public cuentaCompleta As Boolean = True
     Private mesero As dbVendedores
-    Private reImprimir As Boolean = False
-    Private esPedido As Boolean = False
-    Private pedidos As New dbRestaurantePedidos(MySqlcon)
-    Private listaMesasOcupadas As New List(Of Integer)
-    Private clientes As dbClientes
-    Private desc As Double = 0
-    Private deLlevar As Boolean = False
-    Private nuevosPlatillos As Boolean = False
-    Private comandaEnviada As Boolean = False
-    Private listaNuevos As New List(Of Integer)
-    Private platillosComensal As New dbRestauranteComensalesPlatillos(MySqlcon)
-
+    
     Dim ImpND As New Collection
     Dim ImpNDD As New Collection
     Dim ImpNDDi As New Collection
@@ -73,532 +22,129 @@
 
         ' This call is required by the designer.
         InitializeComponent()
-        'Me.listaPagar = listaPagar
+
         Me.idVenta = idVenta
-        ventas.buscar(idVenta)
-        Me.cuentaCompleta = cuentaCompleta
-        If idVenta > 0 Then
-            nuevaVenta = False
-            mesero = New dbVendedores(ventas.idMesero, MySqlcon)
-        End If
         Me.idMesa = idMesa
-        'If idMesa > 0 Then
-        '    listaMesasOcupadas.Add(idMesa)
-        'End If
-        Me.listaDetalles = listaDetalles
-        ' Add any initialization after the InitializeComponent() call.
-        sf = New dbSucursalesFolios(GlobalIdSucursalDefault, MySqlcon)
-        'LlenaCombos("tblrestaurantesecciones", comboSeccion, "nombre", "nombret", "idseccion", listaSecciones)
-        'configuraTabla()
-        'llenaTabla()
-        total = ventas.DaTotal(idVenta)
-        lblTotal.Text = Format(total, "$#,###,##0.00######")
-        lblTotal.TextAlign = ContentAlignment.MiddleRight
+    End Sub
+
+    Private Property ventas As Object
+
+    Private Sub frmRestaurantePuntoVenta_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        dgvMetodosPago.AutoGenerateColumns = False
+        dgvPagos.AutoGenerateColumns = False
+
+        Dim ventas As New dbRestauranteVentas(MySqlcon)
+        If idVenta = 0 And idMesa <> 0 Then
+            If ventas.buscarventaabierta(idMesa) Then
+                idVenta = ventas.idVenta
+            End If
+        End If
+
+        Dim pagos As New dbFormasdePagoRemisiones(MySqlcon)
+        dgvMetodosPago.DataSource = pagos.vistaFormas
+        Dim pagosventa As New dbRestauranteVentaPago(MySqlcon)
+        dgvPagos.DataSource = pagosventa.buscarPorVenta(idVenta)
+
+        txtTotal.Text = Format(ventas.DaTotal(idVenta), "C2")
         lblCajero.Text = GlobalUsuario
         mesero = New dbVendedores(ventas.idMesero, MySqlcon)
         lblMesero.Text = mesero.Nombre
         lblMesa.Text = Me.idMesa.ToString
-    End Sub
-    Private Sub frmRestaurantePuntoVenta_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Dim config As New dbRestauranteConfiguracion(1, MySqlcon)
         Me.BackColor = Color.FromArgb(config.colorVentanas)
         panelObjetos.BackColor = Color.FromArgb(config.colorVentanas)
-        activarTeclado = config.activarTeclado
-        muestraMetodos()
-        panelObjetos.Left = (Me.Size.Width / 2) - (Me.MinimumSize.Width / 2 - 1)
-        muestraDellevar()
-    End Sub
 
-    'Public Sub buscaFolio()
-    '    If sf.BuscaFolios(GlobalIdSucursalDefault, dbSucursalesFolios.TipoDocumentos.RestauranteVentas, 0) Then
-    '        'txtSerie.Text = sf.Serie
+    End Sub
+   
+    'Private Sub guardar()
+    '    If dgvMetodosPago.SelectedRows.Count > 0 Then
+    '        Dim ventas As New dbRestauranteVentas(MySqlcon)
+    '        ventas.buscar(idVenta)
+
+    '        imprimirTicket()
+    '        'limpiaDatos()
+    '        PopUp("Guardado", 30)
+    '        limpiaDatos()
+    '        btnCE.Enabled = False
+    '        idVenta = -1
+    '        muestraDellevar()
     '    Else
-    '        'txtSerie.Text = ""
-    '        sf.FolioInicial = 1
+    '        MsgBox("Debe seleccionar una forma de pago.")
     '    End If
 
-    '    'txtFolio.Text = liquidaciones.DaNuevoFolio(txtSerie.Text)
-    '    'If CInt(txtFolio.Text) < sf.FolioInicial Then
-    '    '    txtFolio.Text = sf.FolioInicial.ToString
-    '    'End If
-    'End Sub
-
-    Private Sub agregarPlatillo()
-        Dim precio As Double
-        precios.BuscaPrecio(inv.ID, 1)
-        precio = precios.Precio
-        detalles.agregar(inv.ID, 1, inv.Nombre, precio, inv.Iva, idVenta, "", 1)
-        detalles.pagarDetalle(detalles.ultimoId, CInt(estadosPlatillos.pendiente))
-    End Sub
-
-    'Private Sub muestraPlatillos(ByVal pMesa As Integer)
-    '    If mesaVenta.buscar(pMesa) Then
-    '        idVenta = mesaVenta.idVenta
-    '        'dgvPlatillos.DataSource = detalles.vistaDetalles(idVenta, False)
-    '    End If
-    'End Sub
-
-    Private Sub TextBox1_Enter(sender As Object, e As EventArgs) Handles txtClave.Enter
-        If activarTeclado Then
-            teclado = New frmRestauranteTeclado(txtClave)
-            teclado.Show()
-        End If
-    End Sub
-
-    Private Sub txtClave_Leave(sender As Object, e As EventArgs) Handles txtClave.Leave
-        If activarTeclado Then
-            teclado.Dispose()
-        End If
-    End Sub
-
-    Private Sub btnVenta_Click(sender As Object, e As EventArgs)
-        Dim f As New frmRestaurantePagar(idVenta, total)
-        f.ShowDialog()
-        If f.pagado Then
-            For x As Integer = 0 To listaDetalles.Count - 1
-                detalles.pagarDetalle(listaDetalles(x), True)
-            Next
-        End If
-        If detalles.cuentaPagadaCompleta(idVenta) Then
-            Dim m As RestauranteMesa = mesas.buscar(idMesa)
-            m.estado = EstadosMesas.Libre
-            mesas.modificar(m)
-        End If
-    End Sub
-
-    'Private Sub configuraTabla()
-    '    tabla.Columns.Add("id", GetType(Integer))
-    '    tabla.Columns.Add("descripcion", GetType(String))
-    '    tabla.Columns.Add("cantidad", GetType(Double))
-    '    tabla.Columns.Add("total", GetType(Double))
-    'End Sub
-
-    'Private Sub llenaTabla()
-
-    '    listaDetalles = ventas.listaDetalles(idVenta, CInt(estadosPlatillos.pendiente))
-
-    '    For i As Integer = 0 To listaDetalles.Count - 1
-    '        detalles.buscar(listaDetalles(i))
-    '        tabla.Rows.Add(detalles.idDetalle, detalles.descripcion, detalles.cantidad, detalles.precio * detalles.cantidad)
-    '    Next
 
     'End Sub
 
-    'Private Function sumaTotal() As Double
-    '    Dim res As Double = 0
-    '    'For i As Integer = 0 To dgvPlatillos.Rows.Count() - 1
-    '    'res += CDbl(dgvPlatillos.Rows(i).Cells("total").Value.ToString())
-    '    'Next
-    '    ventas.buscar(Me.idVenta)
-    '    Dim lista As List(Of Integer)
-    '    ' If deLlevar Or esPedido Then
-    '    'lista = ventas.listaDetalles(ventas.idVenta, CInt(estadosPlatillos.enviado), CInt(estadosPlatillos.pendiente))
-    '    ' Else
-    '    lista = ventas.listaDetalles(ventas.idVenta, CInt(estadosPlatillos.pendiente), CInt(estadosPlatillos.pendiente))
-    '    ' End If
-    '    For Each i As Integer In lista
-    '        detalles.buscar(i)
-    '        res += detalles.precio
-    '    Next
-    '    If desc > 0 Then
-    '        res -= desc
-    '    End If
-    '    Return res
-    'End Function
 
-    Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
-        guardar()
-        limpiaDatos()
-        ventas.buscar(idVenta)
-    End Sub
-
-    Private Sub guardar()
-        If idForma > 0 Then
-            ventas.buscar(idVenta)
-            listaDetalles = ventas.listaDetalles(ventas.idVenta, -1, CInt(estadosPlatillos.pendiente).ToString)
-            For i As Integer = 0 To listaDetalles.Count - 1
-                detalles.buscar(listaDetalles(i))
-                detalles.modificar(listaDetalles(i), detalles.idInventario, detalles.cantidad, detalles.descripcion, detalles.precio, detalles.iva, idVenta, "")
-            Next
-            pedidos.agregar(ventas.idVenta, DateTime.Now.ToString("yyyy/MM/dd"), TimeOfDay.ToString("HH:mm:ss"), "", pedidos.obtenFolio, CInt(Estados.Pendiente), GlobalIdUsuario, 0)
-            If deLlevar Then
-                pedidos.modificar(pedidos.idPedido, pedidos.idVenta, pedidos.fecha, pedidos.hora, pedidos.serie, pedidos.folio, CInt(Estados.Guardada), pedidos.idVendedor, 1)
-                ventas.buscar(pedidos.idVenta)
-                ventas.modificar(ventas.idVenta, ventas.idCliente, ventas.descuento, ventas.total, ventas.totalapagar, CInt(Estados.Guardada), ventas.fecha, ventas.idSucursal, GlobalUsuarioIdVendedor, My.Settings.cajadefault, "")
-            Else
-                ventas.modificar(idVenta, ventas.idCliente, ventas.descuento, total, total, CInt(Estados.Guardada), ventas.fecha, ventas.idSucursal, GlobalUsuarioIdVendedor, My.Settings.cajadefault, "")
-            End If
-            If cuentaCompleta Then
-                liberar = True
-            Else
-                liberar = False
-            End If
-            imprimirTicket()
-            For i As Integer = 0 To listaDetalles.Count - 1
-                detalles.buscar(listaDetalles(i))
-                detalles.pagarDetalle(detalles.idDetalle, CInt(estadosPlatillos.pagado))
-            Next
-            If esPedido = False Then
-                If cuentaCompleta Then
-                    For Each i As Integer In listaMesasOcupadas
-                        Dim mesa As RestauranteMesa = mesas.buscar(i)
-                        mesa.estado = EstadosMesas.Libre
-                        mesas.modificar(mesa)
-                    Next
-                End If
-            End If
-            idUltimaVenta = ventas.idVenta
-            'limpiaDatos()
-            PopUp("Guardado", 30)
-            limpiaDatos()
-            esPedido = False
-            deLlevar = False
-            comandaEnviada = False
-            btnCE.Enabled = False
-            idVenta = -1
-            muestraDellevar()
-        Else
-            MsgBox("Debe seleccionar una forma de pago.")
-        End If
-        'esPedido = False
-
-    End Sub
-
-    Private Sub Button13_Click(sender As Object, e As EventArgs) Handles btnMesas.Click
-        Dim f As New frmRestauranteCambioMesa(0, listaMesasOcupadas, GlobalIdSucursalDefault)
-        f.ShowDialog()
-        If f.idMesaNueva > 0 Then
-            Dim idmesa = f.idMesaNueva
-            listaMesasOcupadas.Add(idmesa)
-            Dim v As New frmRestauranteOrden(idmesa, 1, GlobalIdSucursalDefault)
-            v.ShowDialog()
-            If v.pagar Then
-                For Each i As Integer In v.listaPagar
-                    detalles.buscar(i)
-                    detalles.modificar(detalles.idDetalle, detalles.idInventario, detalles.cantidad, detalles.descripcion, detalles.precio, detalles.iva, idVenta, "")
-                    detalles.pagarDetalle(detalles.idDetalle, CInt(estadosPlatillos.pendiente))
-                    'agregarPlatillo()
-                Next
-                Dim venta As Integer
-                If v.cuentaCompleta Then
-                    venta = v.idVenta
-                Else
-                    venta = v.idnuevaVenta
-                End If
-                ventas.eliminar(venta)
-                total = ventas.DaTotal(idVenta)
-                lblTotal.Text = Format(total, opciones._formatoTotal)
-            End If
-        End If
-    End Sub
-
-    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles btnReservaciones.Click
-        Dim f As New frmRestauranteReservaciones()
-        f.Show()
-    End Sub
-
-    Private Sub btnMenu_Click(sender As Object, e As EventArgs) Handles btnMenu.Click
-        Dim f As New frmRestauranteBuscador()
-        'f.MdiParent = Me
-        f.ShowDialog()
-        If Not f.clave Is Nothing Then
-            claves = f.clave
-            For Each s As String In claves
-                inv.BuscaArticulo(s, 0)
-                agregarPlatillo()
-            Next
-            total = ventas.DaTotal(idVenta)
-            lblTotal.Text = Format(total, opciones._formatoTotal)
-            btnCE.Enabled = True
-        End If
-    End Sub
-
-    Private Sub btnNuevo_Click(sender As Object, e As EventArgs) Handles btnNuevo.Click
-        crearVenta()
-    End Sub
-
-    Private Sub crearVenta()
-        idVenta = ventas.Guardar(ventas.obtenFolio, GlobalIdUsuario, config.clienteDefault, GlobalIdSucursalDefault, idMesa, My.Settings.cajadefault)
-        ventas.buscar(idVenta)
-        listaMesasOcupadas = New List(Of Integer)
-        txtClave.Text = ventas.folio.ToString
-        lblMesa.Text = "Caja"
-    End Sub
-
-    Private Sub btnLlevar_Click(sender As Object, e As EventArgs) Handles btnLlevar.Click
-        deLlevar = True
-        comandaEnviada = False
-        crearVenta()
-        If esPedido Then
-            Dim fc As New frmRestauranteLlevar(ventas.idVenta)
-            fc.ShowDialog()
-            If Not fc.cliente Is Nothing Then
-                ventas.idCliente = fc.cliente.ID
-                clientes = fc.cliente
-            End If
-        End If
-        Dim f As New frmRestauranteBuscador()
-        'f.MdiParent = Me
-        f.ShowDialog()
-        If Not f.clave Is Nothing Then
-            claves = f.clave
-            For Each s As String In claves
-                inv.BuscaArticulo(s, 0)
-                agregarPlatillo()
-            Next
-            imprimir()
-            nuevosPlatillos = False
-            total = ventas.DaTotal(idVenta)
-            lblTotal.Text = Format(total, opciones._formatoTotal)
-            pedidos.agregar(ventas.idVenta, DateTime.Now.ToString("yyyy/MM/dd"), TimeOfDay.ToString("HH:mm:ss"), "", pedidos.obtenFolio, CInt(Estados.Pendiente), GlobalIdUsuario, 1)
-            pedidos.buscar(pedidos.ultimoId)
-            lblMesa.Text = "DE LLEVAR"
-            muestraDellevar()
-            btnCE.Enabled = True
-
-        End If
-    End Sub
-
-    Private Sub escribeCaja(ByVal caja As TextBox)
-        cajaActiva = caja
-    End Sub
-
-    Private Sub btn0_Click(sender As Object, e As EventArgs) Handles btn0.Click
-        cajaActiva.Text += "0"
-    End Sub
-
-    Private Sub btn1_Click(sender As Object, e As EventArgs) Handles btn1.Click
-        cajaActiva.Text += "1"
-    End Sub
-
-    Private Sub btn2_Click(sender As Object, e As EventArgs) Handles btn2.Click
-        cajaActiva.Text += "2"
-    End Sub
-
-    Private Sub btn3_Click(sender As Object, e As EventArgs) Handles btn3.Click
-        cajaActiva.Text += "3"
-    End Sub
-
-    Private Sub btn4_Click(sender As Object, e As EventArgs) Handles btn4.Click
-        cajaActiva.Text += "4"
-    End Sub
-
-    Private Sub btn5_Click(sender As Object, e As EventArgs) Handles btn5.Click
-        cajaActiva.Text += "5"
-    End Sub
-
-    Private Sub btn6_Click(sender As Object, e As EventArgs) Handles btn6.Click
-        cajaActiva.Text += "6"
-    End Sub
-
-    Private Sub btn7_Click(sender As Object, e As EventArgs) Handles btn7.Click
-        cajaActiva.Text += "7"
-    End Sub
-
-    Private Sub btn8_Click(sender As Object, e As EventArgs) Handles btn8.Click
-        cajaActiva.Text += "8"
-    End Sub
-
-    Private Sub btn9_Click(sender As Object, e As EventArgs) Handles btn9.Click
-        cajaActiva.Text += "9"
+    Private Sub btn0_Click(sender As Object, e As EventArgs) Handles btn0.Click, btn1.Click, btn2.Click, btn3.Click, btn4.Click, btn5.Click, btn6.Click, btn7.Click, btn8.Click, btn9.Click, btnDecimal.Click
+        txtRecibido.Text += sender.Text
     End Sub
 
     Private Sub frmRestaurantePuntoVenta_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         GlobalEstadoRestaurante = "Cerrado"
     End Sub
 
-    Private Sub btnCE_Click(sender As Object, e As EventArgs) Handles btnCE.Click
+    Private Sub btnCE_Click(sender As Object, e As EventArgs)
         imprimirComanda()
     End Sub
 
-    Private Sub btnPedidos_Click(sender As Object, e As EventArgs) Handles btnPedidos.Click
-        esPedido = True
-        crearVenta()
-        pedidos.agregar(idVenta, Date.Now.ToString("yyyy/MM/dd"), TimeOfDay.ToString("HH:mm:ss"), "", pedidos.obtenFolio, Estados.Pendiente, GlobalIdUsuario, 0)
-        pedidos.buscar(pedidos.ultimoId)
-        Dim f As New frmRestauranteBuscador()
-        'f.MdiParent = Me
-        f.ShowDialog()
-        If Not f.clave Is Nothing Then
-            claves = f.clave
-            For Each s As String In claves
-                inv.BuscaArticulo(s, 0)
-                agregarPlatillo()
-            Next
-            imprimirComanda()
-            nuevosPlatillos = False
-            total = ventas.DaTotal(idVenta)
-            lblTotal.Text = Format(total, opciones._formatoTotal)
-            lblMesa.Text = "PEDIDO"
-            btnCE.Enabled = True
-        End If
-
-    End Sub
-
+   
     Private Sub imprimirTicket()
         imprimir()
     End Sub
 
-    Private Sub btnBuscar_Click(sender As Object, e As EventArgs) Handles btnBuscar.Click
-        If ventas.buscarFolio(CInt(txtClave.Text), GlobalIdSucursalDefault) Then
-            Me.idVenta = ventas.idVenta
-        Else
-            MsgBox("El folio es incorrecto.")
-        End If
-    End Sub
-
-    Private Sub muestraMetodos()
-        Dim x As Integer = 0
-        Dim y As Integer = 0
-        Dim lista As List(Of Integer) = metodos.listaFormas
-        For Each s As Integer In lista
-            metodos.ID = s
-            metodos.LlenaDatos()
-            Dim b As New Button
-            b.Name = metodos.ID.ToString
-            b.Text = metodos.Nombre
-            b.Width = panelMetodos.Width
-            b.Height = 60
-            b.BackColor = Color.LightGray
-            AddHandler b.Click, AddressOf btnClasificacion
-            b.Location = New Point(x, y)
-            y += 60
-            panelMetodos.Controls.Add(b)
-        Next
-    End Sub
-
-    Private Sub btnClasificacion(sender As Object, e As EventArgs)
-        Dim b As Button = DirectCast(sender, Button)
-        For Each b1 As Button In panelMetodos.Controls
-            b1.BackColor = Color.LightGray
-        Next
-        b.BackColor = Color.Green
-        idForma = CInt(b.Name)
-        txtRecibido.Focus()
-    End Sub
-
-    Private Sub txtRecibido_Enter(sender As Object, e As EventArgs) Handles txtRecibido.Enter
-
-    End Sub
-
-    Private Sub txtRecibido_Leave(sender As Object, e As EventArgs) Handles txtRecibido.Leave
-        txtRecibido.Text = txtRecibido.Text.Substring(0, txtRecibido.Text.Length)
-        If activarTeclado Then
-            teclado.Dispose()
-        End If
-    End Sub
-
-    Private Function calculaCambio(ByVal ptotal As Double, ByVal recibido As Double) As Boolean
-        lblNotificacion.Visible = False
-        If idForma <= 0 Then
-            MsgBox("Debe indicar una forma de pago.")
-            Return False
-        End If
-        If total = recibido Then
-            cambio = 0
-            lblNotificacion.Visible = False
-            Label8.Text = "0.0"
-            ventasPagos.agregar(idVenta, idForma, recibido)
-            Try
-                muestraPagos()
-            Catch ex As Exception
-
-            End Try
-            Return True
-        ElseIf total > recibido Then
-            'cambio = total - recibido
-            lblNotificacion.Visible = True
-            lblNotificacion.ForeColor = Color.Red
-            Label1.Text = "Restante"
-            total = ptotal - recibido
-            'lblTotal.Text = Format(total, total)
-            lblTotal.TextAlign = ContentAlignment.MiddleRight
-            lblNotificacion.Text = "La cantidad recibida no cubre el total"
-            txtRecibido.Text = ""
-            Label8.Text = ""
-            ventasPagos.agregar(idVenta, idForma, recibido)
-
-            Try
-                muestraPagos()
-            Catch ex As Exception
-
-            End Try
-            idForma = -1
-            Return False
-        Else
-            cambio = recibido - total
-            Label8.Text = cambio.ToString("###,###,##0.00")
-            ventasPagos.agregar(idVenta, idForma, recibido)
-            Try
-                muestraPagos()
-            Catch ex As Exception
-
-            End Try
-            Return True
-        End If
-
-    End Function
-
-    Private Sub muestraPagos()
-        dgvMetodos.DataSource = ventasPagos.buscarPorVenta(idVenta)
-    End Sub
-
-
-    Private Sub txtRecibido_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtRecibido.KeyPress
-        If e.KeyChar = vbCrLf Then
-            e.Handled = True
-        End If
-        NumConFrac(txtRecibido, e)
-    End Sub
-
-    Public Sub NumConFrac(ByVal CajaTexto As Windows.Forms.TextBox, ByVal e As System.Windows.Forms.KeyPressEventArgs)
-        If Char.IsDigit(e.KeyChar) Then
-            e.Handled = False
-        ElseIf Char.IsControl(e.KeyChar) Then
-            e.Handled = False
-
-        ElseIf e.KeyChar = "." And Not CajaTexto.Text.IndexOf(".") Then
-            e.Handled = True
-        ElseIf e.KeyChar = "." Then
-            e.Handled = False
-        Else
-            e.Handled = True
-        End If
-    End Sub
 
     Private Sub txtRecibido_KeyDown(sender As Object, e As KeyEventArgs) Handles txtRecibido.KeyDown
         If e.KeyCode = Keys.Enter Then
-            If txtRecibido.Text = "" Then
-                recibido = 0
-                txtRecibido.Text = txtRecibido.Text.Replace(vbCrLf, "")
-            Else
-                recibido = CDbl(txtRecibido.Text)
-                txtRecibido.Text = txtRecibido.Text.Replace(vbCrLf, "")
+            If IsNumeric(txtRecibido.Text) Then
+                Dim pagos As New dbRestauranteVentaPago(MySqlcon)
+                'agrega el pago parcial o total
+                pagos.agregar(idVenta, dgvMetodosPago.SelectedRows(0).Cells(colIdforma.Index).Value, txtRecibido.Text)
+                txtRecibido.Text = ""
+
+                'consulta los pagos
+                dgvPagos.DataSource = pagos.buscarPorVenta(idVenta)
+
+                'calcula el total de pagos
+                Dim totalRecibido As Double
+                For Each r As DataGridViewRow In dgvPagos.Rows
+                    totalRecibido += r.Cells(colMonto.Index).Value
+                Next
+
+                'si el total recibido es mayo a total cierra la cuenta
+                If totalRecibido >= CDbl(txtTotal.Text) Then
+                    txtCambio.Text = Format(totalRecibido - CDbl(txtTotal.Text), "C2")
+
+                    Dim ventas As New dbRestauranteVentas(MySqlcon)
+                    ventas.Pagar(idVenta)
+                    imprimir()
+
+                    DialogResult = Windows.Forms.DialogResult.OK
+                    Close()
+                Else
+                    txtCambio.Text = "N/A"
+                End If
             End If
         End If
     End Sub
 
     Private Sub limpiaDatos()
-        txtClave.Text = ""
         txtRecibido.Text = ""
-        Label8.Text = ""
-        lblTotal.Text = "$0.00"
-        For Each b As Button In panelMetodos.Controls
-            b.BackColor = Color.LightGray
-        Next
-        dgvMetodos.DataSource = Nothing
-        'dgvPlatillos.DataSource = Nothing
-    End Sub
+        txtCambio.Text = ""
+        txtTotal.Text = "$0.00"
 
-    Private Sub configuraTablaMetodos()
-        tablaMetodos.Columns.Add("Metodo")
-        tablaMetodos.Columns.Add("Cantidad")
+        dgvPagos.DataSource = Nothing
+
     End Sub
 
     Private Function imprimir() As Boolean
-        If ventas.listaDetalles(ventas.idVenta, CInt(estadosPlatillos.sinEnviar)).Count > 0 Then
-            nuevosPlatillos = True
-        End If
+        'If ventas.listaDetalles(ventas.idVenta, CInt(estadosPlatillos.sinEnviar)).Count > 0 Then
+        '    nuevosPlatillos = True
+        'End If
         Dim suc As New dbSucursales(GlobalIdSucursalDefault, MySqlcon)
+        Dim ventas As New dbRestauranteVentas(MySqlcon)
+        ventas.buscar(idVenta)
 
         Dim SA As New dbSucursalesArchivos
         Dim Impresora As String
@@ -629,26 +175,26 @@
             obj.SetValue("Target", "printer")
             obj.WriteSettings()
         End If
-        If nuevosPlatillos Then
-            LlenaNodosImpresionComanda()
+        'If nuevosPlatillos Then
+        '    LlenaNodosImpresionComanda()
+        'Else
+        LlenaNodosImpresion()
+        'End If
+        'If nuevosPlatillos Then
+        '    If TipoImpresora = 0 Then
+        '        LlenaNodos(suc.ID, TiposDocumentos.RestauranteComanda)
+        '    Else
+        '        LlenaNodos(suc.ID, TiposDocumentos.RestauranteComandaFlujo)
+        '    End If
+        'Else
+        If TipoImpresora = 0 Then
+            LlenaNodos(suc.ID, TiposDocumentos.RestauranteTicket)
         Else
-            LlenaNodosImpresion()
+            LlenaNodos(suc.ID, TiposDocumentos.RestauranteTicket + 1000)
         End If
-        If nuevosPlatillos Then
-            If TipoImpresora = 0 Then
-                LlenaNodos(suc.ID, TiposDocumentos.RestauranteComanda)
-            Else
-                LlenaNodos(suc.ID, TiposDocumentos.RestauranteComanda + 1000)
-            End If
-        Else
-            If TipoImpresora = 0 Then
-                LlenaNodos(suc.ID, TiposDocumentos.RestauranteTicket)
-            Else
-                LlenaNodos(suc.ID, TiposDocumentos.RestauranteTicket + 1000)
-            End If
-        End If
+        'End If
         PrintDocument1.Print()
-        comandaEnviada = True
+        'comandaEnviada = True
         Return True
     End Function
 
@@ -694,19 +240,19 @@
 
     Private Sub DibujaPaginaN(ByRef e As System.Drawing.Graphics)
         Dim ImpDb As New dbImpresionesN(MySqlcon)
-        If deLlevar And comandaEnviada = False Or esPedido Then
-            If TipoImpresora = 0 Then
-                ImpDb.DaZonaDetalles(TiposDocumentos.RestauranteComanda, GlobalIdSucursalDefault)
-            Else
-                ImpDb.DaZonaDetalles(TiposDocumentos.RestauranteComanda + 1000, GlobalIdSucursalDefault)
-            End If
+        'If deLlevar And comandaEnviada = False Or esPedido Then
+        '    If TipoImpresora = 0 Then
+        '        ImpDb.DaZonaDetalles(TiposDocumentos.RestauranteComanda, GlobalIdSucursalDefault)
+        '    Else
+        '        ImpDb.DaZonaDetalles(TiposDocumentos.RestauranteComandaFlujo, GlobalIdSucursalDefault)
+        '    End If
+        'Else
+        If TipoImpresora = 0 Then
+            ImpDb.DaZonaDetalles(TiposDocumentos.RestauranteTicket, GlobalIdSucursalDefault)
         Else
-            If TipoImpresora = 0 Then
-                ImpDb.DaZonaDetalles(TiposDocumentos.RestauranteTicket, GlobalIdSucursalDefault)
-            Else
-                ImpDb.DaZonaDetalles(TiposDocumentos.RestauranteTicket + 1000, GlobalIdSucursalDefault)
-            End If
+            ImpDb.DaZonaDetalles(TiposDocumentos.RestauranteTicket + 1000, GlobalIdSucursalDefault)
         End If
+        'End If
 
         If TipoImpresora = 0 Then
             DibujaPaginaEstatico(e, ImpDb.Y, ImpDb.YL, ImpDb.RG, ImpDb.Alt)
@@ -732,19 +278,19 @@
         strF.LineAlignment = StringAlignment.Near
         e.PageUnit = GraphicsUnit.Millimeter
         Try
-            If nuevosPlatillos Then
-                If TipoImpresora = 0 Then
-                    e.DrawImage(Image.FromFile(SA.DaRuta(TiposDocumentos.RestauranteComanda, GlobalIdSucursalDefault, GlobalIdEmpresa, True)), 1, 1, CInt(864 / 40 * 10), CInt(1116 / 40 * 10))
-                Else
-                    e.DrawImage(Image.FromFile(SA.DaRuta(TiposDocumentos.RestauranteComanda + 1000, GlobalIdSucursalDefault, GlobalIdEmpresa, True)), 1, 1, CInt(864 / 40 * 10), CInt(1116 / 40 * 10))
-                End If
+            'If nuevosPlatillos Then
+            '    If TipoImpresora = 0 Then
+            '        e.DrawImage(Image.FromFile(SA.DaRuta(TiposDocumentos.RestauranteComanda, GlobalIdSucursalDefault, GlobalIdEmpresa, True)), 1, 1, CInt(864 / 40 * 10), CInt(1116 / 40 * 10))
+            '    Else
+            '        e.DrawImage(Image.FromFile(SA.DaRuta(TiposDocumentos.RestauranteComandaFlujo, GlobalIdSucursalDefault, GlobalIdEmpresa, True)), 1, 1, CInt(864 / 40 * 10), CInt(1116 / 40 * 10))
+            '    End If
+            'Else
+            If TipoImpresora = 0 Then
+                e.DrawImage(Image.FromFile(SA.DaRuta(TiposDocumentos.RestauranteTicket, GlobalIdSucursalDefault, GlobalIdEmpresa, True)), 1, 1, CInt(864 / 40 * 10), CInt(1116 / 40 * 10))
             Else
-                If TipoImpresora = 0 Then
-                    e.DrawImage(Image.FromFile(SA.DaRuta(TiposDocumentos.RestauranteTicket, GlobalIdSucursalDefault, GlobalIdEmpresa, True)), 1, 1, CInt(864 / 40 * 10), CInt(1116 / 40 * 10))
-                Else
-                    e.DrawImage(Image.FromFile(SA.DaRuta(TiposDocumentos.RestauranteTicket + 1000, GlobalIdSucursalDefault, GlobalIdEmpresa, True)), 1, 1, CInt(864 / 40 * 10), CInt(1116 / 40 * 10))
-                End If
+                e.DrawImage(Image.FromFile(SA.DaRuta(TiposDocumentos.RestauranteTicket + 1000, GlobalIdSucursalDefault, GlobalIdEmpresa, True)), 1, 1, CInt(864 / 40 * 10), CInt(1116 / 40 * 10))
             End If
+            'End If
 
 
         Catch ex As Exception
@@ -1020,19 +566,19 @@
         strF.LineAlignment = StringAlignment.Near
         e.PageUnit = GraphicsUnit.Millimeter
         Try
-            If nuevosPlatillos Then
-                If TipoImpresora = 0 Then
-                    e.DrawImage(Image.FromFile(SA.DaRuta(TiposDocumentos.RestauranteComanda, GlobalIdSucursalDefault, GlobalIdEmpresa, True)), 1, 1, CInt(864 / 40 * 10), CInt(1116 / 40 * 10))
-                Else
-                    e.DrawImage(Image.FromFile(SA.DaRuta(TiposDocumentos.RestauranteComanda + 1000, GlobalIdSucursalDefault, GlobalIdEmpresa, True)), 1, 1, CInt(864 / 40 * 10), CInt(1116 / 40 * 10))
-                End If
+            'If nuevosPlatillos Then
+            '    If TipoImpresora = 0 Then
+            '        e.DrawImage(Image.FromFile(SA.DaRuta(TiposDocumentos.RestauranteComanda, GlobalIdSucursalDefault, GlobalIdEmpresa, True)), 1, 1, CInt(864 / 40 * 10), CInt(1116 / 40 * 10))
+            '    Else
+            '        e.DrawImage(Image.FromFile(SA.DaRuta(TiposDocumentos.RestauranteComandaFlujo, GlobalIdSucursalDefault, GlobalIdEmpresa, True)), 1, 1, CInt(864 / 40 * 10), CInt(1116 / 40 * 10))
+            '    End If
+            'Else
+            If TipoImpresora = 0 Then
+                e.DrawImage(Image.FromFile(SA.DaRuta(TiposDocumentos.RestauranteTicket, GlobalIdSucursalDefault, GlobalIdEmpresa, True)), 1, 1, CInt(864 / 40 * 10), CInt(1116 / 40 * 10))
             Else
-                If TipoImpresora = 0 Then
-                    e.DrawImage(Image.FromFile(SA.DaRuta(TiposDocumentos.RestauranteTicket, GlobalIdSucursalDefault, GlobalIdEmpresa, True)), 1, 1, CInt(864 / 40 * 10), CInt(1116 / 40 * 10))
-                Else
-                    e.DrawImage(Image.FromFile(SA.DaRuta(TiposDocumentos.RestauranteTicket + 1000, GlobalIdSucursalDefault, GlobalIdEmpresa, True)), 1, 1, CInt(864 / 40 * 10), CInt(1116 / 40 * 10))
-                End If
+                e.DrawImage(Image.FromFile(SA.DaRuta(TiposDocumentos.RestauranteTicket + 1000, GlobalIdSucursalDefault, GlobalIdEmpresa, True)), 1, 1, CInt(864 / 40 * 10), CInt(1116 / 40 * 10))
             End If
+            'End If
 
         Catch ex As Exception
 
@@ -1405,17 +951,22 @@
     End Sub
 
     Private Sub LlenaNodosImpresion()
+        Dim detalles As New dbRestauranteVentasDetalles(MySqlcon)
         Dim O As New dbOpciones(MySqlcon)
         Dim iva As Double = 0
         Dim total As Double = 0
         Dim subtotal As Double = 0
         Dim lista As List(Of Integer)
-        If reImprimir Then
-            lista = ventas.listaDetalles(ventas.idVenta, CInt(estadosPlatillos.pendiente).ToString, CInt(estadosPlatillos.pagado).ToString)
-        Else
-            lista = ventas.listaDetalles(ventas.idVenta, CInt(estadosPlatillos.pendiente).ToString, CInt(estadosPlatillos.pendiente).ToString)
-        End If
-        Dim come As List(Of Integer) = comensales.listaComensales(idMesa)
+
+        Dim ventas As New dbRestauranteVentas(MySqlcon)
+        ventas.buscar(idVenta)
+
+        'If reImprimir Then
+        '    lista = ventas.listaDetalles(ventas.idVenta, CInt(estadosPlatillos.pendiente).ToString, CInt(estadosPlatillos.pagado).ToString)
+        'Else
+        lista = ventas.listaDetalles(ventas.idVenta, CInt(estadosPlatillos.pendiente).ToString, CInt(estadosPlatillos.pendiente).ToString)
+        'End If
+        'Dim come As List(Of Integer) = comensales.listaComensales(idMesa)
         ImpND.Clear()
         ImpNDD.Clear()
         CuantosRenglones = 0
@@ -1444,29 +995,35 @@
         If idMesa > 0 Then
             Dim m As New dbRestauranteMesas(MySqlcon, GlobalIdSucursalDefault)
             Dim m2 As RestauranteMesa = m.buscar(Me.idMesa)
-            ImpND.Add(New NodoImpresionN("", "mesa", m2.numero.ToString, 0), "mesa")
+            ImpND.Add(New NodoImpresionN("", "mesa", m2.Numero.ToString, 0), "mesa")
         Else
             ImpND.Add(New NodoImpresionN("", "mesa", "Caja", 0), "mesa")
         End If
         ImpND.Add(New NodoImpresionN("", "fecha", ventas.fecha, 0), "fecha")
         ImpND.Add(New NodoImpresionN("", "subtotal", Format(subtotal, O._formatoSubtotal).PadLeft(O.EspacioSubtotal, " "), 0), "subtotal")
         ImpND.Add(New NodoImpresionN("", "total", Format(total, O._formatoTotal).PadLeft(O.Espaciototal, " "), 0), "total")
-        ImpND.Add(New NodoImpresionN("", "recibido", Format(recibido, O._formatoTotal).PadLeft(O.Espaciototal, " "), 0), "recibido")
-        ImpND.Add(New NodoImpresionN("", "cambio", Format(cambio, O._formatoTotal).PadLeft(O.Espaciototal, " "), 0), "cambio")
+
+        Dim totalRecibido As Double
+        For Each r As DataGridViewRow In dgvPagos.Rows
+            totalRecibido += r.Cells(colMonto.Index).Value
+        Next
+
+        ImpND.Add(New NodoImpresionN("", "recibido", Format(totalRecibido, O._formatoTotal).PadLeft(O.Espaciototal, " "), 0), "recibido")
+        ImpND.Add(New NodoImpresionN("", "cambio", Format(CDbl(txtCambio.Text), O._formatoTotal).PadLeft(O.Espaciototal, " "), 0), "cambio")
         ImpND.Add(New NodoImpresionN("", "hora", TimeOfDay.ToString("HH:mm:ss"), 0), "hora")
         ImpND.Add(New NodoImpresionN("", "iva", iva, 0), "iva")
         ImpND.Add(New NodoImpresionN("", "folio", ventas.folio.ToString, 0), "folio")
         ImpND.Add(New NodoImpresionN("", "descuento", "0", 0), "descuento")
         'ImpND.Add(New NodoImpresionN("", "recibido", "0", 0), "descuento")
-        If pedidos.idPedido > 0 Then
-            If deLlevar Then
-                ImpND.Add(New NodoImpresionN("", "texto", "", 0), "texto")
-            Else
-                ImpND.Add(New NodoImpresionN("", "texto", clientes.Direccion, 0), "texto")
-            End If
-        Else
-            ImpND.Add(New NodoImpresionN("", "texto", "", 0), "texto")
-        End If
+        'If pedidos.idPedido > 0 Then
+        '    If deLlevar Then
+        '        ImpND.Add(New NodoImpresionN("", "texto", "", 0), "texto")
+        '    Else
+        '        ImpND.Add(New NodoImpresionN("", "texto", clientes.Direccion, 0), "texto")
+        '    End If
+        'Else
+        ImpND.Add(New NodoImpresionN("", "texto", "", 0), "texto")
+        'End If
     End Sub
 
     Private Function InsertaEnters(ByVal Cadena As String, ByVal CadaCuantos As Integer, ByVal Y As Integer, ByVal AumentoY As Integer) As Integer
@@ -1489,73 +1046,27 @@
         Return Yx
     End Function
 
-    Private Sub frmRestaurantePuntoVenta_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
-        panelObjetos.Left = (Me.Size.Width / 2) - (Me.MinimumSize.Width / 2 - 1)
-    End Sub
-
-    Private Sub btnImprimir_Click(sender As Object, e As EventArgs) Handles btnImprimir.Click
-        ventas.buscar(idUltimaVenta)
-        reImprimir = True
+    Private Sub btnImprimir_Click(sender As Object, e As EventArgs)
+        'ventas.buscar(idUltimaVenta)
+        'reImprimir = True
         imprimir()
-        ventas.buscar(idVenta)
-        reImprimir = False
     End Sub
 
     Private Sub btnBorrar_Click(sender As Object, e As EventArgs) Handles btnBorrar.Click
-        If cajaActiva.Text.Length > 0 Then
-            cajaActiva.Text = cajaActiva.Text.Substring(0, cajaActiva.Text.Length)
-        End If
+        txtRecibido.Text = txtRecibido.Text.Substring(0, txtRecibido.Text.Length)
     End Sub
 
-    Private Sub btnCajon_Click(sender As Object, e As EventArgs) Handles btnCajon.Click
-        Dim f As New frmRestauranteBuscaVenta(frmRestauranteBuscaVenta.tipoBusqueda.ventas)
-        f.ShowDialog()
-        If f.idventa > 0 Then
-            Me.idVenta = f.idventa
-            ventas.buscar(idVenta)
-            lblTotal.Text = Format(ventas.total, "$#,###,##0.00######")
-            lblTotal.TextAlign = ContentAlignment.MiddleRight
-            lblCajero.Text = GlobalUsuario
-            mesero = New dbVendedores(ventas.idMesero, MySqlcon)
-            lblMesero.Text = mesero.Nombre
-            lblMesa.Text = ""
-        End If
-    End Sub
-
-    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
-        Dim f As New frmRestauranteBuscaVenta(frmRestauranteBuscaVenta.tipoBusqueda.pedidos)
-        f.ShowDialog()
-        If f.idPedido > 0 Then
-            pedidos.buscar(f.idPedido)
-            ventas.buscar(pedidos.idVenta)
-            lblTotal.Text = Format(ventas.total, "$#,###,##0.00######")
-            lblTotal.TextAlign = ContentAlignment.MiddleRight
-            lblCajero.Text = GlobalUsuario
-            mesero = New dbVendedores(ventas.idMesero, MySqlcon)
-            lblMesero.Text = mesero.Nombre
-            lblMesa.Text = ""
-        End If
-    End Sub
-
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        Dim f As New frmBuscador(frmBuscador.TipoDeBusqueda.Cliente, 0, False, False, False)
-        f.ShowDialog()
-        If Not f.Cliente Is Nothing Then
-            clientes = f.Cliente
-            If descuentos.buscarCliente(clientes.ID) Then
-                lblDescuento.Text = descuentos.descuento + "%"
-                desc = descuentos.descuento
-                total = ventas.DaTotal(idVenta)
-            End If
-        End If
-    End Sub
-
+   
     Private Sub LlenaNodosImpresionComanda()
         Dim O As New dbOpciones(MySqlcon)
         Dim iva As Double = 0
         Dim total As Double = 0
         Dim subtotal As Double = 0
         Dim lista As List(Of Integer)
+
+        Dim ventas As New dbRestauranteVentas(MySqlcon)
+        ventas.buscar(idVenta)
+
         lista = ventas.listaDetalles(ventas.idVenta, CInt(estadosPlatillos.sinEnviar))
         ImpND.Clear()
         ImpNDD.Clear()
@@ -1565,12 +1076,13 @@
         Dim cont As Integer = 0
         Dim cont1 As Integer = 0
         ' lista = platillosComensal.listaDetalles(i, CInt(estadosPlatillos.sinEnviar))
+        Dim detalles As New dbRestauranteVentasDetalles(MySqlcon)
         For Each x As Integer In lista
             detalles.buscar(x)
             ImpNDD.Add(New NodoImpresionN("", "comensal", "", 0), "comensal" + Format(cont, "000"))
             ImpNDD.Add(New NodoImpresionN("", "producto", detalles.descripcion, 0), "producto" + Format(cont, "000"))
             ImpNDD.Add(New NodoImpresionN("", "cantidad", detalles.cantidad.ToString, 0), "cantidad" + Format(cont, "000"))
-            detalles.cambiarEstado(x, CInt(estadosPlatillos.pendiente))
+            'detalles.cambiarEstado(x, CInt(estadosPlatillos.pendiente))
             cont += 1
             CuantosRenglones += 1
             total += detalles.precio
@@ -1591,57 +1103,73 @@
         imprimir()
     End Sub
 
-    Private Sub muestraDellevar()
-        btnVer.Visible = False
-        panelPedidos.Controls.Clear()
-        Dim x As Integer = 0
-        Dim y As Integer = 0
-        Dim ancho = (panelPedidos.Width / 10) - 4
-        Dim alto = panelPedidos.Height / 2
-        Dim l As New List(Of Integer)
-        l = pedidos.listaPedidos(CInt(Estados.Pendiente), 1)
-        Dim totalPedidos = l.Count
-        For Each i As Integer In l
-            If x >= panelPedidos.Width - 4 Then
-                x = 0
-                y += alto
+    
+    Private Sub btnQuitarPago_Click(sender As Object, e As EventArgs) Handles btnQuitarPago.Click
+        If dgvPagos.SelectedRows.Count > 0 Then
+            Dim pagos As New dbRestauranteVentaPago(MySqlcon)
+            pagos.eliminar(dgvPagos.SelectedRows(0).Cells(colIdPago.Index).Value)
+            txtRecibido.Text = ""
+            dgvPagos.DataSource = pagos.buscarPorVenta(idVenta)
+
+            Dim totalRecibido As Double
+            For Each r As DataGridViewRow In dgvPagos.Rows
+                totalRecibido += r.Cells(colMonto.Index).Value
+            Next
+            If CDbl(txtTotal.Text) < totalRecibido Then
+                txtCambio.Text = Format(totalRecibido - CDbl(txtTotal.Text), "C2")
+            Else
+                txtCambio.Text = "N/A"
             End If
-            Dim b As New Button
-            b.Name = i
-            b.Text = "Orden " + i.ToString
-            b.Width = ancho
-            b.Height = alto
-            b.BackColor = Color.Red
-            AddHandler b.Click, AddressOf clickPedido
-            b.Location = New Point(x, y)
-            panelPedidos.Controls.Add(b)
-            x += ancho
-        Next
+        End If
     End Sub
 
-    Private Sub clickPedido(sender As Object, e As EventArgs)
-        deLlevar = True
-        Dim b As Button = DirectCast(sender, Button)
-        Dim id As Integer = CInt(b.Name)
-        pedidos.buscar(id)
-        ventas.buscar(pedidos.idVenta)
-        Me.idVenta = pedidos.idVenta
-        total = ventas.DaTotal(idVenta)
-        lblTotal.Text = Format(total, opciones._formatoTotal)
-        btnVer.Enabled = True
+    Private Sub btnAgregarPago_Click(sender As Object, e As EventArgs) Handles btnEnter.Click
+        If IsNumeric(txtRecibido.Text) Then
+            Dim pagos As New dbRestauranteVentaPago(MySqlcon)
+            'agrega el pago parcial o total
+            pagos.agregar(idVenta, dgvMetodosPago.SelectedRows(0).Cells(colIdforma.Index).Value, txtRecibido.Text)
+            
+            'consulta los pagos
+            dgvPagos.DataSource = pagos.buscarPorVenta(idVenta)
+
+            'calcula el total de pagos
+            Dim totalRecibido As Double
+            For Each r As DataGridViewRow In dgvPagos.Rows
+                totalRecibido += r.Cells(colMonto.Index).Value
+            Next
+
+            'si el total recibido es mayor al total cierra la cuenta
+            If totalRecibido >= CDbl(txtTotal.Text) Then
+                txtCambio.Text = Format(totalRecibido - CDbl(txtTotal.Text), "C2")
+
+                Dim ventas As New dbRestauranteVentas(MySqlcon)
+                ventas.Pagar(idVenta)
+                imprimir()
+
+                DialogResult = Windows.Forms.DialogResult.OK
+                Close()
+            Else
+                txtRecibido.Text = Format(CDbl(txtTotal.Text) - totalRecibido, "N2")
+                txtCambio.Text = "0.00"
+            End If
+        End If
     End Sub
 
-    Private Sub btnVer_Click(sender As Object, e As EventArgs) Handles btnVer.Click
-        Dim f As New frmRestauranteBuscaVenta(frmRestauranteBuscaVenta.tipoBusqueda.muestraVenta, pedidos.idPedido)
-        f.ShowDialog()
+    Private Sub txtRecibido_Enter(sender As Object, e As EventArgs) Handles txtRecibido.Enter
+        Dim config As New dbRestauranteConfiguracion(MySqlcon)
+        config.llenaDatos()
+        If config.activarTeclado Then
+            Dim f As frmRestauranteTeclado = frmRestauranteTeclado.Instanciar(txtRecibido)
+            'f.Parent = Me
+            f.Show()
+        End If
     End Sub
 
-   
-    Private Sub btnClientes_Click(sender As Object, e As EventArgs) Handles btnClientes.Click
+    Private Sub btnBuscar_Click(sender As Object, e As EventArgs)
 
     End Sub
 
-    Private Sub txtRecibido_TextChanged(sender As Object, e As EventArgs) Handles txtRecibido.TextChanged
+    Private Sub btnVerPedido_Click(sender As Object, e As EventArgs)
 
     End Sub
 End Class

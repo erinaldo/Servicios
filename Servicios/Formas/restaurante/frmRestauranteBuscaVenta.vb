@@ -1,7 +1,7 @@
 ﻿Public Class frmRestauranteBuscaVenta
     Private config As New dbRestauranteConfiguracion(1, MySqlcon)
     Public ventas As New dbRestauranteVentas(MySqlcon)
-    Public pedidos As New dbRestaurantePedidos(MySqlcon)
+    'Public pedidos As New dbRestaurantePedidos(MySqlcon)
     Public idventa As Integer = -1
     Private idSucursal As Integer = -1
     Public idPedido As Integer = -1
@@ -20,9 +20,9 @@
         Me.tipo = tipo
         If idPedido > 0 Then
             Me.idPedido = idPedido
-            pedidos.buscar(idPedido)
-            ventas.buscar(pedidos.idVenta)
-            txtFolio.Text = pedidos.folio
+            'pedidos.buscar(idPedido)
+            'ventas.buscar(pedidos.idVenta)
+            'txtFolio.Text = pedidos.folio
         End If
         ' This call is required by the designer.
         InitializeComponent()
@@ -78,7 +78,7 @@
             configuragrid()
         End If
         If tipo = tipoBusqueda.pedidos Then
-            dgvVentas.DataSource = pedidos.vistaPedidos(dtp1.Value.ToString("yyyy/MM/dd"), dtp2.Value.ToString("yyyy/MM/dd"))
+            'dgvVentas.DataSource = pedidos.vistaPedidos(dtp1.Value.ToString("yyyy/MM/dd"), dtp2.Value.ToString("yyyy/MM/dd"))
             configuraGridPedidos()
             For Each r As DataGridViewRow In dgvVentas.Rows
                 If r.Cells("estado").Value = CInt(Estados.Pendiente) Then
@@ -146,11 +146,11 @@
     Private Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
         For i As Integer = 0 To dgvVentas.Rows.Count - 1
             If dgvVentas.Rows(i).Selected Then
-                pedidos.buscar(CInt(dgvVentas.Rows(i).Cells(0).Value.ToString))
-                Dim v As Integer = pedidos.idVenta
-                pedidos.modificar(pedidos.idPedido, pedidos.idVenta, pedidos.fecha, pedidos.hora, pedidos.serie, pedidos.folio, CInt(Estados.Guardada), pedidos.idVendedor, 0)
-                ventas.buscar(v)
-                ventas.modificar(ventas.idVenta, ventas.idCliente, ventas.descuento, ventas.total, ventas.totalapagar, CInt(Estados.Guardada), ventas.fecha, ventas.idSucursal, GlobalUsuarioIdVendedor, 0, "")
+                'pedidos.buscar(CInt(dgvVentas.Rows(i).Cells(0).Value.ToString))
+                'Dim v As Integer = pedidos.idVenta
+                'pedidos.modificar(pedidos.idPedido, pedidos.idVenta, pedidos.fecha, pedidos.hora, pedidos.serie, pedidos.folio, CInt(Estados.Guardada), pedidos.idVendedor, 0)
+                'ventas.buscar(v)
+                'ventas.modificar(ventas.idVenta, ventas.idCliente, ventas.descuento, ventas.total, ventas.totalapagar, CInt(Estados.Guardada), ventas.fecha, ventas.idSucursal, GlobalUsuarioIdVendedor, 0, "")
             End If
         Next
         buscar()

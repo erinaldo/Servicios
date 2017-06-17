@@ -228,7 +228,5 @@ Public Class dbInventarioClasificaciones
         dr.Close()
         Return lista
     End Function
-    Public Function totalClasificaciones() As Integer
-        Return listaClasificaciones().Count
-    End Function
+    
 End Class

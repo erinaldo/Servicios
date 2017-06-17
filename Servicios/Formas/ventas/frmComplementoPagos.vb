@@ -131,97 +131,97 @@
         End If
 
     End Sub
-    Private Function Timbrar() As Boolean
-        Dim en As New Encriptador
-        Dim HuboError As Boolean = False
-        If (CPago.uuid = "**No Timbrado**" Or CPago.uuid = "") And CPago.Estado = Estados.Guardada Then
-            If dtpFecha.Value.ToString("yyyy/MM/dd") < DateAdd(DateInterval.Day, -2, Date.Now).ToString("yyyy/MM/dd") Then
-                If MsgBox("La fecha ya no es válida para timbrar esta pago. ¿Cambiarla a la fecha actual?", MsgBoxStyle.YesNo, GlobalNombreApp) = MsgBoxResult.Yes Then
-                    CPago.ModificarFechaHora()
-                    dtpFecha.Value = Date.Now
-                Else
-                    Return False
-                End If
-            End If
+    'Private Function Timbrar() As Boolean
+    '    Dim en As New Encriptador
+    '    Dim HuboError As Boolean = False
+    '    If (CPago.uuid = "**No Timbrado**" Or CPago.uuid = "") And CPago.Estado = Estados.Guardada Then
+    '        If dtpFecha.Value.ToString("yyyy/MM/dd") < DateAdd(DateInterval.Day, -2, Date.Now).ToString("yyyy/MM/dd") Then
+    '            If MsgBox("La fecha ya no es válida para timbrar esta pago. ¿Cambiarla a la fecha actual?", MsgBoxStyle.YesNo, GlobalNombreApp) = MsgBoxResult.Yes Then
+    '                CPago.ModificarFechaHora()
+    '                dtpFecha.Value = Date.Now
+    '            Else
+    '                Return False
+    '            End If
+    '        End If
 
-        End If
+    '    End If
 
-        Dim RutaXml As String = ""
-        Dim RutaPDF As String = ""
-        Dim MsgError As String = ""
-        Dim Cadena As String
-        Dim Sello As String
-        Try
-            Cadena = V.CreaCadenaOriginali33(idVenta, GlobalIdMoneda, Sello, GlobalIdEmpresa, pXMLAdenda, Op.FacturaComoegreso, pCadenaOriginalComp)
-            Dim Archivos As New dbSucursalesArchivos
-            Archivos.DaRutaCER(GlobalIdSucursalDefault, GlobalIdEmpresa, False)
-            RutaXml = Archivos.DaRutaArchivos(GlobalIdSucursalDefault, GlobalIdEmpresa, dbSucursalesArchivos.TipoRutas.FacturaXML, False)
-            RutaPDF = Archivos.DaRutaArchivos(GlobalIdSucursalDefault, GlobalIdEmpresa, dbSucursalesArchivos.TipoRutas.FacturaPDF, False)
-            Archivos.CierraDB()
-            Sello = en.GeneraSello(Cadena, Archivos.RutaCer, Format(CDate(CPago.Fecha), "yyyy"), True)
-            IO.Directory.CreateDirectory(RutaPDF + "\" + Format(CDate(CPago.Fecha), "yyyy") + "\")
-            IO.Directory.CreateDirectory(RutaPDF + "\" + Format(CDate(CPago.Fecha), "yyyy") + "\" + Format(CDate(CPago.Fecha), "MM") + "\")
-            IO.Directory.CreateDirectory(RutaXml + "\" + Format(CDate(CPago.Fecha), "yyyy") + "\")
-            IO.Directory.CreateDirectory(RutaXml + "\" + Format(CDate(CPago.Fecha), "yyyy") + "\" + Format(CDate(CPago.Fecha), "MM") + "\")
-            RutaXml = RutaXml + "\" + Format(CDate(CPago.Fecha), "yyyy") + "\" + Format(CDate(CPago.Fecha), "MM") + "\PSSPAGO-" + CPago.Serie + CPago.Folio.ToString + ".xml"
-            If Op._NoRutas = "0" Then
-                RutaPDF = RutaPDF + "\" + Format(CDate(CPago.Fecha), "yyyy") + "\" + Format(CDate(CPago.Fecha), "MM")
-            End If
-            Dim strXML As String
-
-            
-                strXML = V.CreaXMLi33(idVenta, GlobalIdMoneda, Sello, GlobalIdEmpresa, "", Op.FacturaComoegreso)
+    '    Dim RutaXml As String = ""
+    '    Dim RutaPDF As String = ""
+    '    Dim MsgError As String = ""
+    '    Dim Cadena As String
+    '    Dim Sello As String
+    '    Try
+    '        Cadena = V.CreaCadenaOriginali33(idVenta, GlobalIdMoneda, Sello, GlobalIdEmpresa, pXMLAdenda, Op.FacturaComoegreso, pCadenaOriginalComp)
+    '        Dim Archivos As New dbSucursalesArchivos
+    '        Archivos.DaRutaCER(GlobalIdSucursalDefault, GlobalIdEmpresa, False)
+    '        RutaXml = Archivos.DaRutaArchivos(GlobalIdSucursalDefault, GlobalIdEmpresa, dbSucursalesArchivos.TipoRutas.FacturaXML, False)
+    '        RutaPDF = Archivos.DaRutaArchivos(GlobalIdSucursalDefault, GlobalIdEmpresa, dbSucursalesArchivos.TipoRutas.FacturaPDF, False)
+    '        Archivos.CierraDB()
+    '        Sello = en.GeneraSello(Cadena, Archivos.RutaCer, Format(CDate(CPago.Fecha), "yyyy"), True)
+    '        IO.Directory.CreateDirectory(RutaPDF + "\" + Format(CDate(CPago.Fecha), "yyyy") + "\")
+    '        IO.Directory.CreateDirectory(RutaPDF + "\" + Format(CDate(CPago.Fecha), "yyyy") + "\" + Format(CDate(CPago.Fecha), "MM") + "\")
+    '        IO.Directory.CreateDirectory(RutaXml + "\" + Format(CDate(CPago.Fecha), "yyyy") + "\")
+    '        IO.Directory.CreateDirectory(RutaXml + "\" + Format(CDate(CPago.Fecha), "yyyy") + "\" + Format(CDate(CPago.Fecha), "MM") + "\")
+    '        RutaXml = RutaXml + "\" + Format(CDate(CPago.Fecha), "yyyy") + "\" + Format(CDate(CPago.Fecha), "MM") + "\PSSPAGO-" + CPago.Serie + CPago.Folio.ToString + ".xml"
+    '        If Op._NoRutas = "0" Then
+    '            RutaPDF = RutaPDF + "\" + Format(CDate(CPago.Fecha), "yyyy") + "\" + Format(CDate(CPago.Fecha), "MM")
+    '        End If
+    '        Dim strXML As String
 
 
-            Dim S As New dbSucursales(GlobalIdSucursalDefault, MySqlcon)
-            If (CPago.uuid = "**No Timbrado**" Or CPago.uuid = "") Then
-                If GlobalPacCFDI = 2 Then
-                    en.GuardaArchivoTexto("temp.xml", strXML, System.Text.Encoding.UTF8)
-                    Dim Timbre As String
-                    Dim sa As New dbSucursalesArchivos
-                    sa.DaOpciones(GlobalIdEmpresa, True)
-                    Timbre = Timbrar33(S.RFC, strXML, "", Op._ApiKey, True, CPago.Folio, CPago.Serie, "Pago", CPago.IdCPago)
-                    If UCase(Timbre.Substring(0, 5).ToUpper) <> "ERROR" Then
-                        Dim xmldoc As New Xml.XmlDocument
-                        en.GuardaArchivoTexto(RutaXml, Timbre, System.Text.Encoding.UTF8)
-                        xmldoc.Load(RutaXml)
-                        CPago.uuid = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("UUID").Value
-                        CPago.SelloCFD = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("SelloCFD").Value
-                        CPago.NoCertificadoSAT = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("NoCertificadoSAT").Value
-                        CPago.FechaTimbrado = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("FechaTimbrado").Value
-                        CPago.SelloSAT = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("SelloSAT").Value
-                        CPago.RFCProvCertif = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("RfcProvCertif").Value
-                        CPago.GuardaDatosTimbrado()
-                        en.GuardaArchivoTexto(RutaXml, Timbre, System.Text.Encoding.UTF8)
+    '            strXML = V.CreaXMLi33(idVenta, GlobalIdMoneda, Sello, GlobalIdEmpresa, "", Op.FacturaComoegreso)
 
-                    Else
-                        MsgError = Timbre
-                        CPago.NoCertificadoSAT = "Error"
-                        HuboError = True
-                    End If
-                End If
 
-            Else
-                'Crear xml timbrado
-                Dim ExisteArchivo As Boolean = False
-                If IO.File.Exists(RutaXml) Then ExisteArchivo = True
-                If ExisteArchivo = False Then
-                    Dim strTimbrado As String
-                    strTimbrado += "<tfd:TimbreFiscalDigital Version=""1.1"" UUID=""" + CPago.uuid + """ FechaTimbrado=""" + CPago.FechaTimbrado + """ selloCFD=""" + CPago.SelloCFD + """ NoCertificadoSAT=""" + CPago.NoCertificadoSAT + """ selloSAT=""" + CPago.SelloSAT + """ RfcProvCertif=""" + CPago.RFCProvCertif + """ xsi:schemaLocation=""http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/TimbreFiscalDigital/TimbreFiscalDigital.xsd"" xmlns:tfd=""http://www.sat.gob.mx/TimbreFiscalDigital""/>"
-                    strXML = strXML.Insert(strXML.LastIndexOf("</cfdi:Complemento>"), strTimbrado)
-                    en.GuardaArchivoTexto(RutaXml, strXML, System.Text.Encoding.UTF8)
-                End If
-            End If
+    '        Dim S As New dbSucursales(GlobalIdSucursalDefault, MySqlcon)
+    '        If (CPago.uuid = "**No Timbrado**" Or CPago.uuid = "") Then
+    '            If GlobalPacCFDI = 2 Then
+    '                en.GuardaArchivoTexto("temp.xml", strXML, System.Text.Encoding.UTF8)
+    '                Dim Timbre As String
+    '                Dim sa As New dbSucursalesArchivos
+    '                sa.DaOpciones(GlobalIdEmpresa, True)
+    '                Timbre = Timbrar33(S.RFC, strXML, "", Op._ApiKey, True, CPago.Folio, CPago.Serie, "Pago", CPago.IdCPago)
+    '                If UCase(Timbre.Substring(0, 5).ToUpper) <> "ERROR" Then
+    '                    Dim xmldoc As New Xml.XmlDocument
+    '                    en.GuardaArchivoTexto(RutaXml, Timbre, System.Text.Encoding.UTF8)
+    '                    xmldoc.Load(RutaXml)
+    '                    CPago.uuid = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("UUID").Value
+    '                    CPago.SelloCFD = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("SelloCFD").Value
+    '                    CPago.NoCertificadoSAT = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("NoCertificadoSAT").Value
+    '                    CPago.FechaTimbrado = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("FechaTimbrado").Value
+    '                    CPago.SelloSAT = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("SelloSAT").Value
+    '                    CPago.RFCProvCertif = xmldoc.Item("cfdi:Comprobante").Item("cfdi:Complemento").Item("tfd:TimbreFiscalDigital").Attributes("RfcProvCertif").Value
+    '                    CPago.GuardaDatosTimbrado()
+    '                    en.GuardaArchivoTexto(RutaXml, Timbre, System.Text.Encoding.UTF8)
 
-            If CPago.NoCertificadoSAT = "Error" Then
-                MsgBox("Ha ocurrido un error en el timbrado del pago, intente mas tarde." + vbCrLf + MsgError, MsgBoxStyle.Critical, GlobalNombreApp)
-                AddErrorTimbrado(Replace(MsgError, "'", "''"), "Pagos - Timbrado", Date.Now.ToString("yyyy/MM/dd"), Date.Now.ToString("HH:mm:ss"), CPago.IdCPago)
-                HuboError = True
-            End If
-        Catch ex As Exception
-            AddError(Replace(ex.Message, "'", "''"), "Pagos - Timbrado", Date.Now.ToString("yyyy/MM/dd"), Date.Now.ToString("HH:mm:ss"), CPago.IdCPago)
-            MsgBox("Error al timbrar " + ex.Message, MsgBoxStyle.Critical, GlobalNombreApp)
-            HuboError = True
-        End Try
-    End Function
+    '                Else
+    '                    MsgError = Timbre
+    '                    CPago.NoCertificadoSAT = "Error"
+    '                    HuboError = True
+    '                End If
+    '            End If
+
+    '        Else
+    '            'Crear xml timbrado
+    '            Dim ExisteArchivo As Boolean = False
+    '            If IO.File.Exists(RutaXml) Then ExisteArchivo = True
+    '            If ExisteArchivo = False Then
+    '                Dim strTimbrado As String
+    '                strTimbrado += "<tfd:TimbreFiscalDigital Version=""1.1"" UUID=""" + CPago.uuid + """ FechaTimbrado=""" + CPago.FechaTimbrado + """ selloCFD=""" + CPago.SelloCFD + """ NoCertificadoSAT=""" + CPago.NoCertificadoSAT + """ selloSAT=""" + CPago.SelloSAT + """ RfcProvCertif=""" + CPago.RFCProvCertif + """ xsi:schemaLocation=""http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/TimbreFiscalDigital/TimbreFiscalDigital.xsd"" xmlns:tfd=""http://www.sat.gob.mx/TimbreFiscalDigital""/>"
+    '                strXML = strXML.Insert(strXML.LastIndexOf("</cfdi:Complemento>"), strTimbrado)
+    '                en.GuardaArchivoTexto(RutaXml, strXML, System.Text.Encoding.UTF8)
+    '            End If
+    '        End If
+
+    '        If CPago.NoCertificadoSAT = "Error" Then
+    '            MsgBox("Ha ocurrido un error en el timbrado del pago, intente mas tarde." + vbCrLf + MsgError, MsgBoxStyle.Critical, GlobalNombreApp)
+    '            AddErrorTimbrado(Replace(MsgError, "'", "''"), "Pagos - Timbrado", Date.Now.ToString("yyyy/MM/dd"), Date.Now.ToString("HH:mm:ss"), CPago.IdCPago)
+    '            HuboError = True
+    '        End If
+    '    Catch ex As Exception
+    '        AddError(Replace(ex.Message, "'", "''"), "Pagos - Timbrado", Date.Now.ToString("yyyy/MM/dd"), Date.Now.ToString("HH:mm:ss"), CPago.IdCPago)
+    '        MsgBox("Error al timbrar " + ex.Message, MsgBoxStyle.Critical, GlobalNombreApp)
+    '        HuboError = True
+    '    End Try
+    'End Function
 End Class

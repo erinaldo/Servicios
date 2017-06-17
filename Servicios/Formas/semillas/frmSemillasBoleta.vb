@@ -194,7 +194,7 @@ Public Class frmSemillasBoleta
             'txtFolio.Text = folio
             txtPeso.Text = Format(peso, "#,###,##0")
             txtClaveProducto.Text = pcodigo
-            If productos.BuscaArticulo(txtClaveProducto.Text, 1) Then
+            If productos.BuscaArticulo(txtClaveProducto.Text, 1, "") Then
                 comboProductos.Text = productos.Nombre
                 producto = productos
                 id = producto.ID
@@ -1202,7 +1202,7 @@ Public Class frmSemillasBoleta
     End Sub
 
     Private Sub txtClaveProducto_TextChanged(sender As Object, e As EventArgs) Handles txtClaveProducto.TextChanged
-        If productos.BuscaArticulo(txtClaveProducto.Text, 1) Then
+        If productos.BuscaArticulo(txtClaveProducto.Text, 1, "") Then
             comboProductos.Text = productos.Nombre
             producto = productos
             id = producto.ID

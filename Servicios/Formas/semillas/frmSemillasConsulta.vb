@@ -460,7 +460,7 @@ Public Class frmSemillasConsulta
     Private Sub txtClaveProducto_TextChanged(sender As Object, e As EventArgs) Handles txtClaveProducto.TextChanged
         txtFolio.Text = ""
         If chckTiempo.Checked Then
-            If productoDB.BuscaArticulo(txtClaveProducto.Text, 1) Then
+            If productoDB.BuscaArticulo(txtClaveProducto.Text, 1, "") Then
                 txtNombreProducto.Text = productoDB.Nombre
             Else
                 txtNombreProducto.Text = ""

@@ -350,7 +350,7 @@
                 Contador = 0
                 Mov.Guardar(Mov.DaNuevoFolio(Concepto.Serie, IdsSucursales.Valor(ComboBox1.SelectedIndex), Concepto.ID), DateTimePicker1.Value.ToString("yyyy/MM/dd"), Concepto.ID, Concepto.Serie, IdsSucursales.Valor(ComboBox1.SelectedIndex), 1, 2, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdsAlmacenes.Valor(ComboBox8.SelectedIndex), 0, 0)
                 For Each Art As Inventario In Ids
-                    MovDetalles.Guardar(Mov.ID, Art.Id, Art.Cantidad, Art.Costo * Art.Cantidad, 2, Art.Nombre, Art.IdAlmacen, Art.IdAlmacen, 1, 1, 0, "", "")
+                    MovDetalles.Guardar(Mov.ID, Art.Id, Art.Cantidad, Art.Costo * Art.Cantidad, 2, Art.Nombre, Art.IdAlmacen, Art.IdAlmacen, 1, 1, 0, "", "", "", "")
                     Contador += 1
                     Label1.Text = "No movimientos procesados: " + Contador.ToString
                     Application.DoEvents()
@@ -397,7 +397,7 @@
                 Contador = 0
                 Mov.Guardar(Mov.DaNuevoFolio(Concepto.Serie, IdsSucursales.Valor(ComboBox1.SelectedIndex), Concepto.ID), DateTimePicker1.Value.ToString("yyyy/MM/dd"), Concepto.ID, Concepto.Serie, IdsSucursales.Valor(ComboBox1.SelectedIndex), 1, 2, IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdsAlmacenes.Valor(ComboBox8.SelectedIndex), 0, 0)
                 For Each Art As Inventario In Ids
-                    MovDetalles.Guardar(Mov.ID, Art.Id, Art.Cantidad, Art.Costo * Art.Cantidad, 2, Art.Nombre, Art.IdAlmacen, Art.IdAlmacen, 1, 1, 0, "", "")
+                    MovDetalles.Guardar(Mov.ID, Art.Id, Art.Cantidad, Art.Costo * Art.Cantidad, 2, Art.Nombre, Art.IdAlmacen, Art.IdAlmacen, 1, 1, 0, "", "", "", "")
                     Contador += 1
                     Label1.Text = "No. movimientos procesados: " + Contador.ToString
                     Application.DoEvents()
@@ -428,7 +428,7 @@
         Try
             If ConsultaOn Then
                 Dim p As New dbInventario(MySqlcon)
-                If p.BuscaArticulo(TextBox3.Text, 1) Then
+                If p.BuscaArticulo(TextBox3.Text, 1, "") Then
                     IdInventario = p.ID
                     TextBox4.Text = p.Nombre
                 Else

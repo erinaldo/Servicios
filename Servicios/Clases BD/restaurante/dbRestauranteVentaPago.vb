@@ -31,19 +31,19 @@ Public Class dbRestauranteVentaPago
         dr = comm.ExecuteReader
         While dr.Read()
             idVenta = dr("idventa")
-            idFormaPago = dr("idmedioPago")
+            idFormaPago = dr("idforma")
             total = dr("total")
         End While
         dr.Close()
     End Sub
 
     Public Sub agregar(ByVal idventa As Integer, ByVal idFormaPago As Integer, ByVal total As Double)
-        comm.CommandText = "insert into tblrestauranteventaspagos(idventa,idmedioPago,total) values(" + idventa.ToString() + "," + idFormaPago.ToString() + "," + total.ToString() + ");"
+        comm.CommandText = "insert into tblrestauranteventaspagos(idventa,idforma,total) values(" + idventa.ToString() + "," + idFormaPago.ToString() + "," + total.ToString() + ");"
         comm.ExecuteNonQuery()
     End Sub
 
     Public Sub modificar(ByVal idForma As Integer, ByVal idVenta As Integer, ByVal idFormaPago As Integer, ByVal total As Double)
-        comm.CommandText = "update tblrestauranteventaspagos set idVenta=" + idVenta.ToString() + ", idmedioPago=" + idFormaPago.ToString() + ", total=" + total.ToString() + " where id=" + idForma.ToString() + ";"
+        comm.CommandText = "update tblrestauranteventaspagos set idVenta=" + idVenta.ToString() + ", idforma=" + idFormaPago.ToString() + ", total=" + total.ToString() + " where id=" + idForma.ToString() + ";"
         comm.ExecuteNonQuery()
     End Sub
 
@@ -53,7 +53,7 @@ Public Class dbRestauranteVentaPago
     End Sub
 
     Public Function buscarPorVenta(ByVal idVenta As Integer) As DataView
-        comm.CommandText = "select fp.nombre, vp.total from tblrestauranteventaspagos as vp inner join tblformasdepago as fp on vp.idmedioPago=fp.idforma where vp.idventa=" + idVenta.ToString() + ";"
+        comm.CommandText = "select id, fp.nombre, vp.total from tblrestauranteventaspagos as vp inner join tblformasdepagoremisiones as fp on vp.idforma=fp.idforma where vp.idventa=" + idVenta.ToString() + ";"
         Dim ds As New DataSet
         Dim da As New MySqlDataAdapter(comm)
         da.Fill(ds, "pagos")

@@ -81,7 +81,7 @@
         Try
             If ConsultaOn Then
                 Dim c As New dbInventario(MySqlcon)
-                If c.BuscaArticulo(TextBox1.Text, 1) Then
+                If c.BuscaArticulo(TextBox1.Text, 1, "") Then
                     TextBox2.Text = c.Nombre
                     IdInventario = c.ID
                     Consulta()
