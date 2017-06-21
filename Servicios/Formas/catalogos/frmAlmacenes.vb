@@ -9,6 +9,7 @@
     Dim IdCuenta4 As Integer
     Dim ColorRojo As Color = Color.FromArgb(255, 200, 200)
     Dim ColorVerde As Color = Color.FromArgb(200, 255, 200)
+    Dim db As New dbAlmacenes(MySqlcon)
     Private Sub frmAlmacenes_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Try
             Me.Icon = GlobalIcono
@@ -39,6 +40,7 @@
             TextBox1.Text = ""
             TextBox2.Text = ""
             TextBox4.Text = "0.0"
+            TextBox5.Text = ""
             ComboBox2.SelectedIndex = 0
             TextBox1.BackColor = Color.FromKnownColor(KnownColor.Window)
             TextBox6.BackColor = Color.FromKnownColor(KnownColor.Window)
@@ -56,14 +58,14 @@
             Button11.BackColor = ColorRojo
             Button12.BackColor = ColorRojo
             Button5.Enabled = False
-            Dim p As New dbAlmacenes(MySqlcon)
-            cmbUbicaciones.DataSource = p.Ubicaciones(0)
+            cmbUbicaciones.DataSource = db.Ubicaciones(0)
             cmbUbicaciones.Text = ""
             cmbUbicaciones.Enabled = False
             btnEliminarU.Enabled = False
             btnGuardarU.Enabled = False
             btnGenerarU.Enabled = False
             Consulta()
+            TextBox6.Focus()
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, GlobalNombreApp)
         End Try
@@ -346,20 +348,28 @@
 
     Private Sub btnGuardarU_Click(sender As Object, e As EventArgs) Handles btnGuardarU.Click
         If cmbUbicaciones.Text = "" Then
-            MsgBox("Indique una ubicación.")
+            MsgBox("Indique una ubicación.", MsgBoxStyle.Information, GlobalNombreApp)
         Else
-            Dim db As New dbAlmacenes(MySqlcon)
+            
+
+            If TextBox5.Text <> "" Then
+                If db.TarimaRepetida(TextBox5.Text, cmbUbicaciones.Text) Then
+                    MsgBox("Ya hay una ubicación con esa tarima", MsgBoxStyle.Information, GlobalNombreApp)
+                    Exit Sub
+                End If
+            End If
             If cmbUbicaciones.SelectedIndex = -1 Then
-                db.AgregarUbicacion(IdAlmacen, cmbUbicaciones.Text)
+                db.AgregarUbicacion(IdAlmacen, cmbUbicaciones.Text, TextBox5.Text)
             Else
-                db.ModificarUbicacion(cmbUbicaciones.SelectedValue, cmbUbicaciones.Text)
+                db.ModificarUbicacion(cmbUbicaciones.SelectedValue, cmbUbicaciones.Text, TextBox5.Text)
             End If
             cmbUbicaciones.DataSource = db.Ubicaciones(IdAlmacen)
             cmbUbicaciones.Text = ""
+            TextBox5.Text = ""
             cmbUbicaciones.Enabled = True
             btnEliminarU.Enabled = True
             btnGuardarU.Enabled = True
-            PopUp("Guardado.", 100)
+            PopUp("Guardado.", 30)
         End If
     End Sub
 
@@ -395,6 +405,18 @@
             Dim fap As New frmAlmacenesPermisos(IdAlmacen, TextBox1.Text, ComboBox1.Text)
             fap.ShowDialog()
             fap.Dispose()
+        End If
+    End Sub
+
+    Private Sub cmbUbicaciones_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbUbicaciones.SelectedIndexChanged
+        If cmbUbicaciones.SelectedIndex >= 0 Then
+            TextBox5.Text = db.Tarima(IdAlmacen, cmbUbicaciones.Text)
+        End If
+    End Sub
+
+    Private Sub cmbUbicaciones_TextChanged(sender As Object, e As EventArgs) Handles cmbUbicaciones.TextChanged
+        If cmbUbicaciones.Text = "" Then
+            TextBox5.Text = ""
         End If
     End Sub
 End Class

@@ -18,14 +18,14 @@
                         If r2.Cells(0).Value IsNot Nothing Then
                             For Each r3 As DataGridViewRow In dgvDimension3.Rows
                                 If r3.Cells(0).Value IsNot Nothing Then
-                                    db.AgregarUbicacion(idalmacen, String.Concat(r1.Cells(0).Value, r2.Cells(0).Value, r3.Cells(0).Value))
+                                    db.AgregarUbicacion(idalmacen, String.Concat(r1.Cells(0).Value, r2.Cells(0).Value, r3.Cells(0).Value), "")
                                 End If
                             Next
                         End If
                     Next
                 End If
             Next
-            MsgBox("Ubicaciones generadas.")
+            MsgBox("Ubicaciones generadas.", MsgBoxStyle.Information, GlobalNombreApp)
         End If
     End Sub
 

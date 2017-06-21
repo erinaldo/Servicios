@@ -3085,6 +3085,5 @@
             Dim db As New dbAlmacenes(MySqlcon)
             txtTarima.Text = db.Tarima(IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), cmbUbicacion.SelectedValue)
         End If
-        txtTarima.Enabled = txtTarima.Text = ""
     End Sub
 End Class

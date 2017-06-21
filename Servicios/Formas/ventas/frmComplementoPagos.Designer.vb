@@ -59,6 +59,8 @@ Partial Class frmComplementoPagos
         Me.ComboBox2 = New System.Windows.Forms.ComboBox()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.PrintDocument1 = New System.Drawing.Printing.PrintDocument()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.TextBox8 = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'dtpFecha
@@ -302,7 +304,7 @@ Partial Class frmComplementoPagos
         Me.Label12.AutoSize = True
         Me.Label12.BackColor = System.Drawing.Color.Transparent
         Me.Label12.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(45, 200)
+        Me.Label12.Location = New System.Drawing.Point(45, 224)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(78, 16)
         Me.Label12.TabIndex = 333
@@ -313,7 +315,7 @@ Partial Class frmComplementoPagos
         Me.Label13.AutoSize = True
         Me.Label13.BackColor = System.Drawing.Color.Transparent
         Me.Label13.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(42, 254)
+        Me.Label13.Location = New System.Drawing.Point(42, 278)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(81, 16)
         Me.Label13.TabIndex = 335
@@ -323,7 +325,7 @@ Partial Class frmComplementoPagos
         '
         Me.TextBox9.Enabled = False
         Me.TextBox9.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox9.Location = New System.Drawing.Point(126, 252)
+        Me.TextBox9.Location = New System.Drawing.Point(126, 276)
         Me.TextBox9.MaxLength = 0
         Me.TextBox9.Name = "TextBox9"
         Me.TextBox9.Size = New System.Drawing.Size(547, 22)
@@ -334,7 +336,7 @@ Partial Class frmComplementoPagos
         Me.Label14.AutoSize = True
         Me.Label14.BackColor = System.Drawing.Color.Transparent
         Me.Label14.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label14.Location = New System.Drawing.Point(62, 283)
+        Me.Label14.Location = New System.Drawing.Point(62, 307)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(61, 16)
         Me.Label14.TabIndex = 337
@@ -344,7 +346,7 @@ Partial Class frmComplementoPagos
         '
         Me.TextBox10.Enabled = False
         Me.TextBox10.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox10.Location = New System.Drawing.Point(126, 280)
+        Me.TextBox10.Location = New System.Drawing.Point(126, 304)
         Me.TextBox10.MaxLength = 0
         Me.TextBox10.Name = "TextBox10"
         Me.TextBox10.Size = New System.Drawing.Size(547, 22)
@@ -355,7 +357,7 @@ Partial Class frmComplementoPagos
         Me.Label15.AutoSize = True
         Me.Label15.BackColor = System.Drawing.Color.Transparent
         Me.Label15.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label15.Location = New System.Drawing.Point(78, 311)
+        Me.Label15.Location = New System.Drawing.Point(78, 335)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(45, 16)
         Me.Label15.TabIndex = 339
@@ -365,7 +367,7 @@ Partial Class frmComplementoPagos
         '
         Me.TextBox11.Enabled = False
         Me.TextBox11.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox11.Location = New System.Drawing.Point(127, 308)
+        Me.TextBox11.Location = New System.Drawing.Point(127, 332)
         Me.TextBox11.MaxLength = 0
         Me.TextBox11.Name = "TextBox11"
         Me.TextBox11.Size = New System.Drawing.Size(546, 22)
@@ -375,7 +377,7 @@ Partial Class frmComplementoPagos
         '
         Me.CheckBox1.AutoSize = True
         Me.CheckBox1.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CheckBox1.Location = New System.Drawing.Point(127, 228)
+        Me.CheckBox1.Location = New System.Drawing.Point(127, 252)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(57, 20)
         Me.CheckBox1.TabIndex = 12
@@ -386,7 +388,7 @@ Partial Class frmComplementoPagos
         '
         Me.Button5.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.Button5.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button5.Location = New System.Drawing.Point(441, 345)
+        Me.Button5.Location = New System.Drawing.Point(441, 369)
         Me.Button5.Name = "Button5"
         Me.Button5.Size = New System.Drawing.Size(71, 30)
         Me.Button5.TabIndex = 19
@@ -396,7 +398,7 @@ Partial Class frmComplementoPagos
         'Button2
         '
         Me.Button2.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button2.Location = New System.Drawing.Point(283, 345)
+        Me.Button2.Location = New System.Drawing.Point(283, 369)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(70, 30)
         Me.Button2.TabIndex = 17
@@ -406,7 +408,7 @@ Partial Class frmComplementoPagos
         'Button1
         '
         Me.Button1.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.Location = New System.Drawing.Point(199, 345)
+        Me.Button1.Location = New System.Drawing.Point(199, 369)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(78, 30)
         Me.Button1.TabIndex = 16
@@ -419,7 +421,7 @@ Partial Class frmComplementoPagos
         Me.Label16.BackColor = System.Drawing.Color.Transparent
         Me.Label16.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label16.ForeColor = System.Drawing.Color.Red
-        Me.Label16.Location = New System.Drawing.Point(431, 200)
+        Me.Label16.Location = New System.Drawing.Point(431, 224)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(154, 16)
         Me.Label16.TabIndex = 345
@@ -432,7 +434,7 @@ Partial Class frmComplementoPagos
         Me.ComboBox2.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.ComboBox2.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ComboBox2.FormattingEnabled = True
-        Me.ComboBox2.Location = New System.Drawing.Point(126, 197)
+        Me.ComboBox2.Location = New System.Drawing.Point(126, 221)
         Me.ComboBox2.Name = "ComboBox2"
         Me.ComboBox2.Size = New System.Drawing.Size(227, 24)
         Me.ComboBox2.TabIndex = 11
@@ -442,12 +444,36 @@ Partial Class frmComplementoPagos
         '
         Me.Button3.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.Button3.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button3.Location = New System.Drawing.Point(362, 345)
+        Me.Button3.Location = New System.Drawing.Point(362, 369)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(71, 30)
         Me.Button3.TabIndex = 18
         Me.Button3.Text = "Imprimir"
         Me.Button3.UseVisualStyleBackColor = True
+        '
+        'PrintDocument1
+        '
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.BackColor = System.Drawing.Color.Transparent
+        Me.Label17.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label17.Location = New System.Drawing.Point(27, 197)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(96, 16)
+        Me.Label17.TabIndex = 347
+        Me.Label17.Text = "RFC Cta. Ben:"
+        '
+        'TextBox8
+        '
+        Me.TextBox8.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.TextBox8.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox8.Location = New System.Drawing.Point(126, 194)
+        Me.TextBox8.MaxLength = 80
+        Me.TextBox8.Name = "TextBox8"
+        Me.TextBox8.Size = New System.Drawing.Size(120, 22)
+        Me.TextBox8.TabIndex = 346
         '
         'frmComplementoPagos
         '
@@ -455,7 +481,9 @@ Partial Class frmComplementoPagos
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(230, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(230, Byte), Integer))
         Me.CancelButton = Me.Button5
-        Me.ClientSize = New System.Drawing.Size(685, 384)
+        Me.ClientSize = New System.Drawing.Size(685, 411)
+        Me.Controls.Add(Me.Label17)
+        Me.Controls.Add(Me.TextBox8)
         Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.ComboBox2)
         Me.Controls.Add(Me.Label16)
@@ -539,4 +567,6 @@ Partial Class frmComplementoPagos
     Friend WithEvents ComboBox2 As System.Windows.Forms.ComboBox
     Friend WithEvents Button3 As System.Windows.Forms.Button
     Friend WithEvents PrintDocument1 As System.Drawing.Printing.PrintDocument
+    Friend WithEvents Label17 As System.Windows.Forms.Label
+    Friend WithEvents TextBox8 As System.Windows.Forms.TextBox
 End Class

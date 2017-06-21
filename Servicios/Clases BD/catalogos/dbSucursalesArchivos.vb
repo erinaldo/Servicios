@@ -35,6 +35,7 @@
         Validador = 15
         AValidadar = 16
         Validadas = 17
+        PagosPDF = 18
     End Enum
     Public Enum TipoImpresoras
         Normal = 0

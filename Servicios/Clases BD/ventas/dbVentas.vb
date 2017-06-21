@@ -79,6 +79,8 @@ Public Class dbVentas
     Public cUsoCFDI As String
     Public NoConfirmacion As String
     Public ClientePG As String
+    Public TotalILT As Double
+    Public TotalILR As Double
     Private Structure Implocal
         Dim Tasa As Double
         Dim Nombre As String
@@ -710,6 +712,46 @@ Public Class dbVentas
         End If
     End Function
 
+    Public Function DaTotalN(ByVal pidVenta As Integer, ByVal pidMoneda As Integer, ByVal NoNegativos As String, ByVal pAlterno As String) As Double
+
+        Comm.CommandText = "select ifnull((select round(sum(if(tblventasinventario.idmoneda=2,tblventasinventario.precio,tblventasinventario.precio*tblventas.tipodecambio)),2) from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventas.idventa=" + pidVenta.ToString + "),0)"
+        Subtototal = Comm.ExecuteScalar
+
+        Comm.CommandText = "select ifnull((select round(sum(if(tblventasinventario.idmoneda=2,(tblventasinventario.precio*(1+tblventasinventario.ieps/100))*tblventasinventario.iva/100,(tblventasinventario.precio*(1+tblventasinventario.ieps/100))*tblventasinventario.iva/100*tblventas.tipodecambio)),2) from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventas.idventa=" + pidVenta.ToString + "),0)"
+        TotalIva = Comm.ExecuteScalar
+
+        Comm.CommandText = "select ifnull((select round(sum(if(tblventasinventario.idmoneda=2,precio*(tblventasinventario.ivaretenido+tblventas.ivaretenido)/100,precio*(tblventasinventario.ivaretenido+tblventas.ivaretenido)/100*tblventas.tipodecambio)),2) from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventas.idventa=" + pidVenta.ToString + "),0)"
+        TotalIvaRetenido = Comm.ExecuteScalar
+
+        Comm.CommandText = "select ifnull((select sum(if(idconversion=2,round(total*isr/100,2),round(total*isr/100*tipodecambio,2))) from tblventas inner join tblformasdepago on tblventas.idforma=tblformasdepago.idforma inner join tblsucursales s on tblventas.idsucursal=s.idsucursal where tblventas.idventa=" + pidVenta.ToString + "),0)"
+        TotalISR = Comm.ExecuteScalar
+
+        Comm.CommandText = "select ifnull((select round(sum(if(tblventasinventario.idmoneda=2,precio*tblventasinventario.ieps/100,precio*tblventasinventario.ieps/100*tblventas.tipodecambio)),2) from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventas.idventa=" + pidVenta.ToString + "),0)"
+        TotalIEPS = Comm.ExecuteScalar
+
+        Comm.CommandText = "select ifnull((select round(sum(" +
+            "if(tblventas.idconversion=2," +
+            "if(tblventasimpuestos.tasa<>0,if(tblventas.sobreimploc=0," + Subtototal.ToString + ",tblventas.sobreimploc)*tblventasimpuestos.tasa/100,tblventasimpuestos.importe)," +
+            "if(tblventasimpuestos.tasa<>0,if(tblventas.sobreimploc=0," + Subtototal.ToString + ",tblventas.sobreimploc)*tblventasimpuestos.tasa/100*tblventas.tipodecambio,tblventasimpuestos.importe*tblventas.tipodecambio))" +
+            "),2) " +
+            "from tblventas inner join tblventasimpuestos on tblventas.idventa=tblventasimpuestos.idventa where tblventasimpuestos.tipo=0 and tblventas.idventa=" + pidVenta.ToString + "),0)"
+        TotalILT = Comm.ExecuteScalar
+
+        Comm.CommandText = "select ifnull((select round(sum(" +
+            "if(tblventas.idconversion=2," +
+            "if(tblventasimpuestos.tasa<>0,if(tblventas.sobreimploc=0," + Subtototal.ToString + ",tblventas.sobreimploc)*tblventasimpuestos.tasa/100,tblventasimpuestos.importe)," +
+            "if(tblventasimpuestos.tasa<>0,if(tblventas.sobreimploc=0," + Subtototal.ToString + ",tblventas.sobreimploc)*tblventasimpuestos.tasa/100*tblventas.tipodecambio,tblventasimpuestos.importe*tblventas.tipodecambio))" +
+            "),2) " +
+            "from tblventas inner join tblventasimpuestos on tblventas.idventa=tblventasimpuestos.idventa where tblventasimpuestos.tipo=1 and tblventas.idventa=" + pidVenta.ToString + "),0)"
+        TotalILR = Comm.ExecuteScalar
+
+        Comm.CommandText = "select ifnull((select round(sum(if(tblventasinventario.idmoneda=2,tblventasinventario.cdescuento,tblventasinventario.cdescuento*tblventas.tipodecambio)),2) from tblventasinventario inner join tblventas on tblventasinventario.idventa=tblventas.idventa where tblventas.idventa=" + pidVenta.ToString + "),0)"
+        TotalDescuento = Comm.ExecuteScalar
+
+        TotalVenta = Subtototal + TotalIva + TotalIEPS - TotalISR - TotalIvaRetenido + TotalILT - TotalILR
+        Return TotalVenta
+
+    End Function
 
     Public Function DaTotalb(ByVal pidVenta As Integer, ByVal pidMoneda As Integer, ByVal NoNegativos As String) As Double
         Dim DReader As MySql.Data.MySqlClient.MySqlDataReader
@@ -3510,7 +3552,7 @@ Public Class dbVentas
             If DR("clavesat") < 1000 Then
                 strMetodos += Format(DR("clavesat"), "00")
             Else
-                strMetodos += "NA"
+                strMetodos += "99"
             End If
         End If
         DR.Close()
@@ -3888,7 +3930,7 @@ Public Class dbVentas
             If DR("clavesat") < 1000 Then
                 strMetodos += Format(DR("clavesat"), "00")
             Else
-                strMetodos += "NA"
+                strMetodos += "99"
             End If
         End If
         'End While

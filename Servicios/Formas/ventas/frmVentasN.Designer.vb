@@ -100,6 +100,9 @@ Partial Class frmVentasN
         Me.Button13 = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.pnlUbicacion = New System.Windows.Forms.Panel()
+        Me.Label44 = New System.Windows.Forms.Label()
+        Me.txtTarima = New System.Windows.Forms.TextBox()
         Me.lblUbicacion = New System.Windows.Forms.Label()
         Me.cmbUbicacion = New System.Windows.Forms.ComboBox()
         Me.Label41 = New System.Windows.Forms.Label()
@@ -160,14 +163,11 @@ Partial Class frmVentasN
         Me.SerialPort1 = New System.IO.Ports.SerialPort(Me.components)
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.pnlUbicacion = New System.Windows.Forms.Panel()
-        Me.Label44 = New System.Windows.Forms.Label()
-        Me.txtTarima = New System.Windows.Forms.TextBox()
         Me.Panel2.SuspendLayout()
         CType(Me.DGDetalles, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
-        Me.Panel4.SuspendLayout()
         Me.pnlUbicacion.SuspendLayout()
+        Me.Panel4.SuspendLayout()
         Me.SuspendLayout()
         '
         'PrintDocument1
@@ -205,6 +205,7 @@ Partial Class frmVentasN
         Me.TextBox15.TabIndex = 34
         Me.TextBox15.TabStop = False
         Me.ToolTip1.SetToolTip(Me.TextBox15, "Indique aquí en cuantas parcialidades será la factura.")
+        Me.TextBox15.Visible = False
         '
         'Button12
         '
@@ -652,6 +653,7 @@ Partial Class frmVentasN
         Me.Label30.Size = New System.Drawing.Size(59, 16)
         Me.Label30.TabIndex = 223
         Me.Label30.Text = "No. Par:"
+        Me.Label30.Visible = False
         '
         'ComboBox6
         '
@@ -1033,6 +1035,39 @@ Partial Class frmVentasN
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(1000, 96)
         Me.Panel1.TabIndex = 12
+        '
+        'pnlUbicacion
+        '
+        Me.pnlUbicacion.Controls.Add(Me.Label44)
+        Me.pnlUbicacion.Controls.Add(Me.txtTarima)
+        Me.pnlUbicacion.Controls.Add(Me.lblUbicacion)
+        Me.pnlUbicacion.Controls.Add(Me.cmbUbicacion)
+        Me.pnlUbicacion.Location = New System.Drawing.Point(623, 48)
+        Me.pnlUbicacion.Name = "pnlUbicacion"
+        Me.pnlUbicacion.Size = New System.Drawing.Size(213, 48)
+        Me.pnlUbicacion.TabIndex = 27
+        '
+        'Label44
+        '
+        Me.Label44.AutoSize = True
+        Me.Label44.BackColor = System.Drawing.Color.Transparent
+        Me.Label44.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label44.Location = New System.Drawing.Point(130, 1)
+        Me.Label44.Name = "Label44"
+        Me.Label44.Size = New System.Drawing.Size(56, 16)
+        Me.Label44.TabIndex = 223
+        Me.Label44.Text = "Tarima:"
+        '
+        'txtTarima
+        '
+        Me.txtTarima.Enabled = False
+        Me.txtTarima.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTarima.Location = New System.Drawing.Point(133, 19)
+        Me.txtTarima.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.txtTarima.Name = "txtTarima"
+        Me.txtTarima.Size = New System.Drawing.Size(78, 22)
+        Me.txtTarima.TabIndex = 1
+        Me.txtTarima.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'lblUbicacion
         '
@@ -1734,38 +1769,6 @@ Partial Class frmVentasN
         '
         Me.OpenFileDialog1.Filter = """Archivos Excel|*.xlsx;*.xls"""
         '
-        'pnlUbicacion
-        '
-        Me.pnlUbicacion.Controls.Add(Me.Label44)
-        Me.pnlUbicacion.Controls.Add(Me.txtTarima)
-        Me.pnlUbicacion.Controls.Add(Me.lblUbicacion)
-        Me.pnlUbicacion.Controls.Add(Me.cmbUbicacion)
-        Me.pnlUbicacion.Location = New System.Drawing.Point(623, 48)
-        Me.pnlUbicacion.Name = "pnlUbicacion"
-        Me.pnlUbicacion.Size = New System.Drawing.Size(213, 48)
-        Me.pnlUbicacion.TabIndex = 27
-        '
-        'Label44
-        '
-        Me.Label44.AutoSize = True
-        Me.Label44.BackColor = System.Drawing.Color.Transparent
-        Me.Label44.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label44.Location = New System.Drawing.Point(130, 1)
-        Me.Label44.Name = "Label44"
-        Me.Label44.Size = New System.Drawing.Size(56, 16)
-        Me.Label44.TabIndex = 223
-        Me.Label44.Text = "Tarima:"
-        '
-        'txtTarima
-        '
-        Me.txtTarima.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtTarima.Location = New System.Drawing.Point(133, 19)
-        Me.txtTarima.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.txtTarima.Name = "txtTarima"
-        Me.txtTarima.Size = New System.Drawing.Size(78, 22)
-        Me.txtTarima.TabIndex = 1
-        Me.txtTarima.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
         'frmVentasN
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -1789,10 +1792,10 @@ Partial Class frmVentasN
         CType(Me.DGDetalles, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
-        Me.Panel4.ResumeLayout(False)
-        Me.Panel4.PerformLayout()
         Me.pnlUbicacion.ResumeLayout(False)
         Me.pnlUbicacion.PerformLayout()
+        Me.Panel4.ResumeLayout(False)
+        Me.Panel4.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub

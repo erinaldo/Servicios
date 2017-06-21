@@ -364,13 +364,11 @@
                 End If
                 'Mov.ReCalculaCostos(Mov.ID, GlobalTipoCosteo, o.CostoTiempoReal, 1)
             End While
-
             'Salidas
             C = 1
             Concepto.DaPrimerConcepto(1)
             While C <= ComboBox1.Items.Count - 1
                 ComboBox1.SelectedIndex = C
-
                 Ca = 1
                 Ids.Clear()
                 Contador = 1

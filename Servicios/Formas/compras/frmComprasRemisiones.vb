@@ -1443,11 +1443,15 @@
     Private Sub cmbUbicacion_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbUbicacion.SelectedIndexChanged
         If cmbUbicacion.SelectedIndex = -1 Then
             txtTarima.Text = ""
+            txtTarima.Enabled = True
         Else
             Dim db As New dbAlmacenes(MySqlcon)
             txtTarima.Text = db.Tarima(IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), cmbUbicacion.SelectedValue)
+            If txtTarima.Text <> "" Then
+                txtTarima.Enabled = False
+            Else
+                txtTarima.Enabled = True
+            End If
         End If
-        txtTarima.Enabled = txtTarima.Text = ""
-
     End Sub
 End Class

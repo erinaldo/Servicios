@@ -133,7 +133,7 @@ Public Class dbMovimientosDetalles
             Comm.ExecuteNonQuery()
         End If
         If pUbicacion <> "" And pUbicacionD <> "" Then
-            Comm.CommandText = "update tblmovimientosubicaciones set cantidad=@cantidad, ubicacion=@ubicacion, ubicaciond=@ubicaciond, tarima=@tarima, tarimad=@tarimad where iddetalle=@iddetalle;"
+            Comm.CommandText = "update tblmovimientosubicaciones set cantidad=@cantidad, ubicacion=@ubicacion, ubicaciond=@ubicaciond,ubicaciond2=@ubicaciond2, tarima=@tarima, tarimad=@tarimad where iddetalle=@iddetalle;"
             Comm.ExecuteNonQuery()
         End If
         Comm.Parameters.Clear()

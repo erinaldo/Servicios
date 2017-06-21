@@ -274,11 +274,15 @@ Public Class dbInventario
         Return DS.Tables("tblinventarioalmacenes").DefaultView
     End Function
 
-    Public Function ConsultaInventarioPorUbicacion(ByVal pidSucursal As Integer, ByVal pIdAlmacen As Integer, ByVal pidinventario As Integer, ubicacion As String, tarima As String) As DataView
+    Public Function ConsultaInventarioPorUbicacion(ByVal pidSucursal As Integer, ByVal pIdAlmacen As Integer, ByVal pidinventario As Integer, ubicacion As String) As DataView
         Dim DS As New DataSet
-        Comm.CommandText = "select a.numero, a.nombre, aiu.ubicacion, aiu.tarima, i.clave, i.nombre descripcion, sum(aiu.cantidad) cantidad, spdaultimocostoinv(i.idinventario) ucosto from tblalmacenes a inner join tblalmacenesi ai on a.idalmacen=ai.idalmacen inner join tblinventario i on ai.idinventario=i.idinventario inner join tblalmacenesiubicaciones aiu on aiu.idalmacen=ai.idalmacen and aiu.idinventario=ai.idinventario where aiu.ubicacion like '%" + ubicacion + "%' and ai.idinventario = " + pidinventario.ToString() + " and aiu.cantidad<>0 and tarima like '%" + tarima + "%'" 'a.idsucursal=" + pidSucursal.ToString
+        Comm.CommandText = "select a.numero,a.nombre,au.ubicacion,au.tarima,i.clave,i.nombre descripcion,ifnull((select sum(aiu.cantidad) from tblalmacenesiubicaciones aiu where aiu.ubicacion=au.ubicacion and aiu.idalmacen=a.idalmacen and aiu.idinventario=i.idinventario),0) cantidad,0 ucosto from tblalmacenes a inner join tblalmacenesubicaciones au on a.idalmacen=au.idalmacen inner join tblalmacenesi ai on ai.idalmacen=a.idalmacen inner join tblinventario i on ai.idinventario=i.idinventario"
+        Comm.CommandText += " where i.usaubicacion=1 and au.ubicacion like '%" + ubicacion + "%'"
+        If pidinventario > 0 Then Comm.CommandText += " and i.idinventario = " + pidinventario.ToString()
+        'Comm.CommandText = "select a.numero, a.nombre, aiu.ubicacion, au.tarima, i.clave, i.nombre descripcion, sum(aiu.cantidad) cantidad, spdaultimocostoinv(i.idinventario) ucosto from tblalmacenes a inner join tblalmacenesi ai on a.idalmacen=ai.idalmacen inner join tblinventario i on ai.idinventario=i.idinventario inner join tblalmacenesiubicaciones aiu on aiu.idalmacen=ai.idalmacen and aiu.idinventario=ai.idinventario inner join tblalmacenesubicaciones au on a.idalmacen=au.idalmacen where aiu.ubicacion like '%" + ubicacion + "%' and ai.idinventario = " + pidinventario.ToString() + " and aiu.cantidad<>0 " 'a.idsucursal=" + pidSucursal.ToString
         If pIdAlmacen > 0 Then Comm.CommandText += " and a.idalmacen=" + pIdAlmacen.ToString
-        Comm.CommandText += " group by a.nombre, aiu.ubicacion order by a.nombre, aiu.ubicacion;"
+        Comm.CommandText += " and ifnull((select sum(aiu.cantidad) from tblalmacenesiubicaciones aiu where aiu.ubicacion=au.ubicacion and aiu.idalmacen=a.idalmacen and aiu.idinventario=i.idinventario),0)<>0"
+        Comm.CommandText += " group by i.idinventario,a.idalmacen, au.ubicacion order by a.nombre, au.ubicacion;"
         Dim DA As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
         DA.Fill(DS, "tblrepinventarioxa")
         'DS.WriteXmlSchema("tblrepinventarioxa.xml")
@@ -511,25 +515,27 @@ Public Class dbInventario
         TipoContenido = New dbTiposCantidades(IdTipoCont, Comm.Connection)
         'CostoBaseMoneda = New dbMonedas(IdMonedaBase, Comm.Connection)
     End Sub
-    Public Function BuscaArticulo(ByVal pClave As String, ByVal pInventariable As Byte, pNombre As String, Optional ByVal pSoloRest As Boolean = False, Optional pSoloV As Boolean = False, Optional pSoloC As Boolean = False, Optional pSoloI As Boolean = False) As Boolean
+    Public Function BuscaArticulo(ByVal pClave As String, ByVal pInventariable As Byte, Optional ByVal pSoloRest As Boolean = False, Optional pSoloV As Boolean = False, Optional pSoloC As Boolean = False, Optional pSoloI As Boolean = False) As Boolean
         Dim Encontro As Integer
-        Comm.CommandText = "select ifnull((select idinventario from tblinventario where idinventario>1 and descontinuado=0"
-        If pClave <> "" Then Comm.CommandText += " and (clave='" + Replace(pClave, "'", "''") + "' or clave2='" + Replace(pClave, "'", "''") + "')"
-        If pInventariable <> 0 Then Comm.CommandText += " and inventariable=1"
-        If pSoloRest Then Comm.CommandText += " and restaurante=1"
-        If pNombre <> "" Then Comm.CommandText += " and nombre='" + pNombre + "'"
-        If pSoloV Then Comm.CommandText += " and ((solocompras=0 and soloinventario=0) or soloventas=1)"
-        If pSoloC Then Comm.CommandText += " and ((soloinventario=0 and soloventas=0) or solocompras=1)"
-        If pSoloI Then Comm.CommandText += " and ((solocompras=0 and soloventas=0) or soloinventario=1)"
+        If pClave <> "" Then
+            Comm.CommandText = "select ifnull((select idinventario from tblinventario where idinventario>1 and descontinuado=0 and (clave='" + Replace(pClave, "'", "''") + "' or clave2='" + Replace(pClave, "'", "''") + "')"
+            If pInventariable <> 0 Then Comm.CommandText += " and inventariable=1"
+            If pSoloRest Then Comm.CommandText += " and restaurante=1"
+            If pSoloV Then Comm.CommandText += " and ((solocompras=0 and soloinventario=0) or soloventas=1)"
+            If pSoloC Then Comm.CommandText += " and ((soloinventario=0 and soloventas=0) or solocompras=1)"
+            If pSoloI Then Comm.CommandText += " and ((solocompras=0 and soloventas=0) or soloinventario=1)"
 
-        Comm.CommandText += " limit 1),0)"
-        Encontro = Comm.ExecuteScalar
-        If Encontro = 0 Then
-            Return False
+            Comm.CommandText += " limit 1),0)"
+            Encontro = Comm.ExecuteScalar
+            If Encontro = 0 Then
+                Return False
+            Else
+                ID = Encontro
+                LlenaDatos()
+                Return True
+            End If
         Else
-            ID = Encontro
-            LlenaDatos()
-            Return True
+            Return False
         End If
     End Function
 

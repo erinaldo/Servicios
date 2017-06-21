@@ -168,16 +168,23 @@ Public Class dbAlmacenes
         Return True
     End Function
 
-    Public Sub AgregarUbicacion(idalmacen As Integer, ubicacion As String)
+    Public Sub AgregarUbicacion(idalmacen As Integer, ubicacion As String, pTarima As String)
         Comm.CommandText = "select count(*) from tblalmacenesubicaciones where idalmacen=" + idalmacen.ToString() + " and ubicacion='" + Trim(Replace(ubicacion, "'", "''")) + "';"
         If Comm.ExecuteScalar = 0 Then
-            Comm.CommandText = "insert into tblalmacenesubicaciones (idalmacen,ubicacion) values (" + idalmacen.ToString() + ",'" + Trim(Replace(ubicacion, "'", "''")) + "');"
+            Comm.CommandText = "insert into tblalmacenesubicaciones (idalmacen,ubicacion,tarima) values (" + idalmacen.ToString() + ",'" + Trim(Replace(ubicacion, "'", "''")) + "','" + Trim(Replace(pTarima, "'", "''")) + "');"
             Comm.ExecuteNonQuery()
         End If
     End Sub
-
-    Public Sub ModificarUbicacion(idubicacion As Integer, ubicacion As String)
-        Comm.CommandText = "update tblalmacenesubicaciones set ubicacion='" + Trim(Replace(ubicacion, "'", "''")) + "' where id=" + idubicacion.ToString() + ";"
+    Public Function TarimaRepetida(pTarima As String, pUbicacion As String) As Boolean
+        Comm.CommandText = "select ifnull((select tarima from tblalmacenesubicaciones where tarima='" + Trim(pTarima.Replace("'", "''")) + "' and ubicacion<>'" + Trim(pUbicacion.Replace("'", "''")) + "' limit 1),'')"
+        If Comm.ExecuteScalar = "" Then
+            Return False
+        Else
+            Return True
+        End If
+    End Function
+    Public Sub ModificarUbicacion(idubicacion As Integer, ubicacion As String, pTarima As String)
+        Comm.CommandText = "update tblalmacenesubicaciones set ubicacion='" + Trim(Replace(ubicacion, "'", "''")) + "',tarima='" + Trim(Replace(pTarima, "'", "''")) + "' where id=" + idubicacion.ToString() + ";"
         Comm.ExecuteNonQuery()
     End Sub
 
@@ -192,7 +199,7 @@ Public Class dbAlmacenes
     End Function
 
     Public Function Tarima(idalmacen As Integer, ubicacion As String) As String
-        Comm.CommandText = "select ifnull(tarima,'') from tblalmacenesiubicaciones where idalmacen=" + idalmacen.ToString() + " and ubicacion='" + ubicacion.Replace("'", "''") + "';"
+        Comm.CommandText = "select tarima from tblalmacenesubicaciones where idalmacen=" + idalmacen.ToString() + " and ubicacion='" + ubicacion.Replace("'", "''") + "';"
         Return Comm.ExecuteScalar
     End Function
 End Class

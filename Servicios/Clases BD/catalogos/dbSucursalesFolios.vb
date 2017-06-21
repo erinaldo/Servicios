@@ -40,6 +40,7 @@
         Gastos = 25
         RemisionesPorSurtir = 26
         InventarioPedidos = 27
+        ComplemtoPagos = 28
         'MovimientosInventario = 50
     End Enum
 
@@ -120,7 +121,7 @@
         Dim DS As New DataSet
         Comm.CommandText = "select idfolio,case tipodocumento when 1 then 'Factura' when 2 then 'Nota de crédito' when 3 then 'Devolución' when 4 then 'Remision' when 5 then 'Nota de Cargo' when 6 then 'Cotización' when 7 then 'Pedido' when 8 then 'C. Cotización' when 9 then 'C. Pedido' when 10 then 'Movimientos Caja' when 11 then 'Apartados' when 12 then 'Nominas' " + _
         "when 13 then 'Compras' when 14 then 'Compras Remisones' when 15 then 'Compras Devoluciones' when 16 then 'Compras Notas de Crédito' when 17 then 'Compras Notas de Cargo' when 18 then 'Fertilizantes Pedidos' when 19 then 'Fert. Movimientos Salida' when 20 then 'Fert. Movimientos Envío' when 21 then 'Fert. Movimientos Traspaso' when 22 then 'Fert. Movimientos Devolución' when 23 then 'Semillas liquidación' when 24 then 'Semillas Comprobante' when 25 then 'Gastos' when 26 then 'Remisiones por Surtir' " +
-        "when 27 then 'Inventario Pedidos' end as tipodoc,serie,folioinicial,foliofinal,if(activo=0,'No','Si') as factivo  from tblsucursalesfolios where idsucursal=" + pIdSucursal.ToString
+        "when 27 then 'Inventario Pedidos' when 28 then 'Complemento de pagos' end as tipodoc,serie,folioinicial,foliofinal,if(activo=0,'No','Si') as factivo  from tblsucursalesfolios where idsucursal=" + pIdSucursal.ToString
         Dim DA As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)
         DA.Fill(DS, "tblsucursalesfolios")
         Return DS.Tables("tblsucursalesfolios").DefaultView

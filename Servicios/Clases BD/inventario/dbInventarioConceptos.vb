@@ -29,7 +29,7 @@
         Comm.Connection = Conexion
         LlenaDatos()
     End Sub
-    Private Sub LlenaDatos()
+    Public Sub LlenaDatos()
         Dim DReader As MySql.Data.MySqlClient.MySqlDataReader
         Comm.CommandText = "select * from tblinventarioconceptos where idconcepto=" + ID.ToString
         DReader = Comm.ExecuteReader

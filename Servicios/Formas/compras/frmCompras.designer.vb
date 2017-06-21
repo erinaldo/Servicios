@@ -22,10 +22,10 @@ Partial Class frmCompras
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.txtReferencia = New System.Windows.Forms.TextBox()
         Me.Button1 = New System.Windows.Forms.Button()
@@ -211,19 +211,19 @@ Partial Class frmCompras
         Me.DGDetalles.AllowUserToAddRows = False
         Me.DGDetalles.AllowUserToDeleteRows = False
         Me.DGDetalles.AllowUserToResizeRows = False
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.DGDetalles.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.DGDetalles.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.DGDetalles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DGDetalles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGDetalles.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colId, Me.colTipoR, Me.colExtra, Me.colCantidad, Me.colCodigo, Me.colDescripcion, Me.colCostoU, Me.colImporte, Me.colMoneda})
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DGDetalles.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DGDetalles.DefaultCellStyle = DataGridViewCellStyle4
         Me.DGDetalles.Location = New System.Drawing.Point(5, 212)
         Me.DGDetalles.Name = "DGDetalles"
         Me.DGDetalles.ReadOnly = True
@@ -282,9 +282,9 @@ Partial Class frmCompras
         'colCostoU
         '
         Me.colCostoU.DataPropertyName = "precio"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle6.Format = "N2"
-        Me.colCostoU.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle2.Format = "N2"
+        Me.colCostoU.DefaultCellStyle = DataGridViewCellStyle2
         Me.colCostoU.HeaderText = "Costo U."
         Me.colCostoU.Name = "colCostoU"
         Me.colCostoU.ReadOnly = True
@@ -292,9 +292,9 @@ Partial Class frmCompras
         'colImporte
         '
         Me.colImporte.DataPropertyName = "importe"
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle7.Format = "N2"
-        Me.colImporte.DefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle3.Format = "N2"
+        Me.colImporte.DefaultCellStyle = DataGridViewCellStyle3
         Me.colImporte.HeaderText = "Importe"
         Me.colImporte.Name = "colImporte"
         Me.colImporte.ReadOnly = True
@@ -492,7 +492,7 @@ Partial Class frmCompras
         Me.Label30.AutoSize = True
         Me.Label30.BackColor = System.Drawing.Color.Transparent
         Me.Label30.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label30.Location = New System.Drawing.Point(145, -1)
+        Me.Label30.Location = New System.Drawing.Point(150, 0)
         Me.Label30.Name = "Label30"
         Me.Label30.Size = New System.Drawing.Size(56, 16)
         Me.Label30.TabIndex = 223
@@ -515,7 +515,7 @@ Partial Class frmCompras
         'txtTarima
         '
         Me.txtTarima.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtTarima.Location = New System.Drawing.Point(148, 17)
+        Me.txtTarima.Location = New System.Drawing.Point(147, 18)
         Me.txtTarima.Name = "txtTarima"
         Me.txtTarima.Size = New System.Drawing.Size(71, 22)
         Me.txtTarima.TabIndex = 1
@@ -583,9 +583,9 @@ Partial Class frmCompras
         Me.Label23.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label23.Location = New System.Drawing.Point(404, 44)
         Me.Label23.Name = "Label23"
-        Me.Label23.Size = New System.Drawing.Size(60, 16)
+        Me.Label23.Size = New System.Drawing.Size(56, 16)
         Me.Label23.TabIndex = 185
-        Me.Label23.Text = "% Desc.:"
+        Me.Label23.Text = "% Desc:"
         '
         'TextBox9
         '

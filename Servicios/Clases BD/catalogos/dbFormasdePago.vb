@@ -70,4 +70,8 @@
             Return True
         End If
     End Function
+    Public Function FormaSat(idFormaSat As Integer) As String
+        Comm.CommandText = "select nombre from tblformasdepagosat where id=" + idFormaSat.ToString
+        Return Comm.ExecuteScalar
+    End Function
 End Class

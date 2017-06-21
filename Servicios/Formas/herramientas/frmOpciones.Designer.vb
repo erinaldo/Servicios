@@ -325,6 +325,13 @@ Partial Class frmOpciones
         Me.ComboBox17 = New System.Windows.Forms.ComboBox()
         Me.Label84 = New System.Windows.Forms.Label()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.Button55 = New System.Windows.Forms.Button()
+        Me.Panel29 = New System.Windows.Forms.Panel()
+        Me.RadioButton55 = New System.Windows.Forms.RadioButton()
+        Me.RadioButton56 = New System.Windows.Forms.RadioButton()
+        Me.TextBox26 = New System.Windows.Forms.TextBox()
+        Me.TextBox27 = New System.Windows.Forms.TextBox()
+        Me.Button91 = New System.Windows.Forms.Button()
         Me.Button5 = New System.Windows.Forms.Button()
         Me.Panel27 = New System.Windows.Forms.Panel()
         Me.RadioButton53 = New System.Windows.Forms.RadioButton()
@@ -551,13 +558,6 @@ Partial Class frmOpciones
         Me.RadioButton37 = New System.Windows.Forms.RadioButton()
         Me.RadioButton38 = New System.Windows.Forms.RadioButton()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.Button55 = New System.Windows.Forms.Button()
-        Me.Panel29 = New System.Windows.Forms.Panel()
-        Me.RadioButton55 = New System.Windows.Forms.RadioButton()
-        Me.RadioButton56 = New System.Windows.Forms.RadioButton()
-        Me.TextBox26 = New System.Windows.Forms.TextBox()
-        Me.TextBox27 = New System.Windows.Forms.TextBox()
-        Me.Button91 = New System.Windows.Forms.Button()
         Me.TabPage1.SuspendLayout()
         Me.Panel28.SuspendLayout()
         Me.General.SuspendLayout()
@@ -587,6 +587,7 @@ Partial Class frmOpciones
         Me.Panel17.SuspendLayout()
         Me.Panel18.SuspendLayout()
         Me.TabPage5.SuspendLayout()
+        Me.Panel29.SuspendLayout()
         Me.Panel27.SuspendLayout()
         Me.Panel26.SuspendLayout()
         Me.Panel25.SuspendLayout()
@@ -603,7 +604,6 @@ Partial Class frmOpciones
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage4.SuspendLayout()
         Me.Panel24.SuspendLayout()
-        Me.Panel29.SuspendLayout()
         Me.SuspendLayout()
         '
         'OpenFileDialog1
@@ -1197,7 +1197,7 @@ Partial Class frmOpciones
         '
         Me.CheckBox74.AutoSize = True
         Me.CheckBox74.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CheckBox74.Location = New System.Drawing.Point(6, 331)
+        Me.CheckBox74.Location = New System.Drawing.Point(6, 305)
         Me.CheckBox74.Name = "CheckBox74"
         Me.CheckBox74.Size = New System.Drawing.Size(319, 20)
         Me.CheckBox74.TabIndex = 416
@@ -1210,7 +1210,7 @@ Partial Class frmOpciones
         '
         Me.CheckBox18.AutoSize = True
         Me.CheckBox18.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CheckBox18.Location = New System.Drawing.Point(296, 303)
+        Me.CheckBox18.Location = New System.Drawing.Point(349, 331)
         Me.CheckBox18.Name = "CheckBox18"
         Me.CheckBox18.Size = New System.Drawing.Size(210, 20)
         Me.CheckBox18.TabIndex = 415
@@ -1298,7 +1298,7 @@ Partial Class frmOpciones
         '
         Me.CheckBox29.AutoSize = True
         Me.CheckBox29.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CheckBox29.Location = New System.Drawing.Point(6, 305)
+        Me.CheckBox29.Location = New System.Drawing.Point(349, 305)
         Me.CheckBox29.Name = "CheckBox29"
         Me.CheckBox29.Size = New System.Drawing.Size(130, 20)
         Me.CheckBox29.TabIndex = 406
@@ -1306,6 +1306,7 @@ Partial Class frmOpciones
         Me.ToolTip1.SetToolTip(Me.CheckBox29, "Al activarse se pueden hacer facturas en parcialidades sin necesidad de indicar e" & _
         "n cuantas parcialidades será.")
         Me.CheckBox29.UseVisualStyleBackColor = True
+        Me.CheckBox29.Visible = False
         '
         'CheckBox62
         '
@@ -4157,6 +4158,77 @@ Partial Class frmOpciones
         Me.TabPage5.Text = "Impresoras Otros"
         Me.TabPage5.UseVisualStyleBackColor = True
         '
+        'Button55
+        '
+        Me.Button55.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button55.Location = New System.Drawing.Point(505, 349)
+        Me.Button55.Name = "Button55"
+        Me.Button55.Size = New System.Drawing.Size(171, 24)
+        Me.Button55.TabIndex = 396
+        Me.Button55.Text = "Comp. Pagos Flujo"
+        Me.Button55.UseVisualStyleBackColor = True
+        '
+        'Panel29
+        '
+        Me.Panel29.Controls.Add(Me.RadioButton55)
+        Me.Panel29.Controls.Add(Me.RadioButton56)
+        Me.Panel29.Location = New System.Drawing.Point(914, 321)
+        Me.Panel29.Name = "Panel29"
+        Me.Panel29.Size = New System.Drawing.Size(69, 52)
+        Me.Panel29.TabIndex = 392
+        '
+        'RadioButton55
+        '
+        Me.RadioButton55.AutoSize = True
+        Me.RadioButton55.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.RadioButton55.Location = New System.Drawing.Point(3, 31)
+        Me.RadioButton55.Name = "RadioButton55"
+        Me.RadioButton55.Size = New System.Drawing.Size(63, 18)
+        Me.RadioButton55.TabIndex = 297
+        Me.RadioButton55.TabStop = True
+        Me.RadioButton55.Text = "Activar"
+        Me.RadioButton55.UseVisualStyleBackColor = True
+        '
+        'RadioButton56
+        '
+        Me.RadioButton56.AutoSize = True
+        Me.RadioButton56.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.RadioButton56.Location = New System.Drawing.Point(3, 4)
+        Me.RadioButton56.Name = "RadioButton56"
+        Me.RadioButton56.Size = New System.Drawing.Size(63, 18)
+        Me.RadioButton56.TabIndex = 296
+        Me.RadioButton56.TabStop = True
+        Me.RadioButton56.Text = "Activar"
+        Me.RadioButton56.UseVisualStyleBackColor = True
+        '
+        'TextBox26
+        '
+        Me.TextBox26.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox26.Location = New System.Drawing.Point(677, 350)
+        Me.TextBox26.MaxLength = 300
+        Me.TextBox26.Name = "TextBox26"
+        Me.TextBox26.Size = New System.Drawing.Size(236, 22)
+        Me.TextBox26.TabIndex = 395
+        '
+        'TextBox27
+        '
+        Me.TextBox27.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox27.Location = New System.Drawing.Point(677, 323)
+        Me.TextBox27.MaxLength = 300
+        Me.TextBox27.Name = "TextBox27"
+        Me.TextBox27.Size = New System.Drawing.Size(236, 22)
+        Me.TextBox27.TabIndex = 394
+        '
+        'Button91
+        '
+        Me.Button91.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button91.Location = New System.Drawing.Point(505, 322)
+        Me.Button91.Name = "Button91"
+        Me.Button91.Size = New System.Drawing.Size(171, 24)
+        Me.Button91.TabIndex = 393
+        Me.Button91.Text = "Comp. Pagos Estático"
+        Me.Button91.UseVisualStyleBackColor = True
+        '
         'Button5
         '
         Me.Button5.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -6598,77 +6670,6 @@ Partial Class frmOpciones
         Me.ToolTip1.InitialDelay = 500
         Me.ToolTip1.ReshowDelay = 100
         '
-        'Button55
-        '
-        Me.Button55.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button55.Location = New System.Drawing.Point(505, 349)
-        Me.Button55.Name = "Button55"
-        Me.Button55.Size = New System.Drawing.Size(171, 24)
-        Me.Button55.TabIndex = 396
-        Me.Button55.Text = "Comp. Pagos Flujo"
-        Me.Button55.UseVisualStyleBackColor = True
-        '
-        'Panel29
-        '
-        Me.Panel29.Controls.Add(Me.RadioButton55)
-        Me.Panel29.Controls.Add(Me.RadioButton56)
-        Me.Panel29.Location = New System.Drawing.Point(914, 321)
-        Me.Panel29.Name = "Panel29"
-        Me.Panel29.Size = New System.Drawing.Size(69, 52)
-        Me.Panel29.TabIndex = 392
-        '
-        'RadioButton55
-        '
-        Me.RadioButton55.AutoSize = True
-        Me.RadioButton55.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.RadioButton55.Location = New System.Drawing.Point(3, 31)
-        Me.RadioButton55.Name = "RadioButton55"
-        Me.RadioButton55.Size = New System.Drawing.Size(63, 18)
-        Me.RadioButton55.TabIndex = 297
-        Me.RadioButton55.TabStop = True
-        Me.RadioButton55.Text = "Activar"
-        Me.RadioButton55.UseVisualStyleBackColor = True
-        '
-        'RadioButton56
-        '
-        Me.RadioButton56.AutoSize = True
-        Me.RadioButton56.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.RadioButton56.Location = New System.Drawing.Point(3, 4)
-        Me.RadioButton56.Name = "RadioButton56"
-        Me.RadioButton56.Size = New System.Drawing.Size(63, 18)
-        Me.RadioButton56.TabIndex = 296
-        Me.RadioButton56.TabStop = True
-        Me.RadioButton56.Text = "Activar"
-        Me.RadioButton56.UseVisualStyleBackColor = True
-        '
-        'TextBox26
-        '
-        Me.TextBox26.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox26.Location = New System.Drawing.Point(677, 350)
-        Me.TextBox26.MaxLength = 300
-        Me.TextBox26.Name = "TextBox26"
-        Me.TextBox26.Size = New System.Drawing.Size(236, 22)
-        Me.TextBox26.TabIndex = 395
-        '
-        'TextBox27
-        '
-        Me.TextBox27.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox27.Location = New System.Drawing.Point(677, 323)
-        Me.TextBox27.MaxLength = 300
-        Me.TextBox27.Name = "TextBox27"
-        Me.TextBox27.Size = New System.Drawing.Size(236, 22)
-        Me.TextBox27.TabIndex = 394
-        '
-        'Button91
-        '
-        Me.Button91.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button91.Location = New System.Drawing.Point(505, 322)
-        Me.Button91.Name = "Button91"
-        Me.Button91.Size = New System.Drawing.Size(171, 24)
-        Me.Button91.TabIndex = 393
-        Me.Button91.Text = "Comp. Pagos Estático"
-        Me.Button91.UseVisualStyleBackColor = True
-        '
         'frmOpciones
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -6744,6 +6745,8 @@ Partial Class frmOpciones
         Me.Panel18.PerformLayout()
         Me.TabPage5.ResumeLayout(False)
         Me.TabPage5.PerformLayout()
+        Me.Panel29.ResumeLayout(False)
+        Me.Panel29.PerformLayout()
         Me.Panel27.ResumeLayout(False)
         Me.Panel27.PerformLayout()
         Me.Panel26.ResumeLayout(False)
@@ -6774,8 +6777,6 @@ Partial Class frmOpciones
         Me.TabPage4.ResumeLayout(False)
         Me.Panel24.ResumeLayout(False)
         Me.Panel24.PerformLayout()
-        Me.Panel29.ResumeLayout(False)
-        Me.Panel29.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

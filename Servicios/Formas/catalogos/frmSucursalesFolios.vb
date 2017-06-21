@@ -248,6 +248,7 @@
         ComboBox2.Items.Add("Gastos")
         ComboBox2.Items.Add("Remisiones por Surtir")
         ComboBox2.Items.Add("Inventario Pedidos")
+        ComboBox2.Items.Add("Complemento de Pagos")
         'ComboBox2.Items.Add("Movimientos Inventario")
         LlenaCombos("tblsucursalescertificados", ComboBox1, "noserie", "nombrem", "idcertificado", IdsCertificados, "idsucursal=" + IdSucursal.ToString, "Seleccionar Certificado")
         Nuevo()

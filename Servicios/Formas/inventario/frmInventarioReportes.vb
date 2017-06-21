@@ -36,6 +36,7 @@
         ListBox1.Items.Add("Inventario a fecha por clasificación.")
         ListBox1.Items.Add("Inventario por almacen.")
         ListBox1.Items.Add("Inventario Equivalencia.")
+        ListBox1.Items.Add("Inventario por ubicación.")
         ListBox1.Items.Add("Costos.")
         ListBox1.Items.Add("Movimientos.")
         ListBox1.Items.Add("Salidas por cliente.")
@@ -357,6 +358,17 @@
 
                     Dim RV As New frmReportes(Rep, False)
                     RV.Show()
+                Case "Inventario por ubicación."
+                    Dim r As New repInventarioAlmacenesUbicaciones
+                    r.SetDataSource(V.ConsultaInventarioPorUbicacion(IdsSucursales.Valor(ComboBox1.SelectedIndex), IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario, ""))
+                    r.SetParameterValue("Encabezado", GlobalNombreEmpresa)
+                    Dim Filtros As String
+                    Filtros = "Sucursal: " + ComboBox1.Text
+                    Filtros += " Almacén: " + ComboBox8.Text
+                    If IdInventario <> 0 Then Filtros += " Artículo: " + TextBox4.Text
+                    r.SetParameterValue("Filtros", Filtros)
+                    Dim f As New frmReportes(r, False)
+                    f.Show()
                 Case "Costos."
                     My.Settings.reportecostoultimo = CheckBox1.Checked
                     Dim Rep As CrystalDecisions.CrystalReports.Engine.ReportDocument
@@ -518,7 +530,7 @@
                     'rep.SetParameterValue("conFacturas", False)
                     Dim RV As New frmReportes(rep, False)
                     RV.Show()
-                   
+
                 Case "Entregas."
                     Dim db As New dbMovimientos(MySqlcon)
                     Dim r As New repEntregasPorCliente

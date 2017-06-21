@@ -317,6 +317,7 @@ Partial Class frmVentasRemisiones
         '
         'txtTarima
         '
+        Me.txtTarima.Enabled = False
         Me.txtTarima.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtTarima.Location = New System.Drawing.Point(128, 20)
         Me.txtTarima.Name = "txtTarima"

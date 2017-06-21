@@ -22,8 +22,8 @@ Partial Class frmAlmacenes
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.colId = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -60,6 +60,8 @@ Partial Class frmAlmacenes
         Me.btnGuardarU = New System.Windows.Forms.Button()
         Me.btnGenerarU = New System.Windows.Forms.Button()
         Me.Button5 = New System.Windows.Forms.Button()
+        Me.TextBox5 = New System.Windows.Forms.TextBox()
+        Me.Label10 = New System.Windows.Forms.Label()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -68,7 +70,7 @@ Partial Class frmAlmacenes
         Me.Label8.AutoSize = True
         Me.Label8.BackColor = System.Drawing.Color.Transparent
         Me.Label8.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(421, 15)
+        Me.Label8.Location = New System.Drawing.Point(466, 15)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(63, 16)
         Me.Label8.TabIndex = 91
@@ -79,26 +81,26 @@ Partial Class frmAlmacenes
         Me.DataGridView1.AllowUserToAddRows = False
         Me.DataGridView1.AllowUserToDeleteRows = False
         Me.DataGridView1.AllowUserToResizeRows = False
-        DataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.DataGridView1.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.DataGridView1.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colId, Me.colNumero, Me.colNombre, Me.colTipo, Me.colUbicaciones})
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle4
-        Me.DataGridView1.Location = New System.Drawing.Point(426, 41)
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle2
+        Me.DataGridView1.Location = New System.Drawing.Point(471, 41)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.ReadOnly = True
         Me.DataGridView1.RowHeadersVisible = False
         Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DataGridView1.Size = New System.Drawing.Size(418, 201)
-        Me.DataGridView1.TabIndex = 18
+        Me.DataGridView1.TabIndex = 20
         Me.DataGridView1.TabStop = False
         '
         'colId
@@ -202,10 +204,10 @@ Partial Class frmAlmacenes
         '
         Me.Button4.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.Button4.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button4.Location = New System.Drawing.Point(771, 248)
+        Me.Button4.Location = New System.Drawing.Point(814, 248)
         Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(75, 23)
-        Me.Button4.TabIndex = 19
+        Me.Button4.Size = New System.Drawing.Size(75, 25)
+        Me.Button4.TabIndex = 21
         Me.Button4.Text = "Cerrar"
         Me.Button4.UseVisualStyleBackColor = True
         '
@@ -215,7 +217,7 @@ Partial Class frmAlmacenes
         Me.Button3.Location = New System.Drawing.Point(285, 253)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(75, 23)
-        Me.Button3.TabIndex = 16
+        Me.Button3.TabIndex = 18
         Me.Button3.Text = "Nuevo"
         Me.Button3.UseVisualStyleBackColor = True
         '
@@ -225,7 +227,7 @@ Partial Class frmAlmacenes
         Me.Button2.Location = New System.Drawing.Point(204, 253)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(75, 23)
-        Me.Button2.TabIndex = 15
+        Me.Button2.TabIndex = 17
         Me.Button2.Text = "Eliminar"
         Me.Button2.UseVisualStyleBackColor = True
         '
@@ -235,7 +237,7 @@ Partial Class frmAlmacenes
         Me.Button1.Location = New System.Drawing.Point(123, 253)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 14
+        Me.Button1.TabIndex = 16
         Me.Button1.Text = "Guardar"
         Me.Button1.UseVisualStyleBackColor = True
         '
@@ -265,11 +267,11 @@ Partial Class frmAlmacenes
         'TextBox3
         '
         Me.TextBox3.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox3.Location = New System.Drawing.Point(487, 12)
+        Me.TextBox3.Location = New System.Drawing.Point(532, 12)
         Me.TextBox3.MaxLength = 20
         Me.TextBox3.Name = "TextBox3"
         Me.TextBox3.Size = New System.Drawing.Size(348, 22)
-        Me.TextBox3.TabIndex = 17
+        Me.TextBox3.TabIndex = 19
         '
         'ComboBox2
         '
@@ -301,7 +303,7 @@ Partial Class frmAlmacenes
         Me.TextBox4.MaxLength = 20
         Me.TextBox4.Name = "TextBox4"
         Me.TextBox4.Size = New System.Drawing.Size(86, 22)
-        Me.TextBox4.TabIndex = 9
+        Me.TextBox4.TabIndex = 11
         '
         'Label5
         '
@@ -331,7 +333,7 @@ Partial Class frmAlmacenes
         Me.Button12.Location = New System.Drawing.Point(311, 215)
         Me.Button12.Name = "Button12"
         Me.Button12.Size = New System.Drawing.Size(27, 26)
-        Me.Button12.TabIndex = 13
+        Me.Button12.TabIndex = 15
         Me.Button12.Text = "4"
         Me.Button12.UseVisualStyleBackColor = True
         '
@@ -341,7 +343,7 @@ Partial Class frmAlmacenes
         Me.Button11.Location = New System.Drawing.Point(280, 215)
         Me.Button11.Name = "Button11"
         Me.Button11.Size = New System.Drawing.Size(27, 26)
-        Me.Button11.TabIndex = 12
+        Me.Button11.TabIndex = 14
         Me.Button11.Text = "3"
         Me.Button11.UseVisualStyleBackColor = True
         '
@@ -351,7 +353,7 @@ Partial Class frmAlmacenes
         Me.Button10.Location = New System.Drawing.Point(248, 215)
         Me.Button10.Name = "Button10"
         Me.Button10.Size = New System.Drawing.Size(27, 26)
-        Me.Button10.TabIndex = 11
+        Me.Button10.TabIndex = 13
         Me.Button10.Text = "2"
         Me.Button10.UseVisualStyleBackColor = True
         '
@@ -371,7 +373,7 @@ Partial Class frmAlmacenes
         Me.Button9.Location = New System.Drawing.Point(217, 215)
         Me.Button9.Name = "Button9"
         Me.Button9.Size = New System.Drawing.Size(27, 26)
-        Me.Button9.TabIndex = 10
+        Me.Button9.TabIndex = 12
         Me.Button9.Text = "1"
         Me.Button9.UseVisualStyleBackColor = True
         '
@@ -404,10 +406,10 @@ Partial Class frmAlmacenes
         '
         Me.btnEliminarU.Enabled = False
         Me.btnEliminarU.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnEliminarU.Location = New System.Drawing.Point(298, 152)
+        Me.btnEliminarU.Location = New System.Drawing.Point(375, 152)
         Me.btnEliminarU.Name = "btnEliminarU"
         Me.btnEliminarU.Size = New System.Drawing.Size(27, 26)
-        Me.btnEliminarU.TabIndex = 8
+        Me.btnEliminarU.TabIndex = 9
         Me.btnEliminarU.Text = "-"
         Me.btnEliminarU.UseVisualStyleBackColor = True
         '
@@ -415,10 +417,10 @@ Partial Class frmAlmacenes
         '
         Me.btnGuardarU.Enabled = False
         Me.btnGuardarU.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnGuardarU.Location = New System.Drawing.Point(267, 152)
+        Me.btnGuardarU.Location = New System.Drawing.Point(344, 152)
         Me.btnGuardarU.Name = "btnGuardarU"
         Me.btnGuardarU.Size = New System.Drawing.Size(27, 26)
-        Me.btnGuardarU.TabIndex = 7
+        Me.btnGuardarU.TabIndex = 8
         Me.btnGuardarU.Text = "+"
         Me.btnGuardarU.UseVisualStyleBackColor = True
         '
@@ -426,10 +428,10 @@ Partial Class frmAlmacenes
         '
         Me.btnGenerarU.Enabled = False
         Me.btnGenerarU.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnGenerarU.Location = New System.Drawing.Point(331, 152)
+        Me.btnGenerarU.Location = New System.Drawing.Point(408, 152)
         Me.btnGenerarU.Name = "btnGenerarU"
         Me.btnGenerarU.Size = New System.Drawing.Size(27, 26)
-        Me.btnGenerarU.TabIndex = 258
+        Me.btnGenerarU.TabIndex = 10
         Me.btnGenerarU.Text = "*"
         Me.btnGenerarU.UseVisualStyleBackColor = True
         '
@@ -445,6 +447,26 @@ Partial Class frmAlmacenes
         Me.Button5.UseVisualStyleBackColor = True
         Me.Button5.Visible = False
         '
+        'TextBox5
+        '
+        Me.TextBox5.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox5.Location = New System.Drawing.Point(267, 154)
+        Me.TextBox5.MaxLength = 20
+        Me.TextBox5.Name = "TextBox5"
+        Me.TextBox5.Size = New System.Drawing.Size(70, 22)
+        Me.TextBox5.TabIndex = 7
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.BackColor = System.Drawing.Color.Transparent
+        Me.Label10.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.Location = New System.Drawing.Point(269, 135)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(56, 16)
+        Me.Label10.TabIndex = 261
+        Me.Label10.Text = "Tarima:"
+        '
         'frmAlmacenes
         '
         Me.AcceptButton = Me.Button1
@@ -452,7 +474,9 @@ Partial Class frmAlmacenes
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(230, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(230, Byte), Integer))
         Me.CancelButton = Me.Button4
-        Me.ClientSize = New System.Drawing.Size(858, 283)
+        Me.ClientSize = New System.Drawing.Size(899, 283)
+        Me.Controls.Add(Me.Label10)
+        Me.Controls.Add(Me.TextBox5)
         Me.Controls.Add(Me.Button5)
         Me.Controls.Add(Me.btnGenerarU)
         Me.Controls.Add(Me.btnEliminarU)
@@ -531,4 +555,6 @@ End Sub
     Friend WithEvents colUbicaciones As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents btnGenerarU As System.Windows.Forms.Button
     Friend WithEvents Button5 As System.Windows.Forms.Button
+    Friend WithEvents TextBox5 As System.Windows.Forms.TextBox
+    Friend WithEvents Label10 As System.Windows.Forms.Label
 End Class

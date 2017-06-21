@@ -499,7 +499,7 @@
                 'checar licencia del registro
             End If
         Catch ex As Exception
-            MensajeError = "No se pudo validar la licencia intente mas tarde o consulta a su proveedor."
+            MensajeError = "No se pudo validar la licencia intente mas tarde o consulta a su proveedor. " + ex.Message
             Return False
         End Try
     End Function

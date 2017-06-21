@@ -701,7 +701,6 @@
                 DescuentoAterior = CDbl(TextBox9.Text)
                 IvaRetAnterior = CDbl(txtIVARetenido.Text)
                 If Button4.Text = "Agregar artículo" Then
-
                     CD.Guardar(idCompra, IdInventario, CDbl(txtCantidad.Text), CDbl(txtImporte.Text), IDsMonedas.Valor(cmbMoneda.SelectedIndex), IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), CDbl(TextBox11.Text), CDbl(TextBox9.Text), True, Double.Parse(txtIEPS.Text), Double.Parse(txtIVARetenido.Text), If(pnlUbicacion.Visible, cmbUbicacion.SelectedValue, ""), txtTarima.Text)
                     If ManejaSeries <> 0 Then
                         If CD.NuevoConcepto Then
@@ -1817,11 +1816,17 @@
     Private Sub cmbUbicacion_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbUbicacion.SelectedIndexChanged
         If cmbUbicacion.SelectedIndex = -1 Then
             txtTarima.Text = ""
+            txtTarima.Enabled = True
         Else
             Dim db As New dbAlmacenes(MySqlcon)
             txtTarima.Text = db.Tarima(IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), cmbUbicacion.SelectedValue)
+            If txtTarima.Text <> "" Then
+                txtTarima.Enabled = False
+            Else
+                txtTarima.Enabled = True
+            End If
+
         End If
-        txtTarima.Enabled = txtTarima.Text = ""
 
     End Sub
 End Class

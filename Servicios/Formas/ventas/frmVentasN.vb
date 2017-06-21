@@ -253,6 +253,7 @@ Public Class frmVentasN
             Catch ex As Exception
             End Try
             Try
+                
                 If SerialPort1.IsOpen Then SerialPort1.Close()
                 SerialPort1.PortName = Op.PuertoBascula
                 SerialPort1.BaudRate = Op.BasculaBaundRate
@@ -513,6 +514,13 @@ Public Class frmVentasN
         End If
         If IdVentaOrigen <> 0 And Funcion = 1 Then
             RadioButton2.Enabled = False
+        End If
+        If GlobalTipoFacturacion = 3 Then
+            Label29.Visible = False
+            ComboBox6.Visible = False
+        Else
+            Label29.Visible = True
+            ComboBox6.Visible = True
         End If
         TextBox1.Focus()
         If GlobalTipoVersion = 3 Then
@@ -1174,6 +1182,13 @@ Public Class frmVentasN
             Button20.Visible = True
         Else
             Button20.Visible = False
+        End If
+        If Eselectronica = 3 Then
+            Label29.Visible = False
+            ComboBox6.Visible = False
+        Else
+            Label29.Visible = True
+            ComboBox6.Visible = True
         End If
         RefDocumento = C.RefDocumento
         Adicional = C.Adicional
@@ -5614,6 +5629,5 @@ Public Class frmVentasN
             Dim db As New dbAlmacenes(MySqlcon)
             txtTarima.Text = db.Tarima(IdsAlmacenes.Valor(cmbAlmacen.SelectedIndex), cmbUbicacion.SelectedValue)
         End If
-        txtTarima.Enabled = txtTarima.Text = ""
     End Sub
 End Class
