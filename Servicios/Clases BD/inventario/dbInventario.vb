@@ -274,13 +274,14 @@ Public Class dbInventario
         Return DS.Tables("tblinventarioalmacenes").DefaultView
     End Function
 
-    Public Function ConsultaInventarioPorUbicacion(ByVal pidSucursal As Integer, ByVal pIdAlmacen As Integer, ByVal pidinventario As Integer, ubicacion As String) As DataView
+    Public Function ConsultaInventarioPorUbicacion(ByVal pidSucursal As Integer, ByVal pIdAlmacen As Integer, ByVal pidinventario As Integer, ubicacion As String, pTarima As String) As DataView
         Dim DS As New DataSet
         Comm.CommandText = "select a.numero,a.nombre,au.ubicacion,au.tarima,i.clave,i.nombre descripcion,ifnull((select sum(aiu.cantidad) from tblalmacenesiubicaciones aiu where aiu.ubicacion=au.ubicacion and aiu.idalmacen=a.idalmacen and aiu.idinventario=i.idinventario),0) cantidad,0 ucosto from tblalmacenes a inner join tblalmacenesubicaciones au on a.idalmacen=au.idalmacen inner join tblalmacenesi ai on ai.idalmacen=a.idalmacen inner join tblinventario i on ai.idinventario=i.idinventario"
-        Comm.CommandText += " where i.usaubicacion=1 and au.ubicacion like '%" + ubicacion + "%'"
+        Comm.CommandText += " where i.usaubicacion=1 and au.ubicacion like '%" + ubicacion.Replace("'", "''").Trim + "%'"
         If pidinventario > 0 Then Comm.CommandText += " and i.idinventario = " + pidinventario.ToString()
         'Comm.CommandText = "select a.numero, a.nombre, aiu.ubicacion, au.tarima, i.clave, i.nombre descripcion, sum(aiu.cantidad) cantidad, spdaultimocostoinv(i.idinventario) ucosto from tblalmacenes a inner join tblalmacenesi ai on a.idalmacen=ai.idalmacen inner join tblinventario i on ai.idinventario=i.idinventario inner join tblalmacenesiubicaciones aiu on aiu.idalmacen=ai.idalmacen and aiu.idinventario=ai.idinventario inner join tblalmacenesubicaciones au on a.idalmacen=au.idalmacen where aiu.ubicacion like '%" + ubicacion + "%' and ai.idinventario = " + pidinventario.ToString() + " and aiu.cantidad<>0 " 'a.idsucursal=" + pidSucursal.ToString
         If pIdAlmacen > 0 Then Comm.CommandText += " and a.idalmacen=" + pIdAlmacen.ToString
+        If pTarima <> "" Then Comm.CommandText += " and au.tarita like '%" + pTarima.Replace("'", "''").Trim + "%'"
         Comm.CommandText += " and ifnull((select sum(aiu.cantidad) from tblalmacenesiubicaciones aiu where aiu.ubicacion=au.ubicacion and aiu.idalmacen=a.idalmacen and aiu.idinventario=i.idinventario),0)<>0"
         Comm.CommandText += " group by i.idinventario,a.idalmacen, au.ubicacion order by a.nombre, au.ubicacion;"
         Dim DA As New MySql.Data.MySqlClient.MySqlDataAdapter(Comm)

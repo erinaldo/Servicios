@@ -1457,7 +1457,7 @@ Public Class frmPrincipal
     Private Sub EmpresasToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuEmpresas.Click
         CierraVentanas()
         If BuscaVentanas("frmEmpresas") = False Then
-            Dim f As New frmEmpresas
+            Dim f As New frmEmpresas(False)
             f.MdiParent = Me
             f.Show()
         End If

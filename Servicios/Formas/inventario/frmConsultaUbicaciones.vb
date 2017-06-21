@@ -28,8 +28,7 @@
         '    DataGridView1.DataSource = db.ConsultaInventarioPorUbicacion(idsucursal, cmbAlmacen.SelectedValue, idarticulo, txtUbicacion.Text)
         'End If
     End Sub
-
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+    Private Sub ConsultaUbicaciones()
         Dim db As New dbInventario(idarticulo, MySqlcon)
         Dim r As New repInventarioAlmacenesUbicaciones
         If cmbAlmacen.SelectedIndex = -1 Then
@@ -46,23 +45,16 @@
             f.Show()
         End If
     End Sub
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        ConsultaUbicaciones()
+    End Sub
 
     Private Sub txtUbicacion_TextChanged(sender As Object, e As EventArgs) Handles txtUbicacion.TextChanged
-        Dim db As New dbInventario(MySqlcon)
-        If cmbAlmacen.SelectedIndex = -1 Then
-            DataGridView1.DataSource = db.ConsultaInventarioPorUbicacion(idsucursal, 0, idarticulo, txtUbicacion.Text, txtTarima.Text)
-        Else
-            DataGridView1.DataSource = db.ConsultaInventarioPorUbicacion(idsucursal, cmbAlmacen.SelectedValue, idarticulo, txtUbicacion.Text, txtTarima.Text)
-        End If
+        ConsultaUbicaciones()
     End Sub
 
     Private Sub cmbAlmacen_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbAlmacen.SelectedIndexChanged
-        Dim db As New dbInventario(MySqlcon)
-        If cmbAlmacen.SelectedIndex = -1 Then
-            DataGridView1.DataSource = db.ConsultaInventarioPorUbicacion(idsucursal, 0, idarticulo, txtUbicacion.Text, txtTarima.Text)
-        Else
-            DataGridView1.DataSource = db.ConsultaInventarioPorUbicacion(idsucursal, cmbAlmacen.SelectedValue, idarticulo, txtUbicacion.Text, txtTarima.Text)
-        End If
+        ConsultaUbicaciones()
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
@@ -70,11 +62,6 @@
     End Sub
 
     Private Sub txtTarima_TextChanged(sender As Object, e As EventArgs) Handles txtTarima.TextChanged
-        Dim db As New dbInventario(MySqlcon)
-        If cmbAlmacen.SelectedIndex = -1 Then
-            DataGridView1.DataSource = db.ConsultaInventarioPorUbicacion(idsucursal, 0, idarticulo, txtUbicacion.Text, txtTarima.Text)
-        Else
-            DataGridView1.DataSource = db.ConsultaInventarioPorUbicacion(idsucursal, cmbAlmacen.SelectedValue, idarticulo, txtUbicacion.Text, txtTarima.Text)
-        End If
+        ConsultaUbicaciones()
     End Sub
 End Class

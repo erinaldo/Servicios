@@ -360,7 +360,7 @@
                     RV.Show()
                 Case "Inventario por ubicación."
                     Dim r As New repInventarioAlmacenesUbicaciones
-                    r.SetDataSource(V.ConsultaInventarioPorUbicacion(IdsSucursales.Valor(ComboBox1.SelectedIndex), IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario, ""))
+                    r.SetDataSource(V.ConsultaInventarioPorUbicacion(IdsSucursales.Valor(ComboBox1.SelectedIndex), IdsAlmacenes.Valor(ComboBox8.SelectedIndex), IdInventario, "", ""))
                     r.SetParameterValue("Encabezado", GlobalNombreEmpresa)
                     Dim Filtros As String
                     Filtros = "Sucursal: " + ComboBox1.Text

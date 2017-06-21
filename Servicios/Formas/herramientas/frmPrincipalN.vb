@@ -992,7 +992,7 @@
     Private Sub EmpresasToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnArcGenEmpresas.Click
         CierraVentanas()
         If BuscaVentanas("frmEmpresas") = False Then
-            Dim f As New frmEmpresas
+            Dim f As New frmEmpresas(False)
             f.MdiParent = Me
             f.Show()
         End If

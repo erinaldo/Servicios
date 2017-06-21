@@ -2,10 +2,18 @@
     Dim Em As New dbEmpresas
     Dim IdEmpresa As Integer
     Dim NombreAnt As String
+    Dim IgnorarPermisos As Boolean
     Private Sub frmEmpresas_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         Em.MySqlconE.Close()
     End Sub
+    Public Sub New(pIgnorar As Boolean)
 
+        ' This call is required by the designer.
+        InitializeComponent()
+        IgnorarPermisos = pIgnorar
+        ' Add any initialization after the InitializeComponent() call.
+
+    End Sub
     Private Sub frmEmpresas_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Try
             Me.Icon = GlobalIcono
@@ -41,7 +49,7 @@
             If TextBox1.Text = "" Or TextBox2.Text = "" Or TextBox4.Text = "" Or TextBox5.Text = "" Or TextBox6.Text = "" Then
                 HayError = "Debe llenar todos los datos para agregar una empresa."
             End If
-            If GlobalPermisos.ChecaPermiso(PermisosN.Catalogos2.EmpresasAlta, PermisosN.Secciones.Catalagos2) = False Then
+            If GlobalPermisos.ChecaPermiso(PermisosN.Catalogos2.EmpresasAlta, PermisosN.Secciones.Catalagos2) = False And IgnorarPermisos = False Then
                 HayError += " No tiene permiso para realizar esta operación."
             End If
             If Em.ChecaEmpresaRepetida(TextBox6.Text) Then HayError += " Ya existe una empresa con ese nombre."
@@ -75,7 +83,7 @@
             If TextBox6.Text <> NombreAnt.ToUpper Then
                 If Em.ChecaEmpresaRepetida(TextBox6.Text) Then HayError += " Ya existe una empresa con ese nombre."
             End If
-            If GlobalPermisos.ChecaPermiso(PermisosN.Catalogos2.EmpresasCambio, PermisosN.Secciones.Catalagos2) = False Then
+            If GlobalPermisos.ChecaPermiso(PermisosN.Catalogos2.EmpresasCambio, PermisosN.Secciones.Catalagos2) = False And IgnorarPermisos = False Then
                 HayError += " No tiene permiso para realizar esta operación."
             End If
             If HayError = "" Then

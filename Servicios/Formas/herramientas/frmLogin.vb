@@ -140,9 +140,9 @@ Public Class frmLogIn
             If IniciarMySQL(BasedeDatos, Servidor, DBUsuario, DBPassword, DBPuerto) = 0 Then
                 MsgBox("Ha habido un problema de conexión a la base de datos, verifique sus conexiones de red y vuelva a intentarlo. Si el problema continua consulte al proveedor del sistema.", MsgBoxStyle.OkOnly, GlobalNombreApp)
                 If MsgBox("¿Desea modificar la configuración de conexión?" + vbCrLf + "(Necesita de una clave especial.)", MsgBoxStyle.YesNo, GlobalNombreApp) = MsgBoxResult.Yes Then
-                    Dim F As New frmEmpresas
-                    frmEmpresas.ShowDialog()
-                    frmEmpresas.Dispose()
+                    Dim F As New frmEmpresas(True)
+                    F.ShowDialog()
+                    F.Dispose()
                 End If
                 'ResetearSettings()
                 MsgBox("El sistema se cerrara.", MsgBoxStyle.OkOnly, GlobalNombreApp)
